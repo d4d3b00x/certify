@@ -47,6 +47,7 @@ h1{margin:.2rem 0 0 0}
 .path .badge{position:absolute; top:-12px; left:16px; background:#efeaff; padding:6px 10px; border-radius:999px; font-size:.8rem; color:#6b5cff}
 .path .title{font-weight:700; margin:6px 0}
 .path .desc{color:var(--muted); margin-bottom:12px}
+
 .mode-row{display:flex; gap:16px; flex-wrap:wrap}
 .mode{flex:1; min-width:240px; border:1px dashed var(--edge); border-radius:12px; padding:12px}
 .mode-title{font-weight:600}
@@ -60,6 +61,40 @@ h1{margin:.2rem 0 0 0}
 .btn.disabled{opacity:.6; cursor:not-allowed}
 
 .quiz-wrap{display:grid; grid-template-columns: 1fr 330px; gap:18px}
+
+/* ===== ZONA GENERAL DE VENDORS (AWS + Azure) ===== */
+.vendor-zone {
+  background: #f6f5ff;                /* fondo suave violeta-gris */
+  border-left: 8px solid #4b3dbb;     /* ribete morado principal */
+  border-radius: 14px;
+  padding: 40px 30px;
+  margin: 40px auto;
+  max-width: 1200px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;                          /* espacio entre grupos internos */
+}
+
+/* Ajusta grupos dentro de la zona */
+.vendor-zone .path-group {
+  margin: 0; /* elimina márgenes individuales para que queden equilibrados */
+  box-shadow: 0 0 0 2px rgba(75, 61, 187, 0.1);
+}
+
+/* Opcional: título general si quisieras añadirlo */
+.vendor-zone::before {
+  content: "Cloud Certifications";
+  display: block;
+  font-weight: 700;
+  color: #4b3dbb;
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+  letter-spacing: 0.3px;
+}
+
+
+
 @media (max-width: 980px){ .quiz-wrap{grid-template-columns:1fr} }
 .question-card{background:#fff; border-radius:16px; padding:16px; border:1px solid var(--edge)}
 .side{display:flex; flex-direction:column; gap:12px}
