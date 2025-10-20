@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CertiFY — Results History</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .hist-container{max-width:1000px;margin:24px auto;padding:0 16px}
+    .hist-card{background:#fff;border:1px solid var(--edge);border-radius:16px;padding:16px}
+    .hist-title{font-size:24px;margin:0 0 12px;color:#332f6b}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{padding:10px;border-bottom:1px solid #eee;text-align:left}
+    .badge-track{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid rgba(108,99,255,.3);background:rgba(108,99,255,.08);color:#5a4cf1;font-weight:700;font-size:12px}
+    .score-ok{color:#1a7f37;font-weight:800}
+    .score-bad{color:#c62828;font-weight:800}
+    .back{display:inline-block;margin-top:10px}
+  </style>
+</head>
+<body>
+  <main class="hist-container">
+    <div class="hist-card">
+      <h1 class="hist-title">Results History</h1>
+      <table class="table">
+        <thead><tr><th>Date</th><th>Course</th><th>Score</th><th>Questions</th></tr></thead>
+        <tbody id="histBody"></tbody>
+      </table>
+      <a class="btn back" href="./#/">← Back to Home</a>
+    </div>
+  </main>
+  <script>
+    function __getHistory(){ try { return JSON.parse(localStorage.getItem('certify_history')||'[]'); } catch(e){ return []; } }
+    const tbody = document.getElementById('histBody');
+    const hist = __getHistory();
+    if (!hist.length){
+      const tr = document.createElement('tr'); tr.innerHTML = '<td colspan="4">No attempts yet</td>'; tbody.appendChild(tr);
+    } else {
+      hist.forEach(r=>{
+        const tr = document.createElement('tr');
+        const dt = new Date(r.ts); const ok = r.pct>=70;
+        tr.innerHTML = `<td>${dt.toLocaleString()}</td>
+          <td><span class="badge-track">${r.track==='practitioner'?'Cloud Practitioner':'Solutions Architect'}</span></td>
+          <td class="${ok?'score-ok':'score-bad'}">${r.pct}%</td>
+          <td>${r.correct}/${r.total}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+  </script>
+</body>
+</html>
