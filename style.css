@@ -167,6 +167,90 @@ h1{margin:.2rem 0 0 0}
 }
 .azure-group .desc a:hover{ text-decoration:underline; }
 
+/* ===== TEMA AWS para la página del quiz ===== */
+.theme-aws {
+  --aws-orange: #FF9900;
+  --aws-dark: #232F3E;
+  --aws-edge: #e6e6e6;
+  --aws-bg: #f9fafb;
+}
+
+/* Contenedor principal del quiz */
+.theme-aws #view{
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 20px;
+}
+
+/* Tarjeta del quiz */
+.theme-aws .path{
+  background:#fff;
+  border:1.5px solid var(--aws-edge);
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+/* Encabezados y textos */
+.theme-aws .title{ color: var(--aws-dark); }
+.theme-aws .desc, 
+.theme-aws .note{ color:#444; }
+
+/* Badge estilo AWS */
+.theme-aws .badge{
+  position:absolute; top:-12px; left:16px;
+  background: rgba(255,153,0,.15);
+  color: var(--aws-orange);
+  padding:6px 10px; border-radius:999px;
+  font-weight:700; font-size:.8rem;
+  border:1px solid rgba(255,153,0,.35);
+}
+
+/* Caja de modo */
+.theme-aws .mode{
+  border:1.5px dashed var(--aws-edge);
+  background:#fffdfa;
+  border-radius:12px;
+  padding:14px;
+}
+.theme-aws .mode-title{ font-weight:700; color:var(--aws-dark); }
+
+/* Fila select + botones en línea */
+.theme-aws .mode-row{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+
+/* Botones */
+.theme-aws .btn{
+  background: var(--aws-orange);
+  color:#fff; border:none; border-radius:10px;
+  padding:10px 16px; font-weight:700; cursor:pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.theme-aws .btn:hover{ background:#e68a00; transform:translateY(-1px); }
+
+/* Botón/Select secundario */
+.theme-aws .btn.secondary{
+  background:#fff; color:var(--aws-dark);
+  border:2px solid var(--aws-orange);
+}
+.theme-aws select.btn.secondary{
+  appearance:auto; /* para que se vea como select */
+}
+
+/* Enlaces de acción en naranja */
+.theme-aws a{ color:var(--aws-orange); font-weight:700; text-decoration:none; }
+.theme-aws a:hover{ text-decoration:underline; }
+
+/* Opciones de respuesta (si aplican en esta página) */
+.theme-aws .option{
+  background:#fffaf3; border:1px solid #ffd9a6;
+}
+.theme-aws .option:hover{ background:#fff3e0; }
+.theme-aws .option.selected.ok{ background:#eafff4; border-color:#b9f1d5; }
+.theme-aws .option.selected.bad{ background:#ffe9e0; border-color:#ffc3cf; }
+
+
 /* Espaciado vertical entre paths si tu contenedor usa flex en columna */
 #view{ display:flex; flex-direction:column; align-items:center; gap:24px; }
 
