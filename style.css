@@ -62,36 +62,105 @@ h1{margin:.2rem 0 0 0}
 
 .quiz-wrap{display:grid; grid-template-columns: 1fr 330px; gap:18px}
 
-/* ===== ZONA GENERAL DE VENDORS (AWS + Azure) ===== */
-.vendor-zone {
-  background: #f6f5ff;                /* fondo suave violeta-gris */
-  border-left: 8px solid #4b3dbb;     /* ribete morado principal */
-  border-radius: 14px;
-  padding: 40px 30px;
-  margin: 40px auto;
-  max-width: 1200px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+/* ===== Grupo AWS (estilo similar a Azure, con color de marca) ===== */
+.aws-group {
+  background: #fbfbff;                 /* Fondo dentro del marco, ligeramente gris-lila */
+  border-left: 6px solid #FF9900;      /* Línea naranja AWS */
+  border-radius: 12px;
+  padding: 32px 28px;
+  margin: 20px auto;
+  max-width: 1100px;
+  box-shadow: 0 0 0 3px #4b3dbb;       /* Marco morado exterior */
+}
+
+.aws-group .group-header {
   display: flex;
-  flex-direction: column;
-  gap: 28px;                          /* espacio entre grupos internos */
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
-/* Ajusta grupos dentro de la zona */
-.vendor-zone .path-group {
-  margin: 0; /* elimina márgenes individuales para que queden equilibrados */
-  box-shadow: 0 0 0 2px rgba(75, 61, 187, 0.1);
+.aws-group .group-logo {
+  height: 40px;
 }
 
-/* Opcional: título general si quisieras añadirlo */
-.vendor-zone::before {
-  content: "Cloud Certifications";
-  display: block;
-  font-weight: 700;
-  color: #4b3dbb;
-  font-size: 1.4rem;
-  margin-bottom: 18px;
-  letter-spacing: 0.3px;
+.aws-group .path {
+  margin: 20px 0;
+  background: #fff;
+  border: 1px solid #e7e9ec;
+  border-radius: 12px;
+  padding: 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.aws-group .path:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+/* Colores de texto y botones */
+.aws-group .badge {
+  background: rgba(255, 153, 0, 0.15);
+  color: #FF9900;
+}
+
+.aws-group .title {
+  color: #232F3E; /* Azul oscuro AWS */
+}
+
+.aws-group .desc a {
+  color: #FF9900;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.aws-group .desc a:hover {
+  text-decoration: underline;
+}
+
+
+/* ===== Grupo Azure (branding fiel) ===== */
+.azure-group{
+  background:#f5f7fb;                 /* fondo suave */
+  border-left:6px solid #0078D4;       /* azul marca */
+  border-radius:12px;
+  padding:32px 28px;
+  margin:40px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+.azure-group .group-header{
+  display:flex; align-items:center; gap:16px; margin-bottom:20px;
+}
+
+.azure-group .group-logo{ height:42px; }
+.azure-group .group-title{
+  font-size:1.6rem; font-weight:700; color:#104581; margin:0; letter-spacing:.3px;
+}
+
+/* Tarjetas dentro del grupo */
+.azure-group .path{
+  margin:20px 0; background:#fff; border-color:#e7e9ec;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.azure-group .path:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 14px rgba(0,0,0,.10);
+}
+
+/* Badges y enlaces con acento Azure */
+.azure-group .badge{
+  background:rgba(0,120,212,.12); /* #0078D4 con transparencia */
+  color:#0078D4;
+}
+.azure-group .desc a{
+  color:#0078D4; font-weight:600; text-decoration:none;
+}
+.azure-group .desc a:hover{ text-decoration:underline; }
+
+/* Espaciado vertical entre paths si tu contenedor usa flex en columna */
+#view{ display:flex; flex-direction:column; align-items:center; gap:24px; }
 
 
 
