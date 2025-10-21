@@ -1,5 +1,4 @@
 
-/* Exam-only SPA, 10 questions, quiz header, explanations + external links */
 
 /* telemetry helper */
 const TELEM = (n,p)=>{ try{ window.__telem && window.__telem.on(n,p); }catch(e){} };
