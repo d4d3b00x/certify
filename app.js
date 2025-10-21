@@ -228,7 +228,7 @@ qCard.appendChild(head);
   ol.innerHTML = `
     <div class="ov-row"><span class="ov-key">The exam has the following content domains and scored content:</span></div>
     <ul style="margin:6px 0 0 8px;padding-left:12px">
-      <li>Domain 1: Design Secure Architectures (30%)</li>
+      <li><a href=./domain1.html>Domain 1: Design Secure Architectures (30%)</a></li>
       <li>Domain 2: Design Resilient Architectures (26%)</li>
       <li>Domain 3: Design High-Performing Architectures (24%)</li>
       <li>Domain 4: Design Cost-Optimized Architectures (20%)</li>
