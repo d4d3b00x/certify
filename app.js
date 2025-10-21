@@ -95,8 +95,7 @@ function renderExamOverviewTo(sideEl){
       Official Exam Guide (PDF)
     </a>
   `;
-  card.appendChild(body);
-  sideEl.appendChild(card);
+ 
 }
 // === /Exam Overview helper ===
 
@@ -221,21 +220,7 @@ qCard.appendChild(head);
   side.appendChild(p1);
   renderLastResults(side);
   
-  // CONTENT OUTLINE (inserted)
-  const outline = h('div', {class:'panel'});
-  outline.appendChild(h('h3', {html:'CONTENT OUTLINE'}));
-  const ol = h('div', {class:'exam-overview'});
-  ol.innerHTML = `
-    <div class="ov-row"><span class="ov-key">The exam has the following content domains and scored content:</span></div>
-    <ul style="margin:6px 0 0 8px;padding-left:12px">
-      <li><a href=./domain1.html>Domain 1: Design Secure Architectures (30%)</a></li>
-      <li>Domain 2: Design Resilient Architectures (26%)</li>
-      <li>Domain 3: Design High-Performing Architectures (24%)</li>
-      <li>Domain 4: Design Cost-Optimized Architectures (20%)</li>
-    </ul>
-  `;
-  outline.appendChild(ol);
-  side.appendChild(outline);
+ 
 
   renderExamOverviewTo(side);
 

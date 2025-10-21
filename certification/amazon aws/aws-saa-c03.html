@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CertiFY — AWS Certification Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css"/>
+</head>
+<body>
+  <div class="shell">
+    <!-- Cabecera -->
+    
+
+    <!-- Contenido principal -->
+    <main id="view" role="main">
+
+<!-- Zona general de certificaciones cloud -->
+<section class="vendor-zone" aria-label="Cloud Certification Groups">
+
+  <!-- Grupo AWS -->
+  <section class="path-group aws-group" aria-label="AWS Certifications">
+    <div class="group-header">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+        alt="AWS Logo"
+        class="group-logo"
+        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
+      >
+      <h2>AWS Certified Solutions Architect — Associate</h2>
+    </div>
+
+<section class="path" aria-label="GUIDE">
+      <span class="badge">LOOK OUR CRASH GUIDE</span>
+      
+      <p class="desc">
+          <div class="ov-row"><span class="ov-key">See our one-page recap of core services, patterns, and exam-day heuristics.</span></div>
+     <a class="ov-link" target="_blank" rel="noopener" href="../amazon aws/">
+     <svg class="ov-ico"  aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V7l-6-4z"></path></svg>
+      Certify Crash Guide (HTML)
+    </a>
+      
+    </section>
+
+    <section class="path" aria-label="DOMAINS">
+      <span class="badge">DOMAINS CONTENT OUTLINE STUDY TIPS</span>
+      
+      <p class="desc">
+          <div class="ov-row"><span class="ov-key">Here you are some focus exam tips:</span></div>
+    <ul style="margin:6px 0 0 8px;padding-left:12px">
+      <li><a class="ov-link" href="../amazon aws/aws-saa-c03/tips-domain1.html">Domain 1: Design Secure Architectures (30%)</a></li>
+      <li><a class="ov-link" href="../amazon aws/aws-saa-c03/tips-domain2.html">Domain 2: Design Resilient Architectures (26%)</a></li>
+      <li><a class="ov-link" href="../amazon aws/aws-saa-c03/tips-domain3.html">Domain 3: Design High-Performing Architectures (24%)</a></li>
+      <li><a class="ov-link" href="../amazon aws/aws-saa-c03/tips-domain4.html">Domain 4: Design Cost-Optimized Architectures (20%)</a></li>
+    </ul>
+        
+      </p>
+    </section>
+
+    <section class="path" aria-label="OFFICIAL">
+      <span class="badge">OFFICIAL CERTIFICATION INFO</span>
+      <a class="ov-link" target="_blank" rel="noopener" href="https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/certification/approved/pdfs/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf">
+      <svg class="ov-ico"  aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V7l-6-4z"></path></svg>
+      Official Exam Guide (PDF) 
+    <a class="ov-link" target="_blank" rel="noopener" href="">
+     
+      
+    </a>
+    
+    </section>
+<section class="path" aria-label="STUDY MODE">
+      <span class="badge">STUDY MODE</span>
+          <p class="desc">
+          <div class="ov-row"><span class="ov-key"><a class="btn" id="btnStart" href="/saa-c03.html" >START PRACTICE QUESTIONS QUIZ</a></span></div>
+
+    </section>
+
+
+  </section>
+
+  
+
+</section>
+
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="foot"><a href="https://github.com/d4d3b00x/certify/blob/main/about">| ABOUT US |</a></footer>
+  </div>
+
+  <!-- Scripts -->
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+  <script>
+    const startBtn = document.getElementById('btnStart');
+    if (startBtn) {
+      startBtn.addEventListener('click', function(){
+        if (typeof start === 'function') start();
+      });
+    }
+  </script>
+  <script src="flags.js"></script>
+  <script src="telemetry.js"></script>
+  <script>
+    (function(){
+      if (window.__CERTIFY_FLAGS__ && window.__CERTIFY_FLAGS__.pwa && 'serviceWorker' in navigator){
+        navigator.serviceWorker.register('./sw.js').catch(()=>{});
+        const link = document.createElement('link');
+        link.rel='manifest';
+        link.href='./manifest.webmanifest';
+        document.head.appendChild(link);
+      }
+    })();
+  </script>
+</body>
+</html>
