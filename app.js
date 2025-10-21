@@ -247,7 +247,7 @@ function finish(){
   location.hash = '';
   // minimal toast
   alert(`Quiz finished! ${score}/${total} (${percent}%)`);
-  window.location.href = "/"; // redirige al raíz
+  window.location.href = "/history.html"; // redirige al raíz
 }
 
 /* History using localStorage */
