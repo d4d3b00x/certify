@@ -9,7 +9,7 @@ const STATE = {
   idx: 0,
   answers: {},
   startedAt: null,
-  certi: 'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'
+  certi: 'Microsoft Azure Administrator - Associate (AZ-104)'
 };
 
 function start(){
@@ -143,6 +143,7 @@ function renderQuiz(){
   const qCard = h('div', {class:'question-card'});
   const head = h('div', {class:'header-quiz'});
   head.appendChild(h('div', {class:'title', html:STATE.certi}));
+
 qCard.appendChild(head);
 
   const q = STATE.qs[STATE.idx];

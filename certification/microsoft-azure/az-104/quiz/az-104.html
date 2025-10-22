@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>CertiFY — AWS Certification Quiz</title>
+  <title>CertiFY — Microsoft Azure Administrator - Associate (AZ-104)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="/style.css"/>
 </head>
 <body class="theme-aws">
   <div class="shell">
@@ -25,21 +25,54 @@
 
         <div class="mode">
           <div class="mode-title">Study Mode</div>
+
+
+<script>
+ 
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.questions) {
+      // Calculo el total de preguntas
+      const totalQuestions = window.questions.reduce(
+        (acc, domain) => acc + domain.questions.length, 
+        0
+      );
+
+      // Mostrarlo en consola o en la página
+      console.log("Bank total", totalQuestions);
+
+      // Por ejemplo, puedes mostrarlo debajo del selector:
+      const label = document.querySelector('label[for="studyCount"]');
+      const totalSpan = document.createElement('span');
+      totalSpan.textContent = ` (Bank total: ${totalQuestions})`;
+      label.appendChild(totalSpan);
+    } else {
+      console.error("No se encontró el array 'questions'.");
+    }
+  });
+</script>
+
+
           <div class="mode-desc"></div>
           <div class="mode-row" style="align-items:center; margin-top:8px">
             <label for="studyCount" class="note">Questions</label>
-            <select id="studyCount" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
+            <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
               <option value="5" selected>5</option>
               <option value="10">10</option>
-              <option value="25">25</option>
+             
+              <option value="30">30</option>
             </select>
           </div>
 
           <div class="actions" style="margin-top:12px">
-            <button class="btn" id="btnStart">Start Quiz</button>
+            <button class="btn" name="aaa" id="btnStart">Start Quiz</button>
             <a class="btn" id="btnStart" href="history.html" >Results</a>
           </div>
           <p class="note">Exam Mode is in development for this build.</p>
+
+
+
+
+
         </div>
 
       </section>
@@ -49,8 +82,8 @@
     <footer class="foot"><a href="/">| HOME |</a></footer>
   </div>
 
+  <script src="/questions-az104.js"></script>
   <script src="/control_quizs/Q_azure-az104.js"></script>
-  <script src="app.js"></script>
   <script>
     document.getElementById('btnStart').addEventListener('click', function(){
       if (typeof start === 'function') start();
