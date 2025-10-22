@@ -9,11 +9,25 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 
-<!-- Amplify Auth (CDN) -->
-<script src="https://cdn.jsdelivr.net/npm/aws-amplify/dist/aws-amplify.min.js"></script>
+
+
+
+
+
+<body>
+  <div class="shell">
+    <!-- Cabecera -->
+    <header class="top" role="banner">
+      <div class="brand">👋 ¡Wellcome to <strong>certiFY</strong>! <span class="beta">beta 0.92</span></div>
+      <nav class="nav" role="navigation"></nav>
+
+        <!-- Carga Amplify v6 desde jsDelivr (UMD global) -->
+<script src="https://cdn.jsdelivr.net/npm/aws-amplify@6/dist/aws-amplify.min.js"></script>
 <script>
-  // Configuración Amplify v6
-  const { Amplify } = aws_amplify;
+  // 1) Referencias a objetos globales de Amplify (UMD)
+  const { Amplify, Auth } = window.aws_amplify;
+
+  // 2) Configura Cognito + Hosted UI
   Amplify.configure({
     Auth: {
       Cognito: {
@@ -23,47 +37,45 @@
           oauth: {
             domain: "certify-auth.auth.eu-west-1.amazoncognito.com",
             scopes: ["openid","email","profile"],
-            redirectSignIn: ["https://main.drlgxq3ev7tby.amplifyapp.com/"],
-            redirectSignOut: ["https://main.drlgxq3ev7tby.amplifyapp.com/"],
-            responseType: "code" // OAuth 2.0 Authorization code + PKCE
+            redirectSignIn: [window.location.origin + "/"],
+            redirectSignOut: [window.location.origin + "/"],
+            responseType: "code" // Authorization Code + PKCE
           }
         }
       }
     }
   });
 
-  // Helpers de login/logout
-  async function loginWithGoogle(){
-    await aws_amplify.Auth.signInWithRedirect({ provider: "Google" });
-  }
-  async function loginWithFacebook(){
-    await aws_amplify.Auth.signInWithRedirect({ provider: "Facebook" });
-  }
-  async function logout(){
-    await aws_amplify.Auth.signOut();
-    // opcional: window.location.href = "/";
-  }
+  // 3) EXPONER funciones en window para que <button onclick="..."> las vea
+  window.loginWithGoogle = async () => {
+    try { await Auth.signInWithRedirect({ provider: "Google" }); }
+    catch (e) { console.error("Google redirect error", e); alert("No se pudo iniciar sesión con Google"); }
+  };
 
-  // Al cargar, detecta sesión
-  aws_amplify.Auth.getCurrentAuthenticatedUser()
-    .then(user => {
-      const name = user?.signInDetails?.loginId || user?.attributes?.name || user?.username;
+  window.loginWithFacebook = async () => {
+    try { await Auth.signInWithRedirect({ provider: "Facebook" }); }
+    catch (e) { console.error("Facebook redirect error", e); alert("No se pudo iniciar sesión con Facebook"); }
+  };
+
+  window.logout = async () => {
+    try { await Auth.signOut(); }
+    catch (e) { console.error("Logout error", e); }
+  };
+
+  // 4) Al volver del Hosted UI, Amplify procesa el ?code=...
+  //    Recuperamos sesión y pintamos el nombre
+  (async () => {
+    try {
+      const user = await Auth.getCurrentAuthenticatedUser();
+      const name = user?.signInDetails?.loginId || user?.attributes?.name || user?.username || "User";
       document.documentElement.classList.add("signed-in");
-      document.querySelector("#username")?.replaceChildren(document.createTextNode(name || "User"));
-    })
-    .catch(() => {
+      const el = document.querySelector("#username");
+      if (el) el.textContent = name;
+    } catch {
       document.documentElement.classList.remove("signed-in");
-    });
-
+    }
+  })();
 </script>
-
-
-<body>
-  <div class="shell">
-    <!-- Cabecera -->
-    <header class="top" role="banner">
-      <div class="brand">👋 ¡Wellcome to <strong>certiFY</strong>! <span class="beta">beta 0.92</span></div>
-      <nav class="nav" role="navigation"></nav>
     </header>
 
     <!-- Contenido principal -->
