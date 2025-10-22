@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Domain 1 — Manage Azure identities and governance — AZ‑104</title>
+<style>
+:root{--bg:#0b5cff;--ink:#18133b;--muted:#665f8d;--card:#ffffff;--border:#e1e8ff;--pill:#eef3ff;}
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+body{background:#f6f8ff;color:var(--ink);}header{background:var(--bg);color:#fff;padding:18px 22px}
+header h1{margin:0;font-size:26px;letter-spacing:.2px}
+main{max-width:1100px;margin:22px auto;padding:0 16px 80px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 6px 24px rgba(23,18,63,.08);padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:2.1fr 1fr;gap:18px}
+.pill{display:inline-block;background:var(--pill);color:#0b2957;border:1px solid #d9e3ff;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+h2{margin:0 0 10px 0}h3{margin:16px 0 8px 0}ul{margin:6px 0 6px 20px}
+.tip{background:#f2fbff;border:1px solid #cfeeff;color:#0a3d80;border-radius:10px;padding:10px;margin:8px 0}
+.warn{background:#fff9e7;border:1px solid #ffe9a9;color:#815b00;border-radius:10px;padding:10px;margin:8px 0}
+code{background:#f4f7ff;border:1px solid #e7efff;padding:1px 6px;border-radius:6px}
+.badge{display:inline-block;background:#eef3ff;border:1px solid #d9e3ff;border-radius:8px;padding:2px 8px;margin-right:6px;font-size:12px}
+.footer{color:var(--muted);font-size:12px;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <h1>Domain 1 — Manage Azure identities and governance (25–30%)</h1>
+  </div>
+</header>
+<main>
+  <section class="grid">
+    <article class="card">
+      <div class="pill">Entra ID · RBAC · PIM · Policy · Subscriptions & Management Groups</div>
+      <h2>What “identities and governance” mean in AZ‑104</h2>
+      <p>Expect scenario questions where you must <strong>minimize privileges</strong>, enforce controls
+      at the correct <em>scope</em> (management group → subscription → resource group → resource),
+      and enable <strong>just‑in‑time</strong> access for admins.</p>
+      <h3>Patterns that score</h3>
+      <ul>
+        <li><strong>RBAC at the lowest scope</strong>: prefer built‑in roles; create custom roles only when necessary with explicit <code>Actions</code>/<code>NotActions</code>.</li>
+        <li><strong>PIM</strong> for privileged roles: eligible assignments, approval/MFA, time‑bound activation, access reviews, audit logs.</li>
+        <li><strong>Conditional Access</strong>: require MFA for privileged roles; block legacy protocols; location/device controls.</li>
+        <li><strong>Azure Policy</strong>: enforce tags, allowed locations/SKUs, require private endpoints, apply diagnostic settings with <code>DeployIfNotExists</code>.</li>
+        <li><strong>Resource organization</strong>: management groups by environment/region; subscriptions for isolation/quotas/billing; RGs by lifecycle.</li>
+      </ul>
+      <div class="tip">Tip: Always include the <em>scope</em> in your answer. Many wrong answers put a correct role on the wrong scope.</div>
+      <h3>Common pitfalls</h3>
+      <ul>
+        <li>Using account‑level owner instead of least‑privileged built‑in roles.</li>
+        <li>Granting data‑plane permissions via RBAC when the service requires separate ACLs (e.g., Blob POSIX ACLs, SQL logins).</li>
+        <li>Leaving break‑glass accounts without conditional access exclusions or without long, monitored secrets.</li>
+      </ul>
+      <h3>Study checklist</h3>
+      <ul>
+        <li>Role assignment components; built‑in roles: Owner, Contributor, Reader, User Access Administrator.</li>
+        <li>Groups: assigned vs dynamic; service principals vs managed identities; app registrations vs enterprise apps.</li>
+        <li>Azure Policy effects: <code>Deny</code>, <code>Audit</code>, <code>Append</code>, <code>Modify</code>, <code>DeployIfNotExists</code>.</li>
+        <li>Blueprint alternatives: use Policy + ARM/Bicep templates; landing zone concepts.</li>
+      </ul>
+    </article>
+    <aside class="card">
+      <h3>Exam Focus</h3>
+      <ul>
+        <li>Assign RBAC roles properly; troubleshoot access via <em>Check Access</em></li>
+        <li>Onboard PIM; configure approvals, MFA, justification, and time limits</li>
+        <li>Create and remediate Policy assignments & initiatives</li>
+        <li>Design subscription hierarchy with management groups</li>
+      </ul>
+      <h3>Key Azure services</h3>
+      <ul>
+        <li>Microsoft Entra ID (Azure AD), Conditional Access, Identity Protection</li>
+        <li>RBAC, PIM, Access Reviews</li>
+        <li>Azure Policy, Initiatives, Resource Graph, Tags</li>
+        <li>Management Groups, Subscriptions, Resource Groups</li>
+      </ul>
+      <h3>Hands‑on ideas</h3>
+      <ul>
+        <li>Create a custom role with minimal <code>Actions</code>; assign at RG scope and test.</li>
+        <li>Enable PIM for Subscription Owner; enforce approval + MFA + time limit.</li>
+        <li>Deploy a policy initiative that denies public network access and deploys diagnostics.</li>
+        <li>Organize subscriptions under management groups (Corp/Prod/Dev) with distinct policies.</li>
+      </ul>
+      <div class="footer">Updated 2025‑10‑22 · Aligns with Microsoft Learn exam outline.</div>
+    </aside>
+  </section>
+</main>
+</body>
+</html>

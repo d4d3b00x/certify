@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Domain 3 — Deploy and manage Azure compute resources — AZ‑104</title>
+<style>
+:root{--bg:#0b5cff;--ink:#18133b;--muted:#665f8d;--card:#ffffff;--border:#e1e8ff;--pill:#eef3ff;}
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+body{background:#f6f8ff;color:var(--ink);}header{background:#0b5cff;color:#fff;padding:18px 22px}
+header h1{margin:0;font-size:26px;letter-spacing:.2px}
+main{max-width:1100px;margin:22px auto;padding:0 16px 80px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 6px 24px rgba(23,18,63,.08);padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:2.1fr 1fr;gap:18px}
+.pill{display:inline-block;background:var(--pill);color:#0b2957;border:1px solid #d9e3ff;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+h2{margin:0 0 10px 0}h3{margin:16px 0 8px 0}ul{margin:6px 0 6px 20px}
+.tip{background:#f2fbff;border:1px solid #cfeeff;color:#0a3d80;border-radius:10px;padding:10px;margin:8px 0}
+.warn{background:#fff9e7;border:1px solid #ffe9a9;color:#815b00;border-radius:10px;padding:10px;margin:8px 0}
+code{background:#f4f7ff;border:1px solid #e7efff;padding:1px 6px;border-radius:6px}
+.footer{color:var(--muted);font-size:12px;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <h1>Domain 3 — Deploy and manage Azure compute resources (20–25%)</h1>
+  </div>
+</header>
+<main>
+  <section class="grid">
+    <article class="card">
+      <div class="pill">VMs · VMSS · Images · Disks · Updates · App Service · Containers</div>
+      <h2>Compute fundamentals</h2>
+      <p>Favor <strong>automation</strong> (Bicep/ARM/CLI), <strong>HA</strong> (zones/sets/scale sets),
+      and <strong>security</strong> (Managed Identity, private access to PaaS).</p>
+      <h3>Patterns that score</h3>
+      <ul>
+        <li><strong>Availability</strong>: Use availability zones for SLA; availability sets (fault/update domains) where zones aren’t available.</li>
+        <li><strong>Scale</strong>: VM Scale Sets with autoscale metrics (CPU, queue length, custom).</li>
+        <li><strong>Images</strong>: Shared Image Gallery for versioned images across regions; capture generalized or specialized images correctly.</li>
+        <li><strong>Disks</strong>: OS vs data disks; Premium SSD v2 vs Ultra for high IOPS; enable host caching where appropriate.</li>
+        <li><strong>Identity</strong>: assign <em>system/user‑assigned</em> managed identity; remove secrets from code.</li>
+        <li><strong>Updates</strong>: Update Manager assessment and deployment schedules with maintenance windows.</li>
+      </ul>
+      <div class="tip">Tip: If the app needs inbound TLS termination + WAF, prefer Application Gateway; for Layer‑4 + cross‑zone, use Standard Load Balancer.</div>
+      <h3>Common pitfalls</h3>
+      <ul>
+        <li>Forgetting proximity placement groups for ultra‑low latency multi‑VM deployments.</li>
+        <li>Under‑sizing temp (ephemeral) OS disks and assuming persistence.</li>
+        <li>Letting VMSS instances drift—use extensions, custom script, or config management.</li>
+      </ul>
+      <h3>Study checklist</h3>
+      <ul>
+        <li>VM sizes, disk SKUs, caching modes; disk encryption (platform‑managed vs CMK/host encryption).</li>
+        <li>App Service plans (Free/Shared/Basic/Standard/Premium); deployment slots; VNet integration.</li>
+        <li>Containers: ACR + AKS basics (node pools, upgrades) vs ACI for serverless containers.</li>
+      </ul>
+    </article>
+    <aside class="card">
+      <h3>Exam Focus</h3>
+      <ul>
+        <li>Deploy VMs/VMSS with Bicep/ARM and configure identity, networking, and disks</li>
+        <li>Design HA with zones/sets; configure load balancing and autoscale</li>
+        <li>Manage updates, extensions, and run commands</li>
+        <li>Publish apps on App Service with custom domains and private endpoints</li>
+      </ul>
+      <h3>Key Azure services</h3>
+      <ul>
+        <li>Virtual Machines, VM Scale Sets, Shared Image Gallery</li>
+        <li>Azure Load Balancer, Application Gateway (WAF), Front Door</li>
+        <li>Azure Update Manager, Automation Account (runbooks), Desired State Configuration</li>
+        <li>Azure App Service, Azure Container Registry, AKS/ACI</li>
+      </ul>
+      <h3>Hands‑on ideas</h3>
+      <ul>
+        <li>Build a SIG image and deploy a VMSS across zones with autoscale</li>
+        <li>Enable disk encryption with CMK and compare performance with/without caching</li>
+        <li>Publish a web app on App Service with a private endpoint and custom domain</li>
+      </ul>
+      <div class="footer">Updated 2025‑10‑22 · Aligns with Microsoft Learn exam outline.</div>
+    </aside>
+  </section>
+</main>
+</body>
+</html>

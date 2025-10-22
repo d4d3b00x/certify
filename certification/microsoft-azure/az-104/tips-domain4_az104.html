@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Domain 4 — Configure and manage virtual networking — AZ‑104</title>
+<style>
+:root{--bg:#0b5cff;--ink:#18133b;--muted:#665f8d;--card:#ffffff;--border:#e1e8ff;--pill:#eef3ff;}
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+body{background:#f6f8ff;color:var(--ink);}header{background:#0b5cff;color:#fff;padding:18px 22px}
+header h1{margin:0;font-size:26px;letter-spacing:.2px}
+main{max-width:1100px;margin:22px auto;padding:0 16px 80px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 6px 24px rgba(23,18,63,.08);padding:18px;margin:14px 0}
+.grid{display:grid;grid-template-columns:2.1fr 1fr;gap:18px}
+.pill{display:inline-block;background:var(--pill);color:#0b2957;border:1px solid #d9e3ff;padding:6px 10px;border-radius:999px;font-weight:700;font-size:12px}
+h2{margin:0 0 10px 0}h3{margin:16px 0 8px 0}ul{margin:6px 0 6px 20px}
+.tip{background:#f2fbff;border:1px solid #cfeeff;color:#0a3d80;border-radius:10px;padding:10px;margin:8px 0}
+.warn{background:#fff9e7;border:1px solid #ffe9a9;color:#815b00;border-radius:10px;padding:10px;margin:8px 0}
+code{background:#f4f7ff;border:1px solid #e7efff;padding:1px 6px;border-radius:6px}
+.footer{color:var(--muted);font-size:12px;margin-top:24px}
+</style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <h1>Domain 4 — Configure and manage virtual networking (25–30%)</h1>
+  </div>
+</header>
+<main>
+  <section class="grid">
+    <article class="card">
+      <div class="pill">VNets · Subnets · NSGs/ASGs · Routing · Private Endpoints · LB/AppGW · DNS</div>
+      <h2>Networking design</h2>
+      <p>Build <strong>hub‑and‑spoke</strong> topologies with central firewalls, private endpoints for PaaS,
+      and explicit routing. Prefer <strong>deny by default</strong> with NSGs.</p>
+      <h3>Patterns that score</h3>
+      <ul>
+        <li><strong>Segmentation</strong>: NSGs per subnet + ASGs per workload; inbound least privilege.</li>
+        <li><strong>Private access</strong>: Private Endpoints + Private DNS; disable public endpoints on Storage/SQL.</li>
+        <li><strong>Routing</strong>: UDRs to send traffic through NVA/Azure Firewall; <em>0.0.0.0/0</em> to firewall for egress filtering.</li>
+        <li><strong>Connectivity</strong>: VNet peering (non‑transitive); use hub VNet with Firewall and Virtual WAN for scale.</li>
+        <li><strong>Load balancing</strong>: LB (L4) for VMs/AKS; App Gateway (L7,WAF,SNI); Front Door for global anycast + TLS offload.</li>
+      </ul>
+      <div class="tip">Tip: If compliance says “no data over public internet,” combine Private Endpoints, DNS resolution, and UDR egress through Firewall/ER.</div>
+      <h3>Common pitfalls</h3>
+      <ul>
+        <li>Relying on service endpoints when exfiltration risk must be mitigated.</li>
+        <li>Mismatched DNS zones for private endpoints causing intermittent failures.</li>
+        <li>Forgetting health probes/NSG allowances for Load Balancers and App Gateway.</li>
+      </ul>
+      <h3>Study checklist</h3>
+      <ul>
+        <li>NSGs vs Azure Firewall; ASGs; DDoS Protection plans; Route Tables & BGP concepts.</li>
+        <li>Private DNS zones and links; name resolution order.</li>
+        <li>ExpressRoute vs VPN; ER circuits (SKUs, peering types, route filters).</li>
+      </ul>
+    </article>
+    <aside class="card">
+      <h3>Exam Focus</h3>
+      <ul>
+        <li>Create and secure VNets/subnets, NSGs/ASGs, and route tables</li>
+        <li>Configure Private Endpoints + Private DNS; disable public access</li>
+        <li>Implement load balancing (LB/App Gateway) and application routing</li>
+        <li>Design hybrid connectivity (VPN/ExpressRoute) with hub‑and‑spoke</li>
+      </ul>
+      <h3>Key Azure services</h3>
+      <ul>
+        <li>VNet, Subnets, NSG/ASG, Route Tables, Azure Firewall, DDoS Protection</li>
+        <li>Private Endpoints, Private DNS, Service Endpoints</li>
+        <li>Load Balancer, Application Gateway (WAF), Front Door, Traffic Manager</li>
+        <li>VPN Gateway, Virtual WAN, ExpressRoute</li>
+      </ul>
+      <h3>Hands‑on ideas</h3>
+      <ul>
+        <li>Build hub‑and‑spoke with Azure Firewall and route all egress via the hub</li>
+        <li>Create Private Endpoints for Storage/SQL; validate DNS resolution</li>
+        <li>Deploy App Gateway WAF v2 with end‑to‑end TLS to a VMSS backend</li>
+      </ul>
+      <div class="footer">Updated 2025‑10‑22 · Aligns with Microsoft Learn exam outline.</div>
+    </aside>
+  </section>
+</main>
+</body>
+</html>

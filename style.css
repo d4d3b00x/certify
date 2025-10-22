@@ -54,14 +54,6 @@ h1{margin:.2rem 0 0 0}
 .path .title{font-weight:700; margin:6px 0}
 .path .desc{color:var(--muted); margin-bottom:12px}
 
-.path2{
-  border:1px solid var(--edge); border-radius:16px; padding:18px; margin:16px 0;
-  position:relative; background:#fbfbff;
-}
-.path2 .badge{position:absolute; top:-12px; left:16px; background:#efeaff; padding:6px 10px; border-radius:999px; font-size:.8rem; color:#6b5cff}
-.path2 .title{font-weight:600; margin:6px 0}
-.path2 .desc{color:var(--muted); margin-bottom:12px}
-
 
 .mode-row{display:flex; gap:16px; flex-wrap:wrap}
 .mode{flex:1; min-width:240px; border:1px dashed var(--edge); border-radius:12px; padding:12px}
@@ -80,25 +72,18 @@ h1{margin:.2rem 0 0 0}
 /* ===== Grupo AWS ===== */
 
 .vendor-zone .path-group {
-  max-width: 80%;   /* o 80%, si prefieres relativo */
+  max-width: 60%;   /* o 80%, si prefieres relativo */
   margin: 5 auto;
 }
 
-.aws-group2 {
-  
-  border-radius: 101px;
-  
-  margin: 1px auto;
-  max-width: 1300px;
-  
-}
+
 
 .aws-group {
   background: #f8f9fa; /* gris claro, limpio */
   border-left: 6px solid #FF9900; /* toque naranja AWS */
   border-radius: 12px;
   padding: 32px 28px;
-  margin: 15px auto;
+  margin: 40px auto;
   max-width: 1100px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
@@ -155,7 +140,7 @@ h1{margin:.2rem 0 0 0}
   border-left:6px solid #0078D4;       /* azul marca */
   border-radius:12px;
   padding:32px 28px;
-  margin:15px auto;
+  margin:40px auto;
   max-width:1100px;
   box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
@@ -278,7 +263,7 @@ h1{margin:.2rem 0 0 0}
 
 
 
-@media (max-width: 1200px){ .quiz-wrap{grid-template-columns:1fr} }
+@media (max-width: 980px){ .quiz-wrap{grid-template-columns:1fr} }
 .question-card{background:#fff; border-radius:16px; padding:16px; border:1px solid var(--edge)}
 .side{display:flex; flex-direction:column; gap:12px}
 .side .panel{background:#fff; border-radius:16px; border:1px solid var(--edge); padding:12px}
