@@ -147,7 +147,7 @@ function renderQuiz(){
   // Left: question
   const qCard = h('div', {class:'question-card'});
   const head = h('div', {class:'header-quiz'});
-  head.appendChild(h('div', {class:'title', html:'STATE.certi'}));
+  head.appendChild(h('div', {class:'title', html:STATE.certi}));
 qCard.appendChild(head);
 
   const q = STATE.qs[STATE.idx];
