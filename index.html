@@ -8,6 +8,56 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css"/>
 </head>
+
+<!-- Amplify Auth (CDN) -->
+<script src="https://unpkg.com/aws-amplify@6.x/dist/aws-amplify.min.js"></script>
+<script>
+  // Configuración Amplify v6
+  const { Amplify } = aws_amplify;
+  Amplify.configure({
+    Auth: {
+      Cognito: {
+        userPoolId: "eu-central-1:7784a5fc-184a-4cac-bf72-5043292c8ab7",
+        userPoolClientId: "333112832092-p3sp1e97hnfr95b655snrm1jngi59to4.apps.googleusercontent.com",
+        loginWith: {
+          oauth: {
+            domain: "certify-auth.auth.eu-west-1.amazoncognito.com",
+            scopes: ["openid","email","profile"],
+            redirectSignIn: ["https://main.drlgxq3ev7tby.amplifyapp.com/"],
+            redirectSignOut: ["https://main.drlgxq3ev7tby.amplifyapp.com/"],
+            responseType: "code" // OAuth 2.0 Authorization code + PKCE
+          }
+        }
+      }
+    }
+  });
+
+  // Helpers de login/logout
+  async function loginWithGoogle(){
+    await aws_amplify.Auth.signInWithRedirect({ provider: "Google" });
+  }
+  async function loginWithFacebook(){
+    await aws_amplify.Auth.signInWithRedirect({ provider: "Facebook" });
+  }
+  async function logout(){
+    await aws_amplify.Auth.signOut();
+    // opcional: window.location.href = "/";
+  }
+
+  // Al cargar, detecta sesión
+  aws_amplify.Auth.getCurrentAuthenticatedUser()
+    .then(user => {
+      const name = user?.signInDetails?.loginId || user?.attributes?.name || user?.username;
+      document.documentElement.classList.add("signed-in");
+      document.querySelector("#username")?.replaceChildren(document.createTextNode(name || "User"));
+    })
+    .catch(() => {
+      document.documentElement.classList.remove("signed-in");
+    });
+
+</script>
+
+
 <body>
   <div class="shell">
     <!-- Cabecera -->
@@ -88,7 +138,7 @@
     </main>
 
     <!-- Pie de página -->
-    <footer class="foot"><a href="https://github.com/d4d3b00x/certify/blob/main/about">| ABOUT US |</a></footer>
+    <footer class="foot"><a href="https://github.com/d4d3b00x/certify/blob/main/about">| ABOUT US | LOGIN BETA |</a></footer>
   </div>
 
   <!-- Scripts 
@@ -115,5 +165,17 @@
       }
     })();
   </script>-->
+
+
+
+
+  <nav class="authbar">
+  <span id="username"></span>
+  <button onclick="loginWithGoogle()">Entrar con Google</button>
+  <button onclick="loginWithFacebook()">Entrar con Facebook</button>
+  <button onclick="logout()">Salir</button>
+
+
+</nav>
 </body>
 </html>
