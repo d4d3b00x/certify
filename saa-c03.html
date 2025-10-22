@@ -20,7 +20,7 @@
         
       <section class="path" aria-label="Architect path">
         <span class="badge">PATH: AMAZON AWS</span>
-        <h2 class="title">AWS Certified Solutions Architect — Associate</h2>
+        <h2 class="title">44AWS Certified Solutions Architect — Associate</h2>
         
 
         <div class="mode">
@@ -55,7 +55,7 @@
           <div class="mode-desc"></div>
           <div class="mode-row" style="align-items:center; margin-top:8px">
             <label for="studyCount" class="note">Questions</label>
-            <select id="studyCount" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
+            <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
               <option value="5" selected>5</option>
               <option value="10">10</option>
              
@@ -64,7 +64,7 @@
           </div>
 
           <div class="actions" style="margin-top:12px">
-            <button class="btn" id="btnStart">Start Quiz</button>
+            <button class="btn" name="aaa" id="btnStart">Start Quiz</button>
             <a class="btn" id="btnStart" href="history.html" >Results</a>
           </div>
           <p class="note">Exam Mode is in development for this build.</p>
@@ -83,7 +83,7 @@
   </div>
 
   <script src="questions.js"></script>
-  <script src="app.js"></script>
+  <script src="/control_quizs/Q_aws-saac03.js"></script>
   <script>
     document.getElementById('btnStart').addEventListener('click', function(){
       if (typeof start === 'function') start();

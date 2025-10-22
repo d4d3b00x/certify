@@ -3,13 +3,18 @@
 /* telemetry helper */
 const TELEM = (n,p)=>{ try{ window.__telem && window.__telem.on(n,p); }catch(e){} };
 
+const COURSE_BY_TRACK = {
+  architect: 'A333',
+  practitioner: 'AWS Certified Cloud Practitioner (CLF-C02)'
+};
+
 const STATE = {
   mode: 'exam',          // exam only
   qs: [],
   idx: 0,
   answers: {},
   startedAt: null,
-  certi: 'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE'
+  certi: 'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'
 };
 
 function start(){
@@ -142,7 +147,7 @@ function renderQuiz(){
   // Left: question
   const qCard = h('div', {class:'question-card'});
   const head = h('div', {class:'header-quiz'});
-  head.appendChild(h('div', {class:'title', html:STATE.certi}));
+  head.appendChild(h('div', {class:'title', html:'STATE.certi'}));
 qCard.appendChild(head);
 
   const q = STATE.qs[STATE.idx];

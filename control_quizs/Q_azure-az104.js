@@ -9,7 +9,7 @@ const STATE = {
   idx: 0,
   answers: {},
   startedAt: null,
-  certi: 'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE'
+  certi: 'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'
 };
 
 function start(){

@@ -93,7 +93,7 @@
           <p class="desc">
           <div class="ov-row">
             <a class="btn" id="btnStart" href="/saa-c03.html" >PRACTICE QUIZ</a></div><br><br>
-            <a class="btn" id="btnStart" href="/history.html" >REVIOUS RESULTS</a></div>
+            <a class="btn" id="btnStart" href="/history.html" >PREVIOUS RESULTS</a></div>
     </section>
 
 
@@ -110,29 +110,6 @@
     <footer class="foot"><a href="https://github.com/d4d3b00x/certify/blob/main/about">| ABOUT US |</a></footer>
   </div>
 
-  <!-- Scripts -->
-  <script src="questions.js"></script>
-  <script src="app.js"></script>
-  <script>
-    const startBtn = document.getElementById('btnStart');
-    if (startBtn) {
-      startBtn.addEventListener('click', function(){
-        if (typeof start === 'function') start();
-      });
-    }
-  </script>
-  <script src="flags.js"></script>
-  <script src="telemetry.js"></script>
-  <script>
-    (function(){
-      if (window.__CERTIFY_FLAGS__ && window.__CERTIFY_FLAGS__.pwa && 'serviceWorker' in navigator){
-        navigator.serviceWorker.register('./sw.js').catch(()=>{});
-        const link = document.createElement('link');
-        link.rel='manifest';
-        link.href='./manifest.webmanifest';
-        document.head.appendChild(link);
-      }
-    })();
-  </script>
+
 </body>
 </html>

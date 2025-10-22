@@ -39,7 +39,7 @@
         const tr = document.createElement('tr');
         const dt = new Date(r.ts); const ok = r.pct>=70;
         tr.innerHTML = `<td>${dt.toLocaleString()}</td>
-          <td><span class="badge-track">${r.track==='practitioner'?'Cloud Practitioner':'AWS Solutions Architect Associate'}</span></td>
+          <td><span class="badge-track">${r.track==='practitioner'?'Cloud Practitioner':'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'}</span></td>
           <td class="${ok?'score-ok':'score-bad'}">${r.pct}%</td>
           <td>${r.correct}/${r.total}</td>`;
         tbody.appendChild(tr);
