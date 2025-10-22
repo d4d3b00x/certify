@@ -80,7 +80,7 @@ const __EXAM_OVERVIEW = {
 function renderExamOverviewTo(sideEl){
   const d = __EXAM_OVERVIEW[__getTrack()] || __EXAM_OVERVIEW.architect;
   const card = h('div', {class:'panel'});
-  card.appendChild(h('h3', {html:'EXAM OVERVIEW'}));
+  card.appendChild(h('h3', {html:'OFFICIAL EXAM OVERVIEW'}));
   const body = h('div', {class:'exam-overview'});
   body.innerHTML = `
     <div class="ov-row"><span class="ov-key">Category</span><span class="ov-val">${d.category}</span></div>
@@ -89,12 +89,13 @@ function renderExamOverviewTo(sideEl){
     <div class="ov-row"><span class="ov-key">Cost</span><span class="ov-val">${d.cost}</span></div>
     <div class="ov-row"><span class="ov-key">Testing options</span><span class="ov-val">${d.testing}</span></div>
     <div class="ov-row"><span class="ov-key">Languages</span><span class="ov-val">${d.languages}</span></div>
-    <a class="ov-link" target="_blank" rel="noopener" href="${d.guideUrl}">
+    <a class="ov-link" target="_blank" href="https://cp.certmetrics.com/amazon">
       <svg class="ov-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V7l-6-4z"></path></svg>
-      Official Exam Guide (PDF)
+      Schedule an Exam (URL)
     </a>
   `;
- 
+card.appendChild(body);
+sideEl.appendChild(card);
 }
 // === /Exam Overview helper ===
 
