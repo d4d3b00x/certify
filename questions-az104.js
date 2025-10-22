@@ -4,7 +4,7 @@
 // Fields: question, options[], correctAnswer (index), difficulty, explanation, explanationRich, links[]
 // ===============================
 
-const az104_questions = [
+const questions = [
   // -------------------- Domain 1 --------------------
   {
     category: "Domain 1: Manage Azure identities and governance",
@@ -145,5 +145,5 @@ const az104_questions = [
 ];
 
 // Optional export bindings (to match your SAA file style)
-if (typeof window !== "undefined") window.questions = az104_questions;
-if (typeof module !== "undefined") module.exports = az104_questions;
+if (typeof window !== "undefined") window.questions = questions;
+if (typeof module !== "undefined") module.exports = questions;

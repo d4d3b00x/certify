@@ -64,7 +64,7 @@
           </div>
 
           <div class="actions" style="margin-top:12px">
-            <button class="btn" name="aaa" id="btnStart">Start Quiz</button>
+        <button class="btn" onclick="start('az-104')">Azure AZ-104</button>
             <a class="btn" id="btnStart" href="history.html" >Results</a>
           </div>
           <p class="note">Exam Mode is in development for this build.</p>
@@ -83,7 +83,7 @@
   </div>
 
   <script src="/questions-az104.js"></script>
-  <script src="/control_quizs/Q_azure-az104.js"></script>
+  <script src="/control_quizs/Q_global.js"></script>
   <script>
     document.getElementById('btnStart').addEventListener('click', function(){
       if (typeof start === 'function') start();

@@ -28,23 +28,48 @@
       <a class="btn back" href="./#/">← Back to Home</a>
     </div>
   </main>
-  <script>
-    function __getHistory(){ try { return JSON.parse(localStorage.getItem('certify_history')||'[]'); } catch(e){ return []; } }
-    const tbody = document.getElementById('histBody');
-    const hist = __getHistory();
-    if (!hist.length){
-      const tr = document.createElement('tr'); tr.innerHTML = '<td colspan="4">No attempts yet</td>'; tbody.appendChild(tr);
-    } else {
-      hist.forEach(r=>{
-        const tr = document.createElement('tr');
-        const dt = new Date(r.ts); const ok = r.pct>=70;
-        tr.innerHTML = `<td>${dt.toLocaleString()}</td>
-          <td><span class="badge-track">${r.track==='practitioner'?'Cloud Practitioner':'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'}</span></td>
-          <td class="${ok?'score-ok':'score-bad'}">${r.pct}%</td>
-          <td>${r.correct}/${r.total}</td>`;
-        tbody.appendChild(tr);
-      });
+<script>
+  function __getHistory() {
+    try { 
+      return JSON.parse(localStorage.getItem('certify_history') || '[]'); 
+    } catch(e) { 
+      return []; 
     }
-  </script>
+  }
+
+  const QUIZ_LABEL = {
+    'aws-saa-c03': 'AWS Solutions Architect – SAA-C03',
+    'az-104': 'Microsoft Azure Administrator – AZ-104',
+    'architect': 'AWS Solutions Architect – SAA-C03',
+    'az-104-architect': 'Microsoft Azure Administrator – AZ-104'
+  };
+
+  const tbody = document.getElementById('histBody');
+  const hist = __getHistory();
+
+  if (!hist.length) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="4">No attempts yet</td>';
+    tbody.appendChild(tr);
+  } else {
+    hist.forEach(r => {
+      const tr = document.createElement('tr');
+      const dt = new Date(r.ts);
+      const ok = r.pct >= 70;
+
+      // usa quizId si existe, si no, usa track
+      const label = QUIZ_LABEL[r.quizId] || QUIZ_LABEL[r.track] || 'Unknown quiz';
+
+      tr.innerHTML = `
+        <td>${dt.toLocaleString()}</td>
+        <td><span class="badge-track">${label}</span></td>
+        <td class="${ok ? 'score-ok' : 'score-bad'}">${r.pct}%</td>
+        <td>${r.correct}/${r.total}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+</script>
+
 </body>
 </html>

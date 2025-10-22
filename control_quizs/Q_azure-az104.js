@@ -25,7 +25,11 @@ function start(){
     if (el && el.value) n = parseInt(el.value, 65);
     if (![5,10,15,30].includes(n)) n = el.value;
   }catch(e){ n = 65; }
-  STATE.qs = STATE.qs.slice(0, n);
+  
+STATE.qs = flattenQuestions(window.questions);
+STATE.qs = shuffle(STATE.qs);   // mezcla todo
+STATE.qs = STATE.qs.slice(0, n); // toma las primeras n (ya aleatorias)
+
   STATE.idx = 0;
   STATE.answers = {};
   STATE.startedAt = Date.now();

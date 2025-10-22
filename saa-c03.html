@@ -64,13 +64,10 @@
           </div>
 
           <div class="actions" style="margin-top:12px">
-            <button class="btn" name="aaa" id="btnStart">Start Quiz</button>
+            <button class="btn" onclick="start('aws-saa-c03')">AWS SAA-C03</button>
             <a class="btn" id="btnStart" href="history.html" >Results</a>
           </div>
           <p class="note">Exam Mode is in development for this build.</p>
-
-
-
 
 
         </div>
@@ -82,8 +79,8 @@
     <footer class="foot"><a href="/">| HOME |</a></footer>
   </div>
 
-  <script src="questions.js"></script>
-  <script src="/control_quizs/Q_aws-saac03.js"></script>
+  <script src="/questions.js"></script>
+  <script src="/control_quizs/Q_global.js"></script>
   <script>
     document.getElementById('btnStart').addEventListener('click', function(){
       if (typeof start === 'function') start();
