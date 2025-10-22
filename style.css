@@ -33,6 +33,12 @@ body{
   gap: 24px; /* 👈 añade espacio vertical entre las .path */
   padding: 0 12px;
 }
+
+#presentación {
+  width:100%; max-width:1400px;
+  gap: 24px; /* 👈 añade espacio vertical entre las .path */
+  padding: 0 12px;
+}
 .card{
   width:100%; max-width:1400px; background:var(--card); border-radius:16px; 
   box-shadow:0 14px 40px rgba(0,0,0,.2); padding:24px; margin-bottom:26px;
@@ -47,6 +53,15 @@ h1{margin:.2rem 0 0 0}
 .path .badge{position:absolute; top:-12px; left:16px; background:#efeaff; padding:6px 10px; border-radius:999px; font-size:.8rem; color:#6b5cff}
 .path .title{font-weight:700; margin:6px 0}
 .path .desc{color:var(--muted); margin-bottom:12px}
+
+.path2{
+  border:1px solid var(--edge); border-radius:16px; padding:18px; margin:16px 0;
+  position:relative; background:#fbfbff;
+}
+.path2 .badge{position:absolute; top:-12px; left:16px; background:#efeaff; padding:6px 10px; border-radius:999px; font-size:.8rem; color:#6b5cff}
+.path2 .title{font-weight:600; margin:6px 0}
+.path2 .desc{color:var(--muted); margin-bottom:12px}
+
 
 .mode-row{display:flex; gap:16px; flex-wrap:wrap}
 .mode{flex:1; min-width:240px; border:1px dashed var(--edge); border-radius:12px; padding:12px}
@@ -69,14 +84,21 @@ h1{margin:.2rem 0 0 0}
   margin: 5 auto;
 }
 
-
+.aws-group2 {
+  
+  border-radius: 101px;
+  
+  margin: 1px auto;
+  max-width: 1300px;
+  
+}
 
 .aws-group {
   background: #f8f9fa; /* gris claro, limpio */
   border-left: 6px solid #FF9900; /* toque naranja AWS */
   border-radius: 12px;
   padding: 32px 28px;
-  margin: 40px auto;
+  margin: 15px auto;
   max-width: 1100px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
@@ -133,7 +155,7 @@ h1{margin:.2rem 0 0 0}
   border-left:6px solid #0078D4;       /* azul marca */
   border-radius:12px;
   padding:32px 28px;
-  margin:40px auto;
+  margin:15px auto;
   max-width:1100px;
   box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
