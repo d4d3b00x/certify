@@ -7,6 +7,180 @@ const questions = [
   {
     category: "Domain 1: Design Secure Architectures",
     questions: [
+      
+      {
+    question: "You must enforce multi-factor authentication for all human users before they can perform any action in any AWS account. What’s the most effective guardrail?",
+    options: [
+      "Attach an inline IAM policy to each user requiring MFA",
+      "Rely on AWS Config rules to alert when MFA is missing",
+      "Create an SCP that DENIES all actions when aws:MultiFactorAuthPresent is false, with exceptions for MFA enrollment APIs",
+      "Use access keys only and rotate them frequently"
+    ],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "A Service Control Policy (SCP) at the AWS Organizations root/OU can deny actions when a principal is not MFA-authenticated, enforcing the control account-wide.",
+    explanationRich: "Implement an <strong>SCP</strong> that contains a <code>Deny</code> statement with a <code>BoolIfExists</code> condition on <code>aws:MultiFactorAuthPresent</code> set to <code>false</code>. Exempt only the APIs needed to enroll in MFA (e.g., <code>iam:CreateVirtualMFADevice</code>, <code>iam:EnableMFADevice</code>) and to obtain session tokens. Because SCPs are evaluated first, this creates a hard guardrail across all accounts and identities in targeted OUs.",
+    links: [
+      { title: "AWS Docs — SCPs", url: "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html" },
+      { title: "AWS Docs — Policy variables & aws:MultiFactorAuthPresent", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html#condition-keys-mfa" },
+      { title: "AWS Security Blog — Enforce MFA with SCP", url: "https://aws.amazon.com/blogs/security/how-to-require-mfa-for-aws-accounts-in-your-organization/" }
+    ]
+  },
+
+   {
+    question: "Multiple applications must access distinct prefixes in a shared S3 bucket from different VPCs with granular network and IAM controls. What design fits best?",
+    options: [
+      "One large bucket policy with dozens of prefix conditions",
+      "Separate buckets per app only",
+      "Use S3 Access Points (one per app) with VPC access points and prefix-level policies",
+      "Grant public read and rely on signed URLs"
+    ],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "S3 Access Points let you isolate permissions and network origins (VPC-only) per application while still using a shared bucket.",
+    explanationRich: "Create <strong>Amazon S3 Access Points</strong> for each application and scope each access point policy to that app’s prefix (e.g., <code>mybucket/appA/*</code>). For private connectivity, create a <strong>VPC access point</strong> so traffic stays on the AWS network. This minimizes blast radius and simplifies policy management compared to monolithic bucket policies.",
+    links: [
+      { title: "AWS Docs — S3 Access Points", url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html" },
+      { title: "AWS Docs — VPC-only access points", url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/privatelink-interface-endpoints.html#vpce-gateway-endpoints-access-points" }
+    ]
+  },
+  {
+    question: "You’re building an internal API that must be reachable only from specific VPCs without public internet exposure. Which approach is most secure?",
+    options: [
+      "API Gateway Regional endpoint with resource policy allowing the VPC CIDR",
+      "API Gateway Private API with VPC endpoints (interface endpoint) and a resource policy that whitelists endpoint IDs",
+      "ALB + public NLB in front of the API",
+      "Use Lambda URLs with an AWS WAF Web ACL"
+    ],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "Private APIs in API Gateway are exposed only through interface VPC endpoints; a resource policy can restrict to specific endpoint IDs.",
+    explanationRich: "Create an <strong>API Gateway Private API</strong>, then create <strong>VPC endpoints</strong> (AWS PrivateLink) in the consumer VPCs. Attach a <strong>resource policy</strong> that <em>allows</em> <code>execute-api:Invoke</code> only when <code>aws:SourceVpce</code> matches the approved endpoint IDs. Use a <strong>Route 53 private hosted zone</strong> for friendly names.",
+    links: [
+      { title: "AWS Docs — API Gateway Private APIs", url: "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-private-apis.html" },
+      { title: "AWS Docs — Resource policies for API Gateway", url: "https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-resource-policies.html" }
+    ]
+  },
+  {
+    question: "A partner SaaS needs cross-account programmatic read access to a subset of your S3 objects. How do you prevent the confused deputy problem?",
+    options: [
+      "Create an IAM user and share long-term access keys",
+      "Make the bucket public temporarily",
+      "Create an IAM role in your account that the partner assumes using an external ID; scope permissions to required prefixes",
+      "Use S3 pre-signed URLs with no expiration"
+    ],
+    correctAnswer: 2,
+    difficulty: "high",
+    explanation: "Use a cross-account IAM role with an external ID in the trust policy and least-privilege permissions.",
+    explanationRich: "Create an <strong>assumable role</strong> in your account that trusts the partner’s account but requires a unique <strong>ExternalId</strong> condition in the role’s trust policy. Grant the role <code>s3:GetObject</code> only on specific prefixes. The partner calls <code>sts:AssumeRole</code> providing the external ID; you can revoke access by updating or deleting the role.",
+    links: [
+      { title: "AWS Docs — External ID to prevent confused deputy", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html" },
+      { title: "AWS Docs — Cross-account access patterns", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/tutorial_cross-account-with-roles.html" }
+    ]
+  },
+  {
+    question: "You need end-to-end TLS from clients to ALB and from ALB to EC2 targets with automated certificate lifecycle at scale. What should you implement?",
+    options: [
+      "Terminate TLS at ALB and use HTTP to targets",
+      "Install self-signed certs manually on each instance",
+      "Use ALB HTTPS listener and configure target group protocol HTTPS with instance certificates issued by ACM Private CA; manage deployment via SSM",
+      "Use an NLB with TCP only"
+    ],
+    correctAnswer: 2,
+    difficulty: "high",
+    explanation: "ALB supports TLS to targets; use private PKI via ACM Private CA to issue instance certs and automate with SSM.",
+    explanationRich: "Create an <strong>ACM Private CA</strong> and issue per-instance certificates. Configure the ALB with an HTTPS listener and the target group protocol as <strong>HTTPS</strong>. Distribute/rotate certs on EC2 using <strong>AWS Systems Manager</strong> (Run Command/State Manager) or the <em>ACM for Nitro Enclaves</em> integration where applicable. Health checks should also use HTTPS.",
+    links: [
+      { title: "AWS Docs — ALB to HTTPS targets", url: "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html#target-group-health-checks" },
+      { title: "AWS Docs — ACM Private CA", url: "https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html" },
+      { title: "AWS Docs — Distribute certificates with SSM", url: "https://docs.aws.amazon.com/systems-manager/latest/userguide/distributor.html" }
+    ]
+  },
+  {
+    question: "To reduce KMS request costs for a high-throughput S3 workload encrypted with SSE-KMS, what feature should you enable?",
+    options: [
+      "Client-side encryption",
+      "KMS multi-Region keys",
+      "S3 Bucket Keys for SSE-KMS",
+      "SSE-S3 instead of SSE-KMS"
+    ],
+    correctAnswer: 2,
+    difficulty: "low",
+    explanation: "S3 Bucket Keys reduce the number of direct KMS calls by using data keys cached per bucket, lowering request charges.",
+    explanationRich: "Enable <strong>S3 Bucket Keys</strong> on the bucket using <strong>SSE-KMS</strong>. S3 will use a <em>bucket-level</em> data key to derive object-level keys, dramatically reducing <code>kms:Decrypt</code>/<code>kms:GenerateDataKey</code> calls while maintaining strong encryption and audit.",
+    links: [
+      { title: "AWS Docs — Amazon S3 Bucket Keys", url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html" },
+      { title: "AWS Docs — Protecting data with SSE-KMS", url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html" }
+    ]
+  },
+  {
+    question: "Security wants to quickly identify and monitor resources that are publicly accessible or shared with external accounts. What AWS service best fits?",
+    options: [
+      "Trusted Advisor checks only",
+      "AWS IAM Access Analyzer with organization-wide analyzers",
+      "VPC Flow Logs",
+      "CloudWatch Alarms on API metrics"
+    ],
+    correctAnswer: 1,
+    difficulty: "low",
+    explanation: "Access Analyzer uses automated reasoning to detect public/cross-account access on supported resource policies and provides findings.",
+    explanationRich: "Enable <strong>AWS IAM Access Analyzer</strong> at the account or <strong>organization</strong> level. It continuously analyzes resource policies (S3, KMS, IAM roles, SQS, SNS, Lambda, Secrets Manager, etc.) to surface findings for public or cross-account access. Send findings to <strong>Security Hub</strong> or <strong>EventBridge</strong> for remediation workflows.",
+    links: [
+      { title: "AWS Docs — IAM Access Analyzer", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html" },
+      { title: "AWS Docs — Access Analyzer for Organizations", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-organization.html" }
+    ]
+  },
+  {
+    question: "You need database authentication for MySQL on Amazon RDS without storing long-term passwords in applications. What should you use?",
+    options: [
+      "Store passwords in S3 and encrypt with KMS",
+      "Hardcode passwords in ECS task definitions",
+      "RDS IAM database authentication with short-lived tokens from AWS STS",
+      "Rotate secrets manually every week"
+    ],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "RDS supports IAM authentication for MySQL and PostgreSQL using short-lived tokens instead of static passwords.",
+    explanationRich: "Enable <strong>IAM database authentication</strong> on the RDS instance. Grant the app role permission to call <code>rds-db:connect</code> and use the SDK/CLI to request a <em>temporary auth token</em> from STS. Configure the DB user to map to the IAM role. Tokens expire quickly, reducing credential risk.",
+    links: [
+      { title: "AWS Docs — IAM Database Authentication", url: "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html" }
+    ]
+  },
+  {
+    question: "Network security needs to block a malicious /24 across hundreds of instances quickly at the subnet level. Which control is most appropriate?",
+    options: [
+      "Security group egress rules",
+      "Network ACL with an explicit DENY for that CIDR applied to the subnets",
+      "Route 53 Resolver DNS Firewall",
+      "OS firewall rules only"
+    ],
+    correctAnswer: 1,
+    difficulty: "low",
+    explanation: "Network ACLs are stateless and support explicit deny rules at the subnet boundary; security groups are stateful and lack explicit denies.",
+    explanationRich: "Apply a <strong>network ACL</strong> to the affected subnets with a higher-priority <em>deny</em> for the malicious CIDR (ingress/egress as needed). This blocks traffic regardless of individual instance security group settings. Keep <em>ephemeral port</em> rules correct to avoid unintended outages.",
+    links: [
+      { title: "AWS Docs — Network ACLs", url: "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-network-acls.html" },
+      { title: "AWS Docs — Security groups vs. NACLs", url: "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html#VPCSecurityGroups" }
+    ]
+  },
+  {
+    question: "A developer account should allow engineers to create roles and policies for their apps, but must prevent privilege escalation. What should you implement?",
+    options: [
+      "Let developers be IAM admins in the account",
+      "Attach AdministratorAccess to all created roles",
+      "Use IAM permissions boundaries on developer-created roles to cap maximum permissions; manage guardrails with SCPs",
+      "Use only resource-based policies"
+    ],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "Permissions boundaries restrict the maximum permissions that a role or user can obtain, preventing escalation even if broader policies are attached later.",
+    explanationRich: "Create a <strong>permissions boundary</strong> policy defining the allowed services/actions and require it on any role created by developers (via IAM policy, SCP, or CI/CD pipeline). Combine with <strong>SCPs</strong> at the OU for global guardrails and with <strong>Access Analyzer</strong> to detect risky grants.",
+    links: [
+      { title: "AWS Docs — Permissions boundaries", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html" },
+      { title: "AWS Docs — Delegating permissions safely", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html" }
+    ]
+  },
+
       {
         question: "How can you ensure that private subnets access Amazon S3 without traversing the public internet and only from a specific VPC endpoint?",
         options: [

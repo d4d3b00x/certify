@@ -18,12 +18,12 @@ function start(){
   STATE.qs = flattenQuestions(window.questions);
   // pick first 10 deterministically to keep URLs stable when you build
   // determine number of questions from dropdown if present
-  let n = 5;
+  let n = 65;
   try{
     const el = document.getElementById('studyCount');
-    if (el && el.value) n = parseInt(el.value, 10);
-    if (![5,10,15,30].includes(n)) n = 10;
-  }catch(e){ n = 10; }
+    if (el && el.value) n = parseInt(el.value, 65);
+    if (![5,10,15,30].includes(n)) n = el.value;
+  }catch(e){ n = 65; }
   STATE.qs = STATE.qs.slice(0, n);
   STATE.idx = 0;
   STATE.answers = {};
