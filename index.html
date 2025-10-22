@@ -1,108 +1,139 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>CertiFY — Free IT Certification Resources and Exams</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem auto; max-width: 800px; }
+    pre { background:#f7f7f9; padding:1rem; border-radius:8px; border:1px solid #eee; white-space: pre-wrap; }
+    button { padding: .6rem 1rem; font-size: 1rem; cursor:pointer; margin-top:1rem; }
+  </style>
 </head>
-
 <body>
-  <div class="shell">
-    <!-- Cabecera -->
-    <header class="top" role="banner">
-      <div class="brand"><span class="beta">beta 0.92</span></div>
-      <nav class="nav" role="navigation"></nav>
-      
-    </header>
+  <h1>Inicio</h1>
+  <div id="status">Comprobando sesión...</div>
+  <button id="logoutBtn" style="display:none">Cerrar sesión</button>
+  <pre id="out"></pre>
 
-    <!-- Contenido principal -->
-    <main id="presentación" role="main">
+  <script type="module">
+    // ======================================================
+    // CONFIG — AJUSTA ESTOS VALORES A TU PROYECTO
+    // ======================================================
+         // ====== CONFIG ======
+   const authority= "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_Nm2FEuL1J";
+    const USER_POOL_ID = "eu-central-1_Nm2FEuL1J";
+    const APP_CLIENT_ID = "2rg0eg5ve63uo4ocn25scbrstg";
+    const IDENTITY_POOL_ID = "eu-central-1:71122039-a3d7-4450-b3fb-f5c5ee33a8ec";
+    const HOSTED_UI_DOMAIN = "https://eu-central-1nm2feul1j.auth.eu-central-1.amazoncognito.com";
+    const REDIRECT_URI = "https://main.drlgxq3ev7tby.amplifyapp.com"; // asegúrate que esté en "Allowed callback URLs"
+   const SCOPES = ["email"];
+    // ======================================================
 
+    async function sha256(buf) { return crypto.subtle.digest("SHA-256", buf); }
+    function b64u(uint8) {
+      return btoa(String.fromCharCode(...new Uint8Array(uint8)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
 
+    // --- Intercambio code → tokens ---
+    async function exchangeCodeForTokens(code) {
+      const verifier = sessionStorage.getItem("pkce_verifier") || "";
+      const body = new URLSearchParams({
+        grant_type: "authorization_code",
+        client_id: APP_CLIENT_ID,
+        redirect_uri: REDIRECT_URI,
+        code_verifier: verifier,
+        code
+      });
+      const res = await fetch(`${HOSTED_UI_DOMAIN}/oauth2/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body
+      });
+      if (!res.ok) throw new Error(`Error al pedir tokens: ${res.status}`);
+      return res.json();
+    }
 
-      
-<!-- Zona general de certificaciones cloud -->
-<section class="vendor-zone" aria-label="Cloud Certification Groups">
+    // --- Decodificar JWT ---
+    function decodeJwt(jwt) {
+      const [,p] = jwt.split(".");
+      return JSON.parse(atob(p.replace(/-/g,'+').replace(/_/g,'/')));
+    }
 
+    // --- Mostrar sesión ---
+    function showSession(claims) {
+      document.getElementById("status").textContent = "✅ Sesión activa";
+      document.getElementById("logoutBtn").style.display = "inline-block";
+      document.getElementById("out").textContent =
+        `sub: ${claims.sub}\n` +
+        `email: ${claims.email || "(sin claim)"}\n` +
+        `expira: ${new Date(claims.exp * 1000).toLocaleString()}`;
+    }
 
+    // --- Guardar tokens ---
+    function saveSession(tokens) {
+      sessionStorage.setItem("id_token", tokens.id_token);
+      sessionStorage.setItem("access_token", tokens.access_token);
+      if (tokens.refresh_token) sessionStorage.setItem("refresh_token", tokens.refresh_token);
+    }
 
-<!-- Grupo AWS -->
-  
+    // --- Cerrar sesión ---
+    function logout() {
+      sessionStorage.clear();
+      const url = new URL(`${HOSTED_UI_DOMAIN}/logout`);
+      url.searchParams.set("client_id", APP_CLIENT_ID);
+      url.searchParams.set("logout_uri", REDIRECT_URI);
+      location.assign(url.toString());
+    }
+    document.getElementById("logoutBtn").addEventListener("click", logout);
 
+    // --- Identity Pool (opcional) ---
+    import { CognitoIdentityClient } from "https://cdn.skypack.dev/@aws-sdk/client-cognito-identity";
+    import { fromCognitoIdentityPool } from "https://cdn.skypack.dev/@aws-sdk/credential-provider-cognito-identity";
+    import { STSClient, GetCallerIdentityCommand } from "https://cdn.skypack.dev/@aws-sdk/client-sts";
 
-  <!-- Grupo AWS -->
-  <section class="path-group aws-group" aria-label="AWS Certifications">
-    <div class="group-header">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
-        alt="AWS Logo"
-        class="group-logo"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
-      >
-    </div>
+    async function ensureIdentity(idTokenJwt) {
+      const providerKey = `cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}`;
+      const credentials = fromCognitoIdentityPool({
+        client: new CognitoIdentityClient({ region: REGION }),
+        identityPoolId: IDENTITY_POOL_ID,
+        logins: { [providerKey]: idTokenJwt }
+      });
+      const creds = await credentials();
+      const sts = new STSClient({ region: REGION, credentials });
+      const who = await sts.send(new GetCallerIdentityCommand({}));
+      document.getElementById("out").textContent +=
+        `\n\nIdentity Pool:\n  Account: ${who.Account}\n  Arn: ${who.Arn}\n  IdentityId: ${creds.identityId || "(creada)"}\n  expira: ${creds.expiration}`;
+    }
 
-    <section class="path" aria-label="Cloud Architect path">
-      <span class="badge">PATH: AZURE ARCHITECT</span>
-      <h2 class="title">AWS Certified Solutions Architect — Associate (SAA-C03)</h2>
-      <p class="desc">
-        Pass your exam... 
-        <a href="/certification/amazon aws/aws-saa-c03.html">Overview Certify Resources →</a>
-      </p>
-    </section>
+    // --- Inicialización ---
+    (async function init() {
+      const params = new URLSearchParams(location.search);
+      const code = params.get("code");
 
-    <section class="path" aria-label="DevOps Engineer path">
-      <span class="badge">PATH: DEVOPS ENGINEER</span>
-      <h2 class="title">AWS Certified DevOps Engineer — Professional</h2>
-      <p class="desc">
-        Questions for the DOP-C02 certification exam.
-        <a href="#">Cooming soon...</a>
-      </p>
-    </section>
-  </section>
+      try {
+        if (code) {
+          const tokens = await exchangeCodeForTokens(code);
+          saveSession(tokens);
+          history.replaceState({}, "", REDIRECT_URI);
+        }
 
-  <!-- Grupo Azure -->
-  <section class="path-group azure-group" aria-label="Microsoft Azure Certifications">
-    <div class="group-header">
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg"
-        alt="Microsoft Azure Logo"
-        class="group-logo"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/640px-Microsoft_Azure_Logo.svg.png';"
-      >
-     
-    </div>
+        const idToken = sessionStorage.getItem("id_token");
+        if (!idToken) {
+          document.getElementById("status").textContent = "No hay sesión activa. Ve a login.html para iniciar.";
+          return;
+        }
 
-    <section class="path" aria-label="Azure Administrator Associate path">
-      <span class="badge">PATH: AZURE ADMINISTRATOR</span>
-      <h2 class="title">Microsoft Azure Administrator - Associate (AZ-104)</h2>
-      <p class="desc">
-       Pass your exam... 
-      <a href="/certification/microsoft-azure/az-104.html">Overview Certify Resources →</a>
-      </p>
-    </section>
+        const claims = decodeJwt(idToken);
+        showSession(claims);
 
-    <section class="path" aria-label="Azure Architect Expert path">
-      <span class="badge">PATH: AZURE ARCHITECT</span>
-      <h2 class="title">AZ-305 — Designing Microsoft Azure Infrastructure Solutions (Expert)</h2>
-      <p class="desc">
-        Scenario-based questions to prep for AZ-305. 
-        <a href="#">Cooming soon...</a>
-      </p>
-    </section>
-  </section>
-
-
-
-    </main>
-
-    <!-- Pie de página -->
-    <footer class="foot"><a href="https://github.com/d4d3b00x/certify/blob/main/about">| LOGIN BETA |</a></footer>
-  </div>
-
-
-</nav>
+        // opcional: crea la identidad IAM (aparece en tu Identity Pool)
+        await ensureIdentity(idToken);
+      } catch (e) {
+        document.getElementById("status").textContent = "❌ Error: " + e.message;
+      }
+    })();
+  </script>
 </body>
 </html>
