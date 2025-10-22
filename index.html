@@ -30,110 +30,76 @@
    const SCOPES = ["email"];
     // ======================================================
 
-    async function sha256(buf) { return crypto.subtle.digest("SHA-256", buf); }
-    function b64u(uint8) {
-      return btoa(String.fromCharCode(...new Uint8Array(uint8)))
-        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+     async function exchangeCodeForTokens(code) {
+    const verifier = sessionStorage.getItem("pkce_verifier") || "";
+    const body = new URLSearchParams({
+      grant_type: "authorization_code",
+      client_id: APP_CLIENT_ID,
+      redirect_uri: REDIRECT_URI,
+      code_verifier: verifier,
+      code
+    });
+
+    const res = await fetch(`${HOSTED_UI_DOMAIN}/oauth2/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body
+    });
+
+    // Si falla, muestra el cuerpo de error para depurar
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(`Token exchange failed (${res.status}): ${text}`);
     }
 
-    // --- Intercambio code → tokens ---
-    async function exchangeCodeForTokens(code) {
-      const verifier = sessionStorage.getItem("pkce_verifier") || "";
-      const body = new URLSearchParams({
-        grant_type: "authorization_code",
-        client_id: APP_CLIENT_ID,
-        redirect_uri: REDIRECT_URI,
-        code_verifier: verifier,
-        code
-      });
-      const res = await fetch(`${HOSTED_UI_DOMAIN}/oauth2/token`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body
-      });
-      if (!res.ok) throw new Error(`Error al pedir tokens: ${res.status}`);
-      return res.json();
+    const json = await res.json();
+    // A veces vuelve access_token pero no id_token si falta 'openid'
+    if (!json.id_token) {
+      throw new Error(`No id_token in response. Revisa que uses el scope "openid". Respuesta: ${JSON.stringify(json)}`);
     }
+    return json;
+  }
 
-    // --- Decodificar JWT ---
-    function decodeJwt(jwt) {
-      const [,p] = jwt.split(".");
-      return JSON.parse(atob(p.replace(/-/g,'+').replace(/_/g,'/')));
+  function safeDecodeJwt(jwt) {
+    if (!jwt || typeof jwt !== "string" || jwt.split(".").length < 2) {
+      throw new Error("ID token ausente o con formato inválido.");
     }
+    const [, p] = jwt.split(".");
+    return JSON.parse(atob(p.replace(/-/g, '+').replace(/_/g, '/')));
+  }
 
-    // --- Mostrar sesión ---
-    function showSession(claims) {
-      document.getElementById("status").textContent = "✅ Sesión activa";
-      document.getElementById("logoutBtn").style.display = "inline-block";
-      document.getElementById("out").textContent =
-        `sub: ${claims.sub}\n` +
-        `email: ${claims.email || "(sin claim)"}\n` +
-        `expira: ${new Date(claims.exp * 1000).toLocaleString()}`;
-    }
+  function saveSession(tokens) {
+    // Guarda SOLO si existe
+    sessionStorage.setItem("id_token", tokens.id_token);
+    sessionStorage.setItem("access_token", tokens.access_token || "");
+    if (tokens.refresh_token) sessionStorage.setItem("refresh_token", tokens.refresh_token);
+  }
 
-    // --- Guardar tokens ---
-    function saveSession(tokens) {
-      sessionStorage.setItem("id_token", tokens.id_token);
-      sessionStorage.setItem("access_token", tokens.access_token);
-      if (tokens.refresh_token) sessionStorage.setItem("refresh_token", tokens.refresh_token);
-    }
+  (async function init() {
+    const status = document.getElementById("status");
+    const out = document.getElementById("out");
 
-    // --- Cerrar sesión ---
-    function logout() {
-      sessionStorage.clear();
-      const url = new URL(`${HOSTED_UI_DOMAIN}/logout`);
-      url.searchParams.set("client_id", APP_CLIENT_ID);
-      url.searchParams.set("logout_uri", REDIRECT_URI);
-      location.assign(url.toString());
-    }
-    document.getElementById("logoutBtn").addEventListener("click", logout);
-
-    // --- Identity Pool (opcional) ---
-    import { CognitoIdentityClient } from "https://cdn.skypack.dev/@aws-sdk/client-cognito-identity";
-    import { fromCognitoIdentityPool } from "https://cdn.skypack.dev/@aws-sdk/credential-provider-cognito-identity";
-    import { STSClient, GetCallerIdentityCommand } from "https://cdn.skypack.dev/@aws-sdk/client-sts";
-
-    async function ensureIdentity(idTokenJwt) {
-      const providerKey = `cognito-idp.${REGION}.amazonaws.com/${USER_POOL_ID}`;
-      const credentials = fromCognitoIdentityPool({
-        client: new CognitoIdentityClient({ region: REGION }),
-        identityPoolId: IDENTITY_POOL_ID,
-        logins: { [providerKey]: idTokenJwt }
-      });
-      const creds = await credentials();
-      const sts = new STSClient({ region: REGION, credentials });
-      const who = await sts.send(new GetCallerIdentityCommand({}));
-      document.getElementById("out").textContent +=
-        `\n\nIdentity Pool:\n  Account: ${who.Account}\n  Arn: ${who.Arn}\n  IdentityId: ${creds.identityId || "(creada)"}\n  expira: ${creds.expiration}`;
-    }
-
-    // --- Inicialización ---
-    (async function init() {
+    try {
       const params = new URLSearchParams(location.search);
       const code = params.get("code");
 
-      try {
-        if (code) {
-          const tokens = await exchangeCodeForTokens(code);
-          saveSession(tokens);
-          history.replaceState({}, "", REDIRECT_URI);
-        }
-
-        const idToken = sessionStorage.getItem("id_token");
-        if (!idToken) {
-          document.getElementById("status").textContent = "No hay sesión activa. Ve a login.html para iniciar.";
-          return;
-        }
-
-        const claims = decodeJwt(idToken);
-        showSession(claims);
-
-        // opcional: crea la identidad IAM (aparece en tu Identity Pool)
-        await ensureIdentity(idToken);
-      } catch (e) {
-        document.getElementById("status").textContent = "❌ Error: " + e.message;
+      if (code) {
+        const tokens = await exchangeCodeForTokens(code);
+        saveSession(tokens);
+        history.replaceState({}, "", REDIRECT_URI); // limpia ?code
       }
-    })();
-  </script>
-</body>
-</html>
+
+      const idToken = sessionStorage.getItem("id_token");
+      if (!idToken) {
+        status.textContent = "No hay sesión activa. Ve a login.html para iniciar.";
+        return;
+      }
+
+      const claims = safeDecodeJwt(idToken);
+      status.textContent = "✅ Sesión activa";
+      out.textContent = `sub: ${claims.sub}\nemail: ${claims.email || "(sin claim)"}\nexp: ${new Date(claims.exp*1000).toLocaleString()}`;
+    } catch (e) {
+      document.getElementById("status").textContent = "❌ Error: " + (e?.message || e);
+    }
+  })();
+</script>
