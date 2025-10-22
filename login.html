@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Demo Cognito + DynamoDB</title>
+</head>
+<body>
+  <button id="loginBtn">Iniciar sesión</button>
+  <button id="logoutBtn" style="display:none">Salir</button>
+  <pre id="out"></pre>
+
+  <script type="module">
+    // --- CONFIG ---
+    const authority= "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_0eh7XQlj8";
+    const USER_POOL_ID = "eu-central-1_0eh7XQlj8";
+    const APP_CLIENT_ID = "6hf6h3p33u3vhiegur79qvr0bk";
+    const IDENTITY_POOL_ID = "eu-central-1:f30d64c5-23a3-491f-a8a5-9c153cc92966";
+    const HOSTED_UI_DOMAIN = "https://eu-central-10eh7xqlj8.auth.eu-central-1.amazoncognito.com";
+    const REDIRECT_URI = "https://main.drlgxq3ev7tby.amplifyapp.com/"; // asegúrate que esté en "Allowed callback URLs"
+   const SCOPES = ["email"];
+
+
+    // --- PKCE helpers ---
+    async function sha256(buf) { return crypto.subtle.digest("SHA-256", buf); }
+    function base64url(uint8) {
+      return btoa(String.fromCharCode(...new Uint8Array(uint8)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+    async function createPKCE() {
+      const verifier = base64url(crypto.getRandomValues(new Uint8Array(32)));
+      const enc = new TextEncoder().encode(verifier);
+      const challenge = base64url(await sha256(enc));
+      return { verifier, challenge };
+    }
+
+    // Guarda/lee en sessionStorage
+    function set(k,v){ sessionStorage.setItem(k, v); }
+    function get(k){ return sessionStorage.getItem(k); }
+    function del(k){ sessionStorage.removeItem(k); }
+
+    // 1) Lanzar login (redirección al Hosted UI)
+    async function startLogin() {
+      const { verifier, challenge } = await createPKCE();
+      set("pkce_verifier", verifier);
+      const url = new URL(`${HOSTED_UI_DOMAIN}/oauth2/authorize`);
+      url.searchParams.set("client_id", APP_CLIENT_ID);
+      url.searchParams.set("response_type", "code");
+      url.searchParams.set("scope", SCOPES.join(' '));
+      url.searchParams.set("redirect_uri", REDIRECT_URI);
+      url.searchParams.set("code_challenge_method", "S256");
+      url.searchParams.set("code_challenge", challenge);
+      window.location.assign(url.toString());
+    }
+
+    // 2) Intercambiar "code" -> tokens
+    async function exchangeCodeForTokens(code) {
+      const body = new URLSearchParams();
+      body.set("grant_type","authorization_code");
+      body.set("client_id", APP_CLIENT_ID);
+      body.set("code", code);
+      body.set("redirect_uri", REDIRECT_URI);
+      body.set("code_verifier", get("pkce_verifier"));
+
+      const res = await fetch(`${HOSTED_UI_DOMAIN}/oauth2/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body
+      });
+      if (!res.ok) throw new Error("Token exchange failed");
+      return res.json(); // { id_token, access_token, refresh_token, expires_in, token_type }
+    }
+
+    // 3) Parsear el retorno (si hay ?code=...)
+    if (new URLSearchParams(window.location.search).get("code")) {
+      try {
+        const code = new URLSearchParams(window.location.search).get("code");
+        const tokens = await exchangeCodeForTokens(code);
+        del("pkce_verifier");
+        // Limpia la URL
+        history.replaceState({}, "", REDIRECT_URI);
+
+        // Decodifica ID Token (para sacar el sub)
+        const [, payloadB64] = tokens.id_token.split(".");
+        const payload = JSON.parse(atob(payloadB64.replace(/-/g,'+').replace(/_/g,'/')));
+        sessionStorage.setItem("id_token", tokens.id_token);
+        sessionStorage.setItem("user_sub", payload.sub);
+        sessionStorage.setItem("expires_at", (Date.now() + tokens.expires_in*1000).toString());
+
+        document.getElementById("logoutBtn").style.display="";
+        document.getElementById("loginBtn").style.display="none";
+        document.getElementById("out").textContent = "Login OK\nsub: " + payload.sub;
+      } catch (e) {
+        document.getElementById("out").textContent = "Error: " + e.message;
+      }
+    }
+
+    // Botones
+    document.getElementById("loginBtn").onclick = () => startLogin();
+    document.getElementById("logoutBtn").onclick = () => {
+      sessionStorage.clear();
+      // Cerrar sesión también en Hosted UI (opcional)
+      const url = new URL(`${HOSTED_UI_DOMAIN}/logout`);
+      url.searchParams.set("client_id", APP_CLIENT_ID);
+      url.searchParams.set("logout_uri", REDIRECT_URI);
+      window.location.assign(url.toString());
+    };
+  </script>
+</body>
+</html>

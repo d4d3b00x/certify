@@ -34,7 +34,7 @@ body{
   padding: 0 12px;
 }
 .card{
-  width:100%; max-width:1400px; background:var(--card); border-radius:16px; 
+  width:100%; max-width:1600px; background:var(--card); border-radius:16px; 
   box-shadow:0 14px 40px rgba(0,0,0,.2); padding:24px; margin-bottom:26px;
 }
 h1{margin:.2rem 0 0 0}
@@ -60,7 +60,9 @@ h1{margin:.2rem 0 0 0}
 .btn.ghost{background:#fff0; border:1px solid #fff; color:#fff}
 .btn.disabled{opacity:.6; cursor:not-allowed}
 
-.quiz-wrap{display:grid; grid-template-columns: 1fr 330px; gap:18px}
+.quiz-wrap{
+  display:grid; grid-template-columns: 1fr 300px; gap:18px
+}
 
 /* ===== Grupo AWS ===== */
 
@@ -251,8 +253,7 @@ h1{margin:.2rem 0 0 0}
 .theme-aws .option.selected.bad{ background:#ffe9e0; border-color:#ffc3cf; }
 
 
-/* Espaciado vertical entre paths si tu contenedor usa flex en columna */
-#view{ display:flex; flex-direction:column; align-items:center; gap:24px; }
+
 
 
 
