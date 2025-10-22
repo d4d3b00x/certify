@@ -281,6 +281,178 @@ const questions = [
   {
     category: "Domain 2: Design Resilient Architectures",
     questions: [
+
+{
+    question: "You need disaster recovery for a critical Aurora MySQL cluster with sub-second RPO and rapid cross-Region failover without full active-active writes. What design fits best?",
+    options: [
+      "RDS Single-AZ with frequent snapshots",
+      "Aurora Global Database with one writer Region and secondary read-only Regions",
+      "Aurora Multi-AZ within a single Region only",
+      "Self-managed MySQL on EC2 with cron-based replication"
+    ],
+    correctAnswer: 1,
+    difficulty: "high",
+    explanation: "Aurora Global Database replicates storage at the cluster layer to secondary Regions with typical <1s lag and supports fast, controlled failover promoting a secondary Region to writer.",
+    explanationRich: "<strong>Aurora Global Database</strong> uses dedicated, storage-level replication to keep secondary Regions nearly in sync while isolating them from primary Region load. In a Regional event, you can <em>promote</em> a secondary to read/write in minutes, achieving low RPO/RTO without the complexity of multi-active writes.",
+    links: [
+      { title: "AWS Docs — Aurora Global Database", url: "https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-global-database.html" }
+    ]
+  },
+  {
+    question: "A stateless API behind ALB experiences intermittent instance failures. You want automatic replacement and AZ rebalancing. What should you configure?",
+    options: [
+      "Use CloudWatch alarms to email the team",
+      "Auto Scaling group with ELB health checks and AZ rebalancing enabled",
+      "Manual instance restarts via SSM",
+      "Route 53 health checks only"
+    ],
+    correctAnswer: 1,
+    difficulty: "low",
+    explanation: "An ASG integrated with ALB target group health checks terminates unhealthy instances and launches replacements while keeping capacity balanced across AZs.",
+    explanationRich: "Configure the <strong>ASG health check type</strong> to <em>ELB</em>, associate the target group, and enable <strong>AZ rebalancing</strong>. Use <em>deregistration delay</em> for graceful shutdown and <em>warm pools</em> to accelerate scale-out after failures.",
+    links: [
+      { title: "AWS Docs — ASG health checks", url: "https://docs.aws.amazon.com/autoscaling/ec2/userguide/health-checks.html" },
+      { title: "AWS Docs — Warm pools", url: "https://docs.aws.amazon.com/autoscaling/ec2/userguide/warm-pools.html" }
+    ]
+  },
+  {
+    question: "During Regional S3 issues, your global static site must continue serving content with minimal changes. Which approach improves resilience the most?",
+    options: [
+      "S3 Standard with versioning in one Region",
+      "S3 Cross-Region Replication combined with CloudFront origin failover",
+      "Copy objects monthly to another bucket and update DNS on failure",
+      "Direct S3 website endpoints without CloudFront"
+    ],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "CRR ensures objects exist in a secondary Region; CloudFront origin groups fail over automatically to the healthy origin, maintaining availability.",
+    explanationRich: "Enable <strong>Versioning + CRR</strong> to a second Region and configure <strong>CloudFront origin groups</strong> with primary/secondary S3 origins. Optionally enable <strong>Replication Time Control</strong> for predictable replication SLAs.",
+    links: [
+      { title: "AWS Docs — S3 Replication", url: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/replication.html" },
+      { title: "AWS Docs — CloudFront origin failover", url: "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html" }
+    ]
+  },
+  {
+    question: "You need to minimize DNS failover time for a two-Region web app and avoid serving unhealthy endpoints. What should you use?",
+    options: [
+      "Weighted records without health checks",
+      "Route 53 failover routing with health checks (and optional CloudWatch alarm health checks)",
+      "Single A record with low TTL",
+      "Geolocation routing only"
+    ],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "Failover routing evaluates health checks and routes traffic only to healthy endpoints, enabling fast automated recovery.",
+    explanationRich: "Create <strong>primary/secondary</strong> records with <strong>Route 53 health checks</strong>. Optionally base health checks on <strong>CloudWatch alarms</strong> (e.g., synthetic canary failures) to reflect true application health, not just port reachability.",
+    links: [
+      { title: "AWS Docs — Route 53 routing policies", url: "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/routing-policy.html" },
+      { title: "AWS Docs — Health checks and DNS failover", url: "https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-failover.html" }
+    ]
+  },
+  {
+    question: "A microservice needs to survive downstream outages and process tasks eventually. Which pattern best increases resilience?",
+    options: [
+      "Synchronous HTTP calls with short timeouts",
+      "Amazon SQS queue between producer and consumer with DLQ and exponential backoff",
+      "Shared database table for handoff",
+      "Direct Lambda-to-Lambda calls"
+    ],
+    correctAnswer: 1,
+    difficulty: "low",
+    explanation: "SQS decouples components, buffers spikes, supports retries/visibility timeouts, and uses DLQs to isolate poison messages.",
+    explanationRich: "Publish work to <strong>Amazon SQS</strong>, configure <em>visibility timeout</em>, <em>redrive policy</em> to a <strong>DLQ</strong>, and implement <em>exponential backoff</em>. Use <strong>FIFO</strong> if ordering exactly-once processing is required (with idempotency).",
+    links: [
+      { title: "AWS Docs — SQS best practices", url: "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-best-practices.html" },
+      { title: "AWS Docs — Redrive to DLQ", url: "https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-dead-letter-queues.html" }
+    ]
+  },
+  {
+    question: "You must reduce origin failures and improve cache hit ratio for a multi-origin architecture serving dynamic + static assets worldwide. What helps most?",
+    options: [
+      "CloudFront with default cache only",
+      "CloudFront Origin Shield with origin groups (failover)",
+      "ALB only in one Region",
+      "Route 53 geolocation routing only"
+    ],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "Origin Shield adds an additional centralized caching layer to offload origins and combined with origin groups provides automated failover.",
+    explanationRich: "Enable <strong>CloudFront Origin Shield</strong> in a strategic Region to increase cache hit ratio and reduce origin load. Pair with <strong>origin groups</strong> (primary/secondary) for resilience and tune <em>cache/origin request policies</em> to normalize headers/cookies.",
+    links: [
+      { title: "AWS Docs — Origin Shield", url: "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/origin-shield.html" },
+      { title: "AWS Docs — Cache key controls", url: "https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/controlling-the-cache-key.html" }
+    ]
+  },
+  {
+    question: "A global application on DynamoDB experiences bursty, unpredictable traffic. How can you avoid throttling while keeping the design resilient?",
+    options: [
+      "Use provisioned capacity with low max settings only",
+      "Switch to a single large RDS instance",
+      "Use DynamoDB on-demand capacity mode with auto scaling disabled",
+      "Use on-demand capacity or provisioned with auto scaling and design for partition keys with high cardinality"
+    ],
+    correctAnswer: 3,
+    difficulty: "medium",
+    explanation: "DynamoDB on-demand absorbs sudden spikes without capacity planning; alternatively, auto scaling adjusts provisioned capacity. A well-distributed partition key prevents hot partitions.",
+    explanationRich: "Choose <strong>on-demand</strong> for spiky workloads or set <strong>auto scaling</strong> for provisioned mode. Ensure <em>high-cardinality partition keys</em> and consider <strong>GSIs</strong> designed with balanced access patterns to maintain steady per-partition throughput.",
+    links: [
+      { title: "AWS Docs — DynamoDB capacity modes", url: "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadWriteCapacityMode.html" },
+      { title: "AWS Docs — Partition keys & adaptive capacity", url: "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html" }
+    ]
+  },
+  {
+    question: "You require resilient shared file storage for Linux app servers across multiple AZs with automatic scaling and durability. Which service should you use?",
+    options: [
+      "EBS single volume attached to one instance",
+      "Instance store on each node",
+      "Amazon EFS with multi-AZ mount targets",
+      "S3 with frequent LIST/GET for POSIX reads"
+    ],
+    correctAnswer: 2,
+    difficulty: "low",
+    explanation: "Amazon EFS is regional, multi-AZ, POSIX-compliant, and elastically scales throughput and IOPS.",
+    explanationRich: "Create <strong>EFS</strong> in the Region with mount targets in each AZ your ASG uses. Choose <em>General Purpose</em> or <em>Max I/O</em> performance mode as needed and consider <strong>Provisioned Throughput</strong> for predictable performance.",
+    links: [
+      { title: "AWS Docs — What is EFS?", url: "https://docs.aws.amazon.com/efs/latest/ug/whatisefs.html" },
+      { title: "AWS Docs — EFS performance", url: "https://docs.aws.amazon.com/efs/latest/ug/performance.html" }
+    ]
+  },
+  {
+    question: "Backups must survive account compromise and Regional disasters. What AWS-native approach provides the strongest resilience?",
+    options: [
+      "Store snapshots in the same account and Region only",
+      "Use AWS Backup to copy recovery points cross-account and cross-Region to a separate, locked vault",
+      "Export snapshots to local disk weekly",
+      "Rely on EBS fast snapshot restore alone"
+    ],
+    correctAnswer: 1,
+    difficulty: "high",
+    explanation: "Cross-account, cross-Region copies in an AWS Backup vault with access policies and vault lock protect against ransomware and regional loss.",
+    explanationRich: "Configure <strong>AWS Backup</strong> plans to copy <em>recovery points</em> to a <strong>separate account</strong> and <strong>Region</strong>. Enable <strong>Vault Lock</strong> (WORM) and strict <em>resource-based</em> vault access policies to prevent deletion or tampering by compromised principals.",
+    links: [
+      { title: "AWS Docs — AWS Backup cross-account/Region copy", url: "https://docs.aws.amazon.com/aws-backup/latest/devguide/wwfs-cross-account-backup.html" },
+      { title: "AWS Docs — Backup Vault Lock", url: "https://docs.aws.amazon.com/aws-backup/latest/devguide/vault-lock.html" }
+    ]
+  },
+  {
+    question: "Your EKS workloads must tolerate AZ failures with minimal impact. Which configuration best improves resilience?",
+    options: [
+      "Single node group in one AZ with large nodes",
+      "Multiple managed node groups across AZs, PodDisruptionBudgets, and topology spread constraints",
+      "DaemonSets only",
+      "Horizontal Pod Autoscaler only"
+    ],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "Distribute capacity and pods across AZs, control voluntary disruptions with PDBs, and enforce balanced placement using topology spread constraints.",
+    explanationRich: "Create <strong>managed node groups</strong> in at least two AZs. Define <strong>PodDisruptionBudgets</strong> to keep a minimum number of replicas available during maintenance and use <strong>topologySpreadConstraints</strong> to spread pods across zones. Consider <strong>EKS control plane multi-AZ</strong> (default) and <strong>cluster-autoscaler</strong> for recovery.",
+    links: [
+      { title: "AWS Docs — EKS managed node groups", url: "https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html" },
+      { title: "Kubernetes Docs — PodDisruptionBudget", url: "https://kubernetes.io/docs/tasks/run-application/configure-pdb/" },
+      { title: "Kubernetes Docs — Topology spread constraints", url: "https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/" }
+    ]
+  },
+
       {
         question: "How do you increase availability of a stateless web tier within a Region?",
         options: [
