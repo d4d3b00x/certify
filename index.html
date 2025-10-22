@@ -27,7 +27,8 @@
     const IDENTITY_POOL_ID = "eu-central-1:71122039-a3d7-4450-b3fb-f5c5ee33a8ec";
     const HOSTED_UI_DOMAIN = "https://eu-central-1nm2feul1j.auth.eu-central-1.amazoncognito.com";
     const REDIRECT_URI = "https://main.drlgxq3ev7tby.amplifyapp.com"; // asegúrate que esté en "Allowed callback URLs"
-   const SCOPES = ["openid","email"];
+   const SCOPES = ["email", "openid","profile"];
+
     // ======================================================
 
      async function exchangeCodeForTokens(code) {
