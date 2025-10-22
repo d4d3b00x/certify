@@ -13,7 +13,7 @@ const STATE = {
 };
 
 function start(){
-  STATE.track = 'architect';
+  STATE.track = 'az-104-architect';
   TELEM('quiz_start');
   STATE.mode = 'exam';
   STATE.qs = flattenQuestions(window.questions);
@@ -53,10 +53,10 @@ function __getTrack(){
     if (typeof STATE!=='undefined' && STATE.track) return STATE.track;
     if (location.hash.includes('track=')) {
       const q = (location.hash.split('?')[1]||'').split('&').reduce((a,s)=>{const [k,v]=s.split('=');if(k)a[k]=v;return a;},{});
-      return q.track || 'architect';
+      return q.track || 'az-104-architect';
     }
   }catch(e){}
-  return 'architect';
+  return 'az-104-architect';
 }
 const __EXAM_OVERVIEW = {
   architect: {
@@ -244,7 +244,7 @@ function finish(){
     if (STATE.answers[i]===STATE.qs[i].correctAnswer) score++;
   }
   const percent = Math.round((score/total)*100);
-  saveHistory({ ts:new Date().toISOString(), track: STATE.track || 'architect', total, correct: score, pct: percent });
+  saveHistory({ ts:new Date().toISOString(), track: STATE.track || 'az-104-architect', total, correct: score, pct: percent });
   // back to landing
   location.hash = '';
   // minimal toast
