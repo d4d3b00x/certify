@@ -99,16 +99,30 @@ function h(tag, attrs={}, kids=[]){
 }
 
 /* ===========================
+   Helpers de sesión
+   =========================== */
+function getCurrentUser(){
+  try { return JSON.parse(localStorage.getItem("currentUser") || "null"); }
+  catch { return null; }
+}
+
+/* ===========================
    Helpers remotos
    =========================== */
 
-// Evitar preflight CORS: NO enviamos Content-Type.
-// Añadimos keepalive para que el POST sobreviva a la navegación.
-async function __postJSON_noPreflight(url, obj){
-  const body = JSON.stringify(obj);
-  const resp = await fetch(url, { method: "POST", body, keepalive: true });
+// Evitar preflight CORS con form-urlencoded
+async function __postForm(url, obj){
+  const params = new URLSearchParams();
+  Object.entries(obj).forEach(([k,v]) => params.append(k, String(v)));
+  const resp = await fetch(url, {
+    method: "POST",
+    body: params,      // Content-Type: application/x-www-form-urlencoded (lo pone el navegador)
+    mode: "cors",
+    cache: "no-store",
+    keepalive: true
+  });
   const text = await resp.text();
-  let data; try { data = JSON.parse(text); } catch { data = { error: text }; }
+  let data; try { data = JSON.parse(text); } catch { data = { raw: text }; }
   if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
   return data;
 }
@@ -124,15 +138,37 @@ function __genResultId(r){
   return `${r.quizId || 'quiz'}-${r.mode || 'exam'}-${base}-${suffix}`;
 }
 
+// ⬇️ AHORA GUARDA EN /results usando el usuario logueado
 async function saveResultRemote(result){
-  const id = __genResultId(result);
-  const payload = { id, content: JSON.stringify(result) };
+  const u = getCurrentUser();
+  if (!u) throw new Error("Debes iniciar sesión para guardar resultados.");
 
-  TELEM('save_remote_start', { id, quizId: result.quizId, pct: result.pct });
+  // Calcula/normaliza números
+  const total = Number(result.total || 0);
+  const correct = Number(result.correct || 0);
+  const pct = total > 0 ? Math.round((correct/total)*100) : Number(result.pct || 0);
+  const durationSec = Number(result.durationSec || 0);
+
+  // Payload que espera tu Lambda /results
+  const payload = {
+    userId: u.userId,
+    userName: u.name,
+    email: u.email || "",
+    quizId: result.quizId,
+    track: result.track || 'architect',
+    mode: result.mode || 'exam',
+    total,
+    correct,
+    pct,
+    durationSec,
+    ts: result.ts || new Date().toISOString()
+  };
+
+  TELEM('save_remote_start', { quizId: payload.quizId, pct: payload.pct });
 
   try{
-    const res = await __postJSON_noPreflight(`${API_URL}/items`, payload);
-    TELEM('save_remote_ok', { id, ok: true });
+    const res = await __postForm(`${API_URL}/results`, payload);
+    TELEM('save_remote_ok', { ok: true });
     return res;
   }catch(err){
     console.error("saveResultRemote ERROR:", err);
@@ -200,7 +236,7 @@ function renderExamOverviewTo(sideEl){
       Schedule an Exam (URL)
     </a>
      <a class="ov-link" target="_blank" href="${d.guideUrl}">
-      <svg class="ov-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a 2 2 0 0 0 2-2V7l-6-4z"></path></svg>
+      <svg class="ov-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a 2 2 0 0 0-2 2v14l4-4h10a 2 2 0 0 0 2-2V7l-6-4z"></path></svg>
       Official Exam Guide (PDF)
     </a>
   `;
@@ -379,7 +415,8 @@ async function finish(){
     correct: score,
     pct: percent,
     markedCount: Object.values(STATE.marked || {}).filter(Boolean).length,
-    durationSec: STATE.startedAt ? Math.round((Date.now() - STATE.startedAt)/1000) : null
+    // 👇 importante: número, no null
+    durationSec: STATE.startedAt ? Math.round((Date.now() - STATE.startedAt)/1000) : 0
   };
 
   // 1) Guardado local inmediato
@@ -391,9 +428,7 @@ async function finish(){
   ]);
 
   try {
-    // opcional: mostrar estado visual mientras guarda
-    // document.getElementById('status')?.innerText = 'Guardando en la nube...';
-    await saveWithTimeout(saveResultRemote(result), 2000); // espera hasta 2s
+    await saveWithTimeout(saveResultRemote(result), 2500); // espera hasta 2.5s
     console.log("Resultado guardado en DynamoDB");
   } catch (err) {
     console.warn("Guardado remoto falló (continuo):", err.message);
