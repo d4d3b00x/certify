@@ -190,17 +190,18 @@ We grow together on the path to certification.</span></div>
     <section class="grid">
       <article class="card path">
          
-        <h2> EXAM DOMAINS STUDY TIPS</h2>
+         <span class="badge">EXAM DOMAINS STUDY TIPS</span>
+        
         <ul>
-          <li><strong><a href="/amazon aws/aws-saa-c03/tips-domain1.html">Domain 1</a> — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
-          <li><strong>Domain 2 — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
-          <li><strong>Domain 3 — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
-          <li><strong>Domain 4 — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain1.html">Domain 1</a> — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain2.html">Domain 2</a> — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain3.html">Domain 3</a> — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain4.html">Domain 4</a> — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
         </ul>
       </article>
 
       <aside class="card path">
-        <h2>EXAM OVERVIEW</h2>
+        <span class="badge">EXAM OVERVIEW</span>
         <ul>
           <li><strong>Category</strong>: Associate.</li>
           <li><strong>Duration</strong>: 130 minutes.</li>
@@ -212,14 +213,61 @@ We grow together on the path to certification.</span></div>
 
       
       <article class="card path span-2">
-        <h2>Storage &amp; Data</h2>
-        <ul>
-          <li><strong>S3</strong>: versioning, encryption (SSE-S3/KMS), lifecycle, replication, access points; clases: Standard / IA / One Zone-IA / Intelligent-Tiering / Glacier tiers.</li>
-          <li><strong>EBS</strong>: gp3 desacopla perf/tamaño; io2/io2 BX para misión crítica; st1/sc1 para throughput/frío.</li>
-          <li><strong>EFS</strong>: regional, NFS, multi-AZ; IA/Archive tiers; miles de montajes concurrentes.</li>
-          <li><strong>DynamoDB</strong>: PK + sort key; GSIs/LSIs; DAX; on-demand/provisioned; streams para eventos.</li>
-          <li><strong>RDS/Aurora</strong>: Multi-AZ para HA; read replicas; backups; Proxy para pool de conexiones.</li>
-        </ul>
+       
+      <section class="path" aria-label="Architect path">
+        <span class="badge">START PRACTICE SIMLUTARO EXAM QUIZ</span>
+    
+        <div class="mode">
+          <div class="mode-title">Study Mode</div>
+
+
+<script>
+ 
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.questions) {
+      // Calculo el total de preguntas
+      const totalQuestions = window.questions.reduce(
+        (acc, domain) => acc + domain.questions.length, 
+        0
+      );
+
+      // Mostrarlo en consola o en la página
+      console.log("Bank total", totalQuestions);
+
+      // Por ejemplo, puedes mostrarlo debajo del selector:
+      const label = document.querySelector('label[for="studyCount"]');
+      const totalSpan = document.createElement('span');
+      totalSpan.textContent = ` (Bank total: ${totalQuestions})`;
+      label.appendChild(totalSpan);
+    } else {
+      console.error("No se encontró el array 'questions'.");
+    }
+  });
+</script>
+
+
+          <div class="mode-desc"></div>
+          <div class="mode-row" style="align-items:center; margin-top:8px">
+            <label for="studyCount" class="note">Questions</label>
+            <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+             
+              <option value="30">30</option>
+            </select>
+          </div>
+
+          <div class="actions" style="margin-top:12px">
+            <button class="btn" onclick="start('aws-saa-c03')">AWS SAA-C03</button>
+            <a class="btn" id="btnStart" href="history.html" >Results</a>
+          </div>
+          <p class="note">Exam Mode is in development for this build.</p>
+
+
+        </div>
+
+      </section>
+
       </article>
 
       
@@ -291,7 +339,8 @@ We grow together on the path to certification.</span></div>
   </div>
 </main>
 
-
+<script src="/questions.js"></script>
+  <script src="/control_quizs/Q_global.js"></script>
 
 </body>
 </html>
