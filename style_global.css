@@ -1,0 +1,366 @@
+
+:root{
+  --bg:#efeaff;
+  --card:#efeaff;
+  --ink:#1b1550;
+  --muted:#258f44;
+  --primary:#5a46ff;
+  --primary-ink:#fff;
+  --ok:#2bb673;
+  --bad:#ef476f;
+  --ring: rgba(90,70,255,.25);
+  --edge: #ece9ff;
+}
+
+*{box-sizing:border-box}
+html,body{height:1%}
+body{
+  margin:0; font-family:Montserrat,system-ui,Segoe UI,Roboto,Arial;
+  color:var(--ink); background:var(--bg);
+}
+.shell{min-height:100%; display:flex; flex-direction:column}
+.top{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:20px 24px; max-width:1100px; margin:0 auto; color:#fff;
+}
+.brand{font-weight:650; letter-spacing:.4px}
+.brand .beta{font-size:.8rem; background:#0003; padding:2px 6px; border-radius:999px; margin-left:6px}
+.nav .btn{margin-left:8px}
+#view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px; /* 👈 añade espacio vertical entre las .path */
+  padding: 0 12px;
+}
+.card{
+  width:100%; max-width:1600px; background:var(--card); border-radius:16px; 
+  box-shadow:0 14px 40px rgba(0,0,0,.2); padding:24px; margin-bottom:26px;
+}
+h1{margin:.2rem 0 0 0}
+.sub{color:var(--muted); margin:6px 0 18px 0}
+
+.path{
+  border:1px solid var(--edge); border-radius:16px; padding:18px; margin:16px 0;
+  position:relative; background:#fbfbff;
+}
+.path .badge{position:absolute; top:-12px; left:16px; background:#efeaff; padding:6px 10px; border-radius:999px; font-size:.8rem; color:#6b5cff}
+.path .title{font-weight:700; margin:6px 0}
+.path .desc{color:var(--muted); margin-bottom:12px}
+
+.path .badge1{position:absolute; top:-12px; left:16px; background:#efeaff; padding:6px 10px; border-radius:999px; font-size:.8rem; color:#7e0faa}
+
+.path .badge2{position:absolute; top:-12px; left:16px; background:#64ccfcbb; padding:6px 10px; border-radius:999px; font-size:.8rem; color:#042874}
+
+
+.mode-row{display:flex; gap:16px; flex-wrap:wrap}
+.mode{flex:1; min-width:240px; border:1px dashed var(--edge); border-radius:12px; padding:12px}
+.mode-title{font-weight:600}
+.mode-desc{font-size:.95rem; color:var(--muted); margin:6px 0 10px}
+.note{margin-top:8px; color:var(--muted); font-size:.95rem}
+
+.btn{background:var(--primary); color:var(--primary-ink); border:none; padding:10px 16px; border-radius:10px; cursor:pointer; font-weight:600}
+.btn:hover{filter:brightness(1.05)}
+.btn.secondary{background:#fff; color:var(--primary); border:1px solid var(--primary)}
+.btn.ghost{background:#fff0; border:1px solid #fff; color:#fff}
+.btn.disabled{opacity:.6; cursor:not-allowed}
+
+.quiz-wrap{
+  display:grid; grid-template-columns: 1fr 300px; gap:18px
+}
+
+/* ===== Grupo AWS ===== */
+
+.vendor-zone .path-group {
+  max-width: 80%;   /* o 80%, si prefieres relativo */
+  margin: 5 auto;
+}
+
+
+
+.aws-group {
+  background: #f8f9fa; /* gris claro, limpio */
+  border-left: 6px solid #840f8f; /* toque naranja AWS */
+  border-radius: 12px;
+  padding: 32px 28px;
+  margin: 40px auto;
+  max-width: 1100px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.aws-group .group-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.aws-group .group-logo {
+  height: 44px;
+}
+
+.aws-group .group-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #232F3E; /* azul oscuro AWS */
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.aws-group .path {
+  margin: 20px 0;
+  border-color: #e7e9ec;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aws-group .path:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+.aws-group .badge {
+  background: rgba(255,153,0,0.15);
+  color: #FF9900;
+}
+
+.aws-group .desc a {
+  color: #FF9900;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.aws-group .desc a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Grupo Azure (branding fiel) ===== */
+.azure-group{
+  background:#f5f7fb;                 /* fondo suave */
+  border-left:6px solid #0078D4;       /* azul marca */
+  border-radius:12px;
+  padding:32px 28px;
+  margin:40px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+.azure-group .group-header{
+  display:flex; align-items:center; gap:16px; margin-bottom:20px;
+}
+
+.azure-group .group-logo{ height:42px; }
+.azure-group .group-title{
+  font-size:1.6rem; font-weight:700; color:#104581; margin:0; letter-spacing:.3px;
+}
+
+/* Tarjetas dentro del grupo */
+.azure-group .path{
+  margin:20px 0; background:#fff; border-color:#e7e9ec;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.azure-group .path:hover{
+  transform:translateY(-2px);
+  box-shadow:0 4px 14px rgba(0,0,0,.10);
+}
+
+/* Badges y enlaces con acento Azure */
+.azure-group .badge{
+  background:rgba(0,120,212,.12); /* #0078D4 con transparencia */
+  color:#0078D4;
+}
+.azure-group .desc a{
+  color:#0078D4; font-weight:600; text-decoration:none;
+}
+.azure-group .desc a:hover{ text-decoration:underline; }
+
+/* ===== TEMA AWS para la página del quiz ===== */
+.theme-aws {
+  --aws-orange: #FF9900;
+  --aws-dark: #232F3E;
+  --aws-edge: #e6e6e6;
+  --aws-bg: #f9fafb;
+}
+
+/* Contenedor principal del quiz */
+.theme-aws #view{
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 20px;
+}
+
+/* Tarjeta del quiz */
+.theme-aws .path{
+  background:#fff;
+  border:1.5px solid var(--aws-edge);
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+/* Encabezados y textos */
+.theme-aws .title{ color: var(--aws-dark); }
+.theme-aws .desc, 
+.theme-aws .note{ color:#444; }
+
+/* Badge estilo AWS */
+.theme-aws .badge{
+  position:absolute; top:-12px; left:16px;
+  background: rgba(255,153,0,.15);
+  color: var(--aws-orange);
+  padding:6px 10px; border-radius:999px;
+  font-weight:700; font-size:.8rem;
+  border:1px solid rgba(255,153,0,.35);
+}
+
+/* Caja de modo */
+.theme-aws .mode{
+  border:1.5px dashed var(--aws-edge);
+  background:#fffdfa;
+  border-radius:12px;
+  padding:14px;
+}
+.theme-aws .mode-title{ font-weight:700; color:var(--aws-dark); }
+
+/* Fila select + botones en línea */
+.theme-aws .mode-row{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+
+/* Botones */
+.theme-aws .btn{
+  background: var(--aws-orange);
+  color:#fff; border:none; border-radius:10px;
+  padding:10px 16px; font-weight:700; cursor:pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.theme-aws .btn:hover{ background:#e68a00; transform:translateY(-1px); }
+
+/* Botón/Select secundario */
+.theme-aws .btn.secondary{
+  background:#fff; color:var(--aws-dark);
+  border:2px solid var(--aws-orange);
+}
+.theme-aws select.btn.secondary{
+  appearance:auto; /* para que se vea como select */
+}
+
+/* Enlaces de acción en naranja */
+.theme-aws a{ color:var(--aws-orange); font-weight:700; text-decoration:none; }
+.theme-aws a:hover{ text-decoration:underline; }
+
+/* Opciones de respuesta (si aplican en esta página) */
+.theme-aws .option{
+  background:#fffaf3; border:1px solid #ffd9a6;
+}
+.theme-aws .option:hover{ background:#fff3e0; }
+.theme-aws .option.selected.ok{ background:#eafff4; border-color:#b9f1d5; }
+.theme-aws .option.selected.bad{ background:#ffe9e0; border-color:#ffc3cf; }
+
+
+
+
+
+
+@media (max-width: 980px){ .quiz-wrap{grid-template-columns:1fr} }
+.question-card{background:#fff; border-radius:16px; padding:16px; border:1px solid var(--edge)}
+.side{display:flex; flex-direction:column; gap:12px}
+.side .panel{background:#fff; border-radius:16px; border:1px solid var(--edge); padding:12px}
+.panel h3{margin:4px 0 8px 0; font-size:1rem; letter-spacing:.3px}
+.list-dots{display:flex; gap:10px; flex-wrap:wrap}
+.dot{width:34px; height:34px; border-radius:999px; display:grid; place-items:center; border:2px solid #eacbcb; color:#c88; background:#fff}
+.dot.current{border-color:#b7b0ff; color:#584bff}
+.dot.ok{border-color:#b9f1d5; color:#21ab68; background:#eafff4}
+.dot.bad{border-color:#ffd1d8; color:#ef476f; background:#fff4f6}
+
+.header-quiz{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; border-bottom:1px solid var(--edge); padding-bottom:6px}
+.header-quiz .title{font-weight:700;font-size:21px;letter-spacing:.3px;}
+
+.option{border:1px solid var(--edge); padding:14px; border-radius:12px; margin:12px 0; background:#fafaff; cursor:pointer; transition:background .2s, border .2s}
+.option:hover{background:#f4f2ff}
+.option.selected.bad{background:#ffe2e8; border-color:#ffc3cf}
+.option.selected.ok{background:#eafff4; border-color:#b9f1d5}
+.option .lead{font-weight:700; margin-right:10px}
+
+.expl{margin-top:8px; border-left:4px solid #d7d2ff; background:#fbfaff; padding:10px 12px; border-radius:8px}
+.expl .ttl{font-weight:700}
+.learn-more a{color:var(--primary)}
+
+.controls{display:flex; gap:10px; justify-content:flex-end; margin-top:10px}
+.foot{color:#ddd; text-align:center; padding:8px 0 16px}
+
+
+/* ===== Tweaks for study selector + fonts ===== */
+body{ font-size:17px; } /* overall slightly larger */
+
+.quiz-question{ font-size:18px; font-weight:600; } /* question a bit smaller than before */
+
+.option{ font-size:18px; } /* bigger answers text */
+
+/* Purple styled dropdown */
+.select{
+  padding:6px 10px;
+  border-radius:12px;
+  background-color:#6c63ff;
+  color:#fff;
+  font-weight:600;
+  border:none;
+  box-shadow:0 2px 4px rgba(108,99,255,.3);
+  cursor:pointer;
+  transition:background-color .2s ease;
+}
+.select:hover{ background-color:#5848f3; }
+.select:focus{ outline:2px solid #6c63ff; outline-offset:2px; }
+
+
+
+/* Add spacing for explanation sections */
+.answer-title {
+  margin-top: 16px !important;
+}
+.answer-links {
+  margin-top: 10px !important;
+}
+
+
+
+/* Extra padding for detailed explanation text */
+.explain{ padding-top:12px; padding-bottom:12px; }
+
+/* Domain label above question */
+.domain{
+  display:inline-block;
+  font-size:12px;
+  letter-spacing:.6px;
+  font-weight:700;
+  color:#6c63ff;
+  background: rgba(108,99,255,0.08);
+  border: 1px solid rgba(108,99,255,0.22);
+  padding:4px 8px;
+  border-radius:999px;
+  margin-bottom:6px;
+}
+
+
+/* Exam Overview styles */
+.exam-overview{font-size:13px;color:#3b356a}
+.exam-overview .ov-row{display:flex;gap:8px;margin:6px 0}
+.exam-overview .ov-key{min-width:130px;font-weight:700;color:#5a55a0}
+.exam-overview .ov-val{flex:1;line-height:1.35}
+.ov-link{display:inline-flex;align-items:center;gap:8px;margin-top:10px;text-decoration:none;font-weight:700;color:#5a4cf1}
+.ov-link:hover{text-decoration:underline}
+.ov-ico{width:18px;height:18px;fill:#5a4cf1;flex:0 0 18px}
+
+.mode-controls{display:flex;align-items:center;gap:6px;justify-content:flex-start}
+
+/* tighter outline bullets */
+.exam-overview ul{margin-left:8px;padding-left:12px}
+
+.app-quote{
+  max-width:1100px;margin:8px auto 10px;padding:10px 14px;border-left:4px solid #6c63ff;
+  background:rgba(108,99,255,.06);color:#2f2b6b;font-style:italic;border-radius:8px
+}
+
+.path-card{background:#fff;border:1px solid var(--edge);border-radius:16px;padding:16px;margin:10px auto;max-width:1100px}
+.path-card .path-label{display:inline-block;margin-bottom:8px;padding:4px 10px;border-radius:999px;background:rgba(108,99,255,.08);color:#5a4cf1;border:1px solid rgba(108,99,255,.25);font-weight:700;font-size:12px}
+.path-card h3{margin:4px 0 6px}
