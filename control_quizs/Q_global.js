@@ -155,7 +155,7 @@ function renderExamOverviewTo(sideEl){
     body.appendChild(guide);
   }
   card.appendChild(body);
-  sideEl.appendChild(card);
+  //sideEl.appendChild(card);
 }
 
 /* ===========================
