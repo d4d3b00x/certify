@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Signup sin preflight</title>
+  <title>Certify. New user register. </title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body{font-family:system-ui,sans-serif;margin:2rem} form{display:grid;gap:10px;max-width:420px}
@@ -14,12 +14,12 @@
   </style>
 </head>
 <body>
-  <h1>Registro (form-urlencoded)</h1>
+  <h1>New user register</h1>
   <form id="f">
-    <label>Nombre <input id="name" required></label>
+    <label>Name <input id="name" required></label>
     <label>Email <input id="email" type="email" required></label>
-    <label>Contraseña <input id="password" type="password" minlength="8" required></label>
-    <button>Crear cuenta</button>
+    <label>Pass  <input id="password" type="password" minlength="8" required></label>
+    <button>New user</button>
   </form>
   <div id="msg" style="margin-top:14px"></div>
   <pre id="out" style="margin-top:10px"></pre>
@@ -38,7 +38,7 @@
         const r = await fetch(API_URL, { method: 'POST', body, mode:'cors', cache:'no-store' });
         const txt = await r.text();
         if (!r.ok) { msg.innerHTML = `<div class="err">Error ${r.status}: ${txt}</div>`; return; }
-        msg.innerHTML = `<div class="ok">✅ Usuario creado</div>`;
+        msg.innerHTML = `<div class="ok">✅ User created. Wellcome!!</div>`;
         out.textContent = txt || "<sin cuerpo>";
       } catch (e) { msg.innerHTML = `<div class="err">${e.message}</div>`; }
     });
