@@ -201,53 +201,8 @@ We grow together on the path to certification.</span></div>
       </article>
 
       <aside class="card path">
-        <span class="badge">EXAM OVERVIEW</span>
-        <ul>
-          <li><strong>Category</strong>: Associate.</li>
-          <li><strong>Duration</strong>: 130 minutes.</li>
-          <li><strong>Format</strong>: 65 questions; multiple choice or multiple response.</li>
-          <li><strong>Cost</strong>: 150 USD (+ taxes/fees).</li>
-          <li><strong>Languages</strong>: EN, FR (France), IT, JA, KO, PT-BR, ES-LATAM, ES-Spain, ZH-CN, ZH-TW.</li>
-        </ul>
-      </aside>
-
-      
-      <article class="card path span-2">
-       
-      <section class="path" aria-label="Architect path">
-        <span class="badge">START PRACTICE SIMLUTARO EXAM QUIZ</span>
-    
-        <div class="mode">
-          <div class="mode-title">Study Mode</div>
-
-
-<script>
- 
-  window.addEventListener('DOMContentLoaded', () => {
-    if (window.questions) {
-      // Calculo el total de preguntas
-      const totalQuestions = window.questions.reduce(
-        (acc, domain) => acc + domain.questions.length, 
-        0
-      );
-
-      // Mostrarlo en consola o en la página
-      console.log("Bank total", totalQuestions);
-
-      // Por ejemplo, puedes mostrarlo debajo del selector:
-      const label = document.querySelector('label[for="studyCount"]');
-      const totalSpan = document.createElement('span');
-      totalSpan.textContent = ` (Bank total: ${totalQuestions})`;
-      label.appendChild(totalSpan);
-    } else {
-      console.error("No se encontró el array 'questions'.");
-    }
-  });
-</script>
-
-
-          <div class="mode-desc"></div>
-          <div class="mode-row" style="align-items:center; margin-top:8px">
+        <span class="badge">SAA-C03 EXAM SIMULATOR</span>
+       <div class="mode-row" style="align-items:center; margin-top:8px">
             <label for="studyCount" class="note">Questions</label>
             <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
               <option value="5" selected>5</option>
@@ -258,17 +213,16 @@ We grow together on the path to certification.</span></div>
           </div>
 
           <div class="actions" style="margin-top:12px">
-            <button class="btn" onclick="start('aws-saa-c03')">AWS SAA-C03</button>
+            <button class="btn" onclick="start('aws-saa-c03')">STAR QUIZ</button>
             <a class="btn" id="btnStart" href="history.html" >Results</a>
           </div>
           <p class="note">Exam Mode is in development for this build.</p>
+      </aside>
 
-
-        </div>
-
-      </section>
-
-      </article>
+      
+ 
+      
+      
 
       
     </section>
