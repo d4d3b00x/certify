@@ -13,6 +13,7 @@ const STATE = {
   qs: [],
   idx: 0,
   answers: {},
+  marked: {},        // <--- NUEVO: preguntas marcadas (dot amarillo)
   startedAt: null,
   certi: 'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'
 };
@@ -59,8 +60,8 @@ const EXAM_OVERVIEW_BY_QUIZ = {
     cost: "165 USD (+ taxes/fees)",
     testing: "Pearson VUE testing center or online proctored exam",
     languages: "EN, ES, FR, DE, JA, KO, ZH (varies by region)",
-    guideUrl: "#",      // pon aquí la URL oficial que prefieras
-    scheduleUrl: "#"    // pon aquí la URL oficial que prefieras
+    guideUrl: "#",
+    scheduleUrl: "#"
   }
 };
 
@@ -123,6 +124,7 @@ function start(quizId = 'aws-saa-c03'){
   // Reset estado
   STATE.idx = 0;
   STATE.answers = {};
+  STATE.marked = {};           // <--- NUEVO: limpiar marcados
   STATE.startedAt = Date.now();
 
   // Hash navegable
@@ -149,13 +151,16 @@ function renderExamOverviewTo(sideEl){
       <svg class="ov-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V7l-6-4z"></path></svg>
       Schedule an Exam (URL)
     </a>
+     <a class="ov-link" target="_blank" href="${d.guideUrl}">
+      <svg class="ov-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V7l-6-4z"></path></svg>
+      Official Exam Guide (PDF)
+    </a>
+    
   `;
-  if (d.guideUrl && d.guideUrl !== '#'){
-    const guide = h('a', {class:'ov-link', target:'_blank', href:d.guideUrl, html:'Official Exam Guide'});
-    body.appendChild(guide);
-  }
+  
+
   card.appendChild(body);
-  //sideEl.appendChild(card);
+  sideEl.appendChild(card);
 }
 
 /* ===========================
@@ -175,7 +180,7 @@ function renderLastResults(side){
       const ok = (r.pct>=70);
       const line = h('div', {class:'result-line'});
       const label = QUIZ_LABEL[r.quizId] || r.quizId || r.track || '—';
-      line.innerHTML = `${r.correct}/${r.total} &nbsp; <b style="color:${ok?'#1a7f37':'#c62828'}">${ok?'PASS':'FAIL'} ${r.pct}%</b> &nbsp; ${label} &nbsp; ${dt.toLocaleString()}`;
+      line.innerHTML = `-> ${r.correct}/${r.total} &nbsp; <b style="color:${ok?'#1a7f37':'#c62828'}">${ok?'PASS':'FAIL'} ${r.pct}%</b> &nbsp; ${label} &nbsp; ${dt.toLocaleString()}`;
       box.appendChild(line);
     });
   }
@@ -253,12 +258,23 @@ function renderQuiz(){
   const back = h('button', {class:'btn secondary', html:'Back'});
   if (STATE.idx===0){ back.disabled = true; back.classList.add('disabled'); }
   back.onclick = () => { STATE.idx=Math.max(0,STATE.idx-1); renderQuiz(); };
+
+  // --- NUEVO: botón Mark / Unmark ---
+  const mark = h('button', {class:'btn secondary', html: STATE.marked[STATE.idx] ? 'Unmark' : 'Mark'});
+  mark.onclick = () => {
+    STATE.marked[STATE.idx] = !STATE.marked[STATE.idx];
+    renderQuiz();
+  };
+  // ----------------------------------
+
   const next = h('button', {class:'btn', html: STATE.idx===STATE.qs.length-1 ? 'Finish' : 'Next'});
   next.onclick = () => {
     if (STATE.idx===STATE.qs.length-1) return finish();
     STATE.idx++; renderQuiz();
   };
-  ctr.appendChild(back); ctr.appendChild(next);
+  ctr.appendChild(back);
+  ctr.appendChild(mark);   // <--- NUEVO
+  ctr.appendChild(next);
   qCard.appendChild(ctr);
 
   // Right panels
@@ -275,6 +291,9 @@ function renderQuiz(){
       if (ans===STATE.qs[i].correctAnswer) d.classList.add('ok');
       else d.classList.add('bad');
     }
+    // --- NUEVO: dot marcado en amarillo ---
+    if (STATE.marked[i]) d.classList.add('marked');
+    // --------------------------------------
     d.onclick = () => { STATE.idx=i; renderQuiz(); };
     dots.appendChild(d);
   });
@@ -294,6 +313,9 @@ function renderQuiz(){
    Selección y fin
    =========================== */
 function onSelect(idx){
+  // --- NUEVO: si ya respondió esta pregunta, NO permitir cambiar ---
+  if (typeof STATE.answers[STATE.idx] !== 'undefined') return;
+  // ----------------------------------------------------------------
   STATE.answers[STATE.idx] = idx;
   renderQuiz();
 }

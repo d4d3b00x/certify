@@ -60,7 +60,6 @@ h1{margin:.2rem 0 0 0}
 
 .btn{background:var(--primary); color:var(--primary-ink); border:none; padding:10px 16px; border-radius:10px; cursor:pointer; font-weight:600}
 .btn:hover{filter:brightness(1.05)}
-.btn.secondary{background:#fff; color:var(--primary); border:1px solid var(--primary)}
 .btn.ghost{background:#fff0; border:1px solid #fff; color:#fff}
 .btn.disabled{opacity:.6; cursor:not-allowed}
 
@@ -71,7 +70,7 @@ h1{margin:.2rem 0 0 0}
 /* ===== Grupo AWS ===== */
 
 .vendor-zone .path-group {
-  max-width: 80%;   /* o 80%, si prefieres relativo */
+  max-width: %;   /* o 80%, si prefieres relativo */
   margin: 5 auto;
 }
 
@@ -267,6 +266,12 @@ h1{margin:.2rem 0 0 0}
 .side .panel{background:#fff; border-radius:16px; border:1px solid var(--edge); padding:12px}
 .panel h3{margin:4px 0 8px 0; font-size:1rem; letter-spacing:.3px}
 .list-dots{display:flex; gap:10px; flex-wrap:wrap}
+/* Dot marcado (amarillo) */
+.list-dots .dot.marked {
+  background: #f4b400;       /* amarillo Google */
+  color: #000;
+  border-color: #d39e00;
+}
 .dot{width:34px; height:34px; border-radius:999px; display:grid; place-items:center; border:2px solid #eacbcb; color:#c88; background:#fff}
 .dot.current{border-color:#b7b0ff; color:#584bff}
 .dot.ok{border-color:#b9f1d5; color:#21ab68; background:#eafff4}
@@ -281,7 +286,7 @@ h1{margin:.2rem 0 0 0}
 .option.selected.ok{background:#eafff4; border-color:#b9f1d5}
 .option .lead{font-weight:700; margin-right:10px}
 
-.expl{margin-top:8px; border-left:4px solid #d7d2ff; background:#fbfaff; padding:10px 12px; border-radius:8px}
+.expl{margin-top:8px; border-left:4px solid #f89718; background:#faf9f881; padding:10px 12px; border-radius:8px}
 .expl .ttl{font-weight:700}
 .learn-more a{color:var(--primary)}
 

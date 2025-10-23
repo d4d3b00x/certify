@@ -68,7 +68,7 @@ h1{
   appearance:none;border:0;cursor:pointer;
   background:var(--cta);color:var(--cta-ink);
   font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
-  box-shadow:0 8px 18px rgba(255,153,0,.25);transition:.15s ease;
+
 }
 .btn:hover{background:var(--cta-hover)}
 .btn:focus{outline:3px solid var(--ring);outline-offset:2px}
@@ -98,7 +98,7 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
   border-left:6px solid #7207a3;
   border-radius:12px;
   padding:32px 28px;
-  margin:40px auto;
+  margin:4px auto;
   max-width:1100px;
   box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
@@ -107,8 +107,8 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
   background:#f8f9fa;
   border-left:6px solid #f89718;
   border-radius:12px;
-  padding:32px 28px;
-  margin:40px auto;
+  padding:5px 10px;
+  margin:4px auto;
   max-width:1100px;
   box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
@@ -128,18 +128,21 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
   background:#f5f7fb;                 /* fondo suave */
   border-left:6px solid #64ccfcbb;       /* azul marca */
   border-radius:12px;
-  padding:32px 28px;
+  padding:3px 10px;
   margin:40px auto;
   max-width:1100px;
   box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
 
 
+
+
+
 </style>
 </head>
 <body>
 
-<div class="topbar"></div>
+<!-- espacio top bar <div class="topbar"></div> -->
 
 <div class="shell">
     <!-- Cabecera -->
@@ -179,7 +182,7 @@ We grow together on the path to certification.</span></div>
      <img
         src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
         alt="AWS Logo"
-        class="group-logo"
+        style="vertical-align: middle; width: 60px;"
         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
       >
       <div class="ov-row"><span class="ov-key">The AWS Certified Solutions Architect – Associate focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
@@ -203,7 +206,7 @@ We grow together on the path to certification.</span></div>
       <aside class="card path">
         <span class="badge">SAA-C03 EXAM SIMULATOR</span>
        <div class="mode-row" style="align-items:center; margin-top:8px">
-            <label for="studyCount" class="note">Questions</label>
+            <label for="studyCount" class="note">Select questions: </label>
             <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
               <option value="5" selected>5</option>
               <option value="10">10</option>
@@ -214,16 +217,13 @@ We grow together on the path to certification.</span></div>
 
           <div class="actions" style="margin-top:12px">
             <button class="btn" onclick="start('aws-saa-c03')">STAR QUIZ</button>
-            <a class="btn" id="btnStart" href="history.html" >Results</a>
+            <button class="btn"><a class="btn" href="history.html" >LAST RESULTS</a></button>
+            
           </div>
           <p class="note">Exam Mode is in development for this build.</p>
       </aside>
 
-      
- 
-      
-      
-
+  
       
     </section>
 
