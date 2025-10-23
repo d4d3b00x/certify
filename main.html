@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AWS Certified Solutions Architect — Associate</title>
+<style>
+:root{
+  --bg:#a296eb;
+  --surface:#f5f7fb;
+  --card:#ffffff;
+  --ink:#0f1330;
+  --muted:#5d6290;
+  --pill-bg:#ffe5bf;
+  --pill-ink:#a915c7;
+  --brand:#0f1438;
+  --cta:#54188d;          /* Naranja AWS */
+  --cta-hover:#8d12ac;
+  --cta-ink:#ffffff;
+  --link:#470447;
+  --ring:rgba(255,153,0,.35);
+  --shadow:0 10px 30px rgba(18,16,99,.12);
+  --radius:18px;
+  --bd:#e8ebf5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+  color:var(--ink);
+  background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);
+  line-height:1.6;
+}
+
+/* Barra superior */
+.topbar{height:72px;background:var(--bg)}
+
+/* Layout */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.brand-row{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
+
+/* Logo AWS */
+.aws-logo{display:flex;align-items:center;gap:10px}
+.aws-swoosh{
+  width:32px;height:22px;border-bottom-left-radius:50px;border-bottom-right-radius:50px;
+  background:conic-gradient(from 210deg,#ffb300 0 70%,#ffa000 0 100%);
+  box-shadow:0 0 0 2px #ffb30022 inset;
+}
+.aws-word{font-weight:900;font-size:28px;letter-spacing:.4px}
+
+/* Tarjeta header */
+.hero.card{
+  margin:8px 0 28px;background:var(--card);border:1px solid var(--bd);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 28px;
+}
+.pill{
+  display:inline-block;background:rgba(255,153,0,0.15);color:#FF9900;
+  font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:8px 12px;border-radius:999px;border:1px solid rgba(255,153,0,0.3);
+}
+h1{
+  font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;
+  color:var(--brand);font-weight:900;
+}
+.actions{display:flex;align-items:center;gap:16px;margin:4px 0 6px;flex-wrap:wrap}
+.btn{
+  appearance:none;border:0;cursor:pointer;
+  background:var(--cta);color:var(--cta-ink);
+  font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
+  box-shadow:0 8px 18px rgba(255,153,0,.25);transition:.15s ease;
+}
+.btn:hover{background:var(--cta-hover)}
+.btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.subtitle{color:var(--muted);font-size:1.05rem}
+.subtitle a{color:var(--link);font-weight:800;text-decoration:none}
+.subtitle a:hover{text-decoration:underline}
+
+/* Grid y tarjetas */
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 40px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+.card{
+  background:var(--card);border:1px solid var(--bd);border-radius:16px;
+  padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;
+}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+h2{margin:.2rem 0 8px;color:var(--brand)}
+h3{margin:1rem 0 .5rem;color:var(--brand)}
+ul{margin:.3rem 0 .8rem 1.1rem}
+.hint{color:var(--muted);font-size:.98rem}
+code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
+.span-2{grid-column:1 / -1}
+.foot{opacity:.85;font-size:.9rem;margin-top:10px;color:var(--muted)}
+
+/* === AWS GROUP WRAPPER === */
+.aws-group{
+  background:#f8f9fa;
+  border-left:6px solid #FF9900;
+  border-radius:12px;
+  padding:32px 28px;
+  margin:40px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+.aws-group .group-header{
+  display:flex;align-items:center;gap:16px;margin-bottom:20px;
+}
+.aws-group .group-title{
+  font-size:1.6rem;font-weight:700;color:#232F3E;margin:0;letter-spacing:0.3px;
+}
+.aws-group .desc a{
+  color:#FF9900;font-weight:600;text-decoration:none;
+}
+.aws-group .desc a:hover{text-decoration:underline}
+/* === /AWS GROUP WRAPPER === */
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+<main class="wrap">
+  <div class="aws-group">
+    <div class="group-header">
+      <h2 class="group-title">AWS Certified Solutions Architect — Associate (SAA-C03)</h2>
+    </div>
+
+    <section class="hero card path">
+      <span class="pill">Certify Crash Guide</span>
+      <h1>One-page recap of core services, patterns, and exam-day heuristics.</h1>
+    </section>
+
+    <section class="grid">
+      <article class="card path">
+        <h2>Exam Domains</h2>
+        <ul>
+          <li><strong>Domain 1 — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
+          <li><strong>Domain 2 — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
+          <li><strong>Domain 3 — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
+          <li><strong>Domain 4 — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
+        </ul>
+        <p class="hint">Aprende defaults de cada servicio, límites, y dónde están los límites de seguridad (cuenta/VPC/SG/bucket/key).</p>
+      </article>
+
+      <aside class="card path">
+        <h2>Quick Patterns</h2>
+        <ul>
+          <li><strong>S3 privado</strong>: Gateway Endpoint + bucket policy <code>aws:SourceVpce</code>.</li>
+          <li><strong>EKS least-privilege</strong>: IRSA (OIDC) con rol por service account.</li>
+          <li><strong>Serverless privado</strong>: Interface Endpoints (Secrets Manager, SSM, STS…).</li>
+          <li><strong>Baja latencia global</strong>: Global Accelerator para tráfico no-cacheable.</li>
+          <li><strong>Base de datos HA</strong>: RDS Multi-AZ; replicas para lectura; Aurora = failover rápido.</li>
+        </ul>
+      </aside>
+
+      <article class="card path">
+        <h2>Compute &amp; Containers</h2>
+        <ul>
+          <li><strong>EC2</strong>: familia por necesidad; Auto Scaling; SG + IAM roles; On-Demand/Spot/RIs/Savings Plans.</li>
+          <li><strong>Lambda</strong>: paga por request/100ms; triggers (S3, API GW, SQS, DynamoDB); DLQs y retries.</li>
+          <li><strong>ECS/EKS</strong>: ECS sencillo; EKS = Kubernetes; Fargate serverless; imágenes en ECR.</li>
+        </ul>
+        <p class="hint">Prefiere servicios gestionados salvo que pidan acceso OS o networking muy custom.</p>
+      </article>
+
+      <aside class="card path">
+        <h2>Networking</h2>
+        <ul>
+          <li>Public vs Private subnets (IGW vs NAT). SGs = <em>stateful</em>; NACLs = stateless.</li>
+          <li>Acceso privado a AWS: <strong>Gateway</strong> endpoints (S3/DynamoDB), <strong>Interface</strong> endpoints (resto).</li>
+          <li>Entre VPCs: PrivateLink (NLB productor), VPC Peering (no transitivo), TGW hub-and-spoke.</li>
+        </ul>
+      </aside>
+
+      <article class="card path span-2">
+        <h2>Storage &amp; Data</h2>
+        <ul>
+          <li><strong>S3</strong>: versioning, encryption (SSE-S3/KMS), lifecycle, replication, access points; clases: Standard / IA / One Zone-IA / Intelligent-Tiering / Glacier tiers.</li>
+          <li><strong>EBS</strong>: gp3 desacopla perf/tamaño; io2/io2 BX para misión crítica; st1/sc1 para throughput/frío.</li>
+          <li><strong>EFS</strong>: regional, NFS, multi-AZ; IA/Archive tiers; miles de montajes concurrentes.</li>
+          <li><strong>DynamoDB</strong>: PK + sort key; GSIs/LSIs; DAX; on-demand/provisioned; streams para eventos.</li>
+          <li><strong>RDS/Aurora</strong>: Multi-AZ para HA; read replicas; backups; Proxy para pool de conexiones.</li>
+        </ul>
+      </article>
+
+      <article class="card path">
+        <h2>Security</h2>
+        <ul>
+          <li><strong>IAM</strong>: users/roles/policies; least privilege; MFA; SCPs en Organizations.</li>
+          <li><strong>KMS</strong>: CMKs, envelope encryption, rotación automática, audit con CloudTrail.</li>
+          <li><strong>Secrets Manager</strong>: rotación (motores RDS), IAM fino + endpoint policies.</li>
+          <li><strong>Security Hub &amp; GuardDuty</strong>: findings centralizados y detección de amenazas.</li>
+        </ul>
+      </article>
+
+      <aside class="card path">
+        <h2>Observability</h2>
+        <ul>
+          <li>CloudWatch: métricas, logs, alarmas, dashboards, Logs Insights.</li>
+          <li>CloudTrail: auditoría (management/data events, Insights).</li>
+          <li>Config: inventario, drift, cumplimiento con reglas/aggregators.</li>
+        </ul>
+      </aside>
+
+      <article class="card path span-2">
+        <h2>Cost Optimization</h2>
+        <ul>
+          <li>Right-sizing con Compute Optimizer; Savings Plans/RIs para steady-state; Spot para stateless.</li>
+          <li>Reduce NAT: S3/DynamoDB con <strong>Gateway Endpoints</strong>.</li>
+          <li>S3 Intelligent-Tiering + lifecycle a Glacier; retención de CloudWatch Logs + export a S3.</li>
+        </ul>
+        <h3>Exam Tips</h3>
+        <ul>
+          <li>Lee primero requisitos (HA, RTO/RPO, rendimiento, cumplimiento, coste) y descarta lo que los rompe.</li>
+          <li>Prefiere multi-AZ/gestionado por defecto; multi-Region solo cuando lo pidan (latencia/DR).</li>
+          <li>Para “sin Internet público”: piensa <strong>VPC Endpoints</strong> antes que NAT/IGW.</li>
+          <li>Cachea antes de escalar BD; desacopla con SQS/Kinesis para picos.</li>
+        </ul>
+        <p class="foot desc">Resumen de estudio para SAA-C03. Adáptalo a tus notas y profundiza en la doc oficial de <a href="https://aws.amazon.com/certification/" target="_blank" rel="noopener">AWS</a>.</p>
+      </article>
+    </section>
+  </div>
+</main>
+
+<script>
+function startQuiz(){
+  location.href='saa-c03.html#/quiz';
+}
+</script>
+</body>
+</html>
