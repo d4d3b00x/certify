@@ -86,7 +86,7 @@ h1{
 .card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
 h2{margin:.2rem 0 8px;color:var(--brand)}
 h3{margin:1rem 0 .5rem;color:var(--brand)}
-ul{margin:.3rem 0 .8rem 1.1rem}
+
 .hint{color:var(--muted);font-size:.98rem}
 code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
 .span-2{grid-column:1 / -1}
@@ -143,7 +143,7 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
 
 <div class="shell">
     <!-- Cabecera -->
-    
+  
 
     <!-- Contenido principal -->
     <main id="view" role="main">
@@ -175,12 +175,7 @@ We grow together on the path to certification.</span></div>
       <span class="badge">AWS CERTIFICATIONS</span>
       
       <p class="desc">
-     <img
-        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
-        alt="AWS Logo"
-        class="group-logo"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
-      >
+     
       <div class="ov-row"><span class="ov-key">The AWS Certified Solutions Architect – Associate focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
     
           
@@ -188,25 +183,29 @@ We grow together on the path to certification.</span></div>
     
     <section class="grid">
       <article class="card path">
-         
-        <h2>AWS Certified Solutions Architect — Associate (SAA-C03)</h2>
+         <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+        alt="AWS Logo"
+        class="group-logo"
+        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
+      >
+        <h2> Solutions Architect Associate (SAA-C03)</h2>
         <ul>
-          <li><strong>Domain 1 — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
+          <li><strong><a href="#">Domain 1</a> — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
           <li><strong>Domain 2 — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
           <li><strong>Domain 3 — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
           <li><strong>Domain 4 — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
         </ul>
-        <p class="hint">Aprende defaults de cada servicio, límites, y dónde están los límites de seguridad (cuenta/VPC/SG/bucket/key).</p>
       </article>
 
       <aside class="card path">
-        <h2>Quick Patterns</h2>
+        <h2>Exam Overview</h2>
         <ul>
-          <li><strong>S3 privado</strong>: Gateway Endpoint + bucket policy <code>aws:SourceVpce</code>.</li>
-          <li><strong>EKS least-privilege</strong>: IRSA (OIDC) con rol por service account.</li>
-          <li><strong>Serverless privado</strong>: Interface Endpoints (Secrets Manager, SSM, STS…).</li>
-          <li><strong>Baja latencia global</strong>: Global Accelerator para tráfico no-cacheable.</li>
-          <li><strong>Base de datos HA</strong>: RDS Multi-AZ; replicas para lectura; Aurora = failover rápido.</li>
+          <li><strong>Category</strong>: Associate.</li>
+          <li><strong>Duration</strong>: 130 minutes.</li>
+          <li><strong>Format</strong>: 65 questions; multiple choice or multiple response.</li>
+          <li><strong>Cost</strong>: 150 USD (+ taxes/fees).</li>
+          <li><strong>Languages</strong>: EN, FR (France), IT, JA, KO, PT-BR, ES-LATAM, ES-Spain, ZH-CN, ZH-TW.</li>
         </ul>
       </aside>
 
