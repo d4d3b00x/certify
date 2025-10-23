@@ -4,6 +4,11 @@
 const TELEM = (n,p)=>{ try{ window.__telem && window.__telem.on(n,p); }catch(e){} };
 
 /* ===========================
+   CONFIG remota (API Gateway)
+   =========================== */
+const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // ← CAMBIA ESTO
+
+/* ===========================
    Estado global
    =========================== */
 const STATE = {
@@ -13,7 +18,7 @@ const STATE = {
   qs: [],
   idx: 0,
   answers: {},
-  marked: {},        // <--- NUEVO: preguntas marcadas (dot amarillo)
+  marked: {},        // preguntas marcadas (dot amarillo)
   startedAt: null,
   certi: 'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'
 };
@@ -94,6 +99,49 @@ function h(tag, attrs={}, kids=[]){
 }
 
 /* ===========================
+   Helpers remotos
+   =========================== */
+
+// Evitar preflight CORS: NO enviamos Content-Type.
+// Añadimos keepalive para que el POST sobreviva a la navegación.
+async function __postJSON_noPreflight(url, obj){
+  const body = JSON.stringify(obj);
+  const resp = await fetch(url, { method: "POST", body, keepalive: true });
+  const text = await resp.text();
+  let data; try { data = JSON.parse(text); } catch { data = { error: text }; }
+  if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
+  return data;
+}
+
+function __genResultId(r){
+  const d = new Date(r.ts || Date.now());
+  const pad = n => String(n).padStart(2,'0');
+  const base = [
+    d.getFullYear(), pad(d.getMonth()+1), pad(d.getDate()),
+    "-", pad(d.getHours()), pad(d.getMinutes()), pad(d.getSeconds())
+  ].join("");
+  const suffix = Math.random().toString(36).slice(2,7);
+  return `${r.quizId || 'quiz'}-${r.mode || 'exam'}-${base}-${suffix}`;
+}
+
+async function saveResultRemote(result){
+  const id = __genResultId(result);
+  const payload = { id, content: JSON.stringify(result) };
+
+  TELEM('save_remote_start', { id, quizId: result.quizId, pct: result.pct });
+
+  try{
+    const res = await __postJSON_noPreflight(`${API_URL}/items`, payload);
+    TELEM('save_remote_ok', { id, ok: true });
+    return res;
+  }catch(err){
+    console.error("saveResultRemote ERROR:", err);
+    TELEM('save_remote_err', { message: err.message });
+    throw err;
+  }
+}
+
+/* ===========================
    Inicio de un quiz
    =========================== */
 function start(quizId = 'aws-saa-c03'){
@@ -124,7 +172,7 @@ function start(quizId = 'aws-saa-c03'){
   // Reset estado
   STATE.idx = 0;
   STATE.answers = {};
-  STATE.marked = {};           // <--- NUEVO: limpiar marcados
+  STATE.marked = {};
   STATE.startedAt = Date.now();
 
   // Hash navegable
@@ -152,12 +200,10 @@ function renderExamOverviewTo(sideEl){
       Schedule an Exam (URL)
     </a>
      <a class="ov-link" target="_blank" href="${d.guideUrl}">
-      <svg class="ov-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V7l-6-4z"></path></svg>
+      <svg class="ov-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14l4-4h10a 2 2 0 0 0 2-2V7l-6-4z"></path></svg>
       Official Exam Guide (PDF)
     </a>
-    
   `;
-
   card.appendChild(body);
   sideEl.appendChild(card);
 }
@@ -258,13 +304,12 @@ function renderQuiz(){
   if (STATE.idx===0){ back.disabled = true; back.classList.add('disabled'); }
   back.onclick = () => { STATE.idx=Math.max(0,STATE.idx-1); renderQuiz(); };
 
-  // --- NUEVO: botón Mark / Unmark ---
+  // Botón Mark / Unmark
   const mark = h('button', {class:'btn secondary', html: STATE.marked[STATE.idx] ? 'Unmark' : 'Mark'});
   mark.onclick = () => {
     STATE.marked[STATE.idx] = !STATE.marked[STATE.idx];
     renderQuiz();
   };
-  // ----------------------------------
 
   const next = h('button', {class:'btn', html: STATE.idx===STATE.qs.length-1 ? 'Finish' : 'Next'});
   next.onclick = () => {
@@ -272,7 +317,7 @@ function renderQuiz(){
     STATE.idx++; renderQuiz();
   };
   ctr.appendChild(back);
-  ctr.appendChild(mark);   // <--- NUEVO
+  ctr.appendChild(mark);
   ctr.appendChild(next);
   qCard.appendChild(ctr);
 
@@ -290,9 +335,7 @@ function renderQuiz(){
       if (ans===STATE.qs[i].correctAnswer) d.classList.add('ok');
       else d.classList.add('bad');
     }
-    // --- NUEVO: dot marcado en amarillo ---
     if (STATE.marked[i]) d.classList.add('marked');
-    // --------------------------------------
     d.onclick = () => { STATE.idx=i; renderQuiz(); };
     dots.appendChild(d);
   });
@@ -312,29 +355,51 @@ function renderQuiz(){
    Selección y fin
    =========================== */
 function onSelect(idx){
-  // --- NUEVO: si ya respondió esta pregunta, NO permitir cambiar ---
+  // Si ya respondió esta pregunta, no permitir cambiar
   if (typeof STATE.answers[STATE.idx] !== 'undefined') return;
-  // ----------------------------------------------------------------
   STATE.answers[STATE.idx] = idx;
   renderQuiz();
 }
 
-function finish(){
+// Hacemos finish() asíncrona para esperar el guardado remoto
+async function finish(){
   const total = STATE.qs.length;
   let score = 0;
   for (let i=0;i<total;i++){
     if (STATE.answers[i]===STATE.qs[i].correctAnswer) score++;
   }
   const percent = Math.round((score/total)*100);
-  saveHistory({
+
+  const result = {
     ts: new Date().toISOString(),
     quizId: STATE.quizId,
     track: STATE.track || 'architect',
+    mode: STATE.mode || 'exam',
     total,
     correct: score,
-    pct: percent
-  });
-  // back to landing
+    pct: percent,
+    markedCount: Object.values(STATE.marked || {}).filter(Boolean).length,
+    durationSec: STATE.startedAt ? Math.round((Date.now() - STATE.startedAt)/1000) : null
+  };
+
+  // 1) Guardado local inmediato
+  saveHistory(result);
+
+  // 2) Guardado remoto (espera breve con timeout)
+  const saveWithTimeout = (p, ms=2000) => Promise.race([
+    p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
+  ]);
+
+  try {
+    // opcional: mostrar estado visual mientras guarda
+    // document.getElementById('status')?.innerText = 'Guardando en la nube...';
+    await saveWithTimeout(saveResultRemote(result), 2000); // espera hasta 2s
+    console.log("Resultado guardado en DynamoDB");
+  } catch (err) {
+    console.warn("Guardado remoto falló (continuo):", err.message);
+  }
+
+  // 3) Navega después del intento de guardado (éxito o timeout)
   location.hash = '';
   alert(`Quiz finished! ${score}/${total} (${percent}%)`);
   window.location.href = "/history.html";
@@ -388,19 +453,16 @@ document.addEventListener('DOMContentLoaded', ()=>{
     // Deep link: #/quiz?quiz=az-104 (o aws-saa-c03)
     const mHash = location.hash.match(/quiz=([^&]+)/);
     if (mHash) start(decodeURIComponent(mHash[1]));
-
-    // Si quieres ocultar algún track en landing, ajusta aquí (opcional)
+    // Ocultaciones opcionales en landing:
     // document.querySelectorAll('*').forEach(el=>{
-    //   if (/practitioner/i.test(el.textContent||'')) { el.style.display='none'; }
+    //   if (/practitioner/i.test((el.textContent||''))) { el.style.display='none'; }
     // });
-
   }catch(e){}
 });
 
 /* ===========================
    API pública (botones HTML)
    =========================== */
-// Puedes llamar desde el HTML:
 // <button onclick="start('aws-saa-c03')">AWS SAA-C03</button>
 // <button onclick="start('az-104')">Azure AZ-104</button>
 window.start = start;

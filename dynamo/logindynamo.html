@@ -1,0 +1,83 @@
+<section class="aws-group3" style="margin-top:24px">
+  <h2>Cuenta</h2>
+
+  <div>
+    <h3>Registro</h3>
+    <input id="r_name" placeholder="Nombre" />
+    <input id="r_email" placeholder="Email" />
+    <input id="r_pass" placeholder="Contraseña" type="password" />
+    <button class="btn" id="btnReg">Crear cuenta</button>
+  </div>
+
+  <div style="margin-top:12px">
+    <h3>Login</h3>
+    <input id="l_email" placeholder="Email" />
+    <input id="l_pass" placeholder="Contraseña" type="password" />
+    <button class="btn" id="btnLogin">Entrar</button>
+    <button class="btn" id="btnLogout">Salir</button>
+  </div>
+
+  <p id="authInfo" class="muted">Estado: desconocido</p>
+  <div id="meBox"></div>
+</section>
+
+<script>
+  const API_BASE = "https://TU-API.execute-api.eu-central-1.amazonaws.com/prod";
+
+  async function call(method, path, body) {
+    const resp = await fetch(API_BASE + path, {
+      method,
+      credentials: "include", // envía/recibe cookie
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: body ? JSON.stringify(body) : undefined
+    });
+    const txt = await resp.text();
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}\n${txt}`);
+    return txt ? JSON.parse(txt) : {};
+  }
+
+  async function refreshMe() {
+    const info = document.getElementById("authInfo");
+    const box = document.getElementById("meBox");
+    try {
+      const me = await call("GET", "/me");
+      info.textContent = `✅ Autenticado como ${me.email}`;
+      box.innerHTML = `<pre>${JSON.stringify(me, null, 2)}</pre>`;
+    } catch {
+      info.textContent = "❌ No autenticado";
+      box.innerHTML = "";
+    }
+  }
+
+  document.getElementById("btnReg").addEventListener("click", async () => {
+    try {
+      const name = document.getElementById("r_name").value.trim();
+      const email = document.getElementById("r_email").value.trim();
+      const password = document.getElementById("r_pass").value;
+      await call("POST", "/auth/signup", { name, email, password });
+      alert("Cuenta creada y sesión iniciada.");
+      await refreshMe();
+    } catch (e) { alert(e.message); }
+  });
+
+  document.getElementById("btnLogin").addEventListener("click", async () => {
+    try {
+      const email = document.getElementById("l_email").value.trim();
+      const password = document.getElementById("l_pass").value;
+      await call("POST", "/auth/login", { email, password });
+      alert("Sesión iniciada.");
+      await refreshMe();
+    } catch (e) { alert(e.message); }
+  });
+
+  document.getElementById("btnLogout").addEventListener("click", async () => {
+    try {
+      await call("POST", "/auth/logout");
+      alert("Sesión cerrada.");
+      await refreshMe();
+    } catch (e) { alert(e.message); }
+  });
+
+  // al cargar
+  refreshMe();
+</script>

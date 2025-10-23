@@ -1,0 +1,73 @@
+
+  <h1>Resultado del Quiz</h1>
+  <p class="muted">Ejemplo: <code>?id=aws-saa-c03-exam-20251023-183701-8eb6u</code></p>
+
+  <p id="status" class="muted">Listo para cargar…</p>
+  <div id="result"></div>
+
+  <script>
+    const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/items";
+
+    async function main() {
+      const status = document.getElementById('status');
+      const result = document.getElementById('result');
+
+      const usp = new URLSearchParams(window.location.search);
+      const id = "?id=aws-saa-c03-exam-20251023-183701-8eb6u";
+
+      if (!id) {
+        status.textContent = "Falta el parámetro ?id en la URL.";
+        return;
+      }
+
+      status.textContent = `Consultando registro con id=${id}...`;
+
+      try {
+        const url = new URL(API_URL);
+        url.searchParams.set("id", id);
+
+        const resp = await fetch(url.toString(), {
+          method: "GET",
+          headers: { "Accept": "application/json" },
+          mode: "cors",
+        });
+
+        const text = await resp.text();
+        if (!resp.ok) throw new Error(`Error ${resp.status}: ${text}`);
+
+        const data = JSON.parse(text);
+        const item = data.item || {};
+
+        if (!item.content) {
+          status.textContent = "No se encontró el ítem o está vacío.";
+          result.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+          return;
+        }
+
+        const content = item.content;
+        const c = typeof content === 'string' ? JSON.parse(content) : content;
+
+        status.textContent = "Resultado cargado correctamente.";
+
+        result.innerHTML = `
+          <h2>${c.quizId?.toUpperCase() || 'Quiz'}</h2>
+          <ul>
+            <li><strong>Track:</strong> ${c.track}</li>
+            <li><strong>Modo:</strong> ${c.mode}</li>
+            <li><strong>Total preguntas:</strong> ${c.total}</li>
+            <li><strong>Correctas:</strong> ${c.correct}</li>
+            <li><strong>Porcentaje:</strong> ${c.pct}%</li>
+            <li><strong>Duración:</strong> ${c.durationSec} segundos</li>
+            <li><strong>Timestamp:</strong> ${c.ts}</li>
+          </ul>
+        `;
+
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Error al cargar el resultado.";
+        result.innerHTML = `<pre class="error">${err.message}</pre>`;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', main);
+  </script>

@@ -1,139 +1,92 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <title>Demo Notes → API Gateway → Lambda → DynamoDB</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <title>Notas DynamoDB (sin preflight)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root { --b:#111; --m:#666; --bd:#e5e7eb; --bg:#f8fafc; }
-    * { box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; color: var(--b); background: white; }
-    h1{ margin:0 0 1rem; }
-    .grid{ display:grid; grid-template-columns: 1fr; gap: 1rem; }
-    @media (min-width: 720px){ .grid{ grid-template-columns: 1fr 1fr; } }
-    .card{ border:1px solid var(--bd); border-radius: 10px; padding: 1rem; background: white; }
-    label{ display:block; margin:.5rem 0 .25rem; font-weight:600; }
-    input, textarea{ width:100%; padding:.65rem .75rem; border:1px solid var(--bd); border-radius:8px; background: var(--bg); }
-    button{ display:inline-flex; align-items:center; gap:.5rem; padding:.65rem 1rem; border-radius:8px; border:1px solid var(--bd); background:#fff; cursor:pointer; }
-    button:disabled{ opacity:.6; cursor: not-allowed; }
-    .muted{ color: var(--m); font-size:.9rem; }
-    .output{ white-space: pre-wrap; word-break: break-word; background: var(--bg); border:1px solid var(--bd); border-radius:8px; padding:.75rem; min-height: 3rem; }
-    .row{ display:flex; gap:.5rem; align-items:center; }
-    .row > *{ flex:1 }
-    .tag{ font-size:.8rem; background: var(--bg); border:1px solid var(--bd); padding:.25rem .5rem; border-radius:999px; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; max-width: 800px; margin: 2rem auto; padding: 1rem; }
+    form, .card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; background: #fff; }
+    label { display:block; margin:.5rem 0 .25rem; font-weight:600; }
+    input, textarea { width:100%; padding:.6rem; border:1px solid #cbd5e1; border-radius:6px; }
+    button { padding:.6rem 1rem; border:none; border-radius:6px; background:#2563eb; color:white; cursor:pointer; }
+    pre { background:#f1f5f9; border-radius:6px; padding:1rem; white-space:pre-wrap; }
   </style>
 </head>
 <body>
-  <h1>Notas (DynamoDB via API Gateway + Lambda)</h1>
-  <p class="muted">Usa este formulario para <strong>insertar</strong> y este botón para <strong>listar</strong> hasta 100 notas.<br/>Recuerda cambiar <code>API_URL</code> por tu endpoint.</p>
+  <h1>Notas DynamoDB</h1>
 
-  <div class="grid">
-    <div class="card">
-      <h2>Insertar nota</h2>
-      <form id="form">
-        <div class="row">
-          <div>
-            <label for="id">ID</label>
-            <input id="id" required placeholder="ej. 1" />
-          </div>
-        </div>
-        <label for="content">Contenido</label>
-        <textarea id="content" rows="5" required placeholder="Tu texto..."></textarea>
-        <div class="row" style="margin-top:.75rem;">
-          <button type="submit" id="btnSave">Guardar</button>
-          <button type="button" id="btnGenId" title="Generar ID único">Generar ID</button>
-        </div>
-      </form>
-      <div class="output" id="insertResult"></div>
-    </div>
-
-    <div class="card">
-      <h2>Listado</h2>
-      <div class="row">
-        <button id="btnLoad">Cargar notas</button>
-        <span class="tag" id="statusTag">idle</span>
+  <div class="card">
+    <h2>Insertar nota</h2>
+    <form id="form">
+      <label for="id">ID</label>
+      <input id="id" placeholder="note-1" required>
+      <label for="content">Contenido</label>
+      <textarea id="content" rows="4" placeholder="texto..." required></textarea>
+      <div style="display:flex; gap:.5rem; margin-top:.75rem;">
+        <button type="submit">Guardar</button>
+        <button type="button" id="gen">Generar ID</button>
       </div>
-      <div class="output" id="list"></div>
-    </div>
+    </form>
+    <pre id="res"></pre>
+  </div>
+
+  <div class="card">
+    <h2>Listar notas</h2>
+    <button id="load">Cargar notas</button>
+    <pre id="list"></pre>
   </div>
 
 <script>
-const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/"; // ← CAMBIA ESTO
+const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // ← tu URL base
 
-function setBusy(el, busy){
-  el.disabled = !!busy;
-  el.textContent = busy ? 'Procesando…' : (el.id === 'btnSave' ? 'Guardar' : 'Cargar notas');
-}
-
-function genId(){
-  // ID simple legible: yyyymmdd-hhmmss-XXXX
-  const pad = n => String(n).padStart(2,'0');
-  const d = new Date();
-  const base = `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
-  const rand = Math.random().toString(36).slice(2,6);
-  return `${base}-${rand}`;
-}
-
-async function insertNote(id, content) {
-  const resp = await fetch(`${API_URL}/items`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, content })
-  });
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) {
-    const msg = data?.error || `Error HTTP ${resp.status}`;
-    throw new Error(msg);
-  }
+// Evita preflight: NO enviamos Content-Type (el navegador pondrá text/plain; simple request)
+async function postJSON(url, obj) {
+  const body = JSON.stringify(obj);
+  const resp = await fetch(url, { method: "POST", body }); // sin headers
+  const text = await resp.text();
+  let data; try { data = JSON.parse(text); } catch { data = { error: text }; }
+  if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
   return data;
 }
 
-async function loadNotes() {
-  const resp = await fetch(`${API_URL}/items`);
-  const data = await resp.json().catch(() => ({}));
-  if (!resp.ok) {
-    const msg = data?.error || `Error HTTP ${resp.status}`;
-    throw new Error(msg);
-  }
-  return data.items || [];
+async function getJSON(url) {
+  const resp = await fetch(url); // GET simple (no preflight)
+  const text = await resp.text();
+  let data; try { data = JSON.parse(text); } catch { data = { error: text }; }
+  if (!resp.ok) throw new Error(data.error || `HTTP ${resp.status}`);
+  return data;
 }
 
-document.getElementById("btnGenId").addEventListener("click", () => {
-  document.getElementById("id").value = genId();
+document.getElementById("gen").addEventListener("click", () => {
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const id = `note-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}-${Math.random().toString(36).slice(2,6)}`;
+  document.getElementById("id").value = id;
 });
 
 document.getElementById("form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const btn = document.getElementById("btnSave");
   const id = document.getElementById("id").value.trim();
   const content = document.getElementById("content").value.trim();
-  const out = document.getElementById("insertResult");
-  out.textContent = ""; setBusy(btn, true);
+  const out = document.getElementById("res");
+  out.textContent = "Guardando...";
   try {
-    const res = await insertNote(id, content);
-    out.textContent = "✅ Guardado: " + JSON.stringify(res.item, null, 2);
-    document.getElementById("content").value = "";
+    const data = await postJSON(`${API_URL}/items`, { id, content });
+    out.textContent = "✅ " + JSON.stringify(data, null, 2);
   } catch (err) {
     out.textContent = "❌ " + err.message;
-  } finally {
-    setBusy(btn, false);
   }
 });
 
-document.getElementById("btnLoad").addEventListener("click", async () => {
-  const btn = document.getElementById("btnLoad");
-  const tag = document.getElementById("statusTag");
+document.getElementById("load").addEventListener("click", async () => {
   const pre = document.getElementById("list");
-  tag.textContent = "loading"; pre.textContent = ""; setBusy(btn, true);
+  pre.textContent = "Cargando...";
   try {
-    const items = await loadNotes();
-    pre.textContent = JSON.stringify(items, null, 2);
-    tag.textContent = `ok (${items.length})`;
+    const data = await getJSON(`${API_URL}/items`);
+    pre.textContent = JSON.stringify(data.items || [], null, 2);
   } catch (err) {
     pre.textContent = "❌ " + err.message;
-    tag.textContent = "error";
-  } finally {
-    setBusy(btn, false);
   }
 });
 </script>
