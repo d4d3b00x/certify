@@ -1,107 +1,109 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Inicio</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem auto; max-width: 800px; }
-    pre { background:#f7f7f9; padding:1rem; border-radius:8px; border:1px solid #eee; white-space: pre-wrap; }
-    button { padding: .6rem 1rem; font-size: 1rem; cursor:pointer; margin-top:1rem; }
-  </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CertiFY — Free IT Certification Resources and Exams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
 </head>
+
 <body>
-  <h1>Inicio</h1>
-  <div id="status">Comprobando sesión...</div>
-  <button id="logoutBtn" style="display:none">Cerrar sesión</button>
-  <pre id="out"></pre>
+  <div class="shell">
+    <!-- Cabecera -->
+    <header class="top" role="banner">
+      <div class="brand"><span class="beta">beta 0.92</span></div>
+      <nav class="nav" role="navigation"></nav>
+      
+    </header>
 
-  <script type="module">
-    // ======================================================
-    // CONFIG — AJUSTA ESTOS VALORES A TU PROYECTO
-    // ======================================================
-         // ====== CONFIG ======
-   const authority= "https://cognito-idp.eu-central-1.amazonaws.com/eu-central-1_OksJqWzrJ";
- 
-    const USER_POOL_ID = "eu-central-1_OksJqWzrJ";
-    const APP_CLIENT_ID = "3m5317ilqevrjhlgsp31ur981p";
-    const IDENTITY_POOL_ID = "eu-central-1:5c2b44e8-8876-40be-a161-23480c702f7b";
-    const HOSTED_UI_DOMAIN = "https://eu-central-1nm2feul1j.auth.eu-central-1.amazoncognito.com";
-    const REDIRECT_URI = "https://main.drlgxq3ev7tby.amplifyapp.com"; // asegúrate que esté en "Allowed callback URLs"
-   const SCOPES = ["email","openid","phone"];
+    <!-- Contenido principal -->
+    <main id="presentación" role="main">
 
-    // ======================================================
 
-     async function exchangeCodeForTokens(code) {
-    const verifier = sessionStorage.getItem("pkce_verifier") || "";
-    const body = new URLSearchParams({
-      grant_type: "authorization_code",
-      client_id: APP_CLIENT_ID,
-      redirect_uri: REDIRECT_URI,
-      code_verifier: verifier,
-      code
-    });
 
-    const res = await fetch(`${HOSTED_UI_DOMAIN}/oauth2/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body
-    });
+      
+<!-- Zona general de certificaciones cloud -->
+<section class="vendor-zone" aria-label="Cloud Certification Groups">
 
-    // Si falla, muestra el cuerpo de error para depurar
-    if (!res.ok) {
-      const text = await res.text().catch(() => "");
-      throw new Error(`Token exchange failed (${res.status}): ${text}`);
-    }
 
-    const json = await res.json();
-    // A veces vuelve access_token pero no id_token si falta 'openid'
-    if (!json.id_token) {
-      throw new Error(`No id_token in response. Revisa que uses el scope "openid". Respuesta: ${JSON.stringify(json)}`);
-    }
-    return json;
-  }
 
-  function safeDecodeJwt(jwt) {
-    if (!jwt || typeof jwt !== "string" || jwt.split(".").length < 2) {
-      throw new Error("ID token ausente o con formato inválido.");
-    }
-    const [, p] = jwt.split(".");
-    return JSON.parse(atob(p.replace(/-/g, '+').replace(/_/g, '/')));
-  }
+<!-- Grupo AWS -->
+  
 
-  function saveSession(tokens) {
-    // Guarda SOLO si existe
-    sessionStorage.setItem("id_token", tokens.id_token);
-    sessionStorage.setItem("access_token", tokens.access_token || "");
-    if (tokens.refresh_token) sessionStorage.setItem("refresh_token", tokens.refresh_token);
-  }
 
-  (async function init() {
-    const status = document.getElementById("status");
-    const out = document.getElementById("out");
+  <!-- Grupo AWS -->
+  <section class="path-group aws-group" aria-label="AWS Certifications">
+    <div class="group-header">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+        alt="AWS Logo"
+        class="group-logo"
+        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
+      >
+    </div>
 
-    try {
-      const params = new URLSearchParams(location.search);
-      const code = params.get("code");
+    <section class="path" aria-label="Cloud Architect path">
+      <span class="badge">PATH: AZURE ARCHITECT</span>
+      <h2 class="title">AWS Certified Solutions Architect — Associate (SAA-C03)</h2>
+      <p class="desc">
+        Pass your exam... 
+        <a href="/certification/amazon aws/aws-saa-c03.html">Overview Certify Resources →</a>
+      </p>
+    </section>
 
-      if (code) {
-        const tokens = await exchangeCodeForTokens(code);
-        saveSession(tokens);
-        history.replaceState({}, "", REDIRECT_URI); // limpia ?code
-      }
+    <section class="path" aria-label="DevOps Engineer path">
+      <span class="badge">PATH: DEVOPS ENGINEER</span>
+      <h2 class="title">AWS Certified DevOps Engineer — Professional</h2>
+      <p class="desc">
+        Questions for the DOP-C02 certification exam.
+        <a href="#">Cooming soon...</a>
+      </p>
+    </section>
+  </section>
 
-      const idToken = sessionStorage.getItem("id_token");
-      if (!idToken) {
-        status.textContent = "No hay sesión activa. Ve a login.html para iniciar.";
-        return;
-      }
+  <!-- Grupo Azure -->
+  <section class="path-group azure-group" aria-label="Microsoft Azure Certifications">
+    <div class="group-header">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg"
+        alt="Microsoft Azure Logo"
+        class="group-logo"
+        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/640px-Microsoft_Azure_Logo.svg.png';"
+      >
+     
+    </div>
 
-      const claims = safeDecodeJwt(idToken);
-      status.textContent = "✅ Sesión activa";
-      out.textContent = `sub: ${claims.sub}\nemail: ${claims.email || "(sin claim)"}\nexp: ${new Date(claims.exp*1000).toLocaleString()}`;
-    } catch (e) {
-      document.getElementById("status").textContent = "❌ Error: " + (e?.message || e);
-    }
-  })();
-</script>
+    <section class="path" aria-label="Azure Administrator Associate path">
+      <span class="badge">PATH: AZURE ADMINISTRATOR</span>
+      <h2 class="title">Microsoft Azure Administrator - Associate (AZ-104)</h2>
+      <p class="desc">
+       Pass your exam... 
+      <a href="/certification/microsoft-azure/az-104.html">Overview Certify Resources →</a>
+      </p>
+    </section>
+
+    <section class="path" aria-label="Azure Architect Expert path">
+      <span class="badge">PATH: AZURE ARCHITECT</span>
+      <h2 class="title">AZ-305 — Designing Microsoft Azure Infrastructure Solutions (Expert)</h2>
+      <p class="desc">
+        Scenario-based questions to prep for AZ-305. 
+        <a href="#">Cooming soon...</a>
+      </p>
+    </section>
+  </section>
+
+
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="foot"><a href="https://github.com/d4d3b00x/certify/blob/main/about">| LOGIN BETA |</a></footer>
+  </div>
+
+
+</nav>
+</body>
+</html>
+
