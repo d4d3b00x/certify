@@ -157,7 +157,6 @@ function renderExamOverviewTo(sideEl){
     </a>
     
   `;
-  
 
   card.appendChild(body);
   sideEl.appendChild(card);
@@ -180,7 +179,7 @@ function renderLastResults(side){
       const ok = (r.pct>=70);
       const line = h('div', {class:'result-line'});
       const label = QUIZ_LABEL[r.quizId] || r.quizId || r.track || '—';
-      line.innerHTML = `-> ${r.correct}/${r.total} &nbsp; <b style="color:${ok?'#1a7f37':'#c62828'}">${ok?'PASS':'FAIL'} ${r.pct}%</b> &nbsp; ${label} &nbsp; ${dt.toLocaleString()}`;
+      line.innerHTML = `+ ${r.correct}/${r.total} &nbsp; <b style="color:${ok?'#1a7f37':'#c62828'}">${ok?'PASS':'FAIL'} ${r.pct}%</b> &nbsp; ${dt.toLocaleDateString()}`;
       box.appendChild(line);
     });
   }
