@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CertiFY — Free IT Certification Resources and Exams</title>
+ <link rel="stylesheet" href="/style_global.css"/> 
+<style>
+:root{
+  --bg:#efeaff;
+  --surface:#f5f7fb;
+  --card:#efeaff;
+  --ink:#0f1330;
+  --muted:#d0b7ec;
+  --pill-bg:#ffe5bf;
+  --pill-ink:#a915c7;
+  --brand:#0f1438;
+  --cta:#54188d;          /* Naranja AWS */
+  --cta-hover:#8d12ac;
+  --cta-ink:#efeaff;
+  --link:#470447;
+  --ring:rgba(255,153,0,.35);
+  --shadow:0 10px 30px rgba(18,16,99,.12);
+  --radius:18px;
+  --bd:#eefeaff8ebf5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+  color:var(--ink);
+  background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);
+  line-height:1.6;
+}
+
+/* Barra superior */
+.topbar{height:72px;background:var(--bg)}
+
+/* Layout */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.brand-row{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
+
+/* Logo AWS */
+.aws-logo{display:flex;align-items:center;gap:10px}
+.aws-swoosh{
+  width:32px;height:22px;border-bottom-left-radius:50px;border-bottom-right-radius:50px;
+  background:conic-gradient(from 210deg,#3e0746 0 70%,#5e0766d2 0 100%);
+  box-shadow:0 0 0 2px #ffb30022 inset;
+}
+.aws-word{font-weight:900;font-size:28px;letter-spacing:.4px}
+
+/* Tarjeta header */
+.hero.card{
+  margin:8px 0 28px;background:var(--card);border:1px solid var(--bd);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 28px;
+}
+.pill{
+  display:inline-block;background:rgba(255,153,0,0.15);color:#7700ff;
+  font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:8px 12px;border-radius:999px;border:1px solid rgba(255,153,0,0.3);
+}
+h1{
+  font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;
+  color:var(--brand);font-weight:900;
+}
+.actions{display:flex;align-items:center;gap:16px;margin:4px 0 6px;flex-wrap:wrap}
+.btn{
+  appearance:none;border:0;cursor:pointer;
+  background:var(--cta);color:var(--cta-ink);
+  font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
+  box-shadow:0 8px 18px rgba(255,153,0,.25);transition:.15s ease;
+}
+.btn:hover{background:var(--cta-hover)}
+.btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.subtitle{color:var(--muted);font-size:1.05rem}
+.subtitle a{color:var(--link);font-weight:800;text-decoration:none}
+.subtitle a:hover{text-decoration:underline}
+
+/* Grid y tarjetas */
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 40px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+.card{
+  background:var(--card);border:1px solid var(--bd);border-radius:16px;
+  padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;
+}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+h2{margin:.2rem 0 8px;color:var(--brand)}
+h3{margin:1rem 0 .5rem;color:var(--brand)}
+
+.hint{color:var(--muted);font-size:.98rem}
+code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
+.span-2{grid-column:1 / -1}
+.foot{opacity:.85;font-size:.9rem;margin-top:10px;color:var(--muted)}
+
+/* === AWS GROUP WRAPPER === */
+.aws-group2{
+  background:#061f38;
+  border-left:6px solid #7207a3;
+  border-radius:12px;
+  padding:32px 28px;
+  margin:40px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+
+.aws-group3{
+  background:#f8f9fa;
+  border-left:6px solid #f89718;
+  border-radius:12px;
+  padding:32px 28px;
+  margin:40px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+
+.aws-group .group-header{
+  display:flex;align-items:center;gap:16px;margin-bottom:20px;
+}
+.aws-group .group-title{
+  font-size:1.6rem;font-weight:700;color:#232F3E;margin:0;letter-spacing:0.3px;
+}
+.aws-group .desc a{
+  color:#FF9900;font-weight:600;text-decoration:none;
+}
+.aws-group .desc a:hover{text-decoration:underline}
+/* === /AWS GROUP WRAPPER === */
+.azure-group3{
+  background:#f5f7fb;                 /* fondo suave */
+  border-left:6px solid #64ccfcbb;       /* azul marca */
+  border-radius:12px;
+  padding:32px 28px;
+  margin:40px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="topbar"></div>
+
+<div class="shell">
+    <!-- Cabecera -->
+  
+
+    <!-- Contenido principal -->
+    <main id="view" role="main">
+
+<!-- Zona general de certificaciones cloud -->
+<section class="vendor-zone">
+
+  <!-- Grupo AWS -->
+  <section class="path-group aws-group" aria-label="AWS Certifications">
+    
+
+<section class="path" aria-label="GUIDE">
+      <span class="badge1">WELLCOME TO CERTIFY</span>
+      
+      <p class="desc">
+          <div class="ov-row"><span class="ov-key">A community where technological knowledge is shared.
+Access content created by professionals and practice with certification simulators that include detailed explanations.
+
+We grow together on the path to certification.</span></div>
+    
+      
+    </section>
+
+
+<main class="wrap2">
+
+  <div class="aws-group3">
+   <section class="path" aria-label="GUIDE">
+    
+      <span class="badge">AWS SOLUTIONS ARCHITECT ASSOCIATE (SAA-C03)</span>
+      
+      <p class="desc">
+     <img
+        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+        alt="AWS Logo"
+        class="group-logo"
+        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
+      >
+      <div class="ov-row"><span class="ov-key">The AWS Certified Solutions Architect – Associate focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
+    
+          
+    </section>
+    
+    <section class="grid">
+      <article class="card path">
+         
+         <span class="badge">EXAM DOMAINS STUDY TIPS</span>
+        
+        <ul>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain1.html">Domain 1</a> — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain2.html">Domain 2</a> — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain3.html">Domain 3</a> — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
+          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain4.html">Domain 4</a> — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
+        </ul>
+      </article>
+
+      <aside class="card path">
+        <span class="badge">EXAM OVERVIEW</span>
+        <ul>
+          <li><strong>Category</strong>: Associate.</li>
+          <li><strong>Duration</strong>: 130 minutes.</li>
+          <li><strong>Format</strong>: 65 questions; multiple choice or multiple response.</li>
+          <li><strong>Cost</strong>: 150 USD (+ taxes/fees).</li>
+          <li><strong>Languages</strong>: EN, FR (France), IT, JA, KO, PT-BR, ES-LATAM, ES-Spain, ZH-CN, ZH-TW.</li>
+        </ul>
+      </aside>
+
+      
+      <article class="card path span-2">
+       
+      <section class="path" aria-label="Architect path">
+        <span class="badge">START PRACTICE SIMLUTARO EXAM QUIZ</span>
+    
+        <div class="mode">
+          <div class="mode-title">Study Mode</div>
+
+
+<script>
+ 
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.questions) {
+      // Calculo el total de preguntas
+      const totalQuestions = window.questions.reduce(
+        (acc, domain) => acc + domain.questions.length, 
+        0
+      );
+
+      // Mostrarlo en consola o en la página
+      console.log("Bank total", totalQuestions);
+
+      // Por ejemplo, puedes mostrarlo debajo del selector:
+      const label = document.querySelector('label[for="studyCount"]');
+      const totalSpan = document.createElement('span');
+      totalSpan.textContent = ` (Bank total: ${totalQuestions})`;
+      label.appendChild(totalSpan);
+    } else {
+      console.error("No se encontró el array 'questions'.");
+    }
+  });
+</script>
+
+
+          <div class="mode-desc"></div>
+          <div class="mode-row" style="align-items:center; margin-top:8px">
+            <label for="studyCount" class="note">Questions</label>
+            <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+             
+              <option value="30">30</option>
+            </select>
+          </div>
+
+          <div class="actions" style="margin-top:12px">
+            <button class="btn" onclick="start('aws-saa-c03')">AWS SAA-C03</button>
+            <a class="btn" id="btnStart" href="history.html" >Results</a>
+          </div>
+          <p class="note">Exam Mode is in development for this build.</p>
+
+
+        </div>
+
+      </section>
+
+      </article>
+
+      
+    </section>
+
+
+  </div>
+</main>
+
+
+<main class="wrap2">
+
+  <div class="azure-group3">
+   <section class="path" aria-label="GUIDE">
+      <span class="badge2">AZURE CERTIFICATIONS</span>
+      
+      <p class="desc">
+    <img
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg"
+        alt="Microsoft Azure Logo"
+        class="group-logo"
+        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/640px-Microsoft_Azure_Logo.svg.png';"
+      >
+      <div class="ov-row"><span class="ov-key">The Azure Certified Solutions Architect - Expert focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
+    
+          
+    </section>
+    
+    <section class="grid">
+      <article class="card path">
+         
+        <h2>Microsoft Azure Administrator (AZ-104)</h2>
+        <ul>
+          <li><strong>Domain 1 — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
+          <li><strong>Domain 2 — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
+          <li><strong>Domain 3 — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
+          <li><strong>Domain 4 — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
+        </ul>
+        <p class="hint">Aprende defaults de cada servicio, límites, y dónde están los límites de seguridad (cuenta/VPC/SG/bucket/key).</p>
+      </article>
+
+      <aside class="card path">
+        <h2>Quick Patterns</h2>
+        <ul>
+          <li><strong>S3 privado</strong>: Gateway Endpoint + bucket policy <code>aws:SourceVpce</code>.</li>
+          <li><strong>EKS least-privilege</strong>: IRSA (OIDC) con rol por service account.</li>
+          <li><strong>Serverless privado</strong>: Interface Endpoints (Secrets Manager, SSM, STS…).</li>
+          <li><strong>Baja latencia global</strong>: Global Accelerator para tráfico no-cacheable.</li>
+          <li><strong>Base de datos HA</strong>: RDS Multi-AZ; replicas para lectura; Aurora = failover rápido.</li>
+        </ul>
+      </aside>
+
+      
+      <article class="card path span-2">
+        <h2>Storage &amp; Data</h2>
+        <ul>
+          <li><strong>S3</strong>: versioning, encryption (SSE-S3/KMS), lifecycle, replication, access points; clases: Standard / IA / One Zone-IA / Intelligent-Tiering / Glacier tiers.</li>
+          <li><strong>EBS</strong>: gp3 desacopla perf/tamaño; io2/io2 BX para misión crítica; st1/sc1 para throughput/frío.</li>
+          <li><strong>EFS</strong>: regional, NFS, multi-AZ; IA/Archive tiers; miles de montajes concurrentes.</li>
+          <li><strong>DynamoDB</strong>: PK + sort key; GSIs/LSIs; DAX; on-demand/provisioned; streams para eventos.</li>
+          <li><strong>RDS/Aurora</strong>: Multi-AZ para HA; read replicas; backups; Proxy para pool de conexiones.</li>
+        </ul>
+      </article>
+
+      
+    </section>
+
+
+  </div>
+</main>
+
+<script src="/questions.js"></script>
+  <script src="/control_quizs/Q_global.js"></script>
+
+</body>
+</html>
