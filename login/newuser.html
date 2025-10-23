@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Signup Test</title>
+  <title>Signup Debug – Dynamo + API GW</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body { font-family: system-ui, sans-serif; margin: 2rem; }
@@ -13,6 +13,8 @@
     .ok { background: #f6ffed; border: 1px solid #b7eb8f; padding: .8rem; border-radius: 8px; }
     .err { background: #fff2f0; border: 1px solid #ffccc7; padding: .8rem; border-radius: 8px; white-space: pre-wrap; }
     pre { background: #f6f8fa; padding: .8rem; border-radius: 8px; overflow: auto; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:18px }
+    @media (max-width:900px){ .grid{ grid-template-columns:1fr } }
   </style>
 </head>
 <body>
@@ -26,25 +28,76 @@
   </form>
 
   <div id="msg" style="margin-top:14px"></div>
-  <div id="out" style="margin-top:10px"></div>
+  <div class="grid">
+    <div>
+      <h3>Resultado</h3>
+      <div id="out"></div>
+    </div>
+    <div>
+      <h3>Diagnóstico</h3>
+      <pre id="diag"></pre>
+    </div>
+  </div>
 
   <script>
+    // 🚩 Ajusta aquí si tu URL cambia:
     const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/signup";
 
     const f = document.getElementById("f");
     const msg = document.getElementById("msg");
     const out = document.getElementById("out");
+    const diag = document.getElementById("diag");
+
+    function show(obj){
+      return JSON.stringify(obj, Object.keys(obj).sort(), 2);
+    }
+
+    async function corsProbe() {
+      // Lanza el preflight manual para mostrar sus headers
+      try {
+        const r = await fetch(API_URL, {
+          method: "OPTIONS",
+          headers: {
+            "Access-Control-Request-Method": "POST",
+            // "Origin" lo añade el navegador automáticamente
+          },
+          mode: "cors",
+          cache: "no-store"
+        });
+        const headers = {};
+        r.headers.forEach((v, k) => headers[k] = v);
+        return { status: r.status, headers };
+      } catch (e) {
+        return { error: e.message || String(e) };
+      }
+    }
 
     f.addEventListener("submit", async (ev) => {
       ev.preventDefault();
-      msg.innerHTML = "Enviando…";
-      out.innerHTML = "";
+      msg.innerHTML = "Comprobando CORS…";
+      out.innerHTML = ""; diag.textContent = "";
 
       const payload = {
         name: document.getElementById("name").value.trim(),
         email: document.getElementById("email").value.trim().toLowerCase(),
         password: document.getElementById("password").value
       };
+
+      // 1) Mostrar lo que responde el preflight
+      const pre = await corsProbe();
+      diag.textContent = "Preflight (OPTIONS) →\n" + show(pre) + "\n\n";
+
+      // Si no devuelve Access-Control-Allow-Origin y Allow-Methods: POST, ni lo intentes
+      if (!pre.headers || !pre.headers["access-control-allow-origin"]) {
+        msg.innerHTML = `<div class="err">El preflight no trae Access-Control-Allow-Origin. Revisa CORS en API Gateway o en la Lambda (OPTIONS).</div>`;
+        return;
+      }
+      if (!pre.headers["access-control-allow-methods"] || !/post/i.test(pre.headers["access-control-allow-methods"])) {
+        msg.innerHTML = `<div class="err">El preflight no permite POST. Añade POST en Allow-Methods.</div>`;
+        return;
+      }
+
+      msg.innerHTML = "Enviando registro…";
 
       try {
         const r = await fetch(API_URL, {
@@ -55,21 +108,28 @@
           cache: "no-store",
         });
 
-        const text = await r.text();
-        let data;
-        try { data = text ? JSON.parse(text) : {}; } catch { data = { raw: text }; }
+        const raw = await r.text();
+        const headers = {}; r.headers.forEach((v, k) => headers[k] = v);
+
+        // Diagnóstico de la respuesta del POST
+        diag.textContent += "POST /signup →\n" + show({ status:r.status, headers, rawBody: raw }) + "\n";
+
+        let data = {};
+        try { data = raw ? JSON.parse(raw) : {}; } catch {
+          data = { error: "Respuesta no es JSON", raw };
+        }
 
         if (!r.ok) {
-          console.error("HTTP", r.status, text);
-          msg.innerHTML = `<div class="err">Error ${r.status}: ${data.error || text}</div>`;
+          msg.innerHTML = `<div class="err">Error ${r.status}: ${data.error || raw}</div>`;
+          out.innerHTML = "";
           return;
         }
 
         msg.innerHTML = `<div class="ok">✅ Usuario creado</div>`;
         out.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
       } catch (e) {
-        console.error(e);
         msg.innerHTML = `<div class="err">${e.message}</div>`;
+        diag.textContent += "\nExcepción JS:\n" + (e.stack || e.message || String(e));
       }
     });
   </script>
