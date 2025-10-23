@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>CertiFY - Registro y Login</title>
+<style>
+body { font-family: sans-serif; max-width: 600px; margin: 40px auto; line-height: 1.6; }
+form { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
+label { display: block; margin-top: 10px; }
+input { width: 100%; padding: 8px; margin-top: 4px; }
+button { padding: 8px 14px; margin-top: 10px; font-weight: bold; }
+#authBar { background: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Registro / Inicio de sesión</h1>
+
+<section id="authBar" style="display:none">
+  <span id="authText">...</span>
+  <button id="btnLogout" style="display:none">Cerrar sesión</button>
+</section>
+
+<h2>Nuevo usuario</h2>
+<form id="signupForm">
+  <label>Nombre: <input type="text" id="signupName" required></label>
+  <label>Email: <input type="email" id="signupEmail" required></label>
+  <label>Contraseña: <input type="password" id="signupPass" required></label>
+  <button type="submit">Registrarse</button>
+</form>
+
+<h2>Iniciar sesión</h2>
+<form id="loginForm">
+  <label>Email: <input type="email" id="loginEmail" required></label>
+  <label>Contraseña: <input type="password" id="loginPass" required></label>
+  <button type="submit">Entrar</button>
+</form>
+
+<script>
+const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+
+// ====== AUTH STORAGE ======
+const AUTH_KEY = "currentUser";
+function setCurrentUser(user) {
+  localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+  renderAuthUI();
+}
+function getCurrentUser() {
+  try { return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }
+  catch { return null; }
+}
+function clearCurrentUser() {
+  localStorage.removeItem(AUTH_KEY);
+  renderAuthUI();
+}
+function renderAuthUI() {
+  const u = getCurrentUser();
+  const bar = document.getElementById("authBar");
+  const text = document.getElementById("authText");
+  const btn = document.getElementById("btnLogout");
+  if (u) {
+    text.textContent = `✅ Sesión iniciada: ${u.name} (id: ${u.userId})`;
+    btn.style.display = "inline-block";
+    bar.style.display = "block";
+  } else {
+    text.textContent = "🔒 No autenticado";
+    btn.style.display = "none";
+    bar.style.display = "block";
+  }
+}
+document.getElementById("btnLogout").onclick = clearCurrentUser;
+document.addEventListener("DOMContentLoaded", renderAuthUI);
+
+// ====== SIGNUP ======
+document.getElementById("signupForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = signupName.value.trim();
+  const email = signupEmail.value.trim().toLowerCase();
+  const password = signupPass.value;
+  const body = new URLSearchParams({ name, email, password });
+  const resp = await fetch(`${API_URL}/signup`, { method: "POST", body, mode: "cors" });
+  const data = await resp.json();
+  alert(resp.ok ? "Usuario creado con éxito" : data.error);
+});
+
+// ====== LOGIN ======
+document.getElementById("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const email = loginEmail.value.trim().toLowerCase();
+  const password = loginPass.value;
+  const body = new URLSearchParams({ email, password });
+  const resp = await fetch(`${API_URL}/login`, { method: "POST", body, mode: "cors" });
+  const data = await resp.json();
+  if (resp.ok) {
+    setCurrentUser(data.user);
+    alert("Sesión iniciada correctamente");
+  } else {
+    alert(data.error || "Error de inicio de sesión");
+  }
+});
+</script>
+</body>
+</html>
