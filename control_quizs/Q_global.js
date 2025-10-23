@@ -406,6 +406,9 @@ async function finish(){
   }
   const percent = Math.round((score/total)*100);
 
+  // Recupera usuario logueado de localStorage (lo guardamos en login)
+  const currentUser = JSON.parse(localStorage.getItem("certify_user") || "{}");
+
   const result = {
     ts: new Date().toISOString(),
     quizId: STATE.quizId,
@@ -415,27 +418,21 @@ async function finish(){
     correct: score,
     pct: percent,
     markedCount: Object.values(STATE.marked || {}).filter(Boolean).length,
-    // 👇 importante: número, no null
-    durationSec: STATE.startedAt ? Math.round((Date.now() - STATE.startedAt)/1000) : 0
+    durationSec: STATE.startedAt ? Math.round((Date.now() - STATE.startedAt)/1000) : null,
+    userId: currentUser.userId || "anon",
+    userName: currentUser.name || "(sin nombre)",
+    email: currentUser.email || ""
   };
 
-  // 1) Guardado local inmediato
+  // Guardado local y remoto igual que antes
   saveHistory(result);
-
-  // 2) Guardado remoto (espera breve con timeout)
-  const saveWithTimeout = (p, ms=2000) => Promise.race([
-    p, new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
-  ]);
-
   try {
-    await saveWithTimeout(saveResultRemote(result), 2500); // espera hasta 2.5s
-    console.log("Resultado guardado en DynamoDB");
+    await saveResultRemote(result);
+    console.log("Resultado guardado en DynamoDB con usuario:", result.userName);
   } catch (err) {
-    console.warn("Guardado remoto falló (continuo):", err.message);
+    console.warn("Guardado remoto falló:", err);
   }
 
-  // 3) Navega después del intento de guardado (éxito o timeout)
-  location.hash = '';
   alert(`Quiz finished! ${score}/${total} (${percent}%)`);
   window.location.href = "/history.html";
 }
