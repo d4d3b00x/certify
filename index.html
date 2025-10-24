@@ -4,356 +4,287 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>CertiFY — Free IT Certification Resources and Exams</title>
- <link rel="stylesheet" href="/style_global.css"/> 
+<link rel="stylesheet" href="/style_global.css"/> 
 <style>
 :root{
-  --bg:#efeaff;
-  --surface:#f5f7fb;
-  --card:#efeaff;
-  --ink:#0f1330;
-  --muted:#d0b7ec;
-  --pill-bg:#ffe5bf;
-  --pill-ink:#a915c7;
-  --brand:#0f1438;
-  --cta:#54188d;          /* Naranja AWS */
-  --cta-hover:#8d12ac;
-  --cta-ink:#efeaff;
-  --link:#470447;
-  --ring:rgba(255,153,0,.35);
-  --shadow:0 10px 30px rgba(18,16,99,.12);
-  --radius:18px;
-  --bd:#eefeaff8ebf5;
+  --bg:#f7f8ff;
+  --surface:#fafbff;
+  --card:#ffffff;
+  --ink:#1b1f3a;
+  --muted:#6c6f91;
+  --brand:#161a3f;
+  --bd:#e7eafe;
+  --ring:rgba(90,100,200,.18);
+  --shadow:0 8px 24px rgba(28,27,70,.08);
+  --radius:16px;
+
+  --aws-50:#fff6e9;
+  --aws-100:#ffefd7;
+  --aws-500:#ff9900;
+  --aws-600:#e28500;
+  --aws-ink:#3a2600;
+
+  --az-50:#eef6ff;
+  --az-100:#e6f2ff;
+  --az-500:#0078d4;
+  --az-600:#0a6cbf;
+  --az-ink:#06233a;
 }
+
+/* Reset */
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", "Noto Sans", sans-serif;
   color:var(--ink);
-  background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);
+  background:
+    radial-gradient(900px 420px at 12% -10%, #f1f4ff 0, transparent 60%),
+    radial-gradient(900px 420px at 88% -10%, #fff4ea 0, transparent 60%),
+    linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
   line-height:1.6;
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-/* Barra superior */
-
-
-/* Layout */
 .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.brand-row{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
 
-/* Logo AWS */
-.aws-logo{display:flex;align-items:center;gap:10px}
-.aws-swoosh{
-  width:32px;height:22px;border-bottom-left-radius:50px;border-bottom-right-radius:50px;
-  background:conic-gradient(from 210deg,#3e0746 0 70%,#5e0766d2 0 100%);
-  box-shadow:0 0 0 2px #ffb30022 inset;
-}
-.aws-word{font-weight:900;font-size:28px;letter-spacing:.4px}
-
-/* Tarjeta header */
-.hero.card{
-position:relative;
-}
-.pill{
-  display:inline-block;background:rgba(255,153,0,0.15);color:#7700ff;
-  font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
-  padding:8px 12px;border-radius:999px;border:1px solid rgba(255,153,0,0.3);
-}
-h1{
-  font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;
-  color:var(--brand);font-weight:900;
-}
-.actions{display:flex;align-items:center;gap:16px;margin:4px 0 6px;flex-wrap:wrap}
-.btn{
-  appearance:none;border:0;cursor:pointer;
-  background:var(--cta);color:var(--cta-ink);
-  font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
-
-}
-.btn:hover{background:var(--cta-hover)}
-.btn:focus{outline:3px solid var(--ring);outline-offset:2px}
-.subtitle{color:var(--muted);font-size:1.05rem}
-.subtitle a{color:var(--link);font-weight:800;text-decoration:none}
-.subtitle a:hover{text-decoration:underline}
-
-/* Grid y tarjetas */
-.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 40px}
-@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+/* Cards */
 .card{
-  background:var(--card);border:1px solid var(--bd);border-radius:16px;
-  padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  transition:transform .12s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
-h2{margin:.2rem 0 8px;color:var(--brand)}
-h3{margin:1rem 0 .5rem;color:var(--brand)}
-
-.hint{color:var(--muted);font-size:.98rem}
-code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
-.span-2{grid-column:1 / -1}
-.foot{opacity:.85;font-size:.9rem;margin-top:10px;color:var(--muted)}
-
-/* === AWS GROUP WRAPPER === */
-.aws-group2{
-  background:#061f38;
-  border-left:6px solid #7207a3;
-  border-radius:12px;
-  padding:32px 28px;
-  margin:4px auto;
-  max-width:1100px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+.card.path:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 28px rgba(28,27,70,.10);
+  border-color:#dfe3ff;
 }
 
-.aws-group3{
-  background:#f8f9fa;
-  border-left:6px solid #f89718;
-  border-radius:12px;
-  padding:5px 10px;
-  margin:4px auto;
-  max-width:1100px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+/* Hero */
+.hero{
+  text-align:center;
+  border:1px solid #ecefff;
+  padding:34px 22px 18px;
+  background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%);
 }
-
-.aws-group .group-header{
-  display:flex;align-items:center;gap:16px;margin-bottom:20px;
+.hero h1{
+  font-size:clamp(1.8rem,2.1vw + 1rem,2.5rem);
+  line-height:1.15; margin:6px 0 6px; font-weight:900; color:var(--brand);
 }
-.aws-group .group-title{
-  font-size:1.6rem;font-weight:700;color:#232F3E;margin:0;letter-spacing:0.3px;
+.hero .desc{color:var(--muted); max-width:820px; margin:0 auto}
+
+/* Login centrado */
+.login-bar{
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  margin:16px auto 0; padding:10px 18px;
+  background:#fff; border:1px solid #ecefff; border-radius:999px;
+  width:fit-content; color:#2a2e57; font-weight:700;
+  box-shadow:0 4px 12px rgba(30,35,80,.06);
 }
-.aws-group .desc a{
-  color:#FF9900;font-weight:600;text-decoration:none;
+.login-bar span{white-space:nowrap;}
+.login-bar button{
+  background:none; border:none; color:#5c5fff; cursor:pointer;
+  font-weight:700; padding:2px 6px; border-radius:8px;
 }
-.aws-group .desc a:hover{text-decoration:underline}
-/* === /AWS GROUP WRAPPER === */
-.azure-group3{
-  background:#f5f7fb;                 /* fondo suave */
-  border-left:6px solid #64ccfcbb;       /* azul marca */
-  border-radius:12px;
-  padding:3px 10px;
-  margin:40px auto;
-  max-width:1100px;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
+.login-bar button:hover{background:#f0f2ff;}
+
+/* Badges */
+.badge,.badge1,.badge2{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:8px 12px; border-radius:999px; font-weight:800;
+  border:1px solid #edf0ff; background:#f7f8ff; color:#2b2f57;
 }
+.badge1{background:var(--aws-50); border-color:var(--aws-100); color:var(--aws-ink)}
+.badge2{background:var(--az-50);  border-color:var(--az-100);  color:var(--az-ink)}
 
-/* Barra superior fija y con el contenido a la derecha */
-.topbar{
-  height:56px;
-  background:var(--bg);
-  display:flex;
-  align-items:center;
-  justify-content:flex-end; /* ⟵ empuja el contenido a la derecha */
-  padding:0 20px;
-  position:sticky; /* o fixed si la quieres siempre visible */
-  top:0;
-  z-index:1000;
-  border-bottom:1px solid #e6e0ff;
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 28px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+
+/* Listas */
+ul{margin:0;padding-left:0;list-style:none}
+ul li{
+  position:relative; padding:10px 12px 10px 28px; margin:10px 0;
+  border:1px solid #edf0ff; border-radius:12px; background:#ffffff;
 }
-
-/* Estilo del auth bar (ajústalo a tu gusto) */
-
-#authBar{
-  position:absolute;
-  top:10px;           /* ajusta según tu espaciado */
-  right:130px;
-  display:flex; align-items:center; gap:12px;
-  font-size:.95rem; color:var(--brand);
-  background:rgba(255,153,0,.12);
-  border:1px solid rgba(255,153,0,.25);
-  padding:8px 12px; border-radius:999px;
+ul li::before{
+  content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(45deg);
+  width:10px; height:10px; border-radius:2px; background:#d9defc; box-shadow:0 1px 3px rgba(36,44,110,.16);
 }
+ul li a{text-decoration:none; color:var(--aws-600); font-weight:700;}
+ul li a:hover{text-decoration:underline;}
 
-/* Coloca logo y texto en una misma fila */
-.desc2 {
-  display: flex;
-  align-items: center;      /* centra verticalmente logo y texto */
-  gap: 11px;                /* espacio entre logo y texto */
-  margin: 15px 0;
+/* Botones */
+.actions{display:flex;align-items:center;gap:12px;margin:12px 0 6px;flex-wrap:wrap;justify-content:center;}
+.btn{
+  appearance:none; border:1px solid #e7eafe; cursor:pointer;
+  background:#f5f7ff; color:#262a52;
+  font-weight:900; letter-spacing:.2px; padding:12px 16px; border-radius:12px;
+  box-shadow:0 6px 16px rgba(25,22,84,.06);
+  transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
 }
+.btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
+.btn:focus{ outline:3px solid var(--ring); outline-offset:2px }
+.btn.secondary{ background:#ffffff; color:#2a2e57; }
 
-.desc2 .logo {
-  width: 75px;
-  height: auto;
-  flex: 0 0 auto;           /* el logo no se estira */
-}
+.btn-aws.solid{ background:var(--aws-500); border-color:#ffc470; color:#fff; }
+.btn-aws.solid:hover{ background:var(--aws-600) }
 
-.desc2 .text {
-  flex: 1 1 auto;           /* el texto ocupa el resto */
-  line-height: 1.4;
-}
+.btn-az.solid{ background:var(--az-500); border-color:#98cfff; color:#fff; }
+.btn-az.solid:hover{ background:var(--az-600) }
 
+/* Sections */
+.aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%);}
+.azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%);}
 
+/* Logo + text */
+.desc2{ display:flex; align-items:center; gap:16px; margin:10px 0 4px; }
+.desc2 .logo{ width:66px; height:auto; flex:0 0 auto }
+.desc2 .text{ flex:1 1 auto; line-height:1.5; color:var(--ink); font-size:.98rem }
 
+.note{ font-size:.95rem; color:var(--muted) }
+.center{ text-align:center }
 </style>
 </head>
 <body>
 
-<!-- espacio top bar <div class="topbar"></div> -->
-
 <div class="shell">
-    <!-- Cabecera -->
-  
+  <main id="view" role="main" class="wrap">
 
-    <!-- Contenido principal -->
-    <main id="view" role="main">
-
-<!-- Zona general de certificaciones cloud -->
-<section class="vendor-zone">
-<div >
-    <p id="authBar"></p>
-</div><br><br><br>
-
-<script src="/login/auth.js"></script>
-  <!-- Grupo AWS -->
-  <section class="path-group aws-group" aria-label="AWS Certifications">
-    
-
-
-<section class="path" aria-label="GUIDE">
-
-  
-      <span class="badge1">WELLCOME TO <b>CERTIFY.TECH</b></span>
-      
+    <!-- HERO -->
+    <section class="card hero" aria-label="Welcome">
+      <span class="badge">WELCOME TO <b>CERTIFY.TECH</b></span>
+      <h1>Practice. Learn. Pass.</h1>
       <p class="desc">
-        
-          <div class="ov-row"><span class="ov-key">A community where technological knowledge is shared.
-Access content created by professionals and practice with certification simulators that include detailed explanations.
+        Bite-sized tips + realistic simulators with clear explanations. Studying should feel simple and focused.
+      </p>
 
-We grow together on the path to certification.</span></div>
-    
-      
+      <!-- LOGIN BAR -->
+      <div class="login-bar">
+        <span id="authBar">Checking session…</span>
+      </div>
     </section>
 
+    <!-- AWS -->
+    <section id="aws" class="aws-group3 card">
+      <span class="badge1">🟧 AWS SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)</span>
+      <section class="grid">
+        <article class="card path">
+          <div class="desc2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS Logo" class="logo">
+            <div class="text">Design secure and cost-optimized AWS architectures. Perfect if you have some AWS or on-prem experience.</div>
+          </div>
+          <h2>Exam Domains</h2>
+          <ul>
+            <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain1.html">Domain 1</a></strong> — Design Secure Architectures (30%)</li>
+            <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain2.html">Domain 2</a></strong> — Design Resilient Architectures (26%)</li>
+            <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain3.html">Domain 3</a></strong> — Design High-Performing Architectures (24%)</li>
+            <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain4.html">Domain 4</a></strong> — Design Cost-Optimized Architectures (20%)</li>
+          </ul>
+        </article>
 
-<main class="wrap2">
-
-  <div class="aws-group3">
-   <section class="path" aria-label="GUIDE">
-    
-      <span class="badge">AWS SOLUTIONS ARCHITECT ASSOCIATE (SAA-C03)</span>
-      
-      <div class="desc2">
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
-    alt="AWS Logo"
-    class="logo"
-    onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
-  >
-  <div class="text">
-    <div class="ov-row">
-      <span class="ov-key">
-        The AWS Certified Solutions Architect – Associate focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.
-      </span>
-    </div>
-  </div>
-</div>
-          
-    </section>
-    
-    <section class="grid">
-      <article class="card path">
-         
-         <span class="badge">EXAM DOMAINS STUDY TIPS</span>
-        
-        <ul>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain1.html">Domain 1</a> — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain2.html">Domain 2</a> — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain3.html">Domain 3</a> — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain4.html">Domain 4</a> — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
-        </ul>
-      </article>
-
-      <aside class="card path">
-        <span class="badge">SAA-C03 EXAM SIMULATOR</span>
-       <div class="mode-row" style="align-items:center; margin-top:8px">
-            <label for="studyCount" class="note">Select questions: </label>
-            <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
+        <aside class="card path">
+          <h3>SAA-C03 Exam Simulator</h3>
+          <div style="display:flex; align-items:center; gap:10px; justify-content:center; margin-top:6px">
+            <label for="studyCount" class="note">Questions:</label>
+            <select id="studyCount" class="btn btn-aws">
               <option value="5" selected>5</option>
               <option value="10">10</option>
-             
               <option value="30">30</option>
             </select>
           </div>
-
-          <div class="actions" style="margin-top:12px">
-            <button class="btn" onclick="start('aws-saa-c03')">STAR QUIZ</button>
-            <button class="btn"><a class="btn" href="/score/ranking.html" >RANKING</a></button>
-            
+          <div class="actions" style="margin-top:8px">
+            <button class="btn btn-aws solid start-btn" data-quiz="aws-saa-c03">▶ Start Quiz</button>
+            <a class="btn btn-aws" href="/score/ranking.html">🏆 Ranking</a>
           </div>
-          <p class="note">To take the quizzes, you must be logged in.</p>
-
-
-
-      </aside>
-
+          <p class="note center">Login to save progress & appear on the leaderboard.</p>
+        </aside>
+      </section>
     </section>
 
-  </div>
-</main>
+    <!-- AZURE -->
+    <section id="azure" class="azure-group3 card">
+      <span class="badge2">🔵 MICROSOFT AZURE ADMINISTRATOR — ASSOCIATE (AZ-104)</span>
+      <section class="grid">
+        <article class="card path">
+          <div class="desc2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg" alt="Azure Logo" class="logo">
+            <div class="text">Master Azure admin essentials: identities, governance, compute, networking and monitoring.</div>
+          </div>
+          <h2>Exam Domains</h2>
+          <ul>
+            <li>Manage identities & governance (15–20%)</li>
+            <li>Implement & manage storage (15–20%)</li>
+            <li>Deploy & manage compute (20–25%)</li>
+            <li>Configure & manage networking (20–25%)</li>
+            <li>Monitor & maintain resources (10–15%)</li>
+          </ul>
+        </article>
 
-
-<main class="wrap2">
-
-  <div class="azure-group3">
-   <section class="path" aria-label="GUIDE">
-      <span class="badge2">AZURE CERTIFICATIONS</span>
-      
-      <p class="desc">
-    <img
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg"
-        alt="Microsoft Azure Logo"
-        class="group-logo"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/640px-Microsoft_Azure_Logo.svg.png';"
-      >
-      <div class="ov-row"><span class="ov-key"><button onclick="start('az-104')">Azure AZ-104</button>The Azure Certified Solutions Architect - Expert focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
-    
-          
-    </section>
-    
-    <section class="grid">
-      <article class="card path">
-         
-        <h2>Microsoft Azure Administrator (AZ-104)</h2>
-        <ul>
-          <li><strong>Domain 1 — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
-          <li><strong>Domain 2 — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
-          <li><strong>Domain 3 — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
-          <li><strong>Domain 4 — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
-        </ul>
-        <p class="hint">Aprende defaults de cada servicio, límites, y dónde están los límites de seguridad (cuenta/VPC/SG/bucket/key).</p>
-      </article>
-
-      <aside class="card path">
-        <h2>Quick Patterns</h2>
-        <ul>
-          <li><strong>S3 privado</strong>: Gateway Endpoint + bucket policy <code>aws:SourceVpce</code>.</li>
-          <li><strong>EKS least-privilege</strong>: IRSA (OIDC) con rol por service account.</li>
-          <li><strong>Serverless privado</strong>: Interface Endpoints (Secrets Manager, SSM, STS…).</li>
-          <li><strong>Baja latencia global</strong>: Global Accelerator para tráfico no-cacheable.</li>
-          <li><strong>Base de datos HA</strong>: RDS Multi-AZ; replicas para lectura; Aurora = failover rápido.</li>
-        </ul>
-      </aside>
-
-      
-      <article class="card path span-2">
-        <h2>Storage &amp; Data</h2>
-        <ul>
-          <li><strong>S3</strong>: versioning, encryption (SSE-S3/KMS), lifecycle, replication, access points; clases: Standard / IA / One Zone-IA / Intelligent-Tiering / Glacier tiers.</li>
-          <li><strong>EBS</strong>: gp3 desacopla perf/tamaño; io2/io2 BX para misión crítica; st1/sc1 para throughput/frío.</li>
-          <li><strong>EFS</strong>: regional, NFS, multi-AZ; IA/Archive tiers; miles de montajes concurrentes.</li>
-          <li><strong>DynamoDB</strong>: PK + sort key; GSIs/LSIs; DAX; on-demand/provisioned; streams para eventos.</li>
-          <li><strong>RDS/Aurora</strong>: Multi-AZ para HA; read replicas; backups; Proxy para pool de conexiones.</li>
-        </ul>
-      </article>
-
-      
+        <aside class="card path">
+          <h3>AZ-104 Exam Simulator</h3>
+          <div style="display:flex; align-items:center; gap:10px; justify-content:center; margin-top:6px">
+            <label for="studyCount2" class="note">Questions:</label>
+            <select id="studyCount2" class="btn btn-az">
+              <option value="5" selected>5</option>
+              <option value="10">10</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <div class="actions" style="margin-top:8px">
+            <button class="btn btn-az solid start-btn" data-quiz="az-104">▶ Start Quiz</button>
+            <a class="btn btn-az" href="/score/ranking.html">🏆 Ranking</a>
+          </div>
+          <p class="note center">Log in to save your best runs.</p>
+        </aside>
+      </section>
     </section>
 
+  </main>
+</div>
 
-  </div>
-</main>
+<!-- JS -->
+<script src="/questions.js"></script>
+<script src="/control_quizs/Q_global.js"></script>
 
+<script>
+// auth.js mejorado con logout y login redirigido
+function getCurrentUser() {
+  try { return JSON.parse(localStorage.getItem("currentUser") || "null"); }
+  catch { return null; }
+}
 
-  <script src="/questions.js"></script>
-  <script src="/control_quizs/Q_global.js"></script>
+function logoutUser() {
+  localStorage.removeItem("currentUser");
+  renderAuthBar(); // se queda en la misma página
+}
+
+function renderAuthBar() {
+  const u = getCurrentUser();
+  const bar = document.getElementById("authBar");
+  if (!bar) return;
+  if (u) {
+    bar.innerHTML = `✅ ${u.name} <span style="color:#999">(${u.email})</span> 
+      <button onclick="logoutUser()">Logout</button>`;
+  } else {
+    bar.innerHTML = `🔒 Not authenticated <button onclick="location.href='/login/login.html'">Login</button>`;
+  }
+}
+document.addEventListener("DOMContentLoaded", renderAuthBar);
+
+/* Start buttons -> start() */
+document.addEventListener('DOMContentLoaded', ()=>{
+  document.querySelectorAll('.start-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const quiz = btn.getAttribute('data-quiz');
+      if (typeof start === 'function') start(quiz);
+    });
+  });
+});
+</script>
 
 </body>
 </html>
-
