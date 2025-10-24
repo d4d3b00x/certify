@@ -100,10 +100,11 @@ body{
 .badge1{background:var(--aws-50); border-color:var(--aws-100); color:var(--aws-ink)}
 .badge2{background:var(--az-50);  border-color:var(--az-100);  color:var(--az-ink)}
 
+/* Grid */
 .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 28px}
 @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
 
-/* Listas */
+/* Lists */
 ul{margin:0;padding-left:0;list-style:none}
 ul li{
   position:relative; padding:10px 12px 10px 28px; margin:10px 0;
@@ -116,7 +117,16 @@ ul li::before{
 ul li a{text-decoration:none; color:var(--aws-600); font-weight:700;}
 ul li a:hover{text-decoration:underline;}
 
-/* Botones */
+/* Brand sections */
+.aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%);}
+.azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%);}
+
+/* Logo + text */
+.desc2{ display:flex; align-items:center; gap:16px; margin:10px 0 4px; }
+.desc2 .logo{ width:66px; height:auto; flex:0 0 auto }
+.desc2 .text{ flex:1 1 auto; line-height:1.5; color:var(--ink); font-size:.98rem }
+
+/* Buttons */
 .actions{display:flex;align-items:center;gap:12px;margin:12px 0 6px;flex-wrap:wrap;justify-content:center;}
 .btn{
   appearance:none; border:1px solid #e7eafe; cursor:pointer;
@@ -132,19 +142,72 @@ ul li a:hover{text-decoration:underline;}
 
 .btn-aws.solid{ background:var(--aws-500); border-color:#ffc470; color:#fff; }
 .btn-aws.solid:hover{ background:var(--aws-600) }
+.btn-aws{ color:var(--aws-ink) }
 
 .btn-az.solid{ background:var(--az-500); border-color:#98cfff; color:#fff; }
 .btn-az.solid:hover{ background:var(--az-600) }
+.btn-az{ color:var(--az-ink) }
 
-/* Sections */
-.aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%);}
-.azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%);}
+/* =========================
+   ✨ SIMULATOR — reorganized
+   ========================= */
+.sim-card h3{margin:0 0 10px}
+.sim-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sim-form .full{grid-column:1/-1}
+@media (max-width:720px){ .sim-form{grid-template-columns:1fr} }
 
-/* Logo + text */
-.desc2{ display:flex; align-items:center; gap:16px; margin:10px 0 4px; }
-.desc2 .logo{ width:66px; height:auto; flex:0 0 auto }
-.desc2 .text{ flex:1 1 auto; line-height:1.5; color:var(--ink); font-size:.98rem }
+.segmented{
+  display:flex; gap:8px; background:#f6f7ff; border:1px solid #e6e9ff; border-radius:10px; padding:6px;
+}
+.segmented input{display:none}
+.segmented label{
+  flex:1 1 auto; text-align:center; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:800;
+  color:#343a6e;
+}
+.segmented input:checked + label{ background:#fff; border:1px solid #e6e9ff }
 
+.segmented.aws input:checked + label{ border-color:#ffddad; color:#7b4a00 }
+.segmented.az  input:checked + label{ border-color:#bfe0ff; color:#0a4a7b }
+
+.field{
+  display:flex; flex-direction:column; gap:6px;
+}
+.field label{font-weight:800; font-size:.93rem; color:#2a2e57}
+.select, .text{
+  display:flex; align-items:center; gap:8px;
+  border:1px solid #e6e9ff; border-radius:10px; padding:8px 10px; background:#fff;
+}
+.select select, .text input{border:none; outline:none; font-weight:700; color:#2a2e57; width:100%; background:transparent}
+.small{font-size:.9rem; color:var(--muted)}
+
+.switch{
+  display:inline-flex; align-items:center; gap:10px; font-weight:800; color:#2a2e57;
+}
+.switch input{appearance:none; width:42px;height:24px;border-radius:999px;background:#e8ebff;position:relative;outline:none;cursor:pointer;transition:.15s}
+.switch input::after{content:""; position:absolute; left:4px; top:4px; width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.15); transition:.15s}
+.switch input:checked{background:#d9e3ff}
+.switch input:checked::after{left:22px}
+
+.presets{display:flex; flex-wrap:wrap; gap:8px}
+.chip{
+  padding:8px 10px; border-radius:999px; border:1px solid #e6e9ff; background:#fff; cursor:pointer; font-weight:800;
+}
+.chip.aws{ border-color:#ffddad; color:#7b4a00; }
+.chip.az{  border-color:#bfe0ff; color:#0a4a7b; }
+.chip:hover{ background:#fafbff }
+
+.domains{display:flex;flex-wrap:wrap;gap:8px}
+.domains .tag{
+  border:1px solid #e6e9ff; padding:6px 10px; border-radius:999px; cursor:pointer; user-select:none; font-weight:800; color:#37407a; background:#fff;
+}
+.domains .tag.active{ box-shadow:0 0 0 2px #ffe7c6 inset; color:#7b4a00; }
+.domains.az .tag.active{ box-shadow:0 0 0 2px #cfe9ff inset; color:#0a4a7b; }
+
+.kbd{
+  display:inline-block; padding:.1rem .4rem; border-radius:6px; border:1px solid #e6e9ff; background:#fff; font-weight:800;
+}
+
+/* Footer note */
 .note{ font-size:.95rem; color:var(--muted) }
 .center{ text-align:center }
 </style>
@@ -175,7 +238,7 @@ ul li a:hover{text-decoration:underline;}
         <article class="card path">
           <div class="desc2">
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS Logo" class="logo">
-            <div class="text">Design secure and cost-optimized AWS architectures. Perfect if you have some AWS or on-prem experience.</div>
+            <div class="text">Design secure and cost-optimized AWS architectures. Perfect if you’ve got some AWS or strong on-prem experience.</div>
           </div>
           <h2>Exam Domains</h2>
           <ul>
@@ -186,21 +249,108 @@ ul li a:hover{text-decoration:underline;}
           </ul>
         </article>
 
-        <aside class="card path">
+        <!-- SIMULATOR AWS -->
+        <aside id="sim-aws" class="card path sim-card" data-brand="aws" data-quiz="aws-saa-c03">
           <h3>SAA-C03 Exam Simulator</h3>
-          <div style="display:flex; align-items:center; gap:10px; justify-content:center; margin-top:6px">
-            <label for="studyCount" class="note">Questions:</label>
-            <select id="studyCount" class="btn btn-aws">
-              <option value="5" selected>5</option>
-              <option value="10">10</option>
-              <option value="30">30</option>
-            </select>
+
+          <div class="sim-form">
+            <!-- Mode -->
+            <div class="field">
+              <label>Mode</label>
+              <div class="segmented aws">
+                <input type="radio" id="aws-mode-practice" name="aws-mode" value="practice" checked>
+                <label for="aws-mode-practice">Practice</label>
+                <input type="radio" id="aws-mode-exam" name="aws-mode" value="exam">
+                <label for="aws-mode-exam">Exam</label>
+              </div>
+              <div class="small">Practice shows explanations after each answer; Exam keeps them for the end.</div>
+            </div>
+
+            <!-- Question count -->
+            <div class="field">
+              <label>Questions</label>
+              <div class="select">
+                <select id="studyCount">
+                  <option value="5" selected>5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="65">65 (Full)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Time limit -->
+            <div class="field">
+              <label>Time limit</label>
+              <div class="select">
+                <select id="aws-time">
+                  <option value="0" selected>No limit</option>
+                  <option value="900">15 min</option>
+                  <option value="1800">30 min</option>
+                  <option value="4500">75 min</option>
+                  <option value="7800">130 min (full)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Explanations -->
+            <div class="field">
+              <label>Explanations</label>
+              <div class="segmented aws">
+                <input type="radio" id="aws-exp-after" name="aws-exp" value="after" checked>
+                <label for="aws-exp-after">After answer</label>
+                <input type="radio" id="aws-exp-end" name="aws-exp" value="end">
+                <label for="aws-exp-end">At the end</label>
+                <input type="radio" id="aws-exp-hide" name="aws-exp" value="hide">
+                <label for="aws-exp-hide">Hidden</label>
+              </div>
+            </div>
+
+            <!-- Domains filter -->
+            <div class="field full">
+              <label>Domains (optional filter)</label>
+              <div class="domains" data-scope="aws">
+                <div class="tag" data-val="D1">D1</div>
+                <div class="tag" data-val="D2">D2</div>
+                <div class="tag" data-val="D3">D3</div>
+                <div class="tag" data-val="D4">D4</div>
+              </div>
+              <div class="small">Leave empty to include all domains.</div>
+            </div>
+
+            <!-- Toggles -->
+            <div class="field">
+              <label>Shuffle</label>
+              <div class="switch"><input id="aws-shuffle" type="checkbox" checked> Shuffle questions</div>
+            </div>
+
+            <div class="field">
+              <label>Audio</label>
+              <div class="switch"><input id="aws-sound" type="checkbox"> SFX on correct/incorrect</div>
+            </div>
+
+            <!-- Presets -->
+            <div class="field full">
+              <label>Quick presets</label>
+              <div class="presets">
+                <button class="chip aws" data-preset="practice-5">Practice 5</button>
+                <button class="chip aws" data-preset="practice-10">Practice 10</button>
+                <button class="chip aws" data-preset="exam-30">Mini-exam 30</button>
+                <button class="chip aws" data-preset="exam-65">Full exam 65</button>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="field full">
+              <div class="actions" style="margin-top:8px">
+                <button class="btn btn-aws solid start-btn">▶ Start Quiz</button>
+                <a class="btn btn-aws" href="/score/ranking.html">🏆 Ranking</a>
+                <button class="btn secondary" id="aws-restore">⏮ Resume last</button>
+              </div>
+              <div class="small center">Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.</div>
+            </div>
           </div>
-          <div class="actions" style="margin-top:8px">
-            <button class="btn btn-aws solid start-btn" data-quiz="aws-saa-c03">▶ Start Quiz</button>
-            <a class="btn btn-aws" href="/score/ranking.html">🏆 Ranking</a>
-          </div>
-          <p class="note center">Login to save progress & appear on the leaderboard.</p>
         </aside>
       </section>
     </section>
@@ -224,21 +374,107 @@ ul li a:hover{text-decoration:underline;}
           </ul>
         </article>
 
-        <aside class="card path">
+        <!-- SIMULATOR AZURE -->
+        <aside id="sim-az" class="card path sim-card" data-brand="az" data-quiz="az-104">
           <h3>AZ-104 Exam Simulator</h3>
-          <div style="display:flex; align-items:center; gap:10px; justify-content:center; margin-top:6px">
-            <label for="studyCount2" class="note">Questions:</label>
-            <select id="studyCount2" class="btn btn-az">
-              <option value="5" selected>5</option>
-              <option value="10">10</option>
-              <option value="30">30</option>
-            </select>
+
+          <div class="sim-form">
+            <!-- Mode -->
+            <div class="field">
+              <label>Mode</label>
+              <div class="segmented az">
+                <input type="radio" id="az-mode-practice" name="az-mode" value="practice" checked>
+                <label for="az-mode-practice">Practice</label>
+                <input type="radio" id="az-mode-exam" name="az-mode" value="exam">
+                <label for="az-mode-exam">Exam</label>
+              </div>
+            </div>
+
+            <!-- Question count -->
+            <div class="field">
+              <label>Questions</label>
+              <div class="select">
+                <select id="studyCount2">
+                  <option value="5" selected>5</option>
+                  <option value="10">10</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="65">65 (Full)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Time limit -->
+            <div class="field">
+              <label>Time limit</label>
+              <div class="select">
+                <select id="az-time">
+                  <option value="0" selected>No limit</option>
+                  <option value="900">15 min</option>
+                  <option value="1800">30 min</option>
+                  <option value="4200">70 min</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Explanations -->
+            <div class="field">
+              <label>Explanations</label>
+              <div class="segmented az">
+                <input type="radio" id="az-exp-after" name="az-exp" value="after" checked>
+                <label for="az-exp-after">After answer</label>
+                <input type="radio" id="az-exp-end" name="az-exp" value="end">
+                <label for="az-exp-end">At the end</label>
+                <input type="radio" id="az-exp-hide" name="az-exp" value="hide">
+                <label for="az-exp-hide">Hidden</label>
+              </div>
+            </div>
+
+            <!-- Topic tags (example) -->
+            <div class="field full">
+              <label>Topics (optional)</label>
+              <div class="domains az" data-scope="az">
+                <div class="tag" data-val="Identity">Identity</div>
+                <div class="tag" data-val="Storage">Storage</div>
+                <div class="tag" data-val="Compute">Compute</div>
+                <div class="tag" data-val="Network">Network</div>
+                <div class="tag" data-val="Monitor">Monitor</div>
+              </div>
+              <div class="small">Leave empty to include all topics.</div>
+            </div>
+
+            <!-- Toggles -->
+            <div class="field">
+              <label>Shuffle</label>
+              <div class="switch"><input id="az-shuffle" type="checkbox" checked> Shuffle questions</div>
+            </div>
+
+            <div class="field">
+              <label>Audio</label>
+              <div class="switch"><input id="az-sound" type="checkbox"> SFX on correct/incorrect</div>
+            </div>
+
+            <!-- Presets -->
+            <div class="field full">
+              <label>Quick presets</label>
+              <div class="presets">
+                <button class="chip az" data-preset="practice-5">Practice 5</button>
+                <button class="chip az" data-preset="practice-10">Practice 10</button>
+                <button class="chip az" data-preset="exam-30">Mini-exam 30</button>
+                <button class="chip az" data-preset="exam-65">Full exam 65</button>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="field full">
+              <div class="actions" style="margin-top:8px">
+                <button class="btn btn-az solid start-btn">▶ Start Quiz</button>
+                <a class="btn btn-az" href="/score/ranking.html">🏆 Ranking</a>
+                <button class="btn secondary" id="az-restore">⏮ Resume last</button>
+              </div>
+              <div class="small center">Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.</div>
+            </div>
           </div>
-          <div class="actions" style="margin-top:8px">
-            <button class="btn btn-az solid start-btn" data-quiz="az-104">▶ Start Quiz</button>
-            <a class="btn btn-az" href="/score/ranking.html">🏆 Ranking</a>
-          </div>
-          <p class="note center">Log in to save your best runs.</p>
         </aside>
       </section>
     </section>
@@ -251,17 +487,15 @@ ul li a:hover{text-decoration:underline;}
 <script src="/control_quizs/Q_global.js"></script>
 
 <script>
-// auth.js mejorado con logout y login redirigido
+/* ===== Auth bar (stay on same page) ===== */
 function getCurrentUser() {
   try { return JSON.parse(localStorage.getItem("currentUser") || "null"); }
   catch { return null; }
 }
-
 function logoutUser() {
   localStorage.removeItem("currentUser");
-  renderAuthBar(); // se queda en la misma página
+  renderAuthBar();
 }
-
 function renderAuthBar() {
   const u = getCurrentUser();
   const bar = document.getElementById("authBar");
@@ -275,13 +509,154 @@ function renderAuthBar() {
 }
 document.addEventListener("DOMContentLoaded", renderAuthBar);
 
-/* Start buttons -> start() */
+/* ===== Simulator helpers ===== */
+function savePrefs(quizId, prefs){
+  try{
+    const all = JSON.parse(localStorage.getItem("quiz_prefs")||"{}");
+    all[quizId] = {...(all[quizId]||{}), ...prefs};
+    localStorage.setItem("quiz_prefs", JSON.stringify(all));
+  }catch{}
+}
+function loadPrefs(quizId){
+  try{
+    const all = JSON.parse(localStorage.getItem("quiz_prefs")||"{}");
+    return all[quizId]||{};
+  }catch{ return {}; }
+}
+
+/* Apply preset to a simulator card */
+function applyPreset(simEl, preset){
+  const [mode, countStr] = preset.split("-");
+  const count = parseInt(countStr,10);
+  const quiz = simEl.dataset.quiz;
+
+  // Mode
+  const modeInput = simEl.querySelector(`input[name="${quiz.includes('aws')?'aws':'az'}-mode"][value="${mode}"]`);
+  if (modeInput) modeInput.checked = true;
+
+  // Questions (sync with the select the quiz.js reads)
+  const selectId = quiz === 'aws-saa-c03' ? '#studyCount' : '#studyCount2';
+  const sel = simEl.querySelector(selectId);
+  if (sel) sel.value = String(count);
+
+  // Time defaults for presets
+  const timeSel = simEl.querySelector(quiz==='aws-saa-c03' ? '#aws-time' : '#az-time');
+  if (timeSel){
+    if (mode==='exam'){
+      timeSel.value = (quiz==='aws-saa-c03' ? (count===65? '7800':'1800') : (count===65? '4200':'1800'));
+    } else {
+      timeSel.value = '0';
+    }
+  }
+}
+
+/* Collect current options from a simulator card and persist */
+function collectOptions(simEl){
+  const brand = simEl.dataset.brand;
+  const quiz  = simEl.dataset.quiz;
+
+  const isAWS = brand==='aws';
+  const mode = simEl.querySelector(`input[name="${isAWS?'aws':'az'}-mode"]:checked`)?.value || 'practice';
+  const count = parseInt(simEl.querySelector(isAWS?'#studyCount':'#studyCount2')?.value||'5',10);
+  const timeLimit = parseInt(simEl.querySelector(isAWS?'#aws-time':'#az-time')?.value||'0',10);
+  const exp = simEl.querySelector(`input[name="${isAWS?'aws':'az'}-exp"]:checked`)?.value || 'after';
+  const shuffle = simEl.querySelector(isAWS?'#aws-shuffle':'#az-shuffle')?.checked || false;
+  const sound = simEl.querySelector(isAWS?'#aws-sound':'#az-sound')?.checked || false;
+
+  // Domain/topic tags
+  const tagsBox = simEl.querySelector('.domains');
+  const tags = [];
+  if (tagsBox){
+    tagsBox.querySelectorAll('.tag.active').forEach(t=> tags.push(t.dataset.val));
+  }
+
+  // Persist (these can be picked by your quiz renderer if you want)
+  const prefs = { mode, count, timeLimit, explanations: exp, shuffle, sound, tags };
+  savePrefs(quiz, prefs);
+
+  // Also persist count to the select that your current start() already reads (#studyCount / #studyCount2)
+  // (Already set by user; nothing else to do here.)
+  return prefs;
+}
+
+/* Wire up UI */
 document.addEventListener('DOMContentLoaded', ()=>{
-  document.querySelectorAll('.start-btn').forEach(btn=>{
+  // Toggle active on domain/topic tags
+  document.querySelectorAll('.domains .tag').forEach(tag=>{
+    tag.addEventListener('click', ()=> tag.classList.toggle('active'));
+  });
+
+  // Presets
+  document.querySelectorAll('.chip[data-preset]').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const sim = chip.closest('.sim-card');
+      applyPreset(sim, chip.dataset.preset);
+    });
+  });
+
+  // Resume last (just starts the quiz; your quiz code will auto-restore if implemented)
+  document.getElementById('aws-restore')?.addEventListener('click', ()=>{
+    if (typeof start === 'function') start('aws-saa-c03');
+  });
+  document.getElementById('az-restore')?.addEventListener('click', ()=>{
+    if (typeof start === 'function') start('az-104');
+  });
+
+  // Start buttons
+  document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const quiz = btn.getAttribute('data-quiz');
+      const sim = btn.closest('.sim-card');
+      const quiz = sim.dataset.quiz;
+
+      // Persist options
+      const prefs = collectOptions(sim);
+
+      // If you later want your quiz engine to pick these up:
+      // localStorage.setItem('certify_runtime_prefs', JSON.stringify({ [quiz]: prefs }));
+
+      // Launch
       if (typeof start === 'function') start(quiz);
     });
+  });
+
+  // Load and apply saved prefs (if any)
+  ['aws-saa-c03','az-104'].forEach(q=>{
+    const sim = document.querySelector(`.sim-card[data-quiz="${q}"]`);
+    if (!sim) return;
+    const isAWS = q==='aws-saa-c03';
+    const p = loadPrefs(q);
+
+    // Mode
+    if (p.mode){
+      const inp = sim.querySelector(`input[name="${isAWS?'aws':'az'}-mode"][value="${p.mode}"]`);
+      if (inp) inp.checked = true;
+    }
+    // Questions
+    const selCount = sim.querySelector(isAWS?'#studyCount':'#studyCount2');
+    if (selCount && p.count) selCount.value = String(p.count);
+
+    // Time
+    const selTime = sim.querySelector(isAWS?'#aws-time':'#az-time');
+    if (selTime && (p.timeLimit!==undefined)) selTime.value = String(p.timeLimit);
+
+    // Explanations
+    if (p.explanations){
+      const expInp = sim.querySelector(`input[name="${isAWS?'aws':'az'}-exp"][value="${p.explanations}"]`);
+      if (expInp) expInp.checked = true;
+    }
+
+    // Toggles
+    const sh = sim.querySelector(isAWS?'#aws-shuffle':'#az-shuffle');
+    if (sh && typeof p.shuffle==='boolean') sh.checked = p.shuffle;
+    const so = sim.querySelector(isAWS?'#aws-sound':'#az-sound');
+    if (so && typeof p.sound==='boolean') so.checked = p.sound;
+
+    // Tags
+    if (Array.isArray(p.tags)){
+      sim.querySelectorAll('.domains .tag').forEach(t=>{
+        if (p.tags.includes(t.dataset.val)) t.classList.add('active');
+      });
+    }
   });
 });
 </script>
