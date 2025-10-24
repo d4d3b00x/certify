@@ -436,13 +436,17 @@ function renderAuthBar() {
   const bar = document.getElementById("authBar");
   if (!bar) return;
   if (u) {
-    bar.innerHTML = \`✅ \${u.name} <span style="color:#999">(\${u.email})</span> 
-      <button onclick="logoutUser()">Logout</button>\`;
+    bar.innerHTML = `✅ ${u.name} <span style="color:#999">(${u.email})</span> 
+      <button onclick="logoutUser()">Logout</button>`;
   } else {
-    bar.innerHTML = \`🔒 Not authenticated <button onclick="location.href='/login/login.html'">Login</button>\`;
+    bar.innerHTML = `🔒 Not authenticated <button onclick="location.href='/login/login.html'">Login</button>`;
   }
 }
+// Lánzalo ya y refuerza con listeners (evita “Checking…” eterno)
+try { renderAuthBar(); } catch {}
 document.addEventListener("DOMContentLoaded", renderAuthBar);
+// Fallback por si el DOMContentLoaded no se dispara en tu bundler
+setTimeout(renderAuthBar, 300);
 
 /* ===== Simulator helpers (sin shuffle/audio/presets) ===== */
 function savePrefs(quizId, prefs){
@@ -459,37 +463,39 @@ function loadPrefs(quizId){
   }catch{ return {}; }
 }
 
-/* Collect current options from a simulator card and persist */
+/* Recoge opciones del simulador y persiste */
 function collectOptions(simEl){
   const brand = simEl.dataset.brand;
   const quiz  = simEl.dataset.quiz;
-
   const isAWS = brand==='aws';
-  const mode = simEl.querySelector(\`input[name="\${isAWS?'aws':'az'}-mode"]:checked\`)?.value || 'practice';
+
+  const mode = simEl.querySelector(`input[name="${isAWS?'aws':'az'}-mode"]:checked`)?.value || 'practice';
   const count = parseInt(simEl.querySelector(isAWS?'#studyCount':'#studyCount2')?.value||'5',10);
   const timeLimit = parseInt(simEl.querySelector(isAWS?'#aws-time':'#az-time')?.value||'0',10);
-  const exp = simEl.querySelector(\`input[name="\${isAWS?'aws':'az'}-exp"]:checked\`)?.value || 'after';
+  const explanations = simEl.querySelector(`input[name="${isAWS?'aws':'az'}-exp"]:checked`)?.value || 'after';
 
   // Domain/topic tags
-  const tagsBox = simEl.querySelector('.domains');
   const tags = [];
-  if (tagsBox){
-    tagsBox.querySelectorAll('.tag.active').forEach(t=> tags.push(t.dataset.val));
-  }
+  simEl.querySelectorAll('.domains .tag.active').forEach(t=> tags.push(t.dataset.val));
 
-  const prefs = { mode, count, timeLimit, explanations: exp, tags };
+  const prefs = { mode, count, timeLimit, explanations, tags };
   savePrefs(quiz, prefs);
+
+  // 👇 Pasa las prefs a Q_global sin romper nada (si lo usa)
+  window.__simPrefs = window.__simPrefs || {};
+  window.__simPrefs[quiz] = prefs;
+
   return prefs;
 }
 
 /* Wire up UI */
 document.addEventListener('DOMContentLoaded', ()=>{
-  // Toggle active on domain/topic tags
+  // Toggle active en tags
   document.querySelectorAll('.domains .tag').forEach(tag=>{
     tag.addEventListener('click', ()=> tag.classList.toggle('active'));
   });
 
-  // Resume last
+  // Resume
   document.getElementById('aws-restore')?.addEventListener('click', ()=>{
     if (typeof start === 'function') start('aws-saa-c03', {resume:true});
   });
@@ -497,7 +503,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if (typeof start === 'function') start('az-104', {resume:true});
   });
 
-  // Start buttons
+  // Start
   document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const sim = btn.closest('.sim-card');
@@ -507,29 +513,29 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
   });
 
-  // Load and apply saved prefs (if any)
+  // Cargar prefs guardadas (UI)
   ['aws-saa-c03','az-104'].forEach(q=>{
-    const sim = document.querySelector(\`.sim-card[data-quiz="\${q}"]\`);
+    const sim = document.querySelector(`.sim-card[data-quiz="${q}"]`);
     if (!sim) return;
     const isAWS = q==='aws-saa-c03';
     const p = loadPrefs(q);
 
-    // Mode
+    // Modo
     if (p.mode){
-      const inp = sim.querySelector(\`input[name="\${isAWS?'aws':'az'}-mode"][value="\${p.mode}"]\`);
+      const inp = sim.querySelector(`input[name="${isAWS?'aws':'az'}-mode"][value="${p.mode}"]`);
       if (inp) inp.checked = true;
     }
-    // Questions
+    // # preguntas
     const selCount = sim.querySelector(isAWS?'#studyCount':'#studyCount2');
     if (selCount && p.count) selCount.value = String(p.count);
 
-    // Time
+    // Tiempo
     const selTime = sim.querySelector(isAWS?'#aws-time':'#az-time');
     if (selTime && (p.timeLimit!==undefined)) selTime.value = String(p.timeLimit);
 
-    // Explanations
+    // Explicaciones
     if (p.explanations){
-      const expInp = sim.querySelector(\`input[name="\${isAWS?'aws':'az'}-exp"][value="\${p.explanations}"]\`);
+      const expInp = sim.querySelector(`input[name="${isAWS?'aws':'az'}-exp"][value="${p.explanations}"]`);
       if (expInp) expInp.checked = true;
     }
 
@@ -542,6 +548,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
 });
 </script>
+
 
 </body>
 </html>

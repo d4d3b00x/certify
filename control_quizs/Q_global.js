@@ -154,52 +154,76 @@ function readSimulatorPrefs(quizId){
 
 /* ========== Start quiz ========== */
 /** Llama con start('aws-saa-c03', {resume:true}) SOLO cuando quieres reanudar. */
-function start(quizId='aws-saa-c03', opts={}){
-  const cfg=QUIZZES[quizId]||QUIZZES['aws-saa-c03'];
-  STATE.quizId=quizId; STATE.track=cfg.track; STATE.certi=cfg.certi; STATE.finished=false; STATE.saving=false;
-  applyTheme(quizId);
+function start(quizId='aws-saa-c03'){
+  const cfg = QUIZZES[quizId]||QUIZZES['aws-saa-c03'];
+  Object.assign(STATE,{quizId,track:cfg.track,certi:cfg.certi,mode:'exam'});
 
-  const prefs=readSimulatorPrefs(quizId);
-  STATE.mode=prefs.mode||'practice';
-  STATE.prefs=prefs;
+  // Lee prefs de simulador (in-page o desde localStorage)
+  const simPrefsAll = (window.__simPrefs||{});
+  const localPrefs = (()=>{ try { return JSON.parse(localStorage.getItem('quiz_prefs')||'{}'); } catch { return {}; }})();
+  const prefs = simPrefsAll[quizId] || localPrefs[quizId] || {};
 
-  // Construye pool
-  const src=cfg.questions();
-  let all=flattenQuestions(src);
+  // Modo
+  if (prefs.mode) STATE.mode = prefs.mode;
 
-  // Filtro dominios D1..D4
-  if (prefs.tags && prefs.tags.length){
-    const allow=new Set(prefs.tags);
-    all=all.filter(q=>{
-      const cat=(q.category||'').toUpperCase();
-      return (allow.has('D1')&&cat.startsWith('DOMAIN 1'))||
-             (allow.has('D2')&&cat.startsWith('DOMAIN 2'))||
-             (allow.has('D3')&&cat.startsWith('DOMAIN 3'))||
-             (allow.has('D4')&&cat.startsWith('DOMAIN 4'));
+  // Preguntas fuente
+  const src = cfg.questions();
+  let all = flattenQuestions(src);
+
+  // FILTRO por dominios tags: D1..D4 (o cualquier etiqueta de texto)
+  if (Array.isArray(prefs.tags) && prefs.tags.length){
+    const tagsUpper = prefs.tags.map(t=>String(t).toUpperCase());
+    all = all.filter(q=>{
+      const cat = (q.category||'').toUpperCase();
+      // Soporta D1..D4 => "DOMAIN 1..4"
+      const matchesD = tagsUpper.some(t=>{
+        if (/^D[1-4]$/.test(t)){
+          const num = t.slice(1);
+          return cat.includes(`DOMAIN ${num}`);
+        }
+        return false;
+      });
+      if (matchesD) return true;
+
+      // Cualquier otra etiqueta: match directo en category
+      return tagsUpper.some(t=> cat.includes(t));
     });
   }
 
-  if (prefs.shuffle) all=shuffle(all);
-
-  // Conteo: RESPETAR SIEMPRE lo elegido y no exceder disponibles
-  let n=parseInt(prefs.count,10);
-  if(!Number.isFinite(n) || n<=0) n=65;
-  n=Math.max(1, Math.min(n, all.length));     // <- aquí ya nunca saldrá 40 si pediste menos
-
-  if (!opts.resume) clearRunningSession();
-
-  if (opts.resume && tryResume(n)) {
-    toast('Restored previous session');
-  } else {
-    STATE.qs=all.slice(0,n);
-    STATE.idx=0; STATE.answers={}; STATE.marked={};
-    STATE.startedAt=Date.now(); STATE.elapsedSec=0;
+  // Número de preguntas: respeta selección/prefs
+  let n = 65;
+  if (typeof prefs.count === 'number') n = prefs.count;
+  else {
+    try{
+      const el = document.getElementById('studyCount') || document.getElementById('studyCount2');
+      if (el && el.value) n = parseInt(el.value,10);
+    }catch{}
   }
+  // saneo
+  const allowed = [5,10,15,30,65];
+  if (!allowed.includes(n)) n = Math.min(65, Math.max(5, n||65));
 
-  stopTimer(); startTimer();
+  // Aleatoriza y recorta en base al tamaño filtrado (si filtras puede haber menos)
+  all = shuffle(all).slice(0, Math.min(n, all.length));
+
+  // Reset de estado (no intentes reusar sesiones si cambia el filtro/tamaño)
+  STATE.qs = all;
+  STATE.idx=0; STATE.answers={}; STATE.marked={};
+  STATE.startedAt=Date.now(); STATE.elapsedSec=0;
+
+  // Guarda preferencias útiles en STATE (por si las usas dentro del quiz)
+  STATE.timeLimit = typeof prefs.timeLimit === 'number' ? prefs.timeLimit : 0;
+  STATE.explanations = prefs.explanations || 'after';
+
+  // Tema visual
+  applyTheme(quizId);
+
+  // Navegación y render
   location.hash=`#/quiz?quiz=${quizId}`;
   renderQuiz();
+  startTimer();
 }
+
 
 /* ========== Timer ========== */
 function startTimer(){
