@@ -160,6 +160,29 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
   padding:8px 12px; border-radius:999px;
 }
 
+/* Coloca logo y texto en una misma fila */
+.desc2 {
+  display: flex;
+  align-items: center;      /* centra verticalmente logo y texto */
+  gap: 14px;                /* espacio entre logo y texto */
+  margin: 8px 0;
+}
+
+.desc2 .logo {
+  width: 60px;
+  height: auto;
+  flex: 0 0 auto;           /* el logo no se estira */
+}
+
+.desc2 .text {
+  flex: 1 1 auto;           /* el texto ocupa el resto */
+  line-height: 1.4;
+}
+
+/* Responsive: logo un poco más pequeño en pantallas chicas */
+@media (max-width: 600px) {
+  .desc2 .logo { width: 48px; }
+}
 
 </style>
 </head>
@@ -209,15 +232,21 @@ We grow together on the path to certification.</span></div>
     
       <span class="badge">AWS SOLUTIONS ARCHITECT ASSOCIATE (SAA-C03)</span>
       
-      <p class="desc">
-     <img
-        src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
-        alt="AWS Logo"
-        style="vertical-align: middle; width: 60px;"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
-      >
-      <div class="ov-row"><span class="ov-key">The AWS Certified Solutions Architect – Associate focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
-    
+      <div class="desc2">
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
+    alt="AWS Logo"
+    class="logo"
+    onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
+  >
+  <div class="text">
+    <div class="ov-row">
+      <span class="ov-key">
+        The AWS Certified Solutions Architect – Associate focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.
+      </span>
+    </div>
+  </div>
+</div>
           
     </section>
     
