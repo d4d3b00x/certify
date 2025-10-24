@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Domain 1 — Design Secure Architectures — AWS SAA (SAA-C03)</title>
- <link rel="stylesheet" href="/style_global.css"/> 
+<link rel="stylesheet" href="/style_global.css"/> 
 <style>
 :root{
   --bg:#efeaff;
@@ -15,7 +15,7 @@
   --pill-bg:#ffe5bf;
   --pill-ink:#a915c7;
   --brand:#0f1438;
-  --cta:#54188d;          /* Naranja AWS */
+  --cta:#54188d;
   --cta-hover:#8d12ac;
   --cta-ink:#efeaff;
   --link:#470447;
@@ -32,15 +32,8 @@ body{
   background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);
   line-height:1.6;
 }
-
-/* Barra superior */
-
-
-/* Layout */
 .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
 .brand-row{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
-
-/* Logo AWS */
 .aws-logo{display:flex;align-items:center;gap:10px}
 .aws-swoosh{
   width:32px;height:22px;border-bottom-left-radius:50px;border-bottom-right-radius:50px;
@@ -48,60 +41,30 @@ body{
   box-shadow:0 0 0 2px #ffb30022 inset;
 }
 .aws-word{font-weight:900;font-size:28px;letter-spacing:.4px}
-
-/* Tarjeta header */
-.hero.card{
-position:relative;
-}
+.hero.card{position:relative;}
 .pill{
   display:inline-block;background:rgba(255,153,0,0.15);color:#7700ff;
   font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
   padding:8px 12px;border-radius:999px;border:1px solid rgba(255,153,0,0.3);
 }
-h1{
-  font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;
-  color:var(--brand);font-weight:900;
-}
+h1{font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;color:var(--brand);font-weight:900;}
 .actions{display:flex;align-items:center;gap:16px;margin:4px 0 6px;flex-wrap:wrap}
-.btn{
-  appearance:none;border:0;cursor:pointer;
-  background:var(--cta);color:var(--cta-ink);
-  font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
-
-}
+.btn{appearance:none;border:0;cursor:pointer;background:var(--cta);color:var(--cta-ink);font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;}
 .btn:hover{background:var(--cta-hover)}
 .btn:focus{outline:3px solid var(--ring);outline-offset:2px}
 .subtitle{color:var(--muted);font-size:1.05rem}
 .subtitle a{color:var(--link);font-weight:800;text-decoration:none}
 .subtitle a:hover{text-decoration:underline}
-
-/* Grid y tarjetas */
 .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 40px}
 @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
-.card{
-  background:var(--card);border:1px solid var(--bd);border-radius:16px;
-  padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;
-}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;}
 .card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
 h2{margin:.2rem 0 8px;color:var(--brand)}
 h3{margin:1rem 0 .5rem;color:var(--brand)}
-
 .hint{color:var(--muted);font-size:.98rem}
 code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
 .span-2{grid-column:1 / -1}
 .foot{opacity:.85;font-size:.9rem;margin-top:10px;color:var(--muted)}
-
-/* === AWS GROUP WRAPPER === */
-.aws-group2{
-  background:#061f38;
-  border-left:6px solid #7207a3;
-  border-radius:12px;
-  padding:32px 28px;
-  margin:4px auto;
-  max-width:1100px;
-  box-shadow:0 6px 20px rgba(0,0,0,0.08);
-}
-
 .aws-group3{
   background:#f8f9fa;
   border-left:6px solid #f89718;
@@ -111,211 +74,105 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
   max-width:1100px;
   box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
-
-.aws-group .group-header{
-  display:flex;align-items:center;gap:16px;margin-bottom:20px;
-}
-.aws-group .group-title{
-  font-size:1.6rem;font-weight:700;color:#232F3E;margin:0;letter-spacing:0.3px;
-}
-.aws-group .desc a{
-  color:#FF9900;font-weight:600;text-decoration:none;
-}
-.aws-group .desc a:hover{text-decoration:underline}
-/* === /AWS GROUP WRAPPER === */
-.azure-group3{
-  background:#f5f7fb;                 /* fondo suave */
-  border-left:6px solid #64ccfcbb;       /* azul marca */
-  border-radius:12px;
-  padding:3px 10px;
-  margin:40px auto;
-  max-width:1100px;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-}
-
-/* Barra superior fija y con el contenido a la derecha */
-.topbar{
-  height:56px;
-  background:var(--bg);
-  display:flex;
-  align-items:center;
-  justify-content:flex-end; /* ⟵ empuja el contenido a la derecha */
-  padding:0 20px;
-  position:sticky; /* o fixed si la quieres siempre visible */
-  top:0;
-  z-index:1000;
-  border-bottom:1px solid #e6e0ff;
-}
-
-/* Estilo del auth bar (ajústalo a tu gusto) */
-
-#authBar{
-  position:absolute;
-  top:10px;           /* ajusta según tu espaciado */
-  right:130px;
-  display:flex; align-items:center; gap:12px;
-  font-size:.95rem; color:var(--brand);
-  background:rgba(255,153,0,.12);
-  border:1px solid rgba(255,153,0,.25);
-  padding:8px 12px; border-radius:999px;
-}
-
-/* Coloca logo y texto en una misma fila */
-.desc2 {
-  display: flex;
-  align-items: center;      /* centra verticalmente logo y texto */
-  gap: 11px;                /* espacio entre logo y texto */
-  margin: 15px 0;
-}
-
-.desc2 .logo {
-  width: 75px;
-  height: auto;
-  flex: 0 0 auto;           /* el logo no se estira */
-}
-
-.desc2 .text {
-  flex: 1 1 auto;           /* el texto ocupa el resto */
-  line-height: 1.4;
-}
-
-
-
 </style>
 </head>
 <body>
-
-<!-- espacio top bar <div class="topbar"></div> -->
-
 <div class="shell">
-    <!-- Cabecera -->
-  
-
-    <!-- Contenido principal -->
-    <main id="view" role="main">
-
-<!-- Zona general de certificaciones cloud -->
-<section class="vendor-zone">
-<div >
-    <p id="authBar"></p>
-</div><br><br><br>
-
-<script src="/login/auth.js"></script>
-  <!-- Grupo AWS -->
-  <section class="path-group aws-group" aria-label="AWS Certifications">
-    
+<main id="view" role="main">
 
 
+<section class="path-group aws-group" aria-label="AWS Certifications">
 <section class="path" aria-label="GUIDE">
+<span class="badge1">Domain 1 — Design Secure Architectures — AWS SAA (SAA-C03)</span>
+
+
+<!-- 💡 Inserted detailed friendly content -->
+<div style="margin:25px 0;font-size:1rem;line-height:1.7;">
+  <h2>🎯 What’s Domain 1 all about?</h2>
+  <p>
+    This domain makes up about <strong>30% of the entire exam</strong>. It’s where AWS tests if you can build strong, secure foundations for workloads — access control, network isolation, encryption, and monitoring. Basically, how well you can design an AWS environment that’s both functional and bulletproof.
+  </p>
+
+  <p>
+    There are <strong>three core tasks</strong> to know:
+    <ul>
+      <li>Design secure access to AWS resources (think IAM, roles, SCPs).</li>
+      <li>Design secure workloads and applications (VPCs, endpoints, firewalls, WAF).</li>
+      <li>Determine appropriate data security controls (KMS, encryption, backups).</li>
+    </ul>
+  </p>
 
   
-      <span class="badge1">What “secure architectures” mean in AWS SAA Certification
-</b></span>
-      
-      <p class="desc">
-        
-          <div class="ov-row"><span class="ov-key">Expect scenario questions where you pick the most secure and simplest design: roles instead of long-lived keys, private connectivity instead of public endpoints, and defense-in-depth with monitoring.</span></div>
-    
-      
-    </section>
 
+
+</section>
 
 <main class="wrap2">
+<div class="aws-group3">
+<section class="grid">
+<article class="card path">
 
-  <div class="aws-group3">
-   
-    
-  <section class="grid">
-      <article class="card path">
+<h3>Patterns that score</h3>
+<ul>
+  <li><strong>Short-lived creds</strong>: EC2 instance profiles, ECS task roles, IRSA for EKS.</li>
+  <li><strong>Private access</strong>: prefer VPC Endpoints to avoid NAT/data egress and to apply
+  <code>aws:SourceVpce</code> or source VPC conditions in resource policies.</li>
+  <li><strong>Encryption by default</strong>: use KMS CMKs with least-privilege key policies and grants.</li>
+  <li><strong>Central visibility</strong>: CloudTrail Organization trail, Security Hub, GuardDuty.</li>
+</ul>
+<div class="tip">Tip: When two designs are equally functional, choose the one that <em>removes credentials</em>
+(e.g., role over access keys) or <em>keeps traffic private</em> (endpoint over public).</div>
 
-       
-         <div class="desc2">
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
-    alt="AWS Logo"
-    class="logo"
-    onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/512px-Amazon_Web_Services_Logo.svg.png';"
-  >
-  <div class="text">
-    <div class="ov-row">
-      <span class="ov-key">
-        The AWS Certified Solutions Architect – Associate focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.
-      </span>
-    </div>
-  </div>
+<h3>Common pitfalls</h3>
+<ul>
+  <li>Allowing 0.0.0.0/0 to private resources when a VPC endpoint would be safer and cheaper.</li>
+  <li>Opening an S3 bucket by VPC CIDR instead of using <code>aws:SourceVpce</code>.</li>
+  <li>Confusing NACLs (stateless) with Security Groups (stateful) and stacking them incorrectly.</li>
+  <li>Putting secrets in env vars or code instead of Secrets Manager + role access.</li>
+</ul>
+
+<h3>Study checklist</h3>
+<ul>
+  <li>Bucket policies with conditions: <code>aws:SourceVpc</code>, <code>aws:SourceVpce</code>, <code>aws:PrincipalArn</code>.</li>
+  <li>Compare endpoint types: Gateway (S3/DDB) vs Interface (most services).</li>
+  <li>WAF vs Shield, Network Firewall vs Security Groups.</li>
+  <li>CMK key policy vs grants; rotation; CloudTrail logs for KMS.</li>
+</ul>
+</article>
+
+<aside class="card path">
+<h3>Exam Focus</h3>
+<ul>
+  <li>Design least-privilege access using IAM roles, SCPs, and resource policies</li>
+  <li>Choose encryption options (KMS CMKs, SSE-S3/SSE-KMS, client-side)</li>
+  <li>Private connectivity (VPC endpoints: Gateway/Interface, PrivateLink)</li>
+  <li>Network isolation (subnets, NACLs vs Security Groups, route tables)</li>
+  <li>Key management, rotation, and audit with CloudTrail/CloudWatch</li>
+</ul>
+<h3>Key AWS services</h3>
+<ul>
+  <li>IAM, STS, Organizations (SCPs, delegated admin)</li>
+  <li>KMS, Secrets Manager, AWS Certificate Manager (ACM)</li>
+  <li>VPC, NACLs, Security Groups, Route 53, Network Firewall, WAF + Shield</li>
+  <li>S3 bucket & VPC endpoint policies; CloudFront OAC/OAI</li>
+  <li>GuardDuty, Security Hub, Macie, Config, CloudTrail</li>
+</ul>
+<h3>Hands-on ideas</h3>
+<ul>
+  <li>Create an S3 Gateway VPC Endpoint with a bucket policy using aws:SourceVpce</li>
+  <li>IRSA on EKS: map a service account to an IAM role with OIDC</li>
+  <li>Encrypt an RDS and EBS stack with KMS CMKs + automatic rotation</li>
+  <li>Enable GuardDuty + Security Hub across an AWS Organization and view findings</li>
+</ul>
+<div class="footer desc">Updated 2025-10-24. Official guide:
+  <a target="_blank" rel="noopener" href="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide_C03.pdf">AWS PDF</a>
 </div>
-
-        <h3>Patterns that score</h3>
-        <ul>
-          <li><strong>Short-lived creds</strong>: EC2 instance profiles, ECS task roles, IRSA for EKS.</li>
-          <li><strong>Private access</strong>: prefer VPC Endpoints to avoid NAT/data egress and to apply
-          <code>aws:SourceVpce</code> or source VPC conditions in resource policies.</li>
-          <li><strong>Encryption by default</strong>: use KMS CMKs with least-privilege key policies and grants.</li>
-          <li><strong>Central visibility</strong>: CloudTrail Organization trail, Security Hub, GuardDuty.</li>
-        </ul>
-
-        <div class="tip">Tip: When two designs are equally functional, choose the one that <em>removes credentials</em>
-        (e.g., role over access keys) or <em>keeps traffic private</em> (endpoint over public).</div>
-
-        <h3>Common pitfalls</h3>
-        <ul>
-          <li>Allowing 0.0.0.0/0 to private resources when a VPC endpoint would be safer and cheaper.</li>
-          <li>Opening an S3 bucket by VPC CIDR instead of using <code>aws:SourceVpce</code>.</li>
-          <li>Confusing NACLs (stateless) with Security Groups (stateful) and stacking them incorrectly.</li>
-          <li>Putting secrets in env vars or code instead of Secrets Manager + role access.</li>
-        </ul>
-
-        <h3>Study checklist</h3>
-        <ul>
-          <li>Bucket policies with conditions: <code>aws:SourceVpc</code>, <code>aws:SourceVpce</code>, <code>aws:PrincipalArn</code>.</li>
-          <li>Compare endpoint types: Gateway (S3/DDB) vs Interface (most services).</li>
-          <li>WAF vs Shield, Network Firewall vs Security Groups.</li>
-          <li>CMK key policy vs grants; rotation; CloudTrail logs for KMS.</li>
-        </ul>
-      </article>
-
-      <aside class="card path">
-        <h3>Exam Focus</h3>
-        <ul>
-          <li>Design least-privilege access using IAM roles, SCPs, and resource policies</li>
-          <li>Choose encryption options (KMS CMKs, SSE-S3/SSE-KMS, client-side)</li>
-          <li>Private connectivity (VPC endpoints: Gateway/Interface, PrivateLink)</li>
-          <li>Network isolation (subnets, NACLs vs Security Groups, route tables)</li>
-          <li>Key management, rotation, and audit with CloudTrail/CloudWatch</li>
-        </ul>
-        <h3>Key AWS services</h3>
-        <ul>
-          <li>IAM, STS, Organizations (SCPs, delegated admin)</li>
-          <li>KMS, Secrets Manager, AWS Certificate Manager (ACM)</li>
-          <li>VPC, NACLs, Security Groups, Route 53, Network Firewall, WAF + Shield</li>
-          <li>S3 bucket & VPC endpoint policies; CloudFront OAC/OAI</li>
-          <li>GuardDuty, Security Hub, Macie, Config, CloudTrail</li>
-        </ul>
-        <h3>Hands-on ideas</h3>
-        <ul>
-          <li>Create an S3 Gateway VPC Endpoint with a bucket policy using aws:SourceVpce</li>
-          <li>IRSA on EKS: map a service account to an IAM role with OIDC</li>
-          <li>Encrypt an RDS and EBS stack with KMS CMKs + automatic rotation</li>
-          <li>Enable GuardDuty + Security Hub across an AWS Organization and view findings</li>
-        </ul>
-        <div class="footer desc">Updated 2025-10-21. Official guide:
-          <a target="_blank" rel="noopener" href="https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/certification/approved/pdfs/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf">AWS PDF</a>
-        </div>
-      </aside>
-    </section>
-
- 
-
-  </div>
+</aside>
+</section>
+</div>
 </main>
 
-
-
-
-
-  <script src="/questions.js"></script>
-  <script src="/control_quizs/Q_global.js"></script>
-
+<script src="/questions.js"></script>
+<script src="/control_quizs/Q_global.js"></script>
 </body>
 </html>
-
