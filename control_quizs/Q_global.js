@@ -6,7 +6,7 @@ const TELEM = (n,p)=>{ try{ window.__telem && window.__telem.on(n,p); }catch(e){
 /* ===========================
    CONFIG remota (API Gateway)
    =========================== */
-const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // ← CAMBIA ESTO
+const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; 
 
 /* ===========================
    Estado global

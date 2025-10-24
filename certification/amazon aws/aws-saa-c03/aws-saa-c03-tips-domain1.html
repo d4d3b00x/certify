@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>CertiFY — Free IT Certification Resources and Exams</title>
+<title>Domain 1 — Design Secure Architectures — AWS SAA (SAA-C03)</title>
  <link rel="stylesheet" href="/style_global.css"/> 
 <style>
 :root{
@@ -209,14 +209,12 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
 <section class="path" aria-label="GUIDE">
 
   
-      <span class="badge1">WELLCOME TO <b>CERTIFY.TECH</b></span>
+      <span class="badge1">What “secure architectures” mean in AWS SAA Certification
+</b></span>
       
       <p class="desc">
         
-          <div class="ov-row"><span class="ov-key">A community where technological knowledge is shared.
-Access content created by professionals and practice with certification simulators that include detailed explanations.
-
-We grow together on the path to certification.</span></div>
+          <div class="ov-row"><span class="ov-key">Expect scenario questions where you pick the most secure and simplest design: roles instead of long-lived keys, private connectivity instead of public endpoints, and defense-in-depth with monitoring.</span></div>
     
       
     </section>
@@ -225,11 +223,13 @@ We grow together on the path to certification.</span></div>
 <main class="wrap2">
 
   <div class="aws-group3">
-   <section class="path" aria-label="GUIDE">
+   
     
-      <span class="badge">AWS SOLUTIONS ARCHITECT ASSOCIATE (SAA-C03)</span>
-      
-      <div class="desc2">
+  <section class="grid">
+      <article class="card path">
+
+       
+         <div class="desc2">
   <img
     src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg"
     alt="AWS Logo"
@@ -244,111 +244,73 @@ We grow together on the path to certification.</span></div>
     </div>
   </div>
 </div>
-          
-    </section>
-    
-    <section class="grid">
-      <article class="card path">
-         
-         <span class="badge">EXAM DOMAINS STUDY TIPS</span>
-        
+
+        <h3>Patterns that score</h3>
         <ul>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain1.html">Domain 1</a> — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain2.html">Domain 2</a> — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain3.html">Domain 3</a> — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
-          <li><strong><a href="/certification/amazon aws/aws-saa-c03/tips-domain4.html">Domain 4</a> — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
+          <li><strong>Short-lived creds</strong>: EC2 instance profiles, ECS task roles, IRSA for EKS.</li>
+          <li><strong>Private access</strong>: prefer VPC Endpoints to avoid NAT/data egress and to apply
+          <code>aws:SourceVpce</code> or source VPC conditions in resource policies.</li>
+          <li><strong>Encryption by default</strong>: use KMS CMKs with least-privilege key policies and grants.</li>
+          <li><strong>Central visibility</strong>: CloudTrail Organization trail, Security Hub, GuardDuty.</li>
+        </ul>
+
+        <div class="tip">Tip: When two designs are equally functional, choose the one that <em>removes credentials</em>
+        (e.g., role over access keys) or <em>keeps traffic private</em> (endpoint over public).</div>
+
+        <h3>Common pitfalls</h3>
+        <ul>
+          <li>Allowing 0.0.0.0/0 to private resources when a VPC endpoint would be safer and cheaper.</li>
+          <li>Opening an S3 bucket by VPC CIDR instead of using <code>aws:SourceVpce</code>.</li>
+          <li>Confusing NACLs (stateless) with Security Groups (stateful) and stacking them incorrectly.</li>
+          <li>Putting secrets in env vars or code instead of Secrets Manager + role access.</li>
+        </ul>
+
+        <h3>Study checklist</h3>
+        <ul>
+          <li>Bucket policies with conditions: <code>aws:SourceVpc</code>, <code>aws:SourceVpce</code>, <code>aws:PrincipalArn</code>.</li>
+          <li>Compare endpoint types: Gateway (S3/DDB) vs Interface (most services).</li>
+          <li>WAF vs Shield, Network Firewall vs Security Groups.</li>
+          <li>CMK key policy vs grants; rotation; CloudTrail logs for KMS.</li>
         </ul>
       </article>
 
       <aside class="card path">
-        <span class="badge">SAA-C03 EXAM SIMULATOR</span>
-       <div class="mode-row" style="align-items:center; margin-top:8px">
-            <label for="studyCount" class="note">Select questions: </label>
-            <select id="studyCount" name="aaa" aria-label="Number of questions" class="btn secondary" style="margin-left:8px">
-              <option value="5" selected>5</option>
-              <option value="10">10</option>
-             
-              <option value="30">30</option>
-            </select>
-          </div>
-
-          <div class="actions" style="margin-top:12px">
-            <button class="btn" onclick="start('aws-saa-c03')">STAR QUIZ</button>
-            <button class="btn"><a class="btn" href="/score/ranking.html" >RANKING</a></button>
-            
-          </div>
-          <p class="note">To take the quizzes, you must be logged in.</p>
-
-
-
+        <h3>Exam Focus</h3>
+        <ul>
+          <li>Design least-privilege access using IAM roles, SCPs, and resource policies</li>
+          <li>Choose encryption options (KMS CMKs, SSE-S3/SSE-KMS, client-side)</li>
+          <li>Private connectivity (VPC endpoints: Gateway/Interface, PrivateLink)</li>
+          <li>Network isolation (subnets, NACLs vs Security Groups, route tables)</li>
+          <li>Key management, rotation, and audit with CloudTrail/CloudWatch</li>
+        </ul>
+        <h3>Key AWS services</h3>
+        <ul>
+          <li>IAM, STS, Organizations (SCPs, delegated admin)</li>
+          <li>KMS, Secrets Manager, AWS Certificate Manager (ACM)</li>
+          <li>VPC, NACLs, Security Groups, Route 53, Network Firewall, WAF + Shield</li>
+          <li>S3 bucket & VPC endpoint policies; CloudFront OAC/OAI</li>
+          <li>GuardDuty, Security Hub, Macie, Config, CloudTrail</li>
+        </ul>
+        <h3>Hands-on ideas</h3>
+        <ul>
+          <li>Create an S3 Gateway VPC Endpoint with a bucket policy using aws:SourceVpce</li>
+          <li>IRSA on EKS: map a service account to an IAM role with OIDC</li>
+          <li>Encrypt an RDS and EBS stack with KMS CMKs + automatic rotation</li>
+          <li>Enable GuardDuty + Security Hub across an AWS Organization and view findings</li>
+        </ul>
+        <div class="footer desc">Updated 2025-10-21. Official guide:
+          <a target="_blank" rel="noopener" href="https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/certification/approved/pdfs/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf">AWS PDF</a>
+        </div>
       </aside>
-
     </section>
+
+ 
 
   </div>
 </main>
 
 
-<main class="wrap2">
 
-  <div class="azure-group3">
-   <section class="path" aria-label="GUIDE">
-      <span class="badge2">AZURE CERTIFICATIONS</span>
-      
-      <p class="desc">
-    <img
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg"
-        alt="Microsoft Azure Logo"
-        class="group-logo"
-        onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/640px-Microsoft_Azure_Logo.svg.png';"
-      >
-      <div class="ov-row"><span class="ov-key"><button onclick="start('az-104')">Azure AZ-104</button>The Azure Certified Solutions Architect - Expert focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
-    
-          
-    </section>
-    
-    <section class="grid">
-      <article class="card path">
-         
-        <h2>Microsoft Azure Administrator (AZ-104)</h2>
-        <ul>
-          <li><strong>Domain 1 — Design Secure Architectures (30%)</strong>: IAM, KMS, Secrets Manager, S3 policies, VPC endpoints, WAF/Shield.</li>
-          <li><strong>Domain 2 — Design Resilient Architectures (26%)</strong>: Multi-AZ/Region, ALB + Auto Scaling, RDS/Aurora features, Route 53, CRR.</li>
-          <li><strong>Domain 3 — Design High-Performing Architectures (24%)</strong>: Caches (ElastiCache/DAX), EBS gp3/io2, Global Accelerator, Athena + Parquet.</li>
-          <li><strong>Domain 4 — Design Cost-Optimized Architectures (20%)</strong>: Right-sizing, Savings Plans, Intelligent-Tiering, VPC endpoints (evitar NAT).</li>
-        </ul>
-        <p class="hint">Aprende defaults de cada servicio, límites, y dónde están los límites de seguridad (cuenta/VPC/SG/bucket/key).</p>
-      </article>
-
-      <aside class="card path">
-        <h2>Quick Patterns</h2>
-        <ul>
-          <li><strong>S3 privado</strong>: Gateway Endpoint + bucket policy <code>aws:SourceVpce</code>.</li>
-          <li><strong>EKS least-privilege</strong>: IRSA (OIDC) con rol por service account.</li>
-          <li><strong>Serverless privado</strong>: Interface Endpoints (Secrets Manager, SSM, STS…).</li>
-          <li><strong>Baja latencia global</strong>: Global Accelerator para tráfico no-cacheable.</li>
-          <li><strong>Base de datos HA</strong>: RDS Multi-AZ; replicas para lectura; Aurora = failover rápido.</li>
-        </ul>
-      </aside>
-
-      
-      <article class="card path span-2">
-        <h2>Storage &amp; Data</h2>
-        <ul>
-          <li><strong>S3</strong>: versioning, encryption (SSE-S3/KMS), lifecycle, replication, access points; clases: Standard / IA / One Zone-IA / Intelligent-Tiering / Glacier tiers.</li>
-          <li><strong>EBS</strong>: gp3 desacopla perf/tamaño; io2/io2 BX para misión crítica; st1/sc1 para throughput/frío.</li>
-          <li><strong>EFS</strong>: regional, NFS, multi-AZ; IA/Archive tiers; miles de montajes concurrentes.</li>
-          <li><strong>DynamoDB</strong>: PK + sort key; GSIs/LSIs; DAX; on-demand/provisioned; streams para eventos.</li>
-          <li><strong>RDS/Aurora</strong>: Multi-AZ para HA; read replicas; backups; Proxy para pool de conexiones.</li>
-        </ul>
-      </article>
-
-      
-    </section>
-
-
-  </div>
-</main>
 
 
   <script src="/questions.js"></script>
