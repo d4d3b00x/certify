@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resultados (DynamoDB)</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#f9fafb;margin:0;padding:20px}
+    h1{font-size:1.6rem;margin:0 0 16px;color:#111827}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+    th,td{padding:12px 10px;border-bottom:1px solid #e5e7eb}
+    th{background:#f3f4f6;text-align:left;font-weight:600;color:#374151}
+    tr:hover{background:#f9fafb}
+    .num{text-align:right}
+    .mono{font-family:ui-monospace,SFMono-Regular,Monaco,Menlo,Consolas,monospace}
+  </style>
+</head>
+<body>
+  <h1>📋 Resultados individuales (ordenados por aciertos)</h1>
+  <div id="resultsTable">Cargando…</div>
+
+  <script>
+  const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // tu API
+
+  async function fetchResults(limit=1000){
+    const res = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors", cache:"no-store"});
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    // Normaliza campos y saca nombre si existe
+    const items = Array.isArray(data.items) ? data.items : [];
+    return items.map(x => ({
+      userId: x.userId || "(unknown)",
+      userName: x.userName || x.name || "(sin nombre)",
+      quizId: x.quizId || "-",
+      correct: toInt(x.correct),
+      total: toInt(x.total),
+      pct: toInt(x.pct ?? (x.total ? Math.round((toInt(x.correct)/toInt(x.total))*100) : 0)),
+      durationSec: toInt(x.durationSec),
+      ts: x.ts || null
+    }));
+  }
+
+  function toInt(v){ const n = Number(v); return Number.isFinite(n) ? n|0 : 0; }
+
+  function sortRows(rows){
+    // Mayor correct → mayor % → fecha más reciente
+    return rows.sort((a,b)=>{
+      if (b.correct !== a.correct) return b.correct - a.correct;
+      if (b.pct !== a.pct) return b.pct - a.pct;
+      return (b.ts || "").localeCompare(a.ts || "");
+    });
+  }
+
+  function renderTable(rows){
+    const root = document.getElementById("resultsTable");
+    if (!rows.length){ root.innerHTML = "<p>No hay resultados.</p>"; return; }
+
+    let html = `
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+           
+            <th>Quiz</th>
+            <th class="num">Correct</th>
+            <th class="num">Total</th>
+            <th class="num">%</th>
+            <th class="num">Duración (s)</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    rows.forEach((r,i)=>{
+      const dt = r.ts ? new Date(r.ts).toLocaleString() : "—";
+      html += `
+        <tr>
+          <td>${i+1}</td>
+          <td>${escapeHtml(r.userName)}</td>
+        
+          <td>${escapeHtml(r.quizId)}</td>
+          <td class="num">${r.correct}</td>
+          <td class="num">${r.total}</td>
+          <td class="num">${r.pct}%</td>
+          <td class="num">${r.durationSec}</td>
+          <td>${dt}</td>
+        </tr>
+      `;
+    });
+    html += `</tbody></table>`;
+    root.innerHTML = html;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, m => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+  }
+
+  document.addEventListener("DOMContentLoaded", async ()=>{
+    const root = document.getElementById("resultsTable");
+    try{
+      const rows = await fetchResults(1000);
+      renderTable(sortRows(rows));
+    }catch(err){
+      root.innerHTML = `<p style="color:#b91c1c">Error cargando resultados: ${escapeHtml(err.message)}</p>`;
+      console.error(err);
+    }
+  });
+  </script>
+</body>
+</html>

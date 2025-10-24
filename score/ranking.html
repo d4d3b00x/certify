@@ -1,23 +1,202 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Resultados (DynamoDB)</title>
-  <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#f9fafb;margin:0;padding:20px}
-    h1{font-size:1.6rem;margin:0 0 16px;color:#111827}
-    table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.05)}
-    th,td{padding:12px 10px;border-bottom:1px solid #e5e7eb}
-    th{background:#f3f4f6;text-align:left;font-weight:600;color:#374151}
-    tr:hover{background:#f9fafb}
-    .num{text-align:right}
-    .mono{font-family:ui-monospace,SFMono-Regular,Monaco,Menlo,Consolas,monospace}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CertiFY — Free IT Certification Resources and Exams</title>
+ <link rel="stylesheet" href="/style_global.css"/> 
+<style>
+:root{
+  --bg:#efeaff;
+  --surface:#f5f7fb;
+  --card:#efeaff;
+  --ink:#0f1330;
+  --muted:#d0b7ec;
+  --pill-bg:#ffe5bf;
+  --pill-ink:#a915c7;
+  --brand:#0f1438;
+  --cta:#54188d;          /* Naranja AWS */
+  --cta-hover:#8d12ac;
+  --cta-ink:#efeaff;
+  --link:#470447;
+  --ring:rgba(255,153,0,.35);
+  --shadow:0 10px 30px rgba(18,16,99,.12);
+  --radius:18px;
+  --bd:#eefeaff8ebf5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+  color:var(--ink);
+  background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);
+  line-height:1.6;
+}
+
+/* Barra superior */
+
+
+/* Layout */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.brand-row{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
+
+/* Logo AWS */
+.aws-logo{display:flex;align-items:center;gap:10px}
+.aws-swoosh{
+  width:32px;height:22px;border-bottom-left-radius:50px;border-bottom-right-radius:50px;
+  background:conic-gradient(from 210deg,#3e0746 0 70%,#5e0766d2 0 100%);
+  box-shadow:0 0 0 2px #ffb30022 inset;
+}
+.aws-word{font-weight:900;font-size:28px;letter-spacing:.4px}
+
+/* Tarjeta header */
+.hero.card{
+position:relative;
+}
+.pill{
+  display:inline-block;background:rgba(255,153,0,0.15);color:#7700ff;
+  font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:8px 12px;border-radius:999px;border:1px solid rgba(255,153,0,0.3);
+}
+h1{
+  font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;
+  color:var(--brand);font-weight:900;
+}
+.actions{display:flex;align-items:center;gap:16px;margin:4px 0 6px;flex-wrap:wrap}
+.btn{
+  appearance:none;border:0;cursor:pointer;
+  background:var(--cta);color:var(--cta-ink);
+  font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
+
+}
+.btn:hover{background:var(--cta-hover)}
+.btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.subtitle{color:var(--muted);font-size:1.05rem}
+.subtitle a{color:var(--link);font-weight:800;text-decoration:none}
+.subtitle a:hover{text-decoration:underline}
+
+/* Grid y tarjetas */
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 40px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+.card{
+  background:var(--card);border:1px solid var(--bd);border-radius:16px;
+  padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;
+}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+h2{margin:.2rem 0 8px;color:var(--brand)}
+h3{margin:1rem 0 .5rem;color:var(--brand)}
+
+.hint{color:var(--muted);font-size:.98rem}
+code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
+.span-2{grid-column:1 / -1}
+.foot{opacity:.85;font-size:.9rem;margin-top:10px;color:var(--muted)}
+
+/* === AWS GROUP WRAPPER === */
+.aws-group2{
+  background:#061f38;
+  border-left:6px solid #7207a3;
+  border-radius:12px;
+  padding:32px 28px;
+  margin:4px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+
+.aws-group3{
+  background:#f8f9fa;
+  border-left:6px solid #f89718;
+  border-radius:12px;
+  padding:5px 10px;
+  margin:4px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+
+.aws-group .group-header{
+  display:flex;align-items:center;gap:16px;margin-bottom:20px;
+}
+.aws-group .group-title{
+  font-size:1.6rem;font-weight:700;color:#232F3E;margin:0;letter-spacing:0.3px;
+}
+.aws-group .desc a{
+  color:#FF9900;font-weight:600;text-decoration:none;
+}
+.aws-group .desc a:hover{text-decoration:underline}
+/* === /AWS GROUP WRAPPER === */
+.azure-group3{
+  background:#f5f7fb;                 /* fondo suave */
+  border-left:6px solid #64ccfcbb;       /* azul marca */
+  border-radius:12px;
+  padding:3px 10px;
+  margin:40px auto;
+  max-width:1100px;
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+}
+
+/* Barra superior fija y con el contenido a la derecha */
+.topbar{
+  height:56px;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:flex-end; /* ⟵ empuja el contenido a la derecha */
+  padding:0 20px;
+  position:sticky; /* o fixed si la quieres siempre visible */
+  top:0;
+  z-index:1000;
+  border-bottom:1px solid #e6e0ff;
+}
+
+/* Estilo del auth bar (ajústalo a tu gusto) */
+
+#authBar{
+  position:absolute;
+  top:10px;           /* ajusta según tu espaciado */
+  right:130px;
+  display:flex; align-items:center; gap:12px;
+  font-size:.95rem; color:var(--brand);
+  background:rgba(255,153,0,.12);
+  border:1px solid rgba(255,153,0,.25);
+  padding:8px 12px; border-radius:999px;
+}
+
+
+</style>
 </head>
 <body>
-  <h1>📋 Resultados individuales (ordenados por aciertos)</h1>
-  <div id="resultsTable">Cargando…</div>
+
+<!-- espacio top bar <div class="topbar"></div> -->
+
+<div class="shell">
+    <!-- Cabecera -->
+  
+
+    <!-- Contenido principal -->
+    <main id="view" role="main">
+
+<!-- Zona general de certificaciones cloud -->
+<section class="vendor-zone">
+<div >
+   
+</div><br>
+
+
+  <!-- Grupo AWS -->
+  <section class="path-group aws-group" aria-label="AWS Certifications">
+    
+
+
+<section class="path" aria-label="GUIDE">
+
+  
+      <span class="badge1">GLOBAL <b>RANKING</b></span>
+      
+      <p class="desc">
+        
+          <div class="ov-row"><span class="ov-key">
+
+
+ <div id="resultsTable">Cargando…</div>
 
   <script>
   const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // tu API
@@ -108,6 +287,21 @@
       console.error(err);
     }
   });
-  </script>
+  </script>           
+
+
+
+</span></div>
+    
+      
+    </section>
+
+
+
+</main>
+
+
+
 </body>
 </html>
+
