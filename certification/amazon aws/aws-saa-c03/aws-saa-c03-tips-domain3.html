@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Domain 3 — Design High-Performing Architectures — AWS SAA (SAA-C03)</title>
+<link rel="stylesheet" href="/style_global.css"/> 
+<style>
+:root{
+  --bg:#efeaff; --surface:#f5f7fb; --card:#efeaff; --ink:#0f1330; --muted:#d0b7ec;
+  --pill-bg:#ffe5bf; --pill-ink:#a915c7; --brand:#0f1438; --cta:#54188d; --cta-hover:#8d12ac;
+  --cta-ink:#efeaff; --link:#470447; --ring:rgba(255,153,0,.35); --shadow:0 10px 30px rgba(18,16,99,.12);
+  --radius:18px; --bd:#eefeaff8ebf5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;color:var(--ink);background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);line-height:1.6;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.brand-row{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
+.aws-logo{display:flex;align-items:center;gap:10px}
+.aws-swoosh{width:32px;height:22px;border-bottom-left-radius:50px;border-bottom-right-radius:50px;background:conic-gradient(from 210deg,#3e0746 0 70%,#5e0766d2 0 100%);box-shadow:0 0 0 2px #ffb30022 inset;}
+.aws-word{font-weight:900;font-size:28px;letter-spacing:.4px}
+.hero.card{position:relative;}
+.pill{display:inline-block;background:rgba(255,153,0,0.15);color:#7700ff;font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,153,0,0.3);}
+h1{font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;color:var(--brand);font-weight:900;}
+.actions{display:flex;align-items:center;gap:16px;margin:4px 0 6px;flex-wrap:wrap}
+.btn{appearance:none;border:0;cursor:pointer;background:var(--cta);color:var(--cta-ink);font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;}
+.btn:hover{background:var(--cta-hover)} .btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.subtitle{color:var(--muted);font-size:1.05rem} .subtitle a{color:var(--link);font-weight:800;text-decoration:none} .subtitle a:hover{text-decoration:underline}
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 40px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+h2{margin:.2rem 0 8px;color:var(--brand)} h3{margin:1rem 0 .5rem;color:var(--brand)}
+.hint{color:var(--muted);font-size:.98rem} code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
+.span-2{grid-column:1 / -1} .foot{opacity:.85;font-size:.9rem;margin-top:10px;color:var(--muted)}
+.aws-group3{background:#f8f9fa;border-left:6px solid #f89718;border-radius:12px;padding:5px 10px;margin:4px auto;max-width:1100px;box-shadow:0 6px 20px rgba(0,0,0,0.08);}
+</style>
+</head>
+<body>
+<div class="shell">
+<main id="view" role="main">
+
+<section class="path-group aws-group" aria-label="AWS Certifications">
+<section class="path" aria-label="GUIDE">
+<span class="badge1">Amazon AWS SAA (SAA-C03). Domain 3 Tips: Design High-Performing Architectures.</span>
+
+<!-- Overview -->
+<div style="margin:25px 0;font-size:1rem;line-height:1.7;">
+  <h2>⚡ What’s Domain 3 all about?</h2>
+  <p>
+    Choose services and patterns that deliver <strong>low latency, high throughput, and efficient scaling</strong>. It’s not “bigger server”, it’s “smarter architecture”.
+  </p>
+  <p><strong>Core tasks:</strong></p>
+  <ul>
+    <li>Right-size compute/storage/DB for the workload profile.</li>
+    <li>Reduce latency via caching and edge (CloudFront/GA), and offload heavy work.</li>
+    <li>Scale horizontally and process in parallel when demand spikes.</li>
+  </ul>
+</div>
+</section>
+
+<main class="wrap2">
+<div class="aws-group3">
+<section class="grid">
+  <article class="card path">
+    <h3>Patterns that score</h3>
+    <ul>
+      <li><strong>Scale-out</strong> with ASG/containers/serverless over vertical scaling.</li>
+      <li><strong>Cache</strong> at every layer: CloudFront, API caching, ElastiCache (Redis/Memcached).</li>
+      <li><strong>Right storage</strong>: EBS <code>gp3</code>/<code>io2</code>, EFS for shared POSIX, S3 for massive throughput.</li>
+      <li><strong>Parallelize</strong> with SQS, Kinesis, Step Functions, Lambda concurrency.</li>
+      <li><strong>Accelerate network</strong>: Global Accelerator, placement groups, ENA.</li>
+    </ul>
+
+    <div class="tip">Tip: “Bursty workload” → serverless or ASG + queue/stream to absorb spikes.</div>
+
+    <h3>Common pitfalls</h3>
+    <ul>
+      <li>Vertical scaling instead of horizontal.</li>
+      <li>Under-provisioned EBS IOPS/throughput for the DB.</li>
+      <li>No CDN for global users; serving everything from one Region.</li>
+      <li>Chatty synchronous microservices without caching/batching.</li>
+      <li>Forcing relational DBs on key-value/ultra-write use cases (use DynamoDB/Kinesis).</li>
+    </ul>
+
+    <h3>Study checklist</h3>
+    <ul>
+      <li>EC2 families & Graviton; Auto Scaling policies.</li>
+      <li>EBS types; EFS vs FSx; S3 performance (multi-part, prefixes).</li>
+      <li>RDS vs Aurora vs DynamoDB; read replicas; partitions; WCU/RCU.</li>
+      <li>CloudFront behaviors; Global Accelerator vs Route 53.</li>
+      <li>SQS/SNS/Kinesis/MSK; Lambda concurrency; DLQs.</li>
+    </ul>
+  </article>
+
+  <aside class="card path">
+    <h3>Exam Focus</h3>
+    <ul>
+      <li>Pick managed/serverless for perf with less ops.</li>
+      <li>Edge + caching for reads; batch/stream for writes.</li>
+      <li>Match data model to access patterns.</li>
+      <li>Balance performance and cost (Graviton, gp3, S3 Intelligent-Tiering).</li>
+    </ul>
+
+    <h3>Key AWS services</h3>
+    <ul>
+      <li>EC2 + ASG, ECS/EKS, Lambda</li>
+      <li>ElastiCache, CloudFront, Global Accelerator</li>
+      <li>S3, EBS, EFS, FSx</li>
+      <li>RDS/Aurora, DynamoDB, OpenSearch</li>
+      <li>SQS, SNS, Kinesis, Step Functions, EMR</li>
+    </ul>
+
+    <h3>Hands-on ideas</h3>
+    <ul>
+      <li>Benchmark <code>gp3</code> vs <code>io2</code> EBS.</li>
+      <li>Aurora + read replicas + ElastiCache for read-heavy workload.</li>
+      <li>CloudFront in front of S3 static site and compare TTFB.</li>
+      <li>S3 → SQS → Lambda pipeline for parallel processing.</li>
+    </ul>
+
+    <div class="footer desc">Updated 2025-10-24. Official guide:
+      <a target="_blank" rel="noopener" href="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide_C03.pdf">AWS PDF</a>
+    </div>
+  </aside>
+</section>
+</div><br>
+
+<!-- NAV -->
+<button class="btn" onclick="location.href='aws-saa-c03-tips-domain2.html'">◀ PREV</button>
+<button class="btn" onclick="location.href='/'">🏠 HOME</button>
+<button class="btn" onclick="location.href='aws-saa-c03-tips-domain4.html'">NEXT ▶</button>
+
+</main>
+</section>
+</main>
+</div>
+
+</body>
+</html>

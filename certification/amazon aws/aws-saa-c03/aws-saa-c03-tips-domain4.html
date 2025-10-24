@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title> Amazon AWS SAA (SAA-C03). Domain 4 Tips: Design Cost-Optimized Architectures.</title>
+<link rel="stylesheet" href="/style_global.css"/> 
+<style>
+:root{
+  --bg:#efeaff; --surface:#f5f7fb; --card:#efeaff; --ink:#0f1330; --muted:#d0b7ec;
+  --pill-bg:#ffe5bf; --pill-ink:#a915c7; --brand:#0f1438; --cta:#54188d; --cta-hover:#8d12ac;
+  --cta-ink:#efeaff; --link:#470447; --ring:rgba(255,153,0,.35); --shadow:0 10px 30px rgba(18,16,99,.12);
+  --radius:18px; --bd:#eefeaff8ebf5;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;color:var(--ink);background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);line-height:1.6;}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.brand-row{display:flex;align-items:center;gap:14px;padding:18px 0 10px}
+.aws-logo{display:flex;align-items:center;gap:10px}
+.aws-swoosh{width:32px;height:22px;border-bottom-left-radius:50px;border-bottom-right-radius:50px;background:conic-gradient(from 210deg,#3e0746 0 70%,#5e0766d2 0 100%);box-shadow:0 0 0 2px #ffb30022 inset;}
+.aws-word{font-weight:900;font-size:28px;letter-spacing:.4px}
+.hero.card{position:relative;}
+.pill{display:inline-block;background:rgba(255,153,0,0.15);color:#7700ff;font-weight:800;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,153,0,0.3);}
+h1{font-size:clamp(1.6rem,2.4vw + 1rem,2.45rem);line-height:1.12;margin:12px 0 10px;color:var(--brand);font-weight:900;}
+.actions{display:flex;align-items:center;gap:16px;margin:4px 0 6px;flex-wrap:wrap}
+.btn{appearance:none;border:0;cursor:pointer;background:var(--cta);color:var(--cta-ink);font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px;}
+.btn:hover{background:var(--cta-hover)} .btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.subtitle{color:var(--muted);font-size:1.05rem} .subtitle a{color:var(--link);font-weight:800;text-decoration:none} .subtitle a:hover{text-decoration:underline}
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 40px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease;}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,0.1);}
+h2{margin:.2rem 0 8px;color:var(--brand)} h3{margin:1rem 0 .5rem;color:var(--brand)}
+.hint{color:var(--muted);font-size:.98rem} code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px}
+.span-2{grid-column:1 / -1} .foot{opacity:.85;font-size:.9rem;margin-top:10px;color:var(--muted)}
+.aws-group3{background:#f8f9fa;border-left:6px solid #f89718;border-radius:12px;padding:5px 10px;margin:4px auto;max-width:1100px;box-shadow:0 6px 20px rgba(0,0,0,0.08);}
+</style>
+</head>
+<body>
+<div class="shell">
+<main id="view" role="main">
+
+<section class="path-group aws-group" aria-label="AWS Certifications">
+<section class="path" aria-label="GUIDE">
+<span class="badge1">Domain 4 — Design Cost-Optimized Architectures — AWS SAA (SAA-C03)</span>
+
+<!-- Overview -->
+<div style="margin:25px 0;font-size:1rem;line-height:1.7;">
+  <h2>💰 What’s Domain 4 all about?</h2>
+  <p>
+    Deliver required outcomes at the <strong>lowest reasonable cost</strong>. Mix pricing models, storage tiers, and automation so you don’t pay for idle capacity.
+  </p>
+  <p><strong>Core tasks:</strong></p>
+  <ul>
+    <li>Right-size compute and choose optimal pricing (On-Demand, Savings Plans, RIs, Spot).</li>
+    <li>Optimize storage & data transfer (S3 lifecycle/tiers, EFS-IA, PrivateLink, CloudFront).</li>
+    <li>Implement visibility/controls (Budgets, Cost Explorer, tags) and automation.</li>
+  </ul>
+</div>
+</section>
+
+<main class="wrap2">
+<div class="aws-group3">
+<section class="grid">
+  <article class="card path">
+    <h3>Patterns that score</h3>
+    <ul>
+      <li><strong>Use serverless/managed</strong> (pay per request) when possible.</li>
+      <li><strong>Blend pricing</strong>: steady base on Savings Plans/RIs, bursts on On-Demand, batch on Spot.</li>
+      <li><strong>Lifecycle everything</strong>: S3 Intelligent-Tiering/IA/Glacier; EFS-IA; snapshot + recycle EBS.</li>
+      <li><strong>Cut transfer costs</strong>: PrivateLink/VPC Endpoints, CloudFront, caching.</li>
+      <li><strong>Watch & alert</strong>: Budgets, Cost Anomaly Detection, CUR, Trusted Advisor.</li>
+    </ul>
+
+    <div class="tip">Tip: “Predictable 24/7 usage” → Savings Plans. “Interruptible batch” → Spot.</div>
+
+    <h3>Common pitfalls</h3>
+    <ul>
+      <li>Oversizing EC2/EBS (paying for unused IOPS/CPU).</li>
+      <li>Keeping cold data on S3 Standard/EFS Standard.</li>
+      <li>Egressing to AWS services over the public internet instead of endpoints.</li>
+      <li>Leaving dev/test running at night or weekends.</li>
+      <li>No tagging → no showback/chargeback.</li>
+    </ul>
+
+    <h3>Study checklist</h3>
+    <ul>
+      <li>Savings Plans vs RIs (standard vs convertible); Spot interruptions & capacity-optimized strategy.</li>
+      <li>S3 classes + lifecycle; Glacier Instant/Flexible/Deep Archive.</li>
+      <li>EBS <code>gp3</code> tuning (IOPS/throughput), snapshots, EFS-IA.</li>
+      <li>Cost tools: Budgets, Cost Explorer, Anomaly Detection, CUR, Trusted Advisor.</li>
+      <li>Architectural levers: CloudFront caching, PrivateLink, compression, batching.</li>
+    </ul>
+  </article>
+
+  <aside class="card path">
+    <h3>Exam Focus</h3>
+    <ul>
+      <li>Choose the cheapest option that still meets perf/RTO/RPO.</li>
+      <li>Turn off idle capacity via Auto Scaling or serverless.</li>
+      <li>Move aged data to cheaper tiers automatically.</li>
+      <li>Prefer edge/local access to reduce transfer and latency.</li>
+    </ul>
+
+    <h3>Key AWS services</h3>
+    <ul>
+      <li>EC2 + Savings Plans/RIs/Spot, Lambda</li>
+      <li>S3 (all classes), EFS/EFS-IA, EBS, FSx</li>
+      <li>RDS/Aurora (incl. Serverless), DynamoDB On-Demand/Provisioned</li>
+      <li>CloudFront, Global Accelerator, PrivateLink/VPC Endpoints</li>
+      <li>Cost Explorer, Budgets, CUR, Trusted Advisor</li>
+    </ul>
+
+    <h3>Hands-on ideas</h3>
+    <ul>
+      <li>Enable S3 lifecycle to Glacier and estimate savings.</li>
+      <li>Convert a steady EC2 workload to Savings Plans.</li>
+      <li>Put CloudFront in front of S3 and compare egress.</li>
+      <li>Set Cost Anomaly Detection + Budgets email alerts.</li>
+    </ul>
+
+    <div class="footer desc">Updated 2025-10-24. Official guide:
+      <a target="_blank" rel="noopener" href="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide_C03.pdf">AWS PDF</a>
+    </div>
+  </aside>
+</section>
+</div><br>
+
+<!-- NAV -->
+<button class="btn" onclick="location.href='aws-saa-c03-tips-domain3.html'">◀ PREV</button>
+<button class="btn" onclick="location.href='/'">🏠 HOME</button>
+
+
+</main>
+</section>
+</main>
+</div>
+
+</body>
+</html>
