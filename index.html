@@ -34,7 +34,7 @@ body{
 }
 
 /* Barra superior */
-.topbar{height:72px;background:var(--bg)}
+
 
 /* Layout */
 .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
@@ -51,8 +51,7 @@ body{
 
 /* Tarjeta header */
 .hero.card{
-  margin:8px 0 28px;background:var(--card);border:1px solid var(--bd);
-  border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 28px;
+position:relative;
 }
 .pill{
   display:inline-block;background:rgba(255,153,0,0.15);color:#7700ff;
@@ -134,8 +133,32 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
   box-shadow:0 6px 20px rgba(0,0,0,.08);
 }
 
+/* Barra superior fija y con el contenido a la derecha */
+.topbar{
+  height:56px;
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:flex-end; /* ⟵ empuja el contenido a la derecha */
+  padding:0 20px;
+  position:sticky; /* o fixed si la quieres siempre visible */
+  top:0;
+  z-index:1000;
+  border-bottom:1px solid #e6e0ff;
+}
 
+/* Estilo del auth bar (ajústalo a tu gusto) */
 
+#authBar{
+  position:absolute;
+  top:10px;           /* ajusta según tu espaciado */
+  right:130px;
+  display:flex; align-items:center; gap:12px;
+  font-size:.95rem; color:var(--brand);
+  background:rgba(255,153,0,.12);
+  border:1px solid rgba(255,153,0,.25);
+  padding:8px 12px; border-radius:999px;
+}
 
 
 </style>
@@ -153,15 +176,23 @@ code{background:#f5f6ff;border:1px solid #dadeff;border-radius:6px;padding:0 4px
 
 <!-- Zona general de certificaciones cloud -->
 <section class="vendor-zone">
+<div >
+    <p id="authBar"></p>
+</div><br><br><br>
 
+<script src="/login/auth.js"></script>
   <!-- Grupo AWS -->
   <section class="path-group aws-group" aria-label="AWS Certifications">
     
 
+
 <section class="path" aria-label="GUIDE">
-      <span class="badge1">WELLCOME TO CERTIFY</span>
+
+  
+      <span class="badge1">WELLCOME TO <b>CERTIFY.TECH</b></span>
       
       <p class="desc">
+        
           <div class="ov-row"><span class="ov-key">A community where technological knowledge is shared.
 Access content created by professionals and practice with certification simulators that include detailed explanations.
 
@@ -220,18 +251,13 @@ We grow together on the path to certification.</span></div>
             <button class="btn"><a class="btn" href="/score/ranking.html" >RANKING</a></button>
             
           </div>
-          <p class="note">Exam Mode is in development for this build.</p>
+          <p class="note">To take the quizzes, you must be logged in.</p>
 
-<p id="authBar"></p>
-<script src="/login/auth.js"></script>
+
 
       </aside>
 
-      
-  
-      
     </section>
-
 
   </div>
 </main>
@@ -250,7 +276,7 @@ We grow together on the path to certification.</span></div>
         class="group-logo"
         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Microsoft_Azure_Logo.svg/640px-Microsoft_Azure_Logo.svg.png';"
       >
-      <div class="ov-row"><span class="ov-key">The Azure Certified Solutions Architect - Expert focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
+      <div class="ov-row"><span class="ov-key"><button onclick="start('az-104')">Azure AZ-104</button>The Azure Certified Solutions Architect - Expert focuses on designing cost- and performance-optimized solutions. It’s ideal for those with AWS or strong on-premises IT experience.</span></div>
     
           
     </section>
