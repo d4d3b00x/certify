@@ -481,3 +481,8 @@ document.addEventListener('DOMContentLoaded', ()=>{ /* listeners externos ya en 
 window.start = start;
 
 } // end singleton
+
+(function(){
+  function start(quiz, opts){ /* ...engine... */ }
+  window.start = start; // <- imprescindible en producción
+})();
