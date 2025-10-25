@@ -112,7 +112,6 @@
     .select select,.text input{border:none;outline:none;font-weight:700;color:#2a2e57;width:100%;background:transparent}
     .small{font-size:.9rem;color:var(--muted)}
 
-    /* Dominios como checkboxes (píldoras) */
     .domains{display:flex;flex-wrap:wrap;gap:8px}
     .domains input{position:absolute;opacity:0;pointer-events:none}
     .domains label{
@@ -127,6 +126,58 @@
     .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important }
     .btn[disabled]:hover{ background:#f5f7ff }
     .login-hint{ display:none }
+
+    /* ==== Carousel styles ==== */
+    .carousel{ position:relative; padding:0; overflow:hidden; }
+    .carousel-inner{ position:relative; }
+    .carousel-track{
+      display:flex; will-change:transform; transition:transform .35s cubic-bezier(.22,.61,.36,1);
+      touch-action:pan-y;
+    }
+    .slide{
+      min-width:100%; flex:0 0 100%; padding:22px;
+    }
+    .slide > .card{ margin:0 }
+    .carousel .nav{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:#fff; border:1px solid #e6e9ff; border-radius:12px; width:42px; height:42px;
+      display:grid; place-items:center; box-shadow:0 6px 16px rgba(25,22,84,.08);
+      cursor:pointer; z-index:5;
+    }
+    .carousel .nav:focus{ outline:3px solid var(--ring); outline-offset:2px }
+    .carousel .prev{ left:10px }
+    .carousel .next{ right:10px }
+    .carousel .nav svg{ width:22px; height:22px }
+    .carousel .dots{
+      display:flex; gap:8px; justify-content:center; align-items:center; padding:12px 0 4px;
+    }
+    .carousel .dot{
+      width:10px; height:10px; border-radius:50%; border:1px solid #cfd6ff; background:#fff; cursor:pointer;
+    }
+    .carousel .dot[aria-selected="true"]{ background:#5260ff; border-color:#5260ff }
+    @media (prefers-reduced-motion:reduce){
+      .carousel-track{ transition:none }
+    }
+
+    /* === AÑADIDOS SEGÚN SOLICITUD === */
+    /*.card.carousel{ padding-bottom:0; }
+    .carousel .dots{
+      position:absolute;
+      left:0; right:0; bottom:10px;
+      padding:0; margin:0;
+    } -->*/
+
+/* === Fondo transparente para el carrusel === */
+.card.carousel {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+
+    
+    .aws-group3{ border-right:6px solid var(--aws-500); }
+    .azure-group3{ border-right:6px solid var(--az-500); }
   </style>
 </head>
 <body>
@@ -136,7 +187,7 @@
       <!-- TOP ROW -->
       <div class="toprow">
         <section class="card hero" aria-label="Welcome">
-          <h1>CERTIFY.TECH: Study less...Enjoy more!</h1>
+          <h1>CERTIFY.TECH: Study while enjoy!!!!!!!</h1>
           <p class="desc">Level up your skills with fun quizzes. Learn, play, and crush your next test — the smart (and fun) way.</p>
         </section>
 
@@ -170,144 +221,167 @@
         </section>
       </div>
 
-      <!-- AWS -->
-      <section id="aws" class="aws-group3 card">
-        <span class="badge1">🟧 AWS SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)</span>
-        <section class="grid">
-          <article class="card path">
-            <div class="desc2">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS Logo" class="logo">
-              <div class="text">Design secure and cost-optimized AWS architectures. Perfect if you’ve got some AWS or strong on-prem experience.</div>
-            </div>
-            <h2>Exam Domains</h2>
-            <p class="small" style="margin-top:-6px;"><em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em></p>
-            <ul>
-              <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain1.html">Domain 1:</a></strong> Design Secure Architectures (30%)</li>
-              <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain2.html">Domain 2:</a></strong> Design Resilient Architectures (26%)</li>
-              <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain3.html">Domain 3:</a></strong> Design High-Performing Architectures (24%)</li>
-              <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain4.html">Domain 4:</a></strong> Design Cost-Optimized Architectures (20%)</li>
-            </ul>
-          </article>
+      <!-- ==== CAROUSEL: AWS + AZURE en la misma zona ==== -->
+      <section class="card carousel" aria-roledescription="carousel" aria-label="Certification paths slider">
+        <div class="carousel-inner">
+          <button class="nav prev" type="button" aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/></svg>
+          </button>
+          <button class="nav next" type="button" aria-label="Next slide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L12.17 12z" fill="currentColor"/></svg>
+          </button>
 
-          <!-- SIMULATOR AWS -->
-          <aside id="sim-aws" class="card path sim-card" data-brand="aws" data-quiz="aws-saa-c03">
-            <h3>SAA-C03 Exam Simulator</h3>
-            <div class="sim-form">
-              <div class="field">
-                <label>Mode</label>
-                <div class="segmented aws">
-                  <input type="radio" id="aws-mode-practice" name="aws-mode" value="practice" checked>
-                  <label for="aws-mode-practice">Practice</label>
-                  <input type="radio" id="aws-mode-exam" name="aws-mode" value="exam">
-                  <label for="aws-mode-exam">Exam</label>
-                </div>
-              </div>
-              <div class="field">
-                <label>Questions</label>
-                <div class="select">
-                  <select id="studyCount">
-                    <option value="5" selected>5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="30">30</option>
-                    <option value="65">65 (Full)</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field full">
-                <label>Domains (optional filter)</label>
-                <div class="domains aws" data-scope="aws">
-                  <input id="aws-d1" type="checkbox" value="D1"><label for="aws-d1">D1</label>
-                  <input id="aws-d2" type="checkbox" value="D2"><label for="aws-d2">D2</label>
-                  <input id="aws-d3" type="checkbox" value="D3"><label for="aws-d3">D3</label>
-                  <input id="aws-d4" type="checkbox" value="D4"><label for="aws-d4">D4</label>
-                </div>
-                <div class="small">Leave empty to include all domains.</div>
-              </div>
-              <div class="field full">
-                <div class="actions" style="margin-top:8px">
-                  <button class="btn btn-aws solid start-btn" type="button">▶ Start Quiz</button>
-                  <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
-                  <a class="btn btn-aws" href="/score/ranking.html?quiz=aws-saa-c03">🏆 Ranking</a>
-                </div>
-                <div class="small center">
-                  Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
-                </div>
-              </div>
-            </div>
-          </aside>
-        </section>
-      </section>
+          <div class="carousel-track" id="carouselTrack">
+            <!-- Slide 1: AWS -->
+            <article class="slide" role="group" aria-roledescription="slide" aria-label="1 of 2">
+              <section id="aws" class="aws-group3 card">
+                <span class="badge1">🟧 AWS SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)</span>
+                <section class="grid">
+                  <article class="card path">
+                    <div class="desc2">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS Logo" class="logo">
+                      <div class="text">Design secure and cost-optimized AWS architectures. Perfect if you’ve got some AWS or strong on-prem experience.</div>
+                    </div>
+                    <h2>Exam Domains</h2>
+                    <p class="small" style="margin-top:-6px;"><em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em></p>
+                    <ul>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain1.html">Domain 1:</a></strong> Design Secure Architectures (30%)</li>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain2.html">Domain 2:</a></strong> Design Resilient Architectures (26%)</li>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain3.html">Domain 3:</a></strong> Design High-Performing Architectures (24%)</li>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain4.html">Domain 4:</a></strong> Design Cost-Optimized Architectures (20%)</li>
+                    </ul>
+                  </article>
 
-      <!-- AZURE -->
-      <section id="azure" class="azure-group3 card">
-        <span class="badge2">🔵 MICROSOFT AZURE ADMINISTRATOR — ASSOCIATE (AZ-104)</span>
-        <section class="grid">
-          <article class="card path">
-            <div class="desc2">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg" alt="Azure Logo" class="logo">
-              <div class="text">Master Azure admin essentials: identities, governance, compute, networking and monitoring.</div>
-            </div>
-            <h2>Exam Domains</h2>
-            <p class="small" style="margin-top:-6px;"><em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em></p>
-            <ul>
-              <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain1.html">Domain 1:</a> Manage identities & governance (15–20%)</li>
-              <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain2.html">Domain 2:</a> Implement & manage storage (15–20%)</li>
-              <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain3.html">Domain 3:</a> Deploy & manage compute (20–25%)</li>
-              <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain4.html">Domain 4:</a> Configure & manage networking (20–25%)</li>
-              <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain5.html">Domain 5:</a> Monitor & maintain resources (10–15%)</li>
-            </ul>
-          </article>
+                  <!-- SIMULATOR AWS -->
+                  <aside id="sim-aws" class="card path sim-card" data-brand="aws" data-quiz="aws-saa-c03">
+                    <h3>SAA-C03 Exam Simulator</h3>
+                    <div class="sim-form">
+                      <div class="field">
+                        <label>Mode</label>
+                        <div class="segmented aws">
+                          <input type="radio" id="aws-mode-practice" name="aws-mode" value="practice" checked>
+                          <label for="aws-mode-practice">Practice</label>
+                          <input type="radio" id="aws-mode-exam" name="aws-mode" value="exam">
+                          <label for="aws-mode-exam">Exam</label>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label>Questions</label>
+                        <div class="select">
+                          <select id="studyCount">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="65">65 (Full)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="field full">
+                        <label>Domains (optional filter)</label>
+                        <div class="domains aws" data-scope="aws">
+                          <input id="aws-d1" type="checkbox" value="D1"><label for="aws-d1">D1</label>
+                          <input id="aws-d2" type="checkbox" value="D2"><label for="aws-d2">D2</label>
+                          <input id="aws-d3" type="checkbox" value="D3"><label for="aws-d3">D3</label>
+                          <input id="aws-d4" type="checkbox" value="D4"><label for="aws-d4">D4</label>
+                        </div>
+                        <div class="small">Leave empty to include all domains.</div>
+                      </div>
+                      <div class="field full">
+                        <div class="actions" style="margin-top:8px">
+                          <button class="btn btn-aws solid start-btn" type="button">▶ Start Quiz</button>
+                          <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
+                          <a class="btn btn-aws" href="/score/ranking.html?quiz=aws-saa-c03">🏆 Ranking</a>
+                        </div>
+                        <div class="small center">
+                          Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
+                        </div>
+                      </div>
+                    </div>
+                  </aside>
+                </section>
+              </section>
+            </article>
 
-          <!-- SIMULATOR AZURE -->
-          <aside id="sim-az" class="card path sim-card" data-brand="az" data-quiz="az-104">
-            <h3>AZ-104 Exam Simulator</h3>
-            <div class="sim-form">
-              <div class="field">
-                <label>Mode</label>
-                <div class="segmented az">
-                  <input type="radio" id="az-mode-practice" name="az-mode" value="practice" checked>
-                  <label for="az-mode-practice">Practice</label>
-                  <input type="radio" id="az-mode-exam" name="az-mode" value="exam">
-                  <label for="az-mode-exam">Exam</label>
-                </div>
-              </div>
-              <div class="field">
-                <label>Questions</label>
-                <div class="select">
-                  <select id="studyCount2">
-                    <option value="5" selected>5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="30">30</option>
-                    <option value="65">65 (Full)</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field full">
-                <label>Domains (optional filter)</label>
-                <div class="domains" data-scope="az">
-                  <input id="az-d1" type="checkbox" value="D1"><label for="az-d1">D1</label>
-                  <input id="az-d2" type="checkbox" value="D2"><label for="az-d2">D2</label>
-                  <input id="az-d3" type="checkbox" value="D3"><label for="az-d3">D3</label>
-                  <input id="az-d4" type="checkbox" value="D4"><label for="az-d4">D4</label>
-                  <input id="az-d5" type="checkbox" value="D5"><label for="az-d5">D5</label>
-                </div>
-                <div class="small">Leave empty to include all domains.</div>
-              </div>
-              <div class="field full">
-                <div class="actions" style="margin-top:8px">
-                  <button class="btn btn-az solid start-btn" type="button">▶ Start Quiz</button>
-                  <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
-                  <a class="btn btn-az" href="/score/ranking.html?quiz=az-104">🏆 Ranking</a>
-                </div>
-                <div class="small center">
-                  Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
-                </div>
-              </div>
-            </div>
-          </aside>
-        </section>
+            <!-- Slide 2: AZURE -->
+            <article class="slide" role="group" aria-roledescription="slide" aria-label="2 of 2">
+              <section id="azure" class="azure-group3 card">
+                <span class="badge2">🔵 MICROSOFT AZURE ADMINISTRATOR — ASSOCIATE (AZ-104)</span>
+                <section class="grid">
+                  <article class="card path">
+                    <div class="desc2">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg" alt="Azure Logo" class="logo">
+                      <div class="text">Master Azure admin essentials: identities, governance, compute, networking and monitoring.</div>
+                    </div>
+                    <h2>Exam Domains</h2>
+                    <p class="small" style="margin-top:-6px;"><em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em></p>
+                    <ul>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain1.html">Domain 1:</a> Manage identities & governance (15–20%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain2.html">Domain 2:</a> Implement & manage storage (15–20%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain3.html">Domain 3:</a> Deploy & manage compute (20–25%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain4.html">Domain 4:</a> Configure & manage networking (20–25%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain5.html">Domain 5:</a> Monitor & maintain resources (10–15%)</li>
+                    </ul>
+                  </article>
+
+                  <!-- SIMULATOR AZURE -->
+                  <aside id="sim-az" class="card path sim-card" data-brand="az" data-quiz="az-104">
+                    <h3>AZ-104 Exam Simulator</h3>
+                    <div class="sim-form">
+                      <div class="field">
+                        <label>Mode</label>
+                        <div class="segmented az">
+                          <input type="radio" id="az-mode-practice" name="az-mode" value="practice" checked>
+                          <label for="az-mode-practice">Practice</label>
+                          <input type="radio" id="az-mode-exam" name="az-mode" value="exam">
+                          <label for="az-mode-exam">Exam</label>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label>Questions</label>
+                        <div class="select">
+                          <select id="studyCount2">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="65">65 (Full)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="field full">
+                        <label>Domains (optional filter)</label>
+                        <div class="domains" data-scope="az">
+                          <input id="az-d1" type="checkbox" value="D1"><label for="az-d1">D1</label>
+                          <input id="az-d2" type="checkbox" value="D2"><label for="az-d2">D2</label>
+                          <input id="az-d3" type="checkbox" value="D3"><label for="az-d3">D3</label>
+                          <input id="az-d4" type="checkbox" value="D4"><label for="az-d4">D4</label>
+                          <input id="az-d5" type="checkbox" value="D5"><label for="az-d5">D5</label>
+                        </div>
+                        <div class="small">Leave empty to include all domains.</div>
+                      </div>
+                      <div class="field full">
+                        <div class="actions" style="margin-top:8px">
+                          <button class="btn btn-az solid start-btn" type="button">▶ Start Quiz</button>
+                          <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
+                          <a class="btn btn-az" href="/score/ranking.html?quiz=az-104">🏆 Ranking</a>
+                        </div>
+                        <div class="small center">
+                          Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
+                        </div>
+                      </div>
+                    </div>
+                  </aside>
+                </section>
+              </section>
+            </article>
+          </div>
+        </div>
+        <!-- Dots -->
+        <div class="dots" role="tablist" aria-label="Slides">
+          <button class="dot" type="button" role="tab" aria-selected="true" aria-controls="aws" title="AWS"></button>
+          <button class="dot" type="button" role="tab" aria-selected="false" aria-controls="azure" title="Azure"></button>
+        </div>
       </section>
     </main>
   </div>
@@ -316,7 +390,7 @@
   <script src="/control_quizs/Q_Global.js"></script>
 
   <script>
-    /* ===== Auth bar (sin cambios) ===== */
+    /* ===== Auth bar (igual que antes) ===== */
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
     function logoutUser(){ localStorage.removeItem("currentUser"); renderAuthBar(); }
     function updateStartButtonsForAuth(){
@@ -342,27 +416,105 @@
         bar.classList.add('guest'); bar.classList.remove('logged');
         nameEl.textContent=''; emailEl.textContent=''; welcome.classList.add('hidden');
         btnLogin.classList.remove('hidden'); btnSignup.classList.remove('hidden'); btnLogout.classList.add('hidden'); btnProfile.classList.add('hidden');
-        extraEl.style.display='flex'; extraEl.innerHTML='👋 <b>Welcome</b> — create a free account to save progress and history.';
+        extraEl.style.display='flex'; extraEl.innerHTML='Create a free account to save progress and history.';
       }
       updateStartButtonsForAuth();
     }
 
+    /* ===== Carousel logic ===== */
+    (function(){
+      const track = document.getElementById('carouselTrack');
+      const slides = Array.from(track.children);
+      const prevBtn = document.querySelector('.carousel .prev');
+      const nextBtn = document.querySelector('.carousel .next');
+      const dots = Array.from(document.querySelectorAll('.carousel .dot'));
+      let index = 0;
+      let isPointerDown = false;
+      let startX = 0;
+      let currentX = 0;
+      let deltaX = 0;
+      let lock = false;
+
+      function setIndex(i, animate=true){
+        index = Math.max(0, Math.min(i, slides.length-1));
+        track.style.transition = animate ? 'transform .35s cubic-bezier(.22,.61,.36,1)' : 'none';
+        track.style.transform = `translateX(${-index*100}%)`;
+        slides.forEach((s, k)=> s.setAttribute('aria-label', `${k+1} of ${slides.length}`));
+        dots.forEach((d, k)=> d.setAttribute('aria-selected', String(k===index)));
+        // focus management: opcional, no robamos foco para no molestar
+      }
+
+      function next(){ setIndex(index+1); }
+      function prev(){ setIndex(index-1); }
+
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
+      dots.forEach((d, k)=> d.addEventListener('click', ()=> setIndex(k)));
+
+      // keyboard
+      document.addEventListener('keydown', (e)=>{
+        if (lock) return;
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') prev();
+      });
+
+      // pointer/touch drag
+      const onPointerDown = (e)=>{
+        isPointerDown = true; lock = true;
+        startX = (e.touches ? e.touches[0].clientX : e.clientX);
+        currentX = startX;
+        track.style.transition = 'none';
+      };
+      const onPointerMove = (e)=>{
+        if(!isPointerDown) return;
+        currentX = (e.touches ? e.touches[0].clientX : e.clientX);
+        deltaX = currentX - startX;
+        const width = track.getBoundingClientRect().width / slides.length;
+        const pct = (deltaX / width) * 100;
+        const base = -index*100;
+        track.style.transform = `translateX(${base + pct}%)`;
+      };
+      const onPointerUp = ()=>{
+        if(!isPointerDown) return;
+        isPointerDown = false;
+        const width = track.getBoundingClientRect().width / slides.length;
+        const threshold = width * 0.18; // 18% deslizado para cambiar
+        if (deltaX > threshold) setIndex(index-1);
+        else if (deltaX < -threshold) setIndex(index+1);
+        else setIndex(index); // reset
+        deltaX = 0;
+        setTimeout(()=> lock=false, 120);
+      };
+      track.addEventListener('mousedown', onPointerDown);
+      track.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+      track.addEventListener('touchstart', onPointerDown, {passive:true});
+      track.addEventListener('touchmove', onPointerMove, {passive:true});
+      track.addEventListener('touchend', onPointerUp);
+
+      // resize safeguard (mantener slide alineado)
+      window.addEventListener('resize', ()=> setIndex(index, false));
+
+      // init
+      setIndex(0, false);
+    })();
+
+    // ===== Quiz start wiring (igual que antes, lee valores dentro de cada slide) =====
     document.addEventListener('DOMContentLoaded', ()=>{
       document.getElementById('btnLogout')?.addEventListener('click', logoutUser);
 
-      // 📌 START: lee el select y los dominios de SU tarjeta y se los pasa a start(...)
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
         btn.addEventListener('click', ()=>{
           if(btn.hasAttribute('disabled')) return;
           const sim = btn.closest('.sim-card');
           const quiz = sim?.dataset.quiz;
 
-          // count: toma el único <select> dentro de esta tarjeta
+          // count
           const sel = sim.querySelector('select');
           let count = Number(sel?.value || 65);
           if(![5,10,15,30,65].includes(count)) count = 65;
 
-          // domains: checkboxes marcados de esta tarjeta
+          // domains
           const tags = [];
           sim.querySelectorAll('.domains input[type="checkbox"]:checked').forEach(cb => tags.push((cb.value||'').toUpperCase()));
 

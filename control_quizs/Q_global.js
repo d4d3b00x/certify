@@ -57,9 +57,11 @@ const QUIZZES = {
   .option.selected.bad{border-color:#b3261e;background:linear-gradient(0deg,#fff5f4,#fff)}
   .expl{border:1px dashed #e2dcff;border-radius:12px;padding:12px;margin-top:10px;background:#f4faff}
   .controls{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;justify-content:flex-end}
+  .controls.centered{justify-content:center}
   .controls .btn{appearance:none;border:1px solid #e2dcff;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;background:#fff;color:#2a1b51}
   .controls .btn.primary{background:#0078d4;color:#fff;border-color:transparent}
   .side .panel{background:#fff;border:1px solid #e8e6ff;border-radius:12px;padding:14px;margin-bottom:14px}
+  .side h3{margin:.2rem 0 .6rem}
   .list-dots{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:8px}
   .dot{display:flex;align-items:center;justify-content:center;height:38px;border-radius:10px;border:1px solid #e2dcff;background:#fff;cursor:pointer;font-weight:800;color:#2a1b51;position:relative}
   .dot.current{outline:3px solid rgba(0,120,212,.28)}
@@ -302,9 +304,21 @@ function renderQuiz(){
   const next=h('button',{class:'btn primary',html:STATE.idx===STATE.qs.length-1?'Finish':'Next'}); next.onclick=()=>{if(STATE.idx===STATE.qs.length-1)return finish();STATE.idx++;renderQuiz()};
   ctr.appendChild(back); ctr.appendChild(mark); ctr.appendChild(next); qCard.appendChild(ctr);
 
+  /* ===== Sidebar (BOTONES arriba, LISTA abajo) ===== */
   const side=h('div',{class:'side'});
-  const p1=h('div',{class:'panel'});
-  p1.appendChild(h('h3',{html:'LIST OF QUESTIONS'}));
+
+  // 1) PANEL DE BOTONES (centrados y sin título) — AHORA ARRIBA
+  const pBtns=h('div',{class:'panel'});
+  const actions=h('div',{class:'controls centered'});
+  const btnHome=h('button',{class:'btn',html:'🏠 Home'}); btnHome.onclick=()=>{ location.href='/'; };
+  const btnStop=h('button',{class:'btn',html:'⏸️ Stop for later'}); btnStop.onclick=()=>{};
+  actions.appendChild(btnHome); actions.appendChild(btnStop);
+  pBtns.appendChild(actions);
+  side.appendChild(pBtns);
+
+  // 2) LIST OF QUESTIONS — AHORA DEBAJO
+  const pList=h('div',{class:'panel'});
+  pList.appendChild(h('h3',{html:'LIST OF QUESTIONS'}));
   const dots=h('div',{class:'list-dots',title:'Click to jump to any question'});
   STATE.qs.forEach((qq,i)=>{
     const d=h('div',{class:'dot',html:String(i+1)});
@@ -315,16 +329,10 @@ function renderQuiz(){
     d.onclick=()=>{STATE.idx=i;renderQuiz()};
     dots.appendChild(d);
   });
-  p1.appendChild(dots); side.appendChild(p1);
+  pList.appendChild(dots);
+  side.appendChild(pList);
 
-  const p2=h('div',{class:'panel'});
-  p2.appendChild(h('h3',{html:'ACTIONS'}));
-  const actions=h('div',{class:'controls'});
-  const btnHome=h('button',{class:'btn',html:'🏠 Home'}); btnHome.onclick=()=>{ location.href='/'; };
-  const btnStop=h('button',{class:'btn',html:'⏸️ Stop for later'}); btnStop.onclick=()=>{};
-  actions.appendChild(btnHome); actions.appendChild(btnStop);
-  p2.appendChild(actions); side.appendChild(p2);
-
+  // Montaje
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
   enableHotkeys();
@@ -335,9 +343,7 @@ function onSelect(i){ if(typeof STATE.answers[STATE.idx]!=='undefined')return; S
 
 /* ===== Resultados (modal aislado) ===== */
 function renderResultModal(r){
-  // Evita conflictos de estilos globales
   document.body.classList.add('qg-lock');
-
   const pass=r.pct>=70;
   const bd=h('div',{class:'qg-backdrop', role:'dialog', 'aria-modal':'true'});
   const m =h('div',{class:'qg-modal'});
@@ -352,18 +358,14 @@ function renderResultModal(r){
   actions.appendChild(home); actions.appendChild(review);
   m.appendChild(actions);
   bd.appendChild(m);
-
-  // Cierre por click fuera y Esc
   bd.addEventListener('click',(e)=>{ if(e.target===bd) closeModal(); });
   const onKey=(e)=>{ if(e.key==='Escape'){ e.preventDefault(); closeModal(); } };
   document.addEventListener('keydown', onKey);
-
   function closeModal(){
     try{ document.body.removeChild(bd); }catch{}
     document.body.classList.remove('qg-lock');
     document.removeEventListener('keydown', onKey);
   }
-
   document.body.appendChild(bd);
 }
 
