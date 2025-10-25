@@ -10,7 +10,7 @@
       --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91; --brand:#161a3f;
       --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:16px;
       --aws-500:#ff9900; --az-500:#0078d4; --danger:#b42318; --ok:#16794c;
-      --gap:12px; /* ✅ unificamos la separación vertical entre secciones */
+      --gap:12px;
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
@@ -30,7 +30,7 @@
     .hero{
       text-align:left; border:1px solid #ecefff; padding:14px 16px;
       background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%);
-      margin:0 0 var(--gap);                /* ✅ misma distancia */
+      margin:0 0 var(--gap);
     }
     .hero h1{ margin:4px 0 6px; font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem); font-weight:900; color:var(--brand); }
     .hero .desc{ color:var(--muted); margin:0; }
@@ -40,13 +40,13 @@
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:8px 12px; background:#fff; border:1px solid #ecefff; border-radius:999px;
       color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06);
-      margin:0 0 var(--gap);                 /* ✅ misma distancia */
+      margin:0 0 var(--gap);
     }
     .authbar .actions{ display:flex; gap:8px; }
     .hidden{ display:none !important; }
 
     /* Main layout */
-    .grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); } /* ✅ misma distancia */
+    .grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); }
     @media (min-width:900px){ .grid{ grid-template-columns: 1.2fr 2fr; } }
 
     /* Profile */
@@ -115,6 +115,8 @@
     <section class="authbar" id="authBar">
       <span id="authText" class="muted">🔒 You’re not signed in.</span>
       <div class="actions">
+        <!-- ✅ New Home button next to Logout -->
+        <button id="btnHome" class="btn small hidden">🏠 Home</button>
         <button id="btnLogout" class="btn small hidden">Sign out</button>
       </div>
     </section>
@@ -130,7 +132,6 @@
             <div>
               <div id="userNameTxt" style="font-weight:900">—</div>
               <div id="userEmailTxt" class="muted">—</div>
-              <!-- ❌ ID removed from UI -->
             </div>
           </div>
           <hr style="border:0;border-top:1px solid #eef1ff;margin:12px 0">
@@ -211,12 +212,15 @@
       const u = getUser();
       const authText = byId("authText");
       const btnLogout = byId("btnLogout");
+      const btnHome = byId("btnHome");
       if (u){
         authText.textContent = `✅ Signed in as: ${u.name} (${u.email})`;
         btnLogout.classList.remove("hidden");
+        btnHome.classList.remove("hidden");
       }else{
         authText.textContent = "🔒 You’re not signed in.";
         btnLogout.classList.add("hidden");
+        btnHome.classList.add("hidden");
       }
       renderProfileForm();
     }
@@ -341,6 +345,7 @@
     }
 
     // Events
+    byId("btnHome").onclick = ()=>{ location.href = "/"; };
     byId("btnLogout").onclick = ()=>{
       localStorage.removeItem(AUTH_KEY);
       location.href = "/"; // Redirect to home after signout
@@ -392,10 +397,10 @@
       }
 
       renderAuth();
-      loadRemoteMe(); // best-effort refresh
+      loadRemoteMe();
 
       try{
-        const rows = await fetchMyResults(500);   // strictly filtered to your account
+        const rows = await fetchMyResults(500);
         window.__myRows = rows;
         renderResults(rows, "all");
       }catch{

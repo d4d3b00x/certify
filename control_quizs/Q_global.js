@@ -102,7 +102,21 @@ function applyTheme(quizId){
 })();
 
 /* ========== Utils ========== */
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+/* Fisher–Yates con crypto (si existe) para aleatoriedad fuerte */
+function shuffle(a){
+  const n=a.length;
+  // vector de índices aleatorios 32-bit
+  let rnd;
+  if (window.crypto && crypto.getRandomValues) {
+    rnd=new Uint32Array(n); crypto.getRandomValues(rnd);
+  }
+  for(let i=n-1;i>0;i--){
+    const r = rnd ? rnd[i] : Math.floor(Math.random()*(i+1));
+    const j = (r % (i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
 function h(tag,attrs={},kids=[]){const el=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')el.className=v;else if(k==='html')el.innerHTML=v;else el.setAttribute(k,v)}kids.forEach(k=>k&&el.appendChild(k));return el}
 function pad(n){return String(n).padStart(2,'0')}
 function fmtTime(sec){sec=Math.max(0,Number(sec)||0);const m=Math.floor(sec/60),s=sec%60;return `${pad(m)}:${pad(s)}`}
@@ -146,10 +160,9 @@ function readSimulatorPrefs(quizId){
   const mode=sim?.querySelector(`input[name="${isAWS?'aws':'az'}-mode"]:checked`)?.value||'practice';
   const timeLimit=parseInt(sim?.querySelector(isAWS?'#aws-time':'#az-time')?.value||'0',10);
   const exp=sim?.querySelector(`input[name="${isAWS?'aws':'az'}-exp"]:checked`)?.value||'after';
-  const shuffleOn=!!sim?.querySelector(isAWS?'#aws-shuffle':'#az-shuffle')?.checked;
+  const shuffleOn=true; // ✅ forzamos aleatoriedad siempre
   const sound=!!sim?.querySelector(isAWS?'#aws-sound':'#az-sound')?.checked;
   const tags=[]; sim?.querySelectorAll('.domains .tag.active')?.forEach(t=>tags.push((t.dataset.val||'').toUpperCase()));
-  // count lo resolvemos aparte para garantizar valores válidos
   return {mode,timeLimit,explanations:exp,shuffle:shuffleOn,sound,tags, urlCount: urlParams.get('count')};
 }
 
@@ -168,7 +181,7 @@ function resolveDesiredCount(quizId){
   // 1) URL ?count=...
   let count = parseIntOrNull(urlParams.get('count'));
 
-  // 2) UI: selects/inputs típicos
+  // 2) UI
   if (count==null) {
     const preferred = sim?.querySelector(isAWS?'#studyCount':'#studyCount2') || sim?.querySelector('select[id*="studyCount" i]');
     if (preferred) count = parseIntOrNull(preferred.value);
@@ -178,7 +191,7 @@ function resolveDesiredCount(quizId){
     if (anyCount) count = parseIntOrNull(anyCount.value);
   }
 
-  // 3) LocalStorage prefs (si existieran)
+  // 3) LocalStorage prefs
   if (count==null) {
     try {
       const all = JSON.parse(localStorage.getItem('quiz_prefs')||'{}');
@@ -187,13 +200,10 @@ function resolveDesiredCount(quizId){
     } catch {}
   }
 
-  // 4) Default seguro
+  // 4) Default
   if (count==null) count = 65;
 
-  // Si el valor no es uno de los permitidos, usar 65
   if (!ALLOWED_COUNTS.includes(count)) count = 65;
-
-  // Hard clamp por seguridad (evita 1)
   if (count < 5) count = 65;
 
   return count;
@@ -208,10 +218,7 @@ async function fetchQuestionsFromApi(exam, desiredCount=65, searchQ=''){
   for (let guard=0; guard<25 && all.length<desiredCount; guard++){
     const params = new URLSearchParams({ exam: exam, limit: String(pageLimit) });
     if (searchQ) params.set('q', searchQ);
-    if (lastKey) {
-      // NO doble-codificar. URLSearchParams ya maneja el encoding.
-      params.set('lastKey', JSON.stringify(lastKey));
-    }
+    if (lastKey) params.set('lastKey', JSON.stringify(lastKey));
 
     const url = `${API_URL}/questions?${params.toString()}`;
     const res = await fetch(url, { headers: { 'Accept':'application/json' }});
@@ -250,7 +257,7 @@ function transformQuestions(items) {
   }));
 }
 
-/* ========== Start quiz (con token anti-solape y COUNT resuelto) ========== */
+/* ========== Start quiz (SIEMPRE mezclando preguntas y respuestas) ========== */
 async function start(quizId='aws-saa-c03'){
   const mySeq = ++__START_SEQ;
   stopTimer();
@@ -264,11 +271,9 @@ async function start(quizId='aws-saa-c03'){
   const uiPrefs = readSimulatorPrefs(quizId);
   const prefs = simPrefsAll[quizId] || localPrefs[quizId] || {};
   if (prefs.mode) STATE.mode = prefs.mode;
-  // COUNT ya no viene de aquí; lo resolvemos aparte
   STATE.prefs = { ...STATE.prefs, ...prefs, ...uiPrefs };
 
-  // --- COUNT robusto ---
-  const desiredCount = resolveDesiredCount(quizId); // SIEMPRE dentro de [5,10,15,30,65]
+  const desiredCount = resolveDesiredCount(quizId);
 
   STATE.loading = true;
   showLoading();
@@ -300,11 +305,11 @@ async function start(quizId='aws-saa-c03'){
       });
     }
 
-    // 4) Shuffle + recorte exacto al desiredCount
-    if (STATE.prefs.shuffle) shuffle(all);
+    // 4) ✅ SIEMPRE mezclar preguntas y recortar al desiredCount
+    shuffle(all);
     all = all.slice(0, Math.min(desiredCount, all.length));
 
-    // 5) Shuffle de opciones recalculando índice correcto
+    // 5) ✅ Mezclar SIEMPRE las opciones de cada pregunta recalculando el índice correcto
     all = all.map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice():[];
       const order = shuffle([...Array(opts.length).keys()]);
@@ -324,7 +329,7 @@ async function start(quizId='aws-saa-c03'){
     renderQuiz();
     startTimer();
 
-    toast(`Loaded ${STATE.qs.length} / Requested ${desiredCount} (resolved)`, 2000);
+    toast(`Loaded ${STATE.qs.length} randomized questions`, 1600);
   } catch (err){
     console.error(err);
     showError(err.message||'Error cargando preguntas');
@@ -447,6 +452,10 @@ function renderQuiz(){
   });
   p1.appendChild(dots); side.appendChild(p1);
 
+  // opcional: últimos resultados
+  renderExamOverviewTo(side);
+  renderLastResults(side);
+
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
   enableHotkeys(); try{wrap.scrollIntoView({behavior:'smooth',block:'start'})}catch{}
@@ -544,7 +553,6 @@ function enableHotkeys(){
 
 /* ========== Wire UI (Start / Resume) ========== */
 document.addEventListener('DOMContentLoaded',()=>{
-  // Si tienes botones .start-btn dentro de .sim-card[data-quiz="..."], ya funcionan:
   document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
     btn.addEventListener('click',async ()=>{
       const quizId=btn.closest('.sim-card')?.dataset.quiz||'aws-saa-c03';
@@ -552,14 +560,8 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   });
 
-  // Si NO tienes esos botones, puedes iniciar manualmente:
-  //   window.start('az-104')  o  window.start('aws-saa-c03')
-
-  // Opcionales
   document.getElementById('aws-restore')?.addEventListener('click',()=>start('aws-saa-c03'));
   document.getElementById('az-restore')?.addEventListener('click',()=>start('az-104'));
-
-  // (No arrancamos por hash para evitar dobles inicios accidentales)
 });
 
 /* ========== API pública ========== */
