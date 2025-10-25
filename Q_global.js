@@ -1,37 +1,3 @@
-/* ===== Google Analytics (gtag) desde JS ===== */
-const GA_MEASUREMENT_ID = 'G-DYZ3GCXHEK';
-
-let __gaLoaded = false;
-function loadGA() {
-  if (__gaLoaded) return Promise.resolve();
-  return new Promise((resolve, reject) => {
-    // dataLayer + stub gtag
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
-
-    // inyectar <script async src="https://www.googletagmanager.com/gtag/js?id=...">
-    const s = document.createElement('script');
-    s.async = true;
-    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
-    s.onload = () => {
-      gtag('js', new Date());
-      gtag('config', GA_MEASUREMENT_ID);
-      __gaLoaded = true;
-      resolve();
-    };
-    s.onerror = reject;
-    document.head.appendChild(s);
-  });
-}
-
-/* Helper para enviar eventos con seguridad (espera a que GA esté cargado) */
-function gaEvent(action, params = {}) {
-  return loadGA().then(() => {
-    gtag('event', action, params);
-  }).catch(() => {
-    // opcional: silenciar errores si GA falla
-  });
-}
 
 
 
