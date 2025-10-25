@@ -1,3 +1,19 @@
+// Crear e inyectar el script de Google Analytics
+(function() {
+  // Cargar el script de gtag.js de forma asíncrona
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK';
+  document.head.appendChild(script);
+
+  // Inicializar Google Analytics
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  window.gtag = gtag; // lo hacemos global por compatibilidad
+
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+})();
 
 
 
