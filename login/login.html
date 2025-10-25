@@ -37,16 +37,17 @@
       transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
     }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
+    .btn[disabled]{ opacity:.6; cursor:not-allowed; transform:none; box-shadow:none; }
     .btn.primary{ background:var(--az-500); color:#fff; border-color:#98cfff; }
     .btn.primary:hover{ filter:brightness(.96) }
     .btn.link{ background:#fff; }
 
-    /* Auth bar (compact and same width as forms) */
+    /* Auth bar */
     .authbar{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:10px 14px; background:#fff; border:1px solid #ecefff; border-radius:999px;
       color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06);
-      max-width:560px; width:100%; margin:0 auto 14px;  /* 👈 igual que los formularios */
+      max-width:560px; width:100%; margin:0 auto 14px;
     }
     .authbar .actions{ display:flex; gap:8px; }
     .authbar .muted{ color:#8b8fb3; font-weight:700; }
@@ -67,8 +68,6 @@
     .form-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:10px; }
     .hint{ color:var(--muted); font-size:.92rem; }
     .err{ color:#b3261e; font-weight:800; margin-top:6px; }
-
-    /* Footer links */
     .footer-links{ text-align:center; margin-top:14px; }
     .footer-links a{ font-weight:900; color:#0a4a7b; text-decoration:none; }
     .footer-links a:hover{ text-decoration:underline; }
@@ -77,7 +76,7 @@
 <body>
   <div class="wrap">
 
-    <!-- AUTH BAR (tabs & hero removed) -->
+    <!-- AUTH BAR -->
     <section class="authbar" id="authBar">
       <span id="authText" class="muted">🔒 Not authenticated :(</span>
       <div class="actions">
@@ -88,7 +87,7 @@
     </section>
 
     <!-- LOGIN FORM -->
-    <form id="loginForm" class="card form-card" autocomplete="on">
+    <form id="loginForm" class="card form-card" autocomplete="on" novalidate>
       <h3 style="margin:4px 0 8px">Login</h3>
       <div class="field">
         <label for="loginEmail">Email</label>
@@ -105,13 +104,13 @@
       <div id="loginErr" class="err hidden"></div>
       <div class="form-actions">
         <button class="btn link" type="button" id="goHome">Cancel</button>
-        <button class="btn primary" type="submit">Certify!</button>
+        <button class="btn primary" type="submit" id="loginSubmit">Certify!</button>
       </div>
       <p class="hint">No account yet? Click <b>Register</b> in the top bar.</p>
     </form>
 
     <!-- SIGNUP FORM -->
-    <form id="signupForm" class="card form-card hidden" autocomplete="on">
+    <form id="signupForm" class="card form-card hidden" autocomplete="on" novalidate>
       <h3 style="margin:4px 0 8px">Create account</h3>
       <div class="field">
         <label for="signupName">Name</label>
@@ -134,7 +133,7 @@
       <div id="signupErr" class="err hidden"></div>
       <div class="form-actions">
         <button class="btn link" type="button" id="goHome2">Cancel</button>
-        <button class="btn primary" type="submit">Certify!</button>
+        <button class="btn primary" type="submit" id="signupSubmit">Certify!</button>
       </div>
       <p class="hint">By signing up you accept our policies. You can sign in right away.</p>
     </form>
@@ -147,8 +146,12 @@
 
   <script>
     const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-
     const AUTH_KEY = "currentUser";
+
+    /* === Helpers (no variables globales implícitas por id) === */
+    const $ = (id) => document.getElementById(id);
+
+    // Auth storage
     function setCurrentUser(user) {
       localStorage.setItem(AUTH_KEY, JSON.stringify(user));
       renderAuthUI();
@@ -162,14 +165,15 @@
       renderAuthUI();
     }
 
+    // UI
     function renderAuthUI() {
       const u = getCurrentUser();
-      const authText = document.getElementById("authText");
-      const btnLogin = document.getElementById("btnLogin");
-      const btnSignup = document.getElementById("btnSignup");
-      const btnLogout = document.getElementById("btnLogout");
-      const loginForm = document.getElementById("loginForm");
-      const signupForm = document.getElementById("signupForm");
+      const authText = $("authText");
+      const btnLogin = $("btnLogin");
+      const btnSignup = $("btnSignup");
+      const btnLogout = $("btnLogout");
+      const loginForm = $("loginForm");
+      const signupForm = $("signupForm");
 
       if (u) {
         authText.textContent = `✅ You are signed in as: ${u.name} (${u.email})`;
@@ -187,8 +191,8 @@
     }
 
     function showForm(which){
-      const loginForm = document.getElementById("loginForm");
-      const signupForm = document.getElementById("signupForm");
+      const loginForm = $("loginForm");
+      const signupForm = $("signupForm");
       if (which === "signup") {
         signupForm.classList.remove("hidden");
         loginForm.classList.add("hidden");
@@ -196,10 +200,35 @@
         loginForm.classList.remove("hidden");
         signupForm.classList.add("hidden");
       }
-      document.getElementById("loginErr").classList.add("hidden");
-      document.getElementById("signupErr").classList.add("hidden");
+      $("loginErr").classList.add("hidden");
+      $("signupErr").classList.add("hidden");
     }
 
+    function showError(id, msg){
+      const el = $(id);
+      el.textContent = msg || "Error";
+      el.classList.remove("hidden");
+      // ocultar después de 4s
+      setTimeout(() => el.classList.add("hidden"), 4000);
+    }
+
+    function disableDuring(el, disabled){
+      if (!el) return;
+      el.disabled = !!disabled;
+    }
+
+    // Navegación barra superior + inicio
+    $("btnLogout").onclick = () => {
+      clearCurrentUser();
+      alert("Signed out");
+      showForm("login");
+    };
+    $("btnLogin").onclick = () => showForm("login");
+    $("btnSignup").onclick = () => showForm("signup");
+    $("goHome").onclick = () => history.back();
+    $("goHome2").onclick = () => history.back();
+
+    // Arranque: elegir vista por hash o query
     document.addEventListener("DOMContentLoaded", () => {
       renderAuthUI();
       const isSignup =
@@ -208,71 +237,87 @@
       showForm(isSignup ? "signup" : "login");
     });
 
-    document.getElementById("btnLogout").onclick = () => {
-      clearCurrentUser();
-      alert("Signed out");
-      showForm("login");
-    };
-    document.getElementById("btnLogin").onclick = () => showForm("login");
-    document.getElementById("btnSignup").onclick = () => showForm("signup");
-    document.getElementById("goHome").onclick = () => history.back();
-    document.getElementById("goHome2").onclick = () => history.back();
-
-    function showError(id, msg){
-      const el = document.getElementById(id);
-      el.textContent = msg || "Error";
-      el.classList.remove("hidden");
-      setTimeout(() => el.classList.add("hidden"), 4000);
-    }
-
-    document.getElementById("signupForm").addEventListener("submit", async e => {
+    // === SIGNUP ===
+    $("signupForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const name = signupName.value.trim();
-      const email = signupEmail.value.trim().toLowerCase();
-      const password = signupPass.value;
+      const name = $("signupName").value.trim();
+      const email = $("signupEmail").value.trim().toLowerCase();
+      const password = $("signupPass").value;
 
       if (!name || !email || !password) {
         showError("signupErr", "Please complete all fields.");
         return;
       }
 
+      const btn = $("signupSubmit");
+      disableDuring(btn, true);
+
       try{
         const body = new URLSearchParams({ name, email, password });
-        const resp = await fetch(`${API_URL}/signup`, { method: "POST", body, mode: "cors" });
-        const data = await resp.json();
+        const resp = await fetch(`${API_URL}/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+          body,
+          mode: "cors",
+        });
+
+        // Puede que el backend no siempre devuelva JSON (protegemos)
+        let data = {};
+        try { data = await resp.json(); } catch(_) {}
+
         if (resp.ok) {
           alert("User created successfully. You can sign in now.");
           showForm("login");
         } else {
-          showError("signupErr", data.error || "Sign up error");
+          showError("signupErr", data?.error || "Sign up error");
         }
       }catch(err){
-        showError("signupErr", err.message || "Sign up error");
+        showError("signupErr", err?.message || "Sign up error");
+      } finally {
+        disableDuring(btn, false);
       }
     });
 
-    document.getElementById("loginForm").addEventListener("submit", async e => {
+    // === LOGIN ===
+    $("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = loginEmail.value.trim().toLowerCase();
-      const password = loginPass.value;
+      const email = $("loginEmail").value.trim().toLowerCase();
+      const password = $("loginPass").value;
+
       if (!email || !password) {
         showError("loginErr", "Enter email and password.");
         return;
       }
 
+      const btn = $("loginSubmit");
+      disableDuring(btn, true);
+
       try{
         const body = new URLSearchParams({ email, password });
-        const resp = await fetch(`${API_URL}/login`, { method: "POST", body, mode: "cors" });
-        const data = await resp.json();
+        const resp = await fetch(`${API_URL}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+          body,
+          mode: "cors",
+        });
+
+        let data = {};
+        try { data = await resp.json(); } catch(_) {}
+
         if (resp.ok) {
-          setCurrentUser(data.user);
-          alert("Signed in successfully");
-          window.location.href = "/";
+          // data.user esperado: { name, email, ... }
+          const user = data?.user || { name: data?.name || "User", email };
+          setCurrentUser(user);
+          // Mensaje opcional antes de redirigir
+          // alert("Signed in successfully");
+          window.location.href = "/"; // << redirección al home
         } else {
-          showError("loginErr", data.error || "Login error");
+          showError("loginErr", data?.error || "Login error");
         }
       }catch(err){
-        showError("loginErr", err.message || "Login error");
+        showError("loginErr", err?.message || "Login error");
+      } finally {
+        disableDuring(btn, false);
       }
     });
   </script>

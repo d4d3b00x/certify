@@ -100,6 +100,7 @@
 
     // ---------- utils ----------
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
+    const toNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;
     const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     const pad = n => String(n).padStart(2,'0');
     function fmtDuration(sec){
@@ -115,6 +116,15 @@
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
 
+    // % acierto como 0..1 (si tienes un campo pct en 0..100 lo normalizamos)
+    function pct01(r){
+      const t = toInt(r.total);
+      const c = toInt(r.correct);
+      if (t > 0) return Math.max(0, Math.min(1, c / t));
+      const p = toNum(r.pct);
+      return Math.max(0, Math.min(1, p > 1 ? p/100 : p));
+    }
+
     // ---------- API ----------
     async function fetchAll(limit=1000){
       const res = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors", cache:"no-store"});
@@ -127,19 +137,36 @@
         quizId: (x.quizId || "-").toLowerCase(),
         correct: toInt(x.correct),
         total: toInt(x.total),
-        pct: toInt(x.pct ?? (x.total ? Math.round((toInt(x.correct)/toInt(x.total))*100) : 0)),
+        pct: toNum(x.pct ?? (x.total ? (toInt(x.correct)/toInt(x.total))*100 : 0)),
         durationSec: toInt(x.durationSec),
         ts: x.ts || null
       }));
     }
 
-    // últimos 10 por examen, por timestamp DESC (más recientes)
-    function latest10PerQuiz(rows){
+    // últimos 10 por examen (más recientes) y LUEGO ordenados con tu criterio:
+    // 1) Total DESC  2) Correct DESC  3) Fecha ASC (antes primero)
+    function latest10PerQuizRanked(rows){
       const byQuiz = Object.fromEntries(QUIZZES.map(q => [q, []]));
       rows.forEach(r => { if (byQuiz[r.quizId]) byQuiz[r.quizId].push(r); });
+
       for (const q of QUIZZES){
+        // 1) Quedarnos con los 10 más recientes por fecha (para limitar dataset)
         byQuiz[q].sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
         byQuiz[q] = byQuiz[q].slice(0,10);
+
+        // 2) Precalcular ayudas
+        byQuiz[q] = byQuiz[q].map(r => ({
+          ...r,
+          pct01: pct01(r),
+          timeSafe: r.ts ? new Date(r.ts).getTime() : 0
+        }));
+
+        // 3) Orden final solicitado
+        byQuiz[q].sort((a,b)=>{
+          if (b.total   !== a.total)   return b.total - a.total;         // más preguntas primero
+          if (b.correct !== a.correct) return b.correct - a.correct;     // más correctas
+          return a.timeSafe - b.timeSafe;                                 // el que lo hizo antes
+        });
       }
       return byQuiz;
     }
@@ -182,7 +209,7 @@
           </thead>
           <tbody>`;
       rows.forEach((r,i)=>{
-        const pct = Math.min(100, Math.max(0, toInt(r.pct)));
+        const pct = Math.round(Math.min(100, Math.max(0, r.pct01*100)));
         html += `<tr>
           <td class="col-rank">${medalCell(i)}</td>
           <td class="col-name">${escapeHtml(r.userName)}</td>
@@ -217,8 +244,8 @@
 
       if (filter==="all"){
         c.innerHTML =
-          tableHTML(allByQuiz["az-104"], "Microsoft Azure Administrator (AZ-104)", "") +
-          tableHTML(allByQuiz["aws-saa-c03"], "Amazon AWS Architect Associate (SAA-C03)", "");
+          tableHTML(allByQuiz["az-104"], "Microsoft Azure Administrator (AZ-104)", "az-104") +
+          tableHTML(allByQuiz["aws-saa-c03"], "Amazon AWS Architect Associate (SAA-C03)", "aws-saa-c03");
       }else{
         const title = filter==="az-104" ? "Microsoft Azure Administrator (AZ-104)" : "Amazon AWS Architect Associate (SAA-C03)";
         c.innerHTML = tableHTML(allByQuiz[filter], title, filter);
@@ -233,7 +260,7 @@
       container.innerHTML = `<div class="table-wrap">Loading…</div>`;
       if (!cacheAllByQuiz){
         const rows = await fetchAll(1000);
-        cacheAllByQuiz = latest10PerQuiz(rows);
+        cacheAllByQuiz = latest10PerQuizRanked(rows);
       }
       renderView(cacheAllByQuiz, filter);
     }
