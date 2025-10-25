@@ -102,21 +102,22 @@ function applyTheme(quizId){
 })();
 
 /* ========== Utils ========== */
-/* Fisher–Yates con crypto (si existe) para aleatoriedad fuerte */
+/* Fisher–Yates con aleatoriedad criptográfica */
 function shuffle(a){
-  const n=a.length;
-  // vector de índices aleatorios 32-bit
-  let rnd;
-  if (window.crypto && crypto.getRandomValues) {
-    rnd=new Uint32Array(n); crypto.getRandomValues(rnd);
-  }
+  const arr=a; // in-place como antes
+  const n=arr.length;
+  // buffer de 32 bits para buena entropía
+  const buf = new Uint32Array(n);
+  if (crypto && crypto.getRandomValues) crypto.getRandomValues(buf);
   for(let i=n-1;i>0;i--){
-    const r = rnd ? rnd[i] : Math.floor(Math.random()*(i+1));
-    const j = (r % (i+1));
-    [a[i],a[j]]=[a[j],a[i]];
+    // si hay crypto, usarlo; si no, fallback Math.random
+    const r = buf[i] !== undefined ? (buf[i] / 0x100000000) : Math.random();
+    const j = Math.floor(r*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
   }
-  return a;
+  return arr;
 }
+
 function h(tag,attrs={},kids=[]){const el=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')el.className=v;else if(k==='html')el.innerHTML=v;else el.setAttribute(k,v)}kids.forEach(k=>k&&el.appendChild(k));return el}
 function pad(n){return String(n).padStart(2,'0')}
 function fmtTime(sec){sec=Math.max(0,Number(sec)||0);const m=Math.floor(sec/60),s=sec%60;return `${pad(m)}:${pad(s)}`}
@@ -157,31 +158,34 @@ function readSimulatorPrefs(quizId){
   const sim=document.querySelector(`.sim-card[data-quiz="${quizId}"]`);
   const isAWS=quizId==='aws-saa-c03';
   const urlParams=new URLSearchParams(location.search||'');
+
   const mode=sim?.querySelector(`input[name="${isAWS?'aws':'az'}-mode"]:checked`)?.value||'practice';
   const timeLimit=parseInt(sim?.querySelector(isAWS?'#aws-time':'#az-time')?.value||'0',10);
   const exp=sim?.querySelector(`input[name="${isAWS?'aws':'az'}-exp"]:checked`)?.value||'after';
-  const shuffleOn=true; // ✅ forzamos aleatoriedad siempre
+  const shuffleOn=!!sim?.querySelector(isAWS?'#aws-shuffle':'#az-shuffle')?.checked;
   const sound=!!sim?.querySelector(isAWS?'#aws-sound':'#az-sound')?.checked;
+
+  // Dominios desde los chips activos…
   const tags=[]; sim?.querySelectorAll('.domains .tag.active')?.forEach(t=>tags.push((t.dataset.val||'').toUpperCase()));
-  return {mode,timeLimit,explanations:exp,shuffle:shuffleOn,sound,tags, urlCount: urlParams.get('count')};
+
+  // …y también desde la URL (?domains=D1,D3)
+  const urlDomains=(urlParams.get('domains')||'').split(',').map(s=>s.trim().toUpperCase()).filter(Boolean);
+  if (urlDomains.length) {
+    urlDomains.forEach(d=>{ if(!tags.includes(d)) tags.push(d); });
+  }
+
+  return {mode,timeLimit,explanations:exp,shuffle:shuffleOn,sound,tags};
 }
 
 /* ========== Resolver COUNT con whitelist estricta ========== */
 const ALLOWED_COUNTS = [5,10,15,30,65];
-
-function parseIntOrNull(v){
-  const n = parseInt(v,10);
-  return Number.isFinite(n) ? n : null;
-}
+function parseIntOrNull(v){const n=parseInt(v,10);return Number.isFinite(n)?n:null}
 function resolveDesiredCount(quizId){
   const sim=document.querySelector(`.sim-card[data-quiz="${quizId}"]`);
   const isAWS=quizId==='aws-saa-c03';
   const urlParams = new URLSearchParams(location.search||'');
 
-  // 1) URL ?count=...
   let count = parseIntOrNull(urlParams.get('count'));
-
-  // 2) UI
   if (count==null) {
     const preferred = sim?.querySelector(isAWS?'#studyCount':'#studyCount2') || sim?.querySelector('select[id*="studyCount" i]');
     if (preferred) count = parseIntOrNull(preferred.value);
@@ -190,8 +194,6 @@ function resolveDesiredCount(quizId){
     const anyCount = sim?.querySelector('input[id*="count" i], select[id*="count" i], input[name*="count" i], select[name*="count" i]');
     if (anyCount) count = parseIntOrNull(anyCount.value);
   }
-
-  // 3) LocalStorage prefs
   if (count==null) {
     try {
       const all = JSON.parse(localStorage.getItem('quiz_prefs')||'{}');
@@ -199,23 +201,20 @@ function resolveDesiredCount(quizId){
       count = parseIntOrNull(pv);
     } catch {}
   }
-
-  // 4) Default
   if (count==null) count = 65;
-
   if (!ALLOWED_COUNTS.includes(count)) count = 65;
   if (count < 5) count = 65;
-
   return count;
 }
 
 /* ========== Cliente /questions (Lambda DynamoDB) ========== */
-async function fetchQuestionsFromApi(exam, desiredCount=65, searchQ=''){
+async function fetchQuestionsFromApi(exam, desiredCount=65, searchQ='', overfetch=3){
+  const target = Math.max(desiredCount*overfetch, desiredCount);
   const all=[]; let lastKey=null;
   const seen=new Set();
   const pageLimit = 200;
 
-  for (let guard=0; guard<25 && all.length<desiredCount; guard++){
+  for (let guard=0; guard<25 && all.length<target; guard++){
     const params = new URLSearchParams({ exam: exam, limit: String(pageLimit) });
     if (searchQ) params.set('q', searchQ);
     if (lastKey) params.set('lastKey', JSON.stringify(lastKey));
@@ -223,9 +222,7 @@ async function fetchQuestionsFromApi(exam, desiredCount=65, searchQ=''){
     const url = `${API_URL}/questions?${params.toString()}`;
     const res = await fetch(url, { headers: { 'Accept':'application/json' }});
     const text = await res.text();
-    if (!res.ok){
-      throw new Error(`GET /questions failed ${res.status}: ${text}`);
-    }
+    if (!res.ok){ throw new Error(`GET /questions failed ${res.status}: ${text}`); }
     let data; try{ data = JSON.parse(text); } catch{ throw new Error('Respuesta no JSON de /questions: '+text); }
 
     const items = Array.isArray(data.items) ? data.items : [];
@@ -234,30 +231,42 @@ async function fetchQuestionsFromApi(exam, desiredCount=65, searchQ=''){
       if (!seen.has(qid)){
         seen.add(qid);
         all.push(it);
-        if (all.length>=desiredCount) break;
+        if (all.length>=target) break;
       }
     }
     lastKey = data.lastEvaluatedKey || null;
     if (!lastKey) break;
   }
 
-  return all.slice(0, desiredCount);
+  return all.slice(0, target);
 }
 
-/* ========== Transformación al modelo del motor ========== */
+/* ========== Transformación al modelo del motor (con dominio normalizado) ========== */
+function normalizeDomain(it){
+  // 1) Si viene explícito
+  if (it.domain && /^D[1-4]$/i.test(it.domain)) return it.domain.toUpperCase();
+  // 2) Intentar inferir desde category (e.g., "Domain 1: …" / "DOMAIN 3 …" / "D2")
+  const s = String(it.category||it.domain||'');
+  const m = s.match(/\bD(?:OMAIN)?\s*([1-4])\b/i);
+  return m ? ('D'+m[1]) : null;
+}
 function transformQuestions(items) {
-  return items.map(it => ({
-    question: it.question || '',
-    options: Array.isArray(it.options) ? it.options.slice() : [],
-    correctAnswer: (typeof it.answerIndex === 'number' ? it.answerIndex : null),
-    explanation: it.explanation || '',
-    explanationRich: it.explanationRich || '',
-    links: Array.isArray(it.links) ? it.links.slice() : [],
-    category: it.category || 'General'
-  }));
+  return items.map(it => {
+    const domain = normalizeDomain(it);
+    return {
+      question: it.question || '',
+      options: Array.isArray(it.options) ? it.options.slice() : [],
+      correctAnswer: (typeof it.answerIndex === 'number' ? it.answerIndex : null),
+      explanation: it.explanation || '',
+      explanationRich: it.explanationRich || '',
+      links: Array.isArray(it.links) ? it.links.slice() : [],
+      category: it.category || 'General',
+      domain // <-- D1..D4 o null
+    };
+  });
 }
 
-/* ========== Start quiz (SIEMPRE mezclando preguntas y respuestas) ========== */
+/* ========== Start quiz (COUNT resuelto + filtro por dominios) ========== */
 async function start(quizId='aws-saa-c03'){
   const mySeq = ++__START_SEQ;
   stopTimer();
@@ -268,7 +277,8 @@ async function start(quizId='aws-saa-c03'){
 
   const simPrefsAll = (window.__simPrefs||{});
   const localPrefs = (()=>{ try { return JSON.parse(localStorage.getItem('quiz_prefs')||'{}'); } catch { return {}; }})();
-  const uiPrefs = readSimulatorPrefs(quizId);
+
+  const uiPrefs = readSimulatorPrefs(quizId);   // <-- aquí llegan tags = ['D1','D3', ...]
   const prefs = simPrefsAll[quizId] || localPrefs[quizId] || {};
   if (prefs.mode) STATE.mode = prefs.mode;
   STATE.prefs = { ...STATE.prefs, ...prefs, ...uiPrefs };
@@ -281,35 +291,33 @@ async function start(quizId='aws-saa-c03'){
   try{
     const exam = QUIZ_TO_EXAM[quizId] || 'SAA-C03';
 
-    // 1) Traer preguntas
-    const raw = await fetchQuestionsFromApi(exam, desiredCount, '');
+    // 1) Traer (overfetch por si el filtrado reduce)
+    const raw = await fetchQuestionsFromApi(exam, desiredCount, '', 3);
     if (mySeq !== __START_SEQ) return;
 
     // 2) Transformar
     let all = transformQuestions(raw);
 
-    // 3) Filtro por tags/domains (si hay)
+    // 3) FILTRO POR DOMINIOS SELECCIONADOS (D1..D4)
     if (Array.isArray(STATE.prefs.tags) && STATE.prefs.tags.length){
-      const tagsUpper = STATE.prefs.tags.map(t=>String(t).toUpperCase());
-      all = all.filter(q=>{
-        const cat = (q.category||'').toUpperCase();
-        const matchesD = tagsUpper.some(t=>{
-          if (/^D[1-4]$/.test(t)){
-            const num = t.slice(1);
-            return cat.includes(`DOMAIN ${num}`);
-          }
-          return false;
-        });
-        if (matchesD) return true;
-        return tagsUpper.some(t=> cat.includes(t));
+      const wanted = STATE.prefs.tags.map(s=>s.toUpperCase());
+      all = all.filter(q => {
+        const d = (q.domain || '').toUpperCase();
+        if (d && wanted.includes(d)) return true;
+        // fallback: intentar con category si no hay domain
+        const m = String(q.category||'').match(/\bD(?:OMAIN)?\s*([1-4])\b/i);
+        const dd = m ? ('D'+m[1]).toUpperCase() : '';
+        return dd && wanted.includes(dd);
       });
     }
 
-    // 4) ✅ SIEMPRE mezclar preguntas y recortar al desiredCount
+    // 4) SIEMPRE barajar preguntas para que cada examen sea distinto
     shuffle(all);
+
+    // 4.1) Recorte exacto al desiredCount
     all = all.slice(0, Math.min(desiredCount, all.length));
 
-    // 5) ✅ Mezclar SIEMPRE las opciones de cada pregunta recalculando el índice correcto
+    // 5) Shuffle de opciones recalculando índice correcto (se mantiene)
     all = all.map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice():[];
       const order = shuffle([...Array(opts.length).keys()]);
@@ -329,7 +337,7 @@ async function start(quizId='aws-saa-c03'){
     renderQuiz();
     startTimer();
 
-    toast(`Loaded ${STATE.qs.length} randomized questions`, 1600);
+    toast(`Loaded ${STATE.qs.length} ${STATE.prefs.tags?.length?`(Domains: ${STATE.prefs.tags.join(', ')})`:''}`, 2000);
   } catch (err){
     console.error(err);
     showError(err.message||'Error cargando preguntas');
@@ -410,7 +418,8 @@ function renderQuiz(){
   if(!q){ qCard.appendChild(h('div',{html:'No questions to display.'})) }
   else{
     const pct=Math.round((STATE.idx/Math.max(1,STATE.qs.length))*100); fill.style.width=`${pct}%`;
-    qCard.appendChild(h('div',{class:'domain',html:(q.category||'').toUpperCase()}));
+    const dom = q.domain ? ` (${q.domain})` : '';
+    qCard.appendChild(h('div',{class:'domain',html:(q.category||'General').toUpperCase()+dom}));
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${STATE.idx+1}.</b> ${q.question}`}));
 
     (q._options||[]).forEach((txt,i)=>{
@@ -441,24 +450,44 @@ function renderQuiz(){
   ctr.appendChild(back); ctr.appendChild(mark); ctr.appendChild(next); qCard.appendChild(ctr);
 
   const side=h('div',{class:'side'});
-  const p1=h('div',{class:'panel'}); p1.appendChild(h('h3',{html:'LIST OF QUESTIONS'}));
+
+  // Panel con dots (lista de preguntas)
+  const p1=h('div',{class:'panel'}); 
+  p1.appendChild(h('h3',{html:'LIST OF QUESTIONS'}));
   const dots=h('div',{class:'list-dots',title:'Click to jump to any question'});
   STATE.qs.forEach((qq,i)=>{
     const d=h('div',{class:'dot',html:String(i+1)});
     if(i===STATE.idx)d.classList.add('current');
-    const ans=STATE.answers[i]; if(typeof ans!=='undefined'){ if(ans===qq._correct)d.classList.add('ok'); else d.classList.add('bad'); }
+    const ans=STATE.answers[i]; 
+    if(typeof ans!=='undefined'){ if(ans===qq._correct)d.classList.add('ok'); else d.classList.add('bad'); }
     if(STATE.marked[i]) d.classList.add('marked');
-    d.onclick=()=>{STATE.idx=i;renderQuiz()}; dots.appendChild(d);
+    d.onclick=()=>{STATE.idx=i;renderQuiz()}; 
+    dots.appendChild(d);
   });
-  p1.appendChild(dots); side.appendChild(p1);
+  p1.appendChild(dots); 
+  side.appendChild(p1);
 
-  // opcional: últimos resultados
-  renderExamOverviewTo(side);
-  renderLastResults(side);
+  // === NUEVA SECCIÓN BAJO LOS DOTS ===
+  const p2=h('div',{class:'panel'});
+  p2.appendChild(h('h3',{html:'ACTIONS'}));
+  const sideActions=h('div',{class:'controls'});
+  const btnHome=h('button',{class:'btn',html:'🏠 Home'});
+  btnHome.onclick=()=>{ location.href='/'; };
+  const btnPause=h('button',{class:'btn',html:'⏸️ Stop for later'});
+  // De momento no hace nada:
+  btnPause.onclick=()=>{};
+  sideActions.appendChild(btnHome);
+  sideActions.appendChild(btnPause);
+  p2.appendChild(sideActions);
+  side.appendChild(p2);
+  // === FIN NUEVA SECCIÓN ===
 
-  shell.appendChild(qCard); shell.appendChild(side);
-  wrap.appendChild(shell); root.appendChild(wrap);
-  enableHotkeys(); try{wrap.scrollIntoView({behavior:'smooth',block:'start'})}catch{}
+  shell.appendChild(qCard); 
+  shell.appendChild(side);
+  wrap.appendChild(shell); 
+  root.appendChild(wrap);
+  enableHotkeys(); 
+  try{wrap.scrollIntoView({behavior:'smooth',block:'start'})}catch{}
 }
 
 /* ========== Selección y finalización ========== */

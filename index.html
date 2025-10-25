@@ -22,122 +22,83 @@
         radial-gradient(900px 420px at 12% -10%, #f1f4ff 0, transparent 60%),
         radial-gradient(900px 420px at 88% -10%, #fff4ea 0, transparent 60%),
         linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
-      line-height:1.6;
-      min-height:100vh;
-      overflow-x:hidden;
+      line-height:1.6; min-height:100vh; overflow-x:hidden;
     }
     .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    /* Cards */
-    .card{
-      background:var(--card);
-      border:1px solid var(--bd);
-      border-radius:var(--radius);
-      padding:22px;
-      box-shadow:var(--shadow);
-      transition:transform .12s ease, box-shadow .18s ease, border-color .18s ease;
-    }
+    .card{background:var(--card);border:1px solid var(--bd);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .12s ease, box-shadow .18s ease, border-color .18s ease}
     .card.path:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(28,27,70,.10); border-color:#dfe3ff; }
 
     /* ===== TOP ROW: HERO + AUTHBAR ===== */
-    .toprow{
-      display:grid;
-      grid-template-columns: 1fr 300px;
-      gap:14px;
-      margin:8px 0 12px;
-      align-items:stretch;
-    }
-    @media (max-width:900px){
-      .toprow{ grid-template-columns: 1fr; gap:10px; }
-    }
+    .toprow{ display:grid; grid-template-columns:1fr 300px; gap:14px; margin:8px 0 12px; align-items:stretch }
+    @media (max-width:900px){ .toprow{ grid-template-columns:1fr; gap:10px } }
 
-    /* HERO */
-    .hero{
-      text-align:center;
-      border:1px solid #ecefff;
-      padding:14px 16px;
-      background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%);
-      margin:0;
-      display:flex; flex-direction:column; justify-content:center;
-    }
-    .hero .badge{margin-bottom:6px;padding:6px 10px;font-size:.88rem;}
-    .hero h1{
-      font-size:clamp(1.6rem,1.5vw + 1rem,2.4rem);
-      line-height:1.08; margin:2px 0 6px; font-weight:900; color:var(--brand);
-    }
-    .hero .desc{ color:var(--muted); max-width:780px; margin:0 auto 2px; font-size:.97rem; line-height:1.45; }
+    .hero{ text-align:center; border:1px solid #ecefff; padding:14px 16px; background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%); margin:0; display:flex; flex-direction:column; justify-content:center }
+    .hero h1{ font-size:clamp(1.6rem,1.5vw + 1rem,2.4rem); line-height:1.08; margin:2px 0 6px; font-weight:900; color:var(--brand) }
+    .hero .desc{ color:var(--muted); max-width:780px; margin:0 auto 2px; font-size:.97rem; line-height:1.45 }
 
     /* ===== AUTH BAR ===== */
-    .authbar{
-      border:1px solid #ecefff; border-radius:var(--radius); background:#fff;
-      box-shadow:0 4px 10px rgba(30,35,80,0.06);
-      padding:0; display:flex; align-items:center; justify-content:center; height:100%;
-    }
+    .authbar{ border:1px solid #ecefff; border-radius:var(--radius); background:#fff; box-shadow:0 4px 10px rgba(30,35,80,0.06); padding:0; display:flex; align-items:center; justify-content:center; height:100% }
     .authbar-inner{
-      display:grid;
-      grid-template-columns: auto 1fr auto;
-      align-items:center; column-gap:10px;
-      padding:10px 12px; width:100%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px; padding:12px; width:100%; text-align:center;
     }
-    .authbar.guest .authbar-inner{ grid-template-columns: 1fr auto auto; justify-content:end; }
-    .authbar.guest .home-icon, .authbar.guest .user{ display:none; }
 
-    .home-icon{ width:22px; height:22px; display:inline-block; }
-    .user{ min-width:0; }
-    .user .inline{
-      display:flex; align-items:center; gap:6px; min-width:0;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-      font-weight:900;
-    }
-    .user .email{ color:#8b8fb3; font-weight:800; }
+    /* Fila nombre + icono juntos */
+    .userrow{ display:flex; align-items:center; justify-content:center; gap:8px; }
+    .home-icon{ width:22px; height:22px }
+    .user .inline{ display:flex; align-items:center; gap:6px; justify-content:center; flex-wrap:wrap; font-weight:900 }
+    .user .email{ color:#8b8fb3; font-weight:800 }
+    .welcome{ font-weight:900; color:#2b2f57; margin-right:4px }
 
-    .authbar .actions{ display:flex; gap:8px; }
-    .authbar .actions button{
+    /* Estados */
+    .authbar.guest .userrow{ display:none }  /* ocultar fila completa en invitado */
+    .authbar.logged .userrow{ display:flex }
+
+    /* Acciones centradas */
+    .authbar .actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:center }
+    .authbar .actions a, .authbar .actions button{
       appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
       font-weight:900; padding:8px 12px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
-      transition:transform .08s ease, box-shadow .12s ease, background .12s ease;
-      white-space:nowrap;
+      transition:transform .08s ease, box-shadow .12s ease, background .12s ease; white-space:nowrap; text-decoration:none
     }
-    .authbar .actions button:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff; }
-    .hidden{ display:none !important; }
+    .authbar .actions a:hover, .authbar .actions button:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
+    .hidden{ display:none !important }
 
-    /* Badges */
-    .badge,.badge1,.badge2{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px; border-radius:999px; font-weight:800;
-      border:1px solid #edf0ff; background:#f7f8ff; color:#2b2f57;
+    /* Tarjeta inferior (solo guest) */
+    .auth-extra{
+      width:100%;
+      background:#fbfcff;
+      border:1px dashed #e9ecff;
+      border-radius:10px;
+      padding:10px 12px;
+      font-size:.92rem; color:#565b86;
+      display:flex; align-items:center; justify-content:center; gap:8px;
     }
+    .auth-extra b{color:#2a2f57}
+
+    /* Resto estilos (sin cambios) */
+    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 22px}
+    @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+    ul{margin:0;padding-left:0;list-style:none}
+    ul li{ position:relative; padding:10px 12px 10px 28px; margin:10px 0; border:1px solid #edf0ff; border-radius:12px; background:#ffffff }
+    ul li::before{ content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(45deg); width:10px; height:10px; border-radius:2px; background:#d9defc; box-shadow:0 1px 3px rgba(36,44,110,.16) }
+    ul li a{text-decoration:none; color:inherit; font-weight:700}
+    ul li a:hover{text-decoration:underline}
+
+    .badge,.badge1,.badge2{ display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; font-weight:800; border:1px solid #edf0ff; background:#f7f8ff; color:#2b2f57 }
     .badge1{background:var(--aws-50); border-color:var(--aws-100); color:var(--aws-ink)}
     .badge2{background:var(--az-50); border-color:var(--az-100); color:var(--az-ink)}
 
-    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 22px}
-    @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+    .aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%)}
+    .azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%)}
 
-    ul{margin:0;padding-left:0;list-style:none}
-    ul li{ position:relative; padding:10px 12px 10px 28px; margin:10px 0;
-      border:1px solid #edf0ff; border-radius:12px; background:#ffffff; }
-    ul li::before{
-      content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(45deg);
-      width:10px; height:10px; border-radius:2px; background:#d9defc; box-shadow:0 1px 3px rgba(36,44,110,.16);
-    }
-    ul li a{text-decoration:none; color:inherit; font-weight:700;}
-    ul li a:hover{text-decoration:underline;}
-
-    .aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%);}
-    .azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%);}
-
-    .desc2{display:flex; align-items:center; gap:16px; margin:10px 0 4px;}
+    .desc2{display:flex; align-items:center; gap:16px; margin:10px 0 4px}
     .desc2 .logo{width:66px; height:auto; flex:0 0 auto}
     .desc2 .text{flex:1 1 auto; line-height:1.5; color:var(--ink); font-size:.98rem}
 
-    .actions{display:flex;align-items:center;gap:12px;margin:12px 0 6px;flex-wrap:wrap;justify-content:center;}
-    .btn{
-      appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
-      font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px;
-      box-shadow:0 6px 16px rgba(25,22,84,.06);
-      transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
-      text-decoration:none; display:inline-flex; align-items:center; gap:8px;
-    }
+    .actions{display:flex;align-items:center;gap:12px;margin:12px 0 6px;flex-wrap:wrap;justify-content:center}
+    .btn{ appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52; font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06); transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease; text-decoration:none; display:inline-flex; align-items:center; gap:8px }
     .btn:hover{transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff}
     .btn:focus{outline:3px solid var(--ring); outline-offset:2px}
     .btn.secondary{background:#ffffff; color:#2a2e57;}
@@ -147,34 +108,30 @@
     .btn-az.solid{background:var(--az-500); border-color:#98cfff; color:#fff;}
     .btn-az.solid:hover{background:var(--az-600)}
     .btn-az{color:var(--az-ink)}
-
     .sim-card h3{margin:0 0 10px}
     .sim-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .sim-form .full{grid-column:1/-1}
     @media (max-width:720px){ .sim-form{grid-template-columns:1fr} }
-    .segmented{display:flex;gap:8px;background:#f6f7ff;border:1px solid #e6e9ff;border-radius:10px;padding:6px;}
+    .segmented{display:flex;gap:8px;background:#f6f7ff;border:1px solid #e6e9ff;border-radius:10px;padding:6px}
     .segmented input{display:none}
-    .segmented label{flex:1 1 auto;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800;color:#343a6e;}
+    .segmented label{flex:1 1 auto;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800;color:#343a6e}
     .segmented input:checked + label{background:#fff;border:1px solid #e6e9ff}
     .segmented.aws input:checked + label{border-color:#ffddad;color:#7b4a00}
     .segmented.az input:checked + label{border-color:#bfe0ff;color:#0a4a7b}
-    .field{display:flex;flex-direction:column;gap:6px;}
+    .field{display:flex;flex-direction:column;gap:6px}
     .field label{font-weight:800;font-size:.93rem;color:#2a2e57}
-    .select, .text{display:flex;align-items:center;gap:8px;border:1px solid #e6e9ff;border-radius:10px;padding:8px 10px;background:#fff;}
-    .select select, .text input{border:none;outline:none;font-weight:700;color:#2a2e57;width:100%;background:transparent}
+    .select,.text{display:flex;align-items:center;gap:8px;border:1px solid #e6e9ff;border-radius:10px;padding:8px 10px;background:#fff}
+    .select select,.text input{border:none;outline:none;font-weight:700;color:#2a2e57;width:100%;background:transparent}
     .small{font-size:.9rem;color:var(--muted)}
     .domains{display:flex;flex-wrap:wrap;gap:8px}
-    .domains .tag{border:1px solid #e6e9ff;padding:6px 10px;border-radius:999px;cursor:pointer;user-select:none;font-weight:800;color:#37407a;background:#fff;}
-    .domains .tag.active{box-shadow:0 0 0 2px #ffe7c6 inset;color:#7b4a00;}
-    .domains.az .tag.active{box-shadow:0 0 0 2px #cfe9ff inset;color:#0a4a7b;}
-    .kbd{display:inline-block;padding:.1rem .4rem;border-radius:6px;border:1px solid #e6e9ff;background:#fff;font-weight:800;}
-    .note{font-size:.95rem;color:var(--muted)}
+    .domains .tag{border:1px solid #e6e9ff;padding:6px 10px;border-radius:999px;cursor:pointer;user-select:none;font-weight:800;color:#37407a;background:#fff}
+    .domains .tag.active{box-shadow:0 0 0 2px #ffe7c6 inset;color:#7b4a00}
+    .domains.az .tag.active{box-shadow:0 0 0 2px #cfe9ff inset;color:#0a4a7b}
+    .kbd{display:inline-block;padding:.1rem .4rem;border-radius:6px;border:1px solid #e6e9ff;background:#fff;font-weight:800}
     .center{text-align:center}
-
-    /* === Estado deshabilitado para Start Quiz + hint === */
-    .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
-    .btn[disabled]:hover{ background:#f5f7ff; }
-    .login-hint{ display:none; } /* se muestra solo como invitado */
+    .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important }
+    .btn[disabled]:hover{ background:#f5f7ff }
+    .login-hint{ display:none }
   </style>
 </head>
 <body>
@@ -185,33 +142,39 @@
       <div class="toprow">
         <section class="card hero" aria-label="Welcome">
           <h1>CERTIFY.TECH: Study less...Enjoy more!</h1>
-          <p class="desc">
-            Level up your skills with fun quizzes. Learn, play, and crush your next test — the smart (and fun) way.
-          </p>
+          <p class="desc">Level up your skills with fun quizzes. Learn, play, and crush your next test — the smart (and fun) way.</p>
         </section>
 
         <section class="authbar" id="authBar">
           <div class="authbar-inner">
-            <!-- Home icon (multicolor) -->
-            <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
-              <path d="M8 30 32 12l24 18v22a2 2 0 0 1-2 2H42a2 2 0 0 1-2-2V40H24v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V30z" fill="#ffd166"/>
-              <path d="M6 28 32 8l26 20-4 5L32 18 10 42l-4-5z" fill="#06d6a0"/>
-              <rect x="28" y="36" width="8" height="8" rx="1.5" fill="#118ab2"/>
-              <rect x="22" y="44" width="20" height="2" fill="#073b4c"/>
-            </svg>
-            <!-- Texto inline -->
-            <div class="user">
-              <div class="inline">
-                <a id="userName" href="/user/profile.html">—</a>
-                <span class="email" id="userEmail">—</span>
+
+            <!-- Fila: icono + Welcome + nombre/email -->
+            <div class="userrow">
+              <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M8 30 32 12l24 18v22a2 2 0 0 1-2 2H42a2 2 0 0 1-2-2V40H24v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V30z" fill="#ffd166"/>
+                <path d="M6 28 32 8l26 20-4 5L32 18 10 42l-4-5z" fill="#06d6a0"/>
+                <rect x="28" y="36" width="8" height="8" rx="1.5" fill="#118ab2"/>
+                <rect x="22" y="44" width="20" height="2" fill="#073b4c"/>
+              </svg>
+              <span id="welcomeTxt" class="welcome hidden">Welcome</span>
+              <div class="user">
+                <div class="inline">
+                  <a id="userName" href="/user/profile.html"></a>
+                  <span class="email" id="userEmail"></span>
+                </div>
               </div>
             </div>
-            <!-- Botones -->
+
+            <!-- Acciones -->
             <div class="actions">
-              <button id="btnLogin" type="button">Login</button>
-              <button id="btnSignup" type="button">Register</button>
+              <a id="btnProfile" href="/user/profile.html" class="hidden">Profile</a>
+              <a id="btnLogin"  href="/login/login.html">Login</a>
+              <a id="btnSignup" href="/login/login.html#signup">Register</a>
               <button id="btnLogout" type="button" class="hidden">Logout</button>
             </div>
+
+            <!-- Tarjeta inferior (solo guest) -->
+            <div class="auth-extra" id="authExtra" aria-live="polite"></div>
           </div>
         </section>
       </div>
@@ -356,162 +319,80 @@
     </main>
   </div>
 
-  <!-- SCRIPTS -->
-  <script src="/questions.js2"></script>
   <script src="/control_quizs/Q_global.js"></script>
 
   <script>
-    /* ===== Auth bar rendering ===== */
-    function getCurrentUser() {
-      try { return JSON.parse(localStorage.getItem("currentUser") || "null"); }
-      catch { return null; }
-    }
-    function logoutUser() {
-      localStorage.removeItem("currentUser");
-      renderAuthBar();
-    }
+    /* ===== Auth bar logic ===== */
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function logoutUser(){ localStorage.removeItem("currentUser"); renderAuthBar(); }
 
-    /* === Habilitar/deshabilitar Start Quiz + mostrar hint “Login to start” === */
     function updateStartButtonsForAuth(){
-      const logged = !!getCurrentUser();
-
+      const logged=!!getCurrentUser();
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
-        if(!logged){
-          btn.setAttribute('disabled','');
-          btn.setAttribute('aria-disabled','true');
-          btn.setAttribute('title','Please log in to start the quiz');
-        }else{
-          btn.removeAttribute('disabled');
-          btn.removeAttribute('aria-disabled');
-          btn.removeAttribute('title');
-        }
+        if(!logged){ btn.setAttribute('disabled',''); btn.setAttribute('aria-disabled','true'); btn.setAttribute('title','Please log in to start the quiz'); }
+        else{ btn.removeAttribute('disabled'); btn.removeAttribute('aria-disabled'); btn.removeAttribute('title'); }
       });
-
-      // Mostrar / ocultar CTA de login al lado
-      document.querySelectorAll('.sim-card .login-hint').forEach(link=>{
-        link.style.display = logged ? 'none' : 'inline-flex';
-      });
+      document.querySelectorAll('.sim-card .login-hint').forEach(link=>{ link.style.display=logged?'none':'inline-flex'; });
     }
 
-    function renderAuthBar() {
-      const u         = getCurrentUser();
-      const authBar   = document.getElementById("authBar");
-      const btnLogin  = document.getElementById("btnLogin");
-      const btnSignup = document.getElementById("btnSignup");
-      const btnLogout = document.getElementById("btnLogout");
-      const nameEl    = document.getElementById("userName");
-      const emailEl   = document.getElementById("userEmail");
+    function renderAuthBar(){
+      const u = getCurrentUser();
+      const bar = document.getElementById('authBar');
+      const nameEl = document.getElementById('userName');
+      const emailEl= document.getElementById('userEmail');
+      const btnLogin = document.getElementById('btnLogin');
+      const btnSignup= document.getElementById('btnSignup');
+      const btnLogout= document.getElementById('btnLogout');
+      const btnProfile=document.getElementById('btnProfile');
+      const extraEl = document.getElementById('authExtra');
+      const welcome = document.getElementById('welcomeTxt');
 
-      if (u) {
-        authBar.classList.remove("guest");
-        nameEl.textContent  = u.name || "(user)";
-        emailEl.textContent = u.email || "";
-        btnLogin.classList.add("hidden");
-        btnSignup.classList.add("hidden");
-        btnLogout.classList.remove("hidden");
-      } else {
-        authBar.classList.add("guest");
-        nameEl.textContent  = "";
-        emailEl.textContent = "";
-        btnLogin.classList.remove("hidden");
-        btnSignup.classList.remove("hidden");
-        btnLogout.classList.add("hidden");
+      if(u){
+        bar.classList.remove('guest'); bar.classList.add('logged');
+        nameEl.textContent = u.name || '(user)'; emailEl.textContent= u.email || '';
+        welcome.classList.remove('hidden');
+
+        // Mostrar botones de sesión abierta debajo (centrados)
+        btnLogin.classList.add('hidden'); btnSignup.classList.add('hidden');
+        btnLogout.classList.remove('hidden'); btnProfile.classList.remove('hidden');
+
+        // Ocultar tarjeta de invitado
+        extraEl.style.display = 'none';
+      }else{
+        bar.classList.add('guest'); bar.classList.remove('logged');
+        nameEl.textContent=''; emailEl.textContent='';
+        welcome.classList.add('hidden');
+
+        // Mostrar botones de Login/Register centrados
+        btnLogin.classList.remove('hidden'); btnSignup.classList.remove('hidden');
+        btnLogout.classList.add('hidden'); btnProfile.classList.add('hidden');
+
+        // Mensaje de bienvenida centrado
+        extraEl.style.display = 'flex';
+        extraEl.innerHTML = `👋 <b>Welcome</b> — create a free account to save progress and history.`;
       }
-      updateStartButtonsForAuth(); // sincroniza simuladores
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const btnLogin  = document.getElementById("btnLogin");
-      const btnSignup = document.getElementById("btnSignup");
-      const btnLogout = document.getElementById("btnLogout");
-      if (btnLogin)  btnLogin.onclick  = () => location.href = "/login/login.html";
-      if (btnSignup) btnSignup.onclick = () => location.href = "/login/login.html#signup";
-      if (btnLogout) btnLogout.onclick = () => logoutUser();
-
-      renderAuthBar();
       updateStartButtonsForAuth();
-      setTimeout(()=>{ renderAuthBar(); updateStartButtonsForAuth(); }, 300);
-    });
-
-    /* ===== Sim helpers ===== */
-    function savePrefs(quizId, prefs){
-      try{
-        const all = JSON.parse(localStorage.getItem("quiz_prefs")||"{}");
-        all[quizId] = {...(all[quizId]||{}), ...prefs};
-        localStorage.setItem("quiz_prefs", JSON.stringify(all));
-      }catch{}
     }
-    function loadPrefs(quizId){
-      try{
-        const all = JSON.parse(localStorage.getItem("quiz_prefs")||"{}");
-        return all[quizId]||{};
-      }catch{ return {}; }
-    }
-    function collectOptions(simEl){
-      const brand = simEl.dataset.brand;
-      const quiz = simEl.dataset.quiz;
-      const isAWS = brand==='aws';
-      const mode = simEl.querySelector(`input[name="${isAWS?'aws':'az'}-mode"]:checked`)?.value || 'practice';
-      const count = parseInt(simEl.querySelector(isAWS?'#studyCount':'#studyCount2')?.value||'5',10);
-      const timeLimit = 0;
-      const explanations = 'after';
-      const tags = [];
-      simEl.querySelectorAll('.domains .tag.active').forEach(t=> tags.push(t.dataset.val));
-      const prefs = { mode, count, timeLimit, explanations, tags };
-      savePrefs(quiz, prefs);
-      window.__simPrefs = window.__simPrefs || {};
-      window.__simPrefs[quiz] = prefs;
-      return prefs;
-    }
-
-    /* Fallback local para start() si tus scripts no lo definen */
-    window.start = window.start || function(quizId){
-      try{
-        const prefs = (window.__simPrefs && window.__simPrefs[quizId]) || {};
-        const q = new URLSearchParams({ quiz: quizId, ...prefs }).toString();
-        location.href = `/quiz/?q=${encodeURIComponent(quizId)}&${q}`;
-      }catch{
-        location.href = `/quiz/?q=${encodeURIComponent(quizId)}`;
-      }
-    };
 
     document.addEventListener('DOMContentLoaded', ()=>{
-      // Toggle de tags de dominios
+      document.getElementById('btnLogout')?.addEventListener('click', logoutUser);
+
+      // Toggle dominios
       document.querySelectorAll('.domains .tag').forEach(tag=>{
         tag.addEventListener('click', ()=> tag.classList.toggle('active'));
       });
 
-      // Click en Start Quiz (si no está deshabilitado)
+      // Start Quiz
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
-        btn.addEventListener('click', (e)=>{
-          if (btn.hasAttribute('disabled')) { e.preventDefault(); return; }
-          const sim = btn.closest('.sim-card');
-          const quiz = sim.dataset.quiz;
-          collectOptions(sim);
-          start(quiz);
+        btn.addEventListener('click', e=>{
+          if(btn.hasAttribute('disabled')){ e.preventDefault(); return; }
+          const sim = btn.closest('.sim-card'); const quiz = sim.dataset.quiz;
+          if(typeof window.start==='function') window.start(quiz); else location.href=`/quiz/?q=${encodeURIComponent(quiz)}`;
         });
       });
 
-      // Rellenar preferencias guardadas
-      ['aws-saa-c03','az-104'].forEach(q=>{
-        const sim = document.querySelector(`.sim-card[data-quiz="${q}"]`);
-        if (!sim) return;
-        const isAWS = q==='aws-saa-c03';
-        const p = loadPrefs(q);
-        if (p.mode){
-          const inp = sim.querySelector(`input[name="${isAWS?'aws':'az'}-mode"][value="${p.mode}"]`);
-          if (inp) inp.checked = true;
-        }
-        const selCount = sim.querySelector(isAWS?'#studyCount':'#studyCount2');
-        if (selCount && p.count) selCount.value = String(p.count);
-        if (Array.isArray(p.tags)){
-          sim.querySelectorAll('.domains .tag').forEach(t=>{
-            if (p.tags.includes(t.dataset.val)) t.classList.add('active');
-          });
-        }
-      });
-
-      updateStartButtonsForAuth(); // asegurar estado final
+      renderAuthBar();
+      setTimeout(()=>{ renderAuthBar(); }, 300);
     });
   </script>
 </body>

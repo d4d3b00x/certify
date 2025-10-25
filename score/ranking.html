@@ -22,11 +22,9 @@
     }
     .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
     .card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);}
-
     .header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:10px 0 14px;}
     .header h2{margin:0;color:var(--brand);font-size:1.4rem;font-weight:900;letter-spacing:.2px;}
     .hint{color:var(--muted)}
-
     /* Filtros */
     .filters{display:flex;gap:8px;flex-wrap:wrap}
     .pill{
@@ -34,14 +32,12 @@
       padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:800;
     }
     .pill[aria-pressed="true"]{border-color:#c9b6ff;background:#f6f1ff}
-
     .section-title{display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px}
     .section-title h3{margin:0;font-size:1.05rem}
     .badge{
       display:inline-block;padding:4px 10px;border-radius:999px;font-weight:800;font-size:.8rem;
       background:#f3ecff;color:#4a1778;border:1px solid #e3d6ff;
     }
-
     .table-wrap{background:#fff;border:1px solid var(--bd);border-radius:16px;box-shadow:var(--shadow);padding:14px;overflow:auto;}
     .rank-table{width:100%;min-width:820px;border-collapse:separate;border-spacing:0}
     .rank-table thead th{
@@ -66,7 +62,6 @@
     .pbar{position:relative;flex:1 1 120px;height:8px;background:#eee;border-radius:999px;overflow:hidden;max-width:160px}
     .pbar>i{position:absolute;left:0;top:0;bottom:0;width:0%;background:linear-gradient(90deg,#7b3fe4,#a45df2)}
     .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(84,24,141,.08);color:#3b2062;border:1px solid rgba(84,24,141,.2);font-weight:700}
-
     .actions{display:flex;gap:10px;justify-content:center;margin-top:14px}
     .btn{appearance:none;border:0;cursor:pointer;background:var(--cta);color:var(--cta-ink);font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px}
     .btn:hover{background:var(--cta-hover)}
@@ -78,9 +73,9 @@
       <div class="header">
         <h2>📊 TOP 10 QUIZZERS PER CERTIFICATION!!</h2>
         <div class="filters" role="tablist" aria-label="Filter by exam">
-          <button class="pill" id="flt-all"   role="tab" aria-pressed="true"  onclick="setFilter('all')">All</button>
-          <button class="pill" id="flt-az"    role="tab" aria-pressed="false" onclick="setFilter('az-104')">AZ-104</button>
-          <button class="pill" id="flt-aws"   role="tab" aria-pressed="false" onclick="setFilter('aws-saa-c03')">AWS-SAA-C03</button>
+          <button class="pill" id="flt-all" role="tab" aria-pressed="true" onclick="setFilter('all')">All</button>
+          <button class="pill" id="flt-az" role="tab" aria-pressed="false" onclick="setFilter('az-104')">AZ-104</button>
+          <button class="pill" id="flt-aws" role="tab" aria-pressed="false" onclick="setFilter('aws-saa-c03')">AWS-SAA-C03</button>
         </div>
       </div>
 
@@ -103,16 +98,23 @@
     const toNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;
     const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     const pad = n => String(n).padStart(2,'0');
+
     function fmtDuration(sec){
-      sec = toInt(sec); if (!sec || sec<0) return "—";
-      const m = Math.floor(sec/60), s = sec%60; return `${pad(m)}:${pad(s)}`;
+      sec = toInt(sec);
+      if (!sec || sec < 0) return "—";
+      const m = Math.floor(sec/60), s = sec%60;
+      return `${pad(m)}:${pad(s)}`;
     }
+
     function fmtDate(iso){
       if (!iso) return "—";
       try{
         return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-      }catch{ return iso; }
+      }catch{
+        return iso;
+      }
     }
+
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
 
@@ -144,7 +146,8 @@
     }
 
     // últimos 10 por examen (más recientes) y LUEGO ordenados con tu criterio:
-    // 1) Total DESC  2) Correct DESC  3) Fecha ASC (antes primero)
+    // 1) Total DESC  2) Correct DESC  3) Duración ASC (menos tiempo primero en el empate)
+    // 4) Fecha ASC (más antiguo primero como desempate final para estabilidad)
     function latest10PerQuizRanked(rows){
       const byQuiz = Object.fromEntries(QUIZZES.map(q => [q, []]));
       rows.forEach(r => { if (byQuiz[r.quizId]) byQuiz[r.quizId].push(r); });
@@ -155,17 +158,19 @@
         byQuiz[q] = byQuiz[q].slice(0,10);
 
         // 2) Precalcular ayudas
-        byQuiz[q] = byQuiz[q].map(r => ({
-          ...r,
-          pct01: pct01(r),
-          timeSafe: r.ts ? new Date(r.ts).getTime() : 0
-        }));
+        byQuiz[q] = byQuiz[q].map(r => {
+          const timeSafe = r.ts ? new Date(r.ts).getTime() : 0;
+          // si no hay duración o es 0/negativa, lo enviamos al final del empate
+          const durationSafe = (toInt(r.durationSec) > 0) ? toInt(r.durationSec) : Number.MAX_SAFE_INTEGER;
+          return { ...r, pct01: pct01(r), timeSafe, durationSafe };
+        });
 
         // 3) Orden final solicitado
         byQuiz[q].sort((a,b)=>{
-          if (b.total   !== a.total)   return b.total - a.total;         // más preguntas primero
-          if (b.correct !== a.correct) return b.correct - a.correct;     // más correctas
-          return a.timeSafe - b.timeSafe;                                 // el que lo hizo antes
+          if (b.total !== a.total)   return b.total - a.total;       // más preguntas primero
+          if (b.correct !== a.correct) return b.correct - a.correct; // más correctas
+          if (a.durationSafe !== b.durationSafe) return a.durationSafe - b.durationSafe; // MENOS tiempo primero
+          return a.timeSafe - b.timeSafe; // el que lo hizo antes (fecha) como desempate último
         });
       }
       return byQuiz;
@@ -186,57 +191,69 @@
             <h3>${title}</h3>
             <span class="badge">${quizId}</span>
           </div>
-          <div class="table-wrap"><p style="text-align:center;margin:18px 0;">No results yet.</p></div>`;
+          <div class="table-wrap"><p style="text-align:center;margin:18px 0;">No results yet.</p></div>
+        `;
       }
+
       let html = `
         <div class="section-title">
           <h3>${title}</h3>
           <span class="badge">${quizId}</span>
         </div>
         <div class="table-wrap">
-        <table class="rank-table">
-          <thead>
-            <tr>
-              <th class="col-rank">#</th>
-              <th class="col-name">Name</th>
-              <th class="col-quiz">Quiz</th>
-              <th class="col-num">Correct</th>
-              <th class="col-num">Total</th>
-              <th class="col-num">Score</th>
-              <th class="col-num">Duration</th>
-              <th class="col-date">Date</th>
-            </tr>
-          </thead>
-          <tbody>`;
+          <table class="rank-table">
+            <thead>
+              <tr>
+                <th class="col-rank">#</th>
+                <th class="col-name">Name</th>
+                <th class="col-quiz">Quiz</th>
+                <th class="col-num">Correct</th>
+                <th class="col-num">Total</th>
+                <th class="col-num">Score</th>
+                <th class="col-num">Duration</th>
+                <th class="col-date">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
       rows.forEach((r,i)=>{
         const pct = Math.round(Math.min(100, Math.max(0, r.pct01*100)));
-        html += `<tr>
-          <td class="col-rank">${medalCell(i)}</td>
-          <td class="col-name">${escapeHtml(r.userName)}</td>
-          <td class="col-quiz"><span class="badge">${escapeHtml(r.quizId)}</span></td>
-          <td class="col-num">${r.correct}</td>
-          <td class="col-num">${r.total}</td>
-          <td class="col-num">
-            <div class="pct">
-              <div class="pbar"><i style="width:${pct}%"></i></div>
-              <span>${pct}%</span>
-            </div>
-          </td>
-          <td class="col-num"><span class="chip">${fmtDuration(r.durationSec)}</span></td>
-          <td class="col-date">${fmtDate(r.ts)}</td>
-        </tr>`;
+        html += `
+          <tr>
+            <td class="col-rank">${medalCell(i)}</td>
+            <td class="col-name">${escapeHtml(r.userName)}</td>
+            <td class="col-quiz"><span class="badge">${escapeHtml(r.quizId)}</span></td>
+            <td class="col-num">${r.correct}</td>
+            <td class="col-num">${r.total}</td>
+            <td class="col-num">
+              <div class="pct">
+                <div class="pbar"><i style="width:${pct}%"></i></div>
+                <span>${pct}%</span>
+              </div>
+            </td>
+            <td class="col-num"><span class="chip">${fmtDuration(r.durationSec)}</span></td>
+            <td class="col-date">${fmtDate(r.ts)}</td>
+          </tr>
+        `;
       });
-      html += `</tbody></table></div>`;
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
       return html;
     }
 
     function renderView(allByQuiz, filter){
       const c = document.getElementById("container");
       const pills = {
-        all:  document.getElementById("flt-all"),
-        az:   document.getElementById("flt-az"),
-        aws:  document.getElementById("flt-aws")
+        all: document.getElementById("flt-all"),
+        az: document.getElementById("flt-az"),
+        aws: document.getElementById("flt-aws")
       };
+
       // actualizar estado de los pills
       pills.all.setAttribute("aria-pressed", String(filter==="all"));
       pills.az.setAttribute("aria-pressed", String(filter==="az-104"));
