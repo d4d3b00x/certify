@@ -136,7 +136,6 @@ function readSimulatorPrefs(quizId){
   const sim=document.querySelector(`.sim-card[data-quiz="${quizId}"]`);
   const isAWS=quizId==='aws-saa-c03';
 
-  // busca cualquier select con id que contenga 'studyCount' dentro de la tarjeta
   const countSel =
     sim?.querySelector(isAWS?'#studyCount':'#studyCount2') ||
     sim?.querySelector('select[id*="studyCount"]');
@@ -163,19 +162,19 @@ function start(quizId='aws-saa-c03'){
   const localPrefs = (()=>{ try { return JSON.parse(localStorage.getItem('quiz_prefs')||'{}'); } catch { return {}; }})();
   const prefs = simPrefsAll[quizId] || localPrefs[quizId] || {};
 
-  // Modo
+  // Modo + Prefs a STATE.prefs (merge correcto)
   if (prefs.mode) STATE.mode = prefs.mode;
+  STATE.prefs = { ...STATE.prefs, ...prefs };
 
   // Preguntas fuente
   const src = cfg.questions();
   let all = flattenQuestions(src);
 
   // FILTRO por dominios tags: D1..D4 (o cualquier etiqueta de texto)
-  if (Array.isArray(prefs.tags) && prefs.tags.length){
-    const tagsUpper = prefs.tags.map(t=>String(t).toUpperCase());
+  if (Array.isArray(STATE.prefs.tags) && STATE.prefs.tags.length){
+    const tagsUpper = STATE.prefs.tags.map(t=>String(t).toUpperCase());
     all = all.filter(q=>{
       const cat = (q.category||'').toUpperCase();
-      // Soporta D1..D4 => "DOMAIN 1..4"
       const matchesD = tagsUpper.some(t=>{
         if (/^D[1-4]$/.test(t)){
           const num = t.slice(1);
@@ -184,36 +183,47 @@ function start(quizId='aws-saa-c03'){
         return false;
       });
       if (matchesD) return true;
-
-      // Cualquier otra etiqueta: match directo en category
       return tagsUpper.some(t=> cat.includes(t));
     });
   }
 
-  // Número de preguntas: respeta selección/prefs
+  // Número de preguntas
   let n = 65;
-  if (typeof prefs.count === 'number') n = prefs.count;
+  if (typeof STATE.prefs.count === 'number') n = STATE.prefs.count;
   else {
     try{
       const el = document.getElementById('studyCount') || document.getElementById('studyCount2');
       if (el && el.value) n = parseInt(el.value,10);
     }catch{}
   }
-  // saneo
   const allowed = [5,10,15,30,65];
   if (!allowed.includes(n)) n = Math.min(65, Math.max(5, n||65));
 
-  // Aleatoriza y recorta en base al tamaño filtrado (si filtras puede haber menos)
-  all = shuffle(all).slice(0, Math.min(n, all.length));
+  // Aleatoriza preguntas SI prefs.shuffle = true
+  if (STATE.prefs.shuffle) shuffle(all);
+  all = all.slice(0, Math.min(n, all.length));
 
-  // Reset de estado (no intentes reusar sesiones si cambia el filtro/tamaño)
+  // --- Barajar opciones por pregunta (y recalcular índice correcto) ---
+  // Guardamos _optOrder, _options y _correct para usar consistentemente en render/corrección.
+  all = all.map(q=>{
+    const order = shuffle([...Array((q.options||[]).length).keys()]);
+    const optionsShuffled = order.map(i=>q.options[i]);
+    const correctIndex = order.indexOf(q.correctAnswer);
+    return {
+      ...q,
+      _optOrder: order,
+      _options: optionsShuffled,
+      _correct: correctIndex
+    };
+  });
+
+  // Reset de estado
   STATE.qs = all;
   STATE.idx=0; STATE.answers={}; STATE.marked={};
   STATE.startedAt=Date.now(); STATE.elapsedSec=0;
 
-  // Guarda preferencias útiles en STATE (por si las usas dentro del quiz)
-  STATE.timeLimit = typeof prefs.timeLimit === 'number' ? prefs.timeLimit : 0;
-  STATE.explanations = prefs.explanations || 'after';
+  // Guarda preferencias útiles en STATE (utiliza STATE.prefs)
+  STATE.timeLimit = typeof STATE.prefs.timeLimit === 'number' ? STATE.prefs.timeLimit : 0;
 
   // Tema visual
   applyTheme(quizId);
@@ -223,7 +233,6 @@ function start(quizId='aws-saa-c03'){
   renderQuiz();
   startTimer();
 }
-
 
 /* ========== Timer ========== */
 function startTimer(){
@@ -285,16 +294,19 @@ function renderQuiz(){
     const pct=Math.round((STATE.idx/Math.max(1,STATE.qs.length))*100); fill.style.width=`${pct}%`;
     qCard.appendChild(h('div',{class:'domain',html:(q.category||'').toUpperCase()}));
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${STATE.idx+1}.</b> ${q.question}`}));
-    q.options.forEach((txt,i)=>{
-      const chosen=STATE.answers[STATE.idx], selected=chosen===i, isCorrect=q.correctAnswer===i;
+
+    // Render opciones barajadas
+    (q._options||[]).forEach((txt,i)=>{
+      const chosen=STATE.answers[STATE.idx], selected=chosen===i, isCorrect=q._correct===i;
       const cls=['option']; if(typeof chosen!=='undefined'&&selected) cls.push(isCorrect?'ok':'bad','selected');
       const line=h('div',{class:cls.join(' ')}); line.onclick=()=>onSelect(i);
       line.appendChild(h('span',{class:'lead',html:String.fromCharCode(65+i)+'.'}));
       line.appendChild(h('span',{html:txt})); qCard.appendChild(line);
     });
+
     const chosen=STATE.answers[STATE.idx];
     if(typeof chosen!=='undefined' && STATE.prefs.explanations==='after'){
-      const box=h('div',{class:'expl'}), correctLetter=String.fromCharCode(65+q.correctAnswer);
+      const box=h('div',{class:'expl'}), correctLetter=String.fromCharCode(65+q._correct);
       box.innerHTML=`<div class="ttl">Correct answer: <b>${correctLetter}</b></div><div class="explain">${q.explanationRich||q.explanation||''}</div>`;
       if(q.links&&q.links.length){
         const ul=h('ul',{class:'learn-more'});
@@ -314,10 +326,10 @@ function renderQuiz(){
   const side=h('div',{class:'side'});
   const p1=h('div',{class:'panel'}); p1.appendChild(h('h3',{html:'LIST OF QUESTIONS'}));
   const dots=h('div',{class:'list-dots',title:'Click to jump to any question'});
-  STATE.qs.forEach((_,i)=>{
+  STATE.qs.forEach((qq,i)=>{
     const d=h('div',{class:'dot',html:String(i+1)});
     if(i===STATE.idx)d.classList.add('current');
-    const ans=STATE.answers[i]; if(typeof ans!=='undefined'){ if(ans===STATE.qs[i].correctAnswer)d.classList.add('ok'); else d.classList.add('bad'); }
+    const ans=STATE.answers[i]; if(typeof ans!=='undefined'){ if(ans===qq._correct)d.classList.add('ok'); else d.classList.add('bad'); }
     if(STATE.marked[i]) d.classList.add('marked');
     d.onclick=()=>{STATE.idx=i;renderQuiz()}; dots.appendChild(d);
   });
@@ -343,7 +355,6 @@ function genResultId(result){
     result.correct||0,
     result.durationSec||0
   ].join('|');
-  // incluye hora redondeada a 10s para evitar miniduplicados por doble clic
   const t = Math.floor((new Date(result.ts||Date.now())).getTime()/10000);
   return `${base}|${t}`;
 }
@@ -353,7 +364,7 @@ async function saveResultRemoteOnce(result){
   STATE.saving = true;
   const u=getUserAny()||{};
   const payload={
-    resultId: genResultId(result),                       // <-- idempotencia
+    resultId: genResultId(result),
     userId:u.userId||u.id||"anon",
     userName:u.name||u.displayName||"anonymous",
     email:u.email||"",
@@ -382,12 +393,12 @@ function renderResultModal(r){
 }
 
 async function finish(){
-  if (STATE.finished) return;          // anti-doble
+  if (STATE.finished) return;
   STATE.finished = true;
   stopTimer();
 
   const total=STATE.qs.length; let correct=0;
-  for(let i=0;i<total;i++){ if(STATE.answers[i]===STATE.qs[i].correctAnswer) correct++; }
+  for(let i=0;i<total;i++){ if(STATE.answers[i]===STATE.qs[i]._correct) correct++; }
   const pct= total? Math.round((correct/total)*100):0;
 
   const result={
@@ -399,7 +410,7 @@ async function finish(){
   };
 
   saveHistory(result);
-  await saveResultRemoteOnce(result);  // una sola vez, con resultId
+  await saveResultRemoteOnce(result);
 
   clearRunningSession();
   renderResultModal(result);
@@ -414,7 +425,11 @@ function enableHotkeys(){
     if(ev.key==='n'||ev.key==='N'){ev.preventDefault(); if(STATE.idx===STATE.qs.length-1)finish(); else{STATE.idx++;renderQuiz();}}
     if(ev.key==='b'||ev.key==='B'){ev.preventDefault(); if(STATE.idx>0){STATE.idx--;renderQuiz();}}
     if(ev.key==='m'||ev.key==='M'){ev.preventDefault(); STATE.marked[STATE.idx]=!STATE.marked[STATE.idx]; toast(STATE.marked[STATE.idx]?'Marked':'Unmarked'); renderQuiz();}
-    const num=parseInt(ev.key,10); if(Number.isInteger(num)&&num>=1&&num<=9){const q=STATE.qs[STATE.idx]; if(q&&q.options&&q.options[num-1]!==undefined){ev.preventDefault(); onSelect(num-1);}}
+    const num=parseInt(ev.key,10); 
+    if(Number.isInteger(num)&&num>=1&&num<=9){
+      const q=STATE.qs[STATE.idx]; 
+      if(q&&q._options&&q._options[num-1]!==undefined){ev.preventDefault(); onSelect(num-1);}
+    }
   });
 }
 
@@ -424,7 +439,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
     btn.addEventListener('click',()=>{
       const quizId=btn.closest('.sim-card')?.dataset.quiz||'aws-saa-c03';
-      start(quizId,{resume:false});  // fuerza respetar selección actual
+      start(quizId,{resume:false});
     });
   });
 
