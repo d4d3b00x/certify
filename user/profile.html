@@ -10,6 +10,7 @@
       --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91; --brand:#161a3f;
       --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:16px;
       --aws-500:#ff9900; --az-500:#0078d4; --danger:#b42318; --ok:#16794c;
+      --gap:12px; /* ✅ unificamos la separación vertical entre secciones */
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
@@ -26,7 +27,11 @@
     .card{ background:var(--card); border:1px solid var(--bd); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); }
 
     /* Compact hero */
-    .hero{ text-align:left; border:1px solid #ecefff; padding:14px 16px; background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%); }
+    .hero{
+      text-align:left; border:1px solid #ecefff; padding:14px 16px;
+      background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%);
+      margin:0 0 var(--gap);                /* ✅ misma distancia */
+    }
     .hero h1{ margin:4px 0 6px; font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem); font-weight:900; color:var(--brand); }
     .hero .desc{ color:var(--muted); margin:0; }
 
@@ -34,13 +39,14 @@
     .authbar{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:8px 12px; background:#fff; border:1px solid #ecefff; border-radius:999px;
-      color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06); margin:10px 0;
+      color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06);
+      margin:0 0 var(--gap);                 /* ✅ misma distancia */
     }
     .authbar .actions{ display:flex; gap:8px; }
     .hidden{ display:none !important; }
 
     /* Main layout */
-    .grid{ display:grid; grid-template-columns:1fr; gap:16px; }
+    .grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); } /* ✅ misma distancia */
     @media (min-width:900px){ .grid{ grid-template-columns: 1.2fr 2fr; } }
 
     /* Profile */
@@ -89,14 +95,11 @@
     .pct{ display:flex; align-items:center; justify-content:center; gap:8px; font-variant-numeric:tabular-nums; font-weight:800; }
     .pbar{ position:relative; flex:1 1 120px; height:8px; background:#eee; border-radius:999px; overflow:hidden; max-width:160px; margin:0 auto; }
     .pbar>i{ position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg,#7b3fe4,#a45df2); }
-
-    /* KPIs */
     .kpis{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
     .kpi{ text-align:center; border:1px solid var(--bd); border-radius:12px; padding:10px; background:#fff; }
     .kpi h4{ margin:0; font-size:1rem; color:#253060 }
     .kpi .n{ font-size:1.4rem; font-weight:900; }
 
-    /* Hidden blocks placeholders */
     .is-hidden{ display:none !important; }
   </style>
 </head>
@@ -112,7 +115,6 @@
     <section class="authbar" id="authBar">
       <span id="authText" class="muted">🔒 You’re not signed in.</span>
       <div class="actions">
-        <!-- Sign in / Create account removed -->
         <button id="btnLogout" class="btn small hidden">Sign out</button>
       </div>
     </section>
@@ -128,7 +130,7 @@
             <div>
               <div id="userNameTxt" style="font-weight:900">—</div>
               <div id="userEmailTxt" class="muted">—</div>
-              <div class="hint" id="userIdTxt">ID: —</div>
+              <!-- ❌ ID removed from UI -->
             </div>
           </div>
           <hr style="border:0;border-top:1px solid #eef1ff;margin:12px 0">
@@ -177,7 +179,6 @@
 
           <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;">
             <a class="btn" href="/score/ranking.html">🏆 View leaderboard</a>
-            <!-- Resume simulator button removed -->
           </div>
         </article>
       </div>
@@ -224,7 +225,6 @@
       const u = getUser() || {};
       byId("userNameTxt").textContent = u.name || "—";
       byId("userEmailTxt").textContent = u.email || "—";
-      byId("userIdTxt").textContent = "ID: " + (u.userId || u.id || "—");
 
       byId("name").value = u.name || "";
       byId("email").value = u.email || "";
@@ -254,16 +254,12 @@
       }catch{}
     }
 
-    /**
-     * Fetch results and **strictly filter to the signed-in user**.
-     * Some backends ignore the userId parameter, so we filter client-side too.
-     */
+    /** Fetch & strictly filter to signed-in user */
     async function fetchMyResults(limit=500){
       const u = getUser(); if (!u) return [];
       const uid = (u.userId || u.id || "").toString();
       const uemail = norm(u.email);
 
-      // Try server-side filter first (userId or email if supported)
       const qs = new URLSearchParams({ limit: String(limit) });
       if (uid) qs.set("userId", uid);
       if (uemail) qs.set("email", uemail);
@@ -274,7 +270,6 @@
 
       const items = Array.isArray(data.items) ? data.items : [];
 
-      // Robust client-side filter (matches by userId OR email variants)
       const isMine = (x) => {
         const xid = (x.userId || x.id || x?.user?.id || "").toString();
         const xemail = norm(x.email || x.userEmail || x?.user?.email || x?.profile?.email);
@@ -397,10 +392,10 @@
       }
 
       renderAuth();
-      loadRemoteMe(); // best-effort refresh of user profile
+      loadRemoteMe(); // best-effort refresh
 
       try{
-        const rows = await fetchMyResults(500);   // << strictly filtered to the signed-in user
+        const rows = await fetchMyResults(500);   // strictly filtered to your account
         window.__myRows = rows;
         renderResults(rows, "all");
       }catch{
