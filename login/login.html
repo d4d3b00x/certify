@@ -9,21 +9,35 @@ form { margin: 20px 0; padding: 20px; border: 1px solid #ccc; border-radius: 10p
 label { display: block; margin-top: 10px; }
 input { width: 100%; padding: 8px; margin-top: 4px; }
 button { padding: 8px 14px; margin-top: 10px; font-weight: bold; }
-#authBar { background: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-top: 20px; }
+#authBar { background: #f8f9fa; border: 1px solid #ddd; padding: 10px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+#authBtns button { margin-left: 8px; }
+.hidden { display: none; }
 </style>
 </head>
 <body>
 
-<h1>Login up:</h1>
-
-<section id="authBar" style="display:none">
-  <span id="authText">...</span>
-  <button id="btnLogout" style="display:none">Cerrar sesión</button>
+<!-- ====== BARRA SUPERIOR ====== -->
+<section id="authBar">
+  <span id="authText">🔒 No autenticado</span>
+  <div id="authBtns">
+    <button id="btnLogin">Login</button>
+    <button id="btnSignup">Registro</button>
+    <button id="btnLogout" class="hidden">Cerrar sesión</button>
+  </div>
 </section>
 
+<!-- ====== FORMULARIO DE REGISTRO ====== -->
+<form id="signupForm" class="hidden">
+  <h3>Registro</h3>
+  <label>Nombre: <input type="text" id="signupName" required></label>
+  <label>Email: <input type="email" id="signupEmail" required></label>
+  <label>Contraseña: <input type="password" id="signupPass" required></label>
+  <button type="submit">Crear cuenta</button>
+</form>
 
-<h2>Iniciar sesión</h2>
-<form id="loginForm">
+<!-- ====== FORMULARIO DE LOGIN ====== -->
+<form id="loginForm" class="hidden">
+  <h3>Inicio de sesión</h3>
   <label>Email: <input type="email" id="loginEmail" required></label>
   <label>Contraseña: <input type="password" id="loginPass" required></label>
   <button type="submit">Entrar</button>
@@ -46,23 +60,58 @@ function clearCurrentUser() {
   localStorage.removeItem(AUTH_KEY);
   renderAuthUI();
 }
+
+// ====== RENDERIZAR UI ======
 function renderAuthUI() {
   const u = getCurrentUser();
-  const bar = document.getElementById("authBar");
-  const text = document.getElementById("authText");
-  const btn = document.getElementById("btnLogout");
+  const authText = document.getElementById("authText");
+  const btnLogin = document.getElementById("btnLogin");
+  const btnSignup = document.getElementById("btnSignup");
+  const btnLogout = document.getElementById("btnLogout");
+  const loginForm = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
+
   if (u) {
-    text.textContent = `✅ Sesión iniciada: ${u.name} (id: ${u.userId})`;
-    btn.style.display = "inline-block";
-    bar.style.display = "block";
+    authText.textContent = `✅ Sesión iniciada: ${u.name} (${u.email})`;
+    btnLogin.classList.add("hidden");
+    btnSignup.classList.add("hidden");
+    btnLogout.classList.remove("hidden");
+    loginForm.classList.add("hidden");
+    signupForm.classList.add("hidden");
   } else {
-    text.textContent = "🔒 No autenticado";
-    btn.style.display = "none";
-    bar.style.display = "block";
+    authText.textContent = "🔒 No autenticado";
+    btnLogin.classList.remove("hidden");
+    btnSignup.classList.remove("hidden");
+    btnLogout.classList.add("hidden");
   }
 }
-document.getElementById("btnLogout").onclick = clearCurrentUser;
-document.addEventListener("DOMContentLoaded", renderAuthUI);
+document.addEventListener("DOMContentLoaded", () => {
+  const isSignup =
+    location.hash === "#signup" ||
+    new URLSearchParams(location.search).get("view") === "signup";
+
+  if (isSignup) {
+    // Ajusta estos IDs/clases a los de tu login.html
+    document.getElementById("signupForm")?.classList.remove("hidden");
+    document.getElementById("loginForm")?.classList.add("hidden");
+  }
+});
+
+// ====== BOTONES SUPERIORES ======
+document.getElementById("btnLogout").onclick = () => {
+  clearCurrentUser();
+  alert("Sesión cerrada");
+};
+
+document.getElementById("btnLogin").onclick = () => {
+  document.getElementById("loginForm").classList.toggle("hidden");
+  document.getElementById("signupForm").classList.add("hidden");
+};
+
+document.getElementById("btnSignup").onclick = () => {
+  document.getElementById("signupForm").classList.toggle("hidden");
+  document.getElementById("loginForm").classList.add("hidden");
+};
 
 // ====== SIGNUP ======
 document.getElementById("signupForm").addEventListener("submit", async e => {
@@ -73,7 +122,13 @@ document.getElementById("signupForm").addEventListener("submit", async e => {
   const body = new URLSearchParams({ name, email, password });
   const resp = await fetch(`${API_URL}/signup`, { method: "POST", body, mode: "cors" });
   const data = await resp.json();
-  alert(resp.ok ? "Usuario creado con éxito" : data.error);
+  if (resp.ok) {
+    alert("Usuario creado con éxito, ahora puedes iniciar sesión");
+    document.getElementById("signupForm").classList.add("hidden");
+    document.getElementById("loginForm").classList.remove("hidden");
+  } else {
+    alert(data.error || "Error en el registro");
+  }
 });
 
 // ====== LOGIN ======
@@ -87,6 +142,7 @@ document.getElementById("loginForm").addEventListener("submit", async e => {
   if (resp.ok) {
     setCurrentUser(data.user);
     alert("Sesión iniciada correctamente");
+    window.location.href = "/";
   } else {
     alert(data.error || "Error de inicio de sesión");
   }
