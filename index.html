@@ -39,13 +39,13 @@
     }
     .card.path:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(28,27,70,.10); border-color:#dfe3ff; }
 
-    /* ===== TOP ROW: HERO + AUTHBAR (alineados e igual altura) ===== */
+    /* ===== TOP ROW: HERO + AUTHBAR ===== */
     .toprow{
       display:grid;
-      grid-template-columns: 1fr 300px; /* login más pequeño */
+      grid-template-columns: 1fr 300px;
       gap:14px;
       margin:8px 0 12px;
-      align-items:stretch;               /* misma altura */
+      align-items:stretch;
     }
     @media (max-width:900px){
       .toprow{ grid-template-columns: 1fr; gap:10px; }
@@ -67,7 +67,7 @@
     }
     .hero .desc{ color:var(--muted); max-width:780px; margin:0 auto 2px; font-size:.97rem; line-height:1.45; }
 
-    /* ===== AUTH BAR (compacta) ===== */
+    /* ===== AUTH BAR ===== */
     .authbar{
       border:1px solid #ecefff; border-radius:var(--radius); background:#fff;
       box-shadow:0 4px 10px rgba(30,35,80,0.06);
@@ -75,17 +75,14 @@
     }
     .authbar-inner{
       display:grid;
-      grid-template-columns: auto 1fr auto; /* icono | texto inline | botones */
+      grid-template-columns: auto 1fr auto;
       align-items:center; column-gap:10px;
       padding:10px 12px; width:100%;
     }
-    /* Invitado: solo botones, sin icono ni texto */
     .authbar.guest .authbar-inner{ grid-template-columns: 1fr auto auto; justify-content:end; }
     .authbar.guest .home-icon, .authbar.guest .user{ display:none; }
 
-    /* Icono casita multicolor */
     .home-icon{ width:22px; height:22px; display:inline-block; }
-    /* Texto en UNA línea */
     .user{ min-width:0; }
     .user .inline{
       display:flex; align-items:center; gap:6px; min-width:0;
@@ -176,6 +173,15 @@
     .kbd{display:inline-block;padding:.1rem .4rem;border-radius:6px;border:1px solid #e6e9ff;background:#fff;font-weight:800;}
     .note{font-size:.95rem;color:var(--muted)}
     .center{text-align:center}
+
+    /* === NUEVO: estado deshabilitado para Start Quiz === */
+    .btn[disabled]{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none !important;
+      box-shadow:none !important;
+    }
+    .btn[disabled]:hover{ background:#f5f7ff; }
   </style>
 </head>
 <body>
@@ -185,7 +191,6 @@
       <!-- TOP ROW -->
       <div class="toprow">
         <section class="card hero" aria-label="Welcome">
-          
           <h1>CERTIFY.TECH: Study less...Enjoy more!</h1>
           <p class="desc">
             Level up your skills with fun quizzes. Learn, play, and crush your next test — the smart (and fun) way.
@@ -194,7 +199,7 @@
 
         <section class="authbar" id="authBar">
           <div class="authbar-inner">
-            <!-- Home icon (multicolor casita) -->
+            <!-- Home icon -->
             <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
               <path d="M8 30 32 12l24 18v22a2 2 0 0 1-2 2H42a2 2 0 0 1-2-2V40H24v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V30z" fill="#ffd166"/>
               <path d="M6 28 32 8l26 20-4 5L32 18 10 42l-4-5z" fill="#06d6a0"/>
@@ -356,7 +361,7 @@
     </main>
   </div>
 
-  <!-- TUS SCRIPTS (para mantener compatibilidad con tu función start original) -->
+  <!-- TUS SCRIPTS -->
   <script src="/questions.js2"></script>
   <script src="/control_quizs/Q_global.js"></script>
 
@@ -370,6 +375,23 @@
       localStorage.removeItem("currentUser");
       renderAuthBar();
     }
+
+    /* === NUEVO: habilitar/deshabilitar Start Quiz según login === */
+    function updateStartButtonsForAuth(){
+      const logged = !!getCurrentUser();
+      document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
+        if(!logged){
+          btn.setAttribute('disabled','');
+          btn.setAttribute('aria-disabled','true');
+          btn.setAttribute('title','Please log in to start the quiz');
+        }else{
+          btn.removeAttribute('disabled');
+          btn.removeAttribute('aria-disabled');
+          btn.removeAttribute('title');
+        }
+      });
+    }
+
     function renderAuthBar() {
       const u         = getCurrentUser();
       const authBar   = document.getElementById("authBar");
@@ -387,21 +409,32 @@
         btnSignup.classList.add("hidden");
         btnLogout.classList.remove("hidden");
       } else {
-        authBar.classList.add("guest");   // oculta icono + texto
+        authBar.classList.add("guest");
         nameEl.textContent  = "";
         emailEl.textContent = "";
         btnLogin.classList.remove("hidden");
         btnSignup.classList.remove("hidden");
         btnLogout.classList.add("hidden");
       }
+      // Siempre sincronizamos los botones del simulador
+      updateStartButtonsForAuth();
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("btnLogin").onclick  = () => location.href = "/login/login.html";
-      document.getElementById("btnSignup").onclick = () => location.href = "/login/login.html#signup";
-      document.getElementById("btnLogout").onclick = () => logoutUser();
-      renderAuthBar();
-      setTimeout(renderAuthBar, 300);
+      // Botonería auth
+      const btnLogin  = document.getElementById("btnLogin");
+      const btnSignup = document.getElementById("btnSignup");
+      const btnLogout = document.getElementById("btnLogout");
+      if (btnLogin)  btnLogin.onclick  = () => location.href = "/login/login.html";
+      if (btnSignup) btnSignup.onclick = () => location.href = "/login/login.html#signup";
+      if (btnLogout) btnLogout.onclick = () => logoutUser();
+
+      renderAuthBar();                 // pinta cabecera y estado inicial
+      updateStartButtonsForAuth();     // asegura estado de Start Quiz
+      setTimeout(()=>{                 // por si el perfil llega un pelín tarde
+        renderAuthBar();
+        updateStartButtonsForAuth();
+      }, 300);
     });
 
     /* ===== Sim helpers ===== */
@@ -447,17 +480,23 @@
     };
 
     document.addEventListener('DOMContentLoaded', ()=>{
+      // Toggle de tags de dominios
       document.querySelectorAll('.domains .tag').forEach(tag=>{
         tag.addEventListener('click', ()=> tag.classList.toggle('active'));
       });
+
+      // Click en Start Quiz (si no está deshabilitado, el navegador gestiona)
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
+        btn.addEventListener('click', (e)=>{
+          if (btn.hasAttribute('disabled')) { e.preventDefault(); return; } // guard por si acaso
           const sim = btn.closest('.sim-card');
           const quiz = sim.dataset.quiz;
           collectOptions(sim);
           start(quiz); // usa tu start o el fallback
         });
       });
+
+      // Rellenar preferencias guardadas
       ['aws-saa-c03','az-104'].forEach(q=>{
         const sim = document.querySelector(`.sim-card[data-quiz="${q}"]`);
         if (!sim) return;
@@ -475,6 +514,9 @@
           });
         }
       });
+
+      // Finalmente, asegurar estado de Start según login
+      updateStartButtonsForAuth();
     });
   </script>
 </body>
