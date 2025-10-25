@@ -9,13 +9,10 @@
     :root{
       --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91; --brand:#161a3f;
       --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:16px;
-      /* AWS */
       --aws-50:#fff6e9; --aws-100:#ffefd7; --aws-500:#ff9900; --aws-600:#e28500; --aws-ink:#3a2600;
-      /* AZURE */
       --az-50:#eef6ff; --az-100:#e6f2ff; --az-500:#0078d4; --az-600:#0a6cbf; --az-ink:#06233a;
     }
 
-    /* Reset */
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
@@ -40,85 +37,93 @@
       box-shadow:var(--shadow);
       transition:transform .12s ease, box-shadow .18s ease, border-color .18s ease;
     }
-    .card.path:hover{
-      transform:translateY(-2px);
-      box-shadow:0 12px 28px rgba(28,27,70,.10);
-      border-color:#dfe3ff;
+    .card.path:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(28,27,70,.10); border-color:#dfe3ff; }
+
+    /* ===== TOP ROW: HERO + AUTHBAR (alineados e igual altura) ===== */
+    .toprow{
+      display:grid;
+      grid-template-columns: 1fr 300px; /* login más pequeño */
+      gap:14px;
+      margin:8px 0 12px;
+      align-items:stretch;               /* misma altura */
+    }
+    @media (max-width:900px){
+      .toprow{ grid-template-columns: 1fr; gap:10px; }
     }
 
-    /* ====== HERO (compacto) ====== */
+    /* HERO */
     .hero{
       text-align:center;
       border:1px solid #ecefff;
-      padding:14px 16px;             /* antes: 34px 22px 18px → MUCHO más compacto */
+      padding:14px 16px;
       background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%);
+      margin:0;
+      display:flex; flex-direction:column; justify-content:center;
     }
-    .hero .badge{
-      margin-bottom:6px;             /* reduce espacio sobre el H1 */
-      padding:6px 10px;
-      font-size:.88rem;
-    }
+    .hero .badge{margin-bottom:6px;padding:6px 10px;font-size:.88rem;}
     .hero h1{
-      font-size:clamp(1.5rem,1.4vw + 1rem,2.05rem); /* ligeramente más pequeño */
-      line-height:1.05;              /* más “apretado” verticalmente */
-      margin:2px 0 6px;              /* reduce márgenes */
-      font-weight:900;
-      color:var(--brand);
-      letter-spacing:.1px;
+      font-size:clamp(1.6rem,1.5vw + 1rem,2.4rem);
+      line-height:1.08; margin:2px 0 6px; font-weight:900; color:var(--brand);
     }
-    .hero .desc{
-      color:var(--muted);
-      max-width:780px;
-      margin:0 auto 6px;             /* menos espacio inferior */
-      font-size:.97rem;
-      line-height:1.45;
-    }
+    .hero .desc{ color:var(--muted); max-width:780px; margin:0 auto 2px; font-size:.97rem; line-height:1.45; }
 
-    /* Login centrado (más fino) */
-    .login-bar{
-      display:flex; align-items:center; justify-content:center; gap:8px;
-      margin:8px auto 0;
-      padding:6px 12px;              /* era 10px 18px */
-      background:#fff;
-      border:1px solid #ecefff;
-      border-radius:999px;
-      width:fit-content;
-      color:#2a2e57;
-      font-weight:700;
-      box-shadow:0 3px 8px rgba(30,35,80,.06);
-      font-size:.92rem;
+    /* ===== AUTH BAR (compacta) ===== */
+    .authbar{
+      border:1px solid #ecefff; border-radius:var(--radius); background:#fff;
+      box-shadow:0 4px 10px rgba(30,35,80,0.06);
+      padding:0; display:flex; align-items:center; justify-content:center; height:100%;
     }
-    .login-bar span{white-space:nowrap;}
-    .login-bar button{
-      background:none; border:none; color:#5c5fff; cursor:pointer; font-weight:700;
-      padding:2px 6px; border-radius:8px; font-size:.92rem;
+    .authbar-inner{
+      display:grid;
+      grid-template-columns: auto 1fr auto; /* icono | texto inline | botones */
+      align-items:center; column-gap:10px;
+      padding:10px 12px; width:100%;
     }
-    .login-bar button:hover{background:#f0f2ff;}
+    /* Invitado: solo botones, sin icono ni texto */
+    .authbar.guest .authbar-inner{ grid-template-columns: 1fr auto auto; justify-content:end; }
+    .authbar.guest .home-icon, .authbar.guest .user{ display:none; }
+
+    /* Icono casita multicolor */
+    .home-icon{ width:22px; height:22px; display:inline-block; }
+    /* Texto en UNA línea */
+    .user{ min-width:0; }
+    .user .inline{
+      display:flex; align-items:center; gap:6px; min-width:0;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      font-weight:900;
+    }
+    .user .email{ color:#8b8fb3; font-weight:800; }
+
+    .authbar .actions{ display:flex; gap:8px; }
+    .authbar .actions button{
+      appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
+      font-weight:900; padding:8px 12px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
+      transition:transform .08s ease, box-shadow .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .authbar .actions button:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff; }
+    .hidden{ display:none !important; }
 
     /* Badges */
     .badge,.badge1,.badge2{
       display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px;
-      border-radius:999px; font-weight:800;
+      padding:8px 12px; border-radius:999px; font-weight:800;
       border:1px solid #edf0ff; background:#f7f8ff; color:#2b2f57;
     }
     .badge1{background:var(--aws-50); border-color:var(--aws-100); color:var(--aws-ink)}
     .badge2{background:var(--az-50); border-color:var(--az-100); color:var(--az-ink)}
 
-    /* Grid */
-    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 28px}
+    /* Grid secciones */
+    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 22px}
     @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
 
     /* Lists */
     ul{margin:0;padding-left:0;list-style:none}
-    ul li{
-      position:relative; padding:10px 12px 10px 28px; margin:10px 0;
-      border:1px solid #edf0ff; border-radius:12px; background:#ffffff;
-    }
+    ul li{ position:relative; padding:10px 12px 10px 28px; margin:10px 0;
+      border:1px solid #edf0ff; border-radius:12px; background:#ffffff; }
     ul li::before{
       content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(45deg);
-      width:10px; height:10px; border-radius:2px; background:#d9defc;
-      box-shadow:0 1px 3px rgba(36,44,110,.16);
+      width:10px; height:10px; border-radius:2px; background:#d9defc; box-shadow:0 1px 3px rgba(36,44,110,.16);
     }
     ul li a{text-decoration:none; color:inherit; font-weight:700;}
     ul li a:hover{text-decoration:underline;}
@@ -127,12 +132,10 @@
     .aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%);}
     .azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%);}
 
-    /* Logo + text */
     .desc2{display:flex; align-items:center; gap:16px; margin:10px 0 4px;}
     .desc2 .logo{width:66px; height:auto; flex:0 0 auto}
     .desc2 .text{flex:1 1 auto; line-height:1.5; color:var(--ink); font-size:.98rem}
 
-    /* Buttons */
     .actions{display:flex;align-items:center;gap:12px;margin:12px 0 6px;flex-wrap:wrap;justify-content:center;}
     .btn{
       appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
@@ -151,80 +154,69 @@
     .btn-az.solid:hover{background:var(--az-600)}
     .btn-az{color:var(--az-ink)}
 
-    /* ========================= ✨ SIMULATOR — reorganized ========================= */
     .sim-card h3{margin:0 0 10px}
     .sim-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .sim-form .full{grid-column:1/-1}
     @media (max-width:720px){ .sim-form{grid-template-columns:1fr} }
-    .segmented{
-      display:flex; gap:8px; background:#f6f7ff; border:1px solid #e6e9ff; border-radius:10px; padding:6px;
-    }
+    .segmented{display:flex;gap:8px;background:#f6f7ff;border:1px solid #e6e9ff;border-radius:10px;padding:6px;}
     .segmented input{display:none}
-    .segmented label{
-      flex:1 1 auto; text-align:center; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:800; color:#343a6e;
-    }
-    .segmented input:checked + label{background:#fff; border:1px solid #e6e9ff}
-    .segmented.aws input:checked + label{border-color:#ffddad; color:#7b4a00}
-    .segmented.az input:checked + label{border-color:#bfe0ff; color:#0a4a7b}
-
-    .field{display:flex; flex-direction:column; gap:6px;}
-    .field label{font-weight:800; font-size:.93rem; color:#2a2e57}
-    .select, .text{
-      display:flex; align-items:center; gap:8px; border:1px solid #e6e9ff; border-radius:10px; padding:8px 10px; background:#fff;
-    }
-    .select select, .text input{border:none; outline:none; font-weight:700; color:#2a2e57; width:100%; background:transparent}
-
-    .small{font-size:.9rem; color:var(--muted)}
+    .segmented label{flex:1 1 auto;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800;color:#343a6e;}
+    .segmented input:checked + label{background:#fff;border:1px solid #e6e9ff}
+    .segmented.aws input:checked + label{border-color:#ffddad;color:#7b4a00}
+    .segmented.az input:checked + label{border-color:#bfe0ff;color:#0a4a7b}
+    .field{display:flex;flex-direction:column;gap:6px;}
+    .field label{font-weight:800;font-size:.93rem;color:#2a2e57}
+    .select, .text{display:flex;align-items:center;gap:8px;border:1px solid #e6e9ff;border-radius:10px;padding:8px 10px;background:#fff;}
+    .select select, .text input{border:none;outline:none;font-weight:700;color:#2a2e57;width:100%;background:transparent}
+    .small{font-size:.9rem;color:var(--muted)}
     .domains{display:flex;flex-wrap:wrap;gap:8px}
-    .domains .tag{
-      border:1px solid #e6e9ff; padding:6px 10px; border-radius:999px; cursor:pointer; user-select:none; font-weight:800; color:#37407a; background:#fff;
-    }
-    .domains .tag.active{box-shadow:0 0 0 2px #ffe7c6 inset; color:#7b4a00;}
-    .domains.az .tag.active{box-shadow:0 0 0 2px #cfe9ff inset; color:#0a4a7b;}
-
-    .kbd{display:inline-block; padding:.1rem .4rem; border-radius:6px; border:1px solid #e6e9ff; background:#fff; font-weight:800;}
-    .note{font-size:.95rem; color:var(--muted)}
+    .domains .tag{border:1px solid #e6e9ff;padding:6px 10px;border-radius:999px;cursor:pointer;user-select:none;font-weight:800;color:#37407a;background:#fff;}
+    .domains .tag.active{box-shadow:0 0 0 2px #ffe7c6 inset;color:#7b4a00;}
+    .domains.az .tag.active{box-shadow:0 0 0 2px #cfe9ff inset;color:#0a4a7b;}
+    .kbd{display:inline-block;padding:.1rem .4rem;border-radius:6px;border:1px solid #e6e9ff;background:#fff;font-weight:800;}
+    .note{font-size:.95rem;color:var(--muted)}
     .center{text-align:center}
-
-    /* Título del simulador por marca */
-    .sim-card[data-brand="aws"] h3{ color: var(--aws-500); }
-    .sim-card[data-brand="az"] h3{ color: var(--az-500); }
-
-    /* ========= enlaces de estudio por marca ========= */
-    .study-link{
-      position:relative; display:inline-block; font-weight:900;
-      text-decoration:underline; text-underline-offset:2px; text-decoration-thickness:2px;
-      padding:2px 10px 2px 28px; border-radius:999px; line-height:1.3;
-    }
-    /* AWS */
-    #aws .study-link{ color:var(--aws-600); background:var(--aws-50); border:1px solid var(--aws-100); }
-    #aws .study-link::before{ content:"📙"; position:absolute; left:8px; top:50%; transform:translateY(-50%); font-size:0.95em; }
-    /* AZURE */
-    #azure .study-link{ color:var(--az-600); background:var(--az-50); border:1px solid var(--az-100); }
-    #azure .study-link::before{ content:"📘"; position:absolute; left:8px; top:50%; transform:translateY(-50%); font-size:0.95em; }
-
-    /* Ajustes extra de compacidad en pantallas grandes: aún menos alto */
-    @media (min-width:900px){
-      .hero{padding:12px 16px;}
-      .hero h1{margin:0 0 4px;}
-    }
   </style>
 </head>
 <body>
   <div class="shell">
     <main id="view" role="main" class="wrap">
-      <!-- HERO -->
-      <section class="card hero" aria-label="Welcome">
-        <span class="badge">WELCOME TO <b>CERTIFY.TECH</b></span>
-        <h1>Study less. Score more.</h1>
-        <p class="desc">
-          Level up your skills with fun quizzes, real exam challenges, and instant feedback.
-          Learn, play, and crush your next test — the smart (and fun) way.
-        </p>
-        <div class="login-bar">
-          <span id="authBar">Checking session…</span>
-        </div>
-      </section>
+
+      <!-- TOP ROW -->
+      <div class="toprow">
+        <section class="card hero" aria-label="Welcome">
+          
+          <h1>CERTIFY.TECH: Study less..... Enjoy more!</h1>
+          <p class="desc">
+            Level up your skills with fun quizzes. Learn, play, and crush your next test — the smart (and fun) way.
+          </p>
+        </section>
+
+        <section class="authbar" id="authBar">
+          <div class="authbar-inner">
+            <!-- Home icon (multicolor casita) -->
+            <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M8 30 32 12l24 18v22a2 2 0 0 1-2 2H42a2 2 0 0 1-2-2V40H24v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V30z" fill="#ffd166"/>
+              <path d="M6 28 32 8l26 20-4 5L32 18 10 42l-4-5z" fill="#06d6a0"/>
+              <rect x="28" y="36" width="8" height="8" rx="1.5" fill="#118ab2"/>
+              <rect x="22" y="44" width="20" height="2" fill="#073b4c"/>
+            </svg>
+            <!-- Texto inline -->
+            <div class="user">
+              <div class="inline">
+                <a id="userName" href="/user/profile.html">—</a>
+                <span class="email" id="userEmail">—</span>
+              </div>
+            </div>
+            <!-- Botones -->
+            <div class="actions">
+              <button id="btnLogin" type="button">Login</button>
+              <button id="btnSignup" type="button">Register</button>
+              <button id="btnLogout" type="button" class="hidden">Logout</button>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <!-- AWS -->
       <section id="aws" class="aws-group3 card">
@@ -236,9 +228,7 @@
               <div class="text">Design secure and cost-optimized AWS architectures. Perfect if you’ve got some AWS or strong on-prem experience.</div>
             </div>
             <h2>Exam Domains</h2>
-            <p class="small" style="margin-top:-6px;">
-              <em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em>
-            </p>
+            <p class="small" style="margin-top:-6px;"><em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em></p>
             <ul>
               <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain1.html">Domain 1:</a></strong> Design Secure Architectures (30%)</li>
               <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain2.html">Domain 2:</a></strong> Design Resilient Architectures (26%)</li>
@@ -251,7 +241,6 @@
           <aside id="sim-aws" class="card path sim-card" data-brand="aws" data-quiz="aws-saa-c03">
             <h3>SAA-C03 Exam Simulator</h3>
             <div class="sim-form">
-              <!-- Mode -->
               <div class="field">
                 <label>Mode</label>
                 <div class="segmented aws">
@@ -261,7 +250,6 @@
                   <label for="aws-mode-exam">Exam</label>
                 </div>
               </div>
-              <!-- Question count -->
               <div class="field">
                 <label>Questions</label>
                 <div class="select">
@@ -274,29 +262,23 @@
                   </select>
                 </div>
               </div>
-              <!-- Domains filter -->
               <div class="field full">
                 <label>Domains (optional filter)</label>
                 <div class="domains" data-scope="aws">
-                  <div class="tag" data-val="Domain 1: Design Secure Architectures">D1</div>
+                  <div class="tag" data-val="D1">D1</div>
                   <div class="tag" data-val="D2">D2</div>
                   <div class="tag" data-val="D3">D3</div>
                   <div class="tag" data-val="D4">D4</div>
                 </div>
                 <div class="small">Leave empty to include all domains.</div>
               </div>
-              <!-- Actions -->
               <div class="field full">
                 <div class="actions" style="margin-top:8px">
                   <button class="btn btn-aws solid start-btn">▶ Start Quiz</button>
                   <a class="btn btn-aws" href="/score/ranking.html?quiz=aws-saa-c03">🏆 Ranking</a>
                 </div>
                 <div class="small center">
-                  Shortcuts inside the quiz:
-                  <span class="kbd">N</span> Next,
-                  <span class="kbd">B</span> Back,
-                  <span class="kbd">M</span> Mark,
-                  <span class="kbd">1-9</span> choose.
+                  Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
                 </div>
               </div>
             </div>
@@ -314,9 +296,7 @@
               <div class="text">Master Azure admin essentials: identities, governance, compute, networking and monitoring.</div>
             </div>
             <h2>Exam Domains</h2>
-            <p class="small" style="margin-top:-6px;">
-              <em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em>
-            </p>
+            <p class="small" style="margin-top:-6px;"><em>Study notes made by us, for us — focusing only on what really matters for the exam 😎✏️</em></p>
             <ul>
               <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain1.html">Domain 1:</a> Manage identities & governance (15–20%)</li>
               <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain2.html">Domain 2:</a> Implement & manage storage (15–20%)</li>
@@ -330,7 +310,6 @@
           <aside id="sim-az" class="card path sim-card" data-brand="az" data-quiz="az-104">
             <h3>AZ-104 Exam Simulator</h3>
             <div class="sim-form">
-              <!-- Mode -->
               <div class="field">
                 <label>Mode</label>
                 <div class="segmented az">
@@ -340,7 +319,6 @@
                   <label for="az-mode-exam">Exam</label>
                 </div>
               </div>
-              <!-- Question count -->
               <div class="field">
                 <label>Questions</label>
                 <div class="select">
@@ -353,30 +331,22 @@
                   </select>
                 </div>
               </div>
-              <!-- Domains filter (cinco dominios) -->
               <div class="field full">
                 <label>Domains (optional filter)</label>
                 <div class="domains az" data-scope="az">
-                  <div class="tag" data-val="D1">D1</div>
-                  <div class="tag" data-val="D2">D2</div>
-                  <div class="tag" data-val="D3">D3</div>
-                  <div class="tag" data-val="D4">D4</div>
+                  <div class="tag" data-val="D1">D1</div><div class="tag" data-val="D2">D2</div>
+                  <div class="tag" data-val="D3">D3</div><div class="tag" data-val="D4">D4</div>
                   <div class="tag" data-val="D5">D5</div>
                 </div>
                 <div class="small">Leave empty to include all domains.</div>
               </div>
-              <!-- Actions -->
               <div class="field full">
                 <div class="actions" style="margin-top:8px">
                   <button class="btn btn-az solid start-btn">▶ Start Quiz</button>
                   <a class="btn btn-az" href="/score/ranking.html?quiz=az-104">🏆 Ranking</a>
                 </div>
                 <div class="small center">
-                  Shortcuts inside the quiz:
-                  <span class="kbd">N</span> Next,
-                  <span class="kbd">B</span> Back,
-                  <span class="kbd">M</span> Mark,
-                  <span class="kbd">1-9</span> choose.
+                  Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
                 </div>
               </div>
             </div>
@@ -386,11 +356,12 @@
     </main>
   </div>
 
-  <!-- JS -->
-  <script src="/questions.js"></script>
+  <!-- TUS SCRIPTS (para mantener compatibilidad con tu función start original) -->
+  <script src="/questions.js2"></script>
   <script src="/control_quizs/Q_global.js"></script>
+
   <script>
-    /* ===== Auth bar (stay on same page) ===== */
+    /* ===== Auth bar rendering ===== */
     function getCurrentUser() {
       try { return JSON.parse(localStorage.getItem("currentUser") || "null"); }
       catch { return null; }
@@ -400,20 +371,40 @@
       renderAuthBar();
     }
     function renderAuthBar() {
-      const u = getCurrentUser();
-      const bar = document.getElementById("authBar");
-      if (!bar) return;
+      const u         = getCurrentUser();
+      const authBar   = document.getElementById("authBar");
+      const btnLogin  = document.getElementById("btnLogin");
+      const btnSignup = document.getElementById("btnSignup");
+      const btnLogout = document.getElementById("btnLogout");
+      const nameEl    = document.getElementById("userName");
+      const emailEl   = document.getElementById("userEmail");
+
       if (u) {
-        bar.innerHTML = `✅ ${u.name} <span style="color:#999">(${u.email})</span> <button onclick="logoutUser()">Logout</button>`;
+        authBar.classList.remove("guest");
+        nameEl.textContent  = u.name || "(user)";
+        emailEl.textContent = u.email || "";
+        btnLogin.classList.add("hidden");
+        btnSignup.classList.add("hidden");
+        btnLogout.classList.remove("hidden");
       } else {
-        bar.innerHTML = `🔒 Not authenticated <button onclick="location.href='/login/login.html'">Login</button>`;
+        authBar.classList.add("guest");   // oculta icono + texto
+        nameEl.textContent  = "";
+        emailEl.textContent = "";
+        btnLogin.classList.remove("hidden");
+        btnSignup.classList.remove("hidden");
+        btnLogout.classList.add("hidden");
       }
     }
-    try { renderAuthBar(); } catch {}
-    document.addEventListener("DOMContentLoaded", renderAuthBar);
-    setTimeout(renderAuthBar, 300);
 
-    /* ===== Simulator helpers ===== */
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("btnLogin").onclick  = () => location.href = "/login/login.html";
+      document.getElementById("btnSignup").onclick = () => location.href = "/login/login.html#signup";
+      document.getElementById("btnLogout").onclick = () => logoutUser();
+      renderAuthBar();
+      setTimeout(renderAuthBar, 300);
+    });
+
+    /* ===== Sim helpers ===== */
     function savePrefs(quizId, prefs){
       try{
         const all = JSON.parse(localStorage.getItem("quiz_prefs")||"{}");
@@ -427,8 +418,6 @@
         return all[quizId]||{};
       }catch{ return {}; }
     }
-
-    /* Recoge opciones del simulador y persiste */
     function collectOptions(simEl){
       const brand = simEl.dataset.brand;
       const quiz = simEl.dataset.quiz;
@@ -437,52 +426,49 @@
       const count = parseInt(simEl.querySelector(isAWS?'#studyCount':'#studyCount2')?.value||'5',10);
       const timeLimit = 0;
       const explanations = 'after';
-      // Domain/topic tags
       const tags = [];
       simEl.querySelectorAll('.domains .tag.active').forEach(t=> tags.push(t.dataset.val));
       const prefs = { mode, count, timeLimit, explanations, tags };
       savePrefs(quiz, prefs);
-      // Pasa las prefs a Q_global si lo usa
       window.__simPrefs = window.__simPrefs || {};
       window.__simPrefs[quiz] = prefs;
       return prefs;
     }
 
-    /* Wire up UI */
+    /* Fallback local para start() si tus scripts no lo definen */
+    window.start = window.start || function(quizId){
+      try{
+        const prefs = (window.__simPrefs && window.__simPrefs[quizId]) || {};
+        const q = new URLSearchParams({ quiz: quizId, ...prefs }).toString();
+        location.href = `/quiz/?q=${encodeURIComponent(quizId)}&${q}`;
+      }catch{
+        location.href = `/quiz/?q=${encodeURIComponent(quizId)}`;
+      }
+    };
+
     document.addEventListener('DOMContentLoaded', ()=>{
-      // Toggle active en tags
       document.querySelectorAll('.domains .tag').forEach(tag=>{
         tag.addEventListener('click', ()=> tag.classList.toggle('active'));
       });
-
-      // Start
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
         btn.addEventListener('click', ()=>{
           const sim = btn.closest('.sim-card');
           const quiz = sim.dataset.quiz;
           collectOptions(sim);
-          if (typeof start === 'function') start(quiz);
+          start(quiz); // usa tu start o el fallback
         });
       });
-
-      // Cargar prefs guardadas (UI)
       ['aws-saa-c03','az-104'].forEach(q=>{
         const sim = document.querySelector(`.sim-card[data-quiz="${q}"]`);
         if (!sim) return;
         const isAWS = q==='aws-saa-c03';
         const p = loadPrefs(q);
-
-        // Modo
         if (p.mode){
           const inp = sim.querySelector(`input[name="${isAWS?'aws':'az'}-mode"][value="${p.mode}"]`);
           if (inp) inp.checked = true;
         }
-
-        // # preguntas
         const selCount = sim.querySelector(isAWS?'#studyCount':'#studyCount2');
         if (selCount && p.count) selCount.value = String(p.count);
-
-        // Tags
         if (Array.isArray(p.tags)){
           sim.querySelectorAll('.domains .tag').forEach(t=>{
             if (p.tags.includes(t.dataset.val)) t.classList.add('active');

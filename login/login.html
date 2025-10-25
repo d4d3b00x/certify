@@ -41,31 +41,16 @@
     .btn.primary:hover{ filter:brightness(.96) }
     .btn.link{ background:#fff; }
 
-    /* HERO */
-    .hero{ text-align:center; border:1px solid #ecefff; padding:28px 20px 18px; background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%); }
-    .hero h1{ font-size:clamp(1.6rem,2.2vw + 1rem,2.2rem); line-height:1.15; margin:6px 0 8px; font-weight:900; color:var(--brand); }
-    .hero .desc{ color:var(--muted); max-width:760px; margin:0 auto; }
-
-    /* Auth bar */
+    /* Auth bar (compact and same width as forms) */
     .authbar{
       display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:10px 14px; background:#fff; border:1px solid #ecefff; border-radius:999px;
       color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06);
+      max-width:560px; width:100%; margin:0 auto 14px;  /* 👈 igual que los formularios */
     }
     .authbar .actions{ display:flex; gap:8px; }
     .authbar .muted{ color:#8b8fb3; font-weight:700; }
     .hidden{ display:none !important; }
-
-    /* Tabs */
-    .tabs{
-      display:flex; gap:8px; background:#f6f7ff; border:1px solid #e6e9ff; border-radius:12px; padding:6px;
-      width:fit-content; margin:0 auto 14px;
-    }
-    .tab-btn{
-      border:1px solid transparent; background:transparent; padding:10px 14px; border-radius:10px;
-      cursor:pointer; font-weight:900; color:#343a6e;
-    }
-    .tab-btn.active{ background:#fff; border-color:#e6e9ff; }
 
     /* Forms */
     .form-card{ max-width:560px; margin:0 auto; }
@@ -87,34 +72,12 @@
     .footer-links{ text-align:center; margin-top:14px; }
     .footer-links a{ font-weight:900; color:#0a4a7b; text-decoration:none; }
     .footer-links a:hover{ text-decoration:underline; }
-
-    /* === MATCH WIDTHS (Auth bar + Tabs + Forms same width) === */
-    .authbar,
-    .tabs,
-    .form-card{
-      max-width:560px;
-      width:100%;
-      margin-left:auto;
-      margin-right:auto;
-    }
-    @media (max-width:640px){
-      .authbar, .tabs, .form-card{ max-width:100%; }
-    }
   </style>
 </head>
 <body>
   <div class="wrap">
 
-    <!-- HERO -->
-    <section class="card hero">
-      <h1>Access CertiFY</h1>
-      <p class="desc">
-        Sign in or create your account to save your progress, show up in the leaderboard,
-        and continue your simulators right where you left off.
-      </p>
-    </section>
-
-    <!-- AUTH BAR -->
+    <!-- AUTH BAR (tabs & hero removed) -->
     <section class="authbar" id="authBar">
       <span id="authText" class="muted">🔒 Not authenticated :(</span>
       <div class="actions">
@@ -123,12 +86,6 @@
         <button id="btnLogout" class="btn hidden">Sign out</button>
       </div>
     </section>
-<br>
-    <!-- TABS -->
-    <div class="tabs">
-      <button id="tabLogin" class="tab-btn active" type="button">Login</button>
-      <button id="tabSignup" class="tab-btn" type="button">Sign Up</button>
-    </div>
 
     <!-- LOGIN FORM -->
     <form id="loginForm" class="card form-card" autocomplete="on">
@@ -150,7 +107,7 @@
         <button class="btn link" type="button" id="goHome">Cancel</button>
         <button class="btn primary" type="submit">Certify!</button>
       </div>
-      <p class="hint">No account yet? Click <b>Sign Up</b> above.</p>
+      <p class="hint">No account yet? Click <b>Register</b> in the top bar.</p>
     </form>
 
     <!-- SIGNUP FORM -->
@@ -213,8 +170,6 @@
       const btnLogout = document.getElementById("btnLogout");
       const loginForm = document.getElementById("loginForm");
       const signupForm = document.getElementById("signupForm");
-      const tabLogin = document.getElementById("tabLogin");
-      const tabSignup = document.getElementById("tabSignup");
 
       if (u) {
         authText.textContent = `✅ You are signed in as: ${u.name} (${u.email})`;
@@ -223,8 +178,6 @@
         btnLogout.classList.remove("hidden");
         loginForm.classList.add("hidden");
         signupForm.classList.add("hidden");
-        tabLogin.classList.remove("active");
-        tabSignup.classList.remove("active");
       } else {
         authText.textContent = "🔒 Not authenticated :(";
         btnLogin.classList.remove("hidden");
@@ -236,18 +189,12 @@
     function showForm(which){
       const loginForm = document.getElementById("loginForm");
       const signupForm = document.getElementById("signupForm");
-      const tabLogin = document.getElementById("tabLogin");
-      const tabSignup = document.getElementById("tabSignup");
       if (which === "signup") {
         signupForm.classList.remove("hidden");
         loginForm.classList.add("hidden");
-        tabSignup.classList.add("active");
-        tabLogin.classList.remove("active");
       } else {
         loginForm.classList.remove("hidden");
         signupForm.classList.add("hidden");
-        tabLogin.classList.add("active");
-        tabSignup.classList.remove("active");
       }
       document.getElementById("loginErr").classList.add("hidden");
       document.getElementById("signupErr").classList.add("hidden");
@@ -268,8 +215,6 @@
     };
     document.getElementById("btnLogin").onclick = () => showForm("login");
     document.getElementById("btnSignup").onclick = () => showForm("signup");
-    document.getElementById("tabLogin").onclick = () => showForm("login");
-    document.getElementById("tabSignup").onclick = () => showForm("signup");
     document.getElementById("goHome").onclick = () => history.back();
     document.getElementById("goHome2").onclick = () => history.back();
 

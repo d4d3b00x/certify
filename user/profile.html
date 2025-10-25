@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CertiFY — My Account</title>
+  <link rel="stylesheet" href="/style_global.css"/>
+  <style>
+    :root{
+      --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91; --brand:#161a3f;
+      --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:16px;
+      --aws-500:#ff9900; --az-500:#0078d4; --danger:#b42318; --ok:#16794c;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", "Noto Sans", sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 12% -10%, #f1f4ff 0, transparent 60%),
+        radial-gradient(900px 420px at 88% -10%, #fff4ea 0, transparent 60%),
+        linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+      line-height:1.6; min-height:100vh; overflow-x:hidden;
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+    .card{ background:var(--card); border:1px solid var(--bd); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); }
+
+    /* Compact hero */
+    .hero{ text-align:left; border:1px solid #ecefff; padding:14px 16px; background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%); }
+    .hero h1{ margin:4px 0 6px; font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem); font-weight:900; color:var(--brand); }
+    .hero .desc{ color:var(--muted); margin:0; }
+
+    /* Session status bar */
+    .authbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:8px 12px; background:#fff; border:1px solid #ecefff; border-radius:999px;
+      color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06); margin:10px 0;
+    }
+    .authbar .actions{ display:flex; gap:8px; }
+    .hidden{ display:none !important; }
+
+    /* Main layout */
+    .grid{ display:grid; grid-template-columns:1fr; gap:16px; }
+    @media (min-width:900px){ .grid{ grid-template-columns: 1.2fr 2fr; } }
+
+    /* Profile */
+    .profile{ display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:center; }
+    .avatar{
+      width:86px; height:86px; border-radius:14px; overflow:hidden; border:1px solid var(--bd); background:#fff;
+      display:flex; align-items:center; justify-content:center; font-weight:900; color:#576; font-size:1.4rem;
+    }
+    .avatar img{ width:100%; height:100%; object-fit:cover; }
+    .muted{ color:var(--muted) }
+
+    .field{ display:flex; flex-direction:column; gap:6px; margin:8px 0; }
+    .field label{ font-weight:800; color:#2a2e57; }
+    .control{
+      display:flex; align-items:center; gap:8px; border:1px solid #e6e9ff; border-radius:10px; padding:8px 10px; background:#fff;
+    }
+    .control input{ border:none; outline:none; background:transparent; width:100%; font-weight:700; color:#2a2e57; padding:4px 0; }
+    .hint{ font-size:.92rem; color:var(--muted) }
+    .ok{ color:var(--ok); font-weight:800; }
+    .err{ color:var(--danger); font-weight:800; }
+
+    .btn{
+      appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
+      font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
+      transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
+    }
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
+    .btn.primary{ background:var(--az-500); color:#fff; border-color:#98cfff; }
+    .btn.primary:hover{ filter:brightness(.96) }
+    .btn.small{ padding:6px 10px; font-size:.9rem; }
+
+    /* Results tabs */
+    .tabs{ display:flex; gap:8px; background:#f6f7ff; border:1px solid #e6e9ff; border-radius:12px; padding:6px; width:fit-content; }
+    .tab-btn{ border:1px solid transparent; background:transparent; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:900; color:#343a6e; }
+    .tab-btn.active{ background:#fff; border-color:#e6e9ff; }
+
+    /* Table */
+    .table-wrap{ background:#fff; border:1px solid var(--bd); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto; }
+    table{ width:100%; min-width:760px; border-collapse:separate; border-spacing:0; }
+    thead th{ position:sticky; top:0; z-index:1; background:#f0f4ff; color:#16224a; font-weight:800; letter-spacing:.01em; text-align:center; padding:10px; border-bottom:1px solid var(--bd) }
+    tbody td{ padding:10px; text-align:center; border-bottom:1px solid #eee; background:#fff }
+    tbody tr:nth-child(even) td{ background:#fafbff }
+    tbody tr:hover td{ background:#f5f7ff }
+    .badge{ display:inline-block; padding:4px 10px; border-radius:999px; font-weight:800; font-size:.8rem; background:#f3ecff; color:#4a1778; border:1px solid #e3d6ff; }
+    .chip{ display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; background:rgba(84,24,141,.08); color:#3b2062; border:1px solid rgba(84,24,141,.2); font-weight:700; }
+    .pct{ display:flex; align-items:center; justify-content:center; gap:8px; font-variant-numeric:tabular-nums; font-weight:800; }
+    .pbar{ position:relative; flex:1 1 120px; height:8px; background:#eee; border-radius:999px; overflow:hidden; max-width:160px; margin:0 auto; }
+    .pbar>i{ position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg,#7b3fe4,#a45df2); }
+
+    /* KPIs */
+    .kpis{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .kpi{ text-align:center; border:1px solid var(--bd); border-radius:12px; padding:10px; background:#fff; }
+    .kpi h4{ margin:0; font-size:1rem; color:#253060 }
+    .kpi .n{ font-size:1.4rem; font-weight:900; }
+
+    /* Hidden blocks placeholders */
+    .is-hidden{ display:none !important; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="card hero">
+      <h1>My Account</h1>
+      <p class="desc">Manage your profile and review your recent quiz results.</p>
+    </section>
+
+    <!-- AUTH BAR -->
+    <section class="authbar" id="authBar">
+      <span id="authText" class="muted">🔒 You’re not signed in.</span>
+      <div class="actions">
+        <!-- Sign in / Create account removed -->
+        <button id="btnLogout" class="btn small hidden">Sign out</button>
+      </div>
+    </section>
+
+    <!-- MAIN GRID -->
+    <section class="grid">
+      <!-- Left column: profile -->
+      <div class="col-left">
+        <article class="card">
+          <h3 style="margin:0 0 10px">Profile</h3>
+          <div class="profile">
+            <div class="avatar" id="avatarBox">👤</div>
+            <div>
+              <div id="userNameTxt" style="font-weight:900">—</div>
+              <div id="userEmailTxt" class="muted">—</div>
+              <div class="hint" id="userIdTxt">ID: —</div>
+            </div>
+          </div>
+          <hr style="border:0;border-top:1px solid #eef1ff;margin:12px 0">
+          <form id="formProfile">
+            <div class="field">
+              <label for="name">Name</label>
+              <div class="control"><input id="name" required placeholder="Your name"></div>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <div class="control"><input id="email" type="email" required placeholder="you@email.com"></div>
+            </div>
+            <div class="field">
+              <label for="avatarUrl">Avatar URL (optional)</label>
+              <div class="control"><input id="avatarUrl" type="url" placeholder="https://.../avatar.png"></div>
+            </div>
+            <div class="hint">Tip: if you don’t set an avatar, we’ll use your initials.</div>
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+              <button type="button" class="btn" id="btnResetProfile">Reset</button>
+              <button class="btn primary" type="submit">Save</button>
+            </div>
+            <div id="profMsg" class="hint" style="margin-top:6px"></div>
+          </form>
+        </article>
+      </div>
+
+      <!-- Right column: results -->
+      <div class="col-right">
+        <article class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <h3 style="margin:0">Your latest results</h3>
+            <div class="tabs">
+              <button id="tabAll"  class="tab-btn active" type="button">All</button>
+              <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
+              <button id="tabAWS"  class="tab-btn" type="button">AWS SAA-C03</button>
+            </div>
+          </div>
+
+          <div class="kpis" style="margin:10px 0 12px">
+            <div class="kpi"><h4>Total attempts</h4><div id="kpiAttempts" class="n">0</div></div>
+            <div class="kpi"><h4>Average %</h4><div id="kpiAvg" class="n">0%</div></div>
+            <div class="kpi"><h4>Best %</h4><div id="kpiBest" class="n">0%</div></div>
+          </div>
+
+          <div id="resultsWrap" class="table-wrap">Loading…</div>
+
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;">
+            <a class="btn" href="/score/ranking.html">🏆 View leaderboard</a>
+            <!-- Resume simulator button removed -->
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+    const AUTH_KEY = "currentUser";
+
+    // ===== utils =====
+    const byId = id => document.getElementById(id);
+    const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
+    const pad = n => String(n).padStart(2,'0');
+    const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    const fmtDuration = sec => { sec = toInt(sec); if (!sec || sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`; };
+    const fmtDate = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; } };
+    const norm = s => (s||"").toString().trim().toLowerCase();
+
+    function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
+    function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
+    function initialsOf(name){
+      const s=(name||"").trim(); if(!s) return "👤";
+      const parts=s.split(/\s+/).slice(0,2);
+      return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤";
+    }
+
+    // Auth & profile
+    function renderAuth(){
+      const u = getUser();
+      const authText = byId("authText");
+      const btnLogout = byId("btnLogout");
+      if (u){
+        authText.textContent = `✅ Signed in as: ${u.name} (${u.email})`;
+        btnLogout.classList.remove("hidden");
+      }else{
+        authText.textContent = "🔒 You’re not signed in.";
+        btnLogout.classList.add("hidden");
+      }
+      renderProfileForm();
+    }
+
+    function renderProfileForm(){
+      const u = getUser() || {};
+      byId("userNameTxt").textContent = u.name || "—";
+      byId("userEmailTxt").textContent = u.email || "—";
+      byId("userIdTxt").textContent = "ID: " + (u.userId || u.id || "—");
+
+      byId("name").value = u.name || "";
+      byId("email").value = u.email || "";
+      byId("avatarUrl").value = u.avatarUrl || "";
+
+      const box = byId("avatarBox");
+      box.innerHTML = "";
+      if (u.avatarUrl){
+        const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar";
+        im.onload = () => { box.innerHTML = ""; box.appendChild(im); }
+        im.onerror = () => { box.textContent = initialsOf(u.name); }
+      }else{
+        box.textContent = initialsOf(u.name);
+      }
+    }
+
+    // Optional: refresh from backend
+    async function loadRemoteMe(){
+      const u = getUser(); if(!u) return;
+      try{
+        const res = await fetch(`${API_BASE}/me`, {mode:"cors",cache:"no-store"});
+        if(res.ok){
+          const data = await res.json();
+          const merged = {...u, ...data};
+          setUser(merged);
+        }
+      }catch{}
+    }
+
+    /**
+     * Fetch results and **strictly filter to the signed-in user**.
+     * Some backends ignore the userId parameter, so we filter client-side too.
+     */
+    async function fetchMyResults(limit=500){
+      const u = getUser(); if (!u) return [];
+      const uid = (u.userId || u.id || "").toString();
+      const uemail = norm(u.email);
+
+      // Try server-side filter first (userId or email if supported)
+      const qs = new URLSearchParams({ limit: String(limit) });
+      if (uid) qs.set("userId", uid);
+      if (uemail) qs.set("email", uemail);
+
+      const res = await fetch(`${API_BASE}/results?${qs.toString()}`, {mode:"cors",cache:"no-store"});
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      // Robust client-side filter (matches by userId OR email variants)
+      const isMine = (x) => {
+        const xid = (x.userId || x.id || x?.user?.id || "").toString();
+        const xemail = norm(x.email || x.userEmail || x?.user?.email || x?.profile?.email);
+        return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
+      };
+
+      const mine = items.filter(isMine);
+
+      const pick = v => (typeof v === "string" ? v.trim() : "");
+      const getName = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+
+      return mine.map(x => ({
+        userId: x.userId || x.id || "(unknown)",
+        userName: getName(x),
+        quizId: (x.quizId || "-").toLowerCase(),
+        correct: toInt(x.correct),
+        total: toInt(x.total),
+        pct: toInt(x.pct ?? (x.total ? Math.round((toInt(x.correct)/toInt(x.total))*100) : 0)),
+        durationSec: toInt(x.durationSec),
+        ts: x.ts || null
+      }));
+    }
+
+    function calcKPIs(rows){
+      const n = rows.length;
+      const avg = n ? Math.round(rows.reduce((a,b)=>a + (toInt(b.pct)||0),0)/n) : 0;
+      const best = rows.reduce((m,b)=> Math.max(m, toInt(b.pct)||0), 0);
+      byId("kpiAttempts").textContent = String(n);
+      byId("kpiAvg").textContent = `${avg}%`;
+      byId("kpiBest").textContent = `${best}%`;
+    }
+
+    function renderResults(rows, filter="all"){
+      const root = byId("resultsWrap");
+      let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
+      const f = filter.toLowerCase();
+      if (f==="az-104" || f==="aws-saa-c03") list = list.filter(x=>x.quizId===f);
+      list = list.slice(0,10);
+
+      calcKPIs(f==="all" ? rows : rows.filter(x=>x.quizId===f));
+
+      if (!list.length){
+        root.innerHTML = `<div class="table-wrap"><p style="text-align:center;margin:12px 0;">No results yet.</p></div>`;
+        return;
+      }
+      let html = `<table>
+        <thead><tr>
+          <th>#</th><th>Quiz</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th>
+        </tr></thead><tbody>`;
+      list.forEach((r,i)=>{
+        const pct = Math.min(100, Math.max(0, toInt(r.pct)));
+        html += `<tr>
+          <td>${i+1}</td>
+          <td><span class="badge">${escapeHtml(r.quizId)}</span></td>
+          <td>${r.correct}</td>
+          <td>${r.total}</td>
+          <td>
+            <div class="pct">
+              <div class="pbar"><i style="width:${pct}%"></i></div>
+              <span>${pct}%</span>
+            </div>
+          </td>
+          <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
+          <td>${fmtDate(r.ts)}</td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+      root.innerHTML = html;
+    }
+
+    // Events
+    byId("btnLogout").onclick = ()=>{
+      localStorage.removeItem(AUTH_KEY);
+      location.href = "/"; // Redirect to home after signout
+    };
+    byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
+
+    byId("formProfile").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const u = getUser(); if(!u){ location.replace('/login/login.html'); return; }
+      const payload = {
+        name: byId("name").value.trim(),
+        email: byId("email").value.trim().toLowerCase(),
+        avatarUrl: byId("avatarUrl").value.trim()
+      };
+      byId("profMsg").textContent = "Saving…";
+      try{
+        const body = new URLSearchParams(payload);
+        const res = await fetch(`${API_BASE}/me`, { method:"PUT", body, mode:"cors" });
+        if (res.ok){
+          const srv = await res.json();
+          setUser({...u, ...srv});
+          byId("profMsg").innerHTML = `<span class="ok">✅ Saved</span>`;
+        }else{
+          setUser({...u, ...payload});
+          byId("profMsg").innerHTML = `<span class="ok">✅ Saved locally</span> <span class="muted">(backend unavailable)</span>`;
+        }
+      }catch{
+        setUser({...u, ...payload});
+        byId("profMsg").innerHTML = `<span class="ok">✅ Saved locally</span> <span class="muted">(offline)</span>`;
+      }
+      renderProfileForm();
+    });
+
+    function activateTab(which){
+      byId("tabAll").classList.toggle("active", which==="all");
+      byId("tabAZ").classList.toggle("active", which==="az-104");
+      byId("tabAWS").classList.toggle("active", which==="aws-saa-c03");
+    }
+    byId("tabAll").onclick = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
+    byId("tabAZ").onclick  = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
+    byId("tabAWS").onclick = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
+
+    // Init with redirect if not signed in
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      const u = getUser();
+      if (!u){
+        location.replace('/login/login.html');
+        return;
+      }
+
+      renderAuth();
+      loadRemoteMe(); // best-effort refresh of user profile
+
+      try{
+        const rows = await fetchMyResults(500);   // << strictly filtered to the signed-in user
+        window.__myRows = rows;
+        renderResults(rows, "all");
+      }catch{
+        byId("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#b3261e;">Error loading results</p></div>`;
+      }
+    });
+  </script>
+</body>
+</html>
