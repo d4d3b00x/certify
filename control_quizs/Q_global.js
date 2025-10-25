@@ -1,4 +1,4 @@
-/* ===== Singleton guard (evita doble carga del script) ===== */
+/* ===== Singleton guard ===== */
 if (window.__QGLOBAL_ACTIVE) {
   console.warn("Q_Global.js already loaded; skipping second init.");
 } else {
@@ -35,7 +35,7 @@ const QUIZZES = {
   'az-104'     : { track:'az-104-architect', certi:'Microsoft Azure Administrator - Associate (AZ-104)' }
 };
 
-/* ========== Estilos mínimos UI ========== */
+/* ========== CSS inyectado (incluye modal aislado) ========== */
 (function(){
   const css = `
   .quiz-wrap{display:grid;grid-template-columns:2fr 1fr;gap:18px}
@@ -69,6 +69,19 @@ const QUIZZES = {
   .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#2a1b51;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:99999}
   .toast.show{opacity:1}
   .loading{padding:18px;border:1px dashed #e2dcff;border-radius:12px;background:#fff;margin:10px 0}
+
+  /* === Modal Aislado === */
+  .qg-lock{overflow:hidden}
+  .qg-backdrop{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,19,48,.45);z-index:2147483000}
+  .qg-modal{max-width:680px;width:100%;background:#ffffff;border:1px solid #e2dcff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);padding:20px}
+  .qg-modal h3{margin:.2rem 0 .6rem}
+  .qg-result-row{display:flex;gap:10px;align-items:center;justify-content:space-between;background:#f7f9ff;border:1px solid #e8e6ff;border-radius:12px;padding:10px 12px;margin-top:8px}
+  .qg-badge-pass,.qg-badge-fail{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-weight:900;margin:.2rem 0}
+  .qg-badge-pass{background:#ecfff4;border:1px solid #b9f1d2;color:#16794c}
+  .qg-badge-fail{background:#fff2f1;border:1px solid #f3b7b2;color:#9b1b16}
+  .qg-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;justify-content:flex-end}
+  .qg-actions .btn{appearance:none;border:1px solid #e2dcff;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;background:#fff;color:#2a1b51}
+  .qg-actions .btn.primary{background:#0078d4;color:#fff;border-color:transparent}
   `;
   const s=document.createElement('style'); s.innerHTML=css; document.head.appendChild(s);
 })();
@@ -80,7 +93,7 @@ function fmtTime(sec){sec=Math.max(0,Number(sec)||0);const m=Math.floor(sec/60),
 function toast(msg,ms=1600){let t=document.querySelector('.toast');if(!t){t=h('div',{class:'toast'});document.body.appendChild(t)}t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms)}
 function shuffle(a){const arr=a;const n=arr.length;const buf=new Uint32Array(n);if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(buf);for(let i=n-1;i>0;i--){const r=buf[i]!==undefined?(buf[i]/0x100000000):Math.random();const j=Math.floor(r*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
 
-/* ========== Tema por quiz ========== */
+/* ========== Tema ========== */
 function applyTheme(quizId){
   const r=document.documentElement;
   const isAWS=quizId==='aws-saa-c03';
@@ -90,7 +103,7 @@ function applyTheme(quizId){
   Object.entries(t).forEach(([k,v])=>r.style.setProperty(k,v));
 }
 
-/* ========== API ======== */
+/* ========== Cliente /questions ========== */
 async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searchQ=''}) {
   const target=Math.max(count*overfetch, count);
   const all=[]; let lastKey=null; const seen=new Set(); const pageLimit=200;
@@ -117,6 +130,7 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
   return all.slice(0,target);
 }
 
+/* ========== Transformación / filtros ========== */
 function normalizeDomain(it){
   if (it.domain && /^D\d+$/i.test(it.domain)) return it.domain.toUpperCase();
   const s=String(it.category||it.domain||''); const m=s.match(/\bD(?:OMAIN)?\s*(\d+)\b/i);
@@ -159,8 +173,7 @@ function filterBySelection(all,tags){
   });
 }
 
-/* ========= START con overrides =========
-   start(quizId, {count, tags}) fuerza el tamaño exacto de preguntas */
+/* ========== START (acepta overrides: {count, tags}) ========== */
 async function start(quizId='aws-saa-c03', overrides={}){
   const mySeq=++__START_SEQ;
   stopTimer();
@@ -172,10 +185,8 @@ async function start(quizId='aws-saa-c03', overrides={}){
   STATE.certi=cfg.certi;
   STATE.mode='exam';
 
-  // Merge prefs: overrides pisan cualquier default
   const desiredCount = Number(overrides.count ?? STATE.prefs.count ?? 65);
   const tags = Array.isArray(overrides.tags) ? overrides.tags.slice() : [];
-
   STATE.prefs = { ...STATE.prefs, count: desiredCount, tags };
 
   STATE.loading=true;
@@ -188,17 +199,15 @@ async function start(quizId='aws-saa-c03', overrides={}){
     const raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 3, domainTags: tags });
     if (mySeq !== __START_SEQ) return;
 
-    // 2) Normaliza
+    // 2) Normaliza y filtra
     let all = transformQuestions(raw);
-
-    // 3) Filtro adicional por dominios (garantía cliente)
     if (tags.length) all = filterBySelection(all, tags);
 
-    // 4) Mezcla y **recorta EXACTO** al count elegido SIEMPRE
+    // 3) Mezcla y recorta EXACTO
     shuffle(all);
     all = all.slice(0, desiredCount);
 
-    // 5) Shuffle de opciones preservando índice correcto
+    // 4) Shuffle de opciones
     all = all.map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice():[];
       const order = shuffle([...Array(opts.length).keys()]);
@@ -209,8 +218,8 @@ async function start(quizId='aws-saa-c03', overrides={}){
 
     if (mySeq !== __START_SEQ) return;
 
-    // 6) Estado y render
-    STATE.qs = all;              // ← los “dots” y el total salen de aquí
+    // 5) Estado y render
+    STATE.qs = all;
     STATE.idx = 0;
     STATE.answers = {};
     STATE.marked = {};
@@ -231,7 +240,7 @@ async function start(quizId='aws-saa-c03', overrides={}){
   }
 }
 
-/* ========== Vistas auxiliares ========== */
+/* ========== Loading / Error ========== */
 function showLoading(){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:'Loading exam questions…'})); }
 function showError(msg){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:`<b>Error:</b> ${msg}`})); }
 
@@ -324,7 +333,40 @@ function renderQuiz(){
 
 function onSelect(i){ if(typeof STATE.answers[STATE.idx]!=='undefined')return; STATE.answers[STATE.idx]=i; renderQuiz(); }
 
-/* ===== Resultado ===== */
+/* ===== Resultados (modal aislado) ===== */
+function renderResultModal(r){
+  // Evita conflictos de estilos globales
+  document.body.classList.add('qg-lock');
+
+  const pass=r.pct>=70;
+  const bd=h('div',{class:'qg-backdrop', role:'dialog', 'aria-modal':'true'});
+  const m =h('div',{class:'qg-modal'});
+  m.appendChild(h('h3',{html:'Exam results'}));
+  m.appendChild(h('div',{class:pass?'qg-badge-pass':'qg-badge-fail',html:pass?'✅ PASS — ≥70%':'❌ FAIL — <70%'}));
+  m.appendChild(h('div',{class:'qg-result-row',html:`<strong>Score</strong><span>${r.correct}/${r.total} (${r.pct}%)</span>`}));
+  m.appendChild(h('div',{class:'qg-result-row',html:`<strong>Duration</strong><span>${Math.floor(r.durationSec/60)}m ${r.durationSec%60}s</span>`}));
+  m.appendChild(h('div',{class:'qg-result-row',html:`<strong>Marked</strong><span>${r.markedCount||0}</span>`}));
+  const actions=h('div',{class:'qg-actions'});
+  const home=h('button',{class:'btn',html:'🏠 Home'});  home.onclick=()=>{closeModal(); location.href='/';};
+  const review=h('button',{class:'btn primary',html:'🔁 Review'}); review.onclick=()=>{ closeModal(); };
+  actions.appendChild(home); actions.appendChild(review);
+  m.appendChild(actions);
+  bd.appendChild(m);
+
+  // Cierre por click fuera y Esc
+  bd.addEventListener('click',(e)=>{ if(e.target===bd) closeModal(); });
+  const onKey=(e)=>{ if(e.key==='Escape'){ e.preventDefault(); closeModal(); } };
+  document.addEventListener('keydown', onKey);
+
+  function closeModal(){
+    try{ document.body.removeChild(bd); }catch{}
+    document.body.classList.remove('qg-lock');
+    document.removeEventListener('keydown', onKey);
+  }
+
+  document.body.appendChild(bd);
+}
+
 function genResultId(result){
   const base=[result.quizId||'quiz',result.mode||'exam',result.total||0,result.correct||0,result.durationSec||0].join('|');
   const t=Math.floor((new Date(result.ts||Date.now())).getTime()/10000);
@@ -357,19 +399,6 @@ async function saveResultRemoteOnce(result){
   finally { STATE.saving=false; }
 }
 
-function renderResultModal(r){
-  const pass=r.pct>=70, bd=h('div',{class:'modal-backdrop'}), m=h('div',{class:'modal'});
-  m.appendChild(h('h3',{html:'Exam results'}));
-  m.appendChild(h('div',{class:pass?'badge-pass':'badge-fail',html:pass?'✅ PASS — ≥70%':'❌ FAIL — <70%'}));
-  m.appendChild(h('div',{class:'result-row',html:`<strong>Score</strong><span>${r.correct}/${r.total} (${r.pct}%)</span>`}));
-  m.appendChild(h('div',{class:'result-row',html:`<strong>Duration</strong><span>${Math.floor(r.durationSec/60)}m ${r.durationSec%60}s</span>`}));
-  m.appendChild(h('div',{class:'result-row',html:`<strong>Marked</strong><span>${r.markedCount||0}</span>`}));
-  const actions=h('div',{class:'controls',style:'margin-top:10px'});
-  const home=h('button',{class:'btn',html:'🏠 Home'});  home.onclick=()=>{document.body.removeChild(bd);location.href='/'};
-  const review=h('button',{class:'btn primary',html:'🔁 Review'}); review.onclick=()=>{document.body.removeChild(bd)};
-  actions.appendChild(home); actions.appendChild(review); m.appendChild(actions);
-  bd.appendChild(m); bd.addEventListener('click',(e)=>{if(e.target===bd)document.body.removeChild(bd)}); document.body.appendChild(bd);
-}
 async function finish(){
   if (STATE.finished) return;
   STATE.finished = true;
@@ -406,11 +435,10 @@ function enableHotkeys(){
   });
 }
 
-/* ========== Wire mínimo (por si quieres lanzar desde consola) ========== */
-document.addEventListener('DOMContentLoaded', ()=>{
-  // Si quisieras añadir listeners a los botones aquí, no es necesario
-});
+/* ========== Wire mínimo ========== */
+document.addEventListener('DOMContentLoaded', ()=>{ /* listeners externos ya en index */ });
 
+/* ========== API pública ========== */
 window.start = start;
 
 } // end singleton
