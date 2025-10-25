@@ -18,29 +18,29 @@ button { padding: 8px 14px; margin-top: 10px; font-weight: bold; }
 
 <!-- ====== BARRA SUPERIOR ====== -->
 <section id="authBar">
-  <span id="authText">🔒 No autenticado</span>
+  <span id="authText">🔒 No Authenticated :(</span>
   <div id="authBtns">
     <button id="btnLogin">Login</button>
-    <button id="btnSignup">Registro</button>
-    <button id="btnLogout" class="hidden">Cerrar sesión</button>
+    <button id="btnSignup">Register</button>
+    <button id="btnLogout" class="hidden">Sign out</button>
   </div>
 </section>
 
 <!-- ====== FORMULARIO DE REGISTRO ====== -->
 <form id="signupForm" class="hidden">
-  <h3>Registro</h3>
-  <label>Nombre: <input type="text" id="signupName" required></label>
+  <h3>Register new user:</h3>
+  <label>Name: <input type="text" id="signupName" required></label>
   <label>Email: <input type="email" id="signupEmail" required></label>
-  <label>Contraseña: <input type="password" id="signupPass" required></label>
-  <button type="submit">Crear cuenta</button>
+  <label>Password: <input type="password" id="signupPass" required></label>
+  <button type="submit">Certify!</button>
 </form>
 
 <!-- ====== FORMULARIO DE LOGIN ====== -->
 <form id="loginForm" class="hidden">
-  <h3>Inicio de sesión</h3>
+  <h3>Login</h3>
   <label>Email: <input type="email" id="loginEmail" required></label>
-  <label>Contraseña: <input type="password" id="loginPass" required></label>
-  <button type="submit">Entrar</button>
+  <label>Password: <input type="password" id="loginPass" required></label>
+  <button type="submit">Certify!</button>
 </form>
 
 <script>
@@ -72,26 +72,29 @@ function renderAuthUI() {
   const signupForm = document.getElementById("signupForm");
 
   if (u) {
-    authText.textContent = `✅ Sesión iniciada: ${u.name} (${u.email})`;
+    authText.textContent = `✅ You are sign-in as: ${u.name} (${u.email})`;
     btnLogin.classList.add("hidden");
     btnSignup.classList.add("hidden");
     btnLogout.classList.remove("hidden");
     loginForm.classList.add("hidden");
     signupForm.classList.add("hidden");
   } else {
-    authText.textContent = "🔒 No autenticado";
+    authText.textContent = "🔒 No Authenticated :(";
     btnLogin.classList.remove("hidden");
     btnSignup.classList.remove("hidden");
     btnLogout.classList.add("hidden");
   }
 }
 document.addEventListener("DOMContentLoaded", () => {
+  // Muestra el estado actual de autenticación al cargar
+  renderAuthUI();
+
+  // Mostrar formulario de registro si se pide por hash o query
   const isSignup =
     location.hash === "#signup" ||
     new URLSearchParams(location.search).get("view") === "signup";
 
   if (isSignup) {
-    // Ajusta estos IDs/clases a los de tu login.html
     document.getElementById("signupForm")?.classList.remove("hidden");
     document.getElementById("loginForm")?.classList.add("hidden");
   }

@@ -1,228 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>CertiFY — Free IT Certification Resources and Exams</title>
-<link rel="stylesheet" href="/style_global.css"/> 
-<style>
-:root{
-  --bg:#efeaff; --surface:#f5f7fb; --card:#efeaff; --ink:#0f1330; --muted:#8e87a8;
-  --brand:#0f1438; --cta:#54188d; --cta-hover:#8d12ac; --cta-ink:#efeaff; --link:#470447;
-  --ring:rgba(255,153,0,.35); --shadow:0 10px 30px rgba(18,16,99,.12); --bd:#e8e6ff;
-  --row:#ffffff; --row-alt:#f7f5ff; --row-hover:#f0eaff; --head:#f0ecff;
-  --ok:#16794c; --bad:#b3261e; --pill:#ffb300;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
-  color:var(--ink); background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px); line-height:1.6;
-}
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);}
-
-/* ======= Tabla ranking bonita ======= */
-.table-wrap{
-  background:#fff; border:1px solid var(--bd); border-radius:16px; box-shadow:var(--shadow);
-  padding:14px; overflow:auto; /* scroll horizontal si hace falta */
-}
-.rank-table{ width:100%; min-width:820px; border-collapse:separate; border-spacing:0; }
-.rank-table thead th{
-  position:sticky; top:0; z-index:1;
-  background:var(--head); color:var(--brand); font-weight:800; letter-spacing:.02em;
-  text-align:center; padding:12px 10px; border-bottom:1px solid var(--bd);
-}
-.rank-table tbody td{
-  padding:12px 10px; text-align:center; border-bottom:1px solid #eee;
-  background:var(--row);
-}
-.rank-table tbody tr:nth-child(even) td{ background:var(--row-alt); }
-.rank-table tbody tr:hover td{ background:var(--row-hover); }
-
-/* Bordes redondeados arriba */
-.rank-table thead th:first-child{ border-top-left-radius:12px; }
-.rank-table thead th:last-child{ border-top-right-radius:12px; }
-
-/* Cols */
-.rank-table .col-rank{ width:64px; }
-.rank-table .col-name{ text-align:center; }
-.rank-table .col-quiz{ width:160px; }
-.rank-table .col-num{ width:110px; font-variant-numeric: tabular-nums; }
-.rank-table .col-date{ width:200px; }
-
-/* Medallas top-3 */
-.medal{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px;
-  border-radius:50%; font-weight:800; color:#1b1830; }
-.medal.gold{ background:linear-gradient(135deg,#ffd662,#ffb300); box-shadow:0 2px 6px rgba(255,179,0,.35);}
-.medal.silver{ background:linear-gradient(135deg,#e6e6e6,#bfbfbf); box-shadow:0 2px 6px rgba(0,0,0,.12);}
-.medal.bronze{ background:linear-gradient(135deg,#e2a97a,#d18d5a); box-shadow:0 2px 6px rgba(0,0,0,.12);}
-
-/* Badge quiz */
-.badge{
-  display:inline-block; padding:6px 10px; border-radius:999px; font-weight:800; font-size:.85rem;
-  background:#f3ecff; color:#4a1778; border:1px solid #e3d6ff;
-}
-
-/* Porcentaje con barrita */
-.pct{
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  font-variant-numeric: tabular-nums; font-weight:800;
-}
-.pbar{
-  position:relative; flex:1 1 120px; height:8px; background:#eee; border-radius:999px; overflow:hidden;
-  max-width:160px;
-}
-.pbar > i{ position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#7b3fe4,#a45df2); }
-
-/* Duración chip */
-.chip{
-  display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px;
-  background:rgba(84,24,141,.08); color:#3b2062; border:1px solid rgba(84,24,141,.2); font-weight:700;
-}
-
-/* Título/encabezado */
-.header{
-  display:flex; align-items:center; justify-content:space-between; gap:16px; margin:10px 0 14px;
-}
-.header h2{ margin:0; color:var(--brand); font-size:1.4rem; font-weight:900; letter-spacing:.2px; }
-.header .hint{ color:var(--muted); }
-
-/* Botones existentes */
-.btn{ appearance:none;border:0;cursor:pointer;background:var(--cta);color:var(--cta-ink);font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px; }
-.btn:hover{ background:var(--cta-hover) }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CertiFY — Free IT Certification Resources and Exams</title>
+  <link rel="stylesheet" href="/style_global.css"/>
+  <style>
+    :root{
+      --bg:#efeaff;
+      --surface:#f5f7fb;
+      --card:#efeaff;
+      --ink:#0f1330;
+      --muted:#8e87a8;
+      --brand:#0f1438;
+      --cta:#54188d;
+      --cta-hover:#8d12ac;
+      --cta-ink:#efeaff;
+      --link:#470447;
+      --ring:rgba(255,153,0,.35);
+      --shadow:0 10px 30px rgba(18,16,99,.12);
+      --bd:#e8e6ff;
+      --row:#ffffff;
+      --row-alt:#f7f5ff;
+      --row-hover:#f0eaff;
+      --head:#f0ecff;
+      --ok:#16794c;
+      --bad:#b3261e;
+      --pill:#ffb300;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+      color:var(--ink);
+      background:linear-gradient(0deg,var(--surface) 96px,var(--bg) 96px);
+      line-height:1.6;
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    .card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);}
+    /* ======= Tabla ranking bonita ======= */
+    .table-wrap{
+      background:#fff;
+      border:1px solid var(--bd);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      padding:14px;
+      overflow:auto; /* scroll horizontal si hace falta */
+    }
+    .rank-table{
+      width:100%;
+      min-width:820px;
+      border-collapse:separate;
+      border-spacing:0;
+    }
+    .rank-table thead th{
+      position:sticky;
+      top:0;
+      z-index:1;
+      background:var(--head);
+      color:var(--brand);
+      font-weight:800;
+      letter-spacing:.02em;
+      text-align:center;
+      padding:12px 10px;
+      border-bottom:1px solid var(--bd);
+    }
+    .rank-table tbody td{
+      padding:12px 10px;
+      text-align:center;
+      border-bottom:1px solid #eee;
+      background:var(--row);
+    }
+    .rank-table tbody tr:nth-child(even) td{ background:var(--row-alt); }
+    .rank-table tbody tr:hover td{ background:var(--row-hover); }
+    /* Bordes redondeados arriba */
+    .rank-table thead th:first-child{ border-top-left-radius:12px; }
+    .rank-table thead th:last-child{ border-top-right-radius:12px; }
+    /* Cols */
+    .rank-table .col-rank{ width:64px; }
+    .rank-table .col-name{ text-align:center; }
+    .rank-table .col-quiz{ width:160px; }
+    .rank-table .col-num{ width:110px; font-variant-numeric: tabular-nums; }
+    .rank-table .col-date{ width:200px; }
+    /* Medallas top-3 */
+    .medal{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      font-weight:800;
+      color:#1b1830;
+    }
+    .medal.gold{ background:linear-gradient(135deg,#ffd662,#ffb300); box-shadow:0 2px 6px rgba(255,179,0,.35);}
+    .medal.silver{ background:linear-gradient(135deg,#e6e6e6,#bfbfbf); box-shadow:0 2px 6px rgba(0,0,0,.12);}
+    .medal.bronze{ background:linear-gradient(135deg,#e2a97a,#d18d5a); box-shadow:0 2px 6px rgba(0,0,0,.12);}
+    /* Badge quiz */
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:.85rem;
+      background:#f3ecff;
+      color:#4a1778;
+      border:1px solid #e3d6ff;
+    }
+    /* Porcentaje con barrita */
+    .pct{ display:flex; align-items:center; justify-content:center; gap:8px; font-variant-numeric: tabular-nums; font-weight:800; }
+    .pbar{ position:relative; flex:1 1 120px; height:8px; background:#eee; border-radius:999px; overflow:hidden; max-width:160px; }
+    .pbar > i{ position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#7b3fe4,#a45df2); }
+    /* Duración chip */
+    .chip{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:5px 10px; border-radius:999px;
+      background:rgba(84,24,141,.08); color:#3b2062; border:1px solid rgba(84,24,141,.2);
+      font-weight:700;
+    }
+    /* Título/encabezado */
+    .header{
+      display:flex; align-items:center; justify-content:space-between; gap:16px; margin:10px 0 14px;
+    }
+    .header h2{ margin:0; color:var(--brand); font-size:1.4rem; font-weight:900; letter-spacing:.2px; }
+    .header .hint{ color:var(--muted); }
+    /* Botones existentes */
+    .btn{ appearance:none;border:0;cursor:pointer;background:var(--cta);color:var(--cta-ink);font-weight:800;letter-spacing:.2px;padding:12px 18px;border-radius:12px; }
+    .btn:hover{ background:var(--cta-hover) }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <div class="card">
+      <div class="header">
+        <h2>🌍 Global Ranking</h2>
+        <div class="hint">If you want your name to appear, you must <a href="/login/login.html"> sign in...</a></div>
+      
+      
+      </div>
 
-<div class="wrap">
-  <div class="card">
-    <div class="header">
-      <h2>🌍 Global Ranking</h2>
-      <div class="hint">Top results across quizzes</div>
-    </div>
 
-    <div id="resultsTable" class="table-wrap">Loading…</div>
+      
+      <div id="resultsTable" class="table-wrap">Loading…</div>
 
-    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;">
-      <button class="btn" onclick="history.back()">HOME</button>
-      <button class="btn" onclick="location.href='/'">BACK</button>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;">
+        <button class="btn" onclick="history.back()">HOME</button>
+        <button class="btn" onclick="location.href='/'">BACK</button>
+      </div>
     </div>
   </div>
-</div>
 
-<script>
-  const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+  <script>
+    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
 
-  function toInt(v){ const n = Number(v); return Number.isFinite(n) ? n|0 : 0; }
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  }
-  function pad(n){ return String(n).padStart(2,'0'); }
-  function fmtDuration(sec){
-    sec = toInt(sec);
-    if (!sec || sec < 0) return '—';
-    const m = Math.floor(sec/60), s = sec%60;
-    return `${pad(m)}:${pad(s)}`;
-  }
-  function fmtDate(iso){
-    if (!iso) return '—';
-    try{
-      return new Date(iso).toLocaleString([], {year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit'});
-    }catch{ return iso; }
-  }
-
-  async function fetchResults(limit=1000){
-    const res = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors", cache:"no-store"});
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-    const items = Array.isArray(data.items) ? data.items : [];
-    return items.map(x => ({
-      userId: x.userId || "(unknown)",
-      userName: x.userName || x.name || "(sin nombre)",
-      quizId: x.quizId || "-",
-      correct: toInt(x.correct),
-      total: toInt(x.total),
-      pct: toInt(x.pct ?? (x.total ? Math.round((toInt(x.correct)/toInt(x.total))*100) : 0)),
-      durationSec: toInt(x.durationSec),
-      ts: x.ts || null
-    }));
-  }
-
-  function sortRows(rows){
-    // más correctos → mayor % → fecha más reciente
-    return rows.sort((a,b)=>{
-      if (b.correct !== a.correct) return b.correct - a.correct;
-      if (b.pct !== a.pct) return b.pct - a.pct;
-      return (b.ts || "").localeCompare(a.ts || "");
-    });
-  }
-
-  function medalCell(i){
-    if (i===0) return `<span class="medal gold">1</span>`;
-    if (i===1) return `<span class="medal silver">2</span>`;
-    if (i===2) return `<span class="medal bronze">3</span>`;
-    return i+1;
-  }
-
-  function renderTable(rows){
-    const root = document.getElementById("resultsTable");
-    if (!rows.length){ root.innerHTML = "<p style='text-align:center;margin:18px 0;'>No results yet.</p>"; return; }
-
-    let html = `
-      <table class="rank-table">
-        <thead>
-          <tr>
-            <th class="col-rank">#</th>
-            <th class="col-name">Name</th>
-            <th class="col-quiz">Quiz</th>
-            <th class="col-num">Correct</th>
-            <th class="col-num">Total</th>
-            <th class="col-num">Score</th>
-            <th class="col-num">Duration</th>
-            <th class="col-date">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-    `;
-
-    rows.forEach((r, i) => {
-      const pct = Math.min(100, Math.max(0, toInt(r.pct)));
-      const dt = fmtDate(r.ts);
-      html += `
-        <tr>
-          <td class="col-rank">${medalCell(i)}</td>
-          <td class="col-name">${escapeHtml(r.userName)}</td>
-          <td class="col-quiz"><span class="badge">${escapeHtml(r.quizId)}</span></td>
-          <td class="col-num">${r.correct}</td>
-          <td class="col-num">${r.total}</td>
-          <td class="col-num">
-            <div class="pct">
-              <div class="pbar"><i style="width:${pct}%"></i></div>
-              <span>${pct}%</span>
-            </div>
-          </td>
-          <td class="col-num"><span class="chip">${fmtDuration(r.durationSec)}</span></td>
-          <td class="col-date">${dt}</td>
-        </tr>
-      `;
-    });
-
-    html += `</tbody></table>`;
-    root.innerHTML = html;
-  }
-
-  document.addEventListener("DOMContentLoaded", async ()=>{
-    const root = document.getElementById("resultsTable");
-    try{
-      const rows = await fetchResults(1000);
-      renderTable(sortRows(rows));
-    }catch(err){
-      root.innerHTML = `<p style="color:#b91c1c;text-align:center;">Error loading results: ${escapeHtml(err.message)}</p>`;
-      console.error(err);
+    function toInt(v){
+      const n = Number(v);
+      return Number.isFinite(n) ? (n|0) : 0;
     }
-  });
-</script>
 
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function pad(n){ return String(n).padStart(2,'0'); }
+
+    function fmtDuration(sec){
+      sec = toInt(sec);
+      if (!sec || sec < 0) return '—';
+      const m = Math.floor(sec/60), s = sec%60;
+      return `${pad(m)}:${pad(s)}`;
+    }
+
+    function fmtDate(iso){
+      if (!iso) return '—';
+      try{
+        return new Date(iso).toLocaleString([], {
+          year:'numeric', month:'short', day:'2-digit', hour:'2-digit', minute:'2-digit'
+        });
+      }catch{
+        return iso;
+      }
+    }
+
+    async function fetchResults(limit=1000){
+      const res = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors", cache:"no-store"});
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      const pick = v => (typeof v === "string" ? v.trim() : "");
+      const getName = x =>
+        pick(x.userName) ||           // camelCase típico
+        pick(x.username) ||           // minúsculas
+        pick(x.displayName) ||        // displayName
+        pick(x.name) ||               // genérico
+        pick(x?.user?.name) ||        // anidado
+        pick(x?.profile?.name) ||     // anidado
+        "(sin nombre)";
+
+      return items.map(x => ({
+        userId: x.userId || "(unknown)",
+        userName: getName(x),
+        quizId: x.quizId || "-",
+        correct: toInt(x.correct),
+        total: toInt(x.total),
+        pct: toInt(x.pct ?? (x.total ? Math.round((toInt(x.correct)/toInt(x.total))*100) : 0)),
+        durationSec: toInt(x.durationSec),
+        ts: x.ts || null
+      }));
+    }
+
+    function sortRows(rows){
+      // más correctos → mayor % → fecha más reciente
+      return rows.sort((a,b)=>{
+        if (b.correct !== a.correct) return b.correct - a.correct;
+        if (b.pct !== a.pct) return b.pct - a.pct;
+        return (b.ts || "").localeCompare(a.ts || "");
+      });
+    }
+
+    function medalCell(i){
+      if (i===0) return `<span class="medal gold">1</span>`;
+      if (i===1) return `<span class="medal silver">2</span>`;
+      if (i===2) return `<span class="medal bronze">3</span>`;
+      return String(i+1);
+    }
+
+    function renderTable(rows){
+      const root = document.getElementById("resultsTable");
+      if (!rows.length){
+        root.innerHTML = "<p style='text-align:center;margin:18px 0;'>No results yet.</p>";
+        return;
+      }
+
+      let html = `
+        <table class="rank-table">
+          <thead>
+            <tr>
+              <th class="col-rank">#</th>
+              <th class="col-name">Name</th>
+              <th class="col-quiz">Quiz</th>
+              <th class="col-num">Correct</th>
+              <th class="col-num">Total</th>
+              <th class="col-num">Score</th>
+              <th class="col-num">Duration</th>
+              <th class="col-date">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      rows.forEach((r, i) => {
+        const pct = Math.min(100, Math.max(0, toInt(r.pct)));
+        const dt = fmtDate(r.ts);
+        html += `
+          <tr>
+            <td class="col-rank">${medalCell(i)}</td>
+            <td class="col-name">${escapeHtml(r.userName)}</td>
+            <td class="col-quiz"><span class="badge">${escapeHtml(r.quizId)}</span></td>
+            <td class="col-num">${r.correct}</td>
+            <td class="col-num">${r.total}</td>
+            <td class="col-num">
+              <div class="pct">
+                <div class="pbar"><i style="width:${pct}%"></i></div>
+                <span>${pct}%</span>
+              </div>
+            </td>
+            <td class="col-num"><span class="chip">${fmtDuration(r.durationSec)}</span></td>
+            <td class="col-date">${dt}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>`;
+      root.innerHTML = html;
+    }
+
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      const root = document.getElementById("resultsTable");
+      try{
+        const rows = await fetchResults(1000);
+        renderTable(sortRows(rows));
+      }catch(err){
+        root.innerHTML = `<p style="color:#b91c1c;text-align:center;">Error loading results: ${escapeHtml(err.message)}</p>`;
+        console.error(err);
+      }
+    });
+  </script>
 </body>
 </html>
