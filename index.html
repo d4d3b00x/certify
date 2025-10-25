@@ -110,11 +110,9 @@
     .badge1{background:var(--aws-50); border-color:var(--aws-100); color:var(--aws-ink)}
     .badge2{background:var(--az-50); border-color:var(--az-100); color:var(--az-ink)}
 
-    /* Grid secciones */
     .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 22px}
     @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
 
-    /* Lists */
     ul{margin:0;padding-left:0;list-style:none}
     ul li{ position:relative; padding:10px 12px 10px 28px; margin:10px 0;
       border:1px solid #edf0ff; border-radius:12px; background:#ffffff; }
@@ -125,7 +123,6 @@
     ul li a{text-decoration:none; color:inherit; font-weight:700;}
     ul li a:hover{text-decoration:underline;}
 
-    /* Brand sections */
     .aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%);}
     .azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%);}
 
@@ -174,14 +171,10 @@
     .note{font-size:.95rem;color:var(--muted)}
     .center{text-align:center}
 
-    /* === NUEVO: estado deshabilitado para Start Quiz === */
-    .btn[disabled]{
-      opacity:.55;
-      cursor:not-allowed;
-      transform:none !important;
-      box-shadow:none !important;
-    }
+    /* === Estado deshabilitado para Start Quiz + hint === */
+    .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
     .btn[disabled]:hover{ background:#f5f7ff; }
+    .login-hint{ display:none; } /* se muestra solo como invitado */
   </style>
 </head>
 <body>
@@ -199,7 +192,7 @@
 
         <section class="authbar" id="authBar">
           <div class="authbar-inner">
-            <!-- Home icon -->
+            <!-- Home icon (multicolor) -->
             <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
               <path d="M8 30 32 12l24 18v22a2 2 0 0 1-2 2H42a2 2 0 0 1-2-2V40H24v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V30z" fill="#ffd166"/>
               <path d="M6 28 32 8l26 20-4 5L32 18 10 42l-4-5z" fill="#06d6a0"/>
@@ -280,6 +273,7 @@
               <div class="field full">
                 <div class="actions" style="margin-top:8px">
                   <button class="btn btn-aws solid start-btn">▶ Start Quiz</button>
+                  <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
                   <a class="btn btn-aws" href="/score/ranking.html?quiz=aws-saa-c03">🏆 Ranking</a>
                 </div>
                 <div class="small center">
@@ -348,6 +342,7 @@
               <div class="field full">
                 <div class="actions" style="margin-top:8px">
                   <button class="btn btn-az solid start-btn">▶ Start Quiz</button>
+                  <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
                   <a class="btn btn-az" href="/score/ranking.html?quiz=az-104">🏆 Ranking</a>
                 </div>
                 <div class="small center">
@@ -361,7 +356,7 @@
     </main>
   </div>
 
-  <!-- TUS SCRIPTS -->
+  <!-- SCRIPTS -->
   <script src="/questions.js2"></script>
   <script src="/control_quizs/Q_global.js"></script>
 
@@ -376,9 +371,10 @@
       renderAuthBar();
     }
 
-    /* === NUEVO: habilitar/deshabilitar Start Quiz según login === */
+    /* === Habilitar/deshabilitar Start Quiz + mostrar hint “Login to start” === */
     function updateStartButtonsForAuth(){
       const logged = !!getCurrentUser();
+
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
         if(!logged){
           btn.setAttribute('disabled','');
@@ -389,6 +385,11 @@
           btn.removeAttribute('aria-disabled');
           btn.removeAttribute('title');
         }
+      });
+
+      // Mostrar / ocultar CTA de login al lado
+      document.querySelectorAll('.sim-card .login-hint').forEach(link=>{
+        link.style.display = logged ? 'none' : 'inline-flex';
       });
     }
 
@@ -416,12 +417,10 @@
         btnSignup.classList.remove("hidden");
         btnLogout.classList.add("hidden");
       }
-      // Siempre sincronizamos los botones del simulador
-      updateStartButtonsForAuth();
+      updateStartButtonsForAuth(); // sincroniza simuladores
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Botonería auth
       const btnLogin  = document.getElementById("btnLogin");
       const btnSignup = document.getElementById("btnSignup");
       const btnLogout = document.getElementById("btnLogout");
@@ -429,12 +428,9 @@
       if (btnSignup) btnSignup.onclick = () => location.href = "/login/login.html#signup";
       if (btnLogout) btnLogout.onclick = () => logoutUser();
 
-      renderAuthBar();                 // pinta cabecera y estado inicial
-      updateStartButtonsForAuth();     // asegura estado de Start Quiz
-      setTimeout(()=>{                 // por si el perfil llega un pelín tarde
-        renderAuthBar();
-        updateStartButtonsForAuth();
-      }, 300);
+      renderAuthBar();
+      updateStartButtonsForAuth();
+      setTimeout(()=>{ renderAuthBar(); updateStartButtonsForAuth(); }, 300);
     });
 
     /* ===== Sim helpers ===== */
@@ -485,14 +481,14 @@
         tag.addEventListener('click', ()=> tag.classList.toggle('active'));
       });
 
-      // Click en Start Quiz (si no está deshabilitado, el navegador gestiona)
+      // Click en Start Quiz (si no está deshabilitado)
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
         btn.addEventListener('click', (e)=>{
-          if (btn.hasAttribute('disabled')) { e.preventDefault(); return; } // guard por si acaso
+          if (btn.hasAttribute('disabled')) { e.preventDefault(); return; }
           const sim = btn.closest('.sim-card');
           const quiz = sim.dataset.quiz;
           collectOptions(sim);
-          start(quiz); // usa tu start o el fallback
+          start(quiz);
         });
       });
 
@@ -515,8 +511,7 @@
         }
       });
 
-      // Finalmente, asegurar estado de Start según login
-      updateStartButtonsForAuth();
+      updateStartButtonsForAuth(); // asegurar estado final
     });
   </script>
 </body>
