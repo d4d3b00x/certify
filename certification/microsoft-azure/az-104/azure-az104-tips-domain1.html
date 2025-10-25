@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Microsoft Azure AZ-104 — Domain 1 Tips: Manage Identities & Governance</title>
+<link rel="stylesheet" href="/style_global.css"/>
+<style>
+/* ============ Calm Azure theme ============ */
+:root{
+  --bg:#f5f8ff;
+  --surface:#f7faff;
+  --card:#ffffff;
+  --ink:#0f172a;
+  --muted:#5b6b82;
+  --brand:#0a1f44;
+
+  /* Azure brand palette */
+  --az:#0078d4;
+  --az-2:#3aa0ff;
+  --az-dk:#005ea6;
+
+  --ring:rgba(0,120,212,.25);
+  --bd:#e4ecff;
+  --shadow:0 12px 26px rgba(8,25,68,.08);
+  --radius:16px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 10% -10%, #ecf3ff 0, transparent 60%),
+    radial-gradient(900px 420px at 90% -10%, #e8f6ff 0, transparent 60%),
+    linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  line-height:1.6;
+  min-height:100vh;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* Card */
+.card{
+  background:linear-gradient(180deg,#fff,#fefefe);
+  border:1px solid var(--bd);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(8,25,68,.10);border-color:#d8e5ff}
+
+/* Hero */
+.hero{
+  position:relative; overflow:hidden; text-align:center;
+  border:1px solid #e8eeff;
+  padding:36px 24px;
+  background:
+    radial-gradient(120% 180% at 80% -20%, rgba(58,160,255,.18), rgba(58,160,255,0) 62%),
+    radial-gradient(120% 180% at 10% -10%, rgba(0,120,212,.16), rgba(0,120,212,0) 65%),
+    linear-gradient(180deg,#ffffff,#fbfdff);
+}
+.badge,.badge1{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:9px 13px; border-radius:999px; font-weight:900; letter-spacing:.02em;
+  border:1px solid #cfe6ff;
+  background:linear-gradient(90deg, rgba(58,160,255,.20), rgba(0,120,212,.12));
+  color:#033764;
+}
+h1{
+  font-size:clamp(1.6rem,2.1vw + 1rem,2.4rem);
+  line-height:1.15;margin:12px 0 8px;color:var(--brand);font-weight:900;
+}
+.subtitle,.hint,.desc{color:var(--muted)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 36px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+
+/* Lists with tiny azure diamond */
+ul{margin:0;padding-left:0;list-style:none}
+ul li{position:relative; padding:10px 12px 10px 32px; margin:10px 0; border:1px solid #eef3ff; border-radius:12px; background:#fff}
+ul li::before{
+  content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(45deg);
+  width:12px; height:12px; border-radius:3px;
+  background:linear-gradient(135deg,var(--az),var(--az-2));
+  box-shadow:0 2px 6px rgba(0,120,212,.35);
+}
+
+/* Code chip */
+code{background:#f0f8ff;border:1px solid #d6eaff;border-radius:6px;padding:0 6px}
+
+/* Azure group wrapper (left border blue) */
+.azure-group{
+  background:#fff;
+  border-left:6px solid var(--az);
+  border-radius:12px;
+  padding:14px 14px;
+  margin:8px auto 10px;
+  box-shadow:var(--shadow);
+}
+
+/* Buttons */
+.actions{display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap;justify-content:center}
+.btn{
+  appearance:none;border:1px solid #cfe6ff;cursor:pointer;
+  background:var(--az);color:#ffffff;
+  font-weight:900;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  box-shadow:0 8px 18px rgba(0,120,212,.18);
+  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.btn.secondary{background:#fff;color:#0a2a4d;border:1px solid #dceaff;box-shadow:none}
+.btn.secondary:hover{background:#f7fbff}
+
+/* Tiny tip box */
+.tip{
+  margin:10px 0; padding:10px 12px; border:1px dashed #bfe1ff;
+  background:#f2f9ff; border-radius:10px; color:#073a6a
+}
+
+/* Footer note */
+.footer{opacity:.95;font-size:.92rem;margin-top:10px;color:var(--muted)}
+.footer a{color:#0b66c3;font-weight:800;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- HERO -->
+  <section class="card hero" aria-label="Domain 1 overview">
+    <span class="badge1">Azure AZ-104 — Domain 1 (Manage Azure identities & governance)</span>
+    <h1>Secure by role, organized by scope, governed by policy</h1>
+    <p class="desc" style="max-width:800px;margin:8px auto 0">
+      Domain 1 is ~15–20% of the exam. You’ll manage Entra ID objects, scopes (management groups, subscriptions, resource groups), RBAC, Policy/initiatives, resource locks, tags, and cost controls.
+      Think “groups over individuals”, “least privilege”, and “guardrails with Policy”.
+    </p>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="azure-group">
+    <section class="grid">
+      <article class="card path">
+        <h2>Patterns that score</h2>
+        <ul>
+          <li><strong>Assign to groups, not users</strong>: create Azure AD (Entra ID) groups and grant <em>role assignments</em> at the right <em>scope</em> (MG/subscription/RG/resource).</li>
+          <li><strong>Use built-in roles first</strong>: Reader, Contributor, Owner, User Access Administrator; create <code>customRole</code> only when necessary.</li>
+          <li><strong>Govern with Policy</strong>: enforce allowed locations/SKUs, require tags, deny public IPs; bundle as <em>initiatives</em> and assign at MG or subscription.</li>
+          <li><strong>Protect critical resources</strong>: use <code>CanNotDelete</code> and <code>ReadOnly</code> <em>resource locks</em> for stateful protection.</li>
+          <li><strong>Budget & alerts</strong>: set <em>Cost Management</em> budgets with email/Action Group alerts, and review Advisor recommendations.</li>
+          <li><strong>Elevated access via PIM</strong>: Privileged Identity Management for just-in-time roles and access reviews (enforce MFA, approvals).</li>
+        </ul>
+        <div class="tip">Exam hint: If two solutions work, choose the one that assigns RBAC to a <em>group at the highest safe scope</em> and enforces guardrails with <em>Policy</em>.</div>
+
+        <h2>Common pitfalls</h2>
+        <ul>
+          <li>Giving <code>Owner</code> broadly instead of least-privilege (e.g., <code>Contributor</code> + specific Reader on sensitive data).</li>
+          <li>Putting tags on resources but not on resource groups, then failing inheritance for policies requiring tags.</li>
+          <li>Creating policies but forgetting to <em>remediate</em> drift with <em>modify/deployIfNotExists</em> or an <em>assignment with remediation task</em>.</li>
+          <li>Confusing <strong>directory roles</strong> (Entra ID) with <strong>Azure RBAC roles</strong> (resource access).</li>
+          <li>Applying locks at resource level only; prefer RG or subscription scope when appropriate.</li>
+        </ul>
+
+        <h2>Study checklist</h2>
+        <ul>
+          <li>Entra ID objects: users, groups (assigned vs dynamic), service principals, app registrations, guest users (B2B).</li>
+          <li>Scopes & inheritance: management groups → subscriptions → resource groups → resources.</li>
+          <li>RBAC: role definitions vs assignments; deny assignments; built-in roles; custom roles JSON.</li>
+          <li>Azure Policy: definitions vs initiatives; effects (<code>deny</code>, <code>audit</code>, <code>append</code>, <code>modify</code>, <code>deployIfNotExists</code>); parameters.</li>
+          <li>Resource organization: naming, tags, locks, blueprints (legacy) vs policy + templates.</li>
+          <li>Cost Management: budgets, exports, tags for chargeback, Advisor.</li>
+          <li>PIM, access reviews, Conditional Access basics (MFA for privileged roles).</li>
+        </ul>
+
+        <h2>CLI quick hits</h2>
+        <ul>
+          <li>Create RG: <code>az group create -n rg-core -l westeurope</code></li>
+          <li>Assign RBAC: <code>az role assignment create --assignee &lt;objectId&gt; --role Reader --scope &lt;scopeId&gt;</code></li>
+          <li>List role defs: <code>az role definition list -o table</code></li>
+          <li>Policy assign: <code>az policy assignment create --name require-tags --policy &lt;policyId&gt; --scope &lt;scopeId&gt; --params @params.json</code></li>
+          <li>Budget: <code>az consumption budget create --amount 500 --time-grain Monthly --name app1 --category Cost --scope &lt;subId-scope&gt;</code></li>
+          <li>Lock RG: <code>az lock create --name protect --lock-type CanNotDelete --resource-group rg-core</code></li>
+        </ul>
+      </article>
+
+      <aside class="card path">
+        <h3>Exam Focus</h3>
+        <ul>
+          <li>Manage Entra ID: users, groups, device settings, external users.</li>
+          <li>Control access with Azure RBAC at the right scope and verify effective permissions.</li>
+          <li>Implement governance with Policy/initiatives, tagging strategies, and locks.</li>
+          <li>Organize with management groups & subscriptions; apply guardrails at MG for inheritance.</li>
+          <li>Monitor and control costs with budgets, exports, and Advisor.</li>
+        </ul>
+
+        <h3>Key Azure services</h3>
+        <ul>
+          <li>Microsoft Entra ID (Azure AD), PIM, Access Reviews</li>
+          <li>Management Groups, Subscriptions, Resource Groups</li>
+          <li>Azure RBAC (role definitions & assignments)</li>
+          <li>Azure Policy (definitions, initiatives, remediation)</li>
+          <li>Resource Locks & Tags, Naming standards</li>
+          <li>Cost Management + Billing, Advisor</li>
+        </ul>
+
+        <h3>Hands-on ideas</h3>
+        <ul>
+          <li>Create an MG hierarchy (<code>mg-root</code> → <code>mg-prod</code>/<code>mg-dev</code>), then assign a tagging initiative at <code>mg-prod</code>.</li>
+          <li>Build a custom role allowing read on Compute + start/stop VMs only; assign at RG scope to a group.</li>
+          <li>Require tags via Policy (<code>environment</code>, <code>owner</code>) and remediate existing resources.</li>
+          <li>Apply <code>CanNotDelete</code> lock to a shared RG and test deletion behavior.</li>
+          <li>Create a monthly budget with alert at 80% and 100%; filter by tag for a specific app.</li>
+        </ul>
+
+        <div class="footer">
+          Updated 2025-10-25 · Useful docs:
+          <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/role-based-access-control/role-assignments-portal">RBAC</a> ·
+          <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/governance/policy/overview">Azure Policy</a> ·
+          <a target="_blank" rel="noopener" href="https://learn.microsoft.com/azure/cost-management-billing/cost-management-billing-overview">Cost Management</a>
+        </div>
+      </aside>
+    </section>
+  </section>
+
+  <!-- NAV -->
+  <div class="actions" style="margin:18px 0 42px">
+    <a class="btn secondary" href="/">🏠 Home</a>
+    <a class="btn" href="azure-az104-tips-domain2.html">Next ▶</a>
+  </div>
+</div>
+
+</body>
+</html>
