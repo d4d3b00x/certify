@@ -29,7 +29,6 @@
     .card{background:var(--card);border:1px solid var(--bd);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .12s ease, box-shadow .18s ease, border-color .18s ease}
     .card.path:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(28,27,70,.10); border-color:#dfe3ff; }
 
-    /* ===== TOP ROW: HERO + AUTHBAR ===== */
     .toprow{ display:grid; grid-template-columns:1fr 300px; gap:14px; margin:8px 0 12px; align-items:stretch }
     @media (max-width:900px){ .toprow{ grid-template-columns:1fr; gap:10px } }
 
@@ -37,25 +36,18 @@
     .hero h1{ font-size:clamp(1.6rem,1.5vw + 1rem,2.4rem); line-height:1.08; margin:2px 0 6px; font-weight:900; color:var(--brand) }
     .hero .desc{ color:var(--muted); max-width:780px; margin:0 auto 2px; font-size:.97rem; line-height:1.45 }
 
-    /* ===== AUTH BAR ===== */
     .authbar{ border:1px solid #ecefff; border-radius:var(--radius); background:#fff; box-shadow:0 4px 10px rgba(30,35,80,0.06); padding:0; display:flex; align-items:center; justify-content:center; height:100% }
-    .authbar-inner{
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      gap:10px; padding:12px; width:100%; text-align:center;
-    }
+    .authbar-inner{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:12px; width:100%; text-align:center; }
 
-    /* Fila nombre + icono juntos */
     .userrow{ display:flex; align-items:center; justify-content:center; gap:8px; }
     .home-icon{ width:22px; height:22px }
     .user .inline{ display:flex; align-items:center; gap:6px; justify-content:center; flex-wrap:wrap; font-weight:900 }
     .user .email{ color:#8b8fb3; font-weight:800 }
     .welcome{ font-weight:900; color:#2b2f57; margin-right:4px }
 
-    /* Estados */
-    .authbar.guest .userrow{ display:none }  /* ocultar fila completa en invitado */
+    .authbar.guest .userrow{ display:none }
     .authbar.logged .userrow{ display:flex }
 
-    /* Acciones centradas */
     .authbar .actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:center }
     .authbar .actions a, .authbar .actions button{
       appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
@@ -65,19 +57,12 @@
     .authbar .actions a:hover, .authbar .actions button:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
     .hidden{ display:none !important }
 
-    /* Tarjeta inferior (solo guest) */
     .auth-extra{
-      width:100%;
-      background:#fbfcff;
-      border:1px dashed #e9ecff;
-      border-radius:10px;
-      padding:10px 12px;
-      font-size:.92rem; color:#565b86;
-      display:flex; align-items:center; justify-content:center; gap:8px;
+      width:100%; background:#fbfcff; border:1px dashed #e9ecff; border-radius:10px; padding:10px 12px;
+      font-size:.92rem; color:#565b86; display:flex; align-items:center; justify-content:center; gap:8px;
     }
     .auth-extra b{color:#2a2f57}
 
-    /* Resto estilos (sin cambios) */
     .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 22px}
     @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
     ul{margin:0;padding-left:0;list-style:none}
@@ -108,25 +93,35 @@
     .btn-az.solid{background:var(--az-500); border-color:#98cfff; color:#fff;}
     .btn-az.solid:hover{background:var(--az-600)}
     .btn-az{color:var(--az-ink)}
+
     .sim-card h3{margin:0 0 10px}
     .sim-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .sim-form .full{grid-column:1/-1}
     @media (max-width:720px){ .sim-form{grid-template-columns:1fr} }
+
     .segmented{display:flex;gap:8px;background:#f6f7ff;border:1px solid #e6e9ff;border-radius:10px;padding:6px}
     .segmented input{display:none}
     .segmented label{flex:1 1 auto;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800;color:#343a6e}
     .segmented input:checked + label{background:#fff;border:1px solid #e6e9ff}
     .segmented.aws input:checked + label{border-color:#ffddad;color:#7b4a00}
     .segmented.az input:checked + label{border-color:#bfe0ff;color:#0a4a7b}
+
     .field{display:flex;flex-direction:column;gap:6px}
     .field label{font-weight:800;font-size:.93rem;color:#2a2e57}
     .select,.text{display:flex;align-items:center;gap:8px;border:1px solid #e6e9ff;border-radius:10px;padding:8px 10px;background:#fff}
     .select select,.text input{border:none;outline:none;font-weight:700;color:#2a2e57;width:100%;background:transparent}
     .small{font-size:.9rem;color:var(--muted)}
+
+    /* Dominios como checkboxes (píldoras) */
     .domains{display:flex;flex-wrap:wrap;gap:8px}
-    .domains .tag{border:1px solid #e6e9ff;padding:6px 10px;border-radius:999px;cursor:pointer;user-select:none;font-weight:800;color:#37407a;background:#fff}
-    .domains .tag.active{box-shadow:0 0 0 2px #ffe7c6 inset;color:#7b4a00}
-    .domains.az .tag.active{box-shadow:0 0 0 2px #cfe9ff inset;color:#0a4a7b}
+    .domains input{position:absolute;opacity:0;pointer-events:none}
+    .domains label{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;
+      border:1px solid #e6e9ff;background:#fff;cursor:pointer;font-weight:800;color:#37407a;user-select:none
+    }
+    .domains input:checked + label{ box-shadow:0 0 0 2px #cfe9ff inset; color:#0a4a7b }
+    .domains.aws input:checked + label{ box-shadow:0 0 0 2px #ffe7c6 inset; color:#7b4a00 }
+
     .kbd{display:inline-block;padding:.1rem .4rem;border-radius:6px;border:1px solid #e6e9ff;background:#fff;font-weight:800}
     .center{text-align:center}
     .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important }
@@ -147,8 +142,6 @@
 
         <section class="authbar" id="authBar">
           <div class="authbar-inner">
-
-            <!-- Fila: icono + Welcome + nombre/email -->
             <div class="userrow">
               <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
                 <path d="M8 30 32 12l24 18v22a2 2 0 0 1-2 2H42a2 2 0 0 1-2-2V40H24v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V30z" fill="#ffd166"/>
@@ -165,7 +158,6 @@
               </div>
             </div>
 
-            <!-- Acciones -->
             <div class="actions">
               <a id="btnProfile" href="/user/profile.html" class="hidden">Profile</a>
               <a id="btnLogin"  href="/login/login.html">Login</a>
@@ -173,7 +165,6 @@
               <button id="btnLogout" type="button" class="hidden">Logout</button>
             </div>
 
-            <!-- Tarjeta inferior (solo guest) -->
             <div class="auth-extra" id="authExtra" aria-live="polite"></div>
           </div>
         </section>
@@ -225,17 +216,17 @@
               </div>
               <div class="field full">
                 <label>Domains (optional filter)</label>
-                <div class="domains" data-scope="aws">
-                  <div class="tag" data-val="D1">D1</div>
-                  <div class="tag" data-val="D2">D2</div>
-                  <div class="tag" data-val="D3">D3</div>
-                  <div class="tag" data-val="D4">D4</div>
+                <div class="domains aws" data-scope="aws">
+                  <input id="aws-d1" type="checkbox" value="D1"><label for="aws-d1">D1</label>
+                  <input id="aws-d2" type="checkbox" value="D2"><label for="aws-d2">D2</label>
+                  <input id="aws-d3" type="checkbox" value="D3"><label for="aws-d3">D3</label>
+                  <input id="aws-d4" type="checkbox" value="D4"><label for="aws-d4">D4</label>
                 </div>
                 <div class="small">Leave empty to include all domains.</div>
               </div>
               <div class="field full">
                 <div class="actions" style="margin-top:8px">
-                  <button class="btn btn-aws solid start-btn">▶ Start Quiz</button>
+                  <button class="btn btn-aws solid start-btn" type="button">▶ Start Quiz</button>
                   <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
                   <a class="btn btn-aws" href="/score/ranking.html?quiz=aws-saa-c03">🏆 Ranking</a>
                 </div>
@@ -295,16 +286,18 @@
               </div>
               <div class="field full">
                 <label>Domains (optional filter)</label>
-                <div class="domains az" data-scope="az">
-                  <div class="tag" data-val="D1">D1</div><div class="tag" data-val="D2">D2</div>
-                  <div class="tag" data-val="D3">D3</div><div class="tag" data-val="D4">D4</div>
-                  <div class="tag" data-val="D5">D5</div>
+                <div class="domains" data-scope="az">
+                  <input id="az-d1" type="checkbox" value="D1"><label for="az-d1">D1</label>
+                  <input id="az-d2" type="checkbox" value="D2"><label for="az-d2">D2</label>
+                  <input id="az-d3" type="checkbox" value="D3"><label for="az-d3">D3</label>
+                  <input id="az-d4" type="checkbox" value="D4"><label for="az-d4">D4</label>
+                  <input id="az-d5" type="checkbox" value="D5"><label for="az-d5">D5</label>
                 </div>
                 <div class="small">Leave empty to include all domains.</div>
               </div>
               <div class="field full">
                 <div class="actions" style="margin-top:8px">
-                  <button class="btn btn-az solid start-btn">▶ Start Quiz</button>
+                  <button class="btn btn-az solid start-btn" type="button">▶ Start Quiz</button>
                   <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
                   <a class="btn btn-az" href="/score/ranking.html?quiz=az-104">🏆 Ranking</a>
                 </div>
@@ -319,57 +312,37 @@
     </main>
   </div>
 
-  <script src="/control_quizs/Q_global.js"></script>
+  <!-- Asegúrate que la ruta/nombre de archivo coinciden con tu servidor -->
+  <script src="/control_quizs/Q_Global.js"></script>
 
   <script>
-    /* ===== Auth bar logic ===== */
+    /* ===== Auth bar (sin cambios) ===== */
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
     function logoutUser(){ localStorage.removeItem("currentUser"); renderAuthBar(); }
-
     function updateStartButtonsForAuth(){
       const logged=!!getCurrentUser();
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
         if(!logged){ btn.setAttribute('disabled',''); btn.setAttribute('aria-disabled','true'); btn.setAttribute('title','Please log in to start the quiz'); }
         else{ btn.removeAttribute('disabled'); btn.removeAttribute('aria-disabled'); btn.removeAttribute('title'); }
       });
-      document.querySelectorAll('.sim-card .login-hint').forEach(link=>{ link.style.display=logged?'none':'inline-flex'; });
+      document.querySelectorAll('.sim-card .login-hint').forEach(link=> link.style.display=logged?'none':'inline-flex');
     }
-
     function renderAuthBar(){
-      const u = getCurrentUser();
-      const bar = document.getElementById('authBar');
-      const nameEl = document.getElementById('userName');
-      const emailEl= document.getElementById('userEmail');
-      const btnLogin = document.getElementById('btnLogin');
-      const btnSignup= document.getElementById('btnSignup');
-      const btnLogout= document.getElementById('btnLogout');
-      const btnProfile=document.getElementById('btnProfile');
-      const extraEl = document.getElementById('authExtra');
-      const welcome = document.getElementById('welcomeTxt');
-
+      const u=getCurrentUser(), bar=document.getElementById('authBar');
+      const nameEl=document.getElementById('userName'), emailEl=document.getElementById('userEmail');
+      const btnLogin=document.getElementById('btnLogin'), btnSignup=document.getElementById('btnSignup');
+      const btnLogout=document.getElementById('btnLogout'), btnProfile=document.getElementById('btnProfile');
+      const extraEl=document.getElementById('authExtra'), welcome=document.getElementById('welcomeTxt');
       if(u){
         bar.classList.remove('guest'); bar.classList.add('logged');
-        nameEl.textContent = u.name || '(user)'; emailEl.textContent= u.email || '';
-        welcome.classList.remove('hidden');
-
-        // Mostrar botones de sesión abierta debajo (centrados)
-        btnLogin.classList.add('hidden'); btnSignup.classList.add('hidden');
-        btnLogout.classList.remove('hidden'); btnProfile.classList.remove('hidden');
-
-        // Ocultar tarjeta de invitado
-        extraEl.style.display = 'none';
+        nameEl.textContent=u.name||'(user)'; emailEl.textContent=u.email||''; welcome.classList.remove('hidden');
+        btnLogin.classList.add('hidden'); btnSignup.classList.add('hidden'); btnLogout.classList.remove('hidden'); btnProfile.classList.remove('hidden');
+        extraEl.style.display='none';
       }else{
         bar.classList.add('guest'); bar.classList.remove('logged');
-        nameEl.textContent=''; emailEl.textContent='';
-        welcome.classList.add('hidden');
-
-        // Mostrar botones de Login/Register centrados
-        btnLogin.classList.remove('hidden'); btnSignup.classList.remove('hidden');
-        btnLogout.classList.add('hidden'); btnProfile.classList.add('hidden');
-
-        // Mensaje de bienvenida centrado
-        extraEl.style.display = 'flex';
-        extraEl.innerHTML = `👋 <b>Welcome</b> — create a free account to save progress and history.`;
+        nameEl.textContent=''; emailEl.textContent=''; welcome.classList.add('hidden');
+        btnLogin.classList.remove('hidden'); btnSignup.classList.remove('hidden'); btnLogout.classList.add('hidden'); btnProfile.classList.add('hidden');
+        extraEl.style.display='flex'; extraEl.innerHTML='👋 <b>Welcome</b> — create a free account to save progress and history.';
       }
       updateStartButtonsForAuth();
     }
@@ -377,22 +350,32 @@
     document.addEventListener('DOMContentLoaded', ()=>{
       document.getElementById('btnLogout')?.addEventListener('click', logoutUser);
 
-      // Toggle dominios
-      document.querySelectorAll('.domains .tag').forEach(tag=>{
-        tag.addEventListener('click', ()=> tag.classList.toggle('active'));
-      });
-
-      // Start Quiz
+      // 📌 START: lee el select y los dominios de SU tarjeta y se los pasa a start(...)
       document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
-        btn.addEventListener('click', e=>{
-          if(btn.hasAttribute('disabled')){ e.preventDefault(); return; }
-          const sim = btn.closest('.sim-card'); const quiz = sim.dataset.quiz;
-          if(typeof window.start==='function') window.start(quiz); else location.href=`/quiz/?q=${encodeURIComponent(quiz)}`;
+        btn.addEventListener('click', ()=>{
+          if(btn.hasAttribute('disabled')) return;
+          const sim = btn.closest('.sim-card');
+          const quiz = sim?.dataset.quiz;
+
+          // count: toma el único <select> dentro de esta tarjeta
+          const sel = sim.querySelector('select');
+          let count = Number(sel?.value || 65);
+          if(![5,10,15,30,65].includes(count)) count = 65;
+
+          // domains: checkboxes marcados de esta tarjeta
+          const tags = [];
+          sim.querySelectorAll('.domains input[type="checkbox"]:checked').forEach(cb => tags.push((cb.value||'').toUpperCase()));
+
+          if (typeof window.start === 'function') {
+            window.start(quiz, { count, tags });
+          } else {
+            alert('Quiz engine not loaded. Please refresh.');
+          }
         });
       });
 
       renderAuthBar();
-      setTimeout(()=>{ renderAuthBar(); }, 300);
+      setTimeout(renderAuthBar, 300);
     });
   </script>
 </body>
