@@ -25,13 +25,22 @@ const STATE={
   certi:'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)',
   prefs:{count:65,timeLimit:0,explanations:'after',shuffle:true,sound:false,tags:[]},
   saving:false,
-  finished:false
+  finished:false,
+  loading:false
 };
 
-/* ========== Quizzes ========== */
+/* Token de arranque para evitar “doble start” */
+let __START_SEQ = 0;
+
+/* ========== Mapas de examen y metadatos ========== */
+const QUIZ_TO_EXAM = {
+  'aws-saa-c03': 'SAA-C03',
+  'az-104': 'AZ-104'
+};
+
 const QUIZZES={
-  'aws-saa-c03':{track:'architect',certi:'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)',questions:()=>window.questions},
-  'az-104':{track:'az-104-architect',certi:'Microsoft Azure Administrator - Associate (AZ-104)',questions:()=>window.questions}
+  'aws-saa-c03':{track:'architect',certi:'AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)'},
+  'az-104':{track:'az-104-architect',certi:'Microsoft Azure Administrator - Associate (AZ-104)'}
 };
 const EXAM_OVERVIEW={
   'aws-saa-c03':{category:"Associate",duration:"130 minutes",format:"65 questions; multiple choice or multiple response",cost:"150 USD (+ taxes/fees)",testing:"Pearson VUE testing center or online proctored exam",languages:"EN, FR (France), IT, JA, KO, PT-BR, ES-LATAM, ES-Spain, ZH-CN, ZH-TW",guideUrl:"https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/certification/approved/pdfs/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide.pdf",scheduleUrl:"https://cp.certmetrics.com/amazon"},
@@ -87,13 +96,13 @@ function applyTheme(quizId){
   .badge-fail{background:var(--bad-bg);border:1px solid var(--bad-bd);color:var(--bad)}
   .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#2a1b51;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:99999}
   .toast.show{opacity:1}
+  .loading{padding:18px;border:1px dashed #e2dcff;border-radius:12px;background:#fff;margin:10px 0}
   `;
   const s=document.createElement('style'); s.innerHTML=css; document.head.appendChild(s);
 })();
 
 /* ========== Utils ========== */
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function flattenQuestions(data){const out=[];(data||[]).forEach(cat=>(cat.questions||[]).forEach(q=>out.push({...q,category:cat.category})));return out}
 function h(tag,attrs={},kids=[]){const el=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')el.className=v;else if(k==='html')el.innerHTML=v;else el.setAttribute(k,v)}kids.forEach(k=>k&&el.appendChild(k));return el}
 function pad(n){return String(n).padStart(2,'0')}
 function fmtTime(sec){sec=Math.max(0,Number(sec)||0);const m=Math.floor(sec/60),s=sec%60;return `${pad(m)}:${pad(s)}`}
@@ -113,7 +122,7 @@ function tryResume(expectedCount){
   try{
     const raw=localStorage.getItem(LS_RUNNING); if(!raw) return false;
     const data=JSON.parse(raw); if(!data || data.quizId!==STATE.quizId) return false;
-    if(Number(data.qsLen)!==Number(expectedCount)) return false; // n debe coincidir
+    if(Number(data.qsLen)!==Number(expectedCount)) return false;
     Object.assign(STATE,data);
     return true;
   }catch{return false}
@@ -129,109 +138,213 @@ async function postForm(url,payload){
   return data;
 }
 
-/* ========== Lectura de preferencias del simulador ========== */
+/* ========== Prefs del simulador (modo, tiempo, shuffle, tags) ========== */
 function readSimulatorPrefs(quizId){
-  // URL param count (permite forzar)
-  const urlCount = (()=>{ try{ const m=location.search.match(/[?&]count=(\d+)/i); return m? parseInt(m[1],10):null; }catch{return null} })();
   const sim=document.querySelector(`.sim-card[data-quiz="${quizId}"]`);
   const isAWS=quizId==='aws-saa-c03';
-
-  const countSel =
-    sim?.querySelector(isAWS?'#studyCount':'#studyCount2') ||
-    sim?.querySelector('select[id*="studyCount"]');
-
+  const urlParams=new URLSearchParams(location.search||'');
   const mode=sim?.querySelector(`input[name="${isAWS?'aws':'az'}-mode"]:checked`)?.value||'practice';
-  const count = urlCount ?? parseInt(countSel?.value||'65',10);
-
   const timeLimit=parseInt(sim?.querySelector(isAWS?'#aws-time':'#az-time')?.value||'0',10);
   const exp=sim?.querySelector(`input[name="${isAWS?'aws':'az'}-exp"]:checked`)?.value||'after';
   const shuffleOn=!!sim?.querySelector(isAWS?'#aws-shuffle':'#az-shuffle')?.checked;
   const sound=!!sim?.querySelector(isAWS?'#aws-sound':'#az-sound')?.checked;
   const tags=[]; sim?.querySelectorAll('.domains .tag.active')?.forEach(t=>tags.push((t.dataset.val||'').toUpperCase()));
-  return {mode,count,timeLimit,explanations:exp,shuffle:shuffleOn,sound,tags};
+  // count lo resolvemos aparte para garantizar valores válidos
+  return {mode,timeLimit,explanations:exp,shuffle:shuffleOn,sound,tags, urlCount: urlParams.get('count')};
 }
 
-/* ========== Start quiz ========== */
-/** Llama con start('aws-saa-c03', {resume:true}) SOLO cuando quieres reanudar. */
-function start(quizId='aws-saa-c03'){
+/* ========== Resolver COUNT con whitelist estricta ========== */
+const ALLOWED_COUNTS = [5,10,15,30,65];
+
+function parseIntOrNull(v){
+  const n = parseInt(v,10);
+  return Number.isFinite(n) ? n : null;
+}
+function resolveDesiredCount(quizId){
+  const sim=document.querySelector(`.sim-card[data-quiz="${quizId}"]`);
+  const isAWS=quizId==='aws-saa-c03';
+  const urlParams = new URLSearchParams(location.search||'');
+
+  // 1) URL ?count=...
+  let count = parseIntOrNull(urlParams.get('count'));
+
+  // 2) UI: selects/inputs típicos
+  if (count==null) {
+    const preferred = sim?.querySelector(isAWS?'#studyCount':'#studyCount2') || sim?.querySelector('select[id*="studyCount" i]');
+    if (preferred) count = parseIntOrNull(preferred.value);
+  }
+  if (count==null) {
+    const anyCount = sim?.querySelector('input[id*="count" i], select[id*="count" i], input[name*="count" i], select[name*="count" i]');
+    if (anyCount) count = parseIntOrNull(anyCount.value);
+  }
+
+  // 3) LocalStorage prefs (si existieran)
+  if (count==null) {
+    try {
+      const all = JSON.parse(localStorage.getItem('quiz_prefs')||'{}');
+      const pv = all?.[quizId]?.count;
+      count = parseIntOrNull(pv);
+    } catch {}
+  }
+
+  // 4) Default seguro
+  if (count==null) count = 65;
+
+  // Si el valor no es uno de los permitidos, usar 65
+  if (!ALLOWED_COUNTS.includes(count)) count = 65;
+
+  // Hard clamp por seguridad (evita 1)
+  if (count < 5) count = 65;
+
+  return count;
+}
+
+/* ========== Cliente /questions (Lambda DynamoDB) ========== */
+async function fetchQuestionsFromApi(exam, desiredCount=65, searchQ=''){
+  const all=[]; let lastKey=null;
+  const seen=new Set();
+  const pageLimit = 200;
+
+  for (let guard=0; guard<25 && all.length<desiredCount; guard++){
+    const params = new URLSearchParams({ exam: exam, limit: String(pageLimit) });
+    if (searchQ) params.set('q', searchQ);
+    if (lastKey) {
+      // NO doble-codificar. URLSearchParams ya maneja el encoding.
+      params.set('lastKey', JSON.stringify(lastKey));
+    }
+
+    const url = `${API_URL}/questions?${params.toString()}`;
+    const res = await fetch(url, { headers: { 'Accept':'application/json' }});
+    const text = await res.text();
+    if (!res.ok){
+      throw new Error(`GET /questions failed ${res.status}: ${text}`);
+    }
+    let data; try{ data = JSON.parse(text); } catch{ throw new Error('Respuesta no JSON de /questions: '+text); }
+
+    const items = Array.isArray(data.items) ? data.items : [];
+    for (const it of items){
+      const qid = it.questionId || `${it.exam||''}:${it.question||''}`;
+      if (!seen.has(qid)){
+        seen.add(qid);
+        all.push(it);
+        if (all.length>=desiredCount) break;
+      }
+    }
+    lastKey = data.lastEvaluatedKey || null;
+    if (!lastKey) break;
+  }
+
+  return all.slice(0, desiredCount);
+}
+
+/* ========== Transformación al modelo del motor ========== */
+function transformQuestions(items) {
+  return items.map(it => ({
+    question: it.question || '',
+    options: Array.isArray(it.options) ? it.options.slice() : [],
+    correctAnswer: (typeof it.answerIndex === 'number' ? it.answerIndex : null),
+    explanation: it.explanation || '',
+    explanationRich: it.explanationRich || '',
+    links: Array.isArray(it.links) ? it.links.slice() : [],
+    category: it.category || 'General'
+  }));
+}
+
+/* ========== Start quiz (con token anti-solape y COUNT resuelto) ========== */
+async function start(quizId='aws-saa-c03'){
+  const mySeq = ++__START_SEQ;
+  stopTimer();
+  STATE.finished = false;
+
   const cfg = QUIZZES[quizId]||QUIZZES['aws-saa-c03'];
   Object.assign(STATE,{quizId,track:cfg.track,certi:cfg.certi,mode:'exam'});
 
-  // Lee prefs de simulador (in-page o desde localStorage)
   const simPrefsAll = (window.__simPrefs||{});
   const localPrefs = (()=>{ try { return JSON.parse(localStorage.getItem('quiz_prefs')||'{}'); } catch { return {}; }})();
+  const uiPrefs = readSimulatorPrefs(quizId);
   const prefs = simPrefsAll[quizId] || localPrefs[quizId] || {};
-
-  // Modo + Prefs a STATE.prefs (merge correcto)
   if (prefs.mode) STATE.mode = prefs.mode;
-  STATE.prefs = { ...STATE.prefs, ...prefs };
+  // COUNT ya no viene de aquí; lo resolvemos aparte
+  STATE.prefs = { ...STATE.prefs, ...prefs, ...uiPrefs };
 
-  // Preguntas fuente
-  const src = cfg.questions();
-  let all = flattenQuestions(src);
+  // --- COUNT robusto ---
+  const desiredCount = resolveDesiredCount(quizId); // SIEMPRE dentro de [5,10,15,30,65]
 
-  // FILTRO por dominios tags: D1..D4 (o cualquier etiqueta de texto)
-  if (Array.isArray(STATE.prefs.tags) && STATE.prefs.tags.length){
-    const tagsUpper = STATE.prefs.tags.map(t=>String(t).toUpperCase());
-    all = all.filter(q=>{
-      const cat = (q.category||'').toUpperCase();
-      const matchesD = tagsUpper.some(t=>{
-        if (/^D[1-4]$/.test(t)){
-          const num = t.slice(1);
-          return cat.includes(`DOMAIN ${num}`);
-        }
-        return false;
+  STATE.loading = true;
+  showLoading();
+
+  try{
+    const exam = QUIZ_TO_EXAM[quizId] || 'SAA-C03';
+
+    // 1) Traer preguntas
+    const raw = await fetchQuestionsFromApi(exam, desiredCount, '');
+    if (mySeq !== __START_SEQ) return;
+
+    // 2) Transformar
+    let all = transformQuestions(raw);
+
+    // 3) Filtro por tags/domains (si hay)
+    if (Array.isArray(STATE.prefs.tags) && STATE.prefs.tags.length){
+      const tagsUpper = STATE.prefs.tags.map(t=>String(t).toUpperCase());
+      all = all.filter(q=>{
+        const cat = (q.category||'').toUpperCase();
+        const matchesD = tagsUpper.some(t=>{
+          if (/^D[1-4]$/.test(t)){
+            const num = t.slice(1);
+            return cat.includes(`DOMAIN ${num}`);
+          }
+          return false;
+        });
+        if (matchesD) return true;
+        return tagsUpper.some(t=> cat.includes(t));
       });
-      if (matchesD) return true;
-      return tagsUpper.some(t=> cat.includes(t));
+    }
+
+    // 4) Shuffle + recorte exacto al desiredCount
+    if (STATE.prefs.shuffle) shuffle(all);
+    all = all.slice(0, Math.min(desiredCount, all.length));
+
+    // 5) Shuffle de opciones recalculando índice correcto
+    all = all.map(q=>{
+      const opts = Array.isArray(q.options)? q.options.slice():[];
+      const order = shuffle([...Array(opts.length).keys()]);
+      const optionsShuffled = order.map(i=>opts[i]);
+      const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? order.indexOf(q.correctAnswer) : null;
+      return { ...q, _optOrder: order, _options: optionsShuffled, _correct: correctIndex };
     });
+
+    // 6) Reset y render
+    if (mySeq !== __START_SEQ) return;
+    STATE.qs = all;
+    STATE.idx=0; STATE.answers={}; STATE.marked={};
+    STATE.startedAt=Date.now(); STATE.elapsedSec=0;
+    STATE.timeLimit = typeof STATE.prefs.timeLimit === 'number' ? STATE.prefs.timeLimit : 0;
+
+    applyTheme(quizId);
+    renderQuiz();
+    startTimer();
+
+    toast(`Loaded ${STATE.qs.length} / Requested ${desiredCount} (resolved)`, 2000);
+  } catch (err){
+    console.error(err);
+    showError(err.message||'Error cargando preguntas');
+  } finally {
+    if (mySeq === __START_SEQ) STATE.loading=false;
   }
+}
 
-  // Número de preguntas
-  let n = 65;
-  if (typeof STATE.prefs.count === 'number') n = STATE.prefs.count;
-  else {
-    try{
-      const el = document.getElementById('studyCount') || document.getElementById('studyCount2');
-      if (el && el.value) n = parseInt(el.value,10);
-    }catch{}
-  }
-  const allowed = [5,10,15,30,65];
-  if (!allowed.includes(n)) n = Math.min(65, Math.max(5, n||65));
-
-  // Aleatoriza preguntas SI prefs.shuffle = true
-  if (STATE.prefs.shuffle) shuffle(all);
-  all = all.slice(0, Math.min(n, all.length));
-
-  // --- Barajar opciones por pregunta (y recalcular índice correcto) ---
-  // Guardamos _optOrder, _options y _correct para usar consistentemente en render/corrección.
-  all = all.map(q=>{
-    const order = shuffle([...Array((q.options||[]).length).keys()]);
-    const optionsShuffled = order.map(i=>q.options[i]);
-    const correctIndex = order.indexOf(q.correctAnswer);
-    return {
-      ...q,
-      _optOrder: order,
-      _options: optionsShuffled,
-      _correct: correctIndex
-    };
-  });
-
-  // Reset de estado
-  STATE.qs = all;
-  STATE.idx=0; STATE.answers={}; STATE.marked={};
-  STATE.startedAt=Date.now(); STATE.elapsedSec=0;
-
-  // Guarda preferencias útiles en STATE (utiliza STATE.prefs)
-  STATE.timeLimit = typeof STATE.prefs.timeLimit === 'number' ? STATE.prefs.timeLimit : 0;
-
-  // Tema visual
-  applyTheme(quizId);
-
-  // Navegación y render
-  location.hash=`#/quiz?quiz=${quizId}`;
-  renderQuiz();
-  startTimer();
+/* ========== Loading / Error views ========== */
+function showLoading(){
+  const root=document.getElementById('view'); if(!root) return;
+  root.innerHTML='';
+  const box=h('div',{class:'loading',html:'Cargando preguntas del examen…'});
+  root.appendChild(box);
+}
+function showError(msg){
+  const root=document.getElementById('view'); if(!root) return;
+  root.innerHTML='';
+  const box=h('div',{class:'loading',html:`<b>Error:</b> ${msg}`});
+  root.appendChild(box);
 }
 
 /* ========== Timer ========== */
@@ -295,7 +408,6 @@ function renderQuiz(){
     qCard.appendChild(h('div',{class:'domain',html:(q.category||'').toUpperCase()}));
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${STATE.idx+1}.</b> ${q.question}`}));
 
-    // Render opciones barajadas
     (q._options||[]).forEach((txt,i)=>{
       const chosen=STATE.answers[STATE.idx], selected=chosen===i, isCorrect=q._correct===i;
       const cls=['option']; if(typeof chosen!=='undefined'&&selected) cls.push(isCorrect?'ok':'bad','selected');
@@ -306,11 +418,11 @@ function renderQuiz(){
 
     const chosen=STATE.answers[STATE.idx];
     if(typeof chosen!=='undefined' && STATE.prefs.explanations==='after'){
-      const box=h('div',{class:'expl'}), correctLetter=String.fromCharCode(65+q._correct);
+      const box=h('div',{class:'expl'}), correctLetter=String.fromCharCode(65+(q._correct ?? 0));
       box.innerHTML=`<div class="ttl">Correct answer: <b>${correctLetter}</b></div><div class="explain">${q.explanationRich||q.explanation||''}</div>`;
       if(q.links&&q.links.length){
         const ul=h('ul',{class:'learn-more'});
-        q.links.forEach(l=>{const li=h('li'); const a=h('a',{href:l.url,target:'_blank',rel:'noopener',html:l.title}); li.appendChild(a); ul.appendChild(li)});
+        q.links.forEach(l=>{const li=h('li'); const a=h('a',{href:l.url,target:'_blank',rel:'noopener',html:l.title||l.url}); li.appendChild(a); ul.appendChild(li)});
         box.appendChild(h('div',{html:'<div style="font-weight:700;margin-top:6px">Learn more</div>'})); box.appendChild(ul);
       }
       qCard.appendChild(box);
@@ -334,9 +446,6 @@ function renderQuiz(){
     d.onclick=()=>{STATE.idx=i;renderQuiz()}; dots.appendChild(d);
   });
   p1.appendChild(dots); side.appendChild(p1);
-  // Opcional:
-  // renderLastResults(side);
-  // renderExamOverviewTo(side);
 
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
@@ -435,20 +544,22 @@ function enableHotkeys(){
 
 /* ========== Wire UI (Start / Resume) ========== */
 document.addEventListener('DOMContentLoaded',()=>{
-  // Botones Start del simulador (si existen)
+  // Si tienes botones .start-btn dentro de .sim-card[data-quiz="..."], ya funcionan:
   document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
+    btn.addEventListener('click',async ()=>{
       const quizId=btn.closest('.sim-card')?.dataset.quiz||'aws-saa-c03';
-      start(quizId,{resume:false});
+      await start(quizId);
     });
   });
 
-  // Botones Resume (opcionales)
-  document.getElementById('aws-restore')?.addEventListener('click',()=>start('aws-saa-c03',{resume:true}));
-  document.getElementById('az-restore')?.addEventListener('click',()=>start('az-104',{resume:true}));
+  // Si NO tienes esos botones, puedes iniciar manualmente:
+  //   window.start('az-104')  o  window.start('aws-saa-c03')
 
-  // Deep link hash (sin resume por defecto)
-  try{ const m=location.hash.match(/quiz=([^&]+)/); if(m) start(decodeURIComponent(m[1]),{resume:false}); }catch{}
+  // Opcionales
+  document.getElementById('aws-restore')?.addEventListener('click',()=>start('aws-saa-c03'));
+  document.getElementById('az-restore')?.addEventListener('click',()=>start('az-104'));
+
+  // (No arrancamos por hash para evitar dobles inicios accidentales)
 });
 
 /* ========== API pública ========== */
