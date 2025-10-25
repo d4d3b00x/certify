@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CertiFY — Login & Registro</title>
-  <!-- (Opcional) si ya usas un CSS global -->
+  <title>CertiFY — Login & Sign Up</title>
   <link rel="stylesheet" href="/style_global.css"/>
 
   <style>
@@ -27,7 +26,7 @@
     }
     .wrap{max-width:980px;margin:0 auto;padding:24px 20px}
 
-    /* Tarjetas y botones */
+    /* Cards & buttons */
     .card{
       background:var(--card); border:1px solid var(--bd); border-radius:var(--radius); padding:22px;
       box-shadow:var(--shadow);
@@ -47,44 +46,60 @@
     .hero h1{ font-size:clamp(1.6rem,2.2vw + 1rem,2.2rem); line-height:1.15; margin:6px 0 8px; font-weight:900; color:var(--brand); }
     .hero .desc{ color:var(--muted); max-width:760px; margin:0 auto; }
 
-    /* Auth bar superior */
+    /* Auth bar */
     .authbar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px; margin:16px 0 18px;
-      padding:10px 14px; background:#fff; border:1px solid #ecefff; border-radius:999px; color:#2a2e57; font-weight:700;
-      box-shadow:0 4px 12px rgba(30,35,80,.06);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:10px 14px; background:#fff; border:1px solid #ecefff; border-radius:999px;
+      color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06);
     }
     .authbar .actions{ display:flex; gap:8px; }
     .authbar .muted{ color:#8b8fb3; font-weight:700; }
     .hidden{ display:none !important; }
 
-    /* Pestañas Login/Registro */
+    /* Tabs */
     .tabs{
       display:flex; gap:8px; background:#f6f7ff; border:1px solid #e6e9ff; border-radius:12px; padding:6px;
       width:fit-content; margin:0 auto 14px;
     }
     .tab-btn{
-      border:1px solid transparent; background:transparent; padding:10px 14px; border-radius:10px; cursor:pointer; font-weight:900; color:#343a6e;
+      border:1px solid transparent; background:transparent; padding:10px 14px; border-radius:10px;
+      cursor:pointer; font-weight:900; color:#343a6e;
     }
     .tab-btn.active{ background:#fff; border-color:#e6e9ff; }
 
-    /* Formularios */
+    /* Forms */
     .form-card{ max-width:560px; margin:0 auto; }
     .field{ display:flex; flex-direction:column; gap:6px; margin:10px 0; }
     .field label{ font-weight:800; color:#2a2e57; }
     .control{
-      display:flex; align-items:center; gap:8px; border:1px solid #e6e9ff; border-radius:10px; padding:10px 12px; background:#fff;
+      display:flex; align-items:center; gap:8px; border:1px solid #e6e9ff;
+      border-radius:10px; padding:10px 12px; background:#fff;
     }
     .control input{
-      border:none; outline:none; width:100%; font-weight:700; color:#2a2e57; background:transparent; padding:4px 0;
+      border:none; outline:none; width:100%; font-weight:700;
+      color:#2a2e57; background:transparent; padding:4px 0;
     }
     .form-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:10px; }
     .hint{ color:var(--muted); font-size:.92rem; }
     .err{ color:#b3261e; font-weight:800; margin-top:6px; }
 
-    /* Pie de enlaces */
+    /* Footer links */
     .footer-links{ text-align:center; margin-top:14px; }
     .footer-links a{ font-weight:900; color:#0a4a7b; text-decoration:none; }
     .footer-links a:hover{ text-decoration:underline; }
+
+    /* === MATCH WIDTHS (Auth bar + Tabs + Forms same width) === */
+    .authbar,
+    .tabs,
+    .form-card{
+      max-width:560px;
+      width:100%;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    @media (max-width:640px){
+      .authbar, .tabs, .form-card{ max-width:100%; }
+    }
   </style>
 </head>
 <body>
@@ -92,33 +107,36 @@
 
     <!-- HERO -->
     <section class="card hero">
-      <h1>Accede a CertiFY</h1>
-      <p class="desc">Inicia sesión o crea tu cuenta para guardar tu progreso, aparecer en el ranking y continuar tus simuladores donde lo dejaste.</p>
+      <h1>Access CertiFY</h1>
+      <p class="desc">
+        Sign in or create your account to save your progress, show up in the leaderboard,
+        and continue your simulators right where you left off.
+      </p>
     </section>
 
     <!-- AUTH BAR -->
     <section class="authbar" id="authBar">
-      <span id="authText" class="muted">🔒 No Authenticated :(</span>
+      <span id="authText" class="muted">🔒 Not authenticated :(</span>
       <div class="actions">
         <button id="btnLogin" class="btn">Login</button>
         <button id="btnSignup" class="btn">Register</button>
         <button id="btnLogout" class="btn hidden">Sign out</button>
       </div>
     </section>
-
-    <!-- PESTAÑAS -->
+<br>
+    <!-- TABS -->
     <div class="tabs">
       <button id="tabLogin" class="tab-btn active" type="button">Login</button>
-      <button id="tabSignup" class="tab-btn" type="button">Registro</button>
+      <button id="tabSignup" class="tab-btn" type="button">Sign Up</button>
     </div>
 
-    <!-- FORM LOGIN -->
+    <!-- LOGIN FORM -->
     <form id="loginForm" class="card form-card" autocomplete="on">
       <h3 style="margin:4px 0 8px">Login</h3>
       <div class="field">
         <label for="loginEmail">Email</label>
         <div class="control">
-          <input type="email" id="loginEmail" required placeholder="tu@email.com" />
+          <input type="email" id="loginEmail" required placeholder="you@email.com" />
         </div>
       </div>
       <div class="field">
@@ -129,51 +147,50 @@
       </div>
       <div id="loginErr" class="err hidden"></div>
       <div class="form-actions">
-        <button class="btn link" type="button" id="goHome">Cancelar</button>
+        <button class="btn link" type="button" id="goHome">Cancel</button>
         <button class="btn primary" type="submit">Certify!</button>
       </div>
-      <p class="hint">¿Sin cuenta? Pulsa en <b>Registro</b> arriba.</p>
+      <p class="hint">No account yet? Click <b>Sign Up</b> above.</p>
     </form>
 
-    <!-- FORM SIGNUP -->
+    <!-- SIGNUP FORM -->
     <form id="signupForm" class="card form-card hidden" autocomplete="on">
-      <h3 style="margin:4px 0 8px">Crear cuenta</h3>
+      <h3 style="margin:4px 0 8px">Create account</h3>
       <div class="field">
-        <label for="signupName">Nombre</label>
+        <label for="signupName">Name</label>
         <div class="control">
-          <input type="text" id="signupName" required placeholder="Tu nombre" />
+          <input type="text" id="signupName" required placeholder="Your name" />
         </div>
       </div>
       <div class="field">
         <label for="signupEmail">Email</label>
         <div class="control">
-          <input type="email" id="signupEmail" required placeholder="tu@email.com" />
+          <input type="email" id="signupEmail" required placeholder="you@email.com" />
         </div>
       </div>
       <div class="field">
         <label for="signupPass">Password</label>
         <div class="control">
-          <input type="password" id="signupPass" required minlength="6" placeholder="Mín. 6 caracteres" />
+          <input type="password" id="signupPass" required minlength="6" placeholder="Min. 6 characters" />
         </div>
       </div>
       <div id="signupErr" class="err hidden"></div>
       <div class="form-actions">
-        <button class="btn link" type="button" id="goHome2">Cancelar</button>
+        <button class="btn link" type="button" id="goHome2">Cancel</button>
         <button class="btn primary" type="submit">Certify!</button>
       </div>
-      <p class="hint">Al registrarte aceptas nuestras políticas. Podrás iniciar sesión de inmediato.</p>
+      <p class="hint">By signing up you accept our policies. You can sign in right away.</p>
     </form>
 
     <p class="footer-links">
-      <a href="/">← Volver al inicio</a> ·
-      <a href="/score/ranking.html">🏆 Ver Ranking</a>
+      <a href="/">← Back to home</a> ·
+      <a href="/score/ranking.html">🏆 View Leaderboard</a>
     </p>
   </div>
 
   <script>
     const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
 
-    // ====== AUTH STORAGE ======
     const AUTH_KEY = "currentUser";
     function setCurrentUser(user) {
       localStorage.setItem(AUTH_KEY, JSON.stringify(user));
@@ -188,7 +205,6 @@
       renderAuthUI();
     }
 
-    // ====== RENDER UI ======
     function renderAuthUI() {
       const u = getCurrentUser();
       const authText = document.getElementById("authText");
@@ -201,7 +217,7 @@
       const tabSignup = document.getElementById("tabSignup");
 
       if (u) {
-        authText.textContent = `✅ You are sign-in as: ${u.name} (${u.email})`;
+        authText.textContent = `✅ You are signed in as: ${u.name} (${u.email})`;
         btnLogin.classList.add("hidden");
         btnSignup.classList.add("hidden");
         btnLogout.classList.remove("hidden");
@@ -210,14 +226,14 @@
         tabLogin.classList.remove("active");
         tabSignup.classList.remove("active");
       } else {
-        authText.textContent = "🔒 No Authenticated :(";
+        authText.textContent = "🔒 Not authenticated :(";
         btnLogin.classList.remove("hidden");
         btnSignup.classList.remove("hidden");
         btnLogout.classList.add("hidden");
       }
     }
 
-    function showForm(which){ // "login" | "signup"
+    function showForm(which){
       const loginForm = document.getElementById("loginForm");
       const signupForm = document.getElementById("signupForm");
       const tabLogin = document.getElementById("tabLogin");
@@ -233,25 +249,21 @@
         tabLogin.classList.add("active");
         tabSignup.classList.remove("active");
       }
-      // limpiar errores visibles
       document.getElementById("loginErr").classList.add("hidden");
       document.getElementById("signupErr").classList.add("hidden");
     }
 
-    // ====== ARRANQUE ======
     document.addEventListener("DOMContentLoaded", () => {
       renderAuthUI();
-      // detectar query/hash
       const isSignup =
         location.hash === "#signup" ||
         new URLSearchParams(location.search).get("view") === "signup";
       showForm(isSignup ? "signup" : "login");
     });
 
-    // ====== TOP ACTIONS ======
     document.getElementById("btnLogout").onclick = () => {
       clearCurrentUser();
-      alert("Sesión cerrada");
+      alert("Signed out");
       showForm("login");
     };
     document.getElementById("btnLogin").onclick = () => showForm("login");
@@ -261,7 +273,6 @@
     document.getElementById("goHome").onclick = () => history.back();
     document.getElementById("goHome2").onclick = () => history.back();
 
-    // ====== HELPERS ======
     function showError(id, msg){
       const el = document.getElementById(id);
       el.textContent = msg || "Error";
@@ -269,7 +280,6 @@
       setTimeout(() => el.classList.add("hidden"), 4000);
     }
 
-    // ====== SIGNUP ======
     document.getElementById("signupForm").addEventListener("submit", async e => {
       e.preventDefault();
       const name = signupName.value.trim();
@@ -277,7 +287,7 @@
       const password = signupPass.value;
 
       if (!name || !email || !password) {
-        showError("signupErr", "Completa todos los campos.");
+        showError("signupErr", "Please complete all fields.");
         return;
       }
 
@@ -286,23 +296,22 @@
         const resp = await fetch(`${API_URL}/signup`, { method: "POST", body, mode: "cors" });
         const data = await resp.json();
         if (resp.ok) {
-          alert("Usuario creado con éxito, ahora puedes iniciar sesión");
+          alert("User created successfully. You can sign in now.");
           showForm("login");
         } else {
-          showError("signupErr", data.error || "Error en el registro");
+          showError("signupErr", data.error || "Sign up error");
         }
       }catch(err){
-        showError("signupErr", err.message || "Error en el registro");
+        showError("signupErr", err.message || "Sign up error");
       }
     });
 
-    // ====== LOGIN ======
     document.getElementById("loginForm").addEventListener("submit", async e => {
       e.preventDefault();
       const email = loginEmail.value.trim().toLowerCase();
       const password = loginPass.value;
       if (!email || !password) {
-        showError("loginErr", "Introduce email y contraseña.");
+        showError("loginErr", "Enter email and password.");
         return;
       }
 
@@ -312,13 +321,13 @@
         const data = await resp.json();
         if (resp.ok) {
           setCurrentUser(data.user);
-          alert("Sesión iniciada correctamente");
+          alert("Signed in successfully");
           window.location.href = "/";
         } else {
-          showError("loginErr", data.error || "Error de inicio de sesión");
+          showError("loginErr", data.error || "Login error");
         }
       }catch(err){
-        showError("loginErr", err.message || "Error de inicio de sesión");
+        showError("loginErr", err.message || "Login error");
       }
     });
   </script>
