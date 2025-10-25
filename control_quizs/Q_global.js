@@ -1,21 +1,32 @@
 
-// Crear e inyectar el script de Google Analytics
-(function() {
-  // Cargar el script de gtag.js de forma asíncrona
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK';
-  document.head.appendChild(script);
+/* ========== Google Analytics (gtag) ========== */
+const GA_ID = 'G-DYZ3GCXHEK';
 
-  // Inicializar Google Analytics
+(function initGA(){
+  if (window.__GA_INIT) return;
+  window.__GA_INIT = true;
+
+  // Cargar gtag.js
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+  document.head.appendChild(s);
+
+  // Inicializar
   window.dataLayer = window.dataLayer || [];
-  function gtag(){window.dataLayer.push(arguments);}
-  window.gtag = gtag; // lo hacemos global por compatibilidad
+  function gtag(){ window.dataLayer.push(arguments); }
+  window.gtag = gtag;
 
   gtag('js', new Date());
-  gtag('config', 'G-DYZ3GCXHEK');
+  gtag('config', GA_ID);
 })();
 
+/* Helper para eventos */
+function gaEvent(name, params = {}) {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', name, params);
+  }
+}
 
 
 /* ===== Singleton guard ===== */
@@ -212,6 +223,24 @@ async function start(quizId='aws-saa-c03', overrides={}){
   STATE.prefs = { ...STATE.prefs, count: desiredCount, tags };
 
   STATE.loading=true;
+
+// Registrar visita / inicio de quiz
+gaEvent('quiz_start', {
+  quiz_id: STATE.quizId,
+  track: STATE.track,
+  mode: STATE.mode,
+  items_requested: desiredCount,
+  tags: (Array.isArray(tags) ? tags.join(',') : '')
+});
+
+// (opcional) page_view con metadatos útiles
+gaEvent('page_view', {
+  page_location: location.href,
+  page_path: `/quiz/${STATE.quizId}/${STATE.mode}`,
+  page_title: STATE.certi
+});
+
+
   showLoading();
 
   try{
