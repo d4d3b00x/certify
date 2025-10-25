@@ -197,6 +197,7 @@ ul li a:hover{text-decoration:underline;}
   <main id="view" role="main" class="wrap">
 
     <!-- HERO -->
+     
     <section class="card hero" aria-label="Welcome">
       <span class="badge">WELCOME TO <b>CERTIFY.TECH</b></span>
       <h1>Practice. Learn. Pass.</h1>
@@ -205,9 +206,7 @@ ul li a:hover{text-decoration:underline;}
       </p>
 
       <!-- LOGIN BAR -->
-      <div class="login-bar">
-        <span id="authBar">Checking session…</span>
-      </div>
+      <div class="login-bar"><span id="authBar">Checking session…</span></div>
     </section>
 
     <!-- AWS -->
@@ -242,7 +241,6 @@ ul li a:hover{text-decoration:underline;}
                 <input type="radio" id="aws-mode-exam" name="aws-mode" value="exam">
                 <label for="aws-mode-exam">Exam</label>
               </div>
-              <div class="small">Practice shows explanations after each answer; Exam keeps them for the end.</div>
             </div>
 
             <!-- Question count -->
@@ -259,32 +257,7 @@ ul li a:hover{text-decoration:underline;}
               </div>
             </div>
 
-            <!-- Time limit -->
-            <div class="field">
-              <label>Time limit</label>
-              <div class="select">
-                <select id="aws-time">
-                  <option value="0" selected>No limit</option>
-                  <option value="900">15 min</option>
-                  <option value="1800">30 min</option>
-                  <option value="4500">75 min</option>
-                  <option value="7800">130 min (full)</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Explanations -->
-            <div class="field">
-              <label>Explanations</label>
-              <div class="segmented aws">
-                <input type="radio" id="aws-exp-after" name="aws-exp" value="after" checked>
-                <label for="aws-exp-after">After answer</label>
-                <input type="radio" id="aws-exp-end" name="aws-exp" value="end">
-                <label for="aws-exp-end">At the end</label>
-                <input type="radio" id="aws-exp-hide" name="aws-exp" value="hide">
-                <label for="aws-exp-hide">Hidden</label>
-              </div>
-            </div>
+          
 
             <!-- Domains filter -->
             <div class="field full">
@@ -303,7 +276,6 @@ ul li a:hover{text-decoration:underline;}
               <div class="actions" style="margin-top:8px">
                 <button class="btn btn-aws solid start-btn">▶ Start Quiz</button>
                 <a class="btn btn-aws" href="/score/ranking.html">🏆 Ranking</a>
-                <button class="btn secondary" id="aws-restore">⏮ Resume last</button>
               </div>
               <div class="small center">Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.</div>
             </div>
