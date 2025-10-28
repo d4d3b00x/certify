@@ -1,3 +1,4 @@
+
 /* ========== Google Analytics (gtag) ========== */
 const GA_ID = 'G-DYZ3GCXHEK';
 
@@ -5,11 +6,13 @@ const GA_ID = 'G-DYZ3GCXHEK';
   if (window.__GA_INIT) return;
   window.__GA_INIT = true;
 
+  // Cargar gtag.js
   const s = document.createElement('script');
   s.async = true;
   s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
   document.head.appendChild(s);
 
+  // Inicializar
   window.dataLayer = window.dataLayer || [];
   function gtag(){ window.dataLayer.push(arguments); }
   window.gtag = gtag;
@@ -25,6 +28,7 @@ function gaEvent(name, params = {}) {
   }
 }
 
+
 /* ===== Singleton guard ===== */
 if (window.__QGLOBAL_ACTIVE) {
   console.warn("Q_Global.js already loaded; skipping second init.");
@@ -33,9 +37,6 @@ window.__QGLOBAL_ACTIVE = true;
 
 /* ========== CONFIG ========== */
 const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-/* Si tu API Gateway usa API Key, ponla aquí; si no, deja "" (ponerla
-   en requests “simples” volvería a disparar preflight CORS) */
-const API_KEY = "";
 
 /* ========== Estado global ========== */
 const STATE = {
@@ -54,15 +55,7 @@ const STATE = {
   saving: false,
   finished: false,
   loading: false,
-  timeLimit: 0,
-
-  // === Progreso incremental ===
-  sessionId: null,
-  lastProgressSyncAt: 0,
-  progressDirty: false,
-  autoSyncId: null,
-
-  lastSaveErrorShown: 0
+  timeLimit: 0
 };
 let __START_SEQ = 0;
 
@@ -109,6 +102,8 @@ const QUIZZES = {
   .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#2a1b51;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:99999}
   .toast.show{opacity:1}
   .loading{padding:18px;border:1px dashed #e2dcff;border-radius:12px;background:#fff;margin:10px 0}
+
+  /* === Modal Aislado === */
   .qg-lock{overflow:hidden}
   .qg-backdrop{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,19,48,.45);z-index:2147483000}
   .qg-modal{max-width:680px;width:100%;background:#ffffff;border:1px solid #e2dcff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);padding:20px}
@@ -130,32 +125,6 @@ function pad(n){return String(n).padStart(2,'0')}
 function fmtTime(sec){sec=Math.max(0,Number(sec)||0);const m=Math.floor(sec/60),s=sec%60;return `${pad(m)}:${pad(s)}`}
 function toast(msg,ms=1600){let t=document.querySelector('.toast');if(!t){t=h('div',{class:'toast'});document.body.appendChild(t)}t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms)}
 function shuffle(a){const arr=a;const n=arr.length;const buf=new Uint32Array(n);if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(buf);for(let i=n-1;i>0;i--){const r=buf[i]!==undefined?(buf[i]/0x100000000):Math.random();const j=Math.floor(r*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
-
-/* Helpers progreso / red */
-function debounce(fn, ms=800){ let t=null; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
-function getUserAny(){let u=null;try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}return u}
-function genSessionId({quizId, startedAt}){ const u=getUserAny()||{}; const uid = u.userId || u.id || "anon"; return [uid, quizId, Math.floor((startedAt||Date.now())/1000)].join('#'); }
-
-/* Helpers de red sin preflight (x-www-form-urlencoded) */
-function toForm(data){
-  const body = new URLSearchParams();
-  Object.entries(data).forEach(([k,v])=>{
-    body.append(k, (typeof v === 'object' ? JSON.stringify(v) : String(v)));
-  });
-  return body;
-}
-async function postForm(url, payload){
-  // NO ponemos x-api-key aquí: cualquier header “custom” dispara preflight
-  const resp = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    headers: {"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-    body: toForm(payload)
-  });
-  const txt = await resp.text(); let data=null; try{ data=JSON.parse(txt) }catch{ data={raw:txt} }
-  if(!resp.ok) throw new Error(`HTTP ${resp.status} ${(data.error||data.message||txt)}`);
-  return data;
-}
 
 /* ========== Tema ========== */
 function applyTheme(quizId){
@@ -237,70 +206,10 @@ function filterBySelection(all,tags){
   });
 }
 
-/* ========== Progreso incremental (cliente) ========== */
-function showSaveErrorOnce(msg){
-  const now=Date.now();
-  if(now-STATE.lastSaveErrorShown>6000){
-    toast(`⚠️ Progress not saved: ${msg}`);
-    STATE.lastSaveErrorShown = now;
-  }
-}
-
-async function saveProgressNow(extraFields={}){
-  if(!STATE.sessionId) return;
-  const u = getUserAny() || {};
-  const payload = {
-    sessionId: STATE.sessionId,
-    userId: u.userId || u.id || "",
-    userName: u.name || u.displayName || "anonymous",
-    email: (u.email || "").trim().toLowerCase(),
-    quizId: STATE.quizId,
-    track: STATE.track || 'architect',
-    mode: STATE.mode || 'exam',
-    idx: Number(STATE.idx || 0),
-    answers: STATE.answers || {},
-    marked: STATE.marked || {},
-    total: (STATE.qs||[]).length || 0,
-    elapsedSec: Number(STATE.elapsedSec || 0),
-    startedAt: new Date(STATE.startedAt || Date.now()).toISOString(),
-    updatedAt: new Date().toISOString(),
-    status: STATE.finished ? 'finished' : 'in_progress',
-    ...extraFields
-  };
-  try{
-    STATE.saving = true;
-    // POST x-www-form-urlencoded => evita preflight
-    const res = await postForm(`${API_URL}/progress`, payload);
-    STATE.lastProgressSyncAt = Date.now();
-    STATE.progressDirty = false;
-    return res;
-  }catch(e){
-    console.warn('saveProgress failed:', e);
-    showSaveErrorOnce(e.message||'unknown');
-    return null;
-  }finally{
-    STATE.saving = false;
-  }
-}
-const saveProgressDebounced = debounce(()=>saveProgressNow(), 900);
-
-function startAutoSync(){
-  stopAutoSync();
-  STATE.autoSyncId = setInterval(()=>{
-    if(STATE.progressDirty && !STATE.saving && !STATE.finished){
-      saveProgressNow();
-    }
-  }, 20000);
-}
-function stopAutoSync(){
-  if(STATE.autoSyncId){ clearInterval(STATE.autoSyncId); STATE.autoSyncId = null; }
-}
-
 /* ========== START (acepta overrides: {count, tags}) ========== */
 async function start(quizId='aws-saa-c03', overrides={}){
   const mySeq=++__START_SEQ;
   stopTimer();
-  stopAutoSync();
   STATE.finished=false;
 
   const cfg=QUIZZES[quizId] || QUIZZES['aws-saa-c03'];
@@ -315,34 +224,41 @@ async function start(quizId='aws-saa-c03', overrides={}){
 
   STATE.loading=true;
 
-  gaEvent('quiz_start', {
-    quiz_id: STATE.quizId,
-    track: STATE.track,
-    mode: STATE.mode,
-    items_requested: desiredCount,
-    tags: (Array.isArray(tags) ? tags.join(',') : '')
-  });
+// Registrar visita / inicio de quiz
+gaEvent('quiz_start', {
+  quiz_id: STATE.quizId,
+  track: STATE.track,
+  mode: STATE.mode,
+  items_requested: desiredCount,
+  tags: (Array.isArray(tags) ? tags.join(',') : '')
+});
 
-  gaEvent('page_view', {
-    page_location: location.href,
-    page_path: `/quiz/${STATE.quizId}/${STATE.mode}`,
-    page_title: STATE.certi
-  });
+// (opcional) page_view con metadatos útiles
+gaEvent('page_view', {
+  page_location: location.href,
+  page_path: `/quiz/${STATE.quizId}/${STATE.mode}`,
+  page_title: STATE.certi
+});
+
 
   showLoading();
 
   try{
     const exam=QUIZ_TO_EXAM[quizId] || 'SAA-C03';
 
+    // 1) Fetch con sobre-muestreo
     const raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 3, domainTags: tags });
     if (mySeq !== __START_SEQ) return;
 
+    // 2) Normaliza y filtra
     let all = transformQuestions(raw);
     if (tags.length) all = filterBySelection(all, tags);
 
+    // 3) Mezcla y recorta EXACTO
     shuffle(all);
     all = all.slice(0, desiredCount);
 
+    // 4) Shuffle de opciones
     all = all.map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice():[];
       const order = shuffle([...Array(opts.length).keys()]);
@@ -353,6 +269,7 @@ async function start(quizId='aws-saa-c03', overrides={}){
 
     if (mySeq !== __START_SEQ) return;
 
+    // 5) Estado y render
     STATE.qs = all;
     STATE.idx = 0;
     STATE.answers = {};
@@ -360,10 +277,6 @@ async function start(quizId='aws-saa-c03', overrides={}){
     STATE.startedAt = Date.now();
     STATE.elapsedSec = 0;
     STATE.timeLimit = 0;
-
-    STATE.sessionId = genSessionId({quizId: STATE.quizId, startedAt: STATE.startedAt});
-    await saveProgressNow({ status: 'in_progress' });
-    startAutoSync();
 
     applyTheme(quizId);
     renderQuiz();
@@ -383,23 +296,14 @@ function showLoading(){ const root=document.getElementById('view'); if(!root) re
 function showError(msg){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:`<b>Error:</b> ${msg}`})); }
 
 /* ========== Timer ========== */
-function startTimer(){
-  stopTimer();
-  STATE.timerId=setInterval(()=>{
-    STATE.elapsedSec++;
-    const t=document.querySelector('.timer'); if(t) t.textContent=fmtTime(STATE.elapsedSec);
-    STATE.progressDirty = true;
-  },1000);
-}
+function startTimer(){ stopTimer(); STATE.timerId=setInterval(()=>{ STATE.elapsedSec++; const t=document.querySelector('.timer'); if(t) t.textContent=fmtTime(STATE.elapsedSec); },1000); }
 function stopTimer(){ if(STATE.timerId){ clearInterval(STATE.timerId); STATE.timerId=null; } }
 
 /* ========== Render principal ========== */
 function renderQuiz(){
   const root=document.getElementById('view'); if(!root) return;
   root.innerHTML='';
-
-  const wrap = h('section',{class:'card'});
-  const shell = h('div',{class:'quiz-wrap'});
+  const wrap=h('section',{class:'card'}), shell=h('div',{class:'quiz-wrap'});
 
   const qCard=h('div',{class:'question-card'});
   const head=h('div',{class:'header-quiz'});
@@ -444,21 +348,24 @@ function renderQuiz(){
   }
 
   const ctr=h('div',{class:'controls'});
-  const back=h('button',{class:'btn',html:'Back'}); back.disabled=STATE.idx===0; back.onclick=()=>{STATE.idx=Math.max(0,STATE.idx-1);STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
-  const mark=h('button',{class:'btn',html:STATE.marked[STATE.idx]?'Unmark':'Mark'}); mark.onclick=()=>{STATE.marked[STATE.idx]=!STATE.marked[STATE.idx];toast(STATE.marked[STATE.idx]?'Marked':'Unmarked');STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
-  const next=h('button',{class:'btn primary',html:STATE.idx===STATE.qs.length-1?'Finish':'Next'}); next.onclick=()=>{if(STATE.idx===STATE.qs.length-1)return finish();STATE.idx++;STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
+  const back=h('button',{class:'btn',html:'Back'}); back.disabled=STATE.idx===0; back.onclick=()=>{STATE.idx=Math.max(0,STATE.idx-1);renderQuiz()};
+  const mark=h('button',{class:'btn',html:STATE.marked[STATE.idx]?'Unmark':'Mark'}); mark.onclick=()=>{STATE.marked[STATE.idx]=!STATE.marked[STATE.idx];toast(STATE.marked[STATE.idx]?'Marked':'Unmarked');renderQuiz()};
+  const next=h('button',{class:'btn primary',html:STATE.idx===STATE.qs.length-1?'Finish':'Next'}); next.onclick=()=>{if(STATE.idx===STATE.qs.length-1)return finish();STATE.idx++;renderQuiz()};
   ctr.appendChild(back); ctr.appendChild(mark); ctr.appendChild(next); qCard.appendChild(ctr);
 
-  /* ===== Sidebar ===== */
+  /* ===== Sidebar (BOTONES arriba, LISTA abajo) ===== */
   const side=h('div',{class:'side'});
+
+  // 1) PANEL DE BOTONES (centrados y sin título) — AHORA ARRIBA
   const pBtns=h('div',{class:'panel'});
   const actions=h('div',{class:'controls centered'});
   const btnHome=h('button',{class:'btn',html:'🏠 Home'}); btnHome.onclick=()=>{ location.href='/'; };
-  const btnStop=h('button',{class:'btn',html:'⏸️ Stop for later'}); btnStop.onclick=async ()=>{ await saveProgressNow({ status: 'paused' }); toast('Progress saved for later'); };
+  const btnStop=h('button',{class:'btn',html:'⏸️ Stop for later'}); btnStop.onclick=()=>{};
   actions.appendChild(btnHome); actions.appendChild(btnStop);
   pBtns.appendChild(actions);
   side.appendChild(pBtns);
 
+  // 2) LIST OF QUESTIONS — AHORA DEBAJO
   const pList=h('div',{class:'panel'});
   pList.appendChild(h('h3',{html:'LIST OF QUESTIONS'}));
   const dots=h('div',{class:'list-dots',title:'Click to jump to any question'});
@@ -468,29 +375,22 @@ function renderQuiz(){
     const ans=STATE.answers[i];
     if(typeof ans!=='undefined'){ if(ans===qq._correct)d.classList.add('ok'); else d.classList.add('bad'); }
     if(STATE.marked[i]) d.classList.add('marked');
-    d.onclick=()=>{STATE.idx=i;STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
+    d.onclick=()=>{STATE.idx=i;renderQuiz()};
     dots.appendChild(d);
   });
   pList.appendChild(dots);
   side.appendChild(pList);
 
+  // Montaje
   shell.appendChild(qCard); shell.appendChild(side);
-  wrap.appendChild(shell);
-  root.appendChild(wrap);
+  wrap.appendChild(shell); root.appendChild(wrap);
   enableHotkeys();
   try{wrap.scrollIntoView({behavior:'smooth',block:'start'})}catch{}
 }
 
-/* Selección */
-function onSelect(i){
-  if(typeof STATE.answers[STATE.idx]!=='undefined')return;
-  STATE.answers[STATE.idx]=i;
-  STATE.progressDirty = true;
-  saveProgressDebounced();
-  renderQuiz();
-}
+function onSelect(i){ if(typeof STATE.answers[STATE.idx]!=='undefined')return; STATE.answers[STATE.idx]=i; renderQuiz(); }
 
-/* ===== Resultados ===== */
+/* ===== Resultados (modal aislado) ===== */
 function renderResultModal(r){
   document.body.classList.add('qg-lock');
   const pass=r.pct>=70;
@@ -523,29 +423,29 @@ function genResultId(result){
   const t=Math.floor((new Date(result.ts||Date.now())).getTime()/10000);
   return `${base}|${t}`;
 }
-
-async function postFormResults(url,payload){
-  const body=new URLSearchParams();
-  Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
+async function postForm(url,payload){
+  const body=new URLSearchParams();Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
   const resp=await fetch(url,{method:"POST",mode:"cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body});
   const text=await resp.text();let data=null;try{data=JSON.parse(text)}catch{data={raw:text}}
   if(!resp.ok) throw new Error(`HTTP ${resp.status} ${(data.error||data.message||text)}`); return data;
 }
+function getUserAny(){let u=null;try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}return u}
 
 async function saveResultRemoteOnce(result){
   if(STATE.saving) return null;
   STATE.saving=true;
   const u=getUserAny()||{};
   const payload={
-    userId: u.userId || u.id || "",
-    userName: u.name || u.displayName || "anonymous",
-    email: (u.email || "").trim().toLowerCase(),
-    quizId: result.quizId, track: result.track||"architect", mode: result.mode||"exam",
-    total: Number(result.total||0), correct: Number(result.correct||0),
-    pct: Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
-    durationSec: Number(result.durationSec||0)
+    resultId: genResultId(result),
+    userId:u.userId||u.id||"anon",
+    userName:u.name||u.displayName||"anonymous",
+    email:u.email||"",
+    quizId:result.quizId, track:result.track||"architect", mode:result.mode||"exam",
+    total:Number(result.total||0), correct:Number(result.correct||0),
+    pct:Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
+    durationSec:Number(result.durationSec||0), ts:result.ts||new Date().toISOString()
   };
-  try { return await postFormResults(`${API_URL}/results`, payload); }
+  try { return await postForm(`${API_URL}/results`, payload); }
   catch(e){ console.warn("Remote save failed:", e); return null; }
   finally { STATE.saving=false; }
 }
@@ -554,19 +454,16 @@ async function finish(){
   if (STATE.finished) return;
   STATE.finished = true;
   stopTimer();
-  stopAutoSync();
-
   const total=STATE.qs.length; let correct=0;
   for(let i=0;i<total;i++){ if(STATE.answers[i]===STATE.qs[i]._correct) correct++; }
   const pct= total? Math.round((correct/total)*100):0;
   const result={
+    ts:new Date().toISOString(),
     quizId:STATE.quizId, track:STATE.track||'architect', mode:STATE.mode||'exam',
     total, correct, pct,
     markedCount:Object.values(STATE.marked||{}).filter(Boolean).length,
     durationSec:STATE.startedAt?Math.round((Date.now()-STATE.startedAt)/1000):STATE.elapsedSec||0
   };
-
-  await saveProgressNow({ status: 'finished' });
   await saveResultRemoteOnce(result);
   renderResultModal(result);
 }
@@ -578,9 +475,9 @@ function enableHotkeys(){
   window.addEventListener('keydown',(ev)=>{
     const tag=(ev.target.tagName||'').toLowerCase();
     if(tag==='input'||tag==='textarea'||tag==='select'||ev.metaKey||ev.ctrlKey) return;
-    if(ev.key==='n'||ev.key==='N'){ev.preventDefault(); if(STATE.idx===STATE.qs.length-1) finish(); else { STATE.idx++; STATE.progressDirty=true; saveProgressDebounced(); renderQuiz(); }}
-    if(ev.key==='b'||ev.key==='B'){ev.preventDefault(); if(STATE.idx>0){ STATE.idx--; STATE.progressDirty=true; saveProgressDebounced(); renderQuiz(); }}
-    if(ev.key==='m'||ev.key==='M'){ev.preventDefault(); STATE.marked[STATE.idx]=!STATE.marked[STATE.idx]; toast(STATE.marked[STATE.idx]?'Marked':'Unmarked'); STATE.progressDirty=true; saveProgressDebounced(); renderQuiz(); }
+    if(ev.key==='n'||ev.key==='N'){ev.preventDefault(); if(STATE.idx===STATE.qs.length-1) finish(); else { STATE.idx++; renderQuiz(); }}
+    if(ev.key==='b'||ev.key==='B'){ev.preventDefault(); if(STATE.idx>0){ STATE.idx--; renderQuiz(); }}
+    if(ev.key==='m'||ev.key==='M'){ev.preventDefault(); STATE.marked[STATE.idx]=!STATE.marked[STATE.idx]; toast(STATE.marked[STATE.idx]?'Marked':'Unmarked'); renderQuiz(); }
     const num=parseInt(ev.key,10);
     if(Number.isInteger(num)&&num>=1&&num<=9){
       const q=STATE.qs[STATE.idx];
