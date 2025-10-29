@@ -7,6 +7,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+
   gtag('config', 'G-DYZ3GCXHEK');
 </script>
   <meta charset="utf-8" />
@@ -16,7 +17,7 @@
   <style>
     :root{
       --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91; --brand:#161a3f;
-      --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:20px;
+      --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:16px;
       --aws-500:#ff9900; --az-500:#0078d4; --danger:#b42318; --ok:#16794c;
       --gap:12px;
     }
@@ -31,15 +32,14 @@
         linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
       line-height:1.6; min-height:100vh; overflow-x:hidden;
     }
-    .wrap{max-width:1200px;margin:0 auto;padding:20px}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
     .card{ background:var(--card); border:1px solid var(--bd); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); }
 
     /* Compact hero */
     .hero{
-      text-align:left; border:1px solid #ecefff; padding:16px 18px;
+      text-align:left; border:1px solid #ecefff; padding:14px 16px;
       background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%);
       margin:0 0 var(--gap);
-      border-radius:var(--radius);
     }
     .hero h1{ margin:4px 0 6px; font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem); font-weight:900; color:var(--brand); }
     .hero .desc{ color:var(--muted); margin:0; }
@@ -54,11 +54,9 @@
     .authbar .actions{ display:flex; gap:8px; }
     .hidden{ display:none !important; }
 
-    /* Main layout: columna izquierda más estrecha */
-    .grid{ display:grid; grid-template-columns: 300px minmax(0,1fr); gap:var(--gap); align-items:start; }
-    @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
-    .col-right{ display:flex; flex-direction:column; gap:var(--gap); }
-    .col-right > .card{ width:100%; }
+    /* Main layout */
+    .grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); }
+    @media (min-width:900px){ .grid{ grid-template-columns: 1.2fr 2fr; } }
 
     /* Profile */
     .profile{ display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:center; }
@@ -83,22 +81,20 @@
       appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
       font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
       transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
-      text-decoration:none;
     }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
     .btn.primary{ background:var(--az-500); color:#fff; border-color:#98cfff; }
     .btn.primary:hover{ filter:brightness(.96) }
     .btn.small{ padding:6px 10px; font-size:.9rem; }
-    .btn.upper{ text-transform:uppercase; letter-spacing:.3px; }
 
-    /* Tabs */
+    /* Results tabs */
     .tabs{ display:flex; gap:8px; background:#f6f7ff; border:1px solid #e6e9ff; border-radius:12px; padding:6px; width:fit-content; }
     .tab-btn{ border:1px solid transparent; background:transparent; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:900; color:#343a6e; }
     .tab-btn.active{ background:#fff; border-color:#e6e9ff; }
 
     /* Table */
     .table-wrap{ background:#fff; border:1px solid var(--bd); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto; }
-    table{ width:100%; min-width:780px; border-collapse:separate; border-spacing:0; } /* ↓ más estrecha */
+    table{ width:100%; min-width:760px; border-collapse:separate; border-spacing:0; }
     thead th{ position:sticky; top:0; z-index:1; background:#f0f4ff; color:#16224a; font-weight:800; letter-spacing:.01em; text-align:center; padding:10px; border-bottom:1px solid var(--bd) }
     tbody td{ padding:10px; text-align:center; border-bottom:1px solid #eee; background:#fff }
     tbody tr:nth-child(even) td{ background:#fafbff }
@@ -108,15 +104,12 @@
     .pct{ display:flex; align-items:center; justify-content:center; gap:8px; font-variant-numeric:tabular-nums; font-weight:800; }
     .pbar{ position:relative; flex:1 1 120px; height:8px; background:#eee; border-radius:999px; overflow:hidden; max-width:160px; margin:0 auto; }
     .pbar>i{ position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg,#7b3fe4,#a45df2); }
-
     .kpis{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
     .kpi{ text-align:center; border:1px solid var(--bd); border-radius:12px; padding:10px; background:#fff; }
     .kpi h4{ margin:0; font-size:1rem; color:#253060 }
     .kpi .n{ font-size:1.4rem; font-weight:900; }
 
-    /* Review icon (sin enlace) */
-    .review-icon{ display:inline-block; user-select:none; cursor:not-allowed; opacity:.9; }
-    .review-icon:active{ transform:none; }
+    .is-hidden{ display:none !important; }
   </style>
 </head>
 <body>
@@ -131,6 +124,7 @@
     <section class="authbar" id="authBar">
       <span id="authText" class="muted">🔒 You’re not signed in.</span>
       <div class="actions">
+        <!-- ✅ New Home button next to Logout -->
         <button id="btnHome" class="btn small hidden">🏠 Home</button>
         <button id="btnLogout" class="btn small hidden">Sign out</button>
       </div>
@@ -138,7 +132,7 @@
 
     <!-- MAIN GRID -->
     <section class="grid">
-      <!-- Left column (más estrecha) -->
+      <!-- Left column: profile -->
       <div class="col-left">
         <article class="card">
           <h3 style="margin:0 0 10px">Profile</h3>
@@ -171,29 +165,9 @@
             <div id="profMsg" class="hint" style="margin-top:6px"></div>
           </form>
         </article>
-
-        <!-- Study goals & streak -->
-        <article class="card">
-          <h3 style="margin:0 0 10px;">Study goals & streak</h3>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <label for="weeklyGoal" style="font-weight:800;color:#2a2e57;">Weekly goal (attempts)</label>
-            <input id="weeklyGoal" type="number" min="1" step="1" value="7" style="width:90px;padding:8px;border:1px solid #e6e9ff;border-radius:10px;font-weight:800;">
-            <button id="btnSaveGoal" class="btn small">Save goal</button>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div style="font-weight:800;">This week</div>
-            <div style="position:relative;flex:1;height:10px;background:#eef1ff;border-radius:999px;overflow:hidden;">
-              <i id="goalFill" style="position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,#0078d4,#55a6ff);"></i>
-            </div>
-            <div id="goalText" style="font-weight:900;">0 / 7</div>
-          </div>
-          <div style="margin-top:10px;" class="hint">
-            Current streak: <b id="streakDays">0</b> day(s)
-          </div>
-        </article>
       </div>
 
-      <!-- Right column -->
+      <!-- Right column: results -->
       <div class="col-right">
         <article class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
@@ -214,24 +188,7 @@
           <div id="resultsWrap" class="table-wrap">Loading…</div>
 
           <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;">
-            <a class="btn upper" href="/score/ranking.html">🏆 LEADERBOARD</a>
-          </div>
-        </article>
-
-        <!-- Marked questions -->
-        <article class="card">
-          <h3 style="margin:0 0 10px;">Your marked question</h3>
-          <div id="markedWrap" class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th><th>QUIZ</th><th>Question</th><th>Note</th><th>Action</th>
-                </tr>
-              </thead>
-              <tbody id="markedBody">
-                <tr><td colspan="5" style="text-align:center;">No marked questions yet.</td></tr>
-              </tbody>
-            </table>
+            <a class="btn" href="/score/ranking.html">🏆 View leaderboard</a>
           </div>
         </article>
       </div>
@@ -241,9 +198,8 @@
   <script>
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const AUTH_KEY = "currentUser";
-    const GOAL_KEY = "weeklyGoal";
 
-    // utils
+    // ===== utils =====
     const byId = id => document.getElementById(id);
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
     const pad = n => String(n).padStart(2,'0');
@@ -260,15 +216,7 @@
       return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤";
     }
 
-    // goals
-    const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
-    const setGoal = (n)=> localStorage.setItem(GOAL_KEY, String(Math.max(1,toInt(n))));
-
-    // dates
-    const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
-
-    // auth
+    // Auth & profile
     function renderAuth(){
       const u = getUser();
       const authText = byId("authText");
@@ -284,7 +232,6 @@
         btnHome.classList.add("hidden");
       }
       renderProfileForm();
-      renderGoalUI();
     }
 
     function renderProfileForm(){
@@ -307,7 +254,7 @@
       }
     }
 
-    // remote refresh
+    // Optional: refresh from backend
     async function loadRemoteMe(){
       const u = getUser(); if(!u) return;
       try{
@@ -320,7 +267,7 @@
       }catch{}
     }
 
-    // results
+    /** Fetch & strictly filter to signed-in user */
     async function fetchMyResults(limit=500){
       const u = getUser(); if (!u) return [];
       const uid = (u.userId || u.id || "").toString();
@@ -368,34 +315,6 @@
       byId("kpiBest").textContent = `${best}%`;
     }
 
-    // streak & weekly goal
-    function computeStreak(rows){
-      if (!rows.length) return 0;
-      const datesSet = new Set(rows
-        .filter(r=>r.ts)
-        .map(r=> new Date(r.ts))
-        .map(d=> toDateOnly(d).toISOString().slice(0,10)));
-      let streak = 0;
-      let cursor = toDateOnly(new Date());
-      while (datesSet.has(cursor.toISOString().slice(0,10))){
-        streak++;
-        cursor = new Date(cursor.getTime() - 86400000);
-      }
-      return streak;
-    }
-    function weeklyProgress(rows){
-      const goal = getGoal();
-      const attempts = rows.filter(r=> r.ts && isWithinDays(r.ts, 6)).length; // last 7 days
-      const pct = Math.min(100, Math.round((attempts / Math.max(1,goal)) * 100));
-      return { attempts, goal, pct };
-    }
-    function renderGoalUI(){
-      const goal = getGoal();
-      byId("weeklyGoal").value = goal;
-      byId("goalText").textContent = `0 / ${goal}`;
-      byId("goalFill").style.width = `0%`;
-    }
-
     function renderResults(rows, filter="all"){
       const root = byId("resultsWrap");
       let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
@@ -405,26 +324,19 @@
 
       calcKPIs(f==="all" ? rows : rows.filter(x=>x.quizId===f));
 
-      // update goals
-      const streak = computeStreak(rows);
-      byId("streakDays").textContent = String(streak);
-      const {attempts, goal, pct} = weeklyProgress(rows);
-      byId("goalText").textContent = `${attempts} / ${goal}`;
-      byId("goalFill").style.width = `${pct}%`;
-
       if (!list.length){
         root.innerHTML = `<div class="table-wrap"><p style="text-align:center;margin:12px 0;">No results yet.</p></div>`;
         return;
       }
       let html = `<table>
         <thead><tr>
-          <th>#</th><th>QUIZ</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th><th>Review</th>
+          <th>#</th><th>Quiz</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th>
         </tr></thead><tbody>`;
       list.forEach((r,i)=>{
         const pct = Math.min(100, Math.max(0, toInt(r.pct)));
         html += `<tr>
           <td>${i+1}</td>
-          <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
+          <td><span class="badge">${escapeHtml(r.quizId)}</span></td>
           <td>${r.correct}</td>
           <td>${r.total}</td>
           <td>
@@ -435,7 +347,6 @@
           </td>
           <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
           <td>${fmtDate(r.ts)}</td>
-          <td><span class="review-icon" title="Review coming soon">🔍</span></td>
         </tr>`;
       });
       html += `</tbody></table>`;
@@ -446,17 +357,36 @@
     byId("btnHome").onclick = ()=>{ location.href = "/"; };
     byId("btnLogout").onclick = ()=>{
       localStorage.removeItem(AUTH_KEY);
-      location.href = "/";
+      location.href = "/"; // Redirect to home after signout
     };
     byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
-    byId("btnSaveGoal").onclick = ()=>{
-      const val = Math.max(1, toInt(byId("weeklyGoal").value));
-      setGoal(val);
-      const rows = window.__myRows || [];
-      const {attempts, goal, pct} = weeklyProgress(rows);
-      byId("goalText").textContent = `${attempts} / ${goal}`;
-      byId("goalFill").style.width = `${pct}%`;
-    };
+
+    byId("formProfile").addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const u = getUser(); if(!u){ location.replace('/login/login.html'); return; }
+      const payload = {
+        name: byId("name").value.trim(),
+        email: byId("email").value.trim().toLowerCase(),
+        avatarUrl: byId("avatarUrl").value.trim()
+      };
+      byId("profMsg").textContent = "Saving…";
+      try{
+        const body = new URLSearchParams(payload);
+        const res = await fetch(`${API_BASE}/me`, { method:"PUT", body, mode:"cors" });
+        if (res.ok){
+          const srv = await res.json();
+          setUser({...u, ...srv});
+          byId("profMsg").innerHTML = `<span class="ok">✅ Saved</span>`;
+        }else{
+          setUser({...u, ...payload});
+          byId("profMsg").innerHTML = `<span class="ok">✅ Saved locally</span> <span class="muted">(backend unavailable)</span>`;
+        }
+      }catch{
+        setUser({...u, ...payload});
+        byId("profMsg").innerHTML = `<span class="ok">✅ Saved locally</span> <span class="muted">(offline)</span>`;
+      }
+      renderProfileForm();
+    });
 
     function activateTab(which){
       byId("tabAll").classList.toggle("active", which==="all");
@@ -467,13 +397,14 @@
     byId("tabAZ").onclick  = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
     byId("tabAWS").onclick = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
 
-    // Init
+    // Init with redirect if not signed in
     document.addEventListener("DOMContentLoaded", async ()=>{
       const u = getUser();
       if (!u){
         location.replace('/login/login.html');
         return;
       }
+
       renderAuth();
       loadRemoteMe();
 
