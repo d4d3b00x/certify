@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DYZ3GCXHEK');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CertiFY — My Account</title>
@@ -17,8 +17,7 @@
     :root{
       --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91; --brand:#161a3f;
       --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:20px;
-      --aws-500:#ff9900; --az-500:#0078d4; --danger:#b42318; --ok:#16794c;
-      --gap:12px;
+      --aws-500:#ff9900; --az-500:#0078d4; --danger:#b42318; --ok:#16794c; --gap:12px;
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
@@ -34,71 +33,51 @@
     .wrap{max-width:1200px;margin:0 auto;padding:20px}
     .card{ background:var(--card); border:1px solid var(--bd); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); }
 
-    /* Compact hero */
-    .hero{
-      text-align:left; border:1px solid #ecefff; padding:16px 18px;
-      background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%);
-      margin:0 0 var(--gap);
-      border-radius:var(--radius);
-    }
+    .hero{ text-align:left; border:1px solid #ecefff; padding:16px 18px;
+      background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%); margin:0 0 var(--gap); border-radius:var(--radius); }
     .hero h1{ margin:4px 0 6px; font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem); font-weight:900; color:var(--brand); }
     .hero .desc{ color:var(--muted); margin:0; }
 
-    /* Session status bar */
-    .authbar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    .authbar{ display:flex; align-items:center; justify-content:space-between; gap:12px;
       padding:8px 12px; background:#fff; border:1px solid #ecefff; border-radius:999px;
-      color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06);
-      margin:0 0 var(--gap);
-    }
+      color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06); margin:0 0 var(--gap); }
     .authbar .actions{ display:flex; gap:8px; }
     .hidden{ display:none !important; }
 
-    /* Main layout: columna izquierda más estrecha */
     .grid{ display:grid; grid-template-columns: 300px minmax(0,1fr); gap:var(--gap); align-items:start; }
     @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
     .col-right{ display:flex; flex-direction:column; gap:var(--gap); }
     .col-right > .card{ width:100%; }
 
-    /* Profile */
     .profile{ display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:center; }
-    .avatar{
-      width:86px; height:86px; border-radius:14px; overflow:hidden; border:1px solid var(--bd); background:#fff;
-      display:flex; align-items:center; justify-content:center; font-weight:900; color:#576; font-size:1.4rem;
-    }
+    .avatar{ width:86px; height:86px; border-radius:14px; overflow:hidden; border:1px solid var(--bd); background:#fff;
+      display:flex; align-items:center; justify-content:center; font-weight:900; color:#576; font-size:1.4rem; }
     .avatar img{ width:100%; height:100%; object-fit:cover; }
     .muted{ color:var(--muted) }
 
     .field{ display:flex; flex-direction:column; gap:6px; margin:8px 0; }
     .field label{ font-weight:800; color:#2a2e57; }
-    .control{
-      display:flex; align-items:center; gap:8px; border:1px solid #e6e9ff; border-radius:10px; padding:8px 10px; background:#fff;
-    }
+    .control{ display:flex; align-items:center; gap:8px; border:1px solid #e6e9ff; border-radius:10px; padding:8px 10px; background:#fff; }
     .control input{ border:none; outline:none; background:transparent; width:100%; font-weight:700; color:#2a2e57; padding:4px 0; }
     .hint{ font-size:.92rem; color:var(--muted) }
     .ok{ color:var(--ok); font-weight:800; }
     .err{ color:var(--danger); font-weight:800; }
 
-    .btn{
-      appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
+    .btn{ appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
       font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
-      transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
-      text-decoration:none;
-    }
+      transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease; text-decoration:none; }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
-    .btn.primary{ background:var(--az-500); color:#fff; border-color:#98cfff; }
+    .btn.primary{ background:#0078d4; color:#fff; border-color:#98cfff; }
     .btn.primary:hover{ filter:brightness(.96) }
     .btn.small{ padding:6px 10px; font-size:.9rem; }
     .btn.upper{ text-transform:uppercase; letter-spacing:.3px; }
 
-    /* Tabs */
     .tabs{ display:flex; gap:8px; background:#f6f7ff; border:1px solid #e6e9ff; border-radius:12px; padding:6px; width:fit-content; }
     .tab-btn{ border:1px solid transparent; background:transparent; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:900; color:#343a6e; }
     .tab-btn.active{ background:#fff; border-color:#e6e9ff; }
 
-    /* Table */
     .table-wrap{ background:#fff; border:1px solid var(--bd); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto; }
-    table{ width:100%; min-width:780px; border-collapse:separate; border-spacing:0; } /* ↓ más estrecha */
+    table{ width:100%; min-width:680px; border-collapse:separate; border-spacing:0; }
     thead th{ position:sticky; top:0; z-index:1; background:#f0f4ff; color:#16224a; font-weight:800; letter-spacing:.01em; text-align:center; padding:10px; border-bottom:1px solid var(--bd) }
     tbody td{ padding:10px; text-align:center; border-bottom:1px solid #eee; background:#fff }
     tbody tr:nth-child(even) td{ background:#fafbff }
@@ -114,20 +93,28 @@
     .kpi h4{ margin:0; font-size:1rem; color:#253060 }
     .kpi .n{ font-size:1.4rem; font-weight:900; }
 
-    /* Review icon (sin enlace) */
-    .review-icon{ display:inline-block; user-select:none; cursor:not-allowed; opacity:.9; }
-    .review-icon:active{ transform:none; }
+    .review-icon{ display:inline-block; user-select:none; cursor:not-allowed; opacity:.95; }
+    .is-hidden{ display:none !important; }
+
+    /* Extra UI: heatstrip + badges + filters */
+    .heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
+    .heat i{display:block;height:14px;border-radius:4px;background:#eef1ff;border:1px solid #e6e9ff}
+    .heat i.lv1{background:#dfe9ff}
+    .heat i.lv2{background:#cfe0ff}
+    .heat i.lv3{background:#bcd6ff}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+    .badge-chip{border:1px solid #e6e9ff;background:#fff;border-radius:999px;padding:6px 10px;font-weight:800}
+    .tool{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+    .tool input[type="range"], .tool select{border:1px solid #e6e9ff;border-radius:8px;padding:6px 8px;font-weight:700}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- HERO -->
     <section class="card hero">
       <h1>My Account</h1>
       <p class="desc">Manage your profile and review your recent quiz results.</p>
     </section>
 
-    <!-- AUTH BAR -->
     <section class="authbar" id="authBar">
       <span id="authText" class="muted">🔒 You’re not signed in.</span>
       <div class="actions">
@@ -136,9 +123,7 @@
       </div>
     </section>
 
-    <!-- MAIN GRID -->
     <section class="grid">
-      <!-- Left column (más estrecha) -->
       <div class="col-left">
         <article class="card">
           <h3 style="margin:0 0 10px">Profile</h3>
@@ -172,7 +157,6 @@
           </form>
         </article>
 
-        <!-- Study goals & streak -->
         <article class="card">
           <h3 style="margin:0 0 10px;">Study goals & streak</h3>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
@@ -190,10 +174,21 @@
           <div style="margin-top:10px;" class="hint">
             Current streak: <b id="streakDays">0</b> day(s)
           </div>
+
+          <!-- 14-day activity heatstrip -->
+          <div style="margin-top:10px;">
+            <div class="muted" style="margin-bottom:6px;">Last 14 days activity</div>
+            <div id="heat14" class="heat"></div>
+          </div>
+
+          <!-- Badges -->
+          <div style="margin-top:10px;">
+            <div class="muted" style="margin-bottom:6px;">Badges</div>
+            <div id="badgesBox" class="badges"></div>
+          </div>
         </article>
       </div>
 
-      <!-- Right column -->
       <div class="col-right">
         <article class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
@@ -211,25 +206,42 @@
             <div class="kpi"><h4>Best %</h4><div id="kpiBest" class="n">0%</div></div>
           </div>
 
+          <!-- Tools above results (sin export) -->
+          <div class="tool">
+            <label>Range:
+              <select id="rangeSel">
+                <option value="all">All</option>
+                <option value="7">Last 7 days</option>
+                <option value="30">Last 30 days</option>
+                <option value="90">Last 90 days</option>
+              </select>
+            </label>
+            <label>Min %:
+              <input id="minPct" type="range" min="0" max="100" value="0">
+              <span id="minPctVal" style="font-weight:800">0</span>
+            </label>
+            <span class="muted" id="filterCount"></span>
+          </div>
+
           <div id="resultsWrap" class="table-wrap">Loading…</div>
 
-          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px;">
+          <div style="display:flex;gap:8px;justify-content:space-between;margin-top:10px;align-items:center;">
+            <div id="trendHint" class="muted">—</div>
             <a class="btn upper" href="/score/ranking.html">🏆 LEADERBOARD</a>
           </div>
         </article>
 
-        <!-- Marked questions -->
         <article class="card">
           <h3 style="margin:0 0 10px;">Your marked question</h3>
           <div id="markedWrap" class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>#</th><th>QUIZ</th><th>Question</th><th>Note</th><th>Action</th>
+                  <th>#</th><th>QUIZ</th><th>Question</th><th>Note</th>
                 </tr>
               </thead>
               <tbody id="markedBody">
-                <tr><td colspan="5" style="text-align:center;">No marked questions yet.</td></tr>
+                <tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>
               </tbody>
             </table>
           </div>
@@ -243,7 +255,6 @@
     const AUTH_KEY = "currentUser";
     const GOAL_KEY = "weeklyGoal";
 
-    // utils
     const byId = id => document.getElementById(id);
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
     const pad = n => String(n).padStart(2,'0');
@@ -253,24 +264,18 @@
     const norm = s => (s||"").toString().trim().toLowerCase();
 
     function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
+    function getUserAny(){ let u=getUser(); if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} } return u; }
     function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
-    function initialsOf(name){
-      const s=(name||"").trim(); if(!s) return "👤";
-      const parts=s.split(/\s+/).slice(0,2);
-      return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤";
-    }
+    function initialsOf(name){ const s=(name||"").trim(); if(!s) return "👤"; const parts=s.split(/\s+/).slice(0,2); return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤"; }
 
-    // goals
     const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
     const setGoal = (n)=> localStorage.setItem(GOAL_KEY, String(Math.max(1,toInt(n))));
 
-    // dates
     const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
     function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
 
-    // auth
     function renderAuth(){
-      const u = getUser();
+      const u = getUserAny();
       const authText = byId("authText");
       const btnLogout = byId("btnLogout");
       const btnHome = byId("btnHome");
@@ -288,14 +293,12 @@
     }
 
     function renderProfileForm(){
-      const u = getUser() || {};
+      const u = getUserAny() || {};
       byId("userNameTxt").textContent = u.name || "—";
       byId("userEmailTxt").textContent = u.email || "—";
-
       byId("name").value = u.name || "";
       byId("email").value = u.email || "";
       byId("avatarUrl").value = u.avatarUrl || "";
-
       const box = byId("avatarBox");
       box.innerHTML = "";
       if (u.avatarUrl){
@@ -307,9 +310,8 @@
       }
     }
 
-    // remote refresh
     async function loadRemoteMe(){
-      const u = getUser(); if(!u) return;
+      const u = getUserAny(); if(!u) return;
       try{
         const res = await fetch(`${API_BASE}/me`, {mode:"cors",cache:"no-store"});
         if(res.ok){
@@ -320,9 +322,8 @@
       }catch{}
     }
 
-    // results
     async function fetchMyResults(limit=500){
-      const u = getUser(); if (!u) return [];
+      const u = getUserAny(); if (!u) return [];
       const uid = (u.userId || u.id || "").toString();
       const uemail = norm(u.email);
 
@@ -351,30 +352,26 @@
         userId: x.userId || x.id || "(unknown)",
         userName: getName(x),
         quizId: (x.quizId || "-").toLowerCase(),
-        correct: toInt(x.correct),
-        total: toInt(x.total),
-        pct: toInt(x.pct ?? (x.total ? Math.round((toInt(x.correct)/toInt(x.total))*100) : 0)),
-        durationSec: toInt(x.durationSec),
+        correct: (x.correct|0),
+        total: (x.total|0),
+        pct: (x.pct|0),
+        durationSec: (x.durationSec|0),
         ts: x.ts || null
       }));
     }
 
     function calcKPIs(rows){
       const n = rows.length;
-      const avg = n ? Math.round(rows.reduce((a,b)=>a + (toInt(b.pct)||0),0)/n) : 0;
-      const best = rows.reduce((m,b)=> Math.max(m, toInt(b.pct)||0), 0);
+      const avg = n ? Math.round(rows.reduce((a,b)=>a + ((b.pct|0)||0),0)/n) : 0;
+      const best = rows.reduce((m,b)=> Math.max(m, (b.pct|0)||0), 0);
       byId("kpiAttempts").textContent = String(n);
       byId("kpiAvg").textContent = `${avg}%`;
       byId("kpiBest").textContent = `${best}%`;
     }
 
-    // streak & weekly goal
     function computeStreak(rows){
       if (!rows.length) return 0;
-      const datesSet = new Set(rows
-        .filter(r=>r.ts)
-        .map(r=> new Date(r.ts))
-        .map(d=> toDateOnly(d).toISOString().slice(0,10)));
+      const datesSet = new Set(rows.filter(r=>r.ts).map(r=> new Date(r.ts)).map(d=> toDateOnly(d).toISOString().slice(0,10)));
       let streak = 0;
       let cursor = toDateOnly(new Date());
       while (datesSet.has(cursor.toISOString().slice(0,10))){
@@ -385,7 +382,7 @@
     }
     function weeklyProgress(rows){
       const goal = getGoal();
-      const attempts = rows.filter(r=> r.ts && isWithinDays(r.ts, 6)).length; // last 7 days
+      const attempts = rows.filter(r=> r.ts && isWithinDays(r.ts, 6)).length;
       const pct = Math.min(100, Math.round((attempts / Math.max(1,goal)) * 100));
       return { attempts, goal, pct };
     }
@@ -396,16 +393,36 @@
       byId("goalFill").style.width = `0%`;
     }
 
+    // Filtros UI (range + min%)
+    window.__filters = {days:'all', minPct:0, fromDate:null};
+    const activeFilterKey = ()=> {
+      const t = document.querySelector('.tab-btn.active')?.textContent || 'All';
+      return t.toLowerCase().includes('aws') ? 'aws-saa-c03'
+           : t.toLowerCase().includes('az')  ? 'az-104'
+           : 'all';
+    };
+
     function renderResults(rows, filter="all"){
       const root = byId("resultsWrap");
       let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
       const f = filter.toLowerCase();
       if (f==="az-104" || f==="aws-saa-c03") list = list.filter(x=>x.quizId===f);
-      list = list.slice(0,10);
 
-      calcKPIs(f==="all" ? rows : rows.filter(x=>x.quizId===f));
+      // filtros extra
+      const { days, minPct } = window.__filters || {};
+      if (days && days!=="all"){
+        const cutoff = Date.now() - Number(days)*86400000;
+        list = list.filter(x=> x.ts && new Date(x.ts).getTime() >= cutoff);
+      }
+      if (typeof minPct === "number"){
+        list = list.filter(x=> (x.pct|0) >= minPct);
+      }
 
-      // update goals
+      byId("filterCount").textContent = list.length ? `${list.length} shown` : '0 shown';
+
+      const rowsForKpi = (f==="all" ? rows : rows.filter(x=>x.quizId===f));
+      calcKPIs(rowsForKpi);
+
       const streak = computeStreak(rows);
       byId("streakDays").textContent = String(streak);
       const {attempts, goal, pct} = weeklyProgress(rows);
@@ -420,8 +437,8 @@
         <thead><tr>
           <th>#</th><th>QUIZ</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th><th>Review</th>
         </tr></thead><tbody>`;
-      list.forEach((r,i)=>{
-        const pct = Math.min(100, Math.max(0, toInt(r.pct)));
+      list.slice(0,10).forEach((r,i)=>{
+        const pct = Math.min(100, Math.max(0, (r.pct|0)));
         html += `<tr>
           <td>${i+1}</td>
           <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
@@ -442,12 +459,145 @@
       root.innerHTML = html;
     }
 
+    async function fetchMyMarked(limit=200){
+      try{
+        const u = getUserAny(); if (!u) return [];
+        const uid = (u.userId || u.id || "").toString();
+        const uemail = norm(u.email);
+
+        const qs = new URLSearchParams({ limit: String(limit) });
+        if (uid) qs.set("userId", uid);
+        if (uemail) qs.set("email", uemail);
+
+        const res = await fetch(`${API_BASE}/progress?${qs.toString()}`, {mode:"cors",cache:"no-store"});
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+        const sessions = Array.isArray(data.items) ? data.items : [];
+        const out=[];
+
+        // Más nuevas primero
+        sessions.sort((a,b)=> String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));
+
+        for(const it of sessions){
+          const quiz = String(it.quizId||'-').toLowerCase();
+
+          // Preferente: markedItems con questionId y texto
+          const arr = Array.isArray(it.markedItems)? it.markedItems : [];
+
+          if (arr.length){
+            for(const m of arr){
+              out.push({
+                quizId: quiz,
+                questionId: m.questionId || null,
+                question: m.question || '(no text)',
+                domain: m.domain || null,
+                category: m.category || null,
+                sessionId: m.sessionId || it.sessionId || '',
+                idx: (typeof m.index==='number'? m.index : null),
+                markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+              });
+            }
+            continue;
+          }
+
+          // Fallback: questionIds + marked
+          const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
+          const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
+          Object.entries(markedMap).forEach(([indexStr,flag])=>{
+            if(!flag) return;
+            const idx = parseInt(indexStr,10);
+            const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
+            out.push({
+              quizId: quiz,
+              questionId: qid,
+              question: '(marked question — open session to view text)',
+              domain: null,
+              category: null,
+              sessionId: it.sessionId || '',
+              idx,
+              markedAt: it.updatedAt || it.startedAt || null
+            });
+          });
+        }
+
+        out.sort((a,b)=> String(b.markedAt||'').localeCompare(String(a.markedAt||'')));
+        return out.slice(0, 50);
+      }catch(e){
+        console.warn('Marked fetch failed:', e);
+        return [];
+      }
+    }
+
+    function renderMarked(rows){
+      const body = byId('markedBody');
+      if(!rows.length){
+        body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>`;
+        return;
+      }
+      body.innerHTML = rows.map((r,i)=>`
+        <tr>
+          <td>${i+1}</td>
+          <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
+          <td style="text-align:left">${escapeHtml(r.question)}</td>
+          <td>${escapeHtml(r.domain || r.category || '')}</td>
+        </tr>
+      `).join('');
+    }
+
+    function computeTrend(rows){
+      const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
+      if (ordered.length<6) return {delta:0, dir:'='};
+      const mid = Math.floor(ordered.length/2);
+      const prev = ordered.slice(0, mid);
+      const last = ordered.slice(mid);
+      const avg = a => Math.round(a.reduce((s,x)=>s+(x.pct||0),0)/Math.max(1,a.length));
+      const p1=avg(prev), p2=avg(last), d=p2-p1;
+      return {delta:d, dir: d>0?'up':(d<0?'down':'=')};
+    }
+
+    function renderHeat14(rows){
+      const root = byId('heat14'); if(!root) return;
+      root.innerHTML = '';
+      const now = toDateOnly(new Date());
+      const perDay = {};
+      rows.forEach(r=>{
+        if(!r.ts) return;
+        const key = toDateOnly(new Date(r.ts)).toISOString().slice(0,10);
+        perDay[key] = (perDay[key]||0)+1;
+      });
+      for(let i=13;i>=0;i--){
+        const d = new Date(now.getTime()-i*86400000);
+        const k = d.toISOString().slice(0,10);
+        const n = perDay[k]||0;
+        const cell = document.createElement('i');
+        if(n>=3) cell.className='lv3'; else if(n===2) cell.className='lv2'; else if(n===1) cell.className='lv1';
+        root.appendChild(cell);
+      }
+    }
+
+    function computeBadges(rows){
+      const n=rows.length;
+      const streak = computeStreak(rows);
+      const hasFast = rows.some(r=> (r.durationSec||0) <= 600);
+      const avg = n? Math.round(rows.reduce((a,b)=>a+(b.pct||0),0)/n) : 0;
+      const badges=[];
+      if(n>=5) badges.push('🏁 Warm-up (5 attempts)');
+      if(streak>=3) badges.push('🔥 Consistent (3-day streak)');
+      if(hasFast) badges.push('⚡ Fast Thinker (<10m)');
+      if(avg>=70) badges.push('🛡️ Solid (avg ≥70%)');
+      if(avg>=85) badges.push('🌟 Elite (avg ≥85%)');
+      return badges;
+    }
+    function renderBadges(rows){
+      const b = computeBadges(rows);
+      const host = byId('badgesBox'); 
+      host.innerHTML = b.map(x=>`<span class="badge-chip">${escapeHtml(x)}</span>`).join('') || '<span class="muted">No badges yet.</span>';
+    }
+
     // Events
     byId("btnHome").onclick = ()=>{ location.href = "/"; };
-    byId("btnLogout").onclick = ()=>{
-      localStorage.removeItem(AUTH_KEY);
-      location.href = "/";
-    };
+    byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = "/"; };
     byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
     byId("btnSaveGoal").onclick = ()=>{
       const val = Math.max(1, toInt(byId("weeklyGoal").value));
@@ -463,17 +613,27 @@
       byId("tabAZ").classList.toggle("active", which==="az-104");
       byId("tabAWS").classList.toggle("active", which==="aws-saa-c03");
     }
-    byId("tabAll").onclick = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
-    byId("tabAZ").onclick  = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
-    byId("tabAWS").onclick = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
+    byId("tabAll").onclick  = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
+    byId("tabAZ").onclick   = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
+    byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
+
+    // Filtros UI wiring
+    byId('rangeSel').onchange = (e)=>{
+      window.__filters.days = e.target.value;
+      renderResults(window.__myRows||[], activeFilterKey());
+    };
+    byId('minPct').oninput = (e)=>{
+      const v=Number(e.target.value)||0;
+      byId('minPctVal').textContent=v;
+      window.__filters.minPct=v;
+      renderResults(window.__myRows||[], activeFilterKey());
+    };
 
     // Init
     document.addEventListener("DOMContentLoaded", async ()=>{
-      const u = getUser();
-      if (!u){
-        location.replace('/login/login.html');
-        return;
-      }
+      const u = getUserAny();
+      if (!u){ location.replace('/login/login.html'); return; }
+
       renderAuth();
       loadRemoteMe();
 
@@ -481,8 +641,30 @@
         const rows = await fetchMyResults(500);
         window.__myRows = rows;
         renderResults(rows, "all");
-      }catch{
-        byId("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#b3261e;">Error loading results</p></div>`;
+
+        // Extras
+        renderHeat14(rows);
+        renderBadges(rows);
+
+        const tr = computeTrend(rows);
+        const arrow = tr.dir==='up'?'⬆️':(tr.dir==='down'?'⬇️':'➡️');
+        byId('trendHint').textContent = `${arrow} Trend vs. previous period: ${tr.delta>0?'+':''}${tr.delta}%`;
+
+        const plan = weeklyProgress(rows);
+        if(plan.attempts < plan.goal){
+          const remain = Math.max(0, plan.goal - plan.attempts);
+          byId('trendHint').textContent += ` • ${remain} to reach weekly goal`;
+        }
+      }catch(e){
+        document.getElementById("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#b3261e;">Error loading results</p></div>`;
+        console.warn('Results fetch failed:', e);
+      }
+
+      try{
+        const marked = await fetchMyMarked(200);
+        renderMarked(marked);
+      }catch(e){
+        console.warn('Marked render failed:', e);
       }
     });
   </script>

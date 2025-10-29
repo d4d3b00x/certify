@@ -33,17 +33,19 @@ window.__QGLOBAL_ACTIVE = true;
 
 /* ========== CONFIG ========== */
 const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-const API_KEY = ""; // si no usas API Key, dejar vacío
+/* Si tu API Gateway usa API Key, ponla aquí; si no, deja "" (ponerla
+   en requests “simples” volvería a disparar preflight CORS) */
+const API_KEY = "";
 
 /* ========== Estado global ========== */
 const STATE = {
   quizId: 'aws-saa-c03',
   track: 'architect',
   mode: 'exam',
-  qs: [],                 // [{ questionId, question, _options, _correct, domain, category, ... }]
+  qs: [],
   idx: 0,
-  answers: {},            // index -> answerIdx
-  marked: {},             // index -> true
+  answers: {},
+  marked: {},
   startedAt: null,
   elapsedSec: 0,
   timerId: null,
@@ -143,6 +145,7 @@ function toForm(data){
   return body;
 }
 async function postForm(url, payload){
+  // NO ponemos x-api-key aquí: cualquier header “custom” dispara preflight
   const resp = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -182,7 +185,7 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
     let data; try{data=JSON.parse(text)}catch{ throw new Error('Respuesta no JSON de /questions'); }
     const items=Array.isArray(data.items)?data.items:[];
     for(const it of items){
-      const qid=it.questionId || it.qid || it.id || `${it.exam||''}:${it.question||''}`;
+      const qid=it.questionId || `${it.exam||''}:${it.question||''}`;
       if(!seen.has(qid)){ seen.add(qid); all.push(it); if(all.length>=target) break; }
     }
     lastKey=data.lastEvaluatedKey||null;
@@ -201,8 +204,6 @@ function transformQuestions(items){
   return items.map(it=>{
     const domain=normalizeDomain(it);
     return {
-      questionId: it.questionId || it.qid || it.id || null, // <-- nos quedamos siempre con questionId del backend
-      exam: it.exam || null,
       question: it.question || '',
       options: Array.isArray(it.options) ? it.options.slice() : [],
       correctAnswer: (typeof it.answerIndex==='number'?it.answerIndex:null),
@@ -236,30 +237,6 @@ function filterBySelection(all,tags){
   });
 }
 
-/* ========== Construir lista de marcadas con metadatos y QID ========== */
-function collectMarkedItems(){
-  const out=[];
-  const nowISO = new Date().toISOString();
-  const sid = STATE.sessionId || '';
-  for(const [k,v] of Object.entries(STATE.marked||{})){
-    if(!v) continue;
-    const i = Number(k);
-    const q = STATE.qs[i];
-    if(!q) continue;
-    out.push({
-      sessionId: sid,
-      quizId: STATE.quizId,
-      index: i,
-      questionId: q.questionId || null,  // <-- ID real de ExamQuestions
-      question: q.question || '',
-      domain: q.domain || null,
-      category: q.category || null,
-      markedAt: nowISO
-    });
-  }
-  return out;
-}
-
 /* ========== Progreso incremental (cliente) ========== */
 function showSaveErrorOnce(msg){
   const now=Date.now();
@@ -272,23 +249,6 @@ function showSaveErrorOnce(msg){
 async function saveProgressNow(extraFields={}){
   if(!STATE.sessionId) return;
   const u = getUserAny() || {};
-
-  // Derivados por índice
-  const questionIds = (STATE.qs||[]).map(q=> q?.questionId ?? null);
-
-  // Mapas por QID (para analítica/rehidratar)
-  const answersByQid = {};
-  Object.entries(STATE.answers||{}).forEach(([idx,ans])=>{
-    const q = STATE.qs[idx]; const qid = q?.questionId;
-    if(qid!=null) answersByQid[qid] = ans;
-  });
-  const markedByQid = {};
-  Object.entries(STATE.marked||{}).forEach(([idx,flag])=>{
-    if(!flag) return;
-    const q = STATE.qs[idx]; const qid = q?.questionId;
-    if(qid!=null) markedByQid[qid] = true;
-  });
-
   const payload = {
     sessionId: STATE.sessionId,
     userId: u.userId || u.id || "",
@@ -300,11 +260,6 @@ async function saveProgressNow(extraFields={}){
     idx: Number(STATE.idx || 0),
     answers: STATE.answers || {},
     marked: STATE.marked || {},
-    // NUEVO: campos enriquecidos
-    questionIds,
-    answersByQid,
-    markedByQid,
-    markedItems: collectMarkedItems(),
     total: (STATE.qs||[]).length || 0,
     elapsedSec: Number(STATE.elapsedSec || 0),
     startedAt: new Date(STATE.startedAt || Date.now()).toISOString(),
@@ -314,6 +269,7 @@ async function saveProgressNow(extraFields={}){
   };
   try{
     STATE.saving = true;
+    // POST x-www-form-urlencoded => evita preflight
     const res = await postForm(`${API_URL}/progress`, payload);
     STATE.lastProgressSyncAt = Date.now();
     STATE.progressDirty = false;
@@ -521,6 +477,7 @@ function renderQuiz(){
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell);
   root.appendChild(wrap);
+  enableHotkeys();
   try{wrap.scrollIntoView({behavior:'smooth',block:'start'})}catch{}
 }
 
@@ -561,6 +518,20 @@ function renderResultModal(r){
   document.body.appendChild(bd);
 }
 
+function genResultId(result){
+  const base=[result.quizId||'quiz',result.mode||'exam',result.total||0,result.correct||0,result.durationSec||0].join('|');
+  const t=Math.floor((new Date(result.ts||Date.now())).getTime()/10000);
+  return `${base}|${t}`;
+}
+
+async function postFormResults(url,payload){
+  const body=new URLSearchParams();
+  Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
+  const resp=await fetch(url,{method:"POST",mode:"cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body});
+  const text=await resp.text();let data=null;try{data=JSON.parse(text)}catch{data={raw:text}}
+  if(!resp.ok) throw new Error(`HTTP ${resp.status} ${(data.error||data.message||text)}`); return data;
+}
+
 async function saveResultRemoteOnce(result){
   if(STATE.saving) return null;
   STATE.saving=true;
@@ -574,7 +545,7 @@ async function saveResultRemoteOnce(result){
     pct: Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
     durationSec: Number(result.durationSec||0)
   };
-  try { return await postForm(`${API_URL}/results`, payload); }
+  try { return await postFormResults(`${API_URL}/results`, payload); }
   catch(e){ console.warn("Remote save failed:", e); return null; }
   finally { STATE.saving=false; }
 }
