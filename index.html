@@ -73,6 +73,56 @@
     .auth-extra b{color:#2a2f57}
 
     .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 22px}
+
+/* ===== Puntos de color para los enlaces de dominios ===== */
+#aws .study-link,
+#azure .study-link{
+  position: relative;
+  padding-left: 22px;            /* espacio para el circulito */
+  text-decoration: none;         /* quitamos subrayado por defecto */
+  font-weight: 800;
+}
+
+#aws .study-link { color: var(--aws-600); }
+#azure .study-link { color: var(--az-600); }
+
+#aws .study-link::before,
+#azure .study-link::before{
+  content:"";
+  position:absolute;
+  left:0; top:50%;
+  width:10px; height:10px;
+  transform: translateY(-50%);
+  border-radius:50%;
+}
+
+#aws .study-link::before{
+  border:2px solid var(--aws-500);
+  box-shadow:0 0 0 3px rgba(255,153,0,.15); /* halo suave */
+  background:#fff;
+}
+
+#azure .study-link::before{
+  border:2px solid var(--az-500);
+  box-shadow:0 0 0 3px rgba(0,120,212,.15);
+  background:#fff;
+}
+
+/* efecto hover: agranda ligeramente el circulito */
+#aws .study-link:hover::before,
+#azure .study-link:hover::before{
+  transform: translateY(-50%) scale(1.15);
+}
+
+/* (Opcional) Oculta el rombo que ya tenías en los <li> de estas listas,
+   para que no se superponga con el circulito nuevo */
+#aws ul li::before,
+#azure ul li::before{
+  display:none;
+}
+
+
+
     @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
     ul{margin:0;padding-left:0;list-style:none}
     ul li{ position:relative; padding:10px 12px 10px 28px; margin:10px 0; border:1px solid #edf0ff; border-radius:12px; background:#ffffff }

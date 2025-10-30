@@ -64,8 +64,8 @@
     .err{ color:var(--danger); font-weight:800; }
 
     .btn{ appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
-      font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
-      transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease; text-decoration:none; }
+      font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px; box-shadow:var(--shadow);
+      transition:transform .08s, box-shadow .12s, background .12s, color .12s, border-color .12s; text-decoration:none; }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
     .btn.primary{ background:#0078d4; color:#fff; border-color:#98cfff; }
     .btn.primary:hover{ filter:brightness(.96) }
@@ -96,7 +96,6 @@
     .review-icon{ display:inline-block; user-select:none; cursor:not-allowed; opacity:.95; }
     .is-hidden{ display:none !important; }
 
-    /* Extra UI: heatstrip + badges + filters */
     .heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
     .heat i{display:block;height:14px;border-radius:4px;background:#eef1ff;border:1px solid #e6e9ff}
     .heat i.lv1{background:#dfe9ff}
@@ -175,13 +174,11 @@
             Current streak: <b id="streakDays">0</b> day(s)
           </div>
 
-          <!-- 14-day activity heatstrip -->
           <div style="margin-top:10px;">
             <div class="muted" style="margin-bottom:6px;">Last 14 days activity</div>
             <div id="heat14" class="heat"></div>
           </div>
 
-          <!-- Badges -->
           <div style="margin-top:10px;">
             <div class="muted" style="margin-bottom:6px;">Badges</div>
             <div id="badgesBox" class="badges"></div>
@@ -206,7 +203,6 @@
             <div class="kpi"><h4>Best %</h4><div id="kpiBest" class="n">0%</div></div>
           </div>
 
-          <!-- Tools above results (sin export) -->
           <div class="tool">
             <label>Range:
               <select id="rangeSel">
@@ -393,7 +389,6 @@
       byId("goalFill").style.width = `0%`;
     }
 
-    // Filtros UI (range + min%)
     window.__filters = {days:'all', minPct:0, fromDate:null};
     const activeFilterKey = ()=> {
       const t = document.querySelector('.tab-btn.active')?.textContent || 'All';
@@ -408,7 +403,6 @@
       const f = filter.toLowerCase();
       if (f==="az-104" || f==="aws-saa-c03") list = list.filter(x=>x.quizId===f);
 
-      // filtros extra
       const { days, minPct } = window.__filters || {};
       if (days && days!=="all"){
         const cutoff = Date.now() - Number(days)*86400000;
@@ -459,73 +453,119 @@
       root.innerHTML = html;
     }
 
+    /* ======== MARCADAS: user primero + fallback por sessionId ======== */
+    function getLastSessionId() {
+      const keys = Object.keys(localStorage).filter(k => k.startsWith("quiz.session."));
+      keys.sort().reverse();
+      for (const k of keys) {
+        const sid = localStorage.getItem(k);
+        if (sid) return sid;
+      }
+      return null;
+    }
+
     async function fetchMyMarked(limit=200){
+      const out = [];
       try{
-        const u = getUserAny(); if (!u) return [];
-        const uid = (u.userId || u.id || "").toString();
-        const uemail = norm(u.email);
+        const u = getUserAny();
+        // 1) Por usuario (si hay login)
+        if (u && (u.userId || u.id || u.email)) {
+          const uid = (u.userId || u.id || "").toString();
+          const uemail = norm(u.email);
+          const qs = new URLSearchParams({ limit: String(limit) });
+          if (uid) qs.set("userId", uid);
+          if (uemail) qs.set("email", uemail);
 
-        const qs = new URLSearchParams({ limit: String(limit) });
-        if (uid) qs.set("userId", uid);
-        if (uemail) qs.set("email", uemail);
-
-        const res = await fetch(`${API_BASE}/progress?${qs.toString()}`, {mode:"cors",cache:"no-store"});
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
-
-        const sessions = Array.isArray(data.items) ? data.items : [];
-        const out=[];
-
-        // Más nuevas primero
-        sessions.sort((a,b)=> String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));
-
-        for(const it of sessions){
-          const quiz = String(it.quizId||'-').toLowerCase();
-
-          // Preferente: markedItems con questionId y texto
-          const arr = Array.isArray(it.markedItems)? it.markedItems : [];
-
-          if (arr.length){
-            for(const m of arr){
-              out.push({
-                quizId: quiz,
-                questionId: m.questionId || null,
-                question: m.question || '(no text)',
-                domain: m.domain || null,
-                category: m.category || null,
-                sessionId: m.sessionId || it.sessionId || '',
-                idx: (typeof m.index==='number'? m.index : null),
-                markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+          const r = await fetch(`${API_BASE}/progress?${qs.toString()}`, {mode:"cors",cache:"no-store"});
+          const data = await r.json().catch(()=> ({}));
+          if (r.ok && Array.isArray(data.items)) {
+            const sessions = data.items.slice().sort((a,b)=> String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));
+            for (const it of sessions) {
+              const quiz = String(it.quizId||'-').toLowerCase();
+              // preferente: markedItems
+              const items = Array.isArray(it.markedItems) ? it.markedItems : [];
+              if (items.length){
+                for (const m of items) {
+                  out.push({
+                    quizId: quiz,
+                    questionId: m.questionId || null,
+                    question: m.question || '(no text)',
+                    domain: m.domain || null,
+                    category: m.category || null,
+                    sessionId: m.sessionId || it.sessionId || '',
+                    idx: (typeof m.index==='number'? m.index : null),
+                    markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+                  });
+                }
+                continue;
+              }
+              // fallback: marked por índice + questionIds si existieran
+              const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
+              const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
+              Object.entries(markedMap).forEach(([idxStr,flag])=>{
+                if(!flag) return;
+                const idx = parseInt(idxStr,10);
+                const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
+                out.push({
+                  quizId: quiz,
+                  questionId: qid,
+                  question: '(marked question — open session to review)',
+                  domain: null, category: null, sessionId: it.sessionId || '',
+                  idx, markedAt: it.updatedAt || it.startedAt || null
+                });
               });
             }
-            continue;
           }
+        }
 
-          // Fallback: questionIds + marked
-          const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
-          const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
-          Object.entries(markedMap).forEach(([indexStr,flag])=>{
-            if(!flag) return;
-            const idx = parseInt(indexStr,10);
-            const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
-            out.push({
-              quizId: quiz,
-              questionId: qid,
-              question: '(marked question — open session to view text)',
-              domain: null,
-              category: null,
-              sessionId: it.sessionId || '',
-              idx,
-              markedAt: it.updatedAt || it.startedAt || null
-            });
-          });
+        // 2) Fallback por sessionId local (si no hay usuario o no se trajo nada)
+        if (out.length === 0) {
+          const sid = getLastSessionId();
+          if (sid) {
+            const r2 = await fetch(`${API_BASE}/progress?sessionId=${encodeURIComponent(sid)}`, {mode:"cors",cache:"no-store"});
+            const data2 = await r2.json().catch(()=> ({}));
+            if (r2.ok && data2 && data2.item) {
+              const it = data2.item;
+              const quiz = String(it.quizId||'-').toLowerCase();
+              const items = Array.isArray(it.markedItems) ? it.markedItems : [];
+              if (items.length){
+                for (const m of items) {
+                  out.push({
+                    quizId: quiz,
+                    questionId: m.questionId || null,
+                    question: m.question || '(no text)',
+                    domain: m.domain || null,
+                    category: m.category || null,
+                    sessionId: m.sessionId || it.sessionId || '',
+                    idx: (typeof m.index==='number'? m.index : null),
+                    markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+                  });
+                }
+              } else {
+                const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
+                const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
+                Object.entries(markedMap).forEach(([idxStr,flag])=>{
+                  if(!flag) return;
+                  const idx = parseInt(idxStr,10);
+                  const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
+                  out.push({
+                    quizId: quiz,
+                    questionId: qid,
+                    question: '(marked question — open session to review)',
+                    domain: null, category: null, sessionId: it.sessionId || '',
+                    idx, markedAt: it.updatedAt || it.startedAt || null
+                  });
+                });
+              }
+            }
+          }
         }
 
         out.sort((a,b)=> String(b.markedAt||'').localeCompare(String(a.markedAt||'')));
         return out.slice(0, 50);
       }catch(e){
         console.warn('Marked fetch failed:', e);
-        return [];
+        return out.slice(0,50);
       }
     }
 
@@ -617,7 +657,6 @@
     byId("tabAZ").onclick   = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
     byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
 
-    // Filtros UI wiring
     byId('rangeSel').onchange = (e)=>{
       window.__filters.days = e.target.value;
       renderResults(window.__myRows||[], activeFilterKey());
@@ -629,11 +668,8 @@
       renderResults(window.__myRows||[], activeFilterKey());
     };
 
-    // Init
+    // ===== Init (NO redirección si no hay usuario) =====
     document.addEventListener("DOMContentLoaded", async ()=>{
-      const u = getUserAny();
-      if (!u){ location.replace('/login/login.html'); return; }
-
       renderAuth();
       loadRemoteMe();
 
@@ -641,8 +677,6 @@
         const rows = await fetchMyResults(500);
         window.__myRows = rows;
         renderResults(rows, "all");
-
-        // Extras
         renderHeat14(rows);
         renderBadges(rows);
 
@@ -656,7 +690,7 @@
           byId('trendHint').textContent += ` • ${remain} to reach weekly goal`;
         }
       }catch(e){
-        document.getElementById("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#b3261e;">Error loading results</p></div>`;
+        document.getElementById("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#b3261e;">Error loading results or not signed in.</p></div>`;
         console.warn('Results fetch failed:', e);
       }
 

@@ -1,29 +1,17 @@
-/* ========== Google Analytics (gtag) ========== */
-const GA_ID = 'G-DYZ3GCXHEK';
-
-(function initGA(){
-  if (window.__GA_INIT) return;
-  window.__GA_INIT = true;
-
-  const s = document.createElement('script');
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-  document.head.appendChild(s);
+// Crear e inyectar el script de Google Analytics
+(function() {
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK';
+  document.head.appendChild(script);
 
   window.dataLayer = window.dataLayer || [];
-  function gtag(){ window.dataLayer.push(arguments); }
+  function gtag(){window.dataLayer.push(arguments);}
   window.gtag = gtag;
 
   gtag('js', new Date());
-  gtag('config', GA_ID);
+  gtag('config', 'G-DYZ3GCXHEK');
 })();
-
-/* Helper para eventos */
-function gaEvent(name, params = {}) {
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', name, params);
-  }
-}
 
 /* ===== Singleton guard ===== */
 if (window.__QGLOBAL_ACTIVE) {
@@ -33,17 +21,18 @@ window.__QGLOBAL_ACTIVE = true;
 
 /* ========== CONFIG ========== */
 const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-const API_KEY = ""; // si no usas API Key, dejar vacío
+const PROGRESS_URL = `${API_URL}/progress`;
 
 /* ========== Estado global ========== */
 const STATE = {
   quizId: 'aws-saa-c03',
   track: 'architect',
   mode: 'exam',
-  qs: [],                 // [{ questionId, question, _options, _correct, domain, category, ... }]
+  qs: [],
   idx: 0,
-  answers: {},            // index -> answerIdx
-  marked: {},             // index -> true
+  answers: {},        // { [index]: selectedIndex }
+  marked: {},         // { [index]: true }
+  markTimes: {},      // { [index]: ISOString }  // para mantener markedAt por ítem
   startedAt: null,
   elapsedSec: 0,
   timerId: null,
@@ -54,13 +43,12 @@ const STATE = {
   loading: false,
   timeLimit: 0,
 
-  // === Progreso incremental ===
+  // ===== Progreso remoto / sesión =====
   sessionId: null,
-  lastProgressSyncAt: 0,
-  progressDirty: false,
-  autoSyncId: null,
-
-  lastSaveErrorShown: 0
+  lastSaveTs: 0,
+  saveDebounce: null,
+  saveEveryNsec: 15,
+  hasInitialUpsert: false
 };
 let __START_SEQ = 0;
 
@@ -107,6 +95,7 @@ const QUIZZES = {
   .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#2a1b51;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:99999}
   .toast.show{opacity:1}
   .loading{padding:18px;border:1px dashed #e2dcff;border-radius:12px;background:#fff;margin:10px 0}
+
   .qg-lock{overflow:hidden}
   .qg-backdrop{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,19,48,.45);z-index:2147483000}
   .qg-modal{max-width:680px;width:100%;background:#ffffff;border:1px solid #e2dcff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.35);padding:20px}
@@ -128,31 +117,7 @@ function pad(n){return String(n).padStart(2,'0')}
 function fmtTime(sec){sec=Math.max(0,Number(sec)||0);const m=Math.floor(sec/60),s=sec%60;return `${pad(m)}:${pad(s)}`}
 function toast(msg,ms=1600){let t=document.querySelector('.toast');if(!t){t=h('div',{class:'toast'});document.body.appendChild(t)}t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),ms)}
 function shuffle(a){const arr=a;const n=arr.length;const buf=new Uint32Array(n);if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(buf);for(let i=n-1;i>0;i--){const r=buf[i]!==undefined?(buf[i]/0x100000000):Math.random();const j=Math.floor(r*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
-
-/* Helpers progreso / red */
-function debounce(fn, ms=800){ let t=null; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
-function getUserAny(){let u=null;try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}return u}
-function genSessionId({quizId, startedAt}){ const u=getUserAny()||{}; const uid = u.userId || u.id || "anon"; return [uid, quizId, Math.floor((startedAt||Date.now())/1000)].join('#'); }
-
-/* Helpers de red sin preflight (x-www-form-urlencoded) */
-function toForm(data){
-  const body = new URLSearchParams();
-  Object.entries(data).forEach(([k,v])=>{
-    body.append(k, (typeof v === 'object' ? JSON.stringify(v) : String(v)));
-  });
-  return body;
-}
-async function postForm(url, payload){
-  const resp = await fetch(url, {
-    method: "POST",
-    mode: "cors",
-    headers: {"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-    body: toForm(payload)
-  });
-  const txt = await resp.text(); let data=null; try{ data=JSON.parse(txt) }catch{ data={raw:txt} }
-  if(!resp.ok) throw new Error(`HTTP ${resp.status} ${(data.error||data.message||txt)}`);
-  return data;
-}
+function uuid(){return 's-' + Math.random().toString(16).slice(2)+Date.now().toString(36)}
 
 /* ========== Tema ========== */
 function applyTheme(quizId){
@@ -182,7 +147,7 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
     let data; try{data=JSON.parse(text)}catch{ throw new Error('Respuesta no JSON de /questions'); }
     const items=Array.isArray(data.items)?data.items:[];
     for(const it of items){
-      const qid=it.questionId || it.qid || it.id || `${it.exam||''}:${it.question||''}`;
+      const qid=it.questionId || `${it.exam||''}:${it.question||''}`;
       if(!seen.has(qid)){ seen.add(qid); all.push(it); if(all.length>=target) break; }
     }
     lastKey=data.lastEvaluatedKey||null;
@@ -201,8 +166,7 @@ function transformQuestions(items){
   return items.map(it=>{
     const domain=normalizeDomain(it);
     return {
-      questionId: it.questionId || it.qid || it.id || null, // <-- nos quedamos siempre con questionId del backend
-      exam: it.exam || null,
+      questionId: it.questionId || `${it.exam||''}:${it.question||''}`, // <-- guardamos id
       question: it.question || '',
       options: Array.isArray(it.options) ? it.options.slice() : [],
       correctAnswer: (typeof it.answerIndex==='number'?it.answerIndex:null),
@@ -236,115 +200,138 @@ function filterBySelection(all,tags){
   });
 }
 
-/* ========== Construir lista de marcadas con metadatos y QID ========== */
-function collectMarkedItems(){
-  const out=[];
-  const nowISO = new Date().toISOString();
-  const sid = STATE.sessionId || '';
-  for(const [k,v] of Object.entries(STATE.marked||{})){
-    if(!v) continue;
-    const i = Number(k);
-    const q = STATE.qs[i];
-    if(!q) continue;
-    out.push({
-      sessionId: sid,
-      quizId: STATE.quizId,
-      index: i,
-      questionId: q.questionId || null,  // <-- ID real de ExamQuestions
-      question: q.question || '',
-      domain: q.domain || null,
-      category: q.category || null,
-      markedAt: nowISO
-    });
-  }
-  return out;
+/* ========== User helpers ========== */
+function getUserAny(){
+  let u=null;
+  try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
+  if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}
+  return u;
 }
 
-/* ========== Progreso incremental (cliente) ========== */
-function showSaveErrorOnce(msg){
-  const now=Date.now();
-  if(now-STATE.lastSaveErrorShown>6000){
-    toast(`⚠️ Progress not saved: ${msg}`);
-    STATE.lastSaveErrorShown = now;
-  }
-}
-
-async function saveProgressNow(extraFields={}){
-  if(!STATE.sessionId) return;
-  const u = getUserAny() || {};
-
-  // Derivados por índice
-  const questionIds = (STATE.qs||[]).map(q=> q?.questionId ?? null);
-
-  // Mapas por QID (para analítica/rehidratar)
-  const answersByQid = {};
-  Object.entries(STATE.answers||{}).forEach(([idx,ans])=>{
-    const q = STATE.qs[idx]; const qid = q?.questionId;
-    if(qid!=null) answersByQid[qid] = ans;
-  });
-  const markedByQid = {};
-  Object.entries(STATE.marked||{}).forEach(([idx,flag])=>{
-    if(!flag) return;
-    const q = STATE.qs[idx]; const qid = q?.questionId;
-    if(qid!=null) markedByQid[qid] = true;
-  });
-
-  const payload = {
-    sessionId: STATE.sessionId,
-    userId: u.userId || u.id || "",
-    userName: u.name || u.displayName || "anonymous",
-    email: (u.email || "").trim().toLowerCase(),
-    quizId: STATE.quizId,
-    track: STATE.track || 'architect',
-    mode: STATE.mode || 'exam',
-    idx: Number(STATE.idx || 0),
-    answers: STATE.answers || {},
-    marked: STATE.marked || {},
-    // NUEVO: campos enriquecidos
-    questionIds,
-    answersByQid,
-    markedByQid,
-    markedItems: collectMarkedItems(),
-    total: (STATE.qs||[]).length || 0,
-    elapsedSec: Number(STATE.elapsedSec || 0),
-    startedAt: new Date(STATE.startedAt || Date.now()).toISOString(),
-    updatedAt: new Date().toISOString(),
-    status: STATE.finished ? 'finished' : 'in_progress',
-    ...extraFields
-  };
+/* ========== PROGRESS (crear/guardar/upsert) ========== */
+function persistLocalSessionId(sid){
   try{
-    STATE.saving = true;
-    const res = await postForm(`${API_URL}/progress`, payload);
-    STATE.lastProgressSyncAt = Date.now();
-    STATE.progressDirty = false;
-    return res;
+    localStorage.setItem('quiz.session.active', sid);
+    localStorage.setItem(`quiz.session.${Date.now()}`, sid);
+  }catch{}
+}
+async function upsertProgress(payload){
+  try{
+    const resp = await fetch(PROGRESS_URL, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const text = await resp.text();
+    let data=null; try{ data = JSON.parse(text); }catch{ data={raw:text}; }
+    if(!resp.ok) throw new Error(`HTTP ${resp.status} ${(data && (data.error||data.message))||text}`);
+    return data;
   }catch(e){
-    console.warn('saveProgress failed:', e);
-    showSaveErrorOnce(e.message||'unknown');
+    console.warn('Progress upsert failed:', e);
     return null;
-  }finally{
-    STATE.saving = false;
   }
 }
-const saveProgressDebounced = debounce(()=>saveProgressNow(), 900);
-
-function startAutoSync(){
-  stopAutoSync();
-  STATE.autoSyncId = setInterval(()=>{
-    if(STATE.progressDirty && !STATE.saving && !STATE.finished){
-      saveProgressNow();
-    }
-  }, 20000);
+function buildMarkedItems(){
+  const items=[];
+  const nowIso=new Date().toISOString();
+  STATE.qs.forEach((q,idx)=>{
+    if(!STATE.marked[idx]) return;
+    items.push({
+      sessionId: STATE.sessionId || '',
+      index: idx,
+      questionId: q.questionId || null,
+      question: q.question || '(no text)',
+      category: q.category || null,
+      domain: q.domain || null,
+      markedAt: STATE.markTimes[idx] || nowIso
+    });
+  });
+  return items;
 }
-function stopAutoSync(){
-  if(STATE.autoSyncId){ clearInterval(STATE.autoSyncId); STATE.autoSyncId = null; }
+function buildQuestionBank(){
+  // Se guarda lo ya mostrado (con orden ya barajado), suficiente para reanudar
+  return STATE.qs.map((q,idx)=>({
+    index: idx,
+    questionId: q.questionId || null,
+    question: q.question || '',
+    category: q.category || null,
+    domain: q.domain || null,
+    optionsShown: (q._options||[]).slice(),
+    correctShownIndex: (typeof q._correct==='number'? q._correct : null),
+    optOrder: Array.isArray(q._optOrder) ? q._optOrder.slice() : null
+  }));
+}
+function questionIdsList(){ return STATE.qs.map(q=>q.questionId || null); }
+function computePct(){
+  let c=0,t=STATE.qs.length;
+  for(let i=0;i<t;i++){ if(STATE.answers[i]===STATE.qs[i]._correct) c++; }
+  return t? Math.round((c/t)*100) : 0;
+}
+function baseUser(){
+  const u=getUserAny()||{};
+  return {
+    userId: u.userId||u.id||"anon",
+    userName: u.name||u.displayName||"anonymous",
+    email: u.email||""
+  };
+}
+function computeProgressPayload({full=false, finished=false}={}){
+  const nowIso = new Date().toISOString();
+  const user = baseUser();
+  const payload = {
+    // claves
+    sessionId: STATE.sessionId,
+    quizId: STATE.quizId,
+    mode: STATE.mode||'exam',
+    track: STATE.track||'architect',
+
+    // usuario
+    ...user,
+
+    // cronos
+    startedAt: STATE.startedAt ? new Date(STATE.startedAt).toISOString() : nowIso,
+    updatedAt: nowIso,
+    elapsedSec: Number(STATE.elapsedSec||0),
+    timeLimit: Number(STATE.timeLimit||0),
+
+    // posición/progreso
+    cursor: Number(STATE.idx||0),
+    total: Number(STATE.qs.length||0),
+    pct: computePct(),
+    finished: Boolean(finished),
+
+    // mapas
+    answers: STATE.answers,           // { "3": 1, ... }
+    marked: STATE.marked,             // { "5": true, ... }
+
+    // identificación de preguntas
+    questionIds: questionIdsList(),
+
+    // para el perfil
+    markedItems: buildMarkedItems()
+  };
+
+  if (full || !STATE.hasInitialUpsert){
+    payload.questionBank = buildQuestionBank();
+  }
+  return payload;
+}
+function scheduleSaveProgress({full=false, finished=false, reason='auto'}={}){
+  try{ localStorage.setItem('quiz.lastReason', reason); }catch{}
+  if (STATE.saveDebounce){ clearTimeout(STATE.saveDebounce); }
+  STATE.saveDebounce = setTimeout(async ()=>{
+    const payload = computeProgressPayload({full, finished});
+    await upsertProgress(payload);
+    STATE.hasInitialUpsert = true;
+    STATE.lastSaveTs = Date.now();
+  }, 400);
 }
 
 /* ========== START (acepta overrides: {count, tags}) ========== */
 async function start(quizId='aws-saa-c03', overrides={}){
   const mySeq=++__START_SEQ;
   stopTimer();
-  stopAutoSync();
   STATE.finished=false;
 
   const cfg=QUIZZES[quizId] || QUIZZES['aws-saa-c03'];
@@ -358,35 +345,72 @@ async function start(quizId='aws-saa-c03', overrides={}){
   STATE.prefs = { ...STATE.prefs, count: desiredCount, tags };
 
   STATE.loading=true;
-
-  gaEvent('quiz_start', {
-    quiz_id: STATE.quizId,
-    track: STATE.track,
-    mode: STATE.mode,
-    items_requested: desiredCount,
-    tags: (Array.isArray(tags) ? tags.join(',') : '')
-  });
-
-  gaEvent('page_view', {
-    page_location: location.href,
-    page_path: `/quiz/${STATE.quizId}/${STATE.mode}`,
-    page_title: STATE.certi
-  });
-
   showLoading();
 
+  // ¿Reanudar?
+  const qp = new URLSearchParams(location.search);
+  const resumeId = overrides.resumeId || qp.get('resume');
+
   try{
+    // Intento de reanudar si hay resumeId
+    if (resumeId){
+      const res = await fetch(`${PROGRESS_URL}?sessionId=${encodeURIComponent(resumeId)}`, {mode:'cors', cache:'no-store'});
+      const data = await res.json();
+      if(res.ok && data && data.item && Array.isArray(data.item.questionBank)){
+        const it = data.item;
+        // reconstrucción desde questionBank
+        const bank = it.questionBank;
+        STATE.qs = bank.map(row=>({
+          questionId: row.questionId || null,
+          question: row.question || '',
+          category: row.category || 'General',
+          domain: row.domain || null,
+          _options: Array.isArray(row.optionsShown) ? row.optionsShown.slice() : [],
+          _optOrder: Array.isArray(row.optOrder) ? row.optOrder.slice() : null,
+          _correct: (typeof row.correctShownIndex==='number'? row.correctShownIndex : null),
+          options: [], correctAnswer: null, explanation:'', explanationRich:'', links:[]
+        }));
+        STATE.idx = Number(it.cursor||0);
+        STATE.answers = (typeof it.answers==='object' && it.answers) ? it.answers : {};
+        STATE.marked = (typeof it.marked==='object' && it.marked) ? it.marked : {};
+        STATE.startedAt = it.startedAt ? new Date(it.startedAt).getTime() : Date.now();
+        STATE.elapsedSec = Number(it.elapsedSec||0);
+        STATE.timeLimit = Number(it.timeLimit||0);
+        STATE.sessionId = it.sessionId || resumeId;
+        // markTimes best-effort
+        if (Array.isArray(it.markedItems)){
+          it.markedItems.forEach(m=>{
+            const idx = Number(m.index);
+            if (STATE.marked[idx]) STATE.markTimes[idx] = m.markedAt || it.updatedAt || it.startedAt || new Date().toISOString();
+          });
+        }
+        applyTheme(quizId);
+        renderQuiz();
+        startTimer();
+        toast(`Resumed session ${STATE.sessionId}`, 2200);
+        STATE.loading=false;
+        STATE.hasInitialUpsert = true;
+        persistLocalSessionId(STATE.sessionId);
+        return; // <-- fin reanudación
+      }
+    }
+
+    // === Inicio normal ===
     const exam=QUIZ_TO_EXAM[quizId] || 'SAA-C03';
 
+    // 1) Fetch con sobre-muestreo
     const raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 3, domainTags: tags });
     if (mySeq !== __START_SEQ) return;
 
+    // 2) Normaliza y filtra
     let all = transformQuestions(raw);
     if (tags.length) all = filterBySelection(all, tags);
 
+    // 3) Mezcla y recorta EXACTO
     shuffle(all);
     all = all.slice(0, desiredCount);
 
+    // 4) Shuffle de opciones
     all = all.map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice():[];
       const order = shuffle([...Array(opts.length).keys()]);
@@ -397,21 +421,26 @@ async function start(quizId='aws-saa-c03', overrides={}){
 
     if (mySeq !== __START_SEQ) return;
 
+    // 5) Estado y render
     STATE.qs = all;
     STATE.idx = 0;
     STATE.answers = {};
     STATE.marked = {};
+    STATE.markTimes = {};
     STATE.startedAt = Date.now();
     STATE.elapsedSec = 0;
     STATE.timeLimit = 0;
 
-    STATE.sessionId = genSessionId({quizId: STATE.quizId, startedAt: STATE.startedAt});
-    await saveProgressNow({ status: 'in_progress' });
-    startAutoSync();
+    // 6) Crear sessionId y guardar "full snapshot" inicial
+    STATE.sessionId = uuid();
+    persistLocalSessionId(STATE.sessionId);
 
     applyTheme(quizId);
     renderQuiz();
     startTimer();
+
+    // Upsert inicial con questionBank completo
+    scheduleSaveProgress({full:true, reason:'start'});
 
     toast(`Loaded ${STATE.qs.length}${tags.length?` • Domains: ${tags.join(', ')}`:''}`, 2000);
   }catch(err){
@@ -427,13 +456,17 @@ function showLoading(){ const root=document.getElementById('view'); if(!root) re
 function showError(msg){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:`<b>Error:</b> ${msg}`})); }
 
 /* ========== Timer ========== */
-function startTimer(){
-  stopTimer();
-  STATE.timerId=setInterval(()=>{
-    STATE.elapsedSec++;
-    const t=document.querySelector('.timer'); if(t) t.textContent=fmtTime(STATE.elapsedSec);
-    STATE.progressDirty = true;
-  },1000);
+function startTimer(){ 
+  stopTimer(); 
+  STATE.timerId=setInterval(()=>{ 
+    STATE.elapsedSec++; 
+    const t=document.querySelector('.timer'); 
+    if(t) t.textContent=fmtTime(STATE.elapsedSec); 
+    // auto-save periódico
+    if (STATE.sessionId && STATE.elapsedSec>0 && (STATE.elapsedSec % STATE.saveEveryNsec === 0)) {
+      scheduleSaveProgress({reason:'tick'});
+    }
+  },1000); 
 }
 function stopTimer(){ if(STATE.timerId){ clearInterval(STATE.timerId); STATE.timerId=null; } }
 
@@ -441,9 +474,7 @@ function stopTimer(){ if(STATE.timerId){ clearInterval(STATE.timerId); STATE.tim
 function renderQuiz(){
   const root=document.getElementById('view'); if(!root) return;
   root.innerHTML='';
-
-  const wrap = h('section',{class:'card'});
-  const shell = h('div',{class:'quiz-wrap'});
+  const wrap=h('section',{class:'card'}), shell=h('div',{class:'quiz-wrap'});
 
   const qCard=h('div',{class:'question-card'});
   const head=h('div',{class:'header-quiz'});
@@ -488,21 +519,37 @@ function renderQuiz(){
   }
 
   const ctr=h('div',{class:'controls'});
-  const back=h('button',{class:'btn',html:'Back'}); back.disabled=STATE.idx===0; back.onclick=()=>{STATE.idx=Math.max(0,STATE.idx-1);STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
-  const mark=h('button',{class:'btn',html:STATE.marked[STATE.idx]?'Unmark':'Mark'}); mark.onclick=()=>{STATE.marked[STATE.idx]=!STATE.marked[STATE.idx];toast(STATE.marked[STATE.idx]?'Marked':'Unmarked');STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
-  const next=h('button',{class:'btn primary',html:STATE.idx===STATE.qs.length-1?'Finish':'Next'}); next.onclick=()=>{if(STATE.idx===STATE.qs.length-1)return finish();STATE.idx++;STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
+  const back=h('button',{class:'btn',html:'Back'}); back.disabled=STATE.idx===0; back.onclick=()=>{STATE.idx=Math.max(0,STATE.idx-1); scheduleSaveProgress({reason:'nav'}); renderQuiz()};
+  const mark=h('button',{class:'btn',html:STATE.marked[STATE.idx]?'Unmark':'Mark'}); 
+  mark.onclick=()=>{
+    STATE.marked[STATE.idx]=!STATE.marked[STATE.idx]; 
+    if(STATE.marked[STATE.idx]) STATE.markTimes[STATE.idx]=new Date().toISOString(); else delete STATE.markTimes[STATE.idx];
+    toast(STATE.marked[STATE.idx]?'Marked':'Unmarked');
+    scheduleSaveProgress({reason:'mark'});
+    renderQuiz();
+  };
+  const next=h('button',{class:'btn primary',html:STATE.idx===STATE.qs.length-1?'Finish':'Next'}); 
+  next.onclick=()=>{if(STATE.idx===STATE.qs.length-1)return finish();STATE.idx++; scheduleSaveProgress({reason:'nav'}); renderQuiz()};
   ctr.appendChild(back); ctr.appendChild(mark); ctr.appendChild(next); qCard.appendChild(ctr);
 
   /* ===== Sidebar ===== */
   const side=h('div',{class:'side'});
+
+  // 1) PANEL DE BOTONES
   const pBtns=h('div',{class:'panel'});
   const actions=h('div',{class:'controls centered'});
-  const btnHome=h('button',{class:'btn',html:'🏠 Home'}); btnHome.onclick=()=>{ location.href='/'; };
-  const btnStop=h('button',{class:'btn',html:'⏸️ Stop for later'}); btnStop.onclick=async ()=>{ await saveProgressNow({ status: 'paused' }); toast('Progress saved for later'); };
+  const btnHome=h('button',{class:'btn',html:'🏠 Home'}); btnHome.onclick=()=>{ scheduleSaveProgress({reason:'home'}); location.href='/'; };
+  const btnStop=h('button',{class:'btn',html:'⏸️ Stop for later'}); 
+  btnStop.onclick=()=>{
+    scheduleSaveProgress({reason:'pause'});
+    try{ localStorage.setItem('quiz.resumeId', STATE.sessionId); }catch{}
+    toast('Progress saved. You can resume later.', 2000);
+  };
   actions.appendChild(btnHome); actions.appendChild(btnStop);
   pBtns.appendChild(actions);
   side.appendChild(pBtns);
 
+  // 2) LIST OF QUESTIONS
   const pList=h('div',{class:'panel'});
   pList.appendChild(h('h3',{html:'LIST OF QUESTIONS'}));
   const dots=h('div',{class:'list-dots',title:'Click to jump to any question'});
@@ -512,28 +559,27 @@ function renderQuiz(){
     const ans=STATE.answers[i];
     if(typeof ans!=='undefined'){ if(ans===qq._correct)d.classList.add('ok'); else d.classList.add('bad'); }
     if(STATE.marked[i]) d.classList.add('marked');
-    d.onclick=()=>{STATE.idx=i;STATE.progressDirty=true;saveProgressDebounced();renderQuiz()};
+    d.onclick=()=>{STATE.idx=i; scheduleSaveProgress({reason:'jump'}); renderQuiz()};
     dots.appendChild(d);
   });
   pList.appendChild(dots);
   side.appendChild(pList);
 
+  // Montaje
   shell.appendChild(qCard); shell.appendChild(side);
-  wrap.appendChild(shell);
-  root.appendChild(wrap);
+  wrap.appendChild(shell); root.appendChild(wrap);
+  enableHotkeys();
   try{wrap.scrollIntoView({behavior:'smooth',block:'start'})}catch{}
 }
 
-/* Selección */
-function onSelect(i){
-  if(typeof STATE.answers[STATE.idx]!=='undefined')return;
-  STATE.answers[STATE.idx]=i;
-  STATE.progressDirty = true;
-  saveProgressDebounced();
-  renderQuiz();
+function onSelect(i){ 
+  if(typeof STATE.answers[STATE.idx]!=='undefined')return; 
+  STATE.answers[STATE.idx]=i; 
+  scheduleSaveProgress({reason:'answer'});
+  renderQuiz(); 
 }
 
-/* ===== Resultados ===== */
+/* ===== Resultados (modal aislado) ===== */
 function renderResultModal(r){
   document.body.classList.add('qg-lock');
   const pass=r.pct>=70;
@@ -561,18 +607,31 @@ function renderResultModal(r){
   document.body.appendChild(bd);
 }
 
+function genResultId(result){
+  const base=[result.quizId||'quiz',result.mode||'exam',result.total||0,result.correct||0,result.durationSec||0].join('|');
+  const t=Math.floor((new Date(result.ts||Date.now())).getTime()/10000);
+  return `${base}|${t}`;
+}
+async function postForm(url,payload){
+  const body=new URLSearchParams();Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
+  const resp=await fetch(url,{method:"POST",mode:"cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body});
+  const text=await resp.text();let data=null;try{data=JSON.parse(text)}catch{data={raw:text}}
+  if(!resp.ok) throw new Error(`HTTP ${resp.status} ${(data.error||data.message||text)}`); return data;
+}
+
 async function saveResultRemoteOnce(result){
   if(STATE.saving) return null;
   STATE.saving=true;
   const u=getUserAny()||{};
   const payload={
-    userId: u.userId || u.id || "",
-    userName: u.name || u.displayName || "anonymous",
-    email: (u.email || "").trim().toLowerCase(),
-    quizId: result.quizId, track: result.track||"architect", mode: result.mode||"exam",
-    total: Number(result.total||0), correct: Number(result.correct||0),
-    pct: Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
-    durationSec: Number(result.durationSec||0)
+    resultId: genResultId(result),
+    userId:u.userId||u.id||"anon",
+    userName:u.name||u.displayName||"anonymous",
+    email:u.email||"",
+    quizId:result.quizId, track:result.track||"architect", mode:result.mode||"exam",
+    total:Number(result.total||0), correct:Number(result.correct||0),
+    pct:Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
+    durationSec:Number(result.durationSec||0), ts:result.ts||new Date().toISOString()
   };
   try { return await postForm(`${API_URL}/results`, payload); }
   catch(e){ console.warn("Remote save failed:", e); return null; }
@@ -583,19 +642,19 @@ async function finish(){
   if (STATE.finished) return;
   STATE.finished = true;
   stopTimer();
-  stopAutoSync();
-
   const total=STATE.qs.length; let correct=0;
   for(let i=0;i<total;i++){ if(STATE.answers[i]===STATE.qs[i]._correct) correct++; }
   const pct= total? Math.round((correct/total)*100):0;
   const result={
+    ts:new Date().toISOString(),
     quizId:STATE.quizId, track:STATE.track||'architect', mode:STATE.mode||'exam',
     total, correct, pct,
     markedCount:Object.values(STATE.marked||{}).filter(Boolean).length,
     durationSec:STATE.startedAt?Math.round((Date.now()-STATE.startedAt)/1000):STATE.elapsedSec||0
   };
 
-  await saveProgressNow({ status: 'finished' });
+  // Guardamos progreso final (finished = true)
+  scheduleSaveProgress({finished:true, reason:'finish'});
   await saveResultRemoteOnce(result);
   renderResultModal(result);
 }
@@ -607,9 +666,9 @@ function enableHotkeys(){
   window.addEventListener('keydown',(ev)=>{
     const tag=(ev.target.tagName||'').toLowerCase();
     if(tag==='input'||tag==='textarea'||tag==='select'||ev.metaKey||ev.ctrlKey) return;
-    if(ev.key==='n'||ev.key==='N'){ev.preventDefault(); if(STATE.idx===STATE.qs.length-1) finish(); else { STATE.idx++; STATE.progressDirty=true; saveProgressDebounced(); renderQuiz(); }}
-    if(ev.key==='b'||ev.key==='B'){ev.preventDefault(); if(STATE.idx>0){ STATE.idx--; STATE.progressDirty=true; saveProgressDebounced(); renderQuiz(); }}
-    if(ev.key==='m'||ev.key==='M'){ev.preventDefault(); STATE.marked[STATE.idx]=!STATE.marked[STATE.idx]; toast(STATE.marked[STATE.idx]?'Marked':'Unmarked'); STATE.progressDirty=true; saveProgressDebounced(); renderQuiz(); }
+    if(ev.key==='n'||ev.key==='N'){ev.preventDefault(); if(STATE.idx===STATE.qs.length-1) finish(); else { STATE.idx++; scheduleSaveProgress({reason:'nav-key'}); renderQuiz(); }}
+    if(ev.key==='b'||ev.key==='B'){ev.preventDefault(); if(STATE.idx>0){ STATE.idx--; scheduleSaveProgress({reason:'nav-key'}); renderQuiz(); }}
+    if(ev.key==='m'||ev.key==='M'){ev.preventDefault(); STATE.marked[STATE.idx]=!STATE.marked[STATE.idx]; if(STATE.marked[STATE.idx]) STATE.markTimes[STATE.idx]=new Date().toISOString(); else delete STATE.markTimes[STATE.idx]; toast(STATE.marked[STATE.idx]?'Marked':'Unmarked'); scheduleSaveProgress({reason:'mark-key'}); renderQuiz(); }
     const num=parseInt(ev.key,10);
     if(Number.isInteger(num)&&num>=1&&num<=9){
       const q=STATE.qs[STATE.idx];
