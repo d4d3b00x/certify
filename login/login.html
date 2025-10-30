@@ -71,6 +71,23 @@
     footer{margin:28px 0 14px;color:#8fa4ff99;text-align:center}
     footer a{color:#bcd3ff}
     .hidden{display:none !important}
+
+    /* ===== Modal de aviso ===== */
+    .modal-overlay{
+      position:fixed;inset:0;background:rgba(5,10,25,.55);backdrop-filter:blur(4px);
+      display:none;align-items:center;justify-content:center;z-index:1000;
+    }
+    .modal{
+      width:min(92vw,520px);border-radius:16px;border:1px solid var(--stroke);
+      background:linear-gradient(180deg,#151b31,#111937);box-shadow:var(--shadow);
+      padding:18px 18px 16px;
+    }
+    .modal h3{margin:0 0 4px;font-size:1.1rem}
+    .modal p{margin:6px 0 0;color:#cdd6ff}
+    .modal .ok{display:inline-flex;align-items:center;gap:8px;
+      background:rgba(37,184,115,.14);border:1px solid rgba(37,184,115,.35);
+      color:#b2f1d4;font-weight:900;border-radius:10px;padding:6px 10px;margin-bottom:8px}
+    .modal .actions{display:flex;justify-content:flex-end;margin-top:12px}
   </style>
 </head>
 <body>
@@ -171,6 +188,18 @@
     Hecho con ❤️ por CertifyLab • <a href="/">Home</a> · <a href="/score/ranking.html">Leaderboard</a>
   </footer>
 
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="ok">✅ Cuenta creada</div>
+      <h3 id="modalTitle">¡Todo listo!</h3>
+      <p id="modalMsg">Tu cuenta se ha creado correctamente. Ahora inicia sesión con tu email y contraseña.</p>
+      <div class="actions">
+        <button class="btn primary" id="modalClose" type="button">Entendido</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const API_URL="https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const AUTH_KEY="currentUser";
@@ -192,10 +221,7 @@
       $("loginErr").style.display="none"; $("loginErr").textContent="";
       $("signupErr").style.display="none"; $("signupErr").textContent="";
       // focus amigable
-      setTimeout(()=>{
-        if(isSignup) $("signupName").focus();
-        else $("loginEmail").focus();
-      },50);
+      setTimeout(()=>{ (isSignup ? $("signupName") : $("loginEmail")).focus(); }, 50);
     }
 
     function renderAuth(){
@@ -207,7 +233,6 @@
         t.textContent=`✅ Sesión iniciada: ${u.name||u.email} (${u.email||''})`;
         actions.style.display="none";
         signed.style.display="flex";
-        // opcional: ocultar formularios si ya está logado
         $("tabBar").classList.add("hidden");
         $("loginForm").classList.add("hidden");
         $("signupForm").classList.add("hidden");
@@ -216,9 +241,23 @@
         actions.style.display="flex";
         signed.style.display="none";
         $("tabBar").classList.remove("hidden");
-        // mantener la pestaña elegida por hash
       }
     }
+
+    // ===== Modal helpers =====
+    function showModal(msg="Tu cuenta se ha creado correctamente. Ahora inicia sesión.", title="¡Todo listo!"){
+      $("modalMsg").textContent = msg;
+      $("modalTitle").textContent = title;
+      $("modalOverlay").style.display = "flex";
+      // autocierre a los 4s
+      clearTimeout(showModal._t);
+      showModal._t = setTimeout(hideModal, 4000);
+    }
+    function hideModal(){
+      $("modalOverlay").style.display = "none";
+    }
+    $("modalClose").onclick = hideModal;
+    $("modalOverlay").addEventListener("click", (e)=>{ if(e.target.id==="modalOverlay") hideModal(); });
 
     // ==== Eventos navegación UI ====
     $("tabLogin").onclick = ()=> showTab("login");
@@ -231,9 +270,17 @@
     // ==== Arranque ====
     document.addEventListener("DOMContentLoaded", ()=>{
       renderAuth();
-      const wantSignup = location.hash === "#signup" || new URLSearchParams(location.search).get("view")==="signup";
+      const params = new URLSearchParams(location.search);
+      const wantSignup = location.hash === "#signup" || params.get("view")==="signup";
       showTab(wantSignup ? "signup" : "login");
-      if(location.hash==="#signedup"){ showTab("login"); }
+
+      // si venimos de registro correcto, mostrar aviso
+      if(location.hash==="#signedup"){
+        showTab("login");
+        showModal("Tu cuenta se ha creado correctamente. Inicia sesión con tus credenciales.", "🎉 Cuenta creada");
+        // limpiar el hash para que no vuelva a saltar si recarga
+        history.replaceState(null, "", location.pathname);
+      }
     });
 
     // ==== Helper errores ====
@@ -290,7 +337,7 @@
         });
         let data={}; try{data=await resp.json();}catch{}
         if(resp.ok){
-          // tras crear, volvemos a login con aviso
+          // Redirige a la misma página en modo login y muestra modal
           location.href="/login/login.html#signedup";
         }else{
           showError("signupErr", data?.error || "Error al crear la cuenta");
