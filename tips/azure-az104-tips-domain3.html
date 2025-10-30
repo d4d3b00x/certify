@@ -1,205 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DYZ3GCXHEK');
-</script>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Microsoft Azure AZ-104 — Domain 3 Tips: Deploy & Manage Compute Resources</title>
-<link rel="stylesheet" href="/style_global.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AZ‑104 — Dominio 3 · Desplegar y administrar cómputo</title>
 <style>
-/* ====== Azure calm blue theme (matches previous domains) ====== */
-:root{
-  --bg:#f5f8ff;
-  --surface:#f7faff;
-  --card:#ffffff;
-  --ink:#0f172a;
-  --muted:#5b6b82;
-  --brand:#0a1f44;
+  body{margin:0;background:#0f1320;color:#e8ecff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:#9fc4ff}
+  .wrap{max-width:900px;margin:0 auto;padding:22px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #2b3566;background:#141a37;
+          padding:8px 12px;border-radius:999px;font-weight:900;color:#cbd6ff}
+  h1{margin:8px 0 6px;font-size:1.55rem}
+  h2{margin:18px 0 8px;font-size:1.15rem}
+  .muted{color:#9ca8d9}
+  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:12px;padding:14px;margin:10px 0}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:#9ff0c9}
+  .warn{color:#ffd063}
+  .bad{color:#ffb0b0}
+  code, .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
 
-  --az:#0078d4;
-  --az-2:#3aa0ff;
-  --ring:rgba(0,120,212,.25);
-  --bd:#e4ecff;
-  --shadow:0 12px 26px rgba(8,25,68,.08);
-  --radius:16px;
-}
-
-*{box-sizing:border-box}
-body{
-  margin:0;padding:0;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
-  color:var(--ink);
-  background:
-    radial-gradient(900px 420px at 10% -10%, #ecf3ff 0, transparent 60%),
-    radial-gradient(900px 420px at 90% -10%, #e8f6ff 0, transparent 60%),
-    linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
-  line-height:1.6;
-  min-height:100vh;
-}
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.card{
-  background:#fff;border:1px solid var(--bd);border-radius:var(--radius);
-  padding:22px;box-shadow:var(--shadow);
-  transition:.18s ease;
-}
-.card.path:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(8,25,68,.1);}
-.hero{
-  text-align:center;padding:36px 24px;
-  background:
-    radial-gradient(120% 180% at 80% -20%, rgba(58,160,255,.18), rgba(58,160,255,0) 62%),
-    radial-gradient(120% 180% at 10% -10%, rgba(0,120,212,.16), rgba(0,120,212,0) 65%),
-    linear-gradient(180deg,#ffffff,#fbfdff);
-  border:1px solid #e8eeff;border-radius:var(--radius);
-}
-.badge1{display:inline-flex;align-items:center;gap:10px;padding:9px 13px;
-  border-radius:999px;font-weight:900;border:1px solid #cfe6ff;
-  background:linear-gradient(90deg,rgba(58,160,255,.2),rgba(0,120,212,.12));color:#033764}
-h1{font-size:clamp(1.6rem,2.1vw + 1rem,2.4rem);color:var(--brand);margin:12px 0 8px;font-weight:900}
-.desc{color:var(--muted)}
-.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 36px}
-@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
-ul{list-style:none;padding-left:0;margin:0}
-ul li{position:relative;padding:10px 12px 10px 32px;margin:10px 0;
-  border:1px solid #eef3ff;border-radius:12px;background:#fff}
-ul li::before{
-  content:"";position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(45deg);
-  width:12px;height:12px;border-radius:3px;
-  background:linear-gradient(135deg,var(--az),var(--az-2));
-  box-shadow:0 2px 6px rgba(0,120,212,.35)
-}
-code{background:#f0f8ff;border:1px solid #d6eaff;border-radius:6px;padding:0 6px}
-.azure-group{background:#fff;border-left:6px solid var(--az);
-  border-radius:12px;padding:14px;box-shadow:var(--shadow)}
-.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}
-.btn{
-  appearance:none;border:1px solid #cfe6ff;background:var(--az);color:#fff;
-  font-weight:900;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
-  text-decoration:none;box-shadow:0 8px 18px rgba(0,120,212,.18);
-  transition:.12s ease;
-}
-.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
-.btn.secondary{background:#fff;color:#0a2a4d;border:1px solid #dceaff}
-.tip{margin:10px 0;padding:10px 12px;border:1px dashed #bfe1ff;
-  background:#f2f9ff;border-radius:10px;color:#073a6a}
-.footer{font-size:.92rem;margin-top:10px;color:#5b6b82}
-.footer a{color:#0b66c3;font-weight:800;text-decoration:none}
-.footer a:hover{text-decoration:underline}
+  .toc{background:#10183a;border:1px solid #283056;border-radius:10px;padding:10px;margin:10px 0}
+  .toc a{color:#cfe1ff;text-decoration:none}
+  .toc li+li{margin-top:4px}
+  .resources a{word-break:break-all}
 </style>
 </head>
 <body>
-
 <div class="wrap">
-  <!-- HERO -->
-  <section class="card hero">
-    <span class="badge1">Azure AZ-104 — Domain 3 (Deploy & Manage Compute Resources)</span>
-    <h1>Scale out smart, secure, and cost-aware compute</h1>
-    <p class="desc" style="max-width:800px;margin:8px auto 0">
-      Domain 3 (about 25-30% of the exam) covers deploying and configuring VMs, VMSS, containers, and Azure App Service.  
-      You’ll also handle availability sets/zones, extensions, automation, and custom images.
-    </p>
-  </section>
-
-  <!-- CONTENT -->
-  <section class="azure-group">
-    <section class="grid">
-      <article class="card path">
-        <h2>Patterns that score</h2>
-        <ul>
-          <li><strong>Use VMSS &gt; single VM</strong> for scale and self-healing. Combine with Load Balancer or App Gateway for traffic distribution.</li>
-          <li><strong>Deploy via templates</strong> (ARM/Bicep) to ensure consistency; use parameters for region, SKU, tags, etc.</li>
-          <li><strong>Choose the right availability</strong>: availability set (domain+update domains) vs availability zones for true AZ redundancy.</li>
-          <li><strong>Use managed identities</strong> instead of credentials to access resources (Key Vault, Storage, etc.).</li>
-          <li><strong>Automate config</strong> with Custom Script Extension, DSC, or Azure Automation State Configuration.</li>
-          <li><strong>Deallocate ≠ delete</strong>: Stopped (deallocated) releases compute cost but keeps storage billing.</li>
-        </ul>
-        <div class="tip">Exam hint: Pick the solution that reduces manual management and improves availability or compliance.</div>
-
-        <h2>Common pitfalls</h2>
-        <ul>
-          <li>Creating unmanaged disks or forgetting to set OS disk type (Premium SSD vs Standard SSD/HDD).</li>
-          <li>Forgetting NSG association on both subnet and NIC levels.</li>
-          <li>Not enabling boot diagnostics or log analytics agent before troubleshooting questions.</li>
-          <li>Mixing up App Service Plan tiers (Shared/Basic vs Standard/Premium) for scaling & SSL support.</li>
-          <li>Confusing managed identity types: system-assigned vs user-assigned.</li>
-        </ul>
-
-        <h2>Study checklist</h2>
-        <ul>
-          <li>VM creation options (Portal, CLI, PowerShell, templates).</li>
-          <li>Availability Sets vs Availability Zones vs VM Scale Sets.</li>
-          <li>Managed Disks (Standard/Premium/Ultra) and snapshots/images.</li>
-          <li>Extensions: Custom Script, DSC, Azure Monitor Agent, Dependency Agent.</li>
-          <li>Automation: Runbooks, Update Management, Desired State Configuration.</li>
-          <li>Containers: Azure Container Instances, Web App for Containers, AKS basics.</li>
-          <li>App Service: scaling, deployment slots, configuration, identity, backup.</li>
-        </ul>
-
-        <h2>CLI quick hits</h2>
-        <ul>
-          <li>Create VM:<br/>
-          <code>az vm create -g rg-core -n vm1 --image UbuntuLTS --admin-username azureuser --generate-ssh-keys --zone 1</code></li>
-          <li>Deallocate:<br/><code>az vm deallocate -n vm1 -g rg-core</code></li>
-          <li>Attach data disk:<br/><code>az vm disk attach -g rg-core --vm-name vm1 --name datadisk1 --size-gb 64</code></li>
-          <li>Create Scale Set:<br/><code>az vmss create -n vmss-web -g rg-core --image UbuntuLTS --instance-count 2 --upgrade-policy automatic</code></li>
-          <li>Deploy ARM template:<br/><code>az deployment group create -g rg-core --template-file main.json --parameters @params.json</code></li>
-          <li>Create App Service Plan + Web App:<br/><code>az appservice plan create -g rg-core -n asp-prod --sku P1v2 --is-linux<br/>az webapp create -g rg-core -p asp-prod -n mywebapp --runtime "NODE:18LTS"</code></li>
-          <li>Create container instance:<br/><code>az container create -g rg-core -n helloaci --image mcr.microsoft.com/azuredocs/aci-helloworld --cpu 1 --memory 1 --ports 80</code></li>
-        </ul>
-      </article>
-
-      <aside class="card path">
-        <h3>Exam Focus</h3>
-        <ul>
-          <li>Deploy VMs and configure availability, extensions, disks, and identities.</li>
-          <li>Configure and manage VMSS scaling and upgrades.</li>
-          <li>Deploy and manage containers (ACI, AKS basics).</li>
-          <li>Deploy and configure App Service (web apps, plans, scaling, backups).</li>
-          <li>Automate VM deployment and configuration (ARM/Bicep, Automation, Runbooks).</li>
-        </ul>
-
-        <h3>Key Azure services</h3>
-        <ul>
-          <li>Virtual Machines, Managed Disks, Snapshots, Images</li>
-          <li>VM Scale Sets, Availability Sets/Zones</li>
-          <li>Azure App Service + Plans, Web App for Containers</li>
-          <li>Azure Container Instances (ACI), AKS basics</li>
-          <li>Azure Automation, Update Mgmt, Log Analytics</li>
-        </ul>
-
-        <h3>Hands-on ideas</h3>
-        <ul>
-          <li>Deploy a VMSS with a Custom Script Extension to install NGINX.</li>
-          <li>Create a snapshot → image → new VM from image.</li>
-          <li>Enable boot diagnostics and connect serial console for troubleshooting.</li>
-          <li>Deploy App Service with staging slot + swap operation test.</li>
-          <li>Configure user-assigned managed identity and grant it Key Vault access.</li>
-        </ul>
-
-        <div class="footer">
-          Updated 2025-10-25 · Useful docs: 
-          <a target="_blank" href="https://learn.microsoft.com/azure/virtual-machines/">Virtual Machines</a> · 
-          <a target="_blank" href="https://learn.microsoft.com/azure/virtual-machine-scale-sets/">VM Scale Sets</a> · 
-          <a target="_blank" href="https://learn.microsoft.com/azure/app-service/overview">App Service</a> · 
-          <a target="_blank" href="https://learn.microsoft.com/azure/automation/automation-intro">Automation</a>
-        </div>
-      </aside>
-    </section>
-  </section>
-
-  <!-- NAV -->
-  <div class="actions">
-    <a class="btn secondary" href="azure-az104-tops-domain2.html">◀ Back</a>
-    <a class="btn" href="azure-az104-tips-domain4.html">Next ▶</a>
-  </div>
+  <span class="badge">Azure · Cómputo</span>
+  <h1>AZ‑104 — Dominio 3 · Desplegar y administrar cómputo</h1>
+  <p class="muted">Máquinas virtuales, scale sets, imágenes y disponibilidad.</p>
+<div class="toc">
+  <strong>Índice</strong>
+  <ul>
+    <li><a href="#patrones">Patrones que puntúan</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#checklist">Lista de estudio</a></li>
+    <li><a href="#pista">Pista de examen</a></li>
+    <li><a href="#recursos">Recursos oficiales</a></li>
+  </ul>
 </div>
 
+<div class=\"card\" id=\"patrones\"><h2>Patrones que puntúan</h2>
+<ul>
+<li><strong>Disponibilidad</strong>: Zonas de disponibilidad o Conjuntos de disponibilidad; balanceo con Azure Load Balancer/ALB.</li>
+<li><strong>Escalado</strong>: VMSS con reglas de CPU, cola o métrica personalizada; <em>custom image</em> o Shared Image Gallery.</li>
+<li><strong>Gestión</strong>: extensiones de VM, Update Manager y Azure Monitor para inventario y parches.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"errores\"><h2>Errores comunes</h2>
+<ul>
+<li class="bad">Una sola instancia crítica sin SLA.</li>
+<li class="bad">No separar datos de SO en discos gestionados distintos (OS vs datos).</li>
+</ul>
+</div>
+<div class=\"card\" id=\"checklist\"><h2>Lista de estudio</h2>
+<ul>
+<li>Tipos de disco (Standard/Premium SSD, Ultra), IOPS/throughput y emparejamiento.</li>
+<li>Backup de VM y restauraciones a nivel de archivo/disco.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"pista\"><h2>Pista de examen</h2>
+<p>Para consistencia a escala, piensa en <strong>VMSS + imágenes compartidas</strong>.</p>
+</div>
+
+<div class="card resources" id="recursos">
+  <h2>Recursos oficiales</h2>
+  <ul>
+    <li><a href="https://learn.microsoft.com/azure/virtual-machines/" target="_blank" rel="noopener">Máquinas virtuales en Azure</a></li>
+<li><a href="https://learn.microsoft.com/azure/virtual-machine-scale-sets/overview" target="_blank" rel="noopener">Scale Sets</a></li>
+<li><a href="https://learn.microsoft.com/azure/virtual-machines/disks-types" target="_blank" rel="noopener">Discos administrados</a></li>
+  </ul>
+  <p class="muted">Enlaces a documentación oficial para ampliar y validar conceptos clave.</p>
+</div>
+
+</div>
 </body>
 </html>

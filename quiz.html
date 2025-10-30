@@ -11,6 +11,8 @@
       --aws:#ff9900;--azure:#0078d4;--radius:14px;--shadow:0 10px 24px rgba(6,12,40,.45);
       --accent:#6c8bff;--accent-2:#3e64ff;--accent-ring:rgba(108,139,255,.28);
       --ok:#25b873;--bad:#ff6b6b;--warn:#ffd063;
+      --brand:#6c8bff;               /* se actualiza por JS según el quiz */
+      --brand-ring: rgba(108,139,255,.32);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -36,8 +38,8 @@
     .userchip b{white-space:nowrap}
     @media(min-width:720px){.menu,.actions{display:flex}}
 
-    /* Paneles principales — derecha más estrecha */
-    .grid{display:grid;grid-template-columns:1.75fr .55fr;gap:16px;margin-top:16px}
+    /* Paneles principales — simulador un poco más estrecho */
+    .grid{display:grid;grid-template-columns:1.35fr .85fr;gap:16px;margin-top:16px}
     @media(max-width:860px){.grid{grid-template-columns:1fr}}
     .panel{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
     .panel h2,.panel h3{margin:0 0 10px}
@@ -59,31 +61,70 @@
     .dom-dot{width:14px;height:14px;border-radius:50%;border:2px solid currentColor}
     .dom-code{font-weight:900;min-width:42px;text-align:center;color:#cbd6ff}
     .dom-title{font-weight:800}
-    .dom-item.active{outline:3px solid var(--accent-ring)}
+    .dom-item.active{outline:3px solid var(--brand-ring)}
 
-    /* INFO_DOM */
-    .infoDom{margin-top:16px}
-    .info-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 8px}
-    .info-box{
+    /* Panel de notas ancho (debajo) */
+    #infoDom{
+      margin-top:16px;
       background:linear-gradient(180deg,#111937,#0f1633);
-      border:1px solid var(--stroke);border-radius:14px;padding:16px;box-shadow:var(--shadow);color:var(--ink)
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      color:var(--ink);
+      display:none; /* se muestra al elegir dominio */
     }
-    .info-content{line-height:1.65}
+    .info-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px}
+    #infoTitle{font-size:clamp(1.2rem,3.2vw,1.6rem);margin:0}
+    .info-content{line-height:1.75}
     .info-content h1,.info-content h2,.info-content h3{color:#eaf0ff}
-    .info-content p,.info-content li{color:#dbe4ff}
+    .info-content p,.info-content li{color:#dbe4ff;font-size:1.02rem}
     .info-empty{color:var(--muted);border:1px dashed var(--stroke);padding:12px;border-radius:10px;background:#0f1630}
 
-    /* Simulador */
+    /* Simulador destacado por color de marca */
+    #simCard{
+      position:relative;
+      background:
+        radial-gradient(600px 240px at 100% 0, color-mix(in srgb, var(--brand) 24%, transparent) , transparent 60%),
+        linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid color-mix(in srgb, var(--brand) 48%, transparent);
+      box-shadow:0 0 0 2px color-mix(in srgb, var(--brand) 35%, transparent) inset, 0 14px 30px rgba(0,0,0,.45);
+    }
+    #simCard::after{
+      content:"";
+      position:absolute;inset:-1px;border-radius:12px;pointer-events:none;
+      box-shadow:0 0 0 3px color-mix(in srgb, var(--brand) 28%, transparent);
+    }
+
     .segmented{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:6px}
     .segmented input{display:none}
     .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
-    .segmented input:checked + label{background:#0f1630;border:1px solid #31407a}
+    .segmented input:checked + label{
+      background:#0f1630;border:1px solid color-mix(in srgb, var(--brand) 55%, #31407a);
+      box-shadow:0 0 0 2px color-mix(in srgb, var(--brand) 25%, transparent) inset;
+    }
     .segmented label.disabled{opacity:.55;cursor:not-allowed;position:relative}
-    .segmented label.disabled::after{content:"Soon";position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.78rem;color:#9ca8d9}
+    .segmented label.disabled::after{content:"Pronto";position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:.78rem;color:#9ca8d9}
 
     .field{display:flex;flex-direction:column;gap:6px;margin-top:10px}
     .select{display:flex;gap:8px}
     .select select{border:1px solid var(--stroke);border-radius:10px;padding:8px 10px;background:var(--surface2);color:var(--ink)}
+
+    /* Título simulador */
+    #simTitle{
+      font-size:clamp(1.4rem,3.0vw,2.0rem);
+      font-weight:900; line-height:1.2; letter-spacing:.2px;
+      text-shadow:0 10px 28px color-mix(in srgb, var(--brand) 40%, transparent);
+      margin-bottom:6px;
+    }
+
+    /* Botón empezar */
+    #startBtn{
+      background:var(--brand);color:#0b0f22;border-color:transparent;
+      box-shadow:0 10px 24px color-mix(in srgb, var(--brand) 35%, transparent);
+    }
+    #startBtn:hover{filter:brightness(1.05)}
+    #startBtn:active{transform:translateY(1px)}
 
     /* FOOTER */
     footer{margin:32px 0 12px;color:#8fa4ff99;text-align:center;font-size:.95rem}
@@ -96,7 +137,7 @@
     <div class="wrap nav">
       <div class="brand"><span class="dot"></span> CertifyLab</div>
       <nav class="menu">
-        <a href="/index.html">Home</a>
+        <a href="/index.html">Inicio</a>
         <a href="/index.html#simuladores">Simuladores</a>
         <a href="/index.html#contenidos">Contenidos</a>
         <a href="/score/ranking.html">Ranking</a>
@@ -119,8 +160,7 @@
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
       <div id="badge" class="badge-pill"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <!-- Ranking eliminado -->
-        <a class="btn" href="/index.html">🏠 Home</a>
+        <a class="btn" href="/index.html">🏠 Inicio</a>
       </div>
     </div>
 
@@ -130,44 +170,31 @@
       <section class="panel" id="leftInfo">
         <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
           <img id="provLogo" alt="" style="width:66px;height:auto">
-          <div id="provText" style="color:var(--muted)">Loading…</div>
+          <div id="provText" style="color:var(--muted)">Cargando…</div>
         </div>
 
-        <h2 style="margin-top:14px">Exam Domains</h2>
-        <p style="margin-top:-6px;color:var(--muted)"><em>😎✏️ Click a domain to open helpful notes below.</em></p>
+        <h2 style="margin-top:14px">Dominios del examen</h2>
+        <p style="margin-top:-6px;color:var(--muted)"><em>😎✏️ Haz clic en un dominio para abrir notas útiles abajo.</em></p>
 
         <ul id="domainsList" class="domains-list"></ul>
-
-        <!-- INFO_DOM -->
-        <section id="infoDom" class="infoDom" hidden>
-          <div class="info-head">
-            <h3 id="infoTitle" style="margin:0">Domain notes</h3>
-            <button id="infoClose" class="btn">✖ Close</button>
-          </div>
-          <div class="info-box">
-            <div id="infoContent" class="info-content">
-              <div class="info-empty">Pick a domain above to load concise study notes right here.</div>
-            </div>
-          </div>
-        </section>
       </section>
 
-      <!-- Derecha (más estrecha) -->
+      <!-- Derecha (ligeramente más estrecha y con color de marca) -->
       <aside class="panel" id="simCard">
-        <h3 id="simTitle">Exam Simulator</h3>
+        <h3 id="simTitle">Simulador de examen</h3>
 
         <div class="field">
-          <label>Mode</label>
+          <label>Modo</label>
           <div class="segmented" id="modeSeg">
             <input type="radio" id="modePractice" name="mode" value="practice" checked>
-            <label for="modePractice">Practice</label>
+            <label for="modePractice">Práctica</label>
             <input type="radio" id="modeExam" name="mode" value="exam" disabled>
-            <label for="modeExam" class="disabled" title="Exam mode coming soon">Exam</label>
+            <label for="modeExam" class="disabled" title="Modo examen próximamente">Examen</label>
           </div>
         </div>
 
         <div class="field">
-          <label>Questions</label>
+          <label>Preguntas</label>
           <div class="select">
             <select id="qCount">
               <option>5</option><option>10</option><option>15</option><option>30</option><option>65</option>
@@ -176,32 +203,42 @@
         </div>
 
         <div class="field">
-          <label>Domains (optional filter)</label>
+          <label>Dominios (filtro opcional)</label>
           <div id="domainChips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
-          <div style="color:var(--muted)">Leave empty to include all domains.</div>
+          <div style="color:var(--muted)">Déjalo vacío para incluir todos los dominios.</div>
         </div>
 
         <div class="field" style="margin-top:12px">
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button id="startBtn" class="btn" style="background:var(--accent);color:#fff;border-color:transparent;box-shadow:var(--shadow)">▶ Start Quiz</button>
-            <!-- Ranking button eliminado -->
+            <button id="startBtn" class="btn">▶ Empezar</button>
           </div>
           <div style="color:var(--muted);margin-top:8px">
-            Shortcuts: <span class="btn" style="padding:2px 6px">N</span> Next,
-            <span class="btn" style="padding:2px 6px">B</span> Back,
-            <span class="btn" style="padding:2px 6px">M</span> Mark,
-            <span class="btn" style="padding:2px 6px">1-9</span> choose.
+            Atajos: <span class="btn" style="padding:2px 6px">N</span> Siguiente,
+            <span class="btn" style="padding:2px 6px">B</span> Anterior,
+            <span class="btn" style="padding:2px 6px">M</span> Marcar,
+            <span class="btn" style="padding:2px 6px">1-9</span> elegir.
           </div>
         </div>
       </aside>
     </div>
+
+    <!-- Panel de notas ancho (debajo, como “vista principal”) -->
+    <section id="infoDom" class="panel">
+      <div class="info-head">
+        <h3 id="infoTitle">Notas del dominio</h3>
+        <button id="infoClose" class="btn">✖ Cerrar</button>
+      </div>
+      <div id="infoContent" class="info-content">
+        <div class="info-empty">Selecciona un dominio para ver notas concisas aquí.</div>
+      </div>
+    </section>
 
     <!-- Aquí pinta Q_global_dark.js -->
     <main id="view"></main>
   </div>
 
   <footer>
-    Made with ❤️ by CertifyLab • <a href="/index.html#contenidos">Study notes</a>
+    Hecho con ❤️ por CertifyLab • <a href="/index.html#contenidos">Apuntes</a>
   </footer>
 
   <!-- Motor de la quiz -->
@@ -227,36 +264,36 @@
     const qs = k => new URLSearchParams(location.search).get(k);
     const QUIZ = (qs('quiz')||'').toLowerCase();         // az-104 | aws-saa-c03
     const IS_AZ = QUIZ.startsWith('az');
-    const BRAND_CLR = IS_AZ ? getComputedStyle(document.documentElement).getPropertyValue('--azure')
-                            : getComputedStyle(document.documentElement).getPropertyValue('--aws');
+    const BASE = getComputedStyle(document.documentElement);
+    const BRAND_CLR = IS_AZ ? BASE.getPropertyValue('--azure').trim()
+                            : BASE.getPropertyValue('--aws').trim();
 
     const CONFIG = {
       'aws-saa-c03': {
         title: 'AWS SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)',
         logo: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
-        blurb: 'Design secure and cost-optimized AWS architectures. Perfect if you’ve got some AWS or strong on-prem experience.',
+        blurb: 'Diseña arquitecturas seguras y optimizadas en coste en AWS. Ideal si ya tienes algo de experiencia en AWS o una base sólida on-prem.',
         domains: [
-          ['D1','Design Secure Architectures (30%)'],
-          ['D2','Design Resilient Architectures (26%)'],
-          ['D3','Design High-Performing Architectures (24%)'],
-          ['D4','Design Cost-Optimized Architectures (20%)'],
+          ['D1','Diseñar arquitecturas seguras (30%)'],
+          ['D2','Diseñar arquitecturas resilientes (26%)'],
+          ['D3','Diseñar arquitecturas de alto rendimiento (24%)'],
+          ['D4','Diseñar arquitecturas optimizadas en coste (20%)'],
         ],
       },
       'az-104': {
         title: 'MICROSOFT AZURE ADMINISTRATOR — ASSOCIATE (AZ-104)',
         logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg',
-        blurb: 'Master Azure admin essentials: identities, governance, compute, networking and monitoring.',
+        blurb: 'Domina lo esencial de administración en Azure: identidades, gobierno, cómputo, redes y monitorización.',
         domains: [
-          ['D1','Manage identities & governance (15–20%)'],
-          ['D2','Implement & manage storage (15–20%)'],
-          ['D3','Deploy & manage compute (20–25%)'],
-          ['D4','Configure & manage networking (20–25%)'],
-          ['D5','Monitor & maintain resources (10–15%)'],
+          ['D1','Administrar identidades y gobierno (15–20%)'],
+          ['D2','Implementar y administrar almacenamiento (15–20%)'],
+          ['D3','Desplegar y administrar cómputo (20–25%)'],
+          ['D4','Configurar y administrar redes (20–25%)'],
+          ['D5','Monitorizar y mantener recursos (10–15%)'],
         ],
       }
     };
 
-    /* ====== Mapeo de archivos HTML por dominio ====== */
     const DOMAIN_FILES = {
       'az-104': {
         D1: '/tips/azure-az104-tips-domain1.html',
@@ -285,11 +322,14 @@
           infoDom=document.getElementById('infoDom'),
           infoTitle=document.getElementById('infoTitle'),
           infoContent=document.getElementById('infoContent'),
-          infoClose=document.getElementById('infoClose');
+          infoClose=document.getElementById('infoClose'),
+          simCard=document.getElementById('simCard');
 
-    /* === util: cerrar panel de notas y limpiar selección === */
+    /* Helpers */
+    const withAlpha = (hex, aHex) => hex.startsWith('#') ? `${hex}${aHex}` : hex;
+
     function closeInfoPanel(){
-      infoDom.hidden = true;
+      infoDom.style.display = 'none';
       dlist.querySelectorAll('.dom-item').forEach(x=>x.classList.remove('active'));
     }
 
@@ -297,13 +337,21 @@
     if(!cfg){
       document.getElementById('root').innerHTML = `<div class="panel">Quiz desconocido: <b>${QUIZ||'(vacío)'}</b>. <a href="/index.html">Volver</a></div>`;
     } else {
-      // Branding
-      badge.style.borderColor = BRAND_CLR.trim() + '33';
-      badge.style.background = BRAND_CLR.trim() + '1f';
+      /* Branding dinámico */
+      document.documentElement.style.setProperty('--brand', BRAND_CLR);
+      document.documentElement.style.setProperty('--brand-ring', `color-mix(in srgb, ${BRAND_CLR} 32%, transparent)`);
+
+      // Badge
+      badge.style.borderColor = withAlpha(BRAND_CLR,'33');
+      badge.style.background = withAlpha(BRAND_CLR,'1f');
       badge.innerHTML = `<span style="width:10px;height:10px;border-radius:50%;background:${BRAND_CLR}"></span> ${cfg.title}`;
+
+      // Logo + texto
       provLogo.src = cfg.logo; provLogo.alt = IS_AZ?'Azure':'AWS';
       provText.textContent = cfg.blurb;
-      simTitle.textContent = (QUIZ.toUpperCase()) + ' Exam Simulator';
+
+      // Título simulador
+      simTitle.textContent = `${QUIZ.toUpperCase()} · Simulador de examen`;
 
       // Dominios
       dlist.innerHTML = cfg.domains.map(([d,txt]) =>
@@ -313,14 +361,14 @@
            <span class="dom-title">${txt}</span>
          </li>`).join('');
 
-      // Chips de filtro
+      // Chips filtro
       chips.innerHTML = cfg.domains.map(([d]) =>
         `<label class="btn" style="background:#0f1630;border-color:#313c6e">
            <input type="checkbox" value="${d}" style="display:none"> ${d}
          </label>`
       ).join('');
 
-      // Desactivar “Exam” de forma robusta
+      // Desactivar “Examen”
       const examInput = document.getElementById('modeExam');
       const examLabel = document.querySelector('label[for="modeExam"]');
       if (examInput) examInput.disabled = true;
@@ -330,29 +378,32 @@
         if (isExam) e.preventDefault();
       });
 
-      // Start quiz
-      startBtn.addEventListener('click', ()=>{
-        // ⬅️ cierre automático del panel de notas antes de iniciar
-        if (!infoDom.hidden) closeInfoPanel();
+      // Ajustes visuales del simulador
+      simCard.style.borderColor = withAlpha(BRAND_CLR,'66');
+      simCard.style.boxShadow = `0 0 0 2px ${withAlpha(BRAND_CLR,'55')} inset, 0 14px 30px rgba(0,0,0,.45)`;
+      startBtn.style.background = BRAND_CLR;
 
+      // Iniciar simulador
+      startBtn.addEventListener('click', ()=>{
+        if (infoDom.style.display !== 'none') closeInfoPanel();
         const count = parseInt(qCount.value,10) || 65;
         const tags = Array.from(chips.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
         if(typeof window.start === 'function'){
           window.start(QUIZ, { count, tags });
         }else{
-          alert('Motor de quiz no cargado.');
+          alert('Motor de simulador no cargado.');
         }
       });
     }
 
-    /* ====== INFO_DOM loader ====== */
+    /* ====== INFO_DOM loader (debajo, ancho) ====== */
     async function loadDomainNotes(domainCode){
       const map = DOMAIN_FILES[QUIZ]||{};
       const file = map[domainCode];
-      infoTitle.textContent = `${domainCode} — Notes`;
-      infoDom.hidden = false;
-      infoContent.innerHTML = `<div class="info-empty">Loading notes…</div>`;
-      if(!file){ infoContent.innerHTML = `<div class="info-empty">No notes file mapped for <b>${domainCode}</b>.</div>`; return; }
+      infoTitle.textContent = `${domainCode} — Notas`;
+      infoDom.style.display = 'block';
+      infoContent.innerHTML = `<div class="info-empty">Cargando notas…</div>`;
+      if(!file){ infoContent.innerHTML = `<div class="info-empty">No hay archivo de notas asignado para <b>${domainCode}</b>.</div>`; return; }
       try{
         const res = await fetch(file, {cache:'no-store'});
         const html = await res.text();
@@ -363,26 +414,29 @@
 
         // Ajuste de contraste si el HTML trae fondos claros
         infoContent.querySelectorAll('[style]').forEach(el=>{
-          const s = el.getAttribute('style');
+          const s = el.getAttribute('style')||'';
           if(/background:\s*#fff|#ffffff|rgb\(\s*255\s*,\s*255\s*,\s*255\s*\)/i.test(s)){
             el.style.background = '#10183a';
             el.style.borderColor = 'var(--stroke)';
             el.style.color = 'var(--ink)';
           }
         });
+
+        // scroll suave al panel ancho
+        infoDom.scrollIntoView({behavior:'smooth',block:'start'});
       }catch(e){
-        infoContent.innerHTML = `<div class="info-empty">Couldn’t load notes for <b>${domainCode}</b>. (${e?.message||'error'})</div>`;
+        infoContent.innerHTML = `<div class="info-empty">No se pudieron cargar las notas de <b>${domainCode}</b>. (${e?.message||'error'})</div>`;
       }
     }
 
-    // Click en dominios
-    dlist.addEventListener('click', (ev)=>{
+    // Click en dominios (abre panel ancho)
+    const dlistEl = document.getElementById('domainsList');
+    dlistEl.addEventListener('click', (ev)=>{
       const li = ev.target.closest('.dom-item');
       if(!li) return;
-      dlist.querySelectorAll('.dom-item').forEach(x=>x.classList.remove('active'));
+      dlistEl.querySelectorAll('.dom-item').forEach(x=>x.classList.remove('active'));
       li.classList.add('active');
       loadDomainNotes(li.dataset.dn);
-      infoDom.scrollIntoView({behavior:'smooth',block:'start'});
     });
 
     // Cerrar INFO_DOM

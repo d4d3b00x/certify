@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Microsoft Azure AZ-104 — Domain 4 Tips: Implement & Manage Virtual Networking</title>
+<link rel="stylesheet" href="/style_global.css"/>
+<style>
+/* ====== Azure calm blue theme (matches previous domains) ====== */
+:root{
+  --bg:#f5f8ff; --surface:#f7faff; --card:#ffffff; --ink:#0f172a; --muted:#5b6b82; --brand:#0a1f44;
+  --az:#0078d4; --az-2:#3aa0ff; --ring:rgba(0,120,212,.25); --bd:#e4ecff; --shadow:0 12px 26px rgba(8,25,68,.08); --radius:16px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;padding:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 10% -10%, #ecf3ff 0, transparent 60%),
+    radial-gradient(900px 420px at 90% -10%, #e8f6ff 0, transparent 60%),
+    linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  line-height:1.6; min-height:100vh;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:.18s ease}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(8,25,68,.1)}
+.hero{
+  text-align:center;padding:36px 24px;border:1px solid #e8eeff;border-radius:var(--radius);
+  background:
+    radial-gradient(120% 180% at 80% -20%, rgba(58,160,255,.18), rgba(58,160,255,0) 62%),
+    radial-gradient(120% 180% at 10% -10%, rgba(0,120,212,.16), rgba(0,120,212,0) 65%),
+    linear-gradient(180deg,#ffffff,#fbfdff);
+}
+.badge1{display:inline-flex;align-items:center;gap:10px;padding:9px 13px;border-radius:999px;font-weight:900;border:1px solid #cfe6ff;
+  background:linear-gradient(90deg,rgba(58,160,255,.2),rgba(0,120,212,.12));color:#033764}
+h1{font-size:clamp(1.6rem,2.1vw + 1rem,2.4rem);color:var(--brand);margin:12px 0 8px;font-weight:900}
+.desc{color:var(--muted)}
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 36px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+ul{list-style:none;padding-left:0;margin:0}
+ul li{position:relative;padding:10px 12px 10px 32px;margin:10px 0;border:1px solid #eef3ff;border-radius:12px;background:#fff}
+ul li::before{
+  content:"";position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(45deg);
+  width:12px;height:12px;border-radius:3px;background:linear-gradient(135deg,var(--az),var(--az-2));box-shadow:0 2px 6px rgba(0,120,212,.35)
+}
+code{background:#f0f8ff;border:1px solid #d6eaff;border-radius:6px;padding:0 6px}
+.azure-group{background:#fff;border-left:6px solid var(--az);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}
+.btn{
+  appearance:none;border:1px solid #cfe6ff;background:var(--az);color:#fff;font-weight:900;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
+  text-decoration:none;box-shadow:0 8px 18px rgba(0,120,212,.18);transition:.12s ease;
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn.secondary{background:#fff;color:#0a2a4d;border:1px solid #dceaff}
+.tip{margin:10px 0;padding:10px 12px;border:1px dashed #bfe1ff;background:#f2f9ff;border-radius:10px;color:#073a6a}
+.footer{font-size:.92rem;margin-top:10px;color:#5b6b82}
+.footer a{color:#0b66c3;font-weight:800;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- HERO -->
+  <section class="card hero" aria-label="Domain 4 overview">
+    <span class="badge1">Azure AZ-104 — Domain 4 (Implement & manage virtual networking)</span>
+    <h1>Segment, secure, and connect networks the right way</h1>
+    <p class="desc" style="max-width:800px;margin:8px auto 0">
+      Domain 4 is ~30–35% of the exam. Master VNets, subnets, IPs, routing (UDR), NSGs/ASGs, name resolution, Private Link, peering/VPN/ExpressRoute,
+      load balancing (LB/App Gateway), Azure Firewall, Bastion, and monitoring with NSG flow logs.
+    </p>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="azure-group">
+    <section class="grid">
+      <article class="card path">
+        <h2>Patterns that score</h2>
+        <ul>
+          <li><strong>Default-deny with layered controls</strong>: NSGs on subnets + NICs; use ASGs to group workloads by role.</li>
+          <li><strong>Prefer Private Endpoints</strong> (Private Link) over public service access; restrict storage/key vault to selected networks.</li>
+          <li><strong>Custom routing</strong>: UDRs to send egress via NVA/Azure Firewall; use <em>Virtual network gateway</em> route for hybrid.</li>
+          <li><strong>Peering over VNet-to-VNet gateway</strong> for intra-Azure; enable <em>use remote gateways</em> strategically.</li>
+          <li><strong>Right balancer</strong>: Basic LB → internal/VM traffic; Standard LB for zones; App Gateway for HTTP(S) + WAF; Front Door/Traffic Manager for global.</li>
+          <li><strong>DNS hygiene</strong>: Private DNS Zones linked to VNets; split-horizon names; avoid custom host files.</li>
+        </ul>
+        <div class="tip">Exam hint: If two designs work, pick the one that keeps traffic private, uses Standard SKUs, and centralizes egress via Azure Firewall.</div>
+
+        <h2>Common pitfalls</h2>
+        <ul>
+          <li>Forgetting NSG association (subnet vs NIC) or asymmetric rules (allow inbound but no outbound).</li>
+          <li>Peering with overlapping address spaces (not supported) or missing <em>allow forwarded traffic</em> for NVAs.</li>
+          <li>Using Service Endpoints when you actually need Private Link-level isolation and identity-based access.</li>
+          <li>Misconfiguring DNS when adding Private Endpoints (must add A-records in Private DNS zones).</li>
+          <li>Leaving default route to Internet when you intended to force-tunnel via VPN/Firewall.</li>
+        </ul>
+
+        <h2>Study checklist</h2>
+        <ul>
+          <li>Addressing: VNet CIDR planning, subnet sizing, reserved IPs (.0, .1, .2, .3, .255/31 patterns).</li>
+          <li>NSG vs ASG; priority/order; service tags; default rules.</li>
+          <li>Routes: system vs UDR; next hops (Virtual appliance, Internet, VNet gateway, None).</li>
+          <li>Connectivity: VNet peering (intra/inter-region), VPN Gateway (S2S/P2S), ExpressRoute basics.</li>
+          <li>Private Link (Private Endpoints) vs Service Endpoints; required DNS integration.</li>
+          <li>Load balancing stack: LB (L4), App Gateway (L7, WAF), Traffic Manager (DNS), Front Door (anycast, WAF).</li>
+          <li>Name resolution: Azure-provided DNS, Custom DNS, Private DNS Zones, resolver endpoints.</li>
+          <li>Security & egress: Azure Firewall, DNAT/SNAT, Application rules, IDPS (if asked), Bastion for RDP/SSH.</li>
+        </ul>
+
+        <h2>CLI quick hits</h2>
+        <ul>
+          <li>Create VNet + subnet:<br/>
+            <code>az network vnet create -g rg-net -n vnet-hub --address-prefixes 10.0.0.0/16 --subnet-name snet-workload --subnet-prefixes 10.0.1.0/24</code>
+          </li>
+          <li>Create NSG + rule + associate to subnet:<br/>
+            <code>az network nsg create -g rg-net -n nsg-workload</code><br/>
+            <code>az network nsg rule create -g rg-net --nsg-name nsg-workload -n allow-ssh --priority 1000 --direction Inbound --access Allow --protocol Tcp --destination-port-ranges 22</code><br/>
+            <code>az network vnet subnet update -g rg-net --vnet-name vnet-hub -n snet-workload --network-security-group nsg-workload</code>
+          </li>
+          <li>Add UDR & route via firewall (virtual appliance 10.0.100.4):<br/>
+            <code>az network route-table create -g rg-net -n rt-egress</code><br/>
+            <code>az network route-table route create -g rg-net --route-table-name rt-egress -n force-egress --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.100.4</code><br/>
+            <code>az network vnet subnet update -g rg-net --vnet-name vnet-hub -n snet-workload --route-table rt-egress</code>
+          </li>
+          <li>Peer two VNets (allow forwarded traffic example):<br/>
+            <code>az network vnet peering create -g rg-net -n hub-to-spoke --vnet-name vnet-hub --remote-vnet /subscriptions/&lt;subId&gt;/resourceGroups/rg-net/providers/Microsoft.Network/virtualNetworks/vnet-spoke --allow-vnet-access --allow-forwarded-traffic</code>
+          </li>
+          <li>Create Private Endpoint for Storage (blob):<br/>
+            <code>az network private-endpoint create -g rg-net -n pe-blob --vnet-name vnet-spoke --subnet snet-workload --private-connection-resource-id &lt;storage-id&gt; --group-ids blob --connection-name pe-blob-conn</code><br/>
+            <code>az network private-dns link vnet create -g rg-net -n link-blob --zone-name privatelink.blob.core.windows.net --virtual-network vnet-spoke --registration-enabled false</code>
+          </li>
+          <li>Create Standard Load Balancer (sketch):<br/>
+            <code># az network lb create ... (frontend, backend pool, health probe, LB rule)</code>
+          </li>
+          <li>Enable NSG Flow Logs (via Network Watcher):<br/>
+            <code>az network watcher flow-log configure -g rg-net -n nsg-workload --enabled true --retention 30 --storage-account mystorage12345 --traffic-analytics true --workspace &lt;log-analytics-id&gt;</code>
+          </li>
+        </ul>
+      </article>
+
+      <aside class="card path">
+        <h3>Exam Focus</h3>
+        <ul>
+          <li>Create and configure VNets, subnets, public/private IPs, and DNS.</li>
+          <li>Secure with NSGs/ASGs, service tags, and network policies.</li>
+          <li>Configure routing with UDRs; integrate NVAs/Azure Firewall.</li>
+          <li>Implement connectivity: peering, VPN Gateway (S2S/P2S), and basics of ExpressRoute.</li>
+          <li>Publish apps with LB/App Gateway; use Bastion for secure admin access.</li>
+          <li>Monitor traffic with NSG flow logs and diagnose with Network Watcher.</li>
+        </ul>
+
+        <h3>Key Azure services</h3>
+        <ul>
+          <li>Virtual Network, Subnets, Public/Private IP</li>
+          <li>NSG, ASG, Service Tags</li>
+          <li>Route Tables (UDR), Network Watcher</li>
+          <li>Private Link/Private Endpoints, Private DNS Zones</li>
+          <li>VNet Peering, VPN Gateway, ExpressRoute (overview)</li>
+          <li>Azure Load Balancer, Application Gateway (WAF), Front Door/Traffic Manager (global)</li>
+          <li>Azure Firewall, Bastion</li>
+        </ul>
+
+        <h3>Hands-on ideas</h3>
+        <ul>
+          <li>Build hub-spoke: Azure Firewall in hub; UDR to force-tunnel spoke egress.</li>
+          <li>Create Private Endpoint for a Storage account; restrict public network access.</li>
+          <li>Deploy Standard LB across zones; add health probe and LB rule for VMSS.</li>
+          <li>Configure P2S VPN with Azure AD authentication and test name resolution via Private DNS.</li>
+          <li>Turn on NSG flow logs + Traffic Analytics; verify denied/allowed flows.</li>
+        </ul>
+
+        <div class="footer">
+          Updated 2025-10-25 · Useful docs:
+          <a target="_blank" href="https://learn.microsoft.com/azure/virtual-network/virtual-networks-overview">Azure Virtual Network</a> ·
+          <a target="_blank" href="https://learn.microsoft.com/azure/virtual-network/network-security-groups-overview">NSG</a> ·
+          <a target="_blank" href="https://learn.microsoft.com/azure/private-link/private-endpoint-overview">Private Link</a> ·
+          <a target="_blank" href="https://learn.microsoft.com/azure/vpn-gateway/vpn-gateway-about-vpngateways">VPN Gateway</a> ·
+          <a target="_blank" href="https://learn.microsoft.com/azure/load-balancer/load-balancer-overview">Load Balancer</a> ·
+          <a target="_blank" href="https://learn.microsoft.com/azure/application-gateway/overview">Application Gateway</a> ·
+          <a target="_blank" href="https://learn.microsoft.com/azure/firewall/overview">Azure Firewall</a>
+        </div>
+      </aside>
+    </section>
+  </section>
+
+  <!-- NAV -->
+  <div class="actions">
+    <a class="btn secondary" href="azure-az104-tips.domain3.html">◀ Back</a>
+    <a class="btn" href="azure-az104-tips-domain5.html">Next ▶</a>
+  </div>
+</div>
+
+</body>
+</html>

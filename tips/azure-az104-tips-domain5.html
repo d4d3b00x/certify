@@ -1,212 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DYZ3GCXHEK');
-</script>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Microsoft Azure AZ-104 — Domain 5 Tips: Monitor & Maintain Azure Resources</title>
-<link rel="stylesheet" href="/style_global.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AZ‑104 — Dominio 5 · Monitorizar y mantener recursos</title>
 <style>
-/* ====== Azure calm blue theme (matches previous domains) ====== */
-:root{
-  --bg:#f5f8ff; --surface:#f7faff; --card:#ffffff; --ink:#0f172a; --muted:#5b6b82; --brand:#0a1f44;
-  --az:#0078d4; --az-2:#3aa0ff; --ring:rgba(0,120,212,.25); --bd:#e4ecff; --shadow:0 12px 26px rgba(8,25,68,.08); --radius:16px;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;padding:0;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
-  color:var(--ink);
-  background:
-    radial-gradient(900px 420px at 10% -10%, #ecf3ff 0, transparent 60%),
-    radial-gradient(900px 420px at 90% -10%, #e8f6ff 0, transparent 60%),
-    linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
-  line-height:1.6; min-height:100vh;
-}
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.card{background:#fff;border:1px solid var(--bd);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:.18s ease}
-.card.path:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(8,25,68,.1)}
-.hero{
-  text-align:center;padding:36px 24px;border:1px solid #e8eeff;border-radius:var(--radius);
-  background:
-    radial-gradient(120% 180% at 80% -20%, rgba(58,160,255,.18), rgba(58,160,255,0) 62%),
-    radial-gradient(120% 180% at 10% -10%, rgba(0,120,212,.16), rgba(0,120,212,0) 65%),
-    linear-gradient(180deg,#ffffff,#fbfdff);
-}
-.badge1{display:inline-flex;align-items:center;gap:10px;padding:9px 13px;border-radius:999px;font-weight:900;border:1px solid #cfe6ff;
-  background:linear-gradient(90deg,rgba(58,160,255,.2),rgba(0,120,212,.12));color:#033764}
-h1{font-size:clamp(1.6rem,2.1vw + 1rem,2.4rem);color:var(--brand);margin:12px 0 8px;font-weight:900}
-.desc{color:var(--muted)}
-.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 36px}
-@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
-ul{list-style:none;padding-left:0;margin:0}
-ul li{position:relative;padding:10px 12px 10px 32px;margin:10px 0;border:1px solid #eef3ff;border-radius:12px;background:#fff}
-ul li::before{
-  content:"";position:absolute;left:10px;top:50%;transform:translateY(-50%) rotate(45deg);
-  width:12px;height:12px;border-radius:3px;background:linear-gradient(135deg,var(--az),var(--az-2));box-shadow:0 2px 6px rgba(0,120,212,.35)
-}
-code{background:#f0f8ff;border:1px solid #d6eaff;border-radius:6px;padding:0 6px}
-.azure-group{background:#fff;border-left:6px solid var(--az);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
-.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}
-.btn{
-  appearance:none;border:1px solid #cfe6ff;background:var(--az);color:#fff;font-weight:900;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
-  text-decoration:none;box-shadow:0 8px 18px rgba(0,120,212,.18);transition:.12s ease;
-}
-.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
-.btn.secondary{background:#fff;color:#0a2a4d;border:1px solid #dceaff}
-.tip{margin:10px 0;padding:10px 12px;border:1px dashed #bfe1ff;background:#f2f9ff;border-radius:10px;color:#073a6a}
-.footer{font-size:.92rem;margin-top:10px;color:#5b6b82}
-.footer a{color:#0b66c3;font-weight:800;text-decoration:none}
-.footer a:hover{text-decoration:underline}
+  body{margin:0;background:#0f1320;color:#e8ecff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:#9fc4ff}
+  .wrap{max-width:900px;margin:0 auto;padding:22px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #2b3566;background:#141a37;
+          padding:8px 12px;border-radius:999px;font-weight:900;color:#cbd6ff}
+  h1{margin:8px 0 6px;font-size:1.55rem}
+  h2{margin:18px 0 8px;font-size:1.15rem}
+  .muted{color:#9ca8d9}
+  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:12px;padding:14px;margin:10px 0}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:#9ff0c9}
+  .warn{color:#ffd063}
+  .bad{color:#ffb0b0}
+  code, .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+
+  .toc{background:#10183a;border:1px solid #283056;border-radius:10px;padding:10px;margin:10px 0}
+  .toc a{color:#cfe1ff;text-decoration:none}
+  .toc li+li{margin-top:4px}
+  .resources a{word-break:break-all}
 </style>
 </head>
 <body>
-
 <div class="wrap">
-  <!-- HERO -->
-  <section class="card hero" aria-label="Domain 5 overview">
-    <span class="badge1">Azure AZ-104 — Domain 5 (Monitor & Maintain Azure Resources)</span>
-    <h1>Observe, alert, automate, and recover</h1>
-    <p class="desc" style="max-width:800px;margin:8px auto 0">
-      Domain 5 (≈15–20%) is about configuring Azure Monitor (metrics/logs), alerts & action groups, diagnostics settings,
-      backup & recovery (Azure Backup/ASR), update management, automation, Service Health, and operational excellence with tagging and policy compliance.
-    </p>
-  </section>
-
-  <!-- CONTENT -->
-  <section class="azure-group">
-    <section class="grid">
-      <article class="card path">
-        <h2>Patterns that score</h2>
-        <ul>
-          <li><strong>Send diagnostics everywhere needed</strong>: create <em>diagnostic settings</em> at resource/RG/subscription to ship logs/metrics to Log Analytics, Storage, and Event Hub.</li>
-          <li><strong>Alert on symptoms, not noise</strong>: metric alerts for performance, log alerts for multi-signal KQL, activity log alerts for control-plane changes.</li>
-          <li><strong>Action Groups</strong> centralize notifications (email/SMS/webhook/ITSM/Logic Apps); reuse across alerts.</li>
-          <li><strong>Automate routine ops</strong>: Update Management for patching, Automation runbooks for tasks, Policy + remediation for drift.</li>
-          <li><strong>Protect data & workloads</strong>: Azure Backup for VMs/Files/SQL; Site Recovery (ASR) for DR with RPO/RTO targets.</li>
-          <li><strong>Use insights</strong>: VM insights, Container insights, and App Insights for deep telemetry.</li>
-        </ul>
-        <div class="tip">Exam hint: If two choices work, pick the one that uses built-in Monitor/Backup capabilities with least custom code and broad scope coverage.</div>
-
-        <h2>Common pitfalls</h2>
-        <ul>
-          <li>Forgetting to enable diagnostic settings (no logs in Log Analytics → can’t query/alert).</li>
-          <li>Creating alerts with hard-coded emails instead of Action Groups.</li>
-          <li>Assuming metrics are retroactive (they aren’t if not collected) or that logs exist without configuring collection.</li>
-          <li>Confusing <em>Azure Service Health</em> (platform impact) with <em>Resource Health</em> (your resource state).</li>
-          <li>Not granting the required permissions (e.g., Backup vault needs access to storage snapshots).</li>
-        </ul>
-
-        <h2>Study checklist</h2>
-        <ul>
-          <li>Azure Monitor: Metrics vs Logs, Log Analytics workspaces, KQL basics, Alerts, Action Groups, Autoscale.</li>
-          <li>Diagnostics: where to enable, categories, destinations (Workspace/Storage/Event Hub).</li>
-          <li>Insights: VM insights/AMA, Container insights, Application Insights & availability tests.</li>
-          <li>Backup: vault types, policies/schedules/retention, Restore Points, soft delete, Vault-Guard, cross-region restore basics.</li>
-          <li>Site Recovery (ASR): enable replication, failover/failback, test failover, recovery plans.</li>
-          <li>Updates & automation: Update Management Center, Azure Automation runbooks (PowerShell/Python), Change Tracking & Inventory.</li>
-          <li>Service Health/Resource Health; Advisor recommendations; Activity log vs Diagnostic logs.</li>
-        </ul>
-
-        <h2>CLI quick hits</h2>
-        <ul>
-          <li>Create Log Analytics workspace:<br/>
-            <code>az monitor log-analytics workspace create -g rg-ops -n law-ops -l westeurope</code>
-          </li>
-          <li>Enable diagnostic settings to workspace:<br/>
-            <code>az monitor diagnostic-settings create --name send-to-law --resource &lt;resource-id&gt; --workspace &lt;law-id&gt; --logs '[{"category":"AuditEvent","enabled":true}]' --metrics '[{"category":"AllMetrics","enabled":true}]'</code>
-          </li>
-          <li>Create Action Group:<br/>
-            <code>az monitor action-group create -g rg-ops -n ag-oncall --short-name ONCALL --email-receiver name=Ops email=ops@example.com</code>
-          </li>
-          <li>Metric alert (CPU &gt; 80% 5m):<br/>
-            <code>az monitor metrics alert create -g rg-ops -n cpu-high --scopes &lt;vm-id&gt; --condition "avg Percentage CPU &gt; 80" --window-size 5m --evaluation-frequency 1m --action-group ag-oncall</code>
-          </li>
-          <li>Log (KQL) alert example:<br/>
-            <code>az monitor scheduled-query create -g rg-ops -n ssh-failures --scopes &lt;law-id&gt; --condition "SecurityEvent | where EventID==4625 | summarize count() by bin(TimeGenerated, 5m)" --evaluation-frequency 5m --window-size 15m --trigger "count &gt; 20" --action-groups ag-oncall</code>
-          </li>
-          <li>Create Recovery Services vault (Backup):<br/>
-            <code>az backup vault create -g rg-ops -n rsv-euw --location westeurope</code>
-          </li>
-          <li>Enable VM backup (default policy):<br/>
-            <code>az backup protection enable-for-vm -g rg-app -n vm1 --vault-name rsv-euw --policy-name DefaultPolicy</code>
-          </li>
-          <li>Enable VM insights (AMA):<br/>
-            <code>az monitor vm insights enable --resource &lt;vm-id&gt; --workspace &lt;law-id&gt;</code>
-          </li>
-        </ul>
-
-        <h2>KQL snippets to remember</h2>
-        <ul>
-          <li>Top VMs by CPU (avg 5m):<br/>
-            <code>InsightsMetrics | where Name == "Percentage CPU" | summarize avg(Total) by bin(TimeGenerated, 5m), Computer | top 10 by avg_Total desc</code>
-          </li>
-          <li>NSG denies last 24h:<br/>
-            <code>AzureNetworkAnalytics_CL | where FlowDirection_s == "I" and Decision_s == "D" and TimeGenerated &gt; ago(24h) | summarize count() by L4Protocol_s, DestPort_d</code>
-          </li>
-          <li>Activity log: deletions by user:<br/>
-            <code>AzureActivity | where OperationNameValue endswith "Delete" | summarize count() by Caller</code>
-          </li>
-        </ul>
-      </article>
-
-      <aside class="card path">
-        <h3>Exam Focus</h3>
-        <ul>
-          <li>Configure diagnostic settings, collect metrics/logs into a Log Analytics workspace.</li>
-          <li>Create metric/log/activity alerts and route via Action Groups.</li>
-          <li>Implement Backup (policies, restores) and ASR (replication, failover).</li>
-          <li>Enable insights (VM/Container/App) and analyze with KQL.</li>
-          <li>Maintain resources with Update Management, Automation, and Change Tracking.</li>
-          <li>Use Service Health/Resource Health and review Advisor recommendations.</li>
-        </ul>
-
-        <h3>Key Azure services</h3>
-        <ul>
-          <li>Azure Monitor (Metrics/Logs, Alerts, Action Groups)</li>
-          <li>Log Analytics Workspace, Application Insights</li>
-          <li>Diagnostic Settings, Activity Log</li>
-          <li>Azure Backup (Recovery Services vaults)</li>
-          <li>Azure Site Recovery (ASR)</li>
-          <li>Update Management Center, Azure Automation</li>
-          <li>Service Health, Resource Health, Advisor</li>
-        </ul>
-
-        <h3>Hands-on ideas</h3>
-        <ul>
-          <li>Enable diagnostics at subscription scope → send to central workspace; verify logs arrive.</li>
-          <li>Build an Action Group and wire three alert types (metric/log/activity) to it.</li>
-          <li>Protect a VM with Backup, delete a file, and restore from a point-in-time snapshot.</li>
-          <li>Replicate a VM with ASR, run a test failover, then planned failover and failback.</li>
-          <li>Turn on VM insights across a RG and build a workbook with CPU/mem/disk charts.</li>
-        </ul>
-
-        <div class="footer">
-          Updated 2025-10-25 · Useful docs:
-          <a target="_blank" href="https://learn.microsoft.com/azure/azure-monitor/overview">Azure Monitor</a> ·
-          <a target="_blank" href="https://learn.microsoft.com/azure/azure-monitor/essentials/diagnostic-settings">Diagnostic settings</a> ·
-          <a target="_blank" href="https://learn.microsoft.com/azure/backup/backup-overview">Azure Backup</a> ·
-          <a target="_blank" href="https://learn.microsoft.com/azure/site-recovery/site-recovery-overview">Azure Site Recovery</a> ·
-          <a target="_blank" href="https://learn.microsoft.com/azure/automation/overview">Azure Automation</a>
-        </div>
-      </aside>
-    </section>
-  </section>
-
-  <!-- NAV -->
-  <div class="actions">
-    <a class="btn secondary" href="azure-az104-tips-domain4.html">◀ Back</a>
-    <a class="btn" href="/">🏁 Finish</a>
-  </div>
+  <span class="badge">Azure · Operaciones</span>
+  <h1>AZ‑104 — Dominio 5 · Monitorizar y mantener recursos</h1>
+  <p class="muted">Registro, alertas, automatización y continuidad.</p>
+<div class="toc">
+  <strong>Índice</strong>
+  <ul>
+    <li><a href="#patrones">Patrones que puntúan</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#checklist">Lista de estudio</a></li>
+    <li><a href="#pista">Pista de examen</a></li>
+    <li><a href="#recursos">Recursos oficiales</a></li>
+  </ul>
 </div>
 
+<div class=\"card\" id=\"patrones\"><h2>Patrones que puntúan</h2>
+<ul>
+<li><strong>Monitor</strong>: métricas, logs, <em>workbooks</em>, mapas de dependencia; Log Analytics centralizado.</li>
+<li><strong>Alertas</strong>: reglas sobre métricas y consultas KQL, Action Groups (mail, webhook, ITSM).</li>
+<li><strong>Automatización</strong>: Update Manager, runbooks/Azure Functions, Automanage.</li>
+<li><strong>Recuperación</strong>: Azure Backup y Site Recovery para DR.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"errores\"><h2>Errores comunes</h2>
+<ul>
+<li class="bad">No habilitar diagnóstico en servicios clave.</li>
+<li class="bad">Alertas sin supresión/hora silenciosa generando ruido.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"checklist\"><h2>Lista de estudio</h2>
+<ul>
+<li>KQL básico para consultas en Log Analytics.</li>
+<li>Evaluar costes de ingestión/retención y tablas dedicadas.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"pista\"><h2>Pista de examen</h2>
+<p>Si la consigna habla de <em>visibilidad y auditoría</em> a nivel organización, piensa en <strong>Log Analytics + Policies</strong>.</p>
+</div>
+
+<div class="card resources" id="recursos">
+  <h2>Recursos oficiales</h2>
+  <ul>
+    <li><a href="https://learn.microsoft.com/azure/azure-monitor/overview" target="_blank" rel="noopener">Azure Monitor</a></li>
+<li><a href="https://learn.microsoft.com/azure/azure-monitor/logs/log-analytics-overview" target="_blank" rel="noopener">Log Analytics</a></li>
+<li><a href="https://learn.microsoft.com/azure/azure-monitor/alerts/alerts-action-rules" target="_blank" rel="noopener">Action Groups</a></li>
+  </ul>
+  <p class="muted">Enlaces a documentación oficial para ampliar y validar conceptos clave.</p>
+</div>
+
+</div>
 </body>
 </html>

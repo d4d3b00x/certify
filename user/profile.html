@@ -12,7 +12,7 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CertiFY — Quizzers Profile</title>
+  <title>CertiFY — Perfil del Estudiante </title>
 
   <style>
     :root{
@@ -177,22 +177,22 @@
 <body>
   <div class="wrap">
     <section class="card hero">
-      <h1>Wellcome to your Quizzer's Profile</h1>
-      <p class="desc">Manage your profile and review your recent quiz results.</p>
+      <h1>Bienvenido a tu perfil.</h1>
+      <p class="desc">Gestiona tu perfil y revisa tus ultimos resultados.</p>
     </section>
 
     <section class="authbar" id="authBar">
-      <span id="authText" class="muted">🔒 You’re not signed in.</span>
+      <span id="authText" class="muted">🔒 No has iniciado sesión</span>
       <div class="actions">
         <button id="btnHome" class="btn small hidden">🏠 Home</button>
-        <button id="btnLogout" class="btn small hidden">Sign out</button>
+        <button id="btnLogout" class="btn small hidden">Cerrar Sesión</button>
       </div>
     </section>
 
     <section class="grid">
       <div class="col-left">
         <article class="card">
-          <h3 style="margin:0 0 10px;font-weight:900">Profile</h3>
+          <h3 style="margin:0 0 10px;font-weight:900">Perfil</h3>
           <div class="profile">
             <div class="avatar" id="avatarBox">👤</div>
             <div>
@@ -203,7 +203,7 @@
           <hr class="divider">
           <form id="formProfile">
             <div class="field">
-              <label for="name">Name</label>
+              <label for="name">Nombre</label>
               <div class="control"><input id="name" required placeholder="Your name"></div>
             </div>
             <div class="field">
@@ -211,10 +211,10 @@
               <div class="control"><input id="email" type="email" required placeholder="you@email.com"></div>
             </div>
             <div class="field">
-              <label for="avatarUrl">Avatar URL (optional)</label>
+              <label for="avatarUrl">Avatar URL (opcional)</label>
               <div class="control"><input id="avatarUrl" type="url" placeholder="https://.../avatar.png"></div>
             </div>
-            <div class="hint">Tip: if you don’t set an avatar, we’ll use your initials.</div>
+            <div class="hint">Tip: si no estableces tu avatar, usaremos tus iniciales.</div>
             <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
               <button type="button" class="btn" id="btnResetProfile">Reset</button>
               <button class="btn primary" type="submit">Save</button>
@@ -224,11 +224,11 @@
         </article>
 
         <article class="card">
-          <h3 style="margin:0 0 10px;font-weight:900;">Study goals & streak</h3>
+          <h3 style="margin:0 0 10px;font-weight:900;">Objetivos y Streaks</h3>
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-            <label for="weeklyGoal" style="font-weight:900;color:#cbd6ff;">Weekly goal (attempts)</label>
+            <label for="weeklyGoal" style="font-weight:900;color:#cbd6ff;">Objetivo Semanal (intentos)</label>
             <input id="weeklyGoal" type="number" min="1" step="1" value="7" style="width:90px;padding:8px;border:1px solid var(--stroke);border-radius:10px;font-weight:900;background:var(--surface2);color:var(--ink);">
-            <button id="btnSaveGoal" class="btn small">Save goal</button>
+            <button id="btnSaveGoal" class="btn small">Guardar Objetivo</button>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
             <div style="font-weight:900;">This week</div>
@@ -238,11 +238,11 @@
             <div id="goalText" style="font-weight:900;">0 / 7</div>
           </div>
           <div style="margin-top:10px;" class="hint">
-            Current streak: <b id="streakDays">0</b> day(s)
+            streak actual: <b id="streakDays">0</b> día(s)
           </div>
 
           <div style="margin-top:10px;">
-            <div class="muted" style="margin-bottom:6px;">Last 14 days activity</div>
+            <div class="muted" style="margin-bottom:6px;">Últmos 14 días de actividad</div>
             <div id="heat14" class="heat"></div>
           </div>
 
@@ -256,24 +256,24 @@
       <div class="col-right">
         <article class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
-            <h3 style="margin:0;font-weight:900">Your latest results</h3>
+            <h3 style="margin:0;font-weight:900">Tus últimos resultados</h3>
             <div class="tabs">
-              <button id="tabAll"  class="tab-btn active" type="button">All</button>
+              <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
               <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
               <button id="tabAWS"  class="tab-btn" type="button">AWS SAA-C03</button>
             </div>
           </div>
 
           <div class="kpis" style="margin:10px 0 12px">
-            <div class="kpi"><h4>Total attempts</h4><div id="kpiAttempts" class="n">0</div></div>
-            <div class="kpi"><h4>Average %</h4><div id="kpiAvg" class="n">0%</div></div>
-            <div class="kpi"><h4>Best %</h4><div id="kpiBest" class="n">0%</div></div>
+            <div class="kpi"><h4>Intentos totales</h4><div id="kpiAttempts" class="n">0</div></div>
+            <div class="kpi"><h4>Media  %</h4><div id="kpiAvg" class="n">0%</div></div>
+            <div class="kpi"><h4>Mejor %</h4><div id="kpiBest" class="n">0%</div></div>
           </div>
 
           <div class="tool">
             <label>Range:
               <select id="rangeSel">
-                <option value="all">All</option>
+                <option value="all">Todos</option>
                 <option value="7">Last 7 days</option>
                 <option value="30">Last 30 days</option>
                 <option value="90">Last 90 days</option>
@@ -295,16 +295,16 @@
         </article>
 
         <article class="card">
-          <h3 style="margin:0 0 10px;font-weight:900;">Your marked question</h3>
+          <h3 style="margin:0 0 10px;font-weight:900;">Tus pregunta marcadas</h3>
           <div id="markedWrap" class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>#</th><th>QUIZ</th><th>Question</th><th>Note</th>
+                  <th>#</th><th>QUIZ</th><th>Pregunta</th><th>Nota</th>
                 </tr>
               </thead>
               <tbody id="markedBody">
-                <tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>
+                <tr><td colspan="4" style="text-align:center;">No hay preguntas marcadas todavía.</td></tr>
               </tbody>
             </table>
           </div>
