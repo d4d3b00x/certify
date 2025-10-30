@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>CertifyLab — Mock filtro de examen y carrusel vinculado</title>
+<style>
+  :root{
+    --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+    --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
+    --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+    --pill-bg:linear-gradient(180deg,#151b31,#12182c);--pill-ring:#2a3150;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6}
+  .container{max-width:1100px;margin:0 auto;padding:20px}
+
+  h1,h2{margin:0 0 8px}
+  .muted{color:var(--muted)}
+  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:800}
+  .chip.azure{background:rgba(0,120,212,.16);border:1px solid rgba(0,120,212,.4);color:#9fd2ff}
+  .chip.aws{background:rgba(255,153,0,.18);border:1px solid rgba(255,153,0,.4);color:#ffd79a}
+  .btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900}
+  .btn.primary{background:linear-gradient(180deg,#6c8bff,#3e64ff);border:none;color:#fff;box-shadow:var(--shadow)}
+  .tiny-btn{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 10px;border-radius:8px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7a67ff,#5f48ff);color:#fff;font-weight:900;white-space:nowrap}
+
+  /* Selector examen + simulador */
+  .toolbar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media(max-width:760px){.toolbar{grid-template-columns:1fr}}
+  .select{display:flex;gap:8px;align-items:center;background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:10px 12px}
+  .select select{appearance:none;background:transparent;border:none;color:var(--ink);font-weight:800;outline:none}
+  .sim-suggest{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .sim-suggest .meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+  /* Carrusel 2x3 paginado */
+  .carousel{position:relative;margin-top:14px}
+  .track{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;min-height:420px}
+  @media(max-width:900px){.track{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.track{grid-template-columns:1fr}}
+  .slide{display:none}
+  .slide.show{display:block}
+  .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+  .dot.az{background:#0078d4}.dot.aws{background:#ff9900}.dot.multi{background:conic-gradient(from 0deg,#ff9900 0 50%,#0078d4 50% 100%)}
+  .cc-meta{display:flex;align-items:center;gap:8px}
+  .cc-meta .grow{display:inline-flex;align-items:center;gap:8px;margin-right:auto}
+  .car-btn{position:absolute;top:45%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.95);color:#0f1320;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+  .car-prev{left:-10px}.car-next{right:-10px}
+  .car-btn[disabled]{opacity:.5;cursor:not-allowed}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Centro de contenidos</h1>
+    <p class="muted">Filtra por examen para ver artículos clave y enlazar al simulador correspondiente.</p>
+
+    <!-- Toolbar: filtro + simulador sugerido -->
+    <div class="toolbar">
+      <div class="card select">
+        <strong>Examen:</strong>
+        <select id="examSelect" aria-label="Examen">
+          <option value="all">Todos</option>
+          <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
+          <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
+        </select>
+      </div>
+
+      <div class="card sim-suggest" id="simSuggest">
+        <div class="meta">
+          <span class="chip azure" id="simChip">AZURE</span>
+          <strong id="simTitle">AZ-104 Administrator Associate</strong>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn" id="simRank" href="/score/ranking.html?quiz=az-104">🏆 Ranking</a>
+          <a class="btn primary" id="simStart" href="quiz.html?quiz=az-104">▶ Empezar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrusel -->
+    <div class="carousel">
+      <button class="car-btn car-prev" aria-label="Anterior">‹</button>
+      <div id="track" class="track"></div>
+      <button class="car-btn car-next" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+
+<script>
+  /* ====== Datos (mock) ====== */
+  const CONTENT = [
+    // AZ-104
+    {id:'vnet-peering', title:'Guía rápida: VNet Peering vs. VPN Gateway', exam:'az-104', provider:'azure', dot:'az',
+      blurb:'Cuándo usar peering y cuándo VPN en Azure…', url:'content/vnet-peering-vpn.html'},
+    {id:'az-sec-check', title:'Checklist de seguridad para suscripciones Azure', exam:'az-104', provider:'azure', dot:'az',
+      blurb:'15 puntos accionables para endurecer tu postura…', url:'content/azure-security-checklist.html'},
+    {id:'az-storage', title:'Azure Storage: operación y seguridad', exam:'az-104', provider:'azure', dot:'az',
+      blurb:'Acceso RBAC/SAS, replicación y WORM…', url:'content/azure-storage-az104.html'},
+
+    // SAA-C03
+    {id:'aws-vpc-ha', title:'Alta disponibilidad en VPC: patrones prácticos', exam:'aws-saa-c03', provider:'aws', dot:'aws',
+      blurb:'Subredes por AZ, NAT, balanceo, resiliencia…', url:'content/aws-vpc-ha.html'},
+    {id:'aws-s3', title:'S3: seguridad, durabilidad y rendimiento', exam:'aws-saa-c03', provider:'aws', dot:'aws',
+      blurb:'KMS, lifecycle, políticas mínimas, endpoints…', url:'content/aws-s3-design-saac03.html'},
+    {id:'aws-sqs-sns', title:'Patrones con SQS y SNS', exam:'aws-saa-c03', provider:'aws', dot:'aws',
+      blurb:'Fanout, FIFO, DLQ y eventos resilientes…', url:'content/aws-sqs-sns-patterns.html'},
+
+    // Mixtos
+    {id:'immutable', title:'Backup inmutable: patrón de ciberrecuperación', exam:'mixed', provider:'mixed', dot:'multi',
+      blurb:'Cómo diseñar un vault y una landing zone…', url:'content/immutable-backup-cyberrecovery.html'},
+    {id:'landing-zone', title:'Arquitectura de Landing Zone en Azure', exam:'az-104', provider:'azure', dot:'az',
+      blurb:'Referencias de diseño: jerarquías, RBAC, redes, políticas.', url:'content/azure-landing-zone.html'},
+    {id:'hybrid', title:'Conectividad híbrida en Azure', exam:'az-104', provider:'azure', dot:'az',
+      blurb:'VPN, ExpressRoute, BGP y hub-spoke con seguridad.', url:'content/azure-hybrid-connectivity-az305.html'},
+  ];
+
+  const SIMS = {
+    'az-104':   {chip:'AZURE', chipClass:'azure', title:'AZ-104 Administrator Associate', hrefStart:'quiz.html?quiz=az-104', hrefRank:'/score/ranking.html?quiz=az-104'},
+    'aws-saa-c03': {chip:'AWS',   chipClass:'aws',   title:'SAA-C03 Solutions Architect Associate', hrefStart:'quiz.html?quiz=aws-saa-c03', hrefRank:'/score/ranking.html?quiz=aws-saa-c03'}
+  };
+
+  /* ====== Estado / refs ====== */
+  const PAGE_SIZE = 6; // 2x3
+  let page = 0;
+  let filter = 'all';
+
+  const track = document.getElementById('track');
+  const prevBtn = document.querySelector('.car-prev');
+  const nextBtn = document.querySelector('.car-next');
+  const sel = document.getElementById('examSelect');
+
+  const simChip  = document.getElementById('simChip');
+  const simTitle = document.getElementById('simTitle');
+  const simStart = document.getElementById('simStart');
+  const simRank  = document.getElementById('simRank');
+
+  /* ====== Render ====== */
+  function filteredItems(){
+    if (filter==='all') return CONTENT;
+    if (filter==='az-104') return CONTENT.filter(x => x.exam==='az-104' || x.exam==='mixed');
+    if (filter==='aws-saa-c03') return CONTENT.filter(x => x.exam==='aws-saa-c03' || x.exam==='mixed');
+    return CONTENT;
+  }
+
+  function renderCards(){
+    const items = filteredItems();
+    track.innerHTML = '';
+    items.forEach(it=>{
+      const dotClass = it.dot==='az'?'az':(it.dot==='aws'?'aws':'multi');
+      const chip = it.provider==='azure' ? `<span class="chip azure"><b>AZURE</b></span>` :
+                   it.provider==='aws'   ? `<span class="chip aws"><b>AWS</b></span>`   :
+                   `<span class="chip azure"><b>AZURE</b></span> · <span class="chip aws"><b>AWS</b></span>`;
+      const providerCode = it.provider==='azure' ? 'AZ-104' : (it.provider==='aws' ? 'SAA-C03' : 'AZ/AWS');
+      const card = document.createElement('article');
+      card.className = 'card slide';
+      card.innerHTML = `
+        <div class="cc-head"><span class="dot ${dotClass}"></span><strong>${it.title}</strong></div>
+        <p class="muted">${it.blurb}</p>
+        <div class="cc-meta">
+          <span class="grow">${chip}<span>${providerCode}</span></span>
+          <a class="tiny-btn" href="${it.url}">Leer</a>
+        </div>`;
+      track.appendChild(card);
+    });
+  }
+
+  function renderCarouselPage(){
+    const slides = Array.from(track.querySelectorAll('.slide'));
+    slides.forEach(s=>s.classList.remove('show'));
+    const start = page * PAGE_SIZE;
+    const end   = start + PAGE_SIZE;
+    slides.slice(start,end).forEach(s=>s.classList.add('show'));
+    prevBtn.disabled = (page===0);
+    nextBtn.disabled = (end>=slides.length);
+  }
+
+  function renderSimSuggest(){
+    const key = (filter==='all') ? 'az-104' : filter; // por defecto mostramos AZ-104
+    const s = SIMS[key] || SIMS['az-104'];
+    simChip.textContent = s.chip;
+    simChip.className = `chip ${s.chipClass}`;
+    simTitle.textContent = s.title;
+    simStart.href = s.hrefStart;
+    simRank.href  = s.hrefRank;
+  }
+
+  function rerenderAll(){
+    page = 0;
+    renderSimSuggest();
+    renderCards();
+    renderCarouselPage();
+  }
+
+  /* ====== Eventos ====== */
+  sel.addEventListener('change', ()=>{
+    filter = sel.value;
+    rerenderAll();
+  });
+  prevBtn.addEventListener('click', ()=>{ if(page>0){ page--; renderCarouselPage(); }});
+  nextBtn.addEventListener('click', ()=>{
+    const total = filteredItems().length;
+    if((page+1)*PAGE_SIZE < total){ page++; renderCarouselPage(); }
+  });
+
+  // init
+  rerenderAll();
+</script>
+</body>
+</html>

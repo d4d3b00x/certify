@@ -218,8 +218,23 @@
       }
     });
 
-    // Vista por defecto
-    document.addEventListener("DOMContentLoaded", ()=>{ showTab("login"); });
+// ---------- Vista inicial ----------
+document.addEventListener("DOMContentLoaded", ()=>{
+  // Normalizamos hash o parámetro
+  const hash = (location.hash || "").toLowerCase();
+  const params = new URLSearchParams(location.search);
+  const view = (params.get("view") || "").toLowerCase();
+
+  const wantsSignup =
+    hash === "#signup" || hash === "#register" ||
+    view === "signup" || view === "register";
+
+  if (wantsSignup) {
+    showTab("signup");
+  } else {
+    showTab("login");
+  }
+});
   </script>
 </body>
 </html>
