@@ -740,14 +740,23 @@ function renderResultModal(r){
   m.appendChild(h('div',{class:'qg-result-row',html:`<strong>Duración</strong><span>${Math.floor(r.durationSec/60)}m ${r.durationSec%60}s</span>`}));
   m.appendChild(h('div',{class:'qg-result-row',html:`<strong>Marcadas</strong><span>${r.markedCount||0}</span>`}));
   const actions=h('div',{class:'qg-actions'});
-  const home=h('button',{class:'btn',html:'🏠 Home'});  home.onclick=()=>{closeModal(); location.href='/';};
-  const review=h('button',{class:'btn primary',html:'🔁 Review'}); review.onclick=()=>{ closeModal(); };
-  actions.appendChild(home); actions.appendChild(review);
+
+  // ⬇️ Aquí el cambio: texto y destino al perfil
+  const home=h('button',{class:'btn',html:'👤 Perfil'});
+  home.onclick=()=>{ closeModal(); location.href='/user/profile.html'; };
+
+  const review=h('button',{class:'btn primary',html:'🔁 Review'});
+  review.onclick=()=>{ closeModal(); };
+
+  actions.appendChild(home); 
+  actions.appendChild(review);
   m.appendChild(actions);
   bd.appendChild(m);
+
   bd.addEventListener('click',(e)=>{ if(e.target===bd) closeModal(); });
   const onKey=(e)=>{ if(e.key==='Escape'){ e.preventDefault(); closeModal(); } };
   document.addEventListener('keydown', onKey);
+
   function closeModal(){
     try{ document.body.removeChild(bd); }catch{}
     document.body.classList.remove('qg-lock');
@@ -755,6 +764,7 @@ function renderResultModal(r){
   }
   document.body.appendChild(bd);
 }
+
 
 function genResultId(result){
   const base=[result.quizId||'quiz',result.mode||'exam',result.total||0,result.correct||0,result.durationSec||0].join('|');
