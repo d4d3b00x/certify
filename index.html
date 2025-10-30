@@ -71,11 +71,20 @@
     .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
     .pill-btn:active{transform:translateY(0)}
 
+    /* Botón "btn" (ranking global) */
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);
+      background:transparent;color:var(--ink);font-weight:900;
+    }
+    .btn:hover{border-color:#3a4580}
+
     @media (max-width:720px){
       .menu{gap:8px}
       .menu a.link-btn{min-width:90px;height:36px}
       .authwrap{gap:6px}
       .pill-btn{min-width:92px;height:36px;padding:0 10px}
+      .btn{height:36px}
       .hello{display:none}
     }
 
@@ -99,6 +108,35 @@
     .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:800}
     .chip.azure{background:var(--chip-az-bg);border:1px solid var(--chip-az-bd);color:var(--chip-az-ink)}
     .chip.aws{background:var(--chip-aws-bg);border:1px solid var(--chip-aws-bd);color:var(--chip-aws-ink)}
+
+    /* ===== Centro de contenidos - carrusel ===== */
+    .carousel{
+      position:relative;margin-top:12px
+    }
+    .track{
+      display:grid;grid-auto-flow:column;grid-auto-columns:80%;
+      gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px
+    }
+    .track::-webkit-scrollbar{height:8px}
+    .track::-webkit-scrollbar-thumb{background:#2a3150;border-radius:999px}
+    @media(min-width:760px){ .track{grid-auto-columns:48%} }
+    @media(min-width:1024px){ .track{grid-auto-columns:32%} }
+    .slide{scroll-snap-align:start}
+    .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .dot.az{background:#0078d4}
+    .dot.aws{background:#ff9900}
+    .dot.multi{background:conic-gradient(from 0deg,#ff9900 0 50%,#0078d4 50% 100%)}
+    .cc-meta{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.9rem}
+    .car-btn{
+      position:absolute;top:45%;transform:translateY(-50%);
+      width:36px;height:36px;border-radius:999px;border:1px solid var(--stroke);
+      background:rgba(17,25,55,.8);display:flex;align-items:center;justify-content:center;
+      cursor:pointer
+    }
+    .car-btn:hover{background:rgba(17,25,55,.95)}
+    .car-prev{left:-6px}
+    .car-next{right:-6px}
 
     .how-grid{display:grid;gap:10px;margin-top:12px}
     @media(min-width:820px){.how-grid{grid-template-columns:repeat(4,1fr)}}
@@ -155,7 +193,6 @@
       <h1>🎮 Aprende, practica y compite</h1>
       <p class="lead">Simula exámenes reales, suma puntos y escala en los rankings.</p>
       <div class="hero-actions">
-        <!-- Se quita "Empezar a practicar" -->
         <a class="btn" href="/score/ranking.html">🏆 Ver ranking global</a>
       </div>
     </div>
@@ -175,22 +212,66 @@
     <div class="container">
       <div class="sec-title">Centro de contenidos</div>
       <div class="muted">Resúmenes visuales, hojas de trucos, guías paso a paso y artículos.</div>
-      <div class="grid">
-        <article class="card">
-          <h3>Guía rápida: VNet Peering vs. VPN Gateway</h3>
-          <p class="muted">Entiende cuándo usar peering y cuándo optar por VPN…</p>
-          <a class="pill-btn" href="content/vnet-peering-vpn.html">Leer</a>
-        </article>
-        <article class="card">
-          <h3>Checklist de seguridad para suscripciones Azure</h3>
-          <p class="muted">15 puntos accionables para endurecer tu postura…</p>
-          <a class="pill-btn" href="content/azure-security-checklist.html">Leer</a>
-        </article>
-        <article class="card">
-          <h3>Backup inmutable: patrón de ciberrecuperación</h3>
-          <p class="muted">Cómo diseñar un vault y una landing zone…</p>
-          <a class="pill-btn" href="content/immutable-backup-cyberrecovery.html">Leer</a>
-        </article>
+
+      <div class="carousel">
+        <button class="car-btn car-prev" aria-label="Anterior">‹</button>
+        <div class="track" id="contentTrack">
+          <!-- Slide 1 -->
+          <article class="card slide">
+            <div class="cc-head">
+              <span class="dot az" title="Azure · AZ-104"></span>
+              <strong>Guía rápida: VNet Peering vs. VPN Gateway</strong>
+            </div>
+            <p class="muted">Entiende cuándo usar peering y cuándo optar por VPN…</p>
+            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></div>
+            <a class="pill-btn" href="content/vnet-peering-vpn.html" style="margin-top:10px">Leer</a>
+          </article>
+
+          <!-- Slide 2 -->
+          <article class="card slide">
+            <div class="cc-head">
+              <span class="dot az" title="Azure · AZ-104"></span>
+              <strong>Checklist de seguridad para suscripciones Azure</strong>
+            </div>
+            <p class="muted">15 puntos accionables para endurecer tu postura…</p>
+            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></div>
+            <a class="pill-btn" href="content/azure-security-checklist.html" style="margin-top:10px">Leer</a>
+          </article>
+
+          <!-- Slide 3 -->
+          <article class="card slide">
+            <div class="cc-head">
+              <span class="dot multi" title="Azure/AWS"></span>
+              <strong>Backup inmutable: patrón de ciberrecuperación</strong>
+            </div>
+            <p class="muted">Cómo diseñar un vault y una landing zone…</p>
+            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span> · <span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></div>
+            <a class="pill-btn" href="content/immutable-backup-cyberrecovery.html" style="margin-top:10px">Leer</a>
+          </article>
+
+          <!-- Slide 4 (nuevo) -->
+          <article class="card slide">
+            <div class="cc-head">
+              <span class="dot az" title="Azure · AZ-305"></span>
+              <strong>Arquitectura de Landing Zone en Azure</strong>
+            </div>
+            <p class="muted">Referencia de diseño con jerarquías, RBAC, redes y políticas.</p>
+            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span></div>
+            <a class="pill-btn" href="content/azure-landing-zone.html" style="margin-top:10px">Leer</a>
+          </article>
+
+          <!-- Slide 5 (nuevo) -->
+          <article class="card slide">
+            <div class="cc-head">
+              <span class="dot aws" title="AWS · SAA-C03"></span>
+              <strong>Alta disponibilidad en VPC: patrones prácticos</strong>
+            </div>
+            <p class="muted">Subredes por AZ, NATs, balanceo y resiliencia para SAA-C03.</p>
+            <div class="cc-meta"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></div>
+            <a class="pill-btn" href="content/aws-vpc-ha.html" style="margin-top:10px">Leer</a>
+          </article>
+        </div>
+        <button class="car-btn car-next" aria-label="Siguiente">›</button>
       </div>
     </div>
   </section>
@@ -213,7 +294,7 @@
           <p class="muted">Accede a artículos y simuladores básicos. Desbloquea modos avanzados y estadísticas con Premium.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
             <a class="pill-btn" href="/login/login.html#signup">Crear cuenta</a>
-            <a class="btn" href="/score/ranking.html">Ver planes / ranking</a>
+            <!-- Eliminado: Ver planes / ranking -->
           </div>
         </div>
         <div class="right">
@@ -244,6 +325,8 @@
         <div><a href="content/vnet-peering-vpn.html">Azure · Redes</a></div>
         <div><a href="content/azure-security-checklist.html">Azure · Seguridad</a></div>
         <div><a href="content/immutable-backup-cyberrecovery.html">Backup inmutable</a></div>
+        <div><a href="content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="content/aws-vpc-ha.html">AWS · VPC HA</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contacto</div>
@@ -280,7 +363,7 @@
     // ====== Cards de simuladores ======
     const CATALOG = [
       {id:'AZ-104',provider:'azure',title:'Administrator Associate',duration:'90 min',questions:60,level:'Intermedio',quiz:'az-104'},
-     // {id:'AZ-305',provider:'azure',title:'Architect Expert',duration:'75 min',questions:50,level:'Avanzado',quiz:'az-305'},
+      // {id:'AZ-305',provider:'azure',title:'Architect Expert',duration:'75 min',questions:50,level:'Avanzado',quiz:'az-305'},
       {id:'SAA-C03',provider:'aws',title:'Solutions Architect Associate',duration:'130 min',questions:65,level:'Intermedio',quiz:'aws-saa-c03'}
     ];
     const simGrid=document.getElementById('simGrid');
@@ -293,7 +376,6 @@
         const el=document.createElement('article'); el.className='card';
         const startLabel = authed ? '▶ Empezar' : '🔒 Login to Start';
         const startHref  = authed ? `quiz.html?quiz=${c.quiz}` : '/login/login.html';
-        // Se elimina la línea de info ⏱ · 📚 · 🎯 y se sustituye por mensaje de login si no está autenticado
         const loginMsg = authed ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
         el.innerHTML=`
           <div class="row">
@@ -322,6 +404,11 @@
         location.href='/login/login.html';
       }
     });
+
+    // ===== Carrusel Contenidos =====
+    const track = document.getElementById('contentTrack');
+    document.querySelector('.car-prev').addEventListener('click', ()=>{ track.scrollBy({left:-track.clientWidth*0.9,behavior:'smooth'}); });
+    document.querySelector('.car-next').addEventListener('click', ()=>{ track.scrollBy({left: track.clientWidth*0.9,behavior:'smooth'}); });
   </script>
 </body>
 </html>
