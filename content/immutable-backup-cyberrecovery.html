@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Backup inmutable & Ciberrecuperación — CertifyLab</title>
+<link rel="stylesheet" href="/style_global.css">
+<style>
+  :root{--bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;--aws:#ff9900;--azure:#0078d4}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:16px 20px 40px}
+  header{position:sticky;top:0;background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.65));backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+  .nav{height:60px;display:flex;align-items:center;justify-content:space-between}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--stroke);border-radius:10px}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid #ff990033;background:#ff99001a;color:#ffd7a0;padding:6px 10px;border-radius:999px}
+  h1{font-size:clamp(1.6rem,4vw,2.2rem);margin:16px 0 8px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+  .card{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px}
+  .call{border-left:6px solid var(--aws);background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:10px;border-bottom:1px solid var(--stroke)}
+  th{color:var(--muted);text-align:left}
+  footer{border-top:1px solid var(--stroke);margin-top:28px;padding-top:16px;color:#9ca8d9}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <div style="font-weight:900;display:flex;align-items:center;gap:10px">
+      <span style="width:10px;height:10px;border-radius:50%;background:var(--aws)"></span> CertifyLab
+    </div>
+    <div style="display:flex;gap:8px">
+      <a class="btn" href="../index.html">↩ Volver</a>
+      <a class="btn" href="../quiz.html?quiz=aws-saa-c03">Practicar SAA-C03</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <span class="badge">🟧 SAA-C03 · (aplica también a AZ-104)</span>
+  <h1>Backup inmutable & Ciberrecuperación</h1>
+  <p class="lead" style="color:#9ca8d9">Diseña una estrategia 3-2-1-1-0 con capas de inmutabilidad y un entorno de recuperación seguro (landing/clean room) para superar escenarios de ransomware.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>Principios 3-2-1-1-0</h3>
+      <ul>
+        <li><b>3</b> copias de los datos, en <b>2</b> medios distintos.</li>
+        <li><b>1</b> copia off-site y <b>1</b> <b>inmutable</b> (WORM/locked).</li>
+        <li><b>0</b> errores: pruebas de restauración verificadas.</li>
+      </ul>
+      <p>En AWS: S3 + S3 Glacier con <b>Object Lock</b>, versiones y MFA-Delete; en Azure: Blob con <b>Immutable Policies</b> (time-based/legal hold) y versiones.</p>
+    </div>
+
+    <div class="card">
+      <h3>Arquitectura de recuperación</h3>
+      <ul>
+        <li><b>Landing/Clean Room</b> aislada (cuentas/proyectos/vnets separadas) sin acceso saliente por defecto.</li>
+        <li>Herramientas de <b>malware scanning</b> y análisis forense antes de rehidratar producción.</li>
+        <li>Orquestación (SRM/Azure Site Recovery/Runbooks) para levantar servicios mínimos viables.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Controles de inmutabilidad</h2>
+  <table>
+    <thead><tr><th>Plataforma</th><th>Mecanismo</th><th>Claves del examen</th></tr></thead>
+    <tbody>
+      <tr><td>AWS S3</td><td><b>Object Lock</b> (Compliance/Governance) + Versioning + MFA-Delete</td><td>WORM a nivel objeto; retention legal vs governance; protege frente a borrados lógicos.</td></tr>
+      <tr><td>Azure Blob</td><td><b>Immutable Policy</b> (time-based/legal hold) + Versioning + Soft Delete</td><td>Bloqueo en contenedor; no modificable hasta expirar; útil para ransomware.</td></tr>
+      <tr><td>Backups</td><td>Copia aislada/vault con <b>air-gap lógico</b></td><td>Acceso solo de escritura; restauración pull desde vault hacia entorno limpio.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="call" style="margin-top:16px">
+    <b>Tip de examen:</b> si te piden “no permitir <i>overwrite</i> ni borrado por 30 días” → habilita <b>WORM</b> (S3 Object Lock / Blob Immutable) con periodo; si te piden “inmutable pero con excepción manual” → modo <i>Governance</i> (S3) con permisos adecuados.
+  </div>
+
+  <h2>Runbook de recuperación (alto nivel)</h2>
+  <ol>
+    <li>Detección/aislamiento. Corta accesos y congela cambios.</li>
+    <li>Activa <b>landing room</b> y restaura desde vault inmutable.</li>
+    <li>Escanea y valida integridad (hashing / AV / EDR).</li>
+    <li>Arranque por olas (DB → app → frontend). DNS/Traffic Manager/Route 53.</li>
+    <li>Retorno controlado a producción, post-mortem y endurecimiento.</li>
+  </ol>
+
+  <h2>Preguntas tipo examen</h2>
+  <ul>
+    <li>“Evitar eliminación por error/malicioso de backups 14 días” → <b>Object Lock / Immutable Policy</b> (time-based).</li>
+    <li>“Permitir solo un equipo restaurar datos desde vault aislado” → <b>RBAC estricto</b> + red aislada + logs/auditoría.</li>
+    <li>“Demostrar que los datos no se alteran durante el periodo” → modo <b>Compliance</b> / <b>Legal hold</b>.</li>
+  </ul>
+
+  <footer>© <span id="y"></span> CertifyLab — Recurso asociado a SAA-C03 (y aplicable a AZ-104).</footer>
+</main>
+<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+</body>
+</html>

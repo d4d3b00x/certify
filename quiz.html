@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Quiz • CertifyLab</title>
+  <link rel="stylesheet" href="/style_global.css">
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
+      --aws:#ff9900;--azure:#0078d4;--radius:14px;--shadow:0 10px 24px rgba(6,12,40,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+
+    /* Shell + container */
+    .wrap{max-width:1100px;margin:0 auto;padding:20px}
+
+    /* ========== HEADER (igual index) ========== */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
+      border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .dot{width:10px;height:10px;border-radius:50%;background:#6c8bff;box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    .menu{display:none;gap:18px;color:var(--muted);font-weight:700}
+    .menu a:hover{color:var(--ink)}
+    .actions{display:none;gap:10px;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:12px;border:1px solid var(--stroke);
+      cursor:pointer;font-weight:800}
+    .btn.primary{background:linear-gradient(180deg,#6c8bff,#3e64ff);border:none;color:#fff;box-shadow:var(--shadow)}
+    .btn.ghost{background:transparent}
+    .userchip{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--stroke);padding:8px 12px;border-radius:999px}
+    .userchip b{white-space:nowrap}
+    @media(min-width:720px){.menu,.actions{display:flex}}
+
+    /* ===== KPIs + filtros ===== */
+    .statsbar{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    .s-card{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
+    .s-k{color:var(--muted);font-size:.9rem}
+    .s-v{font-size:1.6rem;font-weight:900}
+    .filters{display:flex;align-items:center;gap:12px;margin:10px 0 0;flex-wrap:wrap;color:var(--muted)}
+    .filters select,.filters input[type="range"]{background:var(--surface2);border:1px solid var(--stroke);color:var(--ink);border-radius:10px;padding:6px 10px}
+
+    /* ===== Panel + simulador ===== */
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:16px}
+    @media(max-width:860px){.grid{grid-template-columns:1fr}}
+    .panel{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+    .panel h2,.panel h3{margin:0 0 10px}
+    .sim{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+
+    .segmented{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:6px}
+    .segmented input{display:none}
+    .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
+    .segmented input:checked + label{background:#0f1630;border:1px solid #31407a}
+
+    .field{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+    .select,.domains{display:flex;flex-wrap:wrap;gap:8px}
+    .select select{border:1px solid var(--stroke);border-radius:10px;padding:8px 10px;background:var(--surface2);color:var(--ink)}
+    .domains input{position:absolute;opacity:0}
+    .domains label{padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:var(--surface2);cursor:pointer;font-weight:800}
+    .domains input:checked + label{box-shadow:0 0 0 2px #3a4a8a inset}
+
+    .btn.solid{color:#0e0e0e;background:#ffd19a}
+    .btn.aws.solid{background:var(--aws);color:#fff;border-color:#ffc470}
+    .btn.az.solid{background:var(--azure);color:#fff;border-color:#9ed0ff}
+
+    /* Tabla resultados */
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:10px;border-bottom:1px solid var(--stroke)}
+    th{text-align:left;color:var(--muted)}
+    tr:hover{background:#141b39}
+
+    /* Target del motor */
+    #view{margin-top:16px}
+  </style>
+</head>
+<body>
+
+  <!-- Header igual que index + Home -->
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><span class="dot"></span> CertifyLab</div>
+      <nav class="menu">
+        <a href="/index.html">Home</a>
+        <a href="/index.html#simuladores">Simuladores</a>
+        <a href="/index.html#contenidos">Contenidos</a>
+        <a href="/score/ranking.html">Ranking</a>
+      </nav>
+      <div class="actions" id="authActions">
+        <a class="btn" id="btnLogin" href="/login/login.html">Login</a>
+        <a class="btn primary" id="btnSignup" href="/login/login.html#signup">Crear cuenta</a>
+        <div class="userchip" id="userChip" style="display:none">
+          <span>👋</span><b id="userNameTop">Usuario</b>
+          <a class="btn" href="/user/profile.html">Perfil</a>
+          <button class="btn" id="btnLogout" type="button">Salir</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <div class="wrap" id="root">
+
+    <!-- Encabezado del quiz -->
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div id="badge" style="font-weight:900;display:inline-flex;align-items:center;gap:10px"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a id="rankLinkTop" class="btn" href="#">🏆 Ranking</a>
+        <a class="btn" href="/index.html">🏠 Home</a>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="statsbar">
+      <div class="s-card"><div class="s-k">Total attempts</div><div class="s-v" id="sAttempts">0</div></div>
+      <div class="s-card"><div class="s-k">Average %</div><div class="s-v" id="sAvg">—</div></div>
+      <div class="s-card"><div class="s-k">Best %</div><div class="s-v" id="sBest">—</div></div>
+    </div>
+    <div class="filters">
+      <label>Range:
+        <select id="rangeSel">
+          <option value="all" selected>All</option>
+          <option value="30d">Last 30 days</option>
+          <option value="7d">Last 7 days</option>
+        </select>
+      </label>
+      <label style="display:flex;align-items:center;gap:8px">
+        Min %:
+        <input id="minPct" type="range" min="0" max="100" value="0">
+        <span id="minPctVal">0</span>
+      </label>
+      <span id="shownCount" style="margin-left:auto">0 shown</span>
+    </div>
+
+    <!-- Información + simulador -->
+    <div class="grid">
+      <section class="panel" id="leftInfo">
+        <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+          <img id="provLogo" alt="" style="width:66px;height:auto">
+          <div id="provText" class="muted">Loading…</div>
+        </div>
+
+        <h2 style="margin-top:14px">Exam Domains</h2>
+        <p class="muted" style="margin-top:-6px"><em>😎✏️ Take a look of our study notes focusing only on what really matters for the exam</em></p>
+        <ul id="domainsList" style="list-style:none;padding-left:0;margin:0;display:grid;gap:10px"></ul>
+      </section>
+
+      <aside class="sim" id="simCard">
+        <h3 id="simTitle">Exam Simulator</h3>
+
+        <div class="field">
+          <label>Mode</label>
+          <div class="segmented">
+            <input type="radio" id="modePractice" name="mode" value="practice" checked>
+            <label for="modePractice">Practice</label>
+            <input type="radio" id="modeExam" name="mode" value="exam">
+            <label for="modeExam">Exam</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Questions</label>
+          <div class="select">
+            <select id="qCount">
+              <option>5</option><option>10</option><option>15</option><option>30</option><option>65</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Domains (optional filter)</label>
+          <div class="domains" id="domainChips"></div>
+          <div class="muted">Leave empty to include all domains.</div>
+        </div>
+
+        <div class="field" style="margin-top:12px">
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button id="startBtn" class="btn solid">▶ Start Quiz</button>
+            <a id="rankLink" class="btn" href="#">🏆 Ranking</a>
+          </div>
+          <div class="muted" style="margin-top:8px">
+            Shortcuts inside the quiz: <span class="btn" style="padding:2px 6px">N</span> Next,
+            <span class="btn" style="padding:2px 6px">B</span> Back,
+            <span class="btn" style="padding:2px 6px">M</span> Mark,
+            <span class="btn" style="padding:2px 6px">1-9</span> choose.
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Aquí pinta Q_global.js -->
+    <main id="view"></main>
+
+    <!-- Últimos resultados -->
+    <section class="panel" style="margin-top:16px">
+      <h3>Your latest results</h3>
+      <table>
+        <thead>
+          <tr><th>#</th><th>QUIZ</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th><th>Review</th></tr>
+        </thead>
+        <tbody id="resTbody"></tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Motor -->
+  <script src="/control_quizs/Q_global.js" defer></script>
+  <script>
+    /* ========= Auth header (igual enfoque que tu portada) ========= */
+    function getCurrentUser(){ try{return JSON.parse(localStorage.getItem("currentUser")||"null");}catch{return null;} }
+    function renderAuth(){
+      const u = getCurrentUser();
+      const chip = document.getElementById('userChip');
+      const nameEl = document.getElementById('userNameTop');
+      const btnLogin = document.getElementById('btnLogin');
+      const btnSignup = document.getElementById('btnSignup');
+      const btnLogout = document.getElementById('btnLogout');
+
+      if(u){
+        nameEl.textContent = u.name || u.email || 'Usuario';
+        chip.style.display='flex';
+        btnLogin.style.display='none';
+        btnSignup.style.display='none';
+      }else{
+        chip.style.display='none';
+        btnLogin.style.display='';
+        btnSignup.style.display='';
+      }
+      btnLogout?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderAuth(); });
+    }
+    renderAuth();
+
+    /* ========= Quiz config / UI wiring ========= */
+    const qs = k => new URLSearchParams(location.search).get(k);
+    const QUIZ = (qs('quiz')||'').toLowerCase();         // az-104 | aws-saa-c03 ...
+    const BRAND = QUIZ.startsWith('az') ? 'az' : 'aws';
+    const BRAND_CLR = getComputedStyle(document.documentElement).getPropertyValue(BRAND==='az'?'--azure':'--aws');
+
+    const CONFIG = {
+      'aws-saa-c03': {
+        title: 'AWS SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)',
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
+        blurb: 'Design secure and cost-optimized AWS architectures. Perfect if you’ve got some AWS or strong on-prem experience.',
+        domains: [
+          ['D1','Design Secure Architectures (30%)'],
+          ['D2','Design Resilient Architectures (26%)'],
+          ['D3','Design High-Performing Architectures (24%)'],
+          ['D4','Design Cost-Optimized Architectures (20%)'],
+        ],
+      },
+      'az-104': {
+        title: 'MICROSOFT AZURE ADMINISTRATOR — ASSOCIATE (AZ-104)',
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg',
+        blurb: 'Master Azure admin essentials: identities, governance, compute, networking and monitoring.',
+        domains: [
+          ['D1','Manage identities & governance (15–20%)'],
+          ['D2','Implement & manage storage (15–20%)'],
+          ['D3','Deploy & manage compute (20–25%)'],
+          ['D4','Configure & manage networking (20–25%)'],
+          ['D5','Monitor & maintain resources (10–15%)'],
+        ],
+      }
+    };
+
+    const badge=document.getElementById('badge'),
+          provLogo=document.getElementById('provLogo'),
+          provText=document.getElementById('provText'),
+          dlist=document.getElementById('domainsList'),
+          chips=document.getElementById('domainChips'),
+          simTitle=document.getElementById('simTitle'),
+          startBtn=document.getElementById('startBtn'),
+          qCount=document.getElementById('qCount'),
+          rankLink=document.getElementById('rankLink'),
+          rankLinkTop=document.getElementById('rankLinkTop');
+
+    const cfg = CONFIG[QUIZ];
+    if(!cfg){
+      document.getElementById('root').innerHTML = `<div class="panel">Quiz desconocido: <b>${QUIZ||'(vacío)'}</b>. <a href="/index.html">Volver</a></div>`;
+    } else {
+      // Badge / branding
+      badge.innerHTML = `
+        <span style="display:inline-flex;align-items:center;gap:10px;border:1px solid ${BRAND_CLR}33;background:${BRAND_CLR}1F;padding:8px 12px;border-radius:999px">
+          <span style="width:10px;height:10px;border-radius:50%;background:${BRAND_CLR}"></span>
+          ${cfg.title}
+        </span>`;
+      provLogo.src = cfg.logo; provLogo.alt = BRAND==='az'?'Azure':'AWS';
+      provText.textContent = cfg.blurb;
+      simTitle.textContent = (QUIZ.toUpperCase()) + ' Exam Simulator';
+
+      // Dominios (no se pierden)
+      dlist.innerHTML = cfg.domains.map(([d,txt]) =>
+        `<li style="border:1px solid var(--stroke);background:var(--surface2);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center">
+           <span style="display:inline-flex;align-items:center;gap:8px;font-weight:900;color:${BRAND_CLR}">
+             <span style="width:10px;height:10px;border:2px solid ${BRAND_CLR};border-radius:50%"></span> Domain ${d.slice(1)}:
+           </span> ${txt}
+         </li>`).join('');
+
+      chips.innerHTML = cfg.domains.map(([d]) => `<input id="d-${d}" type="checkbox" value="${d}"><label for="d-${d}">${d}</label>`).join('');
+
+      // Ranking
+      rankLink.href = `/score/ranking.html?quiz=${encodeURIComponent(QUIZ)}`;
+      rankLinkTop.href = rankLink.href;
+
+      // Start
+      startBtn.classList.add(BRAND==='az'?'az':'aws','solid');
+      startBtn.addEventListener('click', ()=>{
+        const count = parseInt(qCount.value,10) || 65;
+        const tags = Array.from(document.querySelectorAll('#domainChips input:checked')).map(cb=>cb.value);
+        if(typeof window.start === 'function'){
+          window.start(QUIZ, { count, tags });      // ← tu motor
+          saveAttempt(QUIZ);                         // demo KPIs (local)
+        }else{
+          alert('Motor de quiz no cargado (Q_global.js). Revisa la ruta del script.');
+        }
+      });
+    }
+
+    /* ========= KPIs / resultados (demo localStorage) ========= */
+    const resTbody=document.getElementById('resTbody'),
+          sAttempts=document.getElementById('sAttempts'),
+          sAvg=document.getElementById('sAvg'),
+          sBest=document.getElementById('sBest'),
+          rangeSel=document.getElementById('rangeSel'),
+          minPct=document.getElementById('minPct'),
+          minPctVal=document.getElementById('minPctVal'),
+          shownCount=document.getElementById('shownCount');
+
+    function loadAttempts(){ try{ const all=JSON.parse(localStorage.getItem('quizAttempts')||'[]'); return all.filter(a=>a.quiz===QUIZ); }catch{return []} }
+    function saveAttempt(quiz){
+      // Registra un intento ficticio para ver KPIs (no toca tu backend)
+      const rec = { quiz, correct: Math.floor(Math.random()*60)+1, total: 65,
+        score: Math.floor(Math.random()*40)+60, duration: Math.floor(Math.random()*5000)+1200,
+        date: Date.now() };
+      const all = JSON.parse(localStorage.getItem('quizAttempts')||'[]');
+      all.unshift(rec); localStorage.setItem('quizAttempts', JSON.stringify(all.slice(0,50)));
+      renderTable();
+    }
+    function fmtDur(s){ const m=Math.floor(s/60), ss=(s%60).toString().padStart(2,'0'); return `${m}:${ss}`; }
+    function withinRange(ts, r){ const n=Date.now(); if(r==='7d') return ts>n-7*864e5; if(r==='30d') return ts>n-30*864e5; return true; }
+
+    function renderTable(){
+      const attemptsAll = loadAttempts();
+      const data = attemptsAll
+        .filter(r=>withinRange(r.date, rangeSel.value))
+        .filter(r=>r.score >= parseInt(minPct.value,10));
+
+      shownCount.textContent = `${data.length} shown`;
+      sAttempts.textContent = attemptsAll.length;
+      sAvg.textContent = data.length ? Math.round(data.reduce((a,b)=>a+b.score,0)/data.length)+'%' : '—';
+      sBest.textContent = attemptsAll.length ? (Math.max(...attemptsAll.map(r=>r.score))+'%') : '—';
+
+      resTbody.innerHTML = '';
+      data.slice(0,10).forEach((r,i)=>{
+        const tr=document.createElement('tr');
+        tr.innerHTML = `
+          <td>${i+1}</td>
+          <td><span style="display:inline-block;font-weight:900;padding:6px 10px;border-radius:999px;border:1px solid ${BRAND_CLR}33;background:${BRAND_CLR}15">${QUIZ.toUpperCase()}</span></td>
+          <td>${r.correct}</td>
+          <td>${r.total}</td>
+          <td><b>${r.score}%</b></td>
+          <td>${fmtDur(r.duration)}</td>
+          <td>${new Date(r.date).toLocaleString()}</td>
+          <td><a class="btn" href="/score/ranking.html?quiz=${encodeURIComponent(QUIZ)}">🔎</a></td>`;
+        resTbody.appendChild(tr);
+      });
+    }
+    rangeSel.addEventListener('change', renderTable);
+    minPct.addEventListener('input', ()=>{ minPctVal.textContent=minPct.value; renderTable(); });
+
+    // Init
+    minPctVal.textContent = minPct.value;
+    renderTable();
+  </script>
+</body>
+</html>
