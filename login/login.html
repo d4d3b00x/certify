@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date()); gtag('config', 'G-DYZ3GCXHEK');
-  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CertifyLab — Login & Registro</title>
@@ -15,8 +8,7 @@
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-      --accent:#6c8bff;--accent-2:#3e64ff;--accent-ring:rgba(108,139,255,.28);
-      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --accent:#6c8bff;--accent-2:#3e64ff;--radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
       --ok:#25b873;--bad:#ff6b6b;
     }
     *{box-sizing:border-box}
@@ -25,7 +17,6 @@
     a{color:#cfe1ff;text-decoration:none}
     a:hover{text-decoration:underline}
 
-    /* Header */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
       border-bottom:1px solid var(--stroke)}
@@ -37,26 +28,20 @@
     .menu a{color:inherit;text-decoration:none}
     .menu a:hover{color:#fff}
 
-    /* Page + cards */
     .page{max-width:960px;margin:0 auto;padding:24px 20px}
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
       border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
     .title{margin:0 0 6px;font-weight:900}
     .hint{color:var(--muted);font-size:.94rem}
     .err{color:#ffb0b0;font-weight:800;margin-top:6px;display:none}
+    .hidden{display:none !important}
 
-    /* Auth status bar */
-    .authbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 auto 16px;
-      background:var(--surface);border:1px solid var(--stroke);border-radius:999px;padding:10px 14px;max-width:720px}
-    .authbar .muted{color:var(--muted)}
-    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff1a;background:#ffffff14;border-radius:999px;padding:8px 12px;font-weight:900}
-
-    /* Switcher */
-    .switcher{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:6px;width:fit-content;margin:0 auto 14px}
-    .tab{appearance:none;border:1px solid transparent;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
+    .switcher{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);
+      border-radius:12px;padding:6px;width:fit-content;margin:0 auto 14px}
+    .tab{appearance:none;border:1px solid transparent;border-radius:10px;padding:8px 12px;
+      font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
     .tab.active{background:#0f1630;border-color:#31407a;box-shadow:inset 0 0 0 1px #31407a}
 
-    /* Forms */
     .field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
     .control{display:flex;align-items:center;gap:8px;border:1px solid var(--stroke);
       border-radius:12px;padding:10px 12px;background:var(--surface2)}
@@ -68,26 +53,11 @@
     .btn.ghost{background:#0f1630}
     .btn[disabled]{opacity:.6;cursor:not-allowed}
 
-    footer{margin:28px 0 14px;color:#8fa4ff99;text-align:center}
-    footer a{color:#bcd3ff}
-    .hidden{display:none !important}
-
-    /* ===== Modal de aviso ===== */
-    .modal-overlay{
-      position:fixed;inset:0;background:rgba(5,10,25,.55);backdrop-filter:blur(4px);
-      display:none;align-items:center;justify-content:center;z-index:1000;
+    /* Aviso de éxito en login */
+    .info{
+      display:none;margin:0 0 10px;padding:10px 12px;border-radius:12px;text-align:left;
+      background:rgba(37,184,115,.14);border:1px solid rgba(37,184,115,.35);color:#c6f4e5;font-weight:800
     }
-    .modal{
-      width:min(92vw,520px);border-radius:16px;border:1px solid var(--stroke);
-      background:linear-gradient(180deg,#151b31,#111937);box-shadow:var(--shadow);
-      padding:18px 18px 16px;
-    }
-    .modal h3{margin:0 0 4px;font-size:1.1rem}
-    .modal p{margin:6px 0 0;color:#cdd6ff}
-    .modal .ok{display:inline-flex;align-items:center;gap:8px;
-      background:rgba(37,184,115,.14);border:1px solid rgba(37,184,115,.35);
-      color:#b2f1d4;font-weight:900;border-radius:10px;padding:6px 10px;margin-bottom:8px}
-    .modal .actions{display:flex;justify-content:flex-end;margin-top:12px}
   </style>
 </head>
 <body>
@@ -104,33 +74,16 @@
   </header>
 
   <div class="page">
-    <!-- Barra de estado -->
-    <div class="authbar" id="authBar">
-      <span class="muted" id="authText">🔒 No autenticado</span>
-      <div style="display:flex;gap:8px" id="authActions">
-        <button class="btn ghost" id="btnToSignup" type="button">Crear cuenta</button>
-        <a class="btn" href="/">Home</a>
-      </div>
-      <div style="display:none;gap:8px" id="authSigned">
-        <a class="btn" href="/">Home</a>
-        <button class="btn" id="btnLogout" type="button">Salir</button>
-      </div>
-    </div>
-
-    <!-- conmutador -->
     <div class="switcher" id="tabBar">
       <button class="tab active" id="tabLogin" type="button">Login</button>
       <button class="tab" id="tabSignup" type="button">Registro</button>
     </div>
 
     <!-- Login -->
-    <form id="loginForm" class="card" novalidate autocomplete="on">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-        <h2 class="title">Iniciar sesión</h2>
-        <span class="pill">Usuario existente</span>
-      </div>
-      <p class="hint" style="margin-top:-4px">Introduce tus credenciales para continuar.</p>
-
+    <form id="loginForm" class="card" novalidate>
+      <h2 class="title">Iniciar sesión</h2>
+      <div id="loginOk" class="info">✅ Cuenta creada correctamente. Ahora inicia sesión.</div>
+      <p class="hint">Introduce tus credenciales para continuar.</p>
       <div class="field">
         <label for="loginEmail"><b>Email</b></label>
         <div class="control"><input id="loginEmail" type="email" required placeholder="you@email.com"></div>
@@ -139,24 +92,17 @@
         <label for="loginPass"><b>Contraseña</b></label>
         <div class="control"><input id="loginPass" type="password" required placeholder="••••••••"></div>
       </div>
-
       <div id="loginErr" class="err"></div>
-
       <div class="actions">
         <button class="btn" id="goSignup" type="button">Crear cuenta</button>
         <button class="btn primary" id="loginSubmit" type="submit">Entrar</button>
       </div>
-      <p class="hint">¿Olvidaste la contraseña? (próximamente)</p>
     </form>
 
     <!-- Registro -->
-    <form id="signupForm" class="card hidden" novalidate autocomplete="on">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-        <h2 class="title">Crear cuenta</h2>
-        <span class="pill">Gratis e inmediato</span>
-      </div>
-      <p class="hint" style="margin-top:-4px">Rellena tus datos y estarás listo.</p>
-
+    <form id="signupForm" class="card hidden" novalidate>
+      <h2 class="title">Crear cuenta</h2>
+      <p class="hint">Rellena tus datos y estarás listo.</p>
       <div class="field">
         <label for="signupName"><b>Nombre</b></label>
         <div class="control"><input id="signupName" required placeholder="Tu nombre"></div>
@@ -169,35 +115,12 @@
         <label for="signupPass"><b>Contraseña</b></label>
         <div class="control"><input id="signupPass" type="password" required minlength="6" placeholder="Mínimo 6 caracteres"></div>
       </div>
-
       <div id="signupErr" class="err"></div>
-
       <div class="actions">
         <button class="btn" id="goLogin" type="button">Ya tengo cuenta</button>
         <button class="btn primary" id="signupSubmit" type="submit">Crear cuenta</button>
       </div>
-      <p class="hint">Al registrarte aceptas nuestras condiciones de uso.</p>
     </form>
-
-    <p class="hint" style="text-align:center;margin-top:14px">
-      También puedes volver a <a href="/">la portada</a> o ver el <a href="/score/ranking.html">ranking</a>.
-    </p>
-  </div>
-
-  <footer>
-    Hecho con ❤️ por CertifyLab • <a href="/">Home</a> · <a href="/score/ranking.html">Leaderboard</a>
-  </footer>
-
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal">
-      <div class="ok">✅ Cuenta creada</div>
-      <h3 id="modalTitle">¡Todo listo!</h3>
-      <p id="modalMsg">Tu cuenta se ha creado correctamente. Ahora inicia sesión con tu email y contraseña.</p>
-      <div class="actions">
-        <button class="btn primary" id="modalClose" type="button">Entendido</button>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -205,147 +128,98 @@
     const AUTH_KEY="currentUser";
     const $=id=>document.getElementById(id);
 
-    // ==== Storage usuario ====
-    function getUser(){ try{return JSON.parse(localStorage.getItem(AUTH_KEY)||"null");}catch{return null;} }
-    function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
-    function clearUser(){ localStorage.removeItem(AUTH_KEY); renderAuth(); }
-
-    // ==== UI ====
+    // ---------- Tabs ----------
     function showTab(which){
-      const isSignup = which === "signup";
-      $("tabLogin").classList.toggle("active", !isSignup);
-      $("tabSignup").classList.toggle("active", isSignup);
-      $("loginForm").classList.toggle("hidden", isSignup);
-      $("signupForm").classList.toggle("hidden", !isSignup);
-      // limpiar errores
-      $("loginErr").style.display="none"; $("loginErr").textContent="";
-      $("signupErr").style.display="none"; $("signupErr").textContent="";
-      // focus amigable
-      setTimeout(()=>{ (isSignup ? $("signupName") : $("loginEmail")).focus(); }, 50);
+      const signup = which === "signup";
+      $("tabLogin").classList.toggle("active", !signup);
+      $("tabSignup").classList.toggle("active", signup);
+      $("loginForm").classList.toggle("hidden", signup);
+      $("signupForm").classList.toggle("hidden", !signup);
+      setTimeout(()=> (signup ? $("signupName") : $("loginEmail")).focus(), 10);
+    }
+    $("tabLogin").onclick=()=>showTab("login");
+    $("tabSignup").onclick=()=>showTab("signup");
+    $("goSignup").onclick=()=>showTab("signup");
+    $("goLogin").onclick=()=>showTab("login");
+
+    // ---------- Helpers ----------
+    function showError(id,msg){ const el=$(id); el.textContent=msg; el.style.display="block"; }
+    function hideError(id){ const el=$(id); el.style.display="none"; el.textContent=""; }
+
+    function setCurrentUser(user){
+      try{ localStorage.setItem(AUTH_KEY, JSON.stringify(user)); }catch{}
     }
 
-    function renderAuth(){
-      const u=getUser();
-      const t=$("authText");
-      const actions=$("authActions");
-      const signed=$("authSigned");
-      if(u){
-        t.textContent=`✅ Sesión iniciada: ${u.name||u.email} (${u.email||''})`;
-        actions.style.display="none";
-        signed.style.display="flex";
-        $("tabBar").classList.add("hidden");
-        $("loginForm").classList.add("hidden");
-        $("signupForm").classList.add("hidden");
-      }else{
-        t.textContent="🔒 No autenticado";
-        actions.style.display="flex";
-        signed.style.display="none";
-        $("tabBar").classList.remove("hidden");
-      }
-    }
-
-    // ===== Modal helpers =====
-    function showModal(msg="Tu cuenta se ha creado correctamente. Ahora inicia sesión.", title="¡Todo listo!"){
-      $("modalMsg").textContent = msg;
-      $("modalTitle").textContent = title;
-      $("modalOverlay").style.display = "flex";
-      // autocierre a los 4s
-      clearTimeout(showModal._t);
-      showModal._t = setTimeout(hideModal, 4000);
-    }
-    function hideModal(){
-      $("modalOverlay").style.display = "none";
-    }
-    $("modalClose").onclick = hideModal;
-    $("modalOverlay").addEventListener("click", (e)=>{ if(e.target.id==="modalOverlay") hideModal(); });
-
-    // ==== Eventos navegación UI ====
-    $("tabLogin").onclick = ()=> showTab("login");
-    $("tabSignup").onclick = ()=> showTab("signup");
-    $("goSignup").onclick = ()=> showTab("signup");
-    $("goLogin").onclick  = ()=> showTab("login");
-    $("btnToSignup").onclick = ()=> showTab("signup");
-    $("btnLogout").onclick = ()=>{ clearUser(); showTab("login"); };
-
-    // ==== Arranque ====
-    document.addEventListener("DOMContentLoaded", ()=>{
-      renderAuth();
-      const params = new URLSearchParams(location.search);
-      const wantSignup = location.hash === "#signup" || params.get("view")==="signup";
-      showTab(wantSignup ? "signup" : "login");
-
-      // si venimos de registro correcto, mostrar aviso
-      if(location.hash==="#signedup"){
-        showTab("login");
-        showModal("Tu cuenta se ha creado correctamente. Inicia sesión con tus credenciales.", "🎉 Cuenta creada");
-        // limpiar el hash para que no vuelva a saltar si recarga
-        history.replaceState(null, "", location.pathname);
-      }
-    });
-
-    // ==== Helper errores ====
-    function showError(elId, msg){
-      const el=$(elId);
-      el.textContent=msg||"Error";
-      el.style.display="block";
-      setTimeout(()=>{ el.style.display="none"; }, 5000);
-    }
-
-    // ==== LOGIN ====
+    // ---------- LOGIN ----------
     $("loginForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
+      hideError("loginErr");
       const email=$("loginEmail").value.trim().toLowerCase();
       const password=$("loginPass").value;
       const btn=$("loginSubmit");
-      if(!email||!password){ return showError("loginErr","Introduce email y contraseña."); }
-      $("loginErr").style.display="none"; btn.disabled=true;
+      if(!email||!password){ return showError("loginErr","Completa todos los campos."); }
+      btn.disabled=true;
       try{
-        const body=new URLSearchParams({email,password});
         const resp=await fetch(`${API_URL}/login`,{
           method:"POST",
           headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-          body, mode:"cors"
+          body:new URLSearchParams({email,password})
         });
-        let data={}; try{data=await resp.json();}catch{}
+        let data=null; try{ data=await resp.json(); }catch{}
         if(resp.ok){
-          const user=data?.user || {name:data?.name||"Usuario", email};
-          setUser(user);
-          location.href="/";
+          const user = data?.user || { email, name: data?.name || "Usuario" };
+          setCurrentUser(user);
+          location.assign("/"); // portada: ya te verá como logueado
         }else{
-          showError("loginErr", data?.error || "Error al iniciar sesión");
+          showError("loginErr", (data && (data.error||data.message)) || `Error al iniciar sesión (HTTP ${resp.status})`);
         }
-      }catch(ex){
-        showError("loginErr", ex?.message || "Error de red");
-      }finally{ btn.disabled=false; }
+      }catch(err){
+        showError("loginErr","Error de red");
+      }finally{
+        btn.disabled=false;
+      }
     });
 
-    // ==== REGISTRO ====
+    // ---------- REGISTRO ----------
     $("signupForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
+      hideError("signupErr");
       const name=$("signupName").value.trim();
       const email=$("signupEmail").value.trim().toLowerCase();
       const password=$("signupPass").value;
       const btn=$("signupSubmit");
       if(!name||!email||!password){ return showError("signupErr","Completa todos los campos."); }
-      $("signupErr").style.display="none"; btn.disabled=true;
+      btn.disabled=true;
+
       try{
-        const body=new URLSearchParams({name,email,password});
         const resp=await fetch(`${API_URL}/signup`,{
           method:"POST",
           headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-          body, mode:"cors"
+          body:new URLSearchParams({name,email,password})
         });
-        let data={}; try{data=await resp.json();}catch{}
-        if(resp.ok){
-          // Redirige a la misma página en modo login y muestra modal
-          location.href="/login/login.html#signedup";
+
+        if(resp.status>=200 && resp.status<300){
+          // ✅ Sin temporizadores ni redirecciones:
+          // Cambiamos a pestaña Login, mostramos aviso y pre-rellenamos el email
+          showTab("login");
+          const ok=$("loginOk");
+          ok.style.display="block";
+          $("loginEmail").value = email;
+          $("loginPass").value = "";
+          $("loginPass").focus();
         }else{
-          showError("signupErr", data?.error || "Error al crear la cuenta");
+          let data=null; try{ data=await resp.json(); }catch{}
+          showError("signupErr",(data && (data.error||data.message)) || `Error al crear la cuenta (HTTP ${resp.status})`);
         }
-      }catch(ex){
-        showError("signupErr", ex?.message || "Error de red");
-      }finally{ btn.disabled=false; }
+      }catch(err){
+        showError("signupErr","Error de red");
+      }finally{
+        btn.disabled=false;
+      }
     });
+
+    // Vista por defecto
+    document.addEventListener("DOMContentLoaded", ()=>{ showTab("login"); });
   </script>
 </body>
 </html>

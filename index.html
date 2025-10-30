@@ -63,7 +63,7 @@
     .hello{display:flex;align-items:center;gap:8px;color:#cbd3ff;font-weight:800;padding:6px 10px}
     .pill-btn{
       display:inline-flex;align-items:center;justify-content:center;
-      min-width:100px; /* mismo tamaño */
+      min-width:100px;
       height:40px; padding:0 14px;border-radius:12px;border:1px solid #3b2fff44;
       background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;
       transition:transform .08s ease, box-shadow .12s ease, background .12s ease;
@@ -71,7 +71,6 @@
     .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
     .pill-btn:active{transform:translateY(0)}
 
-    /* Botón "btn" (ranking global) */
     .btn{
       display:inline-flex;align-items:center;justify-content:center;
       height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);
@@ -94,7 +93,7 @@
     .lead{color:var(--muted);max-width:760px;margin:6px auto 0}
     .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
 
-    section{padding:26px 0} /* más juntas verticalmente */
+    section{padding:26px 0}
     .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px}
     .muted{color:var(--muted);font-size:.95rem}
     .grid{display:grid;gap:14px;margin-top:12px}
@@ -102,34 +101,49 @@
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
       border-radius:14px;padding:14px;box-shadow:var(--shadow);transition:transform .12s ease}
     .card:hover{transform:translateY(-2px)}
-    .row{display:flex;flex-direction:column;align-items:center;gap:10px} /* centrado */
+    .row{display:flex;flex-direction:column;align-items:center;gap:10px}
     .btns-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 
     .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:800}
     .chip.azure{background:var(--chip-az-bg);border:1px solid var(--chip-az-bd);color:var(--chip-az-ink)}
     .chip.aws{background:var(--chip-aws-bg);border:1px solid var(--chip-aws-bd);color:var(--chip-aws-ink)}
 
-    /* ===== Centro de contenidos - carrusel ===== */
-    .carousel{
-      position:relative;margin-top:12px
-    }
+    /* ===== Centro de contenidos - carrusel 2x3 ===== */
+    .carousel{position:relative;margin-top:12px}
     .track{
-      display:grid;grid-auto-flow:column;grid-auto-columns:80%;
-      gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      min-height: 420px; /* asegura altura estable al paginar */
     }
-    .track::-webkit-scrollbar{height:8px}
-    .track::-webkit-scrollbar-thumb{background:#2a3150;border-radius:999px}
-    @media(min-width:760px){ .track{grid-auto-columns:48%} }
-    @media(min-width:1024px){ .track{grid-auto-columns:32%} }
-    .slide{scroll-snap-align:start}
+    @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
+    @media(max-width:560px){ .track{grid-template-columns:1fr} }
+    .slide{display:none}
+    .slide.show{display:block}
     .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
     .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
     .dot.az{background:#0078d4}
     .dot.aws{background:#ff9900}
     .dot.multi{background:conic-gradient(from 0deg,#ff9900 0 50%,#0078d4 50% 100%)}
-    .cc-meta{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.9rem}
 
-    /* FLECHAS más visibles (claras) */
+    /* Línea meta: chip + código + botón mini alineados */
+    .cc-meta{
+      display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;
+    }
+    .cc-meta .grow{ display:inline-flex; align-items:center; gap:8px; margin-right:auto; }
+
+    /* Botón mini */
+    .tiny-btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      height:28px; padding:0 10px; border-radius:8px;
+      border:1px solid #3b2fff44; background:linear-gradient(180deg,#7a67ff,#5f48ff);
+      color:#fff; font-weight:900; cursor:pointer;
+      transition:transform .08s ease, background .12s ease, box-shadow .12s ease;
+      white-space:nowrap;
+    }
+    .tiny-btn:hover{ transform:translateY(-1px) }
+
+    /* Flechas/paginación */
     .car-btn{
       position:absolute;top:45%;transform:translateY(-50%);
       width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);
@@ -137,10 +151,12 @@
       display:flex;align-items:center;justify-content:center;cursor:pointer;
       box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:2
     }
-    .car-btn:hover{background:#ffffff;color:#0a0e1a}
+    .car-btn[disabled]{opacity:.5;cursor:not-allowed}
+    .car-btn:hover:not([disabled]){background:#ffffff;color:#0a0e1a}
     .car-prev{left:-10px}
     .car-next{right:-10px}
 
+    /* How & CTA */
     .how-grid{display:grid;gap:10px;margin-top:12px}
     @media(min-width:820px){.how-grid{grid-template-columns:repeat(4,1fr)}}
     .how-step{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px}
@@ -155,7 +171,6 @@
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
 
-    /* Utilidades */
     .center{display:flex;align-items:center;justify-content:center}
     .hidden{display:none !important}
     .login-msg{margin-top:6px}
@@ -201,7 +216,7 @@
     </div>
   </section>
 
-  <!-- ===== Cómo funciona + CTA (MOVIDO ARRIBA) ===== -->
+  <!-- ===== Cómo funciona + CTA ===== -->
   <section>
     <div class="container">
       <div class="sec-title">Cómo queremos que apruebes:</div>
@@ -215,18 +230,18 @@
       <div class="cta">
         <div class="left">
           <span class="tag">Lanzamos nuestro simulador (beta)</span>
-          <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Registrate y empieza gratis!!</h2>
+          <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Regístrate y empieza gratis</h2>
           <p class="muted">Artículos y simuladores básicos. Compite y desbloquea modos avanzados.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
             <a class="pill-btn" href="/login/login.html#signup">Crear cuenta</a>
           </div>
         </div>
         <div class="right">
-          <div>✅ Modo practica (modo examen en desarrollo)</div>
+          <div>✅ Modo práctica (modo examen en desarrollo)</div>
           <div>✅ Explicaciones y referencias centradas en aprobar</div>
           <div>✅ Tips de estudio por cada dominio de la certificación</div>
           <div>✅ Perfil de usuario con estadísticas y progreso</div>
-          <div>✅ Preguntas marcadas y budgets conseguidos. </div>
+          <div>✅ Preguntas marcadas y budgets conseguidos</div>
         </div>
       </div>
     </div>
@@ -244,109 +259,122 @@
   <!-- ===== Centro de contenidos ===== -->
   <section id="contenidos">
     <div class="container">
-      <div class="sec-title">Centro de contenidos</div>
-      <div class="muted">Resúmenes visuales, hojas de trucos, guías paso a paso y artículos.</div>
+      <div class="sec-title">Contenido clave para aprobar</div>
+      <div class="muted">Solo lo esencial: resúmenes rápidos, hojas de trucos y guías prácticas enfocadas en el examen.</div>
 
       <div class="carousel">
         <button class="car-btn car-prev" aria-label="Anterior">‹</button>
         <div class="track" id="contentTrack">
-          <!-- Slide 1 -->
+          <!-- 9 slides de ejemplo -->
           <article class="card slide">
             <div class="cc-head">
               <span class="dot az" title="Azure · AZ-104"></span>
               <strong>Guía rápida: VNet Peering vs. VPN Gateway</strong>
             </div>
             <p class="muted">Entiende cuándo usar peering y cuándo optar por VPN…</p>
-            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></div>
-            <a class="pill-btn" href="content/vnet-peering-vpn.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></span>
+              <a class="tiny-btn" href="content/vnet-peering-vpn.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 2 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot az" title="Azure · AZ-104"></span>
+              <span class="dot az"></span>
               <strong>Checklist de seguridad para suscripciones Azure</strong>
             </div>
             <p class="muted">15 puntos accionables para endurecer tu postura…</p>
-            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></div>
-            <a class="pill-btn" href="content/azure-security-checklist.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></span>
+              <a class="tiny-btn" href="content/azure-security-checklist.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 3 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot multi" title="Azure/AWS"></span>
+              <span class="dot multi"></span>
               <strong>Backup inmutable: patrón de ciberrecuperación</strong>
             </div>
             <p class="muted">Cómo diseñar un vault y una landing zone…</p>
-            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span> · <span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></div>
-            <a class="pill-btn" href="content/immutable-backup-cyberrecovery.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow">
+                <span class="chip azure"><b>AZURE</b></span><span>AZ-305</span> ·
+                <span class="chip aws"><b>AWS</b></span><span>SAA-C03</span>
+              </span>
+              <a class="tiny-btn" href="content/immutable-backup-cyberrecovery.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 4 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot az" title="Azure · AZ-305"></span>
+              <span class="dot az"></span>
               <strong>Arquitectura de Landing Zone en Azure</strong>
             </div>
             <p class="muted">Referencia de diseño con jerarquías, RBAC, redes y políticas.</p>
-            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span></div>
-            <a class="pill-btn" href="content/azure-landing-zone.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span></span>
+              <a class="tiny-btn" href="content/azure-landing-zone.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 5 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot aws" title="AWS · SAA-C03"></span>
+              <span class="dot aws"></span>
               <strong>Alta disponibilidad en VPC: patrones prácticos</strong>
             </div>
             <p class="muted">Subredes por AZ, NATs, balanceo y resiliencia para SAA-C03.</p>
-            <div class="cc-meta"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></div>
-            <a class="pill-btn" href="content/aws-vpc-ha.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></span>
+              <a class="tiny-btn" href="content/aws-vpc-ha.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 6 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot az" title="Azure · AZ-104"></span>
+              <span class="dot az"></span>
               <strong>Azure Storage: operación y seguridad</strong>
             </div>
             <p class="muted">Acceso RBAC/SAS, replicación y WORM para datos críticos.</p>
-            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></div>
-            <a class="pill-btn" href="content/azure-storage-az104.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></span>
+              <a class="tiny-btn" href="content/azure-storage-az104.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 7 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot az" title="Azure · AZ-305"></span>
+              <span class="dot az"></span>
               <strong>Conectividad híbrida en Azure</strong>
             </div>
             <p class="muted">VPN, ExpressRoute, BGP y hub-spoke con seguridad.</p>
-            <div class="cc-meta"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span></div>
-            <a class="pill-btn" href="content/azure-hybrid-connectivity-az305.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span></span>
+              <a class="tiny-btn" href="content/azure-hybrid-connectivity-az305.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 8 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot aws" title="AWS · SAA-C03"></span>
+              <span class="dot aws"></span>
               <strong>S3: seguridad, durabilidad y rendimiento</strong>
             </div>
             <p class="muted">Políticas mínimas, KMS, lifecycle y endpoints privados.</p>
-            <div class="cc-meta"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></div>
-            <a class="pill-btn" href="content/aws-s3-design-saac03.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></span>
+              <a class="tiny-btn" href="content/aws-s3-design-saac03.html">Leer</a>
+            </div>
           </article>
 
-          <!-- Slide 9 -->
           <article class="card slide">
             <div class="cc-head">
-              <span class="dot aws" title="AWS · SAA-C03"></span>
+              <span class="dot aws"></span>
               <strong>Patrones con SQS y SNS</strong>
             </div>
             <p class="muted">Fanout, FIFO, DLQ y eventos resilientes.</p>
-            <div class="cc-meta"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></div>
-            <a class="pill-btn" href="content/aws-sqs-sns-patterns.html" style="margin-top:10px">Leer</a>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></span>
+              <a class="tiny-btn" href="content/aws-sqs-sns-patterns.html">Leer</a>
+            </div>
           </article>
         </div>
         <button class="car-btn car-next" aria-label="Siguiente">›</button>
@@ -444,7 +472,7 @@
     }
     renderSims();
 
-    // Click en empezar: si no hay sesión, va a login; si hay sesión, a quiz
+    // Click en empezar
     document.addEventListener('click', e=>{
       const b=e.target.closest('.start-btn'); if(!b) return;
       if(isAuthed()){
@@ -456,10 +484,28 @@
       }
     });
 
-    // ===== Carrusel Contenidos =====
+    // ===== Carrusel 2x3 (paginación) =====
     const track = document.getElementById('contentTrack');
-    document.querySelector('.car-prev').addEventListener('click', ()=>{ track.scrollBy({left:-track.clientWidth*0.9,behavior:'smooth'}); });
-    document.querySelector('.car-next').addEventListener('click', ()=>{ track.scrollBy({left: track.clientWidth*0.9,behavior:'smooth'}); });
+    const slides = Array.from(track.querySelectorAll('.slide'));
+    const prevBtn = document.querySelector('.car-prev');
+    const nextBtn = document.querySelector('.car-next');
+    const PAGE_SIZE = 6; // 2 filas x 3 columnas
+    let page = 0;
+
+    function renderCarousel(){
+      slides.forEach(s => s.classList.remove('show'));
+      const start = page * PAGE_SIZE;
+      const end   = start + PAGE_SIZE;
+      slides.slice(start, end).forEach(s => s.classList.add('show'));
+
+      prevBtn.disabled = (page === 0);
+      nextBtn.disabled = (end >= slides.length);
+    }
+
+    prevBtn.addEventListener('click', ()=>{ if(page>0){ page--; renderCarousel(); } });
+    nextBtn.addEventListener('click', ()=>{ if((page+1)*PAGE_SIZE < slides.length){ page++; renderCarousel(); } });
+
+    renderCarousel();
   </script>
 </body>
 </html>
