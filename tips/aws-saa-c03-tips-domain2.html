@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Amazon AWS SAA (SAA-C03) — Domain 2 Tips: Design Resilient Architectures</title>
+<link rel="stylesheet" href="/style_global.css"/> 
+<style>
+/* ============ Pastel, playful, AWS-orange theme (same as Domain 1) ============ */
+:root{
+  --bg:#f7f8ff;
+  --surface:#fafbff;
+  --card:#ffffff;
+  --ink:#1b1f3a;
+  --muted:#6c6f91;
+  --brand:#0d0f2e;
+
+  /* AWS brand palette */
+  --aws:#ff9900;
+  --aws-2:#ffb84d;
+  --aws-dk:#cc7a00;
+
+  --ring:rgba(255,153,0,.25);
+  --bd:#e6e9ff;
+  --shadow:0 12px 26px rgba(25,22,84,.08);
+  --radius:16px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 10% -10%, #f1f4ff 0, transparent 60%),
+    radial-gradient(900px 420px at 90% -10%, #fff5e8 0, transparent 60%),
+    linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  line-height:1.6;
+  min-height:100vh;
+}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* Card */
+.card{
+  background:linear-gradient(180deg,#fff,#fefefe);
+  border:1px solid var(--bd);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.card.path:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(25,22,84,.10);border-color:#dfe3ff}
+
+/* Hero (light, no shine) */
+.hero{
+  position:relative; overflow:hidden; text-align:center; 
+  border:1px solid #ecefff;
+  padding:36px 24px;
+  background:
+    radial-gradient(120% 180% at 80% -20%, rgba(255,184,77,.20), rgba(255,184,77,0) 62%),
+    radial-gradient(120% 180% at 10% -10%, rgba(255,153,0,.18), rgba(255,153,0,0) 65%),
+    linear-gradient(180deg,#ffffff,#fbfcff);
+}
+.badge,.badge1{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:9px 13px; border-radius:999px; font-weight:900; letter-spacing:.02em;
+  border:1px solid #ffe5c2;
+  background:linear-gradient(90deg, rgba(255,184,77,.22), rgba(255,153,0,.15));
+  color:#6b3d00;
+}
+h1{
+  font-size:clamp(1.6rem,2.1vw + 1rem,2.4rem);
+  line-height:1.15;margin:12px 0 8px;color:var(--brand);font-weight:900;
+}
+.subtitle,.hint,.desc{color:var(--muted)}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 36px}
+@media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+
+/* Lists with tiny orange cube */
+ul{margin:0;padding-left:0;list-style:none}
+ul li{position:relative; padding:10px 12px 10px 32px; margin:10px 0; border:1px solid #f3f4ff; border-radius:12px; background:#fff}
+ul li::before{
+  content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(45deg);
+  width:12px; height:12px; border-radius:3px;
+  background:linear-gradient(135deg,var(--aws),var(--aws-2));
+  box-shadow:0 2px 6px rgba(255,153,0,.35);
+}
+
+/* Code chip */
+code{background:#fff9f0;border:1px solid #ffe2bf;border-radius:6px;padding:0 6px}
+
+/* AWS group wrapper (left border orange) */
+.aws-group3{
+  background:#fff;
+  border-left:6px solid var(--aws);
+  border-radius:12px;
+  padding:14px 14px;
+  margin:8px auto 10px;
+  box-shadow:var(--shadow);
+}
+
+/* Buttons */
+.actions{display:flex;align-items:center;gap:12px;margin:8px 0;flex-wrap:wrap;justify-content:center}
+.btn{
+  appearance:none;border:1px solid #ffe1b6;cursor:pointer;
+  background:var(--aws);color:#2a1400;
+  font-weight:900;letter-spacing:.2px;padding:12px 18px;border-radius:12px;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  box-shadow:0 8px 18px rgba(255,153,0,.18);
+  transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.04)}
+.btn:focus{outline:3px solid var(--ring);outline-offset:2px}
+.btn.secondary{background:#fff;color:#3b2a12;border:1px solid #f0e6ff;box-shadow:none}
+.btn.secondary:hover{background:#fff7ec}
+
+/* Tiny tip box */
+.tip{
+  margin:10px 0; padding:10px 12px; border:1px dashed #ffd9a6;
+  background:#fffaf3; border-radius:10px; color:#5b3a00
+}
+
+/* Footer note */
+.footer{opacity:.9;font-size:.92rem;margin-top:10px;color:var(--muted)}
+.footer a{color:#9a5b00;font-weight:800;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <!-- HERO -->
+  <section class="card hero" aria-label="Domain 2 overview">
+    <span class="badge1">AWS SAA-C03 — Domain 2 (Design Resilient Architectures)</span>
+    <h1>Build for failure: multi-AZ, decoupled, and self-healing</h1>
+    <p class="desc" style="max-width:800px;margin:8px auto 0">
+      Domain 2 is all about <strong>high availability, fault tolerance, and graceful degradation</strong>.
+      Expect scenarios that survive AZ loss, recover quickly, and avoid single points of failure.
+    </p>
+  </section>
+
+  <!-- CONTENT -->
+  <section class="aws-group3">
+    <section class="grid">
+      <article class="card path">
+        <h2>Patterns that score</h2>
+        <ul>
+          <li><strong>Stateless app tier</strong> behind an <strong>ALB</strong> with <strong>ASG</strong> across ≥2 AZs.</li>
+          <li><strong>Stateful tiers</strong> with <strong>Multi-AZ</strong> (RDS/Aurora/EFS) and read replicas for scale.</li>
+          <li><strong>Decouple</strong> with SQS/SNS/EventBridge to isolate failures and smooth spikes.</li>
+          <li><strong>Global reach</strong> via CloudFront, S3 CRR, and Route 53 latency/failover policies.</li>
+          <li><strong>Backups + DR</strong> tested: PITR, cross-Region copies, recovery runbooks.</li>
+        </ul>
+        <div class="tip">Tip: “Zero downtime during AZ failure” → Multi-AZ + health checks + automatic failover.</div>
+
+        <h2>Common pitfalls</h2>
+        <ul>
+          <li>Single-AZ databases or single-instance apps.</li>
+          <li>Sticky sessions without shared/session store (ElastiCache or stateless JWTs).</li>
+          <li>Tight synchronous coupling (no retries/backoff/DLQs).</li>
+          <li>DIY failover scripts instead of managed features (Aurora, RDS).</li>
+          <li>Ignoring health checks and deregistration delay on target groups.</li>
+        </ul>
+
+        <h2>Study checklist</h2>
+        <ul>
+          <li>ALB vs NLB vs GWLB; health checks; deregistration delay; slow start.</li>
+          <li>ASG policies (target tracking/step/scheduled), cooldowns, warm pools.</li>
+          <li>RDS/Aurora: Multi-AZ vs read replicas, backups, Global Database, failover times.</li>
+          <li>S3 versioning, CRR/SRR, object lock and retention.</li>
+          <li>Route 53 policies: failover, latency, weighted, geolocation + health checks.</li>
+        </ul>
+      </article>
+
+      <aside class="card path">
+        <h3>Exam Focus</h3>
+        <ul>
+          <li>Choose multi-AZ vs multi-Region based on RTO/RPO.</li>
+          <li>Graceful degradation with retries/backoff and circuit breakers.</li>
+          <li>Decouple services with SQS/SNS/EventBridge; use DLQs.</li>
+          <li>Prefer managed failover (Aurora/RDS/Global Accelerator) over DIY.</li>
+        </ul>
+
+        <h3>Key AWS services</h3>
+        <ul>
+          <li>ALB/NLB, Auto Scaling, Launch Templates</li>
+          <li>RDS, Aurora, DynamoDB global tables, ElastiCache</li>
+          <li>S3, EFS, FSx, AWS Backup</li>
+          <li>Route 53, CloudFront, Global Accelerator</li>
+          <li>SQS, SNS, EventBridge, Step Functions</li>
+        </ul>
+
+        <h3>Hands-on ideas</h3>
+        <ul>
+          <li>ALB + ASG across 2 AZs; terminate instances to see self-healing.</li>
+          <li>Enable RDS Multi-AZ and simulate failover.</li>
+          <li>Route 53 failover between two endpoints (active/passive).</li>
+          <li>SQS between producers and Lambda consumers with DLQ.</li>
+        </ul>
+
+        <div class="footer">
+          Updated 2025-10-24 · Official guide:
+          <a target="_blank" rel="noopener" href="https://d1.awsstatic.com/training-and-certification/docs-sa-assoc/AWS-Certified-Solutions-Architect-Associate_Exam-Guide_C03.pdf">AWS PDF</a>
+        </div>
+      </aside>
+    </section>
+  </section>
+
+  <!-- NAV -->
+  <div class="actions" style="margin:18px 0 42px">
+    <a class="btn secondary" href="aws-saa-c03-tips-domain1.html">◀ Prev</a>
+    <a class="btn" href="aws-saa-c03-tips-domain3.html">Next ▶</a>
+  </div>
+</div>
+
+</body>
+</html>

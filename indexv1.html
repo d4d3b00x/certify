@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CertiFY — Free IT Certification Resources and Exams</title>
+  <link rel="stylesheet" href="/style_global.css"/>
+  <style>
+    :root{
+      --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91; --brand:#161a3f;
+      --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08); --radius:16px;
+      --aws-50:#fff6e9; --aws-100:#ffefd7; --aws-500:#ff9900; --aws-600:#e28500; --aws-ink:#3a2600;
+      --az-50:#eef6ff; --az-100:#e6f2ff; --az-500:#0078d4; --az-600:#0a6cbf; --az-ink:#06233a;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", "Noto Sans", sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 12% -10%, #f1f4ff 0, transparent 60%),
+        radial-gradient(900px 420px at 88% -10%, #fff4ea 0, transparent 60%),
+        linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+      line-height:1.6; min-height:100vh; overflow-x:hidden;
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    .card{background:var(--card);border:1px solid var(--bd);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .12s ease, box-shadow .18s ease, border-color .18s ease}
+    .card.path:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(28,27,70,.10); border-color:#dfe3ff; }
+
+    .toprow{ display:grid; grid-template-columns:1fr 300px; gap:14px; margin:8px 0 12px; align-items:stretch }
+    @media (max-width:900px){ .toprow{ grid-template-columns:1fr; gap:10px } }
+
+    .hero{ text-align:center; border:1px solid #ecefff; padding:14px 16px; background:linear-gradient(180deg,#ffffff 0,#fbfcff 100%); margin:0; display:flex; flex-direction:column; justify-content:center }
+    .hero h1{ font-size:clamp(1.6rem,1.5vw + 1rem,2.4rem); line-height:1.08; margin:2px 0 6px; font-weight:900; color:var(--brand) }
+    .hero .desc{ color:var(--muted); max-width:780px; margin:0 auto 2px; font-size:.97rem; line-height:1.45 }
+
+    .authbar{ border:1px solid #ecefff; border-radius:var(--radius); background:#fff; box-shadow:0 4px 10px rgba(30,35,80,0.06); padding:0; display:flex; align-items:center; justify-content:center; height:100% }
+    .authbar-inner{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:12px; width:100%; text-align:center; }
+
+    .userrow{ display:flex; align-items:center; justify-content:center; gap:8px; }
+    .home-icon{ width:22px; height:22px }
+    .user .inline{ display:flex; align-items:center; gap:6px; justify-content:center; flex-wrap:wrap; font-weight:900 }
+    .user .email{ color:#8b8fb3; font-weight:800 }
+    .welcome{ font-weight:900; color:#2b2f57; margin-right:4px }
+
+    .authbar.guest .userrow{ display:none }
+    .authbar.logged .userrow{ display:flex }
+
+    .authbar .actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:center }
+    .authbar .actions a, .authbar .actions button{
+      appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
+      font-weight:900; padding:8px 12px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
+      transition:transform .08s ease, box-shadow .12s ease, background .12s ease; white-space:nowrap; text-decoration:none
+    }
+    .authbar .actions a:hover, .authbar .actions button:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
+    .hidden{ display:none !important }
+
+    .auth-extra{
+      width:100%; background:#fbfcff; border:1px dashed #e9ecff; border-radius:10px; padding:10px 12px;
+      font-size:.92rem; color:#565b86; display:flex; align-items:center; justify-content:center; gap:8px;
+    }
+    .auth-extra b{color:#2a2f57}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 22px}
+
+/* ===== Puntos de color para los enlaces de dominios ===== */
+#aws .study-link,
+#azure .study-link{
+  position: relative;
+  padding-left: 22px;            /* espacio para el circulito */
+  text-decoration: none;         /* quitamos subrayado por defecto */
+  font-weight: 800;
+}
+
+#aws .study-link { color: var(--aws-600); }
+#azure .study-link { color: var(--az-600); }
+
+#aws .study-link::before,
+#azure .study-link::before{
+  content:"";
+  position:absolute;
+  left:0; top:50%;
+  width:10px; height:10px;
+  transform: translateY(-50%);
+  border-radius:50%;
+}
+
+#aws .study-link::before{
+  border:2px solid var(--aws-500);
+  box-shadow:0 0 0 3px rgba(255,153,0,.15); /* halo suave */
+  background:#fff;
+}
+
+#azure .study-link::before{
+  border:2px solid var(--az-500);
+  box-shadow:0 0 0 3px rgba(0,120,212,.15);
+  background:#fff;
+}
+
+/* efecto hover: agranda ligeramente el circulito */
+#aws .study-link:hover::before,
+#azure .study-link:hover::before{
+  transform: translateY(-50%) scale(1.15);
+}
+
+/* (Opcional) Oculta el rombo que ya tenías en los <li> de estas listas,
+   para que no se superponga con el circulito nuevo */
+#aws ul li::before,
+#azure ul li::before{
+  display:none;
+}
+
+
+
+    @media (min-width:900px){.grid{grid-template-columns:2fr 1fr}}
+    ul{margin:0;padding-left:0;list-style:none}
+    ul li{ position:relative; padding:10px 12px 10px 28px; margin:10px 0; border:1px solid #edf0ff; border-radius:12px; background:#ffffff }
+    ul li::before{ content:""; position:absolute; left:10px; top:50%; transform:translateY(-50%) rotate(45deg); width:10px; height:10px; border-radius:2px; background:#d9defc; box-shadow:0 1px 3px rgba(36,44,110,.16) }
+    ul li a{text-decoration:none; color:inherit; font-weight:700}
+    ul li a:hover{text-decoration:underline}
+
+    .badge,.badge1,.badge2{ display:inline-flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; font-weight:800; border:1px solid #edf0ff; background:#f7f8ff; color:#2b2f57 }
+    .badge1{background:var(--aws-50); border-color:var(--aws-100); color:var(--aws-ink)}
+    .badge2{background:var(--az-50); border-color:var(--az-100); color:var(--az-ink)}
+
+    .aws-group3{border-left:6px solid var(--aws-500);background:linear-gradient(180deg,#ffffff 0,#fffaf3 100%)}
+    .azure-group3{border-left:6px solid var(--az-500);background:linear-gradient(180deg,#ffffff 0,#f7fbff 100%)}
+
+    .desc2{display:flex; align-items:center; gap:16px; margin:10px 0 4px}
+    .desc2 .logo{width:66px; height:auto; flex:0 0 auto}
+    .desc2 .text{flex:1 1 auto; line-height:1.5; color:var(--ink); font-size:.98rem}
+
+    .actions{display:flex;align-items:center;gap:12px;margin:12px 0 6px;flex-wrap:wrap;justify-content:center}
+    .btn{ appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52; font-weight:900; letter-spacing:.2px; padding:10px 14px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06); transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease; text-decoration:none; display:inline-flex; align-items:center; gap:8px }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff}
+    .btn:focus{outline:3px solid var(--ring); outline-offset:2px}
+    .btn.secondary{background:#ffffff; color:#2a2e57;}
+    .btn-aws.solid{background:var(--aws-500); border-color:#ffc470; color:#fff;}
+    .btn-aws.solid:hover{background:var(--aws-600)}
+    .btn-aws{color:var(--aws-ink)}
+    .btn-az.solid{background:var(--az-500); border-color:#98cfff; color:#fff;}
+    .btn-az.solid:hover{background:var(--az-600)}
+    .btn-az{color:var(--az-ink)}
+
+    .sim-card h3{margin:0 0 10px}
+    .sim-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .sim-form .full{grid-column:1/-1}
+    @media (max-width:720px){ .sim-form{grid-template-columns:1fr} }
+
+    .segmented{display:flex;gap:8px;background:#f6f7ff;border:1px solid #e6e9ff;border-radius:10px;padding:6px}
+    .segmented input{display:none}
+    .segmented label{flex:1 1 auto;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800;color:#343a6e}
+    .segmented input:checked + label{background:#fff;border:1px solid #e6e9ff}
+    .segmented.aws input:checked + label{border-color:#ffddad;color:#7b4a00}
+    .segmented.az input:checked + label{border-color:#bfe0ff;color:#0a4a7b}
+
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field label{font-weight:800;font-size:.93rem;color:#2a2e57}
+    .select,.text{display:flex;align-items:center;gap:8px;border:1px solid #e6e9ff;border-radius:10px;padding:8px 10px;background:#fff}
+    .select select,.text input{border:none;outline:none;font-weight:700;color:#2a2e57;width:100%;background:transparent}
+    .small{font-size:.9rem;color:var(--muted)}
+
+    .domains{display:flex;flex-wrap:wrap;gap:8px}
+    .domains input{position:absolute;opacity:0;pointer-events:none}
+    .domains label{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;
+      border:1px solid #e6e9ff;background:#fff;cursor:pointer;font-weight:800;color:#37407a;user-select:none
+    }
+    .domains input:checked + label{ box-shadow:0 0 0 2px #cfe9ff inset; color:#0a4a7b }
+    .domains.aws input:checked + label{ box-shadow:0 0 0 2px #ffe7c6 inset; color:#7b4a00 }
+
+    .kbd{display:inline-block;padding:.1rem .4rem;border-radius:6px;border:1px solid #e6e9ff;background:#fff;font-weight:800}
+    .center{text-align:center}
+    .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none !important; box-shadow:none !important }
+    .btn[disabled]:hover{ background:#f5f7ff }
+    .login-hint{ display:none }
+
+    /* ==== Carousel styles ==== */
+    .carousel{ position:relative; padding:0; overflow:hidden; }
+    .carousel-inner{ position:relative; }
+    .carousel-track{
+      display:flex; will-change:transform; transition:transform .35s cubic-bezier(.22,.61,.36,1);
+      touch-action:pan-y;
+    }
+    .slide{
+      min-width:100%; flex:0 0 100%; padding:22px;
+    }
+    .slide > .card{ margin:0 }
+    .carousel .nav{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:#fff; border:1px solid #e6e9ff; border-radius:12px; width:42px; height:42px;
+      display:grid; place-items:center; box-shadow:0 6px 16px rgba(25,22,84,.08);
+      cursor:pointer; z-index:5;
+    }
+    .carousel .nav:focus{ outline:3px solid var(--ring); outline-offset:2px }
+    .carousel .prev{ left:10px }
+    .carousel .next{ right:10px }
+    .carousel .nav svg{ width:22px; height:22px }
+    .carousel .dots{
+      display:flex; gap:8px; justify-content:center; align-items:center; padding:12px 0 4px;
+    }
+    .carousel .dot{
+      width:10px; height:10px; border-radius:50%; border:1px solid #cfd6ff; background:#fff; cursor:pointer;
+    }
+    .carousel .dot[aria-selected="true"]{ background:#5260ff; border-color:#5260ff }
+    @media (prefers-reduced-motion:reduce){
+      .carousel-track{ transition:none }
+    }
+
+    /* === AÑADIDOS SEGÚN SOLICITUD === */
+    /*.card.carousel{ padding-bottom:0; }
+    .carousel .dots{
+      position:absolute;
+      left:0; right:0; bottom:10px;
+      padding:0; margin:0;
+    } -->*/
+
+/* === Fondo transparente para el carrusel === */
+.card.carousel {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+
+    
+    .aws-group3{ border-right:6px solid var(--aws-500); }
+    .azure-group3{ border-right:6px solid var(--az-500); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <main id="view" role="main" class="wrap">
+
+      <!-- TOP ROW -->
+      <div class="toprow">
+        <section class="card hero" aria-label="Welcome">
+          <h1>CERTIFY.TECH: Study while enjoy!!!!!!!</h1>
+          <p class="desc">Level up your skills with fun quizzes. Learn, play, and crush your next test — the smart (and fun) way.</p>
+        </section>
+
+        <section class="authbar" id="authBar">
+          <div class="authbar-inner">
+            <div class="userrow">
+              <svg class="home-icon" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M8 30 32 12l24 18v22a2 2 0 0 1-2 2H42a2 2 0 0 1-2-2V40H24v12a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2V30z" fill="#ffd166"/>
+                <path d="M6 28 32 8l26 20-4 5L32 18 10 42l-4-5z" fill="#06d6a0"/>
+                <rect x="28" y="36" width="8" height="8" rx="1.5" fill="#118ab2"/>
+                <rect x="22" y="44" width="20" height="2" fill="#073b4c"/>
+              </svg>
+              <span id="welcomeTxt" class="welcome hidden">Welcome</span>
+              <div class="user">
+                <div class="inline">
+                  <a id="userName" href="/user/profile.html"></a>
+                  <span class="email" id="userEmail"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <a id="btnProfile" href="/user/profile.html" class="hidden">Profile</a>
+              <a id="btnLogin"  href="/login/login.html">Login</a>
+              <a id="btnSignup" href="/login/login.html#signup">Register</a>
+              <button id="btnLogout" type="button" class="hidden">Logout</button>
+            </div>
+
+            <div class="auth-extra" id="authExtra" aria-live="polite"></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ==== CAROUSEL: AWS + AZURE en la misma zona ==== -->
+      <section class="card carousel" aria-roledescription="carousel" aria-label="Certification paths slider">
+        <div class="carousel-inner">
+          <button class="nav prev" type="button" aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="currentColor"/></svg>
+          </button>
+          <button class="nav next" type="button" aria-label="Next slide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59 10 18l6-6-6-6-1.41 1.41L12.17 12z" fill="currentColor"/></svg>
+          </button>
+
+          <div class="carousel-track" id="carouselTrack">
+            <!-- Slide 1: AWS -->
+            <article class="slide" role="group" aria-roledescription="slide" aria-label="1 of 2">
+              <section id="aws" class="aws-group3 card">
+                <span class="badge1">🟧 AWS SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)</span>
+                <section class="grid">
+                  <article class="card path">
+                    <div class="desc2">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS Logo" class="logo">
+                      <div class="text">Design secure and cost-optimized AWS architectures. Perfect if you’ve got some AWS or strong on-prem experience.</div>
+                    </div>
+                    <h2>Exam Domains</h2>
+                    <p class="small" style="margin-top:-6px;"><em>😎✏️ Take a look of our next study notes mfocusing only on what really matters for the exam </em></p>
+                    <ul>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain1.html">Domain 1:</a></strong> Design Secure Architectures (30%)</li>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain2.html">Domain 2:</a></strong> Design Resilient Architectures (26%)</li>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain3.html">Domain 3:</a></strong> Design High-Performing Architectures (24%)</li>
+                      <li><strong><a class="study-link" href="/certification/amazon aws/aws-saa-c03/aws-saa-c03-tips-domain4.html">Domain 4:</a></strong> Design Cost-Optimized Architectures (20%)</li>
+                    </ul>
+                  </article>
+
+                  <!-- SIMULATOR AWS -->
+                  <aside id="sim-aws" class="card path sim-card" data-brand="aws" data-quiz="aws-saa-c03">
+                    <h3>SAA-C03 Exam Simulator</h3>
+                    <div class="sim-form">
+                      <div class="field">
+                        <label>Mode</label>
+                        <div class="segmented aws">
+                          <input type="radio" id="aws-mode-practice" name="aws-mode" value="practice" checked>
+                          <label for="aws-mode-practice">Practice</label>
+                          <input type="radio" id="aws-mode-exam" name="aws-mode" value="exam">
+                          <label for="aws-mode-exam">Exam</label>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label>Questions</label>
+                        <div class="select">
+                          <select id="studyCount">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="65">65 (Full)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="field full">
+                        <label>Domains (optional filter)</label>
+                        <div class="domains aws" data-scope="aws">
+                          <input id="aws-d1" type="checkbox" value="D1"><label for="aws-d1">D1</label>
+                          <input id="aws-d2" type="checkbox" value="D2"><label for="aws-d2">D2</label>
+                          <input id="aws-d3" type="checkbox" value="D3"><label for="aws-d3">D3</label>
+                          <input id="aws-d4" type="checkbox" value="D4"><label for="aws-d4">D4</label>
+                        </div>
+                        <div class="small">Leave empty to include all domains.</div>
+                      </div>
+                      <div class="field full">
+                        <div class="actions" style="margin-top:8px">
+                          <button class="btn btn-aws solid start-btn" type="button">▶ Start Quiz</button>
+                          <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
+                          <a class="btn btn-aws" href="/score/ranking.html?quiz=aws-saa-c03">🏆 Ranking</a>
+                        </div>
+                        <div class="small center">
+                          Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
+                        </div>
+                      </div>
+                    </div>
+                  </aside>
+                </section>
+              </section>
+            </article>
+
+            <!-- Slide 2: AZURE -->
+            <article class="slide" role="group" aria-roledescription="slide" aria-label="2 of 2">
+              <section id="azure" class="azure-group3 card">
+                <span class="badge2">🔵 MICROSOFT AZURE ADMINISTRATOR — ASSOCIATE (AZ-104)</span>
+                <section class="grid">
+                  <article class="card path">
+                    <div class="desc2">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg" alt="Azure Logo" class="logo">
+                      <div class="text">Master Azure admin essentials: identities, governance, compute, networking and monitoring.</div>
+                    </div>
+                    <h2>Exam Domains</h2>
+                    <p class="small" style="margin-top:-6px;"><em>😎✏️ Take a look of our next study notes mfocusing only on what really matters for the exam </em></p>
+                    <ul>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain1.html">Domain 1:</a> Manage identities & governance (15–20%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain2.html">Domain 2:</a> Implement & manage storage (15–20%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain3.html">Domain 3:</a> Deploy & manage compute (20–25%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain4.html">Domain 4:</a> Configure & manage networking (20–25%)</li>
+                      <li><a class="study-link" href="/certification/microsoft-azure/az-104/azure-az104-tips-domain5.html">Domain 5:</a> Monitor & maintain resources (10–15%)</li>
+                    </ul>
+                  </article>
+
+                  <!-- SIMULATOR AZURE -->
+                  <aside id="sim-az" class="card path sim-card" data-brand="az" data-quiz="az-104">
+                    <h3>AZ-104 Exam Simulator</h3>
+                    <div class="sim-form">
+                      <div class="field">
+                        <label>Mode</label>
+                        <div class="segmented az">
+                          <input type="radio" id="az-mode-practice" name="az-mode" value="practice" checked>
+                          <label for="az-mode-practice">Practice</label>
+                          <input type="radio" id="az-mode-exam" name="az-mode" value="exam">
+                          <label for="az-mode-exam">Exam</label>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label>Questions</label>
+                        <div class="select">
+                          <select id="studyCount2">
+                            <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="30">30</option>
+                            <option value="65">65 (Full)</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="field full">
+                        <label>Domains (optional filter)</label>
+                        <div class="domains" data-scope="az">
+                          <input id="az-d1" type="checkbox" value="D1"><label for="az-d1">D1</label>
+                          <input id="az-d2" type="checkbox" value="D2"><label for="az-d2">D2</label>
+                          <input id="az-d3" type="checkbox" value="D3"><label for="az-d3">D3</label>
+                          <input id="az-d4" type="checkbox" value="D4"><label for="az-d4">D4</label>
+                          <input id="az-d5" type="checkbox" value="D5"><label for="az-d5">D5</label>
+                        </div>
+                        <div class="small">Leave empty to include all domains.</div>
+                      </div>
+                      <div class="field full">
+                        <div class="actions" style="margin-top:8px">
+                          <button class="btn btn-az solid start-btn" type="button">▶ Start Quiz</button>
+                          <a class="btn secondary login-hint" href="/login/login.html" title="Sign in to begin the quiz">🔐 Login to start</a>
+                          <a class="btn btn-az" href="/score/ranking.html?quiz=az-104">🏆 Ranking</a>
+                        </div>
+                        <div class="small center">
+                          Shortcuts inside the quiz: <span class="kbd">N</span> Next, <span class="kbd">B</span> Back, <span class="kbd">M</span> Mark, <span class="kbd">1-9</span> choose.
+                        </div>
+                      </div>
+                    </div>
+                  </aside>
+                </section>
+              </section>
+            </article>
+          </div>
+        </div>
+        <!-- Dots -->
+        <div class="dots" role="tablist" aria-label="Slides">
+          <button class="dot" type="button" role="tab" aria-selected="true" aria-controls="aws" title="AWS"></button>
+          <button class="dot" type="button" role="tab" aria-selected="false" aria-controls="azure" title="Azure"></button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Asegúrate que la ruta/nombre de archivo coinciden con tu servidor -->
+<script src="/control_quizs/Q_global.js"></script>
+  <script>
+    /* ===== Auth bar (igual que antes) ===== */
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function logoutUser(){ localStorage.removeItem("currentUser"); renderAuthBar(); }
+    function updateStartButtonsForAuth(){
+      const logged=!!getCurrentUser();
+      document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
+        if(!logged){ btn.setAttribute('disabled',''); btn.setAttribute('aria-disabled','true'); btn.setAttribute('title','Please log in to start the quiz'); }
+        else{ btn.removeAttribute('disabled'); btn.removeAttribute('aria-disabled'); btn.removeAttribute('title'); }
+      });
+      document.querySelectorAll('.sim-card .login-hint').forEach(link=> link.style.display=logged?'none':'inline-flex');
+    }
+    function renderAuthBar(){
+      const u=getCurrentUser(), bar=document.getElementById('authBar');
+      const nameEl=document.getElementById('userName'), emailEl=document.getElementById('userEmail');
+      const btnLogin=document.getElementById('btnLogin'), btnSignup=document.getElementById('btnSignup');
+      const btnLogout=document.getElementById('btnLogout'), btnProfile=document.getElementById('btnProfile');
+      const extraEl=document.getElementById('authExtra'), welcome=document.getElementById('welcomeTxt');
+      if(u){
+        bar.classList.remove('guest'); bar.classList.add('logged');
+        nameEl.textContent=u.name||'(user)'; emailEl.textContent=u.email||''; welcome.classList.remove('hidden');
+        btnLogin.classList.add('hidden'); btnSignup.classList.add('hidden'); btnLogout.classList.remove('hidden'); btnProfile.classList.remove('hidden');
+        extraEl.style.display='none';
+      }else{
+        bar.classList.add('guest'); bar.classList.remove('logged');
+        nameEl.textContent=''; emailEl.textContent=''; welcome.classList.add('hidden');
+        btnLogin.classList.remove('hidden'); btnSignup.classList.remove('hidden'); btnLogout.classList.add('hidden'); btnProfile.classList.add('hidden');
+        extraEl.style.display='flex'; extraEl.innerHTML='Create a free account to save progress and history.';
+      }
+      updateStartButtonsForAuth();
+    }
+
+    /* ===== Carousel logic ===== */
+    (function(){
+      const track = document.getElementById('carouselTrack');
+      const slides = Array.from(track.children);
+      const prevBtn = document.querySelector('.carousel .prev');
+      const nextBtn = document.querySelector('.carousel .next');
+      const dots = Array.from(document.querySelectorAll('.carousel .dot'));
+      let index = 0;
+      let isPointerDown = false;
+      let startX = 0;
+      let currentX = 0;
+      let deltaX = 0;
+      let lock = false;
+
+      function setIndex(i, animate=true){
+        index = Math.max(0, Math.min(i, slides.length-1));
+        track.style.transition = animate ? 'transform .35s cubic-bezier(.22,.61,.36,1)' : 'none';
+        track.style.transform = `translateX(${-index*100}%)`;
+        slides.forEach((s, k)=> s.setAttribute('aria-label', `${k+1} of ${slides.length}`));
+        dots.forEach((d, k)=> d.setAttribute('aria-selected', String(k===index)));
+        // focus management: opcional, no robamos foco para no molestar
+      }
+
+      function next(){ setIndex(index+1); }
+      function prev(){ setIndex(index-1); }
+
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
+      dots.forEach((d, k)=> d.addEventListener('click', ()=> setIndex(k)));
+
+      // keyboard
+      document.addEventListener('keydown', (e)=>{
+        if (lock) return;
+        if (e.key === 'ArrowRight') next();
+        if (e.key === 'ArrowLeft') prev();
+      });
+
+      // pointer/touch drag
+      const onPointerDown = (e)=>{
+        isPointerDown = true; lock = true;
+        startX = (e.touches ? e.touches[0].clientX : e.clientX);
+        currentX = startX;
+        track.style.transition = 'none';
+      };
+      const onPointerMove = (e)=>{
+        if(!isPointerDown) return;
+        currentX = (e.touches ? e.touches[0].clientX : e.clientX);
+        deltaX = currentX - startX;
+        const width = track.getBoundingClientRect().width / slides.length;
+        const pct = (deltaX / width) * 100;
+        const base = -index*100;
+        track.style.transform = `translateX(${base + pct}%)`;
+      };
+      const onPointerUp = ()=>{
+        if(!isPointerDown) return;
+        isPointerDown = false;
+        const width = track.getBoundingClientRect().width / slides.length;
+        const threshold = width * 0.18; // 18% deslizado para cambiar
+        if (deltaX > threshold) setIndex(index-1);
+        else if (deltaX < -threshold) setIndex(index+1);
+        else setIndex(index); // reset
+        deltaX = 0;
+        setTimeout(()=> lock=false, 120);
+      };
+      track.addEventListener('mousedown', onPointerDown);
+      track.addEventListener('mousemove', onPointerMove);
+      window.addEventListener('mouseup', onPointerUp);
+      track.addEventListener('touchstart', onPointerDown, {passive:true});
+      track.addEventListener('touchmove', onPointerMove, {passive:true});
+      track.addEventListener('touchend', onPointerUp);
+
+      // resize safeguard (mantener slide alineado)
+      window.addEventListener('resize', ()=> setIndex(index, false));
+
+      // init
+      setIndex(0, false);
+    })();
+
+    // ===== Quiz start wiring (igual que antes, lee valores dentro de cada slide) =====
+    document.addEventListener('DOMContentLoaded', ()=>{
+      document.getElementById('btnLogout')?.addEventListener('click', logoutUser);
+
+      document.querySelectorAll('.sim-card .start-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          if(btn.hasAttribute('disabled')) return;
+          const sim = btn.closest('.sim-card');
+          const quiz = sim?.dataset.quiz;
+
+          // count
+          const sel = sim.querySelector('select');
+          let count = Number(sel?.value || 65);
+          if(![5,10,15,30,65].includes(count)) count = 65;
+
+          // domains
+          const tags = [];
+          sim.querySelectorAll('.domains input[type="checkbox"]:checked').forEach(cb => tags.push((cb.value||'').toUpperCase()));
+
+          if (typeof window.start === 'function') {
+            window.start(quiz, { count, tags });
+          } else {
+            alert('Quiz engine not loaded. Please refresh.');
+          }
+        });
+      });
+
+      renderAuthBar();
+      setTimeout(renderAuthBar, 300);
+    });
+  </script>
+</body>
+</html>
