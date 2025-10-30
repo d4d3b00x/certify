@@ -128,15 +128,18 @@
     .dot.aws{background:#ff9900}
     .dot.multi{background:conic-gradient(from 0deg,#ff9900 0 50%,#0078d4 50% 100%)}
     .cc-meta{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.9rem}
+
+    /* FLECHAS más visibles (claras) */
     .car-btn{
       position:absolute;top:45%;transform:translateY(-50%);
-      width:36px;height:36px;border-radius:999px;border:1px solid var(--stroke);
-      background:rgba(17,25,55,.8);display:flex;align-items:center;justify-content:center;
-      cursor:pointer
+      width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);
+      background:rgba(255,255,255,.95);color:#0f1320;font-weight:900;
+      display:flex;align-items:center;justify-content:center;cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:2
     }
-    .car-btn:hover{background:rgba(17,25,55,.95)}
-    .car-prev{left:-6px}
-    .car-next{right:-6px}
+    .car-btn:hover{background:#ffffff;color:#0a0e1a}
+    .car-prev{left:-10px}
+    .car-next{right:-10px}
 
     .how-grid{display:grid;gap:10px;margin-top:12px}
     @media(min-width:820px){.how-grid{grid-template-columns:repeat(4,1fr)}}
@@ -194,6 +197,37 @@
       <p class="lead">Simula exámenes reales, suma puntos y escala en los rankings.</p>
       <div class="hero-actions">
         <a class="btn" href="/score/ranking.html">🏆 Ver ranking global</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Cómo funciona + CTA (MOVIDO ARRIBA) ===== -->
+  <section>
+    <div class="container">
+      <div class="sec-title">Cómo queremos que apruebes:</div>
+      <div class="how-grid">
+        <div class="how-step"><strong>1) Elige tu ruta</strong><br><span class="muted">Filtra por certificación, proveedor o nivel.</span></div>
+        <div class="how-step"><strong>2) Aprende rápido</strong><br><span class="muted">Notas claras y hojas de trucos.</span></div>
+        <div class="how-step"><strong>3) Simula el examen</strong><br><span class="muted">Modo estudio o examen cronometrado.</span></div>
+        <div class="how-step"><strong>4) Aprueba</strong><br><span class="muted">Revisa tus estadísticas y repite.</span></div>
+      </div>
+
+      <div class="cta">
+        <div class="left">
+          <span class="tag">Lanzamos nuestro simulador (beta)</span>
+          <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Registrate y empieza gratis!!</h2>
+          <p class="muted">Artículos y simuladores básicos. COmpite y desbloquea modos avanzados.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+            <a class="pill-btn" href="/login/login.html#signup">Crear cuenta</a>
+          </div>
+        </div>
+        <div class="right">
+          <div>✅ Modo practica (modo examen en desarrollo)</div>
+          <div>✅ Explicaciones y referencias centradas en aprobar</div>
+          <div>✅ Tips de estudio por cada dominio de la certificación</div>
+          <div>✅ Perfil de usuario con estadísticas y progreso</div>
+          <div>✅ Preguntas marcadas y budgets conseguidos. </div>
+        </div>
       </div>
     </div>
   </section>
@@ -271,7 +305,7 @@
             <a class="pill-btn" href="content/aws-vpc-ha.html" style="margin-top:10px">Leer</a>
           </article>
 
-          <!-- Slide 6 (nuevo) -->
+          <!-- Slide 6 -->
           <article class="card slide">
             <div class="cc-head">
               <span class="dot az" title="Azure · AZ-104"></span>
@@ -282,7 +316,7 @@
             <a class="pill-btn" href="content/azure-storage-az104.html" style="margin-top:10px">Leer</a>
           </article>
 
-          <!-- Slide 7 (nuevo) -->
+          <!-- Slide 7 -->
           <article class="card slide">
             <div class="cc-head">
               <span class="dot az" title="Azure · AZ-305"></span>
@@ -293,7 +327,7 @@
             <a class="pill-btn" href="content/azure-hybrid-connectivity-az305.html" style="margin-top:10px">Leer</a>
           </article>
 
-          <!-- Slide 8 (nuevo) -->
+          <!-- Slide 8 -->
           <article class="card slide">
             <div class="cc-head">
               <span class="dot aws" title="AWS · SAA-C03"></span>
@@ -304,7 +338,7 @@
             <a class="pill-btn" href="content/aws-s3-design-saac03.html" style="margin-top:10px">Leer</a>
           </article>
 
-          <!-- Slide 9 (nuevo) -->
+          <!-- Slide 9 -->
           <article class="card slide">
             <div class="cc-head">
               <span class="dot aws" title="AWS · SAA-C03"></span>
@@ -316,37 +350,6 @@
           </article>
         </div>
         <button class="car-btn car-next" aria-label="Siguiente">›</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== Cómo funciona + CTA ===== -->
-  <section>
-    <div class="container">
-      <div class="sec-title">Cómo funciona</div>
-      <div class="how-grid">
-        <div class="how-step"><strong>1) Elige tu ruta</strong><br><span class="muted">Filtra por certificación, proveedor o nivel.</span></div>
-        <div class="how-step"><strong>2) Aprende rápido</strong><br><span class="muted">Notas claras y hojas de trucos.</span></div>
-        <div class="how-step"><strong>3) Simula el examen</strong><br><span class="muted">Modo estudio o examen cronometrado.</span></div>
-        <div class="how-step"><strong>4) Aprueba</strong><br><span class="muted">Revisa tus estadísticas y repite.</span></div>
-      </div>
-
-      <div class="cta">
-        <div class="left">
-          <span class="tag">Lanzamiento</span>
-          <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Empieza gratis, mejora cuando quieras</h2>
-          <p class="muted">Accede a artículos y simuladores básicos. Desbloquea modos avanzados y estadísticas con Premium.</p>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-            <a class="pill-btn" href="/login/login.html#signup">Crear cuenta</a>
-            <!-- Eliminado: Ver planes / ranking -->
-          </div>
-        </div>
-        <div class="right">
-          <div>✅ Modo examen con tiempo</div>
-          <div>✅ Explicaciones y referencias</div>
-          <div>✅ Estadísticas y progreso</div>
-          <div>✅ Marcadores y repasos</div>
-        </div>
       </div>
     </div>
   </section>
