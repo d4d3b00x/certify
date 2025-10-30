@@ -108,13 +108,26 @@
     .chip.azure{background:var(--chip-az-bg);border:1px solid var(--chip-az-bd);color:var(--chip-az-ink)}
     .chip.aws{background:var(--chip-aws-bg);border:1px solid var(--chip-aws-bd);color:var(--chip-aws-ink)}
 
-    /* ===== Centro de contenidos - carrusel 2x3 ===== */
+    /* ===== Centro de contenidos ===== */
+
+    /* Selector (filtro certificación) */
+    .filter-bar{
+      display:flex;align-items:center;gap:10px;background:var(--surface2);
+      border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;margin-top:10px
+    }
+    .filter-bar label{font-weight:900;white-space:nowrap}
+    .filter-bar select{
+      appearance:none;background:#0f1630;border:1px solid var(--stroke);
+      border-radius:10px;color:var(--ink);font-weight:800;padding:10px 12px;min-width:260px;
+    }
+
+    /* Carrusel 2x3 con paginación */
     .carousel{position:relative;margin-top:12px}
     .track{
       display:grid;
       grid-template-columns:repeat(3, 1fr);
       gap:12px;
-      min-height: 420px; /* asegura altura estable al paginar */
+      min-height: 420px; /* altura estable al paginar */
     }
     @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
     @media(max-width:560px){ .track{grid-template-columns:1fr} }
@@ -126,13 +139,9 @@
     .dot.aws{background:#ff9900}
     .dot.multi{background:conic-gradient(from 0deg,#ff9900 0 50%,#0078d4 50% 100%)}
 
-    /* Línea meta: chip + código + botón mini alineados */
-    .cc-meta{
-      display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;
-    }
+    .cc-meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;}
     .cc-meta .grow{ display:inline-flex; align-items:center; gap:8px; margin-right:auto; }
 
-    /* Botón mini */
     .tiny-btn{
       display:inline-flex;align-items:center;justify-content:center;
       height:28px; padding:0 10px; border-radius:8px;
@@ -143,7 +152,6 @@
     }
     .tiny-btn:hover{ transform:translateY(-1px) }
 
-    /* Flechas/paginación */
     .car-btn{
       position:absolute;top:45%;transform:translateY(-50%);
       width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);
@@ -219,7 +227,7 @@
   <!-- ===== Cómo funciona + CTA ===== -->
   <section>
     <div class="container">
-      <div class="sec-title">Cómo queremos que apruebes:</div>
+      <div class="sec-title">ESTRATEGIA PARA APROBAR TU CERTIFICACIÓN TI</div>
       <div class="how-grid">
         <div class="how-step"><strong>1) Elige tu ruta</strong><br><span class="muted">Filtra por certificación, proveedor o nivel.</span></div>
         <div class="how-step"><strong>2) Aprende rápido</strong><br><span class="muted">Notas claras y hojas de trucos.</span></div>
@@ -229,7 +237,7 @@
 
       <div class="cta">
         <div class="left">
-          <span class="tag">Lanzamos nuestro simulador (beta)</span>
+          <span class="tag">LANZAMOS NUESTRA WEB. PARTICIPA!</span>
           <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Regístrate y empieza gratis</h2>
           <p class="muted">Artículos y simuladores básicos. Compite y desbloquea modos avanzados.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
@@ -250,7 +258,7 @@
   <!-- ===== Simuladores ===== -->
   <section id="simuladores">
     <div class="container">
-      <div class="sec-title">Simuladores de examen</div>
+      <div class="sec-title">SIMULADOR DE EXAMENES (BETA)</div>
       <div class="muted">Modo estudio o examen cronometrado. Más simuladores pronto.</div>
       <div class="grid" id="simGrid"></div>
     </div>
@@ -259,14 +267,26 @@
   <!-- ===== Centro de contenidos ===== -->
   <section id="contenidos">
     <div class="container">
-      <div class="sec-title">Contenido clave para aprobar</div>
+      <div class="sec-title">CONTENIDO CLAVE POR CERTIFICACIÓN</div>
       <div class="muted">Solo lo esencial: resúmenes rápidos, hojas de trucos y guías prácticas enfocadas en el examen.</div>
 
+      <!-- Filtro de certificación -->
+      <div class="filter-bar">
+        <label for="examSelect">Selecciona Certificación:</label>
+        <select id="examSelect">
+          <option value="all">TODAS</option>
+          <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
+          <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
+        </select>
+      </div>
+
+      <!-- Carrusel 2×3 -->
       <div class="carousel">
         <button class="car-btn car-prev" aria-label="Anterior">‹</button>
         <div class="track" id="contentTrack">
-          <!-- 9 slides de ejemplo -->
-          <article class="card slide">
+          <!-- Añadimos data-exam para filtrar (az-104 | aws-saa-c03 | mixed) -->
+
+          <article class="card slide" data-exam="az-104">
             <div class="cc-head">
               <span class="dot az" title="Azure · AZ-104"></span>
               <strong>Guía rápida: VNet Peering vs. VPN Gateway</strong>
@@ -278,7 +298,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="az-104">
             <div class="cc-head">
               <span class="dot az"></span>
               <strong>Checklist de seguridad para suscripciones Azure</strong>
@@ -290,7 +310,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="mixed">
             <div class="cc-head">
               <span class="dot multi"></span>
               <strong>Backup inmutable: patrón de ciberrecuperación</strong>
@@ -305,7 +325,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="az-104">
             <div class="cc-head">
               <span class="dot az"></span>
               <strong>Arquitectura de Landing Zone en Azure</strong>
@@ -317,7 +337,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="aws-saa-c03">
             <div class="cc-head">
               <span class="dot aws"></span>
               <strong>Alta disponibilidad en VPC: patrones prácticos</strong>
@@ -329,7 +349,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="az-104">
             <div class="cc-head">
               <span class="dot az"></span>
               <strong>Azure Storage: operación y seguridad</strong>
@@ -341,7 +361,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="az-104">
             <div class="cc-head">
               <span class="dot az"></span>
               <strong>Conectividad híbrida en Azure</strong>
@@ -353,7 +373,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="aws-saa-c03">
             <div class="cc-head">
               <span class="dot aws"></span>
               <strong>S3: seguridad, durabilidad y rendimiento</strong>
@@ -365,7 +385,7 @@
             </div>
           </article>
 
-          <article class="card slide">
+          <article class="card slide" data-exam="aws-saa-c03">
             <div class="cc-head">
               <span class="dot aws"></span>
               <strong>Patrones con SQS y SNS</strong>
@@ -441,9 +461,9 @@
 
     // ====== Cards de simuladores ======
     const CATALOG = [
-      {id:'AZ-104',provider:'azure',title:'Administrator Associate',duration:'90 min',questions:60,level:'Intermedio',quiz:'az-104'},
+      {id:'AZ-104',provider:'Microsoft azure',title:'Administrator Associate',duration:'90 min',questions:60,level:'Intermedio',quiz:'az-104'},
       // {id:'AZ-305',provider:'azure',title:'Architect Expert',duration:'75 min',questions:50,level:'Avanzado',quiz:'az-305'},
-      {id:'SAA-C03',provider:'aws',title:'Solutions Architect Associate',duration:'130 min',questions:65,level:'Intermedio',quiz:'aws-saa-c03'}
+      {id:'SAA-C03',provider:'amazon aws',title:'Solutions Architect Associate',duration:'130 min',questions:65,level:'Intermedio',quiz:'aws-saa-c03'}
     ];
     const simGrid=document.getElementById('simGrid');
     function chip(p){return `<span class="chip ${p}"><b>${p.toUpperCase()}</b></span>`}
@@ -484,27 +504,50 @@
       }
     });
 
-    // ===== Carrusel 2x3 (paginación) =====
+    // ===== Carrusel 2x3 con filtro y paginación =====
     const track = document.getElementById('contentTrack');
-    const slides = Array.from(track.querySelectorAll('.slide'));
+    const allSlides = Array.from(track.querySelectorAll('.slide'));
     const prevBtn = document.querySelector('.car-prev');
     const nextBtn = document.querySelector('.car-next');
+    const select  = document.getElementById('examSelect');
+
     const PAGE_SIZE = 6; // 2 filas x 3 columnas
     let page = 0;
+    let filter = 'all';
 
-    function renderCarousel(){
-      slides.forEach(s => s.classList.remove('show'));
-      const start = page * PAGE_SIZE;
-      const end   = start + PAGE_SIZE;
-      slides.slice(start, end).forEach(s => s.classList.add('show'));
-
-      prevBtn.disabled = (page === 0);
-      nextBtn.disabled = (end >= slides.length);
+    function filteredSlides(){
+      if(filter==='all') return allSlides;
+      return allSlides.filter(s => s.dataset.exam === filter || s.dataset.exam === 'mixed');
     }
 
-    prevBtn.addEventListener('click', ()=>{ if(page>0){ page--; renderCarousel(); } });
-    nextBtn.addEventListener('click', ()=>{ if((page+1)*PAGE_SIZE < slides.length){ page++; renderCarousel(); } });
+    function renderCarousel(){
+      // reset visibilidad
+      allSlides.forEach(s => s.classList.remove('show'));
+      const items = filteredSlides();
 
+      // paginación
+      const start = page * PAGE_SIZE;
+      const end   = start + PAGE_SIZE;
+      items.slice(start, end).forEach(s => s.classList.add('show'));
+
+      // estado flechas
+      prevBtn.disabled = (page === 0);
+      nextBtn.disabled = (end >= items.length);
+    }
+
+    select.addEventListener('change', ()=>{
+      filter = select.value;
+      page = 0;
+      renderCarousel();
+    });
+
+    prevBtn.addEventListener('click', ()=>{ if(page>0){ page--; renderCarousel(); }});
+    nextBtn.addEventListener('click', ()=>{
+      const total = filteredSlides().length;
+      if((page+1)*PAGE_SIZE < total){ page++; renderCarousel(); }
+    });
+
+    // primer pintado
     renderCarousel();
   </script>
 </body>

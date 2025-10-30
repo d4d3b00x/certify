@@ -287,6 +287,12 @@
           infoContent=document.getElementById('infoContent'),
           infoClose=document.getElementById('infoClose');
 
+    /* === util: cerrar panel de notas y limpiar selección === */
+    function closeInfoPanel(){
+      infoDom.hidden = true;
+      dlist.querySelectorAll('.dom-item').forEach(x=>x.classList.remove('active'));
+    }
+
     const cfg = CONFIG[QUIZ];
     if(!cfg){
       document.getElementById('root').innerHTML = `<div class="panel">Quiz desconocido: <b>${QUIZ||'(vacío)'}</b>. <a href="/index.html">Volver</a></div>`;
@@ -326,6 +332,9 @@
 
       // Start quiz
       startBtn.addEventListener('click', ()=>{
+        // ⬅️ cierre automático del panel de notas antes de iniciar
+        if (!infoDom.hidden) closeInfoPanel();
+
         const count = parseInt(qCount.value,10) || 65;
         const tags = Array.from(chips.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
         if(typeof window.start === 'function'){
@@ -377,10 +386,7 @@
     });
 
     // Cerrar INFO_DOM
-    infoClose.addEventListener('click', ()=>{
-      infoDom.hidden = true;
-      dlist.querySelectorAll('.dom-item').forEach(x=>x.classList.remove('active'));
-    });
+    infoClose.addEventListener('click', closeInfoPanel);
   </script>
 </body>
 </html>
