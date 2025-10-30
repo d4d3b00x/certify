@@ -1,0 +1,113 @@
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Azure Storage: operación y seguridad (AZ-104) — CertifyLab</title>
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --stroke:#283056;--brand:#6c8bff;--azure:#0078d4;--aws:#ff9900;
+      --shadow:0 12px 28px rgba(6,12,40,.45);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);background:var(--bg);line-height:1.6}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));
+      backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .logo-pill{width:16px;height:30px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);
+      box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    a{color:inherit;text-decoration:none}
+    .btn, .pill{display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 14px;border-radius:12px;
+      border:1px solid var(--stroke);font-weight:900}
+    .pill{background:linear-gradient(180deg,#7a67ff,#5f48ff);border-color:#3b2fff44;color:#fff}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:#9ca8d9;font-size:.95rem;margin-top:6px}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid #2a3150;font-weight:800}
+    .chip.az{background:rgba(0,120,212,.16);color:#9fd2ff;border-color:rgba(0,120,212,.4)}
+    .chip.aws{background:rgba(255,153,0,.18);color:#ffd79a;border-color:rgba(255,153,0,.4)}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .dot.az{background:#0078d4}
+    .dot.aws{background:#ff9900}
+    h1{font-size:clamp(1.6rem,4.2vw,2.2rem);margin:16px 0 6px}
+    h2{margin:22px 0 8px;font-size:1.25rem}
+    section{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;
+      box-shadow:var(--shadow);padding:16px;margin:14px 0}
+    pre{background:#0b122a;border:1px solid #22305f;border-radius:10px;padding:12px;overflow:auto}
+    code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;color:#cde1ff}
+    ul{margin:8px 0 0 18px}
+    footer{border-top:1px solid var(--stroke);color:#9ca8d9;margin-top:20px;padding:16px 0}
+    .note{color:#9ca8d9}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="logo-pill"></span> <span>CertifyLab</span></div>
+      <a class="btn" href="/index.html">← Volver</a>
+    </div>
+  </header>
+  <main class="container">
+    <div class="meta"><span class="dot az" title="Azure · AZ-104"></span> <span>Aplica: AZ-104</span> · <span>Lectura: 7 min</span></div>
+    <h1>Operación y seguridad en Azure Storage Accounts</h1>
+    <p class="muted">Acceso, SAS, RBAC, replicación y retención inmutable para el administrador de Azure.</p>
+
+    <section>
+      <h2>1) Acceso: RBAC vs. claves</h2>
+      <ul>
+        <li>Prefiere <strong>RBAC + Azure AD</strong> (roles <em>Storage Blob Data Reader</em>/<em>Contributor</em>).</li>
+        <li>Deshabilita <em>Shared Key access</em> si es posible.</li>
+      </ul>
+      <pre><code>az storage account update -g rg -n mystorage \
+  --allow-shared-key-access false</code></pre>
+    </section>
+    <section>
+      <h2>2) SAS con límites estrictos</h2>
+      <ul>
+        <li>Usa <strong>User Delegation SAS</strong>, expiración &lt;= 1 día y permisos mínimos.</li>
+        <li>Restringe por IP/https.</li>
+      </ul>
+      <pre><code>az storage container generate-sas --account-name mystorage \
+  --name data --as-user --auth-mode login \
+  --permissions r --expiry 2025-12-31T23:00Z --ip 203.0.113.0/24 --https-only</code></pre>
+    </section>
+    <section>
+      <h2>3) Replicación y rendimiento</h2>
+      <ul>
+        <li>Producción: <strong>LRS</strong> (coste) o <strong>GZRS</strong> (crítico).</li>
+        <li>Activa <em>versioning</em> y <em>soft delete</em> para blobs.</li>
+      </ul>
+    </section>
+    <section>
+      <h2>4) Inmutabilidad (WORM)</h2>
+      <ul>
+        <li>Política <strong>immutability</strong> a nivel de contenedor con períodos legales o de retención.</li>
+      </ul>
+      <pre><code>az storage container immutability-policy create \
+  --account-name mystorage --container-name backups --period 30 --policy-mode Locked</code></pre>
+    </section>
+    <section>
+      <h2>5) Networking</h2>
+      <ul>
+        <li>Habilita <strong>Private Endpoints</strong> y desactiva el acceso público.</li>
+      </ul>
+      <pre><code>az storage account update -g rg -n mystorage --default-action Deny</code></pre>
+    </section>
+    <section>
+      <h2>Checklist</h2>
+      <ul>
+        <li>¿RBAC y PIM para acceso a datos?</li>
+        <li>¿SAS con expiración corta y por IP?</li>
+        <li>¿Versioning + soft delete + WORM en copias?</li>
+        <li>¿Private Endpoint + acceso público deshabilitado?</li>
+      </ul>
+    </section>
+    
+  </main>
+  <footer class="container">© <span id="y"></span> CertifyLab — <a href="/index.html">Inicio</a></footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

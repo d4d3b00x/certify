@@ -1,333 +1,303 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DYZ3GCXHEK');
-</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config', 'G-DYZ3GCXHEK');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CertiFY — Login & Sign Up</title>
-  <link rel="stylesheet" href="/style_global.css"/>
+  <title>CertifyLab — Login & Registro</title>
 
   <style>
     :root{
-      --bg:#f7f8ff; --surface:#fafbff; --card:#ffffff; --ink:#1b1f3a; --muted:#6c6f91;
-      --brand:#161a3f; --bd:#e7eafe; --ring:rgba(90,100,200,.18); --shadow:0 8px 24px rgba(28,27,70,.08);
-      --radius:16px;
-      --aws-500:#ff9900; --az-500:#0078d4;
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
+      --accent:#6c8bff;--accent-2:#3e64ff;--accent-ring:rgba(108,139,255,.28);
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --ok:#25b873;--bad:#ff6b6b;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Helvetica Neue", "Noto Sans", sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(900px 420px at 12% -10%, #f1f4ff 0, transparent 60%),
-        radial-gradient(900px 420px at 88% -10%, #fff4ea 0, transparent 60%),
-        linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
-      line-height:1.6; min-height:100vh;
-    }
-    .wrap{max-width:980px;margin:0 auto;padding:24px 20px}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:#cfe1ff;text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    /* Cards & buttons */
-    .card{
-      background:var(--card); border:1px solid var(--bd); border-radius:var(--radius); padding:22px;
-      box-shadow:var(--shadow);
-    }
-    .btn{
-      appearance:none; border:1px solid #e7eafe; cursor:pointer; background:#f5f7ff; color:#262a52;
-      font-weight:900; letter-spacing:.2px; padding:12px 16px; border-radius:12px; box-shadow:0 6px 16px rgba(25,22,84,.06);
-      transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
-    }
-    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(25,22,84,.08); background:#eef1ff }
-    .btn[disabled]{ opacity:.6; cursor:not-allowed; transform:none; box-shadow:none; }
-    .btn.primary{ background:var(--az-500); color:#fff; border-color:#98cfff; }
-    .btn.primary:hover{ filter:brightness(.96) }
-    .btn.link{ background:#fff; }
+    /* Header */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
+      border-bottom:1px solid var(--stroke)}
+    .wrap{max-width:960px;margin:0 auto;padding:20px}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .dot{width:10px;height:10px;border-radius:50%;background:#6c8bff;box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    .menu{display:flex;gap:18px;color:var(--muted);font-weight:700}
+    .menu a{color:inherit;text-decoration:none}
+    .menu a:hover{color:#fff}
 
-    /* Auth bar */
-    .authbar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:10px 14px; background:#fff; border:1px solid #ecefff; border-radius:999px;
-      color:#2a2e57; font-weight:700; box-shadow:0 4px 12px rgba(30,35,80,.06);
-      max-width:560px; width:100%; margin:0 auto 14px;
-    }
-    .authbar .actions{ display:flex; gap:8px; }
-    .authbar .muted{ color:#8b8fb3; font-weight:700; }
-    .hidden{ display:none !important; }
+    /* Page + cards */
+    .page{max-width:960px;margin:0 auto;padding:24px 20px}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+    .title{margin:0 0 6px;font-weight:900}
+    .hint{color:var(--muted);font-size:.94rem}
+    .err{color:#ffb0b0;font-weight:800;margin-top:6px;display:none}
+
+    /* Auth status bar */
+    .authbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 auto 16px;
+      background:var(--surface);border:1px solid var(--stroke);border-radius:999px;padding:10px 14px;max-width:720px}
+    .authbar .muted{color:var(--muted)}
+    .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff1a;background:#ffffff14;border-radius:999px;padding:8px 12px;font-weight:900}
+
+    /* Switcher */
+    .switcher{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:6px;width:fit-content;margin:0 auto 14px}
+    .tab{appearance:none;border:1px solid transparent;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
+    .tab.active{background:#0f1630;border-color:#31407a;box-shadow:inset 0 0 0 1px #31407a}
 
     /* Forms */
-    .form-card{ max-width:560px; margin:0 auto; }
-    .field{ display:flex; flex-direction:column; gap:6px; margin:10px 0; }
-    .field label{ font-weight:800; color:#2a2e57; }
-    .control{
-      display:flex; align-items:center; gap:8px; border:1px solid #e6e9ff;
-      border-radius:10px; padding:10px 12px; background:#fff;
-    }
-    .control input{
-      border:none; outline:none; width:100%; font-weight:700;
-      color:#2a2e57; background:transparent; padding:4px 0;
-    }
-    .form-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:10px; }
-    .hint{ color:var(--muted); font-size:.92rem; }
-    .err{ color:#b3261e; font-weight:800; margin-top:6px; }
-    .footer-links{ text-align:center; margin-top:14px; }
-    .footer-links a{ font-weight:900; color:#0a4a7b; text-decoration:none; }
-    .footer-links a:hover{ text-decoration:underline; }
+    .field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
+    .control{display:flex;align-items:center;gap:8px;border:1px solid var(--stroke);
+      border-radius:12px;padding:10px 12px;background:var(--surface2)}
+    .control input{border:none;outline:none;background:transparent;color:var(--ink);width:100%;font-weight:800}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    .btn{appearance:none;border:1px solid var(--stroke);border-radius:12px;padding:12px 16px;
+      font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
+    .btn.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+    .btn.ghost{background:#0f1630}
+    .btn[disabled]{opacity:.6;cursor:not-allowed}
+
+    footer{margin:28px 0 14px;color:#8fa4ff99;text-align:center}
+    footer a{color:#bcd3ff}
+    .hidden{display:none !important}
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><span class="dot"></span> CertifyLab</div>
+      <nav class="menu">
+        <a href="/index.html">Home</a>
+        <a href="/index.html#simuladores">Simuladores</a>
+        <a href="/index.html#contenidos">Contenidos</a>
+        <a href="/score/ranking.html">Ranking</a>
+      </nav>
+    </div>
+  </header>
 
-    <!-- AUTH BAR -->
-    <section class="authbar" id="authBar">
-      <span id="authText" class="muted">🔒 Not authenticated :(</span>
+  <div class="page">
+    <!-- Barra de estado -->
+    <div class="authbar" id="authBar">
+      <span class="muted" id="authText">🔒 No autenticado</span>
+      <div style="display:flex;gap:8px" id="authActions">
+        <button class="btn ghost" id="btnToSignup" type="button">Crear cuenta</button>
+        <a class="btn" href="/">Home</a>
+      </div>
+      <div style="display:none;gap:8px" id="authSigned">
+        <a class="btn" href="/">Home</a>
+        <button class="btn" id="btnLogout" type="button">Salir</button>
+      </div>
+    </div>
+
+    <!-- conmutador -->
+    <div class="switcher" id="tabBar">
+      <button class="tab active" id="tabLogin" type="button">Login</button>
+      <button class="tab" id="tabSignup" type="button">Registro</button>
+    </div>
+
+    <!-- Login -->
+    <form id="loginForm" class="card" novalidate autocomplete="on">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h2 class="title">Iniciar sesión</h2>
+        <span class="pill">Usuario existente</span>
+      </div>
+      <p class="hint" style="margin-top:-4px">Introduce tus credenciales para continuar.</p>
+
+      <div class="field">
+        <label for="loginEmail"><b>Email</b></label>
+        <div class="control"><input id="loginEmail" type="email" required placeholder="you@email.com"></div>
+      </div>
+      <div class="field">
+        <label for="loginPass"><b>Contraseña</b></label>
+        <div class="control"><input id="loginPass" type="password" required placeholder="••••••••"></div>
+      </div>
+
+      <div id="loginErr" class="err"></div>
+
       <div class="actions">
-        <button id="btnLogin" class="btn">Login</button>
-        <button id="btnSignup" class="btn">Register</button>
-        <button id="btnLogout" class="btn hidden">Sign out</button>
+        <button class="btn" id="goSignup" type="button">Crear cuenta</button>
+        <button class="btn primary" id="loginSubmit" type="submit">Entrar</button>
       </div>
-    </section>
-
-    <!-- LOGIN FORM -->
-    <form id="loginForm" class="card form-card" autocomplete="on" novalidate>
-      <h3 style="margin:4px 0 8px">Login</h3>
-      <div class="field">
-        <label for="loginEmail">Email</label>
-        <div class="control">
-          <input type="email" id="loginEmail" required placeholder="you@email.com" />
-        </div>
-      </div>
-      <div class="field">
-        <label for="loginPass">Password</label>
-        <div class="control">
-          <input type="password" id="loginPass" required placeholder="••••••••" />
-        </div>
-      </div>
-      <div id="loginErr" class="err hidden"></div>
-      <div class="form-actions">
-        <button class="btn link" type="button" id="goHome">Cancel</button>
-        <button class="btn primary" type="submit" id="loginSubmit">Certify!</button>
-      </div>
-      <p class="hint">No account yet? Click <b>Register</b> in the top bar.</p>
+      <p class="hint">¿Olvidaste la contraseña? (próximamente)</p>
     </form>
 
-    <!-- SIGNUP FORM -->
-    <form id="signupForm" class="card form-card hidden" autocomplete="on" novalidate>
-      <h3 style="margin:4px 0 8px">Create account</h3>
-      <div class="field">
-        <label for="signupName">Name</label>
-        <div class="control">
-          <input type="text" id="signupName" required placeholder="Your name" />
-        </div>
+    <!-- Registro -->
+    <form id="signupForm" class="card hidden" novalidate autocomplete="on">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <h2 class="title">Crear cuenta</h2>
+        <span class="pill">Gratis e inmediato</span>
       </div>
+      <p class="hint" style="margin-top:-4px">Rellena tus datos y estarás listo.</p>
+
       <div class="field">
-        <label for="signupEmail">Email</label>
-        <div class="control">
-          <input type="email" id="signupEmail" required placeholder="you@email.com" />
-        </div>
+        <label for="signupName"><b>Nombre</b></label>
+        <div class="control"><input id="signupName" required placeholder="Tu nombre"></div>
       </div>
       <div class="field">
-        <label for="signupPass">Password</label>
-        <div class="control">
-          <input type="password" id="signupPass" required minlength="6" placeholder="Min. 6 characters" />
-        </div>
+        <label for="signupEmail"><b>Email</b></label>
+        <div class="control"><input id="signupEmail" type="email" required placeholder="you@email.com"></div>
       </div>
-      <div id="signupErr" class="err hidden"></div>
-      <div class="form-actions">
-        <button class="btn link" type="button" id="goHome2">Cancel</button>
-        <button class="btn primary" type="submit" id="signupSubmit">Certify!</button>
+      <div class="field">
+        <label for="signupPass"><b>Contraseña</b></label>
+        <div class="control"><input id="signupPass" type="password" required minlength="6" placeholder="Mínimo 6 caracteres"></div>
       </div>
-      <p class="hint">By signing up you accept our policies. You can sign in right away.</p>
+
+      <div id="signupErr" class="err"></div>
+
+      <div class="actions">
+        <button class="btn" id="goLogin" type="button">Ya tengo cuenta</button>
+        <button class="btn primary" id="signupSubmit" type="submit">Crear cuenta</button>
+      </div>
+      <p class="hint">Al registrarte aceptas nuestras condiciones de uso.</p>
     </form>
 
-    <p class="footer-links">
-      <a href="/">← Back to home</a> ·
-      <a href="/score/ranking.html">🏆 View Leaderboard</a>
+    <p class="hint" style="text-align:center;margin-top:14px">
+      También puedes volver a <a href="/">la portada</a> o ver el <a href="/score/ranking.html">ranking</a>.
     </p>
   </div>
 
+  <footer>
+    Hecho con ❤️ por CertifyLab • <a href="/">Home</a> · <a href="/score/ranking.html">Leaderboard</a>
+  </footer>
+
   <script>
-    const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-    const AUTH_KEY = "currentUser";
+    const API_URL="https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+    const AUTH_KEY="currentUser";
+    const $=id=>document.getElementById(id);
 
-    /* === Helpers (no variables globales implícitas por id) === */
-    const $ = (id) => document.getElementById(id);
+    // ==== Storage usuario ====
+    function getUser(){ try{return JSON.parse(localStorage.getItem(AUTH_KEY)||"null");}catch{return null;} }
+    function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
+    function clearUser(){ localStorage.removeItem(AUTH_KEY); renderAuth(); }
 
-    // Auth storage
-    function setCurrentUser(user) {
-      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-      renderAuthUI();
+    // ==== UI ====
+    function showTab(which){
+      const isSignup = which === "signup";
+      $("tabLogin").classList.toggle("active", !isSignup);
+      $("tabSignup").classList.toggle("active", isSignup);
+      $("loginForm").classList.toggle("hidden", isSignup);
+      $("signupForm").classList.toggle("hidden", !isSignup);
+      // limpiar errores
+      $("loginErr").style.display="none"; $("loginErr").textContent="";
+      $("signupErr").style.display="none"; $("signupErr").textContent="";
+      // focus amigable
+      setTimeout(()=>{
+        if(isSignup) $("signupName").focus();
+        else $("loginEmail").focus();
+      },50);
     }
-    function getCurrentUser() {
-      try { return JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); }
-      catch { return null; }
-    }
-    function clearCurrentUser() {
-      localStorage.removeItem(AUTH_KEY);
-      renderAuthUI();
-    }
 
-    // UI
-    function renderAuthUI() {
-      const u = getCurrentUser();
-      const authText = $("authText");
-      const btnLogin = $("btnLogin");
-      const btnSignup = $("btnSignup");
-      const btnLogout = $("btnLogout");
-      const loginForm = $("loginForm");
-      const signupForm = $("signupForm");
-
-      if (u) {
-        authText.textContent = `✅ You are signed in as: ${u.name} (${u.email})`;
-        btnLogin.classList.add("hidden");
-        btnSignup.classList.add("hidden");
-        btnLogout.classList.remove("hidden");
-        loginForm.classList.add("hidden");
-        signupForm.classList.add("hidden");
-      } else {
-        authText.textContent = "🔒 Not authenticated :(";
-        btnLogin.classList.remove("hidden");
-        btnSignup.classList.remove("hidden");
-        btnLogout.classList.add("hidden");
+    function renderAuth(){
+      const u=getUser();
+      const t=$("authText");
+      const actions=$("authActions");
+      const signed=$("authSigned");
+      if(u){
+        t.textContent=`✅ Sesión iniciada: ${u.name||u.email} (${u.email||''})`;
+        actions.style.display="none";
+        signed.style.display="flex";
+        // opcional: ocultar formularios si ya está logado
+        $("tabBar").classList.add("hidden");
+        $("loginForm").classList.add("hidden");
+        $("signupForm").classList.add("hidden");
+      }else{
+        t.textContent="🔒 No autenticado";
+        actions.style.display="flex";
+        signed.style.display="none";
+        $("tabBar").classList.remove("hidden");
+        // mantener la pestaña elegida por hash
       }
     }
 
-    function showForm(which){
-      const loginForm = $("loginForm");
-      const signupForm = $("signupForm");
-      if (which === "signup") {
-        signupForm.classList.remove("hidden");
-        loginForm.classList.add("hidden");
-      } else {
-        loginForm.classList.remove("hidden");
-        signupForm.classList.add("hidden");
-      }
-      $("loginErr").classList.add("hidden");
-      $("signupErr").classList.add("hidden");
-    }
+    // ==== Eventos navegación UI ====
+    $("tabLogin").onclick = ()=> showTab("login");
+    $("tabSignup").onclick = ()=> showTab("signup");
+    $("goSignup").onclick = ()=> showTab("signup");
+    $("goLogin").onclick  = ()=> showTab("login");
+    $("btnToSignup").onclick = ()=> showTab("signup");
+    $("btnLogout").onclick = ()=>{ clearUser(); showTab("login"); };
 
-    function showError(id, msg){
-      const el = $(id);
-      el.textContent = msg || "Error";
-      el.classList.remove("hidden");
-      // ocultar después de 4s
-      setTimeout(() => el.classList.add("hidden"), 4000);
-    }
-
-    function disableDuring(el, disabled){
-      if (!el) return;
-      el.disabled = !!disabled;
-    }
-
-    // Navegación barra superior + inicio
-    $("btnLogout").onclick = () => {
-      clearCurrentUser();
-      alert("Signed out");
-      showForm("login");
-    };
-    $("btnLogin").onclick = () => showForm("login");
-    $("btnSignup").onclick = () => showForm("signup");
-    $("goHome").onclick = () => history.back();
-    $("goHome2").onclick = () => history.back();
-
-    // Arranque: elegir vista por hash o query
-    document.addEventListener("DOMContentLoaded", () => {
-      renderAuthUI();
-      const isSignup =
-        location.hash === "#signup" ||
-        new URLSearchParams(location.search).get("view") === "signup";
-      showForm(isSignup ? "signup" : "login");
+    // ==== Arranque ====
+    document.addEventListener("DOMContentLoaded", ()=>{
+      renderAuth();
+      const wantSignup = location.hash === "#signup" || new URLSearchParams(location.search).get("view")==="signup";
+      showTab(wantSignup ? "signup" : "login");
+      if(location.hash==="#signedup"){ showTab("login"); }
     });
 
-    // === SIGNUP ===
-    $("signupForm").addEventListener("submit", async (e) => {
+    // ==== Helper errores ====
+    function showError(elId, msg){
+      const el=$(elId);
+      el.textContent=msg||"Error";
+      el.style.display="block";
+      setTimeout(()=>{ el.style.display="none"; }, 5000);
+    }
+
+    // ==== LOGIN ====
+    $("loginForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
-      const name = $("signupName").value.trim();
-      const email = $("signupEmail").value.trim().toLowerCase();
-      const password = $("signupPass").value;
-
-      if (!name || !email || !password) {
-        showError("signupErr", "Please complete all fields.");
-        return;
-      }
-
-      const btn = $("signupSubmit");
-      disableDuring(btn, true);
-
+      const email=$("loginEmail").value.trim().toLowerCase();
+      const password=$("loginPass").value;
+      const btn=$("loginSubmit");
+      if(!email||!password){ return showError("loginErr","Introduce email y contraseña."); }
+      $("loginErr").style.display="none"; btn.disabled=true;
       try{
-        const body = new URLSearchParams({ name, email, password });
-        const resp = await fetch(`${API_URL}/signup`, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-          body,
-          mode: "cors",
+        const body=new URLSearchParams({email,password});
+        const resp=await fetch(`${API_URL}/login`,{
+          method:"POST",
+          headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+          body, mode:"cors"
         });
-
-        // Puede que el backend no siempre devuelva JSON (protegemos)
-        let data = {};
-        try { data = await resp.json(); } catch(_) {}
-
-        if (resp.ok) {
-          alert("User created successfully. You can sign in now.");
-          showForm("login");
-        } else {
-          showError("signupErr", data?.error || "Sign up error");
+        let data={}; try{data=await resp.json();}catch{}
+        if(resp.ok){
+          const user=data?.user || {name:data?.name||"Usuario", email};
+          setUser(user);
+          location.href="/";
+        }else{
+          showError("loginErr", data?.error || "Error al iniciar sesión");
         }
-      }catch(err){
-        showError("signupErr", err?.message || "Sign up error");
-      } finally {
-        disableDuring(btn, false);
-      }
+      }catch(ex){
+        showError("loginErr", ex?.message || "Error de red");
+      }finally{ btn.disabled=false; }
     });
 
-    // === LOGIN ===
-    $("loginForm").addEventListener("submit", async (e) => {
+    // ==== REGISTRO ====
+    $("signupForm").addEventListener("submit", async (e)=>{
       e.preventDefault();
-      const email = $("loginEmail").value.trim().toLowerCase();
-      const password = $("loginPass").value;
-
-      if (!email || !password) {
-        showError("loginErr", "Enter email and password.");
-        return;
-      }
-
-      const btn = $("loginSubmit");
-      disableDuring(btn, true);
-
+      const name=$("signupName").value.trim();
+      const email=$("signupEmail").value.trim().toLowerCase();
+      const password=$("signupPass").value;
+      const btn=$("signupSubmit");
+      if(!name||!email||!password){ return showError("signupErr","Completa todos los campos."); }
+      $("signupErr").style.display="none"; btn.disabled=true;
       try{
-        const body = new URLSearchParams({ email, password });
-        const resp = await fetch(`${API_URL}/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-          body,
-          mode: "cors",
+        const body=new URLSearchParams({name,email,password});
+        const resp=await fetch(`${API_URL}/signup`,{
+          method:"POST",
+          headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+          body, mode:"cors"
         });
-
-        let data = {};
-        try { data = await resp.json(); } catch(_) {}
-
-        if (resp.ok) {
-          // data.user esperado: { name, email, ... }
-          const user = data?.user || { name: data?.name || "User", email };
-          setCurrentUser(user);
-          // Mensaje opcional antes de redirigir
-          // alert("Signed in successfully");
-          window.location.href = "/"; // << redirección al home
-        } else {
-          showError("loginErr", data?.error || "Login error");
+        let data={}; try{data=await resp.json();}catch{}
+        if(resp.ok){
+          // tras crear, volvemos a login con aviso
+          location.href="/login/login.html#signedup";
+        }else{
+          showError("signupErr", data?.error || "Error al crear la cuenta");
         }
-      }catch(err){
-        showError("loginErr", err?.message || "Login error");
-      } finally {
-        disableDuring(btn, false);
-      }
+      }catch(ex){
+        showError("signupErr", ex?.message || "Error de red");
+      }finally{ btn.disabled=false; }
     });
   </script>
 </body>
