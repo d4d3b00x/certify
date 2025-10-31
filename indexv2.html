@@ -3,21 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ITHub: Aprueba tus certificaciones IT · Aprende • Practica • Compite</title>
+  <title>ITHub: Aprueba tus certificacions IT. Aprende • Practica • Compite</title>
 
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
       --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
       --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
-      --btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);--btn-ink:#fff;
+      --btn-bg:linear-gradient(180deg,#6c8bff,#3e64ff);--btn-ink:#fff;
       --chip-az-bg:rgba(0,120,212,.16);--chip-az-bd:rgba(0,120,212,.4);--chip-az-ink:#9fd2ff;
       --chip-aws-bg:rgba(255,153,0,.18);--chip-aws-bd:rgba(255,153,0,.4);--chip-aws-ink:#ffd79a;
+
+      /* Cabecera pill */
       --pill-bg:linear-gradient(180deg,#151b31,#12182c);
       --pill-ring:#2a3150;
       --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
       --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
-      --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
     }
     *{box-sizing:border-box}
     body{
@@ -38,15 +39,14 @@
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
       border-bottom:1px solid var(--stroke)
     }
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
     .brand .logo-pill{
       width:18px;height:34px;border-radius:10px;
       background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);
       box-shadow:0 0 0 6px rgba(108,139,255,.18);
     }
-    .brand img.site-logo{height:26px;width:auto;display:block}
-    .menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    .menu{display:flex;gap:12px;color:var(--muted);font-weight:800}
     .menu a.link-btn{
       display:inline-flex;align-items:center;justify-content:center;
       min-width:110px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;
@@ -54,36 +54,35 @@
     }
     .menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
 
-    /* Cápsula auth compacta */
+    /* Cápsula derecha */
     .authwrap{
-      display:flex;align-items:center;gap:6px;
+      display:flex;align-items:center;gap:8px;
       background:var(--pill-bg); border:1px solid var(--pill-ring);
-      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35);
-      max-height:44px;
+      border-radius:999px; padding:6px; box-shadow:0 6px 18px rgba(5,10,30,.35);
     }
-    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .hello{display:flex;align-items:center;gap:8px;color:#cbd3ff;font-weight:800;padding:6px 10px}
     .pill-btn{
       display:inline-flex;align-items:center;justify-content:center;
-      min-width:88px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;
+      min-width:100px;
+      height:40px; padding:0 14px;border-radius:12px;border:1px solid #3b2fff44;
       background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;
-      transition:transform .08s ease, background .12s ease; font-size:13px;
-      text-transform:uppercase;
+      transition:transform .08s ease, box-shadow .12s ease, background .12s ease;
     }
     .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
     .pill-btn:active{transform:translateY(0)}
+
     .btn{
       display:inline-flex;align-items:center;justify-content:center;
       height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);
-      background:transparent;color:var(--ink);font-weight:900;cursor:pointer;
-      text-transform:uppercase;
+      background:transparent;color:var(--ink);font-weight:900;
     }
     .btn:hover{border-color:#3a4580}
 
     @media (max-width:720px){
       .menu{gap:8px}
       .menu a.link-btn{min-width:90px;height:36px}
-      .authwrap{gap:4px}
-      .pill-btn{min-width:82px;height:32px;padding:0 10px}
+      .authwrap{gap:6px}
+      .pill-btn{min-width:92px;height:36px;padding:0 10px}
       .btn{height:36px}
       .hello{display:none}
     }
@@ -91,40 +90,27 @@
     /* ===== Secciones ===== */
     .hero{padding:36px 0 14px;text-align:center}
     .hero h1{margin:0 0 4px;font-size:clamp(1.9rem,4.4vw,3.1rem)}
-    .lead{color:var(--muted);max-width:900px;margin:6px auto 0}
+    .lead{color:var(--muted);max-width:760px;margin:6px auto 0}
     .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
 
     section{padding:26px 0}
-    .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
+    .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px}
     .muted{color:var(--muted);font-size:.95rem}
     .grid{display:grid;gap:14px;margin-top:12px}
-    @media(min-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
-    @media(min-width:1140px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:720px){.grid{grid-template-columns:repeat(3,1fr)}}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
+      border-radius:14px;padding:14px;box-shadow:var(--shadow);transition:transform .12s ease}
+    .card:hover{transform:translateY(-2px)}
+    .row{display:flex;flex-direction:column;align-items:center;gap:10px}
+    .btns-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 
-    /* ===== Card simulador (estilo captura) ===== */
-    .sim-card{
-      background:linear-gradient(180deg,#111937,#0f1633);
-      border:1px solid var(--stroke);
-      border-radius:18px;padding:16px;box-shadow:var(--shadow);
-      display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;
-    }
-    .prov-pill{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:8px 14px;border-radius:999px;font-weight:900;letter-spacing:.3px;
-      border:1px solid rgba(255,255,255,.15); text-transform:uppercase;
-    }
-    .prov-azure{background:rgba(0,120,212,.16);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
-    .prov-aws{background:rgba(255,153,0,.18);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
-    .sim-title{font-weight:900;font-size:1.05rem}
-    .btns-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-    .cta-btn{
-      display:inline-flex;align-items:center;gap:8px;justify-content:center;
-      padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);
-      color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);
-    }
-    .cta-btn[disabled]{opacity:.65;cursor:not-allowed;filter:grayscale(.35)}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-weight:800}
+    .chip.azure{background:var(--chip-az-bg);border:1px solid var(--chip-az-bd);color:var(--chip-az-ink)}
+    .chip.aws{background:var(--chip-aws-bg);border:1px solid var(--chip-aws-bd);color:var(--chip-aws-ink)}
 
     /* ===== Centro de contenidos ===== */
+
+    /* Selector (filtro certificación) */
     .filter-bar{
       display:flex;align-items:center;gap:10px;background:var(--surface2);
       border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;margin-top:10px
@@ -135,30 +121,36 @@
       border-radius:10px;color:var(--ink);font-weight:800;padding:10px 12px;min-width:260px;
     }
 
-    /* Carrusel 2x3 con paginación (sin iconos) */
+    /* Carrusel 2x3 con paginación */
     .carousel{position:relative;margin-top:12px}
     .track{
-      display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;min-height:420px;
-      align-items:start;align-content:start;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      min-height: 420px; /* altura estable al paginar */
     }
-    .track.compact{min-height:auto;justify-content:center}
     @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
     @media(max-width:560px){ .track{grid-template-columns:1fr} }
     .slide{display:none}
     .slide.show{display:block}
-    .card{
-      background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
-      border-radius:14px;padding:14px;box-shadow:var(--shadow);
-    }
     .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .dot.az{background:#0078d4}
+    .dot.aws{background:#ff9900}
+    .dot.multi{background:conic-gradient(from 0deg,#ff9900 0 50%,#0078d4 50% 100%)}
+
     .cc-meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;}
     .cc-meta .grow{ display:inline-flex; align-items:center; gap:8px; margin-right:auto; }
+
     .tiny-btn{
       display:inline-flex;align-items:center;justify-content:center;
       height:28px; padding:0 10px; border-radius:8px;
-      border:1px solid #3b2fff44; background:var(--btn-bg);
-      color:#fff; font-weight:900; cursor:pointer;white-space:nowrap;
+      border:1px solid #3b2fff44; background:linear-gradient(180deg,#7a67ff,#5f48ff);
+      color:#fff; font-weight:900; cursor:pointer;
+      transition:transform .08s ease, background .12s ease, box-shadow .12s ease;
+      white-space:nowrap;
     }
+    .tiny-btn:hover{ transform:translateY(-1px) }
 
     .car-btn{
       position:absolute;top:45%;transform:translateY(-50%);
@@ -190,41 +182,32 @@
     .center{display:flex;align-items:center;justify-content:center}
     .hidden{display:none !important}
     .login-msg{margin-top:6px}
-
-    /* Modal feedback */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120}
-    .modal.show{display:flex}
-    .modal-card{width:min(520px,92vw);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-    .modal-card textarea, .modal-card input{width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700}
   </style>
 </head>
 <body>
   <!-- ===== CABECERA ===== -->
   <header>
     <div class="container nav">
-      <div class="brand">
-        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub logo">
-        <!-- Texto ITHub.es eliminado -->
-      </div>
+      <div class="brand"><span class="logo-pill"></span> <span>ITHub.es</span></div>
 
       <nav class="menu">
-        <a class="link-btn" href="#simuladores">HOME</a>
-        <a class="link-btn" href="#simuladores">SIMULADORES</a>
-        <a class="link-btn" href="#contenidos">CONTENIDOS</a>
-        <a class="link-btn" href="/score/ranking.html">RANKING</a>
+        <a class="link-btn" href="#simuladores">Home</a>
+        <a class="link-btn" href="#simuladores">Simuladores</a>
+        <a class="link-btn" href="#contenidos">Contenidos</a>
+        <a class="link-btn" href="/score/ranking.html">Ranking</a>
       </nav>
 
       <!-- Cápsula de autenticación -->
       <div class="authwrap" id="authWrap">
         <!-- Estado no autenticado -->
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">CREAR</a>
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html">Login</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">Crear</a>
 
         <!-- Estado autenticado -->
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">SALIR</button>
+        <div id="userArea" style="display:none;align-items:center;gap:8px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">User</span></div>
+          <a class="pill-btn" href="/user/profile.html">Perfil</a>
+          <button id="btnLogout" class="pill-btn" type="button">Salir</button>
         </div>
       </div>
     </div>
@@ -233,58 +216,40 @@
   <!-- ===== HERO ===== -->
   <section class="hero">
     <div class="container">
-      <h1>🎮 Aprende, practica y compite</h1>
-      <p class="lead">Simula <strong>exámenes y certificaciones IT</strong> con preguntas centradas en aprobar. Sube tu nivel y mide tu progreso.</p>
+      <h1>🎮 ITHUB.es_Aprende, practica y compite</h1>
+      <p class="lead">Simula exámenes reales, suma puntos y escala en los rankings.</p>
       <div class="hero-actions">
         <a class="btn" href="/score/ranking.html">🏆 VER RANKING GLOBAL</a>
-        <button class="btn" id="btnFeedback" type="button">💬 ENVIAR FEEDBACK</button>
       </div>
     </div>
   </section>
 
-  <!-- ===== Plan para aprobar + CTA ===== -->
+  <!-- ===== Cómo funciona + CTA ===== -->
   <section>
     <div class="container">
-      <div class="sec-title">PLAN PARA APROBAR TU CERTIFICACIÓN IT</div>
-
-      <!-- 4 pasos orientados a aprobar -->
+      <div class="sec-title">ESTRATEGIA PARA APROBAR TU CERTIFICACIÓN TI</div>
       <div class="how-grid">
-        <div class="how-step">
-          <strong>1) Diagnóstico inicial</strong><br>
-          <span class="muted">Haz un mini-test por dominios. Identificamos tus puntos débiles para priorizar estudio.</span>
-        </div>
-        <div class="how-step">
-          <strong>2) Domina lo esencial</strong><br>
-          <span class="muted">Resumenes rápidos y hojas de trucos por dominio. Solo lo que cae en el examen.</span>
-        </div>
-        <div class="how-step">
-          <strong>3) Practica con propósito</strong><br>
-          <span class="muted">Simulador en modo estudio con explicación detallada y <em>links oficiales</em> en cada respuesta.</span>
-        </div>
-        <div class="how-step">
-          <strong>4) Ensayo final</strong><br>
-          <span class="muted">Modo examen cronometrado con blueprint real. Repite hasta superar tu objetivo.</span>
-        </div>
+        <div class="how-step"><strong>1) Elige tu ruta</strong><br><span class="muted">Filtra por certificación, proveedor o nivel.</span></div>
+        <div class="how-step"><strong>2) Aprende rápido</strong><br><span class="muted">Notas claras y hojas de trucos.</span></div>
+        <div class="how-step"><strong>3) Simula el examen</strong><br><span class="muted">Modo estudio o examen cronometrado.</span></div>
+        <div class="how-step"><strong>4) Aprueba</strong><br><span class="muted">Revisa tus estadísticas y repite.</span></div>
       </div>
 
-      <!-- CTA alineada a las herramientas -->
       <div class="cta">
         <div class="left">
           <span class="tag">LANZAMOS NUESTRA BETA. ÚNETE!</span>
-          <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Regístrate y activa tu plan</h2>
-          <p class="muted">
-            Crea tu cuenta para guardar progreso, marcar preguntas y recibir recomendaciones por dominio.
-          </p>
+          <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Regístrate y empieza gratis</h2>
+          <p class="muted">Artículos y simuladores básicos. Compite y desbloquea modos avanzados.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-            <a class="pill-btn" href="/login/login.html?view=signup">CREAR CUENTA</a>
+            <a class="pill-btn" href="/login/login.html?view=signup">Crear cuenta</a>
           </div>
         </div>
         <div class="right">
-          <div>✅ <b>Análisis por dominio</b> tras cada intento (foco en lo que más resta puntos)</div>
-          <div>✅ <b>Explicación + enlaces oficiales</b> en cada respuesta</div>
-          <div>✅ <b>Preguntas marcadas</b> y repaso dirigido</div>
-          <div>✅ <b>Objetivo semanal</b> de preguntas y racha de estudio</div>
-          <div>✅ <b>Estadísticas</b> de acierto, tiempo y evolución</div>
+          <div>✅ Modo práctica (modo examen en desarrollo)</div>
+          <div>✅ Explicaciones y referencias centradas en aprobar</div>
+          <div>✅ Tips de estudio por cada dominio de la certificación</div>
+          <div>✅ Perfil de usuario con estadísticas y progreso</div>
+          <div>✅ Preguntas marcadas y budgets conseguidos</div>
         </div>
       </div>
     </div>
@@ -293,10 +258,9 @@
   <!-- ===== Simuladores ===== -->
   <section id="simuladores">
     <div class="container">
-      <div class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
+      <div class="sec-title">SIMULADOR DE EXAMENES (BETA)</div>
       <div class="muted">Modo estudio o examen cronometrado. Más simuladores pronto.</div>
-
-      <div class="grid" id="simGrid"><!-- tarjetas renderizadas por JS --></div>
+      <div class="grid" id="simGrid"></div>
     </div>
   </section>
 
@@ -306,6 +270,7 @@
       <div class="sec-title">CONTENIDO CLAVE POR CERTIFICACIÓN</div>
       <div class="muted">Solo lo esencial: resúmenes rápidos, hojas de trucos y guías prácticas enfocadas en el examen.</div>
 
+      <!-- Filtro de certificación -->
       <div class="filter-bar">
         <label for="examSelect">Selecciona Certificación:</label>
         <select id="examSelect">
@@ -315,81 +280,119 @@
         </select>
       </div>
 
-      <!-- Carrusel 2×3 (sin iconos) -->
+      <!-- Carrusel 2×3 -->
       <div class="carousel">
         <button class="car-btn car-prev" aria-label="Anterior">‹</button>
         <div class="track" id="contentTrack">
+          <!-- Añadimos data-exam para filtrar (az-104 | aws-saa-c03 | mixed) -->
+
           <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Guía rápida: VNet Peering vs. VPN Gateway</strong></div>
+            <div class="cc-head">
+              <span class="dot az" title="Azure · AZ-104"></span>
+              <strong>Guía rápida: VNet Peering vs. VPN Gateway</strong>
+            </div>
             <p class="muted">Entiende cuándo usar peering y cuándo optar por VPN…</p>
             <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></span>
               <a class="tiny-btn" href="content/vnet-peering-vpn.html">Leer</a>
             </div>
           </article>
 
           <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Checklist de seguridad para suscripciones Azure</strong></div>
+            <div class="cc-head">
+              <span class="dot az"></span>
+              <strong>Checklist de seguridad para suscripciones Azure</strong>
+            </div>
             <p class="muted">15 puntos accionables para endurecer tu postura…</p>
             <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></span>
               <a class="tiny-btn" href="content/azure-security-checklist.html">Leer</a>
             </div>
           </article>
 
           <article class="card slide" data-exam="mixed">
-            <div class="cc-head"><strong>Backup inmutable: patrón de ciberrecuperación</strong></div>
+            <div class="cc-head">
+              <span class="dot multi"></span>
+              <strong>Backup inmutable: patrón de ciberrecuperación</strong>
+            </div>
             <p class="muted">Cómo diseñar un vault y una landing zone…</p>
             <div class="cc-meta">
               <span class="grow">
-                <span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span> ·
-                <span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span>
+                <span class="chip azure"><b>AZURE</b></span><span>AZ-305</span> ·
+                <span class="chip aws"><b>AWS</b></span><span>SAA-C03</span>
               </span>
               <a class="tiny-btn" href="content/immutable-backup-cyberrecovery.html">Leer</a>
             </div>
           </article>
 
+          <article class="card slide" data-exam="az-104">
+            <div class="cc-head">
+              <span class="dot az"></span>
+              <strong>Arquitectura de Landing Zone en Azure</strong>
+            </div>
+            <p class="muted">Referencia de diseño con jerarquías, RBAC, redes y políticas.</p>
+            <div class="cc-meta">
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span></span>
+              <a class="tiny-btn" href="content/azure-landing-zone.html">Leer</a>
+            </div>
+          </article>
+
           <article class="card slide" data-exam="aws-saa-c03">
-            <div class="cc-head"><strong>Alta disponibilidad en VPC: patrones prácticos</strong></div>
+            <div class="cc-head">
+              <span class="dot aws"></span>
+              <strong>Alta disponibilidad en VPC: patrones prácticos</strong>
+            </div>
             <p class="muted">Subredes por AZ, NATs, balanceo y resiliencia para SAA-C03.</p>
             <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
+              <span class="grow"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></span>
               <a class="tiny-btn" href="content/aws-vpc-ha.html">Leer</a>
             </div>
           </article>
 
           <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Azure Storage: operación y seguridad</strong></div>
+            <div class="cc-head">
+              <span class="dot az"></span>
+              <strong>Azure Storage: operación y seguridad</strong>
+            </div>
             <p class="muted">Acceso RBAC/SAS, replicación y WORM para datos críticos.</p>
             <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-104</span></span>
               <a class="tiny-btn" href="content/azure-storage-az104.html">Leer</a>
             </div>
           </article>
 
           <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Conectividad híbrida en Azure</strong></div>
+            <div class="cc-head">
+              <span class="dot az"></span>
+              <strong>Conectividad híbrida en Azure</strong>
+            </div>
             <p class="muted">VPN, ExpressRoute, BGP y hub-spoke con seguridad.</p>
             <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+              <span class="grow"><span class="chip azure"><b>AZURE</b></span><span>AZ-305</span></span>
               <a class="tiny-btn" href="content/azure-hybrid-connectivity-az305.html">Leer</a>
             </div>
           </article>
 
           <article class="card slide" data-exam="aws-saa-c03">
-            <div class="cc-head"><strong>S3: seguridad, durabilidad y rendimiento</strong></div>
+            <div class="cc-head">
+              <span class="dot aws"></span>
+              <strong>S3: seguridad, durabilidad y rendimiento</strong>
+            </div>
             <p class="muted">Políticas mínimas, KMS, lifecycle y endpoints privados.</p>
             <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
+              <span class="grow"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></span>
               <a class="tiny-btn" href="content/aws-s3-design-saac03.html">Leer</a>
             </div>
           </article>
 
           <article class="card slide" data-exam="aws-saa-c03">
-            <div class="cc-head"><strong>Patrones con SQS y SNS</strong></div>
+            <div class="cc-head">
+              <span class="dot aws"></span>
+              <strong>Patrones con SQS y SNS</strong>
+            </div>
             <p class="muted">Fanout, FIFO, DLQ y eventos resilientes.</p>
             <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
+              <span class="grow"><span class="chip aws"><b>AWS</b></span><span>SAA-C03</span></span>
               <a class="tiny-btn" href="content/aws-sqs-sns-patterns.html">Leer</a>
             </div>
           </article>
@@ -403,7 +406,7 @@
   <footer>
     <div class="container f-grid">
       <div>
-        <div class="brand" style="text-transform:none"><span class="logo-pill"></span> <span>ITHub.es</span></div>
+        <div class="brand"><span class="logo-pill"></span> <span>ITHub.es</span></div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo. <br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
       <div>
@@ -413,6 +416,7 @@
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
+
         <div><a href="content/azure-landing-zone.html">Azure · Landing Zone</a></div>
         <div><a href="content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
         <div><a href="content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
@@ -427,25 +431,11 @@
     <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
   </footer>
 
-  <!-- ===== Modal Feedback ===== -->
-  <div class="modal" id="feedbackModal" aria-hidden="true">
-    <div class="modal-card">
-      <h3 style="margin:0 0 10px">💬 ENVIAR FEEDBACK</h3>
-      <p class="muted" style="margin:0 0 8px">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
-      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
-      <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
-        <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
-        <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
-      </div>
-    </div>
-  </div>
-
   <script>
     // Año
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // ====== AUTH ======
+    // ====== AUTH de la cabecera ======
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
     function isAuthed(){ return !!getCurrentUser(); }
     function renderHeaderAuth(){
@@ -456,7 +446,7 @@
       const nameTop  = document.getElementById('userNameTop');
       if(u){
         login.style.display='none'; signup.style.display='none';
-        userArea.style.display='flex'; nameTop.textContent = (u.name || u.email || 'USER').toUpperCase();
+        userArea.style.display='flex'; nameTop.textContent = u.name || u.email || 'User';
       }else{
         login.style.display='inline-flex'; signup.style.display='inline-flex';
         userArea.style.display='none';
@@ -465,39 +455,40 @@
     document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); renderSims(); });
     renderHeaderAuth();
 
-    // ====== Simuladores (estilo captura) ======
+    // ====== Cards de simuladores ======
     const CATALOG = [
-      {id:'AZ-104',provider:'MICROSOFT AZURE',title:'Administrator Associate',quiz:'az-104', providerClass:'prov-azure'},
-      {id:'SAA-C03',provider:'AMAZON AWS',title:'Solutions Architect Associate',quiz:'aws-saa-c03', providerClass:'prov-aws'},
-      // AZ-305 "coming soon"
-      {id:'AZ-305',provider:'MICROSOFT AZURE',title:'Architect Expert',quiz:'az-305', providerClass:'prov-azure', comingSoon:true}
+      {id:'AZ-104',provider:'Microsoft azure',title:'Administrator Associate',duration:'90 min',questions:60,level:'Intermedio',quiz:'az-104'},
+      // {id:'AZ-305',provider:'azure',title:'Architect Expert',duration:'75 min',questions:50,level:'Avanzado',quiz:'az-305'},
+      {id:'SAA-C03',provider:'amazon aws',title:'Solutions Architect Associate',duration:'130 min',questions:65,level:'Intermedio',quiz:'aws-saa-c03'}
     ];
     const simGrid=document.getElementById('simGrid');
+    function chip(p){return `<span class="chip ${p}"><b>${p.toUpperCase()}</b></span>`}
 
     function renderSims(){
       simGrid.innerHTML='';
       const authed = isAuthed();
       CATALOG.forEach(c=>{
-        const el=document.createElement('article'); el.className='sim-card';
-        const startLabel = c.comingSoon ? '⏳ Coming Soon' : (authed ? '▶ Empezar' : '🔒 Login to Start');
-        const startHref  = c.comingSoon ? '#' : (authed ? `quiz.html?quiz=${c.quiz}` : '/login/login.html');
-        const loginMsg   = (authed || c.comingSoon) ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
-
+        const el=document.createElement('article'); el.className='card';
+        const startLabel = authed ? '▶ Empezar' : '🔒 Login to Start';
+        const startHref  = authed ? `quiz.html?quiz=${c.quiz}` : '/login/login.html';
+        const loginMsg = authed ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
         el.innerHTML=`
-          <div class="prov-pill ${c.providerClass}">${c.provider}</div>
-          <div class="sim-title">${c.id} ${c.title}</div>
-          <div class="btns-row">
-            ${c.comingSoon ? '' : `<a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}">🏆 Ranking</a>`}
-            <a class="cta-btn ${c.comingSoon ? 'disabled' : 'start-btn'}" ${c.comingSoon ? 'aria-disabled="true"' : `data-quiz="${c.quiz}"`} href="${startHref}" ${c.comingSoon ? 'onclick="return false;"' : ''}>${startLabel}</a>
-          </div>
-          ${loginMsg}
-        `;
+          <div class="row">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center">
+              ${chip(c.provider)} <strong>${c.id} ${c.title}</strong>
+            </div>
+            <div class="btns-row">
+              <a class="pill-btn" href="/score/ranking.html?quiz=${c.quiz}">🏆 Ranking</a>
+              <a class="pill-btn start-btn" data-quiz="${c.quiz}" href="${startHref}">${startLabel}</a>
+            </div>
+            ${loginMsg}
+          </div>`;
         simGrid.appendChild(el);
       });
     }
     renderSims();
 
-    // Click en empezar (simuladores activos)
+    // Click en empezar
     document.addEventListener('click', e=>{
       const b=e.target.closest('.start-btn'); if(!b) return;
       if(isAuthed()){
@@ -526,21 +517,26 @@
     }
 
     function renderCarousel(){
+      // reset visibilidad
       allSlides.forEach(s => s.classList.remove('show'));
       const items = filteredSlides();
 
+      // paginación
       const start = page * PAGE_SIZE;
-      const end   = Math.min(start + PAGE_SIZE, items.length);
+      const end   = start + PAGE_SIZE;
       items.slice(start, end).forEach(s => s.classList.add('show'));
 
-      const visible = end - start;
-      track.classList.toggle('compact', visible < PAGE_SIZE);
-
+      // estado flechas
       prevBtn.disabled = (page === 0);
       nextBtn.disabled = (end >= items.length);
     }
 
-    select.addEventListener('change', ()=>{ filter = select.value; page = 0; renderCarousel(); });
+    select.addEventListener('change', ()=>{
+      filter = select.value;
+      page = 0;
+      renderCarousel();
+    });
+
     prevBtn.addEventListener('click', ()=>{ if(page>0){ page--; renderCarousel(); }});
     nextBtn.addEventListener('click', ()=>{
       const total = filteredSlides().length;
@@ -549,37 +545,6 @@
 
     // primer pintado
     renderCarousel();
-
-    // ===== Feedback modal =====
-    const FEEDBACK_API = "https://tu-api-feedback.example.com/feedback"; // ← pon aquí tu endpoint real
-    const modal = document.getElementById('feedbackModal');
-    const btnOpen = document.getElementById('btnFeedback');
-    const btnCancel = document.getElementById('btnCancelFeedback');
-    const btnSend = document.getElementById('btnSendFeedback');
-    const txt = document.getElementById('feedbackText');
-    const emailInput = document.getElementById('feedbackEmail');
-
-    btnOpen.addEventListener('click',()=>{ modal.classList.add('show'); txt.value=''; emailInput.value=''; });
-    btnCancel.addEventListener('click',()=> modal.classList.remove('show'));
-    modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show'); });
-
-    btnSend.addEventListener('click', async ()=>{
-      const message = (txt.value||'').trim();
-      const from = (emailInput.value||'').trim();
-      if(!message){ alert('Por favor, escribe tu sugerencia.'); txt.focus(); return; }
-
-      try{
-        const res = await fetch(FEEDBACK_API, {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ message, from, meta:{ path:location.href, ua:navigator.userAgent } })
-        });
-        if(!res.ok) throw new Error(await res.text());
-        alert('¡Gracias! Tu feedback se ha enviado por email. 💜');
-      }catch(err){
-        console.warn('Fallo envío a API, se ignora de forma segura:', err);
-      }
-      modal.classList.remove('show');
-    });
   </script>
 </body>
 </html>
