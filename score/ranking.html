@@ -11,7 +11,7 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IT Hub .es — Ranking</title>
+  <title>IT Hub .es — Ranking Gamificado</title>
   <link rel="stylesheet" href="/style_global.css"/>
   <style>
     :root{
@@ -35,7 +35,7 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    /* ===== Header estilo captura ===== */
+    /* ===== Header como captura ===== */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
       border-bottom:1px solid var(--stroke)}
@@ -66,42 +66,35 @@
 
     /* ===== Página ===== */
     .wrap{padding:22px 0 28px}
+    .layout{display:grid;grid-template-columns: 1fr 320px; gap:18px}
+    @media (max-width: 980px){ .layout{grid-template-columns:1fr} }
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
       border-radius:16px;padding:18px 18px;box-shadow:var(--shadow)}
     .header-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:6px 0 12px}
     .header-row h2{margin:0;color:#fff;font-size:1.35rem;font-weight:900;letter-spacing:.2px}
-    .filters{display:flex;gap:8px;flex-wrap:wrap}
-    .pill{
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .tab{
       appearance:none;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff;
       padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:800
     }
-    .pill[aria-pressed="true"]{outline:2px solid rgba(108,139,255,.3)}
-
-    .section-title{display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px}
-    .section-title h3{margin:0;font-size:1.05rem}
-    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:800;font-size:.8rem;
-      background:var(--surface2);color:#cbd6ff;border:1px solid var(--stroke)}
-    .badge.aws{background:rgba(255,153,0,.12);border-color:rgba(255,153,0,.35);color:#ffd9a1}
-    .badge.az{background:rgba(0,120,212,.14);border-color:rgba(0,120,212,.35);color:#bcd9ff}
+    .tab[aria-pressed="true"]{outline:2px solid rgba(108,139,255,.3)}
 
     .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:14px;overflow:auto}
-    .rank-table{width:100%;min-width:760px;border-collapse:separate;border-spacing:0}
-    .rank-table thead th{
-      position:sticky;top:0;z-index:1;background:var(--surface2);color:#e8ecff;
-      font-weight:800;letter-spacing:.02em;text-align:center;padding:12px 10px;border-bottom:1px solid var(--stroke)
-    }
-    .rank-table tbody td{padding:12px 10px;text-align:center;border-bottom:1px solid #1f2747;background:#0f1430;color:#e8ecff}
-    .rank-table tbody tr:nth-child(even) td{background:#101738}
-    .rank-table tbody tr:hover td{background:#0e1536}
-    .rank-table thead th:first-child{border-top-left-radius:12px}
-    .rank-table thead th:last-child{border-top-right-radius:12px}
+    table{width:100%;min-width:860px;border-collapse:separate;border-spacing:0}
+    thead th{position:sticky;top:0;z-index:1;background:var(--surface2);color:#e8ecff;font-weight:800;text-align:center;padding:12px 10px;border-bottom:1px solid var(--stroke)}
+    tbody td{padding:12px 10px;text-align:center;border-bottom:1px solid #1f2747;background:#0f1430;color:#e8ecff}
+    tbody tr:nth-child(even) td{background:#101738}
+    tbody tr:hover td{background:#0e1536}
+    thead th:first-child{border-top-left-radius:12px}
+    thead th:last-child{border-top-right-radius:12px}
     .col-rank{width:64px}
-    .col-name{text-align:center}
+    .col-name{text-align:left}
     .col-num{width:110px;font-variant-numeric:tabular-nums}
     .col-date{width:200px}
     .col-points{width:140px}
+    .col-level{white-space:nowrap} /* evita salto en el chip de nivel */
 
-    /* Medallas (visibles) */
+    /* Medallas Top 3 */
     .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
     .medal.gold{background:linear-gradient(135deg,#ffd662,#ffb300);box-shadow:0 2px 6px rgba(255,179,0,.35)}
     .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf);box-shadow:0 2px 6px rgba(0,0,0,.12)}
@@ -113,22 +106,28 @@
     .name-silver{color:var(--silver)}
     .name-bronze{color:var(--bronze)}
 
-    /* Chips de puntos: azul solo Top 3, neutro resto */
+    /* Puntos: azul solo Top 3 */
     .points-chip{
       display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;
       font-weight:900;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff
     }
-    .points-chip.top{
-      background:linear-gradient(180deg,#6c8bff,#3e64ff);
-      color:#fff;border:none;box-shadow:var(--shadow)
-    }
+    .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff;border:none;box-shadow:var(--shadow)}
 
-    .pct{display:flex;align-items:center;justify-content:center;gap:8px;font-variant-numeric:tabular-nums;font-weight:800}
-    .pbar{position:relative;flex:1 1 120px;height:8px;background:#0a0f25;border-radius:999px;overflow:hidden;max-width:160px}
-    .pbar>i{position:absolute;left:0;top:0;bottom:0;width:0%}
-    .pbar>i.aws{background:linear-gradient(90deg,var(--aws),var(--aws-2))}
-    .pbar>i.az{background:linear-gradient(90deg,var(--azure),var(--azure-2))}
-    .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface2);color:#e8ecff;border:1px solid var(--stroke);font-weight:700}
+    .avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#fff;margin-right:8px}
+
+    /* Nivel alineado en una sola línea */
+    .level{
+      display:inline-flex;align-items:center;gap:8px;
+      font-weight:900;padding:4px 10px;border-radius:999px;
+      border:1px solid var(--stroke);background:rgba(255,255,255,.04)
+    }
+    .level .bar{display:inline-block;height:8px;width:110px;background:#0a0f25;border-radius:999px;position:relative;overflow:hidden}
+    .level .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
+
+    .badge2{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface2);color:#e8ecff;border:1px solid var(--stroke);font-weight:800;margin:2px}
+    .badge2.fast{background:rgba(255,179,0,.14);border-color:rgba(255,179,0,.35);color:#ffe3a6}
+    .badge2.perfect{background:rgba(124,77,255,.18);border-color:rgba(124,77,255,.38);color:#e0d6ff}
+    .badge2.ok{background:rgba(46,204,113,.15);border-color:rgba(46,204,113,.35);color:#b8ffd7}
   </style>
 </head>
 <body>
@@ -140,31 +139,49 @@
         <span>IT&nbsp;Hub</span> <small>.es</small>
       </div>
       <nav class="menu">
-        <a href="/">HOME</a>
         <a href="/#simuladores">SIMULADORES</a>
         <a href="/#contenidos">CONTENIDOS</a>
+        <a href="/score/ranking.html">RANKING</a>
       </nav>
       <div class="actions" id="navActions"></div>
     </div>
   </header>
 
   <main class="container wrap">
-    <section class="card">
-      <div class="header-row">
-        <h2>📊 Ranking global (Top 10 recientes por certificación)</h2>
-        <div class="filters" role="tablist" aria-label="Filtrar por examen">
-          <button class="pill" id="flt-all" role="tab" aria-pressed="true" onclick="setFilter('all')">Todos</button>
-          <button class="pill" id="flt-az" role="tab" aria-pressed="false" onclick="setFilter('az-104')">AZ-104</button>
-          <button class="pill" id="flt-aws" role="tab" aria-pressed="false" onclick="setFilter('aws-saa-c03')">SAA-C03</button>
+    <div class="layout">
+      <section class="card">
+        <div class="header-row">
+          <h2>🏆 Ranking Gamificado</h2>
+          <div class="tabs" role="tablist">
+            <button class="tab" id="tab-global" aria-pressed="true" onclick="setScope('global')">Global</button>
+            <button class="tab" id="tab-season" aria-pressed="false" onclick="setScope('season')">Temporada (mes)</button>
+            <button class="tab" id="tab-week" aria-pressed="false" onclick="setScope('week')">Semanal</button>
+            <button class="tab" id="tab-az" aria-pressed="false" onclick="setExam('az-104')">AZ-104</button>
+            <button class="tab" id="tab-aws" aria-pressed="false" onclick="setExam('aws-saa-c03')">SAA-C03</button>
+          </div>
         </div>
-      </div>
 
-      <div id="container"></div>
-    </section>
+        <div class="table-wrap" id="board">Cargando…</div>
+      </section>
+
+      <aside class="side">
+        <div class="card">
+          <h3 style="margin:0 0 8px">⚙️ Reglas de puntos</h3>
+          <ul style="margin:0 0 6px 18px">
+            <li><b>+5</b> por respuesta correcta.</li>
+            <li><b>+50</b> por examen aprobado (≥70%).</li>
+            <li><b>+10</b> bonus rápido (≤30s/pregunta).</li>
+            <li><b>Racha</b>: +5 extra por aprobado consecutivo en 7 días.</li>
+          </ul>
+          <p style="margin:8px 0 0">Nivel cada 150 XP. Top 3 con medalla y chip azul.</p>
+        </div>
+        <div class="card" id="myPosition" style="margin-top:12px;display:none"></div>
+      </aside>
+    </div>
   </main>
 
   <script>
-    /* ======= Cabecera: sesión ======= */
+    /* ======= Cabecera: sesión (como tu web) ======= */
     function getUserAny(){
       let u=null;
       try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
@@ -175,7 +192,7 @@
       const box=document.getElementById('navActions');
       const u=getUserAny();
       if(u && (u.name||u.displayName||u.userName)){
-        const name = (u.name||u.displayName||u.userName||'Usuario').toUpperCase();
+        const name=(u.name||u.displayName||u.userName||'Usuario').toUpperCase();
         box.innerHTML = `
           <div class="userbox">
             <span>🔥 <span class="name">${name}</span></span>
@@ -196,200 +213,182 @@
     }
     renderHeaderUser();
 
-    /* ======= Ranking logic ======= */
+    /* ======= Config API ======= */
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const QUIZZES = ["az-104","aws-saa-c03"];
 
-    // utils
+    /* ======= Utils ======= */
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
     const toNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;
-    const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    const pad = n => String(n).padStart(2,'0');
-
-    function fmtDuration(sec){
-      sec = toInt(sec);
-      if (!sec || sec < 0) return "—";
-      const m = Math.floor(sec/60), s = sec%60;
-      return `${pad(m)}:${pad(s)}`;
-    }
-    function fmtDate(iso){
-      if (!iso) return "—";
-      try{
-        return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-      }catch{ return iso; }
-    }
     const pick = v => (typeof v === "string" ? v.trim() : "");
-    const getName = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
-    function pct01(r){
-      const t = toInt(r.total), c = toInt(r.correct);
-      if (t > 0) return Math.max(0, Math.min(1, c / t));
-      const p = toNum(r.pct);
-      return Math.max(0, Math.min(1, p > 1 ? p/100 : p));
+    const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+    const pad = n => String(n).padStart(2,'0');
+    const fmtDate = (iso)=>{ if (!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; }};
+
+    function pointsForAttempt(r){
+      const correct = toInt(r.correct), total = toInt(r.total), dur = toInt(r.durationSec);
+      let pts = correct * 5; // base
+      const pct = total>0 ? (correct/total)*100 : (r.pct||0);
+      if (pct >= 70) pts += 50;               // aprobado
+      if (total>0 && dur>0 && (dur/total) <= 30) pts += 10; // rápido (≤30s/pregunta)
+      return { pts, passed: pct>=70, pct };
+    }
+    function levelFromXP(xp){
+      const lvl = Math.max(1, Math.floor(xp/150)+1); // 150 XP por nivel
+      const cur = xp % 150; const p = Math.max(0, Math.min(100, Math.floor((cur/150)*100)));
+      return {lvl, progress:p};
     }
 
-    // API
-    async function fetchAll(limit=1000){
+    /* ======= API ======= */
+    async function fetchAll(limit=3000){
       const res = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors", cache:"no-store"});
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
       const items = Array.isArray(data.items) ? data.items : [];
-      return items.map(x => {
-        const correct = toInt(x.correct);
-        return {
-          userId: x.userId || "(unknown)",
-          userName: getName(x),
-          quizId: (x.quizId || "-").toLowerCase(),
-          correct,
-          total: toInt(x.total),
-          pct: toNum(x.pct ?? (x.total ? (toInt(x.correct)/toInt(x.total))*100 : 0)),
-          points: correct * 5,                 // PUNTOS
-          durationSec: toInt(x.durationSec),
-          ts: x.ts || null
-        };
+      return items.map(x=>({
+        userId: x.userId || "(unknown)",
+        userName: getName(x),
+        quizId: (x.quizId || "-").toLowerCase(),
+        correct: toInt(x.correct),
+        total: toInt(x.total),
+        pct: toNum(x.pct ?? 0),
+        durationSec: toInt(x.durationSec),
+        ts: x.ts || null
+      })).filter(r=> QUIZZES.includes(r.quizId));
+    }
+
+    /* ======= Agregación ======= */
+    function weekKey(d){ const dt=new Date(d); const onejan=new Date(dt.getFullYear(),0,1); const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7); return `${dt.getFullYear()}-W${String(week).padStart(2,'0')}`; }
+
+    function aggregate(rows, scope, exam){
+      const now=new Date(); const curMonth=now.getMonth(), curYear=now.getFullYear(); const wkKey=weekKey(now);
+      const byUser=new Map();
+
+      rows.forEach(r=>{
+        if(exam && r.quizId!==exam) return;
+        const d=r.ts? new Date(r.ts): null;
+        if(scope==='season' && d && (d.getMonth()!==curMonth || d.getFullYear()!==curYear)) return;
+        if(scope==='week' && d && weekKey(d)!==wkKey) return;
+
+        const {pts, passed, pct}=pointsForAttempt(r);
+        const key=r.userId+'|'+r.userName;
+        if(!byUser.has(key)){
+          byUser.set(key, {userId:r.userId, userName:r.userName, xp:0, attempts:0, passed:0, last:r.ts, badges:new Set(), streak:0, lastPassTs:null});
+        }
+        const u=byUser.get(key);
+        if(passed){
+          u.passed++;
+          const t=d? d.getTime():0;
+          if(u.lastPassTs && (t-u.lastPassTs)<=1000*60*60*24*7){ u.streak++; } else { u.streak=1; }
+          u.lastPassTs=t;
+        }
+        u.xp += pts + Math.max(0,(u.streak-1)*5);
+        u.attempts++;
+        if(pct===100) u.badges.add('perfect');
+        if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+        u.last=r.ts||u.last;
       });
+
+      const list=[...byUser.values()].map(u=>{ const lvl=levelFromXP(u.xp); return {...u, lvl:lvl.lvl, prog:lvl.progress}; })
+        .sort((a,b)=>{ if(b.xp!==a.xp) return b.xp-a.xp; if(b.passed!==a.passed) return b.passed-a.passed; return String(a.userName).localeCompare(String(b.userName)); });
+      return list;
     }
 
-    function latest10PerQuizRanked(rows){
-      const byQuiz = Object.fromEntries(QUIZZES.map(q => [q, []]));
-      rows.forEach(r => { if (byQuiz[r.quizId]) byQuiz[r.quizId].push(r); });
-
-      for (const q of QUIZZES){
-        byQuiz[q].sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
-        byQuiz[q] = byQuiz[q].slice(0,10).map(r => {
-          const timeSafe = r.ts ? new Date(r.ts).getTime() : 0;
-          const durationSafe = (toInt(r.durationSec) > 0) ? toInt(r.durationSec) : Number.MAX_SAFE_INTEGER;
-          return { ...r, pct01: pct01(r), timeSafe, durationSafe };
-        });
-        // Orden principal por PUNTOS
-        byQuiz[q].sort((a,b)=>{
-          if (b.points !== a.points) return b.points - a.points;
-          if (b.correct !== a.correct) return b.correct - a.correct;
-          if (b.total !== a.total) return b.total - a.total;
-          if (a.durationSafe !== b.durationSafe) return a.durationSafe - b.durationSafe;
-          return a.timeSafe - b.timeSafe;
-        });
-      }
-      return byQuiz;
-    }
-
+    /* ======= Render ======= */
     function medalCell(i){
       if (i===0) return `<span class="medal gold">1</span>`;
       if (i===1) return `<span class="medal silver">2</span>`;
       if (i===2) return `<span class="medal bronze">3</span>`;
       return String(i+1);
     }
-    function nameClassByIndex(i){
+    function nameClass(i){
       if (i===0) return "name-strong name-gold";
       if (i===1) return "name-strong name-silver";
       if (i===2) return "name-strong name-bronze";
       return "name-strong";
     }
-    function pointsChipClass(i){
-      return i<3 ? "points-chip top" : "points-chip";
-    }
+    function pointsChipClass(i){ return i<3 ? "points-chip top" : "points-chip"; }
+    function badgeHTML(b){ if(b==='fast') return `<span class="badge2 fast">⚡ Rápido</span>`; if(b==='perfect') return `<span class="badge2 perfect">💯 Perfect</span>`; return `<span class="badge2 ok">✅ Pro</span>`; }
 
-    function tableHTML(rows, title, quizId){
-      const isAz = quizId==="az-104";
-      const badgeCls = isAz ? "badge az" : "badge aws";
-      const pbarCls = isAz ? "az" : "aws";
+    function renderBoard(list){
+      const me = getUserAny();
+      const meName = (me?.name||me?.displayName||me?.userName)||null;
 
-      if (!rows.length){
-        return `
-          <div class="section-title">
-            <h3>${title}</h3>
-            <span class="${badgeCls}">${quizId}</span>
-          </div>
-          <div class="table-wrap"><p style="text-align:center;margin:18px 0;color:var(--muted)">No hay resultados aún.</p></div>
-        `;
-      }
+      let html = `<table><thead><tr>
+        <th class="col-rank">#</th>
+        <th class="col-points">Puntos</th>
+        <th class="col-name">Jugador</th>
+        <th class="col-num col-level">Nivel</th>
+        <th class="col-num">Aprobados</th>
+        <th class="col-num">Intentos</th>
+        <th class="col-date">Último</th>
+        <th>Insignias</th>
+      </tr></thead><tbody>`;
 
-      let html = `
-        <div class="section-title">
-          <h3>${title}</h3>
-          <span class="${badgeCls}">${quizId}</span>
-        </div>
-        <div class="table-wrap">
-          <table class="rank-table">
-            <thead>
-              <tr>
-                <th class="col-rank">#</th>
-                <th class="col-points">Puntos</th>
-                <th class="col-name">Nombre</th>
-                <th class="col-num">Correctas</th>
-                <th class="col-num">Total</th>
-                <th class="col-num">Puntuación</th>
-                <th class="col-num">Duración</th>
-                <th class="col-date">Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-      rows.forEach((r,i)=>{
-        const pct = Math.round(Math.min(100, Math.max(0, r.pct01*100)));
-        html += `
-          <tr>
-            <td class="col-rank">${medalCell(i)}</td>
-            <td class="col-points"><span class="${pointsChipClass(i)}">⭐ ${r.points}</span></td>
-            <td class="col-name"><span class="${nameClassByIndex(i)}">${escapeHtml(r.userName)}</span></td>
-            <td class="col-num">${r.correct}</td>
-            <td class="col-num">${r.total}</td>
-            <td class="col-num">
-              <div class="pct">
-                <div class="pbar"><i class="${pbarCls}" style="width:${pct}%"></i></div>
-                <span>${pct}%</span>
-              </div>
-            </td>
-            <td class="col-num"><span class="chip">${fmtDuration(r.durationSec)}</span></td>
-            <td class="col-date">${fmtDate(r.ts)}</td>
-          </tr>
-        `;
+      list.forEach((u,i)=>{
+        const initials = String(u.userName).trim().slice(0,2).toUpperCase();
+        const isMe = meName && String(u.userName).toLowerCase()===String(meName).toLowerCase();
+        html += `<tr${isMe? ' style="outline:2px solid rgba(108,139,255,.35)"':''}>
+          <td>${medalCell(i)}</td>
+          <td><span class="${pointsChipClass(i)}">⭐ ${u.xp}</span></td>
+          <td class="col-name"><span class="avatar">${initials}</span><span class="${nameClass(i)}">${u.userName}</span></td>
+          <td class="col-level"><span class="level">Lv ${u.lvl}<span class="bar"><i style="width:${u.prog}%"></i></span></span></td>
+          <td>${u.passed}</td>
+          <td>${u.attempts}</td>
+          <td>${u.last? fmtDate(u.last) : '—'}</td>
+          <td>${[...u.badges].map(b=> badgeHTML(b)).join('')}</td>
+        </tr>`;
       });
-      html += `</tbody></table></div>`;
-      return html;
-    }
 
-    function renderView(allByQuiz, filter){
-      const c = document.getElementById("container");
-      const pills = { all:document.getElementById("flt-all"), az:document.getElementById("flt-az"), aws:document.getElementById("flt-aws") };
-      pills.all.setAttribute("aria-pressed", String(filter==="all"));
-      pills.az.setAttribute("aria-pressed", String(filter==="az-104"));
-      pills.aws.setAttribute("aria-pressed", String(filter==="aws-saa-c03"));
+      html += `</tbody></table>`;
+      document.getElementById('board').innerHTML = html;
 
-      if (filter==="all"){
-        c.innerHTML =
-          tableHTML(allByQuiz["az-104"], "Microsoft Azure Administrator (AZ-104)", "az-104") +
-          tableHTML(allByQuiz["aws-saa-c03"], "AWS Solutions Architect Associate (SAA-C03)", "aws-saa-c03");
-      } else {
-        const title = filter==="az-104" ? "Microsoft Azure Administrator (AZ-104)" : "AWS Solutions Architect Associate (SAA-C03)";
-        c.innerHTML = tableHTML(allByQuiz[filter], title, filter);
+      // "Mi posición"
+      const myDiv = document.getElementById('myPosition');
+      if (meName){
+        const idx = list.findIndex(x=> String(x.userName).toLowerCase()===meName.toLowerCase());
+        if (idx>=0){
+          const meU=list[idx];
+          myDiv.style.display='';
+          myDiv.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+            <div style="display:flex;align-items:center;gap:10px"><span>${medalCell(idx)}</span>
+            <span class="avatar">${String(meU.userName).slice(0,2).toUpperCase()}</span>
+            <span class="name-strong">${meU.userName}</span></div>
+            <div><span class="${pointsChipClass(idx)}">⭐ ${meU.xp}</span></div>
+          </div>`;
+        }
       }
     }
 
-    let cacheAllByQuiz = null;
-    async function loadAndRender(filter="all"){
-      const container = document.getElementById("container");
-      container.innerHTML = `<div class="table-wrap" style="text-align:center;color:var(--muted)">Cargando…</div>`;
-      if (!cacheAllByQuiz){
-        const rows = await fetchAll(1000);
-        cacheAllByQuiz = latest10PerQuizRanked(rows);
-      }
-      renderView(cacheAllByQuiz, filter);
+    // Estado UI
+    let SCOPE='global', EXAM=null, CACHE=null;
+    function setScope(x){ SCOPE=x; syncTabs(); render(); }
+    function setExam(x){ EXAM=x; syncTabs(); render(); }
+    function syncTabs(){
+      const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
+      set('tab-global', SCOPE==='global');
+      set('tab-season', SCOPE==='season');
+      set('tab-week', SCOPE==='week');
+      set('tab-az', EXAM==='az-104');
+      set('tab-aws', EXAM==='aws-saa-c03');
     }
 
-    function setFilter(filter){
-      const allowed = ["all","az-104","aws-saa-c03"];
-      if (!allowed.includes(filter)) filter = "all";
-      const q = new URLSearchParams(location.search);
-      if (filter==="all") q.delete("quiz"); else q.set("quiz", filter);
-      history.replaceState(null, "", `${location.pathname}?${q.toString()}`);
-      loadAndRender(filter);
+    async function render(){
+      const node = document.getElementById('board');
+      node.innerHTML = 'Cargando…';
+      try{
+        if (!CACHE){
+          const rows = await fetchAll(3000);
+          CACHE = rows;
+        }
+        const list = aggregate(CACHE, SCOPE, EXAM);
+        renderBoard(list.slice(0,50));
+      }catch(e){
+        node.innerHTML = `<p style="color:var(--muted)">Error cargando API: ${e.message}</p>`;
+      }
     }
-    function initFromURL(){
-      const q = new URLSearchParams(location.search);
-      const filter = (q.get("quiz")||"all").toLowerCase();
-      setFilter(filter);
-    }
-    document.addEventListener("DOMContentLoaded", initFromURL);
+    render();
+
   </script>
 </body>
 </html>
