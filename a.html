@@ -1,395 +1,330 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>ITHub — Plan + Contenidos + Modal</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IT Hub .es — Ranking Gamificado (Preview)</title>
   <style>
     :root{
-      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-      --azure:#0078d4;--aws:#ff9900;
-      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
-      --cta:linear-gradient(180deg,#6c8bff,#3e64ff);
-      --ok:#3ad97a; --warn:#ffd873; --bad:#ff6b6b;
+      --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
+      --stroke:#283056; --brand:#6c8bff; --radius:14px; --shadow:0 12px 28px rgba(6,12,40,.45);
+      --aws:#ff9900; --azure:#0078d4; --aws-2:#ffb84d; --azure-2:#5fb3ff;
+      --violet:#7b5cff; --violet-2:#6246ff;
+      --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
+      --green:#2ecc71; --red:#ff5c5c; --amber:#ffb300;
     }
     *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
-    a{color:inherit;text-decoration:none}
-    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(15,19,32,.86),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke);backdrop-filter:blur(8px)}
-    .container{max-width:1120px;margin:0 auto;padding:0 18px}
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
-    .dot{width:10px;height:10px;border-radius:999px;background:#6c8bff;box-shadow:0 0 0 6px rgba(108,139,255,.18)}
-
-    h1{font-size:clamp(1.6rem,4.0vw,2.2rem);margin:14px 0}
-    section{padding:20px 0}
-
-    /* ===== HOW STEPS ===== */
-    .how-grid{display:grid;gap:12px}
-    @media(min-width:820px){.how-grid{grid-template-columns:repeat(4,1fr)}}
-    .how-step{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
-    .muted{color:var(--muted)}
-    .pill-btn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 14px;border-radius:12px;border:1px solid #3b2fff44;
-      background:var(--cta);color:#fff;font-weight:900;cursor:pointer
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.12),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.12),transparent 60%),
+        var(--bg);
+      line-height:1.6;
     }
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1160px;margin:0 auto;padding:0 20px}
 
-    /* ===== CONTENTS ===== */
-    .filter-bar{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px}
-    .filter-bar select{background:#0f1630;border:1px solid var(--stroke);border-radius:10px;color:var(--ink);font-weight:800;padding:10px 12px;min-width:260px}
-    .grid{display:grid;gap:12px;margin-top:12px}
-    @media(min-width:820px){.grid{grid-template-columns:repeat(3,1fr)}}
-    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
-    .cc-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
-    .prov-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid #ffffff22;font-weight:900}
-    .prov-azure{background:rgba(0,120,212,.16);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
-    .prov-aws{background:rgba(255,153,0,.18);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
-    .tiny-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer}
-    .save-btn{border-color:#b49422;color:#ffec9a}
+    /* Header */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
+      border-bottom:1px solid var(--stroke)}
+    .nav{height:56px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
+    .brand .logo{width:22px;height:22px;border-radius:6px;background:linear-gradient(180deg,#7b8cff,#4c66ff);box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    .brand span{opacity:.9}
+    .brand small{opacity:.6;font-weight:800}
+    .menu{display:none;gap:28px;color:var(--muted);font-weight:900;letter-spacing:.04em}
+    .menu a{text-transform:uppercase}
+    .menu a:hover{color:#fff}
+    @media(min-width:720px){.menu{display:flex}}
+    .actions{display:flex;align-items:center;gap:10px}
 
-    /* ===== MODAL ===== */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
-    .modal.show{display:flex}
-    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
-    .tabs{display:flex;gap:8px;margin-bottom:10px}
-    .tab{padding:8px 12px;border-radius:999px;border:1px solid var(--stroke);cursor:pointer;font-weight:900}
-    .tab.on{background:#0f1630;border-color:#45529b}
-    .list{display:grid;gap:10px}
-    .list .row{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--stroke);background:var(--surface2);border-radius:12px;padding:10px}
-    .meter{position:relative;height:8px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
-    .meter>span{position:absolute;left:0;top:0;height:100%;width:0}
-    .m-ok{background:var(--ok)} .m-warn{background:var(--warn)} .m-bad{background:var(--bad)}
+    /* Page */
+    .wrap{padding:22px 0 28px}
+    .layout{display:grid;grid-template-columns: 1fr 320px; gap:18px}
+    @media (max-width: 980px){ .layout{grid-template-columns:1fr} }
+
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
+      border-radius:16px;padding:18px 18px;box-shadow:var(--shadow)}
+    .header-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:6px 0 12px}
+    .header-row h2{margin:0;color:#fff;font-size:1.3rem;font-weight:900;letter-spacing:.2px}
+
+    /* Tabs */
+    .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .tab{appearance:none;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff;
+      padding:8px 12px;border-radius:999px;cursor:pointer;font-weight:800}
+    .tab[aria-pressed="true"]{outline:2px solid rgba(108,139,255,.3)}
+
+    /* Leaderboard */
+    .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:14px;overflow:auto}
+    table{width:100%;min-width:840px;border-collapse:separate;border-spacing:0}
+    thead th{position:sticky;top:0;z-index:1;background:var(--surface2);color:#e8ecff;font-weight:800;letter-spacing:.02em;text-align:center;padding:12px 10px;border-bottom:1px solid var(--stroke)}
+    tbody td{padding:12px 10px;text-align:center;border-bottom:1px solid #1f2747;background:#0f1430;color:#e8ecff}
+    tbody tr:nth-child(even) td{background:#101738}
+    tbody tr:hover td{background:#0e1536}
+    thead th:first-child{border-top-left-radius:12px}
+    thead th:last-child{border-top-right-radius:12px}
+
+    .col-rank{width:64px}
+    .col-name{text-align:left}
+    .col-points{width:140px}
+    .col-num{width:110px;font-variant-numeric:tabular-nums}
+    .col-date{width:190px}
+
+    .avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#fff;margin-right:8px}
+    .name-strong{font-weight:900}
+    .name-gold{color:var(--gold)}
+    .name-silver{color:var(--silver)}
+    .name-bronze{color:var(--bronze)}
+
+    .points-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-weight:900;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff}
+    .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff;border:none;box-shadow:var(--shadow)}
+
+    .level{font-weight:900;padding:4px 10px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.04)}
+    .level .bar{display:inline-block;height:8px;width:90px;background:#0a0f25;border-radius:999px;position:relative;margin-left:8px;vertical-align:middle}
+    .level .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
+
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface2);color:#e8ecff;border:1px solid var(--stroke);font-weight:800;margin:2px}
+    .badge.fast{background:rgba(255,179,0,.14);border-color:rgba(255,179,0,.35);color:#ffe3a6}
+    .badge.perfect{background:rgba(124,77,255,.18);border-color:rgba(124,77,255,.38);color:#e0d6ff}
+    .badge.ok{background:rgba(46,204,113,.15);border-color:rgba(46,204,113,.35);color:#b8ffd7}
+
+    .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
+    .medal.gold{background:linear-gradient(135deg,#ffd662,#ffb300);box-shadow:0 2px 6px rgba(255,179,0,.35)}
+    .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf);box-shadow:0 2px 6px rgba(0,0,0,.12)}
+    .medal.bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a);box-shadow:0 2px 6px rgba(0,0,0,.12)}
+
+    .mypos{position:sticky;bottom:12px;margin-top:12px;}
+    .mypos .card{background:linear-gradient(180deg,#13204d,#10173b)}
   </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div class="brand"><span class="dot"></span> ITHub</div>
-      <nav style="color:var(--muted);font-weight:800">Aprende • Practica • Compite</nav>
-    </div>
-  </header>
-
-  <main>
-    <!-- PLAN -->
-    <section>
-      <div class="container">
-        <h1>PLAN PARA APROBAR TU CERTIFICACIÓN IT</h1>
-        <div class="how-grid">
-          <!-- Paso 1 (igual) -->
-          <div class="how-step">
-            <strong>1) Diagnóstico inicial</strong><br>
-            <span class="muted">Mini-test por dominios. Prioriza dónde estudiar.</span>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-              <a class="pill-btn" href="#!">Iniciar diagnóstico</a>
-              <a class="btn" href="#!">Ver último resultado</a>
-            </div>
-          </div>
-
-          <!-- Paso 2: Domina lo esencial (con modal y salto a contenidos) -->
-          <div class="how-step">
-            <strong>2) Domina lo esencial</strong><br>
-            <span class="muted">Resúmenes y hojas de trucos por dominio. Solo lo que cae.</span>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-              <button class="pill-btn go-content" data-exam="az-104">📘 AZ-104</button>
-              <button class="pill-btn go-content" data-exam="aws-saa-c03">📒 SAA-C03</button>
-              <button class="btn" id="btnOpenNotes">🗂️ Mis apuntes</button>
-            </div>
-          </div>
-
-          <!-- Paso 3: Practicar (enlaces directos) -->
-          <div class="how-step">
-            <strong>3) Practica con propósito</strong><br>
-            <span class="muted">Simulador con explicación y enlaces oficiales.</span>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-              <a class="pill-btn" href="/quiz.html?quiz=az-104">🧪 Practicar AZ-104</a>
-              <a class="pill-btn" href="/quiz.html?quiz=aws-saa-c03">🧪 Practicar SAA-C03</a>
-            </div>
-          </div>
-
-          <!-- Paso 4: Ensayo final (deep-link con autostart) -->
-          <div class="how-step">
-            <strong>4) Ensayo final</strong><br>
-            <span class="muted">Modo examen cronometrado. Repite hasta tu objetivo.</span>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-              <a class="pill-btn" href="/quiz.html?quiz=az-104&count=30&autostart=1">⏱️ Ensayo AZ-104</a>
-              <a class="pill-btn" href="/quiz.html?quiz=aws-saa-c03&count=30&autostart=1">⏱️ Ensayo SAA-C03</a>
-              <a class="btn" href="/score/ranking.html">🏆 Ver ranking</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTENIDOS -->
-    <section id="contenidos">
-      <div class="container">
-        <div class="filter-bar">
-          <label for="examSelect"><b>Selecciona Certificación:</b></label>
-          <select id="examSelect">
-            <option value="all">TODAS</option>
-            <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
-            <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
-          </select>
-        </div>
-
-        <div id="contentGrid" class="grid">
-          <!-- Tarjetas ejemplo (puedes cambiarlas por tus reales) -->
-          <article class="card" data-exam="az-104" data-id="vnet-peering">
-            <div class="cc-head">
-              <strong>🔗 VNet Peering vs. VPN Gateway</strong>
-              <span class="prov-pill prov-azure">AZURE</span>
-            </div>
-            <p class="muted">Cuándo usar peering entre VNets y cuándo preferir VPN con BGP para aislar dominios.</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <a class="tiny-btn read" href="#!">Leer</a>
-              <button class="tiny-btn save-btn save">⭐ Guardar</button>
-            </div>
-          </article>
-
-          <article class="card" data-exam="az-104" data-id="azure-storage">
-            <div class="cc-head">
-              <strong>💾 Azure Storage: seguridad y operación</strong>
-              <span class="prov-pill prov-azure">AZURE</span>
-            </div>
-            <p class="muted">RBAC y SAS, replicación ZRS/GZRS y WORM para datos críticos y auditoría.</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <a class="tiny-btn read" href="#!">Leer</a>
-              <button class="tiny-btn save-btn save">⭐ Guardar</button>
-            </div>
-          </article>
-
-          <article class="card" data-exam="aws-saa-c03" data-id="vpc-ha">
-            <div class="cc-head">
-              <strong>🛡️ Alta disponibilidad en VPC</strong>
-              <span class="prov-pill prov-aws">AWS</span>
-            </div>
-            <p class="muted">Subredes por AZ, NATs, balanceo y resiliencia. Diseño típico de examen.</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <a class="tiny-btn read" href="#!">Leer</a>
-              <button class="tiny-btn save-btn save">⭐ Guardar</button>
-            </div>
-          </article>
-
-          <article class="card" data-exam="aws-saa-c03" data-id="s3-security">
-            <div class="cc-head">
-              <strong>🗄️ S3: seguridad y rendimiento</strong>
-              <span class="prov-pill prov-aws">AWS</span>
-            </div>
-            <p class="muted">Políticas mínimas, KMS, lifecycle, multipart y endpoints privados.</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <a class="tiny-btn read" href="#!">Leer</a>
-              <button class="tiny-btn save-btn save">⭐ Guardar</button>
-            </div>
-          </article>
-
-          <article class="card" data-exam="mixed" data-id="immutable-backup">
-            <div class="cc-head">
-              <strong>🧱 Backup inmutable y ciberrecuperación</strong>
-              <span class="prov-pill prov-azure">AZURE</span>
-            </div>
-            <p class="muted">Patrón vault + landing zone. RPO/RTO y drill de recuperación.</p>
-            <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <a class="tiny-btn read" href="#!">Leer</a>
-              <button class="tiny-btn save-btn save">⭐ Guardar</button>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- MODAL: Mis apuntes -->
-  <div class="modal" id="notesModal" aria-hidden="true">
-    <div class="modal-card">
-      <h3>🗂️ Mis apuntes</h3>
-      <div class="tabs">
-        <button class="tab on" data-tab="recent">Recientes</button>
-        <button class="tab" data-tab="saved">Guardados</button>
-      </div>
-      <div id="notesRecent" class="list"></div>
-      <div id="notesSaved" class="list" style="display:none"></div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="btn" id="notesClose">Cerrar</button>
-      </div>
-    </div>
+<header>
+  <div class="container nav">
+    <div class="brand"><i class="logo"></i><span>IT&nbsp;Hub</span> <small>.es</small></div>
+    <nav class="menu">
+      <a href="/">HOME</a>
+      <a href="/#simuladores">SIMULADORES</a>
+      <a href="/#contenidos">CONTENIDOS</a>
+    </nav>
+    <div class="actions" id="navActions"></div>
   </div>
+</header>
 
-  <script>
-    // ===== util =====
-    const headerEl = document.querySelector('header');
-    function smoothScrollTo(el){
-      const offset = (headerEl ? headerEl.offsetHeight : 0) + 10;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior:'smooth' });
+<main class="container wrap">
+  <div class="layout">
+    <section class="card">
+      <div class="header-row">
+        <h2>🏆 Ranking Gamificado — Preview</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab" id="tab-global" aria-pressed="true" onclick="setScope('global')">Global</button>
+          <button class="tab" id="tab-season" aria-pressed="false" onclick="setScope('season')">Temporada (mes)</button>
+          <button class="tab" id="tab-week" aria-pressed="false" onclick="setScope('week')">Semanal</button>
+          <button class="tab" id="tab-az" aria-pressed="false" onclick="setExam('az-104')">AZ-104</button>
+          <button class="tab" id="tab-aws" aria-pressed="false" onclick="setExam('aws-saa-c03')">SAA-C03</button>
+        </div>
+      </div>
+      <div class="table-wrap" id="board">Cargando…</div>
+    </section>
+
+    <aside class="side">
+      <div class="card rules">
+        <h3>⚙️ Cómo sumas puntos (preview)</h3>
+        <ul>
+          <li><b>+5</b> por cada <b>respuesta correcta</b>.</li>
+          <li><b>+50</b> por <b>examen aprobado</b> (≥70%).</li>
+          <li><b>+10</b> bonus <b>rápido</b>: ≤30s por pregunta.</li>
+          <li><b>Racha</b>: +5 extra por cada aprobado consecutivo en 7 días.</li>
+        </ul>
+        <p>Los puntos generan <b>XP</b> y subes de nivel. Hay tablas <i>Global</i>, de <i>Temporada</i> (mes actual) y <i>Semanal</i>.</p>
+      </div>
+      <div class="mypos" id="myPosition"></div>
+    </aside>
+  </div>
+</main>
+
+<script>
+function getUserAny(){
+  let u=null; try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
+  if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}
+  return u;
+}
+(function renderHeaderUser(){
+  const box=document.getElementById('navActions');
+  const u=getUserAny();
+  if(u && (u.name||u.displayName||u.userName)){
+    const name = (u.name||u.displayName||u.userName||'Usuario');
+    box.innerHTML = '<span style="opacity:.9;font-weight:900">👋 '+name+'</span>';
+  } else {
+    box.innerHTML = '<a style="font-weight:800;border:1px solid var(--stroke);padding:8px 12px;border-radius:10px" href="/login/login.html">Entrar</a>';
+  }
+})();
+
+const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+const QUIZZES = ["az-104","aws-saa-c03"];
+const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
+const toNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;
+const pick = v => (typeof v === "string" ? v.trim() : "");
+const getName = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+const pad = n => String(n).padStart(2,'0');
+const fmtDuration = (sec)=>{sec=toInt(sec); if(!sec||sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`};
+const fmtDate = (iso)=>{ if (!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; }};
+function weekKey(d){ const dt = new Date(d); const onejan = new Date(dt.getFullYear(),0,1); const week = Math.ceil((((dt - onejan) / 86400000) + onejan.getDay()+1) / 7); return `${dt.getFullYear()}-W${String(week).padStart(2,'0')}`; }
+function pointsForAttempt(r){
+  const correct = toInt(r.correct), total=toInt(r.total), dur=toInt(r.durationSec);
+  let pts = correct * 5; // base
+  const pct = total>0 ? (correct/total)*100 : (r.pct||0);
+  if (pct >= 70) pts += 50; // pass bonus
+  if (total>0 && dur>0 && (dur/total) <= 30) pts += 10; // speed bonus (<=30s/q)
+  return { pts, passed: pct>=70, pct };
+}
+function levelFromXP(xp){ const lvl = Math.max(1, Math.floor(xp/150)+1); const cur = xp % 150; const p = Math.max(0, Math.min(100, Math.floor((cur/150)*100))); return {lvl, progress:p}; }
+async function fetchAll(limit=1500){
+  const res = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors", cache:"no-store"});
+  const data = await res.json();
+  if(!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  const items = Array.isArray(data.items) ? data.items : [];
+  return items.map(x=>({ userId:x.userId||"(unknown)", userName:getName(x), quizId:(x.quizId||"-").toLowerCase(), correct:toInt(x.correct), total:toInt(x.total), pct:toNum(x.pct??0), durationSec:toInt(x.durationSec), ts:x.ts||null })).filter(r=>QUIZZES.includes(r.quizId));
+}
+// Fallback mock data so it always renders
+function mockRows(){
+  const now = Date.now();
+  const users = ["ALEX","BEA","CARLOS","DANI","ELENA","FER","GEMA","HUGO","IVAN","JULIA"];
+  const out=[];
+  for (let i=0;i<60;i++){
+    const u = users[i%users.length] + (i>users.length? String((i/users.length)|0):"");
+    const total = 50;
+    const correct = Math.max(0, Math.min(total, Math.floor(30+Math.random()*20)));
+    out.push({userId:u, userName:u, quizId: i%2? "az-104":"aws-saa-c03", correct, total, pct: (correct/total)*100, durationSec: 1000+Math.floor(Math.random()*1500), ts: new Date(now - Math.random()*1000*60*60*24*20).toISOString()});
+  }
+  return out;
+}
+
+function aggregate(rows, scope, exam){
+  const now=new Date(); const curMonth = now.getMonth(), curYear = now.getFullYear(); const wkKey = weekKey(now);
+  const byUser = new Map();
+  rows.forEach(r=>{
+    if (exam && r.quizId!==exam) return;
+    const d = r.ts ? new Date(r.ts) : null;
+    if (scope==='season' && d && (d.getMonth()!==curMonth || d.getFullYear()!==curYear)) return;
+    if (scope==='week' && d && weekKey(d)!==wkKey) return;
+    const {pts, passed, pct} = pointsForAttempt(r);
+    const key = r.userId+"|"+r.userName;
+    if(!byUser.has(key)) byUser.set(key, {userId:r.userId,userName:r.userName,xp:0, attempts:0, passed:0, fastest:Infinity, last: r.ts, badges:new Set(), streak:0, lastPassTs:null});
+    const u = byUser.get(key);
+    if (passed){
+      u.passed++;
+      const t = d ? d.getTime() : 0;
+      if (u.lastPassTs && (t - u.lastPassTs) <= 1000*60*60*24*7) { u.streak++; }
+      else if (!u.lastPassTs) { u.streak = 1; }
+      else { u.streak = 1; }
+      u.lastPassTs = t;
     }
+    u.xp += pts + Math.max(0, (u.streak-1)*5);
+    u.attempts++;
+    if (r.durationSec>0) u.fastest = Math.min(u.fastest, r.durationSec);
+    if (pct===100) u.badges.add('perfect');
+    if (r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+  });
+  const list = [...byUser.values()].map(u=>{ const lvl = levelFromXP(u.xp); return {...u, lvl:lvl.lvl, prog:lvl.progress}; }).sort((a,b)=>{
+    if (b.xp!==a.xp) return b.xp-a.xp;
+    if (b.passed!==a.passed) return b.passed-a.passed;
+    if (a.fastest!==b.fastest) return a.fastest-b.fastest;
+    return String(a.userName).localeCompare(String(b.userName));
+  });
+  return list;
+}
 
-    // ===== filtro contenidos + scroll =====
-    const examSelect = document.getElementById('examSelect');
-    const contentGrid = document.getElementById('contentGrid');
-    const contenidos = document.getElementById('contenidos');
+function medalCell(i){ if (i===0) return '<span class="medal gold">1</span>'; if (i===1) return '<span class="medal silver">2</span>'; if (i===2) return '<span class="medal bronze">3</span>'; return String(i+1); }
+function nameClass(i){ if (i===0) return 'name-strong name-gold'; if (i===1) return 'name-strong name-silver'; if (i===2) return 'name-strong name-bronze'; return 'name-strong'; }
+function pointsChipClass(i){ return i<3 ? 'points-chip top' : 'points-chip'; }
+function badgeHTML(b){ if (b==='fast') return '<span class="badge fast">⚡ Rápido</span>'; if (b==='perfect') return '<span class="badge perfect">💯 Perfect</span>'; return '<span class="badge ok">✅ Pro</span>'; }
 
-    function applyFilter(){
-      const val = examSelect.value;
-      document.querySelectorAll('#contentGrid .card').forEach(c=>{
-        const tag = c.getAttribute('data-exam');
-        c.style.display = (val==='all' || tag===val || tag==='mixed') ? '' : 'none';
-      });
+function renderBoard(list){
+  const me = getUserAny();
+  const meName = (me?.name||me?.displayName||me?.userName)||null;
+  let html = '<table><thead><tr>\
+      <th class="col-rank">#</th>\
+      <th class="col-points">Puntos</th>\
+      <th class="col-name">Jugador</th>\
+      <th class="col-num">Nivel</th>\
+      <th class="col-num">Aprobados</th>\
+      <th class="col-num">Intentos</th>\
+      <th class="col-num">Mejor tiempo</th>\
+      <th class="col-date">Último</th>\
+      <th>Insignias</th>\
+    </tr></thead><tbody>';
+  list.forEach((u,i)=>{
+    const initials = String(u.userName).trim().slice(0,2).toUpperCase();
+    const isMe = meName && String(u.userName).toLowerCase()===String(meName).toLowerCase();
+    html += '<tr'+(isMe? ' style="outline:2px solid rgba(108,139,255,.35)"':'')+'>\
+      <td>'+medalCell(i)+'</td>\
+      <td><span class="'+pointsChipClass(i)+'">⭐ '+u.xp+'</span></td>\
+      <td class="col-name"><span class="avatar">'+initials+'</span><span class="'+nameClass(i)+'">'+u.userName+'</span></td>\
+      <td><span class="level">Lv '+u.lvl+'<span class="bar"><i style="width:'+u.prog+'%"></i></span></span></td>\
+      <td>'+u.passed+'</td>\
+      <td>'+u.attempts+'</td>\
+      <td>'+(u.fastest===Infinity? '—' : fmtDuration(u.fastest))+'</td>\
+      <td>'+(u.last? fmtDate(u.last) : '—')+'</td>\
+      <td>'+[...u.badges].map(b=> badgeHTML(b)).join('')+'</td>\
+    </tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('board').innerHTML = html;
+  const myDiv = document.getElementById('myPosition');
+  if (meName){
+    const idx = list.findIndex(x=> String(x.userName).toLowerCase()===meName.toLowerCase());
+    if (idx>=0){
+      const meU = list[idx];
+      myDiv.innerHTML = '<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px">\
+        <div style="display:flex;align-items:center;gap:10px"><span>'+medalCell(idx)+'</span>\
+        <span class="avatar">'+String(meU.userName).slice(0,2).toUpperCase()+'</span>\
+        <span class="name-strong">'+meU.userName+'</span></div>\
+        <div><span class="'+pointsChipClass(idx)+'">⭐ '+meU.xp+'</span></div>\
+      </div></div>';
+    } else {
+      myDiv.innerHTML = '';
     }
-    examSelect.addEventListener('change', applyFilter);
-    applyFilter();
+  }
+}
 
-    // Botones “Domina lo esencial” -> set filtro + scroll
-    document.querySelectorAll('.go-content').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const val=btn.dataset.exam||'all';
-        examSelect.value = val;
-        examSelect.dispatchEvent(new Event('change',{bubbles:true}));
-        smoothScrollTo(contenidos);
-      });
-    });
+let SCOPE='global';
+let EXAM=null;
+let CACHE_ROWS=null;
 
-    // ===== “leer” y “guardar” simulan interacción y persisten en localStorage =====
-    const KEY_RECENT = 'notes.recent';
-    const KEY_SAVED  = 'notes.saved';
-    function loadLS(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch{return []} }
-    function saveLS(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
-    function nowISO(){ return new Date().toISOString(); }
+function setScope(sc){ SCOPE=sc; syncTabs(); render(); }
+function setExam(ex){ EXAM=ex; syncTabs(); render(); }
+function syncTabs(){
+  const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
+  set('tab-global', SCOPE==='global');
+  set('tab-season', SCOPE==='season');
+  set('tab-week', SCOPE==='week');
+  set('tab-az', EXAM==='az-104');
+  set('tab-aws', EXAM==='aws-saa-c03');
+}
 
-    function cardMeta(el){
-      return {
-        id: el.getAttribute('data-id'),
-        exam: el.getAttribute('data-exam'),
-        title: el.querySelector('.cc-head strong')?.textContent?.trim() || 'Apunte',
-      };
-    }
-
-    // “Leer” -> guarda en recientes
-    contentGrid.addEventListener('click', e=>{
-      const a = e.target.closest('.read');
-      if(!a) return;
-      e.preventDefault();
-      const card = e.target.closest('.card');
-      const meta = cardMeta(card);
-      const recent = loadLS(KEY_RECENT).filter(x=>x.id!==meta.id);
-      recent.unshift({ ...meta, ts: nowISO() });
-      saveLS(KEY_RECENT, recent.slice(0,20));
-      // Simula abrir artículo
-      alert(`Abriendo: ${meta.title}`);
-    });
-
-    // “Guardar” -> añade a guardados
-    contentGrid.addEventListener('click', e=>{
-      const b = e.target.closest('.save');
-      if(!b) return;
-      const card = e.target.closest('.card');
-      const meta = cardMeta(card);
-      const saved = loadLS(KEY_SAVED);
-      if(!saved.find(x=>x.id===meta.id)){
-        saved.unshift({ ...meta, ts: nowISO() });
-        saveLS(KEY_SAVED, saved.slice(0,50));
-        b.textContent = '✅ Guardado';
-      }else{
-        // quitar
-        saveLS(KEY_SAVED, saved.filter(x=>x.id!==meta.id));
-        b.textContent = '⭐ Guardar';
+async function render(){
+  const board = document.getElementById('board');
+  board.innerHTML = 'Cargando…';
+  try{
+    if (!CACHE_ROWS) {
+      try {
+        CACHE_ROWS = await fetchAll(2000);
+      } catch (e) {
+        console.warn('Fallo API, usando datos de prueba', e);
+        CACHE_ROWS = mockRows();
       }
-    });
-
-    // ===== Modal “Mis apuntes” =====
-    const notesModal  = document.getElementById('notesModal');
-    const notesClose  = document.getElementById('notesClose');
-    const btnOpenNotes= document.getElementById('btnOpenNotes');
-    const notesRecent = document.getElementById('notesRecent');
-    const notesSaved  = document.getElementById('notesSaved');
-
-    function renderList(host, list){
-      host.innerHTML='';
-      if(!list.length){
-        host.innerHTML = `<div class="row" style="justify-content:center;color:var(--muted)">No hay elementos todavía.</div>`;
-        return;
-      }
-      list.forEach(it=>{
-        const row=document.createElement('div'); row.className='row';
-        row.innerHTML=`
-          <div>
-            <div style="font-weight:900">${it.title}</div>
-            <div class="muted" style="font-size:.9rem">${it.exam.toUpperCase()} · ${new Date(it.ts).toLocaleString()}</div>
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="tiny-btn open" data-id="${it.id}">Abrir</button>
-            <button class="tiny-btn" data-id="${it.id}" data-action="remove">Quitar</button>
-          </div>
-        `;
-        host.appendChild(row);
-      });
     }
-
-    function openModalNotes(){
-      // pestañas
-      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-      document.querySelector('.tab[data-tab="recent"]').classList.add('on');
-      notesRecent.style.display='grid';
-      notesSaved.style.display='none';
-
-      renderList(notesRecent, loadLS(KEY_RECENT));
-      renderList(notesSaved,  loadLS(KEY_SAVED));
-
-      notesModal.classList.add('show');
-    }
-    btnOpenNotes.addEventListener('click', openModalNotes);
-    notesClose.addEventListener('click', ()=> notesModal.classList.remove('show'));
-    notesModal.addEventListener('click', e=>{ if(e.target===notesModal) notesModal.classList.remove('show'); });
-
-    // Tabs
-    document.querySelectorAll('.tab').forEach(t=>{
-      t.addEventListener('click', ()=>{
-        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-        t.classList.add('on');
-        const tab=t.dataset.tab;
-        notesRecent.style.display = (tab==='recent')?'grid':'none';
-        notesSaved.style.display  = (tab==='saved')?'grid':'none';
-      });
-    });
-
-    // Acciones dentro del modal
-    function simulateOpenById(id){
-      const card = document.querySelector(`.card[data-id="${id}"]`);
-      if(card){
-        examSelect.value = card.getAttribute('data-exam');
-        applyFilter();
-        notesModal.classList.remove('show');
-        smoothScrollTo(contenidos);
-        card.scrollIntoView({behavior:'smooth',block:'center'});
-      }
-    }
-    [notesRecent, notesSaved].forEach(host=>{
-      host.addEventListener('click', e=>{
-        const open = e.target.closest('.open');
-        const rem  = e.target.closest('[data-action="remove"]');
-        if(open){ simulateOpenById(open.dataset.id); }
-        if(rem){
-          const id = rem.dataset.id;
-          const key = (host.id==='notesSaved')?KEY_SAVED:KEY_RECENT;
-          saveLS(key, loadLS(key).filter(x=>x.id!==id));
-          renderList(host, loadLS(key));
-        }
-      });
-    });
-
-    // (Opcional) Soporta llegar con #contenidos?exam=...
-    (function syncExamFromQueryOnLoad(){
-      try{
-        const hashOk = location.hash.includes('contenidos');
-        const qp = new URLSearchParams(location.search).get('exam');
-        if (hashOk && qp){
-          examSelect.value = qp;
-          examSelect.dispatchEvent(new Event('change', { bubbles:true }));
-          setTimeout(()=>smoothScrollTo(contenidos), 60);
-        }
-      }catch{}
-    })();
-  </script>
+    const list = aggregate(CACHE_ROWS, SCOPE, EXAM);
+    renderBoard(list.slice(0,50));
+  }catch(e){
+    board.innerHTML = '<p style="color:var(--muted)">Error: '+e.message+'</p>';
+  }
+}
+render();
+</script>
 </body>
 </html>
