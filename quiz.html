@@ -11,7 +11,7 @@
       --aws:#ff9900;--azure:#0078d4;--radius:14px;--shadow:0 10px 24px rgba(6,12,40,.45);
       --accent:#6c8bff;--accent-2:#3e64ff;--accent-ring:rgba(108,139,255,.28);
       --ok:#25b873;--bad:#ff6b6b;--warn:#ffd063;
-      --brand:#6c8bff;               /* se actualiza por JS según el quiz */
+      --brand:#6c8bff;
       --brand-ring: rgba(108,139,255,.32);
     }
     *{box-sizing:border-box}
@@ -30,46 +30,46 @@
     .menu{display:none;gap:18px;color:var(--muted);font-weight:700}
     .menu a:hover{color:var(--ink)}
     .actions{display:none;gap:10px;align-items:center}
+
     .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
       padding:10px 14px;border-radius:12px;border:1px solid var(--stroke);cursor:pointer;font-weight:800}
     .btn.primary{background:linear-gradient(180deg,#6c8bff,#3e64ff);border:none;color:#fff;box-shadow:var(--shadow)}
     .btn.ghost{background:transparent}
+    .btn[disabled]{opacity:.55;cursor:not-allowed;filter:grayscale(.25)}
     .userchip{display:flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--stroke);padding:8px 12px;border-radius:999px}
     .userchip b{white-space:nowrap}
 
-
-/* ===== KPIs bajo el simulador ===== */
-.kpis-under-quiz{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap:12px;
-  margin-top:16px;
-}
-@media (max-width:820px){
-  .kpis-under-quiz{ grid-template-columns:1fr; }
-}
-.kpi-card{
-  background:linear-gradient(180deg,#111937,#0f1633);
-  border:1px solid var(--stroke);
-  border-radius:14px;
-  padding:14px 16px;
-  box-shadow:var(--shadow);
-  color:var(--ink);
-}
-.kpi-card h4{
-  margin:0 0 6px;
-  font-size:.95rem;
-  font-weight:900;
-  color:#cbd6ff;
-}
-.kpi-card .n{
-  font-size:1.6rem;
-  font-weight:900;
-  line-height:1.2;
-}
-.kpi-card.ok    { border-color: color-mix(in srgb, var(--brand) 45%, #283056); }
-.kpi-card.mark  { border-color: #b49422; }
-
+    /* ===== KPIs bajo el simulador ===== */
+    .kpis-under-quiz{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:16px;
+    }
+    @media (max-width:820px){
+      .kpis-under-quiz{ grid-template-columns:1fr; }
+    }
+    .kpi-card{
+      background:linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      padding:14px 16px;
+      box-shadow:var(--shadow);
+      color:var(--ink);
+    }
+    .kpi-card h4{
+      margin:0 0 6px;
+      font-size:.95rem;
+      font-weight:900;
+      color:#cbd6ff;
+    }
+    .kpi-card .n{
+      font-size:1.6rem;
+      font-weight:900;
+      line-height:1.2;
+    }
+    .kpi-card.ok    { border-color: color-mix(in srgb, var(--brand) 45%, #283056); }
+    .kpi-card.mark  { border-color: #b49422; }
 
     @media(min-width:720px){.menu,.actions{display:flex}}
 
@@ -107,7 +107,7 @@
       padding:18px;
       box-shadow:var(--shadow);
       color:var(--ink);
-      display:none; /* se muestra al elegir dominio */
+      display:none;
     }
     .info-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px}
     #infoTitle{font-size:clamp(1.2rem,3.2vw,1.6rem);margin:0}
@@ -369,7 +369,8 @@
           infoTitle=document.getElementById('infoTitle'),
           infoContent=document.getElementById('infoContent'),
           infoClose=document.getElementById('infoClose'),
-          simCard=document.getElementById('simCard');
+          simCard=document.getElementById('simCard'),
+          view=document.getElementById('view');
 
     /* Helpers */
     const withAlpha = (hex, aHex) => hex.startsWith('#') ? `${hex}${aHex}` : hex;
@@ -399,7 +400,7 @@
       // Título simulador
       simTitle.textContent = `${QUIZ.toUpperCase()} · Simulador de examen`;
 
-      // *** LISTA DE DOMINIOS (izquierda)
+      // LISTA DE DOMINIOS
       dlist.innerHTML = cfg.domains.map(([d,txt]) =>
         `<li class="dom-item" data-dn="${d}">
            <span class="dom-dot" style="color:${BRAND_CLR}"></span>
@@ -407,7 +408,7 @@
            <span class="dom-title">${txt}</span>
          </li>`).join('');
 
-      // *** CHIPS DE FILTRO (derecha) — con LED que se enciende
+      // CHIPS DE FILTRO
       chips.innerHTML = cfg.domains.map(([d]) =>
         `<label class="chip-dom" data-dn="${d}">
            <input type="checkbox" value="${d}" hidden>
@@ -430,7 +431,7 @@
       simCard.style.boxShadow = `0 0 0 2px ${withAlpha(BRAND_CLR,'55')} inset, 0 14px 30px rgba(0,0,0,.45)`;
       startBtn.style.background = BRAND_CLR;
 
-      // ===== Sincronización LISTA <-> CHIPS (encender LEDs)
+      // ===== Sincronización LISTA <-> CHIPS
       function updateChipVisuals(){
         chips.querySelectorAll('.chip-dom').forEach(lbl=>{
           const cb = lbl.querySelector('input[type="checkbox"]');
@@ -444,7 +445,6 @@
         cb.checked = !cb.checked;
         updateChipVisuals();
       }
-      // Click en lista de dominios: abre notas y sincroniza chip
       dlist.addEventListener('click', (ev)=>{
         const li = ev.target.closest('.dom-item');
         if(!li) return;
@@ -453,25 +453,61 @@
         toggleChipFor(li.dataset.dn);
         loadDomainNotes(li.dataset.dn);
       });
-      // Click en chips: solo enciende/apaga y mantiene clase .on
       chips.addEventListener('click', (ev)=>{
         const wrap = ev.target.closest('.chip-dom');
         if(!wrap) return;
         const cb = wrap.querySelector('input[type="checkbox"]');
-        cb.checked = !cb.checked;  // manual toggle porque el input está hidden
+        cb.checked = !cb.checked;
         updateChipVisuals();
       });
-      // Inicial
       updateChipVisuals();
+
+      /* ====== ESTADO DE QUIZ ACTIVA + AUTO-SCROLL ====== */
+      let quizActive = false;
+      const startBtnDefaultText = startBtn.textContent;
+
+      function scrollToQuiz(){
+        // Espera breve para que el motor pinte algo en #view y luego baja
+        setTimeout(()=>{ view.scrollIntoView({behavior:'smooth', block:'start'}); }, 80);
+      }
+      function setQuizActive(on){
+        quizActive = !!on;
+        startBtn.disabled = quizActive;
+        startBtn.textContent = quizActive ? '⏳ En marcha…' : startBtnDefaultText;
+        startBtn.setAttribute('aria-disabled', quizActive ? 'true' : 'false');
+      }
+
+      // Observa cambios en #view: si se queda vacío, consideramos terminada
+      const obs = new MutationObserver(()=>{
+        const hasContent = view.children.length > 0;
+        if (!hasContent && quizActive){
+          setQuizActive(false);
+        }
+      });
+      obs.observe(view, {childList:true, subtree:false});
+
+      // API de integración opcional para el motor
+      window.quizUI = {
+        end(){ setQuizActive(false); },         // Llama esto cuando termine el quiz
+        started(){ setQuizActive(true); scrollToQuiz(); }  // Por si el motor quiere forzar el scroll
+      };
+
+      // También escuchamos eventos personalizados si el motor los emite
+      window.addEventListener('quiz:started', ()=>{ setQuizActive(true); scrollToQuiz(); });
+      window.addEventListener('quiz:ended',   ()=>{ setQuizActive(false); });
 
       // Iniciar simulador
       startBtn.addEventListener('click', ()=>{
+        if (quizActive) return; // ya en marcha
         if (infoDom.style.display !== 'none') closeInfoPanel();
         const count = parseInt(qCount.value,10) || 65;
         const tags = Array.from(chips.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
         if(typeof window.start === 'function'){
-          window.start(QUIZ, { count, tags });   // <- aquí viajan los D1, D2…
+          setQuizActive(true);           // bloquea botón inmediatamente
+          window.start(QUIZ, { count, tags });
+          scrollToQuiz();                // baja a la zona de quiz
         }else{
+          setQuizActive(false);
           alert('Motor de simulador no cargado.');
         }
       });

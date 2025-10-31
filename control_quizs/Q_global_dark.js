@@ -19,8 +19,9 @@
 
 (() => {
 /* ===================== CONFIG ===================== */
-const API_URL = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-const PROGRESS_URL = `${API_URL}/progress`;
+const API_URL     = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+const PROGRESS_URL= `${API_URL}/progress`;
+const RESULTS_URL = `${API_URL}/results`;          // <-- NUEVO: endpoint de resultados
 
 /* ===================== ESTADO ===================== */
 const S = {
@@ -48,6 +49,9 @@ const S = {
   hasInitialUpsert: false,
   loading: false,
   finished: false,
+
+  // guardado de resultados
+  savingResult: false,
 };
 let __SEQ = 0;
 
@@ -117,7 +121,7 @@ const QUIZZES = {
   .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#fff; border-color:transparent; }
   .btn:disabled{ opacity:.6; filter:grayscale(.2); cursor:not-allowed; }
 
-  /* Keycaps para atajos */
+  /* Keycaps para atajos visibles */
   .keycap{
     display:inline-flex; align-items:center; justify-content:center;
     min-width:1.4em; height:1.4em; padding:0 .4em; margin-left:.45em;
@@ -240,7 +244,7 @@ function filterByDomains(all, tags){
   });
 }
 
-/* ===================== Usuario / progreso ===================== */
+/* ===================== Usuario / progreso / resultados ===================== */
 function getUserAny(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
 async function upsertProgress(payload){
   try{
@@ -250,7 +254,7 @@ async function upsertProgress(payload){
 }
 function computePct(){ let c=0,t=S.qs.length; for(let i=0;i<t;i++){ if(S.answers[i]===S.qs[i]._correct) c++; } return t?Math.round((c/t)*100):0; }
 function buildMarkedItems(){ const list=[]; const now=new Date().toISOString(); S.qs.forEach((q,i)=>{ if(S.marked[i]) list.push({index:i,questionId:q.questionId,domain:q.domain,markedAt:S.markTimes[i]||now}); }); return list; }
-function buildBank(){ return S.qs.map((q,i)=>({index:i,questionId:q.questionId,domain:q.domain,optionsShown:q._options.slice(),correctShownIndex:q._correct,optOrder:q._optOrder.slice()})); }
+function buildBank(){ return S.qs.map((q,i)=>({index:i,questionId:q.questionId,domain:q.domain,optionsShown:(q._options||[]).slice(),correctShownIndex:(typeof q._correct==='number'?q._correct:null),optOrder:Array.isArray(q._optOrder)?q._optOrder.slice():null})); }
 function saveProgress({full=false,finished=false,reason='auto'}={}){
   if(S.saveDebounce) clearTimeout(S.saveDebounce);
   S.saveDebounce=setTimeout(()=> {
@@ -267,6 +271,69 @@ function saveProgress({full=false,finished=false,reason='auto'}={}){
     if(full || !S.hasInitialUpsert) payload.questionBank = buildBank();
     upsertProgress(payload); S.hasInitialUpsert=true;
   }, 300);
+}
+
+/* ======= Resultados: guardar en /results (form-encoded y fallback JSON) ======= */
+function genResultId(r){
+  const base=[r.quizId||'quiz', r.mode||'exam', r.total||0, r.correct||0, r.durationSec||0].join('|');
+  const t=Math.floor(Date.now()/10000);
+  return `${base}|${t}`;
+}
+async function postForm(url, payload){
+  const body=new URLSearchParams();
+  Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
+  const resp=await fetch(url,{
+    method:"POST",
+    mode:"cors",
+    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+    body
+  });
+  const text=await resp.text().catch(()=> "");
+  let data=null; try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
+  if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
+  return data;
+}
+async function postJSON(url,payload){
+  const resp=await fetch(url,{
+    method:"POST",
+    mode:"cors",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify(payload)
+  });
+  const text=await resp.text().catch(()=> "");
+  let data=null; try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
+  if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
+  return data;
+}
+async function saveResultRemoteOnce(result){
+  if(S.savingResult) return null;
+  S.savingResult = true;
+  const u=getUserAny()||{};
+  const payload={
+    resultId: genResultId(result),
+    userId: u.userId||u.id||"anon",
+    userName: u.name||u.displayName||"anonymous",
+    email: u.email||"",
+    quizId: result.quizId,
+    track: result.track||"architect",
+    mode: result.mode||"exam",
+    total: Number(result.total||0),
+    correct: Number(result.correct||0),
+    pct: Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
+    durationSec: Number(result.durationSec||0),
+    ts: result.ts || new Date().toISOString(),
+    sessionId: S.sessionId || "",
+  };
+  try {
+    // muchos backends nuestros esperan x-www-form-urlencoded
+    return await postForm(RESULTS_URL, payload);
+  } catch(e1){
+    console.warn("Form submit failed, trying JSON:", e1?.message||e1);
+    try { return await postJSON(RESULTS_URL, payload); }
+    catch(e2){ console.error("Result save failed:", e2); return null; }
+  } finally {
+    S.savingResult=false;
+  }
 }
 
 /* ===================== Timer ===================== */
@@ -507,6 +574,18 @@ async function finish(){
   for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
 
+  const result={
+    ts:new Date().toISOString(),
+    quizId:S.quizId, track:S.track||'architect', mode:S.mode||'exam',
+    total, correct, pct,
+    durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
+  };
+
+  // Guardar progreso final + resultado en BD
+  saveProgress({finished:true,reason:'finish'});
+  await saveResultRemoteOnce(result);   // <-- AQUÍ se manda a /results
+
+  // Modal de resumen
   const bd=h('div',{class:'qg-backdrop',style:'position:fixed;inset:0;background:rgba(10,12,24,.65);display:flex;align-items:center;justify-content:center;z-index:2147483000'});
   const m=h('div',{class:'qg-modal',style:'max-width:680px;width:100%;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:20px;color:var(--ink)'});
   m.appendChild(h('h3',{html:'Resultados del examen'}));
@@ -517,8 +596,6 @@ async function finish(){
   acts.appendChild(btnP); acts.appendChild(btnR); m.appendChild(acts); bd.appendChild(m);
   bd.addEventListener('click',e=>{ if(e.target===bd){ try{document.body.removeChild(bd);}catch{} }});
   document.body.appendChild(bd);
-
-  saveProgress({finished:true,reason:'finish'});
 }
 
 /* ===================== Hotkeys ===================== */
