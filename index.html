@@ -331,104 +331,134 @@
     </div>
   </section>
 
-  <!-- ===== Centro de contenidos ===== -->
-  <section id="contenidos">
-    <div class="container">
-      <div class="sec-title">CONTENIDO CLAVE POR CERTIFICACIÓN</div>
-      <div class="muted">Solo lo esencial: resúmenes rápidos, hojas de trucos y guías prácticas enfocadas en el examen.</div>
+<!-- ===== Centro de contenidos ===== -->
+<section id="contenidos">
+  <div class="container">
+    <div class="sec-title">CONTENIDO CLAVE POR CERTIFICACIÓN</div>
+    <div class="muted">Solo lo esencial: resúmenes rápidos, hojas de trucos y guías prácticas enfocadas en el examen.</div>
 
-      <div class="filter-bar">
-        <label for="examSelect">Selecciona Certificación:</label>
-        <select id="examSelect">
-          <option value="all">TODAS</option>
-          <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
-          <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
-        </select>
-      </div>
-
-      <!-- Carrusel 2×3 -->
-      <div class="carousel">
-        <button class="car-btn car-prev" aria-label="Anterior">‹</button>
-        <div class="track" id="contentTrack">
-          <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Guía rápida: VNet Peering vs. VPN Gateway</strong></div>
-            <p class="muted">Entiende cuándo usar peering y cuándo optar por VPN…</p>
-            <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
-              <a class="tiny-btn" href="content/vnet-peering-vpn.html">Leer</a>
-            </div>
-          </article>
-
-          <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Checklist de seguridad para suscripciones Azure</strong></div>
-            <p class="muted">15 puntos accionables para endurecer tu postura…</p>
-            <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
-              <a class="tiny-btn" href="content/azure-security-checklist.html">Leer</a>
-            </div>
-          </article>
-
-          <article class="card slide" data-exam="mixed">
-            <div class="cc-head"><strong>Backup inmutable: patrón de ciberrecuperación</strong></div>
-            <p class="muted">Cómo diseñar un vault y una landing zone…</p>
-            <div class="cc-meta">
-              <span class="grow">
-                <span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span> ·
-                <span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span>
-              </span>
-              <a class="tiny-btn" href="content/immutable-backup-cyberrecovery.html">Leer</a>
-            </div>
-          </article>
-
-          <article class="card slide" data-exam="aws-saa-c03">
-            <div class="cc-head"><strong>Alta disponibilidad en VPC: patrones prácticos</strong></div>
-            <p class="muted">Subredes por AZ, NATs, balanceo y resiliencia para SAA-C03.</p>
-            <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
-              <a class="tiny-btn" href="content/aws-vpc-ha.html">Leer</a>
-            </div>
-          </article>
-
-          <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Azure Storage: operación y seguridad</strong></div>
-            <p class="muted">Acceso RBAC/SAS, replicación y WORM para datos críticos.</p>
-            <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
-              <a class="tiny-btn" href="content/azure-storage-az104.html">Leer</a>
-            </div>
-          </article>
-
-          <article class="card slide" data-exam="az-104">
-            <div class="cc-head"><strong>Conectividad híbrida en Azure</strong></div>
-            <p class="muted">VPN, ExpressRoute, BGP y hub-spoke con seguridad.</p>
-            <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
-              <a class="tiny-btn" href="content/azure-hybrid-connectivity-az305.html">Leer</a>
-            </div>
-          </article>
-
-          <article class="card slide" data-exam="aws-saa-c03">
-            <div class="cc-head"><strong>S3: seguridad, durabilidad y rendimiento</strong></div>
-            <p class="muted">Políticas mínimas, KMS, lifecycle y endpoints privados.</p>
-            <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
-              <a class="tiny-btn" href="content/aws-s3-design-saac03.html">Leer</a>
-            </div>
-          </article>
-
-          <article class="card slide" data-exam="aws-saa-c03">
-            <div class="cc-head"><strong>Patrones con SQS y SNS</strong></div>
-            <p class="muted">Fanout, FIFO, DLQ y eventos resilientes.</p>
-            <div class="cc-meta">
-              <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
-              <a class="tiny-btn" href="content/aws-sqs-sns-patterns.html">Leer</a>
-            </div>
-          </article>
-        </div>
-        <button class="car-btn car-next" aria-label="Siguiente">›</button>
-      </div>
+    <div class="filter-bar">
+      <label for="examSelect">Selecciona Certificación:</label>
+      <select id="examSelect">
+        <option value="all">TODAS</option>
+        <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
+        <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
+      </select>
     </div>
-  </section>
+
+    <!-- Carrusel 2×3 -->
+    <div class="carousel">
+      <button class="car-btn car-prev" aria-label="Anterior">‹</button>
+      <div class="track" id="contentTrack">
+        
+        <article class="card slide" data-exam="az-104">
+          <div class="cc-head">🌐 <strong>VNet Peering vs. VPN Gateway</strong></div>
+          <p class="muted">
+            Aprende cuándo usar <strong>VNet Peering</strong> para baja latencia y cuándo elegir <strong>VPN Gateway</strong> 
+            para cifrado y conectividad híbrida. Incluye topologías <em>hub-spoke</em> y buenas prácticas de examen.
+          </p>
+          <div class="cc-meta">
+            <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+            <a class="tiny-btn" href="content/vnet-peering-vpn.html">Leer</a>
+          </div>
+        </article>
+
+        <article class="card slide" data-exam="az-104">
+          <div class="cc-head">🔐 <strong>Checklist de seguridad Azure</strong></div>
+          <p class="muted">
+            Revisa <strong>RBAC mínimo</strong>, <strong>MFA</strong>, <strong>PIM</strong>, <strong>Azure Policy</strong> 
+            y <strong>Defender for Cloud</strong> para reforzar la seguridad. Alineado con los dominios principales del examen AZ-104.
+          </p>
+          <div class="cc-meta">
+            <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+            <a class="tiny-btn" href="content/azure-security-checklist.html">Leer</a>
+          </div>
+        </article>
+
+        <article class="card slide" data-exam="mixed">
+          <div class="cc-head">💾 <strong>Backup inmutable y recuperación</strong></div>
+          <p class="muted">
+            Diseña un <strong>vault WORM</strong> con aislamiento, cuentas separadas y <em>drills</em> de prueba. 
+            Comparativa Azure-AWS para proteger copias críticas frente a ransomware y ataques internos.
+          </p>
+          <div class="cc-meta">
+            <span class="grow">
+              <span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span> ·
+              <span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span>
+            </span>
+            <a class="tiny-btn" href="content/immutable-backup-cyberrecovery.html">Leer</a>
+          </div>
+        </article>
+
+        <article class="card slide" data-exam="aws-saa-c03">
+          <div class="cc-head">🏗️ <strong>Alta disponibilidad en VPC</strong></div>
+          <p class="muted">
+            Crea VPC resilientes con <strong>subredes multi-AZ</strong>, <strong>Auto Scaling</strong>, 
+            <strong>ALB</strong> y <strong>NAT Gateway</strong> redundantes. Diseños y errores comunes que suelen aparecer en SAA-C03.
+          </p>
+          <div class="cc-meta">
+            <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
+            <a class="tiny-btn" href="content/aws-vpc-ha.html">Leer</a>
+          </div>
+        </article>
+
+        <article class="card slide" data-exam="az-104">
+          <div class="cc-head">🗂️ <strong>Azure Storage: claves rápidas</strong></div>
+          <p class="muted">
+            Domina <strong>SAS</strong>, <strong>RBAC</strong> y <strong>replicación LRS-GZRS</strong>. 
+            Configura <strong>inmutabilidad</strong>, <strong>Private Endpoints</strong> y cifrado <strong>CMK</strong> 
+            para aprobar el dominio de almacenamiento.
+          </p>
+          <div class="cc-meta">
+            <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+            <a class="tiny-btn" href="content/azure-storage-az104.html">Leer</a>
+          </div>
+        </article>
+
+        <article class="card slide" data-exam="az-104">
+          <div class="cc-head">🔗 <strong>Conectividad híbrida en Azure</strong></div>
+          <p class="muted">
+            Configura <strong>VPN S2S</strong> y <strong>ExpressRoute</strong> con <strong>BGP</strong>. 
+            Diseña <em>hub-spoke</em> seguros con <strong>Azure Firewall</strong> y <strong>DNS privado</strong> para entornos híbridos.
+          </p>
+          <div class="cc-meta">
+            <span class="grow"><span class="prov-pill prov-azure">AZURE</span><span>AZ-104</span></span>
+            <a class="tiny-btn" href="content/azure-hybrid-connectivity-az305.html">Leer</a>
+          </div>
+        </article>
+
+        <article class="card slide" data-exam="aws-saa-c03">
+          <div class="cc-head">📦 <strong>S3: seguridad y rendimiento</strong></div>
+          <p class="muted">
+            Asegura buckets con <strong>bloqueo público</strong>, <strong>SSE-KMS</strong>, 
+            <strong>versionado</strong> y políticas IAM. Optimiza rendimiento con multipart upload y <strong>Transfer Acceleration</strong>.
+          </p>
+          <div class="cc-meta">
+            <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
+            <a class="tiny-btn" href="content/aws-s3-design-saac03.html">Leer</a>
+          </div>
+        </article>
+
+        <article class="card slide" data-exam="aws-saa-c03">
+          <div class="cc-head">📨 <strong>Patrones con SQS y SNS</strong></div>
+          <p class="muted">
+            Diseña colas <strong>FIFO</strong> y <strong>DLQ</strong> con <strong>SNS fan-out</strong> para 
+            microservicios asíncronos. Usa reintentos, filtros y desacople efectivo entre productores y consumidores.
+          </p>
+          <div class="cc-meta">
+            <span class="grow"><span class="prov-pill prov-aws">AWS</span><span>SAA-C03</span></span>
+            <a class="tiny-btn" href="content/aws-sqs-sns-patterns.html">Leer</a>
+          </div>
+        </article>
+
+      </div>
+      <button class="car-btn car-next" aria-label="Siguiente">›</button>
+    </div>
+  </div>
+</section>
+
+
+
 
   <!-- ===== Pie ===== -->
   <footer>
