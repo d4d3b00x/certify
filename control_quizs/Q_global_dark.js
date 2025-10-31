@@ -21,7 +21,7 @@
 /* ===================== CONFIG ===================== */
 const API_URL     = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
 const PROGRESS_URL= `${API_URL}/progress`;
-const RESULTS_URL = `${API_URL}/results`;          // <-- NUEVO: endpoint de resultados
+const RESULTS_URL = `${API_URL}/results`;
 
 /* ===================== ESTADO ===================== */
 const S = {
@@ -50,8 +50,10 @@ const S = {
   loading: false,
   finished: false,
 
-  // guardado de resultados
   savingResult: false,
+
+  /* scroll objetivo tras render */
+  _afterRenderScroll: null
 };
 let __SEQ = 0;
 
@@ -61,10 +63,12 @@ const QUIZZES = {
   "aws-saa-c03": {
     track: "architect",
     certi: "AWS Certified Solutions Architect — Associate (SAA-C03)",
+    domNames: { D1:"Diseño seguro", D2:"Resiliencia", D3:"Alto rendimiento", D4:"Optimización de coste" }
   },
   "az-104": {
     track: "az-104-architect",
     certi: "Microsoft Azure Administrator — Associate (AZ-104)",
+    domNames: { D1:"Identidades y gobierno", D2:"Almacenamiento", D3:"Cómputo", D4:"Redes", D5:"Monitorización" }
   },
 };
 
@@ -121,14 +125,6 @@ const QUIZZES = {
   .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#fff; border-color:transparent; }
   .btn:disabled{ opacity:.6; filter:grayscale(.2); cursor:not-allowed; }
 
-  /* Keycaps para atajos visibles */
-  .keycap{
-    display:inline-flex; align-items:center; justify-content:center;
-    min-width:1.4em; height:1.4em; padding:0 .4em; margin-left:.45em;
-    border:1px solid #3a447a; border-bottom-width:2px; border-radius:6px;
-    background:#0f1630; color:#cfe0ff; font-weight:900; font-size:.85em; line-height:1;
-  }
-
   .side .panel{ background:var(--surface); border:1px solid var(--stroke); border-radius:16px; padding:16px; margin-bottom:14px; }
   .side h3{ margin:.2rem 0 .6rem; }
 
@@ -136,7 +132,7 @@ const QUIZZES = {
   .dot{ display:flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:999px;
         border:2px solid var(--stroke); background:var(--surface2); cursor:pointer; font-weight:900; color:#e8ecff; }
   .dot.current{ outline:3px solid var(--accent-ring); }
-  .dot.ok{ background:var(--ok-bg); border-color:#2e7a5a; color:var(--ok-ink); }
+  .dot.ok{ background:var(--ok-bg); border-color:#2e7a5a; color:#ok-ink; }
   .dot.bad{ background:#2a1216; border-color:#7a2e38; color:#ffc1c1; }
   .dot.marked{ background:var(--mark-bg)!important; border-color:#b49422!important; color:#ffeaa3!important; outline:3px solid var(--mark-ring); }
 
@@ -163,8 +159,15 @@ function toast(msg, ms = 1600) { let t = document.querySelector(".toast"); if (!
 function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}
 const uuid = () => "s-" + Math.random().toString(16).slice(2) + Date.now().toString(36);
 
-/* keycap helper */
-const keycap = (txt) => `<span class="keycap" aria-hidden="true">${txt}</span>`;
+/* scroll con offset por header sticky */
+function smartScrollTo(el, align='start'){
+  if(!el) return;
+  const rect = el.getBoundingClientRect();
+  const header = document.querySelector('header');
+  const offset = (header ? header.offsetHeight : 0) + 10;
+  const top = rect.top + window.scrollY - (align==='center' ? window.innerHeight/2 - rect.height/2 : offset);
+  window.scrollTo({ top, behavior: 'smooth' });
+}
 
 /* ===================== Tema ===================== */
 function applyTheme(quizId){
@@ -273,7 +276,7 @@ function saveProgress({full=false,finished=false,reason='auto'}={}){
   }, 300);
 }
 
-/* ======= Resultados: guardar en /results (form-encoded y fallback JSON) ======= */
+/* ======= Resultados: guardar en /results ======= */
 function genResultId(r){
   const base=[r.quizId||'quiz', r.mode||'exam', r.total||0, r.correct||0, r.durationSec||0].join('|');
   const t=Math.floor(Date.now()/10000);
@@ -282,24 +285,14 @@ function genResultId(r){
 async function postForm(url, payload){
   const body=new URLSearchParams();
   Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
-  const resp=await fetch(url,{
-    method:"POST",
-    mode:"cors",
-    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-    body
-  });
+  const resp=await fetch(url,{method:"POST",mode:"cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body});
   const text=await resp.text().catch(()=> "");
   let data=null; try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
   if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
   return data;
 }
 async function postJSON(url,payload){
-  const resp=await fetch(url,{
-    method:"POST",
-    mode:"cors",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify(payload)
-  });
+  const resp=await fetch(url,{method:"POST",mode:"cors",headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
   const text=await resp.text().catch(()=> "");
   let data=null; try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
   if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
@@ -324,16 +317,12 @@ async function saveResultRemoteOnce(result){
     ts: result.ts || new Date().toISOString(),
     sessionId: S.sessionId || "",
   };
-  try {
-    // muchos backends nuestros esperan x-www-form-urlencoded
-    return await postForm(RESULTS_URL, payload);
+  try { return await postForm(RESULTS_URL, payload);
   } catch(e1){
     console.warn("Form submit failed, trying JSON:", e1?.message||e1);
     try { return await postJSON(RESULTS_URL, payload); }
     catch(e2){ console.error("Result save failed:", e2); return null; }
-  } finally {
-    S.savingResult=false;
-  }
+  } finally { S.savingResult=false; }
 }
 
 /* ===================== Timer ===================== */
@@ -387,9 +376,15 @@ async function start(quizId="aws-saa-c03", overrides={}){
     S.sessionId = uuid();
 
     applyTheme(quizId);
+    S._afterRenderScroll = 'question';
     renderQuiz();
     startTimer();
     saveProgress({full:true,reason:'start'});
+
+    // Evento para la página + scroll inmediato
+    window.dispatchEvent(new Event('quiz:started'));
+    const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
+    smartScrollTo(qCard,'start');
 
     toast(`Cargadas ${S.qs.length}${tags.length?` • Dominios: ${tags.join(', ')}`:''}`, 1800);
   }catch(e){
@@ -460,6 +455,8 @@ function renderQuiz(){
   head.appendChild(meta); qCard.appendChild(head);
 
   const q=S.qs[S.idx];
+  let expBox = null;
+
   if(!q){
     qCard.appendChild(h('div',{html:'No hay preguntas que mostrar.'}));
   }else{
@@ -482,24 +479,24 @@ function renderQuiz(){
 
     const chosen=S.answers[S.idx];
     if(typeof chosen!=='undefined' && S.prefs.explanations==='after'){
-      const box=h('div',{class:'expl'});
+      expBox=h('div',{class:'expl'});
       const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
-      box.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
-      qCard.appendChild(box);
+      expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
+      qCard.appendChild(expBox);
     }
   }
 
-  // Controles inferiores (con atajos visibles)
+  // Controles inferiores
   const ctr=h('div',{class:'controls'});
-  const back=h('button',{class:'btn',html:`Atrás ${keycap('B')}`, title:'Atrás (B)'}); back.disabled=S.idx===0;
-  back.onclick=()=>{ S.idx=Math.max(0,S.idx-1); saveProgress({reason:'nav'}); renderQuiz(); };
+  const back=h('button',{class:'btn',html:`Atrás <span class="keycap">B</span>`, title:'Atrás (B)'}); back.disabled=S.idx===0;
+  back.onclick=()=>{ S.idx=Math.max(0,S.idx-1); S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); };
 
-  const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} ${keycap('M')}`, title:'Marcar (M)'});
+  const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} <span class="keycap">M</span>`, title:'Marcar (M)'});
   mark.onclick=()=>{ S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; saveProgress({reason:'mark'}); renderQuiz(); };
 
-  const nextLabel = S.idx===S.qs.length-1 ? `Finalizar ${keycap('N')}` : `Siguiente ${keycap('N')}`;
+  const nextLabel = S.idx===S.qs.length-1 ? `Finalizar <span class="keycap">N</span>` : `Siguiente <span class="keycap">N</span>`;
   const next=h('button',{class:'btn primary',html:nextLabel, title:'Siguiente (N) / Finalizar (N)'});
-  next.onclick=()=>{ if(S.idx===S.qs.length-1){ if(hasPendingMarked()){ toast('No puedes finalizar: hay preguntas marcadas sin responder.'); return; } return finish(); } S.idx++; saveProgress({reason:'nav'}); renderQuiz(); };
+  next.onclick=()=>{ if(S.idx===S.qs.length-1){ if(hasPendingMarked()){ toast('No puedes finalizar: hay preguntas marcadas sin responder.'); return; } return finish(); } S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); };
   if(S.idx===S.qs.length-1 && hasPendingMarked()) next.disabled=true;
 
   ctr.appendChild(back); ctr.appendChild(mark); ctr.appendChild(next);
@@ -508,18 +505,14 @@ function renderQuiz(){
   // Sidebar
   const side=h('div',{class:'side'});
 
-  // Acciones (centrado y grande) con atajos
   const pBtns=h('div',{class:'panel'});
   const actions=h('div',{class:'controls centered'});
   const btnQuit=h('button',{class:'btn lg',html:'🏠 Salir', title:'Ir al perfil'});
   btnQuit.onclick=()=>{ saveProgress({reason:'quit'}); location.href='/user/profile.html'; };
-
-  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar ${keycap('P')}`, title:'Pausar (P)'});
+  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar <span class="keycap">P</span>`, title:'Pausar (P)'});
   btnPause.onclick=()=>{ doPause(); };
-
   actions.appendChild(btnQuit); actions.appendChild(btnPause); pBtns.appendChild(actions); side.appendChild(pBtns);
 
-  // Lista de preguntas
   const pList=h('div',{class:'panel'});
   pList.appendChild(h('h3',{html:'LISTA DE PREGUNTAS'}));
   const dots=h('div',{class:'list-dots',title:'Haz clic para saltar'});
@@ -529,21 +522,31 @@ function renderQuiz(){
     const ans=S.answers[i];
     if(typeof ans!=='undefined'){ if(ans===qq._correct) d.classList.add('ok'); else d.classList.add('bad'); }
     if(S.marked[i]){ d.classList.add('marked'); if(typeof ans==='undefined') d.classList.add('unanswered'); }
-    d.onclick=()=>{ S.idx=i; saveProgress({reason:'jump'}); renderQuiz(); };
+    d.onclick=()=>{ S.idx=i; S._afterRenderScroll='question'; saveProgress({reason:'jump'}); renderQuiz(); };
     dots.appendChild(d);
   });
   pList.appendChild(dots); side.appendChild(pList);
 
-  // Leyenda de dominios
   const pLegend=h('div',{class:'panel'});
   renderLegend(pLegend); side.appendChild(pLegend);
 
-  // Montaje
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
 
   kpis(wrap);
   enableHotkeys();
+
+  // ===== Scroll post-render =====
+  if (S._afterRenderScroll === 'explanation') {
+    const target = expBox || ctr;
+    smartScrollTo(target || qCard, 'start');
+  } else if (S._afterRenderScroll === 'question') {
+    smartScrollTo(qCard, 'start');
+  }
+  S._afterRenderScroll = null;
+
+  // avisar a la página de que se ha renderizado
+  window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
 }
 
 /* ===================== Helpers ===================== */
@@ -557,6 +560,7 @@ function hasPendingMarked(){
 function onSelect(i){
   if(typeof S.answers[S.idx]!=='undefined') return;
   S.answers[S.idx]=i;
+  S._afterRenderScroll='explanation';      // <- al elegir, baja a la explicación/respuesta
   saveProgress({reason:'answer'});
   renderQuiz();
 }
@@ -574,6 +578,16 @@ async function finish(){
   for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
 
+  // desglose por dominio
+  const cfg = QUIZZES[S.quizId] || {};
+  const byDomain = {};
+  S.qs.forEach((q,idx)=>{
+    const code = q.domain || 'D?';
+    if(!byDomain[code]) byDomain[code] = { name: (cfg.domNames && cfg.domNames[code]) || code, correct:0, total:0 };
+    byDomain[code].total++;
+    if(S.answers[idx]===q._correct) byDomain[code].correct++;
+  });
+
   const result={
     ts:new Date().toISOString(),
     quizId:S.quizId, track:S.track||'architect', mode:S.mode||'exam',
@@ -581,21 +595,29 @@ async function finish(){
     durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
   };
 
-  // Guardar progreso final + resultado en BD
   saveProgress({finished:true,reason:'finish'});
-  await saveResultRemoteOnce(result);   // <-- AQUÍ se manda a /results
+  await saveResultRemoteOnce(result);
 
-  // Modal de resumen
-  const bd=h('div',{class:'qg-backdrop',style:'position:fixed;inset:0;background:rgba(10,12,24,.65);display:flex;align-items:center;justify-content:center;z-index:2147483000'});
-  const m=h('div',{class:'qg-modal',style:'max-width:680px;width:100%;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:20px;color:var(--ink)'});
-  m.appendChild(h('h3',{html:'Resultados del examen'}));
-  m.appendChild(h('div',{html:`<div style="display:flex;gap:10px;justify-content:space-between;background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:10px 12px;margin-top:8px"><strong>Puntuación</strong><span>${correct}/${total} (${pct}%)</span></div>`}));
-  const acts=h('div',{class:'controls',style:'justify-content:flex-end'});
-  const btnP=h('button',{class:'btn',html:'👤 Perfil'}); btnP.onclick=()=>{ try{document.body.removeChild(bd);}catch{} location.href='/user/profile.html'; };
-  const btnR=h('button',{class:'btn primary',html:'🔁 Revisar'}); btnR.onclick=()=>{ try{document.body.removeChild(bd);}catch{} };
-  acts.appendChild(btnP); acts.appendChild(btnR); m.appendChild(acts); bd.appendChild(m);
-  bd.addEventListener('click',e=>{ if(e.target===bd){ try{document.body.removeChild(bd);}catch{} }});
-  document.body.appendChild(bd);
+  // Emitir eventos para la UI
+  window.dispatchEvent(new Event('quiz:ended'));
+  window.dispatchEvent(new CustomEvent('quiz:results', {
+    detail: { score: correct, total, byDomain }
+  }));
+
+  // Modal básico (fallback) si la página no muestra el suyo
+  setTimeout(()=>{
+    if (document.querySelector('#quizResultModal')) return; // la página tiene su modal
+    const bd=h('div',{class:'qg-backdrop',style:'position:fixed;inset:0;background:rgba(10,12,24,.65);display:flex;align-items:center;justify-content:center;z-index:2147483000'});
+    const m=h('div',{class:'qg-modal',style:'max-width:680px;width:100%;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:20px;color:var(--ink)'});
+    m.appendChild(h('h3',{html:'Resultados del examen'}));
+    m.appendChild(h('div',{html:`<div style="display:flex;gap:10px;justify-content:space-between;background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:10px 12px;margin-top:8px"><strong>Puntuación</strong><span>${correct}/${total} (${pct}%)</span></div>`}));
+    const acts=h('div',{class:'controls',style:'justify-content:flex-end'});
+    const btnP=h('button',{class:'btn',html:'👤 Perfil'}); btnP.onclick=()=>{ try{document.body.removeChild(bd);}catch{} location.href='/user/profile.html'; };
+    const btnR=h('button',{class:'btn primary',html:'🔁 Revisar'}); btnR.onclick=()=>{ try{document.body.removeChild(bd);}catch{} };
+    acts.appendChild(btnP); acts.appendChild(btnR); m.appendChild(acts); bd.appendChild(m);
+    bd.addEventListener('click',e=>{ if(e.target===bd){ try{document.body.removeChild(bd);}catch{} }});
+    document.body.appendChild(bd);
+  }, 50);
 }
 
 /* ===================== Hotkeys ===================== */
@@ -611,9 +633,9 @@ function enableHotkeys(){
     if(ev.key==='n'||ev.key==='N'){
       ev.preventDefault();
       if(S.idx===S.qs.length-1){ if(hasPendingMarked()) { toast('No puedes finalizar: marcadas sin responder.'); return; } finish(); }
-      else{ S.idx++; saveProgress({reason:'nav-key'}); renderQuiz(); }
+      else{ S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav-key'}); renderQuiz(); }
     }
-    if(ev.key==='b'||ev.key==='B'){ ev.preventDefault(); if(S.idx>0){ S.idx--; saveProgress({reason:'nav-key'}); renderQuiz(); } }
+    if(ev.key==='b'||ev.key==='B'){ ev.preventDefault(); if(S.idx>0){ S.idx--; S._afterRenderScroll='question'; saveProgress({reason:'nav-key'}); renderQuiz(); } }
     if(ev.key==='m'||ev.key==='M'){ ev.preventDefault(); S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; saveProgress({reason:'mark-key'}); renderQuiz(); }
     const n=parseInt(ev.key,10);
     if(Number.isInteger(n)&&n>=1&&n<=9){ const q=S.qs[S.idx]; if(q&&q._options&&q._options[n-1]!==undefined){ ev.preventDefault(); onSelect(n-1); } }
@@ -621,5 +643,5 @@ function enableHotkeys(){
 }
 
 /* ===================== API PÚBLICA ===================== */
-window.start = start; // <- MUY IMPORTANTE: evita el “simulador no cargado”
+window.start = start;
 })();
