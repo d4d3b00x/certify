@@ -11,16 +11,15 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CertifyLab — Ranking global</title>
+  <title>IT Hub .es — Ranking</title>
   <link rel="stylesheet" href="/style_global.css"/>
   <style>
     :root{
-      /* Paleta base (index) */
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
       --stroke:#283056; --brand:#6c8bff; --radius:14px; --shadow:0 12px 28px rgba(6,12,40,.45);
-      /* Acentos por proveedor */
-      --aws:#ff9900; --azure:#0078d4;
-      --aws-2:#ffb84d; --azure-2:#5fb3ff;
+      --aws:#ff9900; --azure:#0078d4; --aws-2:#ffb84d; --azure-2:#5fb3ff;
+      --violet:#7b5cff; --violet-2:#6246ff;
+      --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
@@ -36,21 +35,34 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    /* ===== Header igual que index ===== */
+    /* ===== Header estilo captura ===== */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
       border-bottom:1px solid var(--stroke)}
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
-    .dot{width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 6px rgba(108,139,255,.18)}
-    .menu{display:none;gap:18px;color:var(--muted);font-weight:700}
-    .menu a:hover{color:var(--ink)}
-    .actions{display:none;gap:10px;align-items:center}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    .nav{height:56px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
+    .brand .logo{width:22px;height:22px;border-radius:6px;background:linear-gradient(180deg,#7b8cff,#4c66ff);box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    .brand span{opacity:.9}
+    .brand small{opacity:.6;font-weight:800}
+    .menu{display:none;gap:28px;color:var(--muted);font-weight:900;letter-spacing:.04em}
+    .menu a{text-transform:uppercase}
+    .menu a:hover{color:#fff}
+    @media(min-width:720px){.menu{display:flex}}
+
+    .actions{display:flex;align-items:center;gap:10px}
+    .userbox{
+      display:flex;align-items:center;gap:12px;padding:8px 10px 8px 12px;
+      border:1px solid var(--stroke);border-radius:999px;background:rgba(17,23,55,.55)
+    }
+    .userbox .name{font-weight:900;letter-spacing:.02em;opacity:.95}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
       padding:10px 14px;border-radius:12px;border:1px solid var(--stroke);
-      cursor:pointer;font-weight:800;background:transparent;color:var(--ink)}
-    .btn.primary{background:linear-gradient(180deg,#6c8bff,#3e64ff);border:none;box-shadow:var(--shadow);color:#fff}
-    @media(min-width:720px){.menu,.actions{display:flex}}
+      cursor:pointer;font-weight:800;background:transparent;color:var(--ink)
+    }
+    .btn.primary{background:linear-gradient(180deg,var(--violet),var(--violet-2));border:none;box-shadow:var(--shadow);color:#fff}
+    .btn.ghost{background:transparent;border:1px solid var(--stroke)}
+    .btn.equal{min-width:92px}
 
     /* ===== Página ===== */
     .wrap{padding:22px 0 28px}
@@ -58,9 +70,6 @@
       border-radius:16px;padding:18px 18px;box-shadow:var(--shadow)}
     .header-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:6px 0 12px}
     .header-row h2{margin:0;color:#fff;font-size:1.35rem;font-weight:900;letter-spacing:.2px}
-    .hint{color:var(--muted)}
-
-    /* Filtros tipo “pills” */
     .filters{display:flex;gap:8px;flex-wrap:wrap}
     .pill{
       appearance:none;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff;
@@ -70,15 +79,13 @@
 
     .section-title{display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px}
     .section-title h3{margin:0;font-size:1.05rem}
-    .badge{
-      display:inline-block;padding:4px 10px;border-radius:999px;font-weight:800;font-size:.8rem;
-      background:var(--surface2);color:#cbd6ff;border:1px solid var(--stroke)
-    }
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:800;font-size:.8rem;
+      background:var(--surface2);color:#cbd6ff;border:1px solid var(--stroke)}
     .badge.aws{background:rgba(255,153,0,.12);border-color:rgba(255,153,0,.35);color:#ffd9a1}
     .badge.az{background:rgba(0,120,212,.14);border-color:rgba(0,120,212,.35);color:#bcd9ff}
 
     .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:14px;overflow:auto}
-    .rank-table{width:100%;min-width:820px;border-collapse:separate;border-spacing:0}
+    .rank-table{width:100%;min-width:760px;border-collapse:separate;border-spacing:0}
     .rank-table thead th{
       position:sticky;top:0;z-index:1;background:var(--surface2);color:#e8ecff;
       font-weight:800;letter-spacing:.02em;text-align:center;padding:12px 10px;border-bottom:1px solid var(--stroke)
@@ -90,42 +97,54 @@
     .rank-table thead th:last-child{border-top-right-radius:12px}
     .col-rank{width:64px}
     .col-name{text-align:center}
-    .col-quiz{width:160px}
     .col-num{width:110px;font-variant-numeric:tabular-nums}
     .col-date{width:200px}
+    .col-points{width:140px}
 
+    /* Medallas (visibles) */
     .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
     .medal.gold{background:linear-gradient(135deg,#ffd662,#ffb300);box-shadow:0 2px 6px rgba(255,179,0,.35)}
     .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf);box-shadow:0 2px 6px rgba(0,0,0,.12)}
     .medal.bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a);box-shadow:0 2px 6px rgba(0,0,0,.12)}
+
+    /* Nombre destacado y color por medalla */
+    .name-strong{font-weight:900}
+    .name-gold{color:var(--gold)}
+    .name-silver{color:var(--silver)}
+    .name-bronze{color:var(--bronze)}
+
+    /* Chips de puntos: azul solo Top 3, neutro resto */
+    .points-chip{
+      display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;
+      font-weight:900;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff
+    }
+    .points-chip.top{
+      background:linear-gradient(180deg,#6c8bff,#3e64ff);
+      color:#fff;border:none;box-shadow:var(--shadow)
+    }
 
     .pct{display:flex;align-items:center;justify-content:center;gap:8px;font-variant-numeric:tabular-nums;font-weight:800}
     .pbar{position:relative;flex:1 1 120px;height:8px;background:#0a0f25;border-radius:999px;overflow:hidden;max-width:160px}
     .pbar>i{position:absolute;left:0;top:0;bottom:0;width:0%}
     .pbar>i.aws{background:linear-gradient(90deg,var(--aws),var(--aws-2))}
     .pbar>i.az{background:linear-gradient(90deg,var(--azure),var(--azure-2))}
-
     .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface2);color:#e8ecff;border:1px solid var(--stroke);font-weight:700}
-
-    .actions{display:flex;gap:10px;justify-content:center;margin-top:14px}
-    .btn.ghost{background:transparent;border:1px solid var(--stroke)}
-    .btn.equal{min-width:92px} /* para que los dos tengan el mismo ancho visual */
   </style>
 </head>
 <body>
   <!-- Header -->
   <header>
     <div class="container nav">
-      <div class="brand"><span class="dot"></span> CertifyLab</div>
-      <nav class="menu">
-        <a href="/">Home</a>
-        <a href="/#simuladores">Simuladores</a>
-        <a href="/#contenidos">Contenidos</a>
-        <a href="/score/ranking.html">Ranking</a>
-      </nav>
-      <div class="actions" id="navActions">
-        <!-- Se rellena por JS: Login/Crear cuenta o Nombre/Perfil/Salir -->
+      <div class="brand">
+        <i class="logo"></i>
+        <span>IT&nbsp;Hub</span> <small>.es</small>
       </div>
+      <nav class="menu">
+        <a href="/">HOME</a>
+        <a href="/#simuladores">SIMULADORES</a>
+        <a href="/#contenidos">CONTENIDOS</a>
+      </nav>
+      <div class="actions" id="navActions"></div>
     </div>
   </header>
 
@@ -140,13 +159,7 @@
         </div>
       </div>
 
-      <!-- Contenedor de tablas -->
       <div id="container"></div>
-
-      <div class="actions">
-        <button class="btn ghost equal" onclick="history.back()">Volver</button>
-        <button class="btn primary equal" onclick="location.href='/'">Home</button>
-      </div>
     </section>
   </main>
 
@@ -162,14 +175,15 @@
       const box=document.getElementById('navActions');
       const u=getUserAny();
       if(u && (u.name||u.displayName||u.userName)){
-        const name = u.name||u.displayName||u.userName||'Usuario';
+        const name = (u.name||u.displayName||u.userName||'Usuario').toUpperCase();
         box.innerHTML = `
-          <span class="btn" style="gap:6px;opacity:.95">👋 ${name}</span>
-          <a class="btn primary equal" href="/user/profile.html">Perfil</a>
-          <button class="btn ghost equal" id="logoutBtn">Salir</button>
+          <div class="userbox">
+            <span>🔥 <span class="name">${name}</span></span>
+            <a class="btn primary equal" href="/user/profile.html">PERFIL</a>
+            <button class="btn primary equal" id="logoutBtn">SALIR</button>
+          </div>
         `;
-        const lo=document.getElementById('logoutBtn');
-        lo?.addEventListener('click', ()=>{
+        document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
           try{ localStorage.removeItem('currentUser'); localStorage.removeItem('certify_user'); }catch{}
           location.reload();
         });
@@ -182,7 +196,7 @@
     }
     renderHeaderUser();
 
-    /* ======= Ranking logic (oscuro, mismo JS base) ======= */
+    /* ======= Ranking logic ======= */
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const QUIZZES = ["az-104","aws-saa-c03"];
 
@@ -219,16 +233,20 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
       const items = Array.isArray(data.items) ? data.items : [];
-      return items.map(x => ({
-        userId: x.userId || "(unknown)",
-        userName: getName(x),
-        quizId: (x.quizId || "-").toLowerCase(),
-        correct: toInt(x.correct),
-        total: toInt(x.total),
-        pct: toNum(x.pct ?? (x.total ? (toInt(x.correct)/toInt(x.total))*100 : 0)),
-        durationSec: toInt(x.durationSec),
-        ts: x.ts || null
-      }));
+      return items.map(x => {
+        const correct = toInt(x.correct);
+        return {
+          userId: x.userId || "(unknown)",
+          userName: getName(x),
+          quizId: (x.quizId || "-").toLowerCase(),
+          correct,
+          total: toInt(x.total),
+          pct: toNum(x.pct ?? (x.total ? (toInt(x.correct)/toInt(x.total))*100 : 0)),
+          points: correct * 5,                 // PUNTOS
+          durationSec: toInt(x.durationSec),
+          ts: x.ts || null
+        };
+      });
     }
 
     function latest10PerQuizRanked(rows){
@@ -242,9 +260,11 @@
           const durationSafe = (toInt(r.durationSec) > 0) ? toInt(r.durationSec) : Number.MAX_SAFE_INTEGER;
           return { ...r, pct01: pct01(r), timeSafe, durationSafe };
         });
+        // Orden principal por PUNTOS
         byQuiz[q].sort((a,b)=>{
-          if (b.total !== a.total) return b.total - a.total;
+          if (b.points !== a.points) return b.points - a.points;
           if (b.correct !== a.correct) return b.correct - a.correct;
+          if (b.total !== a.total) return b.total - a.total;
           if (a.durationSafe !== b.durationSafe) return a.durationSafe - b.durationSafe;
           return a.timeSafe - b.timeSafe;
         });
@@ -257,6 +277,15 @@
       if (i===1) return `<span class="medal silver">2</span>`;
       if (i===2) return `<span class="medal bronze">3</span>`;
       return String(i+1);
+    }
+    function nameClassByIndex(i){
+      if (i===0) return "name-strong name-gold";
+      if (i===1) return "name-strong name-silver";
+      if (i===2) return "name-strong name-bronze";
+      return "name-strong";
+    }
+    function pointsChipClass(i){
+      return i<3 ? "points-chip top" : "points-chip";
     }
 
     function tableHTML(rows, title, quizId){
@@ -284,8 +313,8 @@
             <thead>
               <tr>
                 <th class="col-rank">#</th>
+                <th class="col-points">Puntos</th>
                 <th class="col-name">Nombre</th>
-                <th class="col-quiz">Quiz</th>
                 <th class="col-num">Correctas</th>
                 <th class="col-num">Total</th>
                 <th class="col-num">Puntuación</th>
@@ -300,8 +329,8 @@
         html += `
           <tr>
             <td class="col-rank">${medalCell(i)}</td>
-            <td class="col-name">${escapeHtml(r.userName)}</td>
-            <td class="col-quiz"><span class="${badgeCls}">${escapeHtml(r.quizId)}</span></td>
+            <td class="col-points"><span class="${pointsChipClass(i)}">⭐ ${r.points}</span></td>
+            <td class="col-name"><span class="${nameClassByIndex(i)}">${escapeHtml(r.userName)}</span></td>
             <td class="col-num">${r.correct}</td>
             <td class="col-num">${r.total}</td>
             <td class="col-num">

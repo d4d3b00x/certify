@@ -130,6 +130,12 @@
     .modal-card h3{margin:0 0 12px;font-size:1.2rem}
     .modal-card textarea, .modal-card input, .modal-card select{width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700}
 
+    /* Estados del feedback */
+    .fb-status{margin-top:8px;font-weight:800}
+    .fb-status.ok{color:var(--ok)}
+    .fb-status.err{color:var(--bad)}
+    .fb-status.info{color:var(--muted)}
+
     /* Quiz */
     .q-meta{display:flex;justify-content:space-between;align-items:center;color:#cbd3ff;font-weight:800;margin:0 0 8px}
     .q-block{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px;overflow:hidden}
@@ -141,12 +147,10 @@
     .opt.correct{border-color:rgba(58,217,122,.7);background:rgba(58,217,122,.07)}
     .opt.wrong{border-color:rgba(255,107,107,.7);background:rgba(255,107,107,.06)}
 
-    /* Meter */
     .meter{position:relative;height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
     .meter > span{position:absolute;left:0;top:0;height:100%;width:0;transition:width .4s ease;display:block;}
     .meter > .m-ok{background:var(--ok)} .meter > .m-warn{background:var(--warn)} .meter > .m-bad{background:var(--bad)}
 
-    /* Footer */
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
@@ -239,7 +243,7 @@
         <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
         <div class="muted">Modo estudio o examen cronometrado. Más simuladores pronto.</div>
 
-        <div class="grid" id="simGrid" role="list"></div>
+        <div class="grid" id="simGrid" role="list"><!-- tarjetas por JS --></div>
       </div>
     </section>
 
@@ -272,7 +276,7 @@
 
             <article class="card slide" data-exam="az-104">
               <div class="cc-head">🔐 <strong>Checklist de seguridad Azure</strong></div>
-              <p class="muted">Revisa <strong>RBAC mínimo</strong>, <strong>MFA</strong>, <strong>PIM</strong>, <strong>Azure Policy</strong> y <strong>Defender for Cloud</strong>.</p>
+              <p class="muted">Revisa <strong>RBAC mínimo</strong>, <strong>MFA</strong>, <strong>PIM</strong>, <strong>Azure Policy</strong> y <strong>Defender for Cloud</strong> para reforzar la seguridad. Alineado con AZ-104.</p>
               <div class="cc-meta">
                 <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
                 <a class="tiny-btn" href="content/azure-security-checklist.html" role="button">Leer</a>
@@ -381,13 +385,18 @@
     <div class="modal-card" role="document" tabindex="-1">
       <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
       <p class="muted" style="margin:0 0 8px">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
-      <label class="visualmente-oculto" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
+
+      <label class="visually-hidden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
       <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
-      <label class="visualmente-oculto" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
+      <label class="visually-hidden" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
       <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
+
+      <div id="fbStatus" class="fb-status" aria-live="polite"></div>
+
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
         <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
         <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
+        <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
       </div>
     </div>
   </div>
@@ -537,7 +546,8 @@
     const track = document.getElementById('contentTrack');
     const allSlides = Array.from(track.querySelectorAll('.slide'));
     const prevBtn = document.querySelector('.car-prev');
-    const nextBtn = document.querySelector('.car-next');
+    theNextBtn = document.querySelector('.car-next'); /* avoid const hoist issue */
+    const nextBtn = theNextBtn;
     const select  = document.getElementById('examSelect');
     const PAGE_SIZE = 6; let page = 0; let filter = 'all';
     function filteredSlides(){ return filter==='all' ? allSlides : allSlides.filter(s => s.dataset.exam === filter || s.dataset.exam === 'mixed'); }
@@ -556,7 +566,7 @@
     nextBtn.addEventListener('click', ()=>{ const total = filteredSlides().length; if((page+1)*PAGE_SIZE < total){ page++; renderCarousel(); }});
     renderCarousel();
 
-    /* ===== Modales (focus trap / abrir-cerrar) ===== */
+    /* ===== Modal helpers ===== */
     const fbModal = document.getElementById('feedbackModal');
     const diagModal = document.getElementById('diagModal');
     let lastFocus = null;
@@ -595,18 +605,38 @@
     const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
     const NOTES_ENDPOINT = `${API_BASE}/items`;
 
+    const fbEmail   = document.getElementById('feedbackEmail');
+    const fbText    = document.getElementById('feedbackText');
+    const fbStatus  = document.getElementById('fbStatus');
+    const btnFbSend = document.getElementById('btnSendFeedback');
+    const btnFbCancel = document.getElementById('btnCancelFeedback');
+    const btnFbOk   = document.getElementById('btnOkFeedback');
+
     document.getElementById('btnFeedback').addEventListener('click',()=>{
-      document.getElementById('feedbackText').value='';
-      document.getElementById('feedbackEmail').value='';
+      fbEmail.value = '';
+      fbText.value  = '';
+      fbStatus.textContent = '';
+      fbStatus.className = 'fb-status';
+      btnFbSend.style.display   = '';
+      btnFbCancel.style.display = '';
+      btnFbOk.style.display     = 'none';
+      fbEmail.disabled = fbText.disabled = false;
+      btnFbSend.disabled = false;
       openModal(fbModal);
     });
-    document.getElementById('btnCancelFeedback').addEventListener('click',()=> closeModal(fbModal));
+    btnFbCancel.addEventListener('click',()=> closeModal(fbModal));
     fbModal.addEventListener('click',e=>{ if(e.target===fbModal) closeModal(fbModal); });
+    btnFbOk.addEventListener('click', ()=> closeModal(fbModal));
 
     document.getElementById('btnSendFeedback').addEventListener('click', async ()=>{
-      const message=(document.getElementById('feedbackText').value||'').trim();
-      const from=(document.getElementById('feedbackEmail').value||'').trim();
-      if(!message){ alert('Por favor, escribe tu sugerencia.'); return; }
+      const message = (fbText.value||'').trim();
+      const from    = (fbEmail.value||'').trim();
+      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; return; }
+
+      fbEmail.disabled = fbText.disabled = true;
+      btnFbSend.disabled = true;
+      fbStatus.textContent = 'Enviando…';
+      fbStatus.className = 'fb-status info';
 
       const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
       const user = getCurrentUser();
@@ -622,35 +652,37 @@
         createdAt: new Date().toISOString()
       };
 
-      // Usamos x-www-form-urlencoded SIN headers → evita preflight
       const params = new URLSearchParams();
       params.set('table','notes');
       params.set('id', id);
       params.set('content', JSON.stringify(note));
 
-      // timeout de seguridad (AbortController)
       const ctl = new AbortController();
-      const t = setTimeout(()=>ctl.abort(), 10000);
+      const timeoutId = setTimeout(()=>ctl.abort(), 10000);
 
       try{
-        const res = await fetch(NOTES_ENDPOINT, {
-          method: 'POST',
-          body: params,
-          signal: ctl.signal
-          // NO PONER headers aquí (el browser pondrá Content-Type adecuado)
-        });
-        clearTimeout(t);
+        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
+        clearTimeout(timeoutId);
 
         if(!res.ok){
-          const text = await res.text().catch(()=>'');
+          const text = await res.text().catch(()=> '');
           throw new Error(`HTTP ${res.status} ${text}`);
         }
 
-        alert('¡Gracias! Hemos recibido correctamente tu feedback. 💜');
-        closeModal(fbModal);
+        fbStatus.textContent = '¡Gracias! Tu feedback se ha guardado correctamente. 👌';
+        fbStatus.className = 'fb-status ok';
+        btnFbSend.style.display   = 'none';
+        btnFbCancel.style.display = 'none';
+        btnFbOk.style.display     = '';
+        btnFbOk.focus();
       }catch(err){
         console.error('Error guardando feedback:', err);
-        alert('No se pudo enviar el feedback :()');
+        fbStatus.textContent = 'No se pudo enviar el feedback. Revisa la consola para más detalles.';
+        fbStatus.className = 'fb-status err';
+        btnFbSend.style.display   = 'none';
+        btnFbCancel.style.display = 'none';
+        btnFbOk.style.display     = '';
+        btnFbOk.focus();
       }
     });
 
@@ -682,7 +714,6 @@
       { exam:"SAA-C03", domain:"Coste y eficiencia", q:"Reducir coste en DynamoDB con tráfico variable:", options:["Provisioned fijo","On-Demand (PAYG)","Índices globales para todo","Auto Scaling deshabilitado"], answerIndex:1 }
     ];
 
-    // UI: Botones diagnóstico
     const diagBtns = document.getElementById('diagBtns');
     function createViewLastBtn(){
       if(document.getElementById('btnViewDiag')) return;
@@ -707,7 +738,6 @@
       if(has) createViewLastBtn();
       else document.getElementById('btnViewDiag')?.remove();
     }
-    // Evaluar al cargar
     maybeAddViewLastBtn();
 
     // Abrir/cerrar modal diagnóstico
@@ -751,9 +781,7 @@
         card.style.background='var(--surface2)'; card.style.border='1px solid var(--stroke)';
         card.style.borderRadius='12px'; card.style.padding='10px';
         card.innerHTML=`<h4 style="margin:0 0 6px;font-size:.95rem">${dom}</h4>
-          <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}" aria-label="Progreso ${dom}">
-            <span class="${cls}" style="width:${p}%"></span>
-          </div>
+          <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}" aria-label="Progreso ${dom}"><span class="${cls}" style="width:${p}%"></span></div>
           <div class="muted" style="margin-top:6px">${stat.correct}/${stat.total} aciertos · ${p}%</div>`;
         container.appendChild(card);
       });
