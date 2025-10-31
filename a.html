@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ITHub — Plan + Contenidos + Modal</title>
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
+      --azure:#0078d4;--aws:#ff9900;
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --cta:linear-gradient(180deg,#6c8bff,#3e64ff);
+      --ok:#3ad97a; --warn:#ffd873; --bad:#ff6b6b;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(180deg,rgba(15,19,32,.86),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke);backdrop-filter:blur(8px)}
+    .container{max-width:1120px;margin:0 auto;padding:0 18px}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .dot{width:10px;height:10px;border-radius:999px;background:#6c8bff;box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+
+    h1{font-size:clamp(1.6rem,4.0vw,2.2rem);margin:14px 0}
+    section{padding:20px 0}
+
+    /* ===== HOW STEPS ===== */
+    .how-grid{display:grid;gap:12px}
+    @media(min-width:820px){.how-grid{grid-template-columns:repeat(4,1fr)}}
+    .how-step{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+    .muted{color:var(--muted)}
+    .pill-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:12px;border:1px solid #3b2fff44;
+      background:var(--cta);color:#fff;font-weight:900;cursor:pointer
+    }
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer}
+
+    /* ===== CONTENTS ===== */
+    .filter-bar{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px}
+    .filter-bar select{background:#0f1630;border:1px solid var(--stroke);border-radius:10px;color:var(--ink);font-weight:800;padding:10px 12px;min-width:260px}
+    .grid{display:grid;gap:12px;margin-top:12px}
+    @media(min-width:820px){.grid{grid-template-columns:repeat(3,1fr)}}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    .cc-head{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px}
+    .prov-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid #ffffff22;font-weight:900}
+    .prov-azure{background:rgba(0,120,212,.16);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
+    .prov-aws{background:rgba(255,153,0,.18);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
+    .tiny-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer}
+    .save-btn{border-color:#b49422;color:#ffec9a}
+
+    /* ===== MODAL ===== */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
+    .modal.show{display:flex}
+    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .tabs{display:flex;gap:8px;margin-bottom:10px}
+    .tab{padding:8px 12px;border-radius:999px;border:1px solid var(--stroke);cursor:pointer;font-weight:900}
+    .tab.on{background:#0f1630;border-color:#45529b}
+    .list{display:grid;gap:10px}
+    .list .row{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--stroke);background:var(--surface2);border-radius:12px;padding:10px}
+    .meter{position:relative;height:8px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
+    .meter>span{position:absolute;left:0;top:0;height:100%;width:0}
+    .m-ok{background:var(--ok)} .m-warn{background:var(--warn)} .m-bad{background:var(--bad)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="dot"></span> ITHub</div>
+      <nav style="color:var(--muted);font-weight:800">Aprende • Practica • Compite</nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- PLAN -->
+    <section>
+      <div class="container">
+        <h1>PLAN PARA APROBAR TU CERTIFICACIÓN IT</h1>
+        <div class="how-grid">
+          <!-- Paso 1 (igual) -->
+          <div class="how-step">
+            <strong>1) Diagnóstico inicial</strong><br>
+            <span class="muted">Mini-test por dominios. Prioriza dónde estudiar.</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <a class="pill-btn" href="#!">Iniciar diagnóstico</a>
+              <a class="btn" href="#!">Ver último resultado</a>
+            </div>
+          </div>
+
+          <!-- Paso 2: Domina lo esencial (con modal y salto a contenidos) -->
+          <div class="how-step">
+            <strong>2) Domina lo esencial</strong><br>
+            <span class="muted">Resúmenes y hojas de trucos por dominio. Solo lo que cae.</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <button class="pill-btn go-content" data-exam="az-104">📘 AZ-104</button>
+              <button class="pill-btn go-content" data-exam="aws-saa-c03">📒 SAA-C03</button>
+              <button class="btn" id="btnOpenNotes">🗂️ Mis apuntes</button>
+            </div>
+          </div>
+
+          <!-- Paso 3: Practicar (enlaces directos) -->
+          <div class="how-step">
+            <strong>3) Practica con propósito</strong><br>
+            <span class="muted">Simulador con explicación y enlaces oficiales.</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <a class="pill-btn" href="/quiz.html?quiz=az-104">🧪 Practicar AZ-104</a>
+              <a class="pill-btn" href="/quiz.html?quiz=aws-saa-c03">🧪 Practicar SAA-C03</a>
+            </div>
+          </div>
+
+          <!-- Paso 4: Ensayo final (deep-link con autostart) -->
+          <div class="how-step">
+            <strong>4) Ensayo final</strong><br>
+            <span class="muted">Modo examen cronometrado. Repite hasta tu objetivo.</span>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <a class="pill-btn" href="/quiz.html?quiz=az-104&count=30&autostart=1">⏱️ Ensayo AZ-104</a>
+              <a class="pill-btn" href="/quiz.html?quiz=aws-saa-c03&count=30&autostart=1">⏱️ Ensayo SAA-C03</a>
+              <a class="btn" href="/score/ranking.html">🏆 Ver ranking</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENIDOS -->
+    <section id="contenidos">
+      <div class="container">
+        <div class="filter-bar">
+          <label for="examSelect"><b>Selecciona Certificación:</b></label>
+          <select id="examSelect">
+            <option value="all">TODAS</option>
+            <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
+            <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
+          </select>
+        </div>
+
+        <div id="contentGrid" class="grid">
+          <!-- Tarjetas ejemplo (puedes cambiarlas por tus reales) -->
+          <article class="card" data-exam="az-104" data-id="vnet-peering">
+            <div class="cc-head">
+              <strong>🔗 VNet Peering vs. VPN Gateway</strong>
+              <span class="prov-pill prov-azure">AZURE</span>
+            </div>
+            <p class="muted">Cuándo usar peering entre VNets y cuándo preferir VPN con BGP para aislar dominios.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a class="tiny-btn read" href="#!">Leer</a>
+              <button class="tiny-btn save-btn save">⭐ Guardar</button>
+            </div>
+          </article>
+
+          <article class="card" data-exam="az-104" data-id="azure-storage">
+            <div class="cc-head">
+              <strong>💾 Azure Storage: seguridad y operación</strong>
+              <span class="prov-pill prov-azure">AZURE</span>
+            </div>
+            <p class="muted">RBAC y SAS, replicación ZRS/GZRS y WORM para datos críticos y auditoría.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a class="tiny-btn read" href="#!">Leer</a>
+              <button class="tiny-btn save-btn save">⭐ Guardar</button>
+            </div>
+          </article>
+
+          <article class="card" data-exam="aws-saa-c03" data-id="vpc-ha">
+            <div class="cc-head">
+              <strong>🛡️ Alta disponibilidad en VPC</strong>
+              <span class="prov-pill prov-aws">AWS</span>
+            </div>
+            <p class="muted">Subredes por AZ, NATs, balanceo y resiliencia. Diseño típico de examen.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a class="tiny-btn read" href="#!">Leer</a>
+              <button class="tiny-btn save-btn save">⭐ Guardar</button>
+            </div>
+          </article>
+
+          <article class="card" data-exam="aws-saa-c03" data-id="s3-security">
+            <div class="cc-head">
+              <strong>🗄️ S3: seguridad y rendimiento</strong>
+              <span class="prov-pill prov-aws">AWS</span>
+            </div>
+            <p class="muted">Políticas mínimas, KMS, lifecycle, multipart y endpoints privados.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a class="tiny-btn read" href="#!">Leer</a>
+              <button class="tiny-btn save-btn save">⭐ Guardar</button>
+            </div>
+          </article>
+
+          <article class="card" data-exam="mixed" data-id="immutable-backup">
+            <div class="cc-head">
+              <strong>🧱 Backup inmutable y ciberrecuperación</strong>
+              <span class="prov-pill prov-azure">AZURE</span>
+            </div>
+            <p class="muted">Patrón vault + landing zone. RPO/RTO y drill de recuperación.</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <a class="tiny-btn read" href="#!">Leer</a>
+              <button class="tiny-btn save-btn save">⭐ Guardar</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: Mis apuntes -->
+  <div class="modal" id="notesModal" aria-hidden="true">
+    <div class="modal-card">
+      <h3>🗂️ Mis apuntes</h3>
+      <div class="tabs">
+        <button class="tab on" data-tab="recent">Recientes</button>
+        <button class="tab" data-tab="saved">Guardados</button>
+      </div>
+      <div id="notesRecent" class="list"></div>
+      <div id="notesSaved" class="list" style="display:none"></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="btn" id="notesClose">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== util =====
+    const headerEl = document.querySelector('header');
+    function smoothScrollTo(el){
+      const offset = (headerEl ? headerEl.offsetHeight : 0) + 10;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior:'smooth' });
+    }
+
+    // ===== filtro contenidos + scroll =====
+    const examSelect = document.getElementById('examSelect');
+    const contentGrid = document.getElementById('contentGrid');
+    const contenidos = document.getElementById('contenidos');
+
+    function applyFilter(){
+      const val = examSelect.value;
+      document.querySelectorAll('#contentGrid .card').forEach(c=>{
+        const tag = c.getAttribute('data-exam');
+        c.style.display = (val==='all' || tag===val || tag==='mixed') ? '' : 'none';
+      });
+    }
+    examSelect.addEventListener('change', applyFilter);
+    applyFilter();
+
+    // Botones “Domina lo esencial” -> set filtro + scroll
+    document.querySelectorAll('.go-content').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const val=btn.dataset.exam||'all';
+        examSelect.value = val;
+        examSelect.dispatchEvent(new Event('change',{bubbles:true}));
+        smoothScrollTo(contenidos);
+      });
+    });
+
+    // ===== “leer” y “guardar” simulan interacción y persisten en localStorage =====
+    const KEY_RECENT = 'notes.recent';
+    const KEY_SAVED  = 'notes.saved';
+    function loadLS(k){ try{ return JSON.parse(localStorage.getItem(k)||'[]'); }catch{return []} }
+    function saveLS(k,v){ localStorage.setItem(k, JSON.stringify(v)); }
+    function nowISO(){ return new Date().toISOString(); }
+
+    function cardMeta(el){
+      return {
+        id: el.getAttribute('data-id'),
+        exam: el.getAttribute('data-exam'),
+        title: el.querySelector('.cc-head strong')?.textContent?.trim() || 'Apunte',
+      };
+    }
+
+    // “Leer” -> guarda en recientes
+    contentGrid.addEventListener('click', e=>{
+      const a = e.target.closest('.read');
+      if(!a) return;
+      e.preventDefault();
+      const card = e.target.closest('.card');
+      const meta = cardMeta(card);
+      const recent = loadLS(KEY_RECENT).filter(x=>x.id!==meta.id);
+      recent.unshift({ ...meta, ts: nowISO() });
+      saveLS(KEY_RECENT, recent.slice(0,20));
+      // Simula abrir artículo
+      alert(`Abriendo: ${meta.title}`);
+    });
+
+    // “Guardar” -> añade a guardados
+    contentGrid.addEventListener('click', e=>{
+      const b = e.target.closest('.save');
+      if(!b) return;
+      const card = e.target.closest('.card');
+      const meta = cardMeta(card);
+      const saved = loadLS(KEY_SAVED);
+      if(!saved.find(x=>x.id===meta.id)){
+        saved.unshift({ ...meta, ts: nowISO() });
+        saveLS(KEY_SAVED, saved.slice(0,50));
+        b.textContent = '✅ Guardado';
+      }else{
+        // quitar
+        saveLS(KEY_SAVED, saved.filter(x=>x.id!==meta.id));
+        b.textContent = '⭐ Guardar';
+      }
+    });
+
+    // ===== Modal “Mis apuntes” =====
+    const notesModal  = document.getElementById('notesModal');
+    const notesClose  = document.getElementById('notesClose');
+    const btnOpenNotes= document.getElementById('btnOpenNotes');
+    const notesRecent = document.getElementById('notesRecent');
+    const notesSaved  = document.getElementById('notesSaved');
+
+    function renderList(host, list){
+      host.innerHTML='';
+      if(!list.length){
+        host.innerHTML = `<div class="row" style="justify-content:center;color:var(--muted)">No hay elementos todavía.</div>`;
+        return;
+      }
+      list.forEach(it=>{
+        const row=document.createElement('div'); row.className='row';
+        row.innerHTML=`
+          <div>
+            <div style="font-weight:900">${it.title}</div>
+            <div class="muted" style="font-size:.9rem">${it.exam.toUpperCase()} · ${new Date(it.ts).toLocaleString()}</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="tiny-btn open" data-id="${it.id}">Abrir</button>
+            <button class="tiny-btn" data-id="${it.id}" data-action="remove">Quitar</button>
+          </div>
+        `;
+        host.appendChild(row);
+      });
+    }
+
+    function openModalNotes(){
+      // pestañas
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+      document.querySelector('.tab[data-tab="recent"]').classList.add('on');
+      notesRecent.style.display='grid';
+      notesSaved.style.display='none';
+
+      renderList(notesRecent, loadLS(KEY_RECENT));
+      renderList(notesSaved,  loadLS(KEY_SAVED));
+
+      notesModal.classList.add('show');
+    }
+    btnOpenNotes.addEventListener('click', openModalNotes);
+    notesClose.addEventListener('click', ()=> notesModal.classList.remove('show'));
+    notesModal.addEventListener('click', e=>{ if(e.target===notesModal) notesModal.classList.remove('show'); });
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+        t.classList.add('on');
+        const tab=t.dataset.tab;
+        notesRecent.style.display = (tab==='recent')?'grid':'none';
+        notesSaved.style.display  = (tab==='saved')?'grid':'none';
+      });
+    });
+
+    // Acciones dentro del modal
+    function simulateOpenById(id){
+      const card = document.querySelector(`.card[data-id="${id}"]`);
+      if(card){
+        examSelect.value = card.getAttribute('data-exam');
+        applyFilter();
+        notesModal.classList.remove('show');
+        smoothScrollTo(contenidos);
+        card.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    }
+    [notesRecent, notesSaved].forEach(host=>{
+      host.addEventListener('click', e=>{
+        const open = e.target.closest('.open');
+        const rem  = e.target.closest('[data-action="remove"]');
+        if(open){ simulateOpenById(open.dataset.id); }
+        if(rem){
+          const id = rem.dataset.id;
+          const key = (host.id==='notesSaved')?KEY_SAVED:KEY_RECENT;
+          saveLS(key, loadLS(key).filter(x=>x.id!==id));
+          renderList(host, loadLS(key));
+        }
+      });
+    });
+
+    // (Opcional) Soporta llegar con #contenidos?exam=...
+    (function syncExamFromQueryOnLoad(){
+      try{
+        const hashOk = location.hash.includes('contenidos');
+        const qp = new URLSearchParams(location.search).get('exam');
+        if (hashOk && qp){
+          examSelect.value = qp;
+          examSelect.dispatchEvent(new Event('change', { bubbles:true }));
+          setTimeout(()=>smoothScrollTo(contenidos), 60);
+        }
+      }catch{}
+    })();
+  </script>
+</body>
+</html>

@@ -49,7 +49,6 @@
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-    /* LOGO más grande */
     .brand img.site-logo{height:34px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
@@ -165,7 +164,6 @@
       </div>
 
       <nav class="menu" aria-label="Navegación principal">
-        <!-- HOME eliminado -->
         <a class="link-btn" href="#simuladores">SIMULADORES</a>
         <a class="link-btn" href="#contenidos">CONTENIDOS</a>
         <a class="link-btn" href="/score/ranking.html">RANKING</a>
@@ -207,7 +205,7 @@
             <span class="muted">Mini-test por dominios. Prioriza dónde estudiar.</span>
             <div id="diagBtns" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
               <button class="pill-btn" id="btnOpenDiag" type="button">Iniciar diagnóstico</button>
-              <!-- NOTA: el botón "Ver último resultado" se inyecta por JS solo si hay datos -->
+              <!-- "Ver último resultado" se inyecta por JS solo si hay datos -->
             </div>
           </div>
           <div class="how-step"><strong>2) Domina lo esencial</strong><br><span class="muted">Resúmenes y hojas de trucos por dominio. Solo lo que cae.</span></div>
@@ -241,7 +239,7 @@
         <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
         <div class="muted">Modo estudio o examen cronometrado. Más simuladores pronto.</div>
 
-        <div class="grid" id="simGrid" role="list"><!-- tarjetas renderizadas por JS --></div>
+        <div class="grid" id="simGrid" role="list"></div>
       </div>
     </section>
 
@@ -274,7 +272,7 @@
 
             <article class="card slide" data-exam="az-104">
               <div class="cc-head">🔐 <strong>Checklist de seguridad Azure</strong></div>
-              <p class="muted">Revisa <strong>RBAC mínimo</strong>, <strong>MFA</strong>, <strong>PIM</strong>, <strong>Azure Policy</strong> y <strong>Defender for Cloud</strong> para reforzar la seguridad. Alineado con AZ-104.</p>
+              <p class="muted">Revisa <strong>RBAC mínimo</strong>, <strong>MFA</strong>, <strong>PIM</strong>, <strong>Azure Policy</strong> y <strong>Defender for Cloud</strong>.</p>
               <div class="cc-meta">
                 <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
                 <a class="tiny-btn" href="content/azure-security-checklist.html" role="button">Leer</a>
@@ -383,9 +381,9 @@
     <div class="modal-card" role="document" tabindex="-1">
       <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
       <p class="muted" style="margin:0 0 8px">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
-      <label class="visually-hidden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
+      <label class="visualmente-oculto" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
       <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
-      <label class="visually-hidden" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
+      <label class="visualmente-oculto" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
       <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
         <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
@@ -558,7 +556,7 @@
     nextBtn.addEventListener('click', ()=>{ const total = filteredSlides().length; if((page+1)*PAGE_SIZE < total){ page++; renderCarousel(); }});
     renderCarousel();
 
-    /* ===== Modal helpers (feedback/diag comparten) ===== */
+    /* ===== Modales (focus trap / abrir-cerrar) ===== */
     const fbModal = document.getElementById('feedbackModal');
     const diagModal = document.getElementById('diagModal');
     let lastFocus = null;
@@ -593,10 +591,13 @@
       if(container.__trapHandler){ container.removeEventListener('keydown', container.__trapHandler); container.__trapHandler=null; }
     }
 
-    /* ===== Feedback -> PUT /items/notes/{id} ===== */
-    const NOTES_API = '/items/notes'; // tabla 'notes' y ruta 'items'
+    /* ===== Feedback → POST /items (tabla notes) ===== */
+    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
+    const NOTES_ENDPOINT = `${API_BASE}/items`;
+
     document.getElementById('btnFeedback').addEventListener('click',()=>{
-      document.getElementById('feedbackText').value=''; document.getElementById('feedbackEmail').value='';
+      document.getElementById('feedbackText').value='';
+      document.getElementById('feedbackEmail').value='';
       openModal(fbModal);
     });
     document.getElementById('btnCancelFeedback').addEventListener('click',()=> closeModal(fbModal));
@@ -616,27 +617,41 @@
         message,
         email: from || (user?.email || null),
         userId: user?.id || user?.email || null,
-        path: location.pathname,
+        path: location.pathname + location.search,
         ua: navigator.userAgent,
         createdAt: new Date().toISOString()
       };
 
+      // Usamos x-www-form-urlencoded SIN headers → evita preflight
+      const params = new URLSearchParams();
+      params.set('table','notes');
+      params.set('id', id);
+      params.set('content', JSON.stringify(note));
+
+      // timeout de seguridad (AbortController)
+      const ctl = new AbortController();
+      const t = setTimeout(()=>ctl.abort(), 10000);
+
       try{
-        const res = await fetch(`${NOTES_API}/${encodeURIComponent(id)}`, {
-          method: 'PUT',
-          headers: { 'Content-Type':'application/json' },
-          body: JSON.stringify(note)
+        const res = await fetch(NOTES_ENDPOINT, {
+          method: 'POST',
+          body: params,
+          signal: ctl.signal
+          // NO PONER headers aquí (el browser pondrá Content-Type adecuado)
         });
+        clearTimeout(t);
+
         if(!res.ok){
-          const txt = await res.text().catch(()=>String(res.status));
-          throw new Error(`PUT ${NOTES_API}/${id} → ${res.status} ${txt}`);
+          const text = await res.text().catch(()=>'');
+          throw new Error(`HTTP ${res.status} ${text}`);
         }
-        alert('¡Gracias! Tu feedback se ha guardado en notas. 💜');
+
+        alert('¡Gracias! Hemos recibido correctamente tu feedback. 💜');
+        closeModal(fbModal);
       }catch(err){
-        console.error('Error guardando nota:', err);
-        alert('No se pudo enviar el feedback. Revisa la consola para más detalles.');
+        console.error('Error guardando feedback:', err);
+        alert('No se pudo enviar el feedback :()');
       }
-      closeModal(fbModal);
     });
 
     /* ===== MINI-TEST DIAGNÓSTICO ===== */
@@ -811,14 +826,12 @@
       document.getElementById('diagResult').style.display='block';
       document.getElementById('btnSaveDiag').onclick=()=>{
         saveResult(result);
-        maybeAddViewLastBtn(); // ahora sí aparece el botón
+        maybeAddViewLastBtn();
         srStatus.textContent='Resultado guardado';
         alert('Guardado en tu perfil local.');
       };
     }
 
-    // Crear botón "Ver último resultado" si al cargar había datos
-    // (para evitar FOUC, no existe en el DOM hasta confirmar)
     document.addEventListener('DOMContentLoaded', maybeAddViewLastBtn);
   </script>
 </body>
