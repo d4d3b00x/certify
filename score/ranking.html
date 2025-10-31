@@ -11,13 +11,12 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IT Hub .es — Ranking Gamificado</title>
+  <title>IT Hub .es — RANKING GLOBAL</title>
   <link rel="stylesheet" href="/style_global.css"/>
   <style>
     :root{
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
       --stroke:#283056; --brand:#6c8bff; --radius:14px; --shadow:0 12px 28px rgba(6,12,40,.45);
-      --aws:#ff9900; --azure:#0078d4; --aws-2:#ffb84d; --azure-2:#5fb3ff;
       --violet:#7b5cff; --violet-2:#6246ff;
       --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
     }
@@ -35,7 +34,7 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    /* ===== Header como captura ===== */
+    /* ===== Header ===== */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
       border-bottom:1px solid var(--stroke)}
@@ -66,12 +65,11 @@
 
     /* ===== Página ===== */
     .wrap{padding:22px 0 28px}
-    .layout{display:grid;grid-template-columns: 1fr 320px; gap:18px}
-    @media (max-width: 980px){ .layout{grid-template-columns:1fr} }
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
       border-radius:16px;padding:18px 18px;box-shadow:var(--shadow)}
     .header-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:6px 0 12px}
     .header-row h2{margin:0;color:#fff;font-size:1.35rem;font-weight:900;letter-spacing:.2px}
+
     .tabs{display:flex;gap:8px;flex-wrap:wrap}
     .tab{
       appearance:none;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff;
@@ -80,7 +78,7 @@
     .tab[aria-pressed="true"]{outline:2px solid rgba(108,139,255,.3)}
 
     .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:14px;overflow:auto}
-    table{width:100%;min-width:860px;border-collapse:separate;border-spacing:0}
+    table{width:100%;min-width:880px;border-collapse:separate;border-spacing:0}
     thead th{position:sticky;top:0;z-index:1;background:var(--surface2);color:#e8ecff;font-weight:800;text-align:center;padding:12px 10px;border-bottom:1px solid var(--stroke)}
     tbody td{padding:12px 10px;text-align:center;border-bottom:1px solid #1f2747;background:#0f1430;color:#e8ecff}
     tbody tr:nth-child(even) td{background:#101738}
@@ -90,9 +88,9 @@
     .col-rank{width:64px}
     .col-name{text-align:left}
     .col-num{width:110px;font-variant-numeric:tabular-nums}
-    .col-date{width:200px}
+    .col-date{width:160px}
     .col-points{width:140px}
-    .col-level{white-space:nowrap} /* evita salto en el chip de nivel */
+    .col-level{white-space:nowrap}
 
     /* Medallas Top 3 */
     .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
@@ -100,7 +98,9 @@
     .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf);box-shadow:0 2px 6px rgba(0,0,0,.12)}
     .medal.bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a);box-shadow:0 2px 6px rgba(0,0,0,.12)}
 
-    /* Nombre destacado y color por medalla */
+    /* Nombre + avatar inline */
+    .namebox{display:inline-flex;align-items:center;gap:8px}
+    .avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#fff}
     .name-strong{font-weight:900}
     .name-gold{color:var(--gold)}
     .name-silver{color:var(--silver)}
@@ -113,9 +113,7 @@
     }
     .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff;border:none;box-shadow:var(--shadow)}
 
-    .avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:#fff;margin-right:8px}
-
-    /* Nivel alineado en una sola línea */
+    /* Nivel en una sola línea */
     .level{
       display:inline-flex;align-items:center;gap:8px;
       font-weight:900;padding:4px 10px;border-radius:999px;
@@ -124,10 +122,35 @@
     .level .bar{display:inline-block;height:8px;width:110px;background:#0a0f25;border-radius:999px;position:relative;overflow:hidden}
     .level .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
 
-    .badge2{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface2);color:#e8ecff;border:1px solid var(--stroke);font-weight:800;margin:2px}
-    .badge2.fast{background:rgba(255,179,0,.14);border-color:rgba(255,179,0,.35);color:#ffe3a6}
-    .badge2.perfect{background:rgba(124,77,255,.18);border-color:rgba(124,77,255,.38);color:#e0d6ff}
-    .badge2.ok{background:rgba(46,204,113,.15);border-color:rgba(46,204,113,.35);color:#b8ffd7}
+    /* Insignias (iconos minis) */
+    .ibadges{display:inline-flex;align-items:center;gap:8px;justify-content:center}
+    .ibadge{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:26px;height:26px;border-radius:999px;border:1px solid var(--stroke);
+      background:var(--surface2);font-size:14px
+    }
+    .ibadge.fast{background:rgba(255,179,0,.14);border-color:rgba(255,179,0,.35)}
+    .ibadge.perfect{background:rgba(124,77,255,.18);border-color:rgba(124,77,255,.38)}
+    .ibadge.ok{background:rgba(46,204,113,.15);border-color:rgba(46,204,113,.35)}
+    .ibadge.streak{background:rgba(255,111,97,.14);border-color:rgba(255,111,97,.35)}
+    .ibadge.grinder{background:rgba(100,181,246,.16);border-color:rgba(100,181,246,.35)}
+    .ibadge.veteran{background:rgba(255,214,98,.18);border-color:rgba(255,214,98,.45)}
+    .ibadge.sharp{background:rgba(0,200,170,.15);border-color:rgba(0,200,170,.38)}
+
+    /* Reglas + Leyenda en 2 columnas */
+    .below-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+    @media (max-width: 980px){ .below-grid{grid-template-columns:1fr} }
+
+    /* Footer */
+    footer{margin-top:28px;border-top:1px solid var(--stroke);background:linear-gradient(180deg,#0f1320,#0e1429)}
+    .footwrap{max-width:1100px;margin:0 auto;padding:22px 20px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:20px}
+    @media (max-width: 920px){ .footwrap{grid-template-columns:1fr} }
+    .footbrand{display:flex;gap:12px;align-items:flex-start}
+    .footlogo{width:32px;height:32px;border-radius:10px;background:linear-gradient(180deg,#7b8cff,#4c66ff);box-shadow:0 0 0 8px rgba(108,139,255,.12)}
+    .footcol h4{margin:0 0 10px;font-size:1.05rem}
+    .footcol ul{list-style:none;margin:0;padding:0}
+    .footcol li{margin:6px 0;color:#cbd6ff}
+    .footsmall{color:#9ca8d9;margin-top:8px}
   </style>
 </head>
 <body>
@@ -139,56 +162,138 @@
         <span>IT&nbsp;Hub</span> <small>.es</small>
       </div>
       <nav class="menu">
+        <a href="/">HOME</a>
         <a href="/#simuladores">SIMULADORES</a>
         <a href="/#contenidos">CONTENIDOS</a>
-        <a href="/score/ranking.html">RANKING</a>
       </nav>
       <div class="actions" id="navActions"></div>
     </div>
   </header>
 
   <main class="container wrap">
-    <div class="layout">
-      <section class="card">
-        <div class="header-row">
-          <h2>🏆 Ranking Gamificado</h2>
-          <div class="tabs" role="tablist">
-            <button class="tab" id="tab-global" aria-pressed="true" onclick="setScope('global')">Global</button>
-            <button class="tab" id="tab-season" aria-pressed="false" onclick="setScope('season')">Temporada (mes)</button>
-            <button class="tab" id="tab-week" aria-pressed="false" onclick="setScope('week')">Semanal</button>
-            <button class="tab" id="tab-az" aria-pressed="false" onclick="setExam('az-104')">AZ-104</button>
-            <button class="tab" id="tab-aws" aria-pressed="false" onclick="setExam('aws-saa-c03')">SAA-C03</button>
-          </div>
+    <!-- Ranking -->
+    <section class="card">
+      <div class="header-row">
+        <h2>🏆 RANKING GLOBAL</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab" id="tab-global" aria-pressed="true" onclick="setScope('global')">Global</button>
+          <button class="tab" id="tab-season" aria-pressed="false" onclick="setScope('season')">Temporada (mes)</button>
+          <button class="tab" id="tab-week" aria-pressed="false" onclick="setScope('week')">Semanal</button>
+          <button class="tab" id="tab-az" aria-pressed="false" onclick="setExam('az-104')">AZ-104</button>
+          <button class="tab" id="tab-aws" aria-pressed="false" onclick="setExam('aws-saa-c03')">SAA-C03</button>
         </div>
+      </div>
+      <div class="table-wrap" id="board">Cargando…</div>
+    </section>
 
-        <div class="table-wrap" id="board">Cargando…</div>
+    <!-- Reglas + Leyenda en 2 columnas -->
+    <div class="below-grid">
+      <section class="card">
+        <h3 style="margin:0 0 8px">⚙️ Reglas de puntos</h3>
+        <ul style="margin:0 0 6px 18px">
+          <li><b>+5</b> por respuesta correcta.</li>
+          <li><b>+50</b> por examen aprobado (≥70%).</li>
+          <li><b>+10</b> bonus rápido (≤30s/pregunta).</li>
+          <li><b>Racha</b>: +5 extra por cada aprobado consecutivo dentro de 7 días.</li>
+          <li><b>Nivel</b>: cada 150 XP subes de nivel (la barra indica progreso).</li>
+        </ul>
       </section>
 
-      <aside class="side">
-        <div class="card">
-          <h3 style="margin:0 0 8px">⚙️ Reglas de puntos</h3>
-          <ul style="margin:0 0 6px 18px">
-            <li><b>+5</b> por respuesta correcta.</li>
-            <li><b>+50</b> por examen aprobado (≥70%).</li>
-            <li><b>+10</b> bonus rápido (≤30s/pregunta).</li>
-            <li><b>Racha</b>: +5 extra por aprobado consecutivo en 7 días.</li>
-          </ul>
-          <p style="margin:8px 0 0">Nivel cada 150 XP. Top 3 con medalla y chip azul.</p>
+      <section class="card">
+        <h3 style="margin:0 0 8px">🎖️ Leyenda de insignias</h3>
+        <p style="margin:0 10px 10px 0;color:#cbd6ff">Así se consiguen y qué significan:</p>
+
+        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+          <span class="ibadge fast">⚡</span>
+          <span class="name-strong">Rápido</span>
+          <span style="color:#9ca8d9">— Media ≤ 30s por pregunta en el intento.</span>
         </div>
-        <div class="card" id="myPosition" style="margin-top:12px;display:none"></div>
-      </aside>
+        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+          <span class="ibadge perfect">💯</span>
+          <span class="name-strong">Perfect</span>
+          <span style="color:#9ca8d9">— 100% de aciertos.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+          <span class="ibadge ok">✅</span>
+          <span class="name-strong">Pro</span>
+          <span style="color:#9ca8d9">— Examen aprobado (≥ 70%).</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+          <span class="ibadge streak">🔥</span>
+          <span class="name-strong">Racha</span>
+          <span style="color:#9ca8d9">— ≥ 3 aprobados consecutivos en ≤ 7 días.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+          <span class="ibadge grinder">💪</span>
+          <span class="name-strong">Grinder</span>
+          <span style="color:#9ca8d9">— ≥ 10 intentos totales.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+          <span class="ibadge sharp">🧠</span>
+          <span class="name-strong">Preciso</span>
+          <span style="color:#9ca8d9">— Precisión media ≥ 90%.</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin:6px 0">
+          <span class="ibadge veteran">🏅</span>
+          <span class="name-strong">Veterano</span>
+          <span style="color:#9ca8d9">— ≥ 2000 XP acumulados.</span>
+        </div>
+      </section>
     </div>
   </main>
 
+  <!-- Footer -->
+  <footer>
+    <div class="footwrap">
+      <div class="footbrand">
+        <i class="footlogo"></i>
+        <div>
+          <h4 class="name-strong">ITHub.es</h4>
+          <p style="margin:6px 0 10px;color:#cbd6ff">
+            Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.
+            <br/>Todo lo que necesitas en un sólo lugar.
+          </p>
+          <div class="footsmall">© 2025 ITHub.es</div>
+        </div>
+      </div>
+
+      <div class="footcol">
+        <h4 class="name-strong">Simuladores</h4>
+        <ul>
+          <li><a href="/#simuladores">AZ-104</a></li>
+          <li><a href="/#simuladores">SAA-C03</a></li>
+        </ul>
+      </div>
+
+      <div class="footcol">
+        <h4 class="name-strong">Contenidos</h4>
+        <ul>
+          <li><a href="/#contenidos">Azure · Landing Zone</a></li>
+          <li><a href="/#contenidos">Azure · Storage (AZ-104)</a></li>
+          <li><a href="/#contenidos">Azure · Conectividad híbrida</a></li>
+          <li><a href="/#contenidos">AWS · S3 diseño</a></li>
+          <li><a href="/#contenidos">AWS · SQS & SNS</a></li>
+        </ul>
+      </div>
+
+      <div class="footcol">
+        <h4 class="name-strong">Contacto</h4>
+        <ul>
+          <li><a href="mailto:infoweb@ithub.es">infoweb(at)ithub.es</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    /* ======= Cabecera: sesión (como tu web) ======= */
+    /* ======= Cabecera: sesión ======= */
     function getUserAny(){
       let u=null;
       try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
       if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}
       return u;
     }
-    function renderHeaderUser(){
+    (function renderHeaderUser(){
       const box=document.getElementById('navActions');
       const u=getUserAny();
       if(u && (u.name||u.displayName||u.userName)){
@@ -198,8 +303,7 @@
             <span>🔥 <span class="name">${name}</span></span>
             <a class="btn primary equal" href="/user/profile.html">PERFIL</a>
             <button class="btn primary equal" id="logoutBtn">SALIR</button>
-          </div>
-        `;
+          </div>`;
         document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
           try{ localStorage.removeItem('currentUser'); localStorage.removeItem('certify_user'); }catch{}
           location.reload();
@@ -207,11 +311,9 @@
       } else {
         box.innerHTML = `
           <a class="btn ghost equal" href="/login/login.html">Login</a>
-          <a class="btn primary equal" href="/login/login.html#signup">Crear cuenta</a>
-        `;
+          <a class="btn primary equal" href="/login/login.html#signup">Crear cuenta</a>`;
       }
-    }
-    renderHeaderUser();
+    })();
 
     /* ======= Config API ======= */
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
@@ -222,8 +324,10 @@
     const toNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
-    const pad = n => String(n).padStart(2,'0');
-    const fmtDate = (iso)=>{ if (!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; }};
+    // Fecha SOLO con día/mes/año (sin hora)
+    const fmtDate = (iso)=>{ if (!iso) return "—"; try{ return new Date(iso).toLocaleDateString([], {year:'numeric',month:'short',day:'2-digit'});}catch{ return iso; }};
+
+    function weekKey(d){ const dt=new Date(d); const onejan=new Date(dt.getFullYear(),0,1); const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7); return `${dt.getFullYear()}-W${String(week).padStart(2,'0')}`; }
 
     function pointsForAttempt(r){
       const correct = toInt(r.correct), total = toInt(r.total), dur = toInt(r.durationSec);
@@ -249,17 +353,15 @@
         userId: x.userId || "(unknown)",
         userName: getName(x),
         quizId: (x.quizId || "-").toLowerCase(),
-        correct: toInt(x.correct),
-        total: toInt(x.total),
-        pct: toNum(x.pct ?? 0),
-        durationSec: toInt(x.durationSec),
+        correct: Number(x.correct)||0,
+        total: Number(x.total)||0,
+        pct: Number(x.pct||0),
+        durationSec: Number(x.durationSec)||0,
         ts: x.ts || null
       })).filter(r=> QUIZZES.includes(r.quizId));
     }
 
-    /* ======= Agregación ======= */
-    function weekKey(d){ const dt=new Date(d); const onejan=new Date(dt.getFullYear(),0,1); const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7); return `${dt.getFullYear()}-W${String(week).padStart(2,'0')}`; }
-
+    /* ======= Agregación + Insignias ======= */
     function aggregate(rows, scope, exam){
       const now=new Date(); const curMonth=now.getMonth(), curYear=now.getFullYear(); const wkKey=weekKey(now);
       const byUser=new Map();
@@ -273,21 +375,39 @@
         const {pts, passed, pct}=pointsForAttempt(r);
         const key=r.userId+'|'+r.userName;
         if(!byUser.has(key)){
-          byUser.set(key, {userId:r.userId, userName:r.userName, xp:0, attempts:0, passed:0, last:r.ts, badges:new Set(), streak:0, lastPassTs:null});
+          byUser.set(key, {userId:r.userId, userName:r.userName, xp:0, attempts:0, passed:0, last:r.ts,
+                           badges:new Set(), lastPassTs:null, streak:0,
+                           correctSum:0, totalSum:0});
         }
         const u=byUser.get(key);
+
+        // racha
         if(passed){
           u.passed++;
           const t=d? d.getTime():0;
           if(u.lastPassTs && (t-u.lastPassTs)<=1000*60*60*24*7){ u.streak++; } else { u.streak=1; }
           u.lastPassTs=t;
         }
-        u.xp += pts + Math.max(0,(u.streak-1)*5);
+
+        u.xp += pts;
         u.attempts++;
+        u.correctSum += Number(r.correct)||0;
+        u.totalSum += Number(r.total)||0;
+
         if(pct===100) u.badges.add('perfect');
         if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+        if(passed) u.badges.add('ok');
         u.last=r.ts||u.last;
       });
+
+      // badges adicionales post-proceso
+      for(const u of byUser.values()){
+        if(u.streak>=3) u.badges.add('streak');
+        if(u.attempts>=10) u.badges.add('grinder');
+        if(u.xp>=2000) u.badges.add('veteran');
+        const acc = u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
+        if(acc>=90) u.badges.add('sharp');
+      }
 
       const list=[...byUser.values()].map(u=>{ const lvl=levelFromXP(u.xp); return {...u, lvl:lvl.lvl, prog:lvl.progress}; })
         .sort((a,b)=>{ if(b.xp!==a.xp) return b.xp-a.xp; if(b.passed!==a.passed) return b.passed-a.passed; return String(a.userName).localeCompare(String(b.userName)); });
@@ -308,16 +428,26 @@
       return "name-strong";
     }
     function pointsChipClass(i){ return i<3 ? "points-chip top" : "points-chip"; }
-    function badgeHTML(b){ if(b==='fast') return `<span class="badge2 fast">⚡ Rápido</span>`; if(b==='perfect') return `<span class="badge2 perfect">💯 Perfect</span>`; return `<span class="badge2 ok">✅ Pro</span>`; }
+
+    function renderBadgesSmall(set){
+      const s=new Set(set);
+      let out='<span class="ibadges">';
+      if(s.has('fast')) out+=`<span class="ibadge fast" title="Rápido">⚡</span>`;
+      if(s.has('perfect')) out+=`<span class="ibadge perfect" title="Perfect">💯</span>`;
+      if(s.has('ok')) out+=`<span class="ibadge ok" title="Pro">✅</span>`;
+      if(s.has('streak')) out+=`<span class="ibadge streak" title="Racha">🔥</span>`;
+      if(s.has('grinder')) out+=`<span class="ibadge grinder" title="Grinder">💪</span>`;
+      if(s.has('sharp')) out+=`<span class="ibadge sharp" title="Preciso">🧠</span>`;
+      if(s.has('veteran')) out+=`<span class="ibadge veteran" title="Veterano">🏅</span>`;
+      out+='</span>';
+      return out;
+    }
 
     function renderBoard(list){
-      const me = getUserAny();
-      const meName = (me?.name||me?.displayName||me?.userName)||null;
-
       let html = `<table><thead><tr>
         <th class="col-rank">#</th>
         <th class="col-points">Puntos</th>
-        <th class="col-name">Jugador</th>
+        <th class="col-name">Quizzer</th>
         <th class="col-num col-level">Nivel</th>
         <th class="col-num">Aprobados</th>
         <th class="col-num">Intentos</th>
@@ -327,37 +457,25 @@
 
       list.forEach((u,i)=>{
         const initials = String(u.userName).trim().slice(0,2).toUpperCase();
-        const isMe = meName && String(u.userName).toLowerCase()===String(meName).toLowerCase();
-        html += `<tr${isMe? ' style="outline:2px solid rgba(108,139,255,.35)"':''}>
+        html += `<tr>
           <td>${medalCell(i)}</td>
           <td><span class="${pointsChipClass(i)}">⭐ ${u.xp}</span></td>
-          <td class="col-name"><span class="avatar">${initials}</span><span class="${nameClass(i)}">${u.userName}</span></td>
+          <td class="col-name">
+            <span class="namebox">
+              <span class="avatar">${initials}</span>
+              <span class="${nameClass(i)}">${u.userName}</span>
+            </span>
+          </td>
           <td class="col-level"><span class="level">Lv ${u.lvl}<span class="bar"><i style="width:${u.prog}%"></i></span></span></td>
           <td>${u.passed}</td>
           <td>${u.attempts}</td>
           <td>${u.last? fmtDate(u.last) : '—'}</td>
-          <td>${[...u.badges].map(b=> badgeHTML(b)).join('')}</td>
+          <td>${renderBadgesSmall(u.badges)}</td>
         </tr>`;
       });
 
       html += `</tbody></table>`;
       document.getElementById('board').innerHTML = html;
-
-      // "Mi posición"
-      const myDiv = document.getElementById('myPosition');
-      if (meName){
-        const idx = list.findIndex(x=> String(x.userName).toLowerCase()===meName.toLowerCase());
-        if (idx>=0){
-          const meU=list[idx];
-          myDiv.style.display='';
-          myDiv.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-            <div style="display:flex;align-items:center;gap:10px"><span>${medalCell(idx)}</span>
-            <span class="avatar">${String(meU.userName).slice(0,2).toUpperCase()}</span>
-            <span class="name-strong">${meU.userName}</span></div>
-            <div><span class="${pointsChipClass(idx)}">⭐ ${meU.xp}</span></div>
-          </div>`;
-        }
-      }
     }
 
     // Estado UI
@@ -378,17 +496,29 @@
       node.innerHTML = 'Cargando…';
       try{
         if (!CACHE){
-          const rows = await fetchAll(3000);
-          CACHE = rows;
+          const res = await fetch(`${"https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"}/results?limit=3000`, {mode:"cors", cache:"no-store"});
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+          const items = Array.isArray(data.items) ? data.items : [];
+          CACHE = items.map(x=>({
+            userId: x.userId || "(unknown)",
+            userName: getName(x),
+            quizId: (x.quizId || "-").toLowerCase(),
+            correct: Number(x.correct)||0,
+            total: Number(x.total)||0,
+            pct: Number(x.pct||0),
+            durationSec: Number(x.durationSec)||0,
+            ts: x.ts || null
+          })).filter(r=> ["az-104","aws-saa-c03"].includes(r.quizId));
         }
-        const list = aggregate(CACHE, SCOPE, EXAM);
+        const filtered = CACHE.filter(r=> !EXAM || r.quizId===EXAM);
+        const list = aggregate(filtered, SCOPE, null);
         renderBoard(list.slice(0,50));
       }catch(e){
         node.innerHTML = `<p style="color:var(--muted)">Error cargando API: ${e.message}</p>`;
       }
     }
     render();
-
   </script>
 </body>
 </html>
