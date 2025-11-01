@@ -224,19 +224,24 @@
 
         <div class="cta" role="region" aria-labelledby="beta-title">
           <div class="left">
-            <span class="tag" id="beta-title">LANZAMOS NUESTRA BETA. ÚNETE!</span>
-            <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Regístrate y aprueba tu certificación!</h2>
-            <p class="muted">Guarda progreso, marca preguntas y recibe recomendaciones por dominio.</p>
+            <span class="tag" id="beta-title">ÚNETE A NUESTRA COMUNIDAD DE QUIZZERS!</span>
+            <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Regístrate y empieza tu camino de aprendizaje hacia tu certificación!</h2>
+            <p class="muted">Guardamos tu progreso, lo analizamos, y te proponemos consejos de aprendizaje para reforzar tus áreas de mejora según los dominios de cada examen.</p>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
               <a class="pill-btn" href="/login/login.html?view=signup" role="button">CREAR CUENTA</a>
             </div>
           </div>
-          <div class="right" aria-label="Ventajas">
+          <div class="right" aria-label="Ventajas"><br>
+            <div>✅ <b>Rutas de estudio</b> de 7/14/30 días</div>
+            <div>✅ <b>Consejos y Tips</b> especificos de cada certificación</div>
+            <div>✅ <b>Simulador adaptativo</b> por dominio</div>
             <div>✅ <b>Análisis por dominio</b> tras cada intento</div>
             <div>✅ <b>Explicación + enlaces oficiales</b> en cada respuesta</div>
             <div>✅ <b>Preguntas marcadas</b> y repaso dirigido</div>
-            <div>✅ <b>Objetivo semanal</b> de preguntas y racha</div>
+            <div>✅ <b>Objetivo semanal</b> de preguntas, racha e insignias</div>
             <div>✅ <b>Estadísticas</b> de acierto, tiempo y evolución</div>
+
+
           </div>
         </div>
       </div>
@@ -680,7 +685,7 @@
           throw new Error(`HTTP ${res.status} ${text}`);
         }
 
-        fbStatus.textContent = '¡Gracias! Tu feedback se ha guardado correctamente. 👌';
+        fbStatus.textContent = '¡Gracias! Mensaje recibo. 👌';
         fbStatus.className = 'fb-status ok';
         btnFbSend.style.display   = 'none';
         btnFbCancel.style.display = 'none';
@@ -688,7 +693,7 @@
         btnFbOk.focus();
       }catch(err){
         console.error('Error guardando feedback:', err);
-        fbStatus.textContent = 'No se pudo enviar el feedback. Revisa la consola para más detalles.';
+        fbStatus.textContent = 'No se pudo enviar la info. :()';
         fbStatus.className = 'fb-status err';
         btnFbSend.style.display   = 'none';
         btnFbCancel.style.display = 'none';
