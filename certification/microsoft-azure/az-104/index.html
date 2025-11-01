@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -28,6 +27,12 @@
       --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
       --cta:linear-gradient(180deg,#76c7ff,#0078d4);
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+
+      /* Paleta por rol */
+      --arch:#8fd0ff;    --arch-ring:#3a7cc2;
+      --dev:#9fffb0;     --dev-ring:#3f9156;
+      --ops:#ffd699;     --ops-ring:#a16a1f;
+      --data:#d1b3ff;    --data-ring:#6f45b4;
     }
     *{box-sizing:border-box}
     body{
@@ -86,7 +91,7 @@
 
     /* Cards */
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
-    .card h2{margin:0 0 6px;font-size:1.2rem}
+    .card h2{margin:0 0 8px;font-size:1.2rem}
     .muted{color:var(--muted)}
     .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta);color:#0b1930;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(0,120,212,.22);min-height:44px;}
@@ -96,63 +101,48 @@
     @media(min-width:720px){ .grid.cols-2{grid-template-columns:repeat(2,1fr)} .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
     .grid.cols-mapa{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 
-    /* Listas */
-    .check{display:grid;gap:8px;margin:8px 0}
-    .check div{display:flex;gap:8px;align-items:flex-start}
-    .check b{color:#b7e1ff}
-
-    /* Tabla bonita (responsive) */
-    .tbl{
-      width:100%;
-      border-collapse:separate;
-      border-spacing:0 10px;
-    }
-    .tbl caption{caption-side:top;text-align:left;font-weight:900;margin-bottom:6px}
-    .tbl thead th{
-      background:#172047;
-      color:#e8ecff;
-      padding:12px 14px;
-      border:1px solid #283056;
-      font-weight:900;
-    }
-    .tbl tbody tr{
-      filter:drop-shadow(0 6px 14px rgba(6,12,40,.25));
-    }
-    .tbl tbody td{
-      background:#121838;
-      border:1px solid #283056;
-      padding:12px 14px;
-      vertical-align:top;
-    }
-    .tbl .rounded-top-left{border-top-left-radius:12px}
-    .tbl .rounded-top-right{border-top-right-radius:12px}
-    .tbl .rounded-bottom-left{border-bottom-left-radius:12px}
-    .tbl .rounded-bottom-right{border-bottom-right-radius:12px}
+    /* Badges */
     .badge-diff{
-      display:inline-flex;align-items:center;justify-content:center;
-      min-width:72px;padding:6px 10px;border-radius:999px;
+      display:inline-flex;align-items:center;gap:6px;justify-content:center;
+      min-width:90px;padding:6px 12px;border-radius:999px;
       background:rgba(0,120,212,.18);border:1px solid rgba(0,120,212,.45);
       font-weight:900;color:#cfe9ff;
     }
-    /* Zebra ligera */
-    .tbl tbody tr:nth-child(odd) td{background:#0f1a38}
+    .badge-diff.high{background:rgba(255,107,107,.2);border-color:rgba(255,107,107,.45)}
 
-    /* Responsive: la tabla se apila como tarjetas */
-    @media(max-width:720px){
-      .tbl thead{display:none}
-      .tbl, .tbl tbody, .tbl tr, .tbl td{display:block;width:100%}
-      .tbl tr{margin-bottom:12px}
-      .tbl td{
-        border-radius:12px!important;
-        border-width:1px;
-        padding:10px 12px;
-      }
-      .tbl td[data-label]:before{
-        content:attr(data-label) " · ";
-        color:#9ca8d9;
-        font-weight:800;
-      }
+    /* Rutas horizontales (dos columnas) con colores por rol */
+    .routes-grid{display:grid;gap:14px;grid-template-columns:repeat(2, minmax(300px,1fr))}
+    .route-card{
+      display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--stroke);
+      border-radius:16px;padding:14px;position:relative;overflow:hidden;
     }
+    .route-card::before{
+      content:"";position:absolute;left:0;top:0;bottom:0;width:6px;border-radius:16px 0 0 16px;opacity:.9;
+    }
+    .route-card.arch::before{background:linear-gradient(180deg,var(--arch),var(--arch-ring))}
+    .route-card.dev::before{background:linear-gradient(180deg,var(--dev),var(--dev-ring))}
+    .route-card.ops::before{background:linear-gradient(180deg,var(--ops),var(--ops-ring))}
+    .route-card.data::before{background:linear-gradient(180deg,var(--data),var(--data-ring))}
+    .route-ico{font-size:22px;line-height:1.1;margin-top:2px}
+    .route-title{font-weight:900;margin-bottom:6px}
+    .route-path{color:#cfe1ff}
+    @media(max-width:900px){ .routes-grid{grid-template-columns:1fr} }
+
+    /* Comparativa Associate vs Expert en cards con iconos */
+    .compare{display:grid;gap:16px;grid-template-columns:repeat(2, minmax(300px,1fr))}
+    .compare .col{
+      background:var(--surface2);border:1px solid var(--stroke);border-radius:16px;padding:16px;position:relative;
+    }
+    .compare .col .icon{
+      font-size:22px;margin-right:8px;opacity:.95
+    }
+    .compare .col.arch{box-shadow:0 10px 24px rgba(0,120,212,.18)}
+    .compare .col.pro{box-shadow:0 10px 24px rgba(255,107,107,.14)}
+    .compare .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .compare h3{margin:0;display:flex;align-items:center}
+    .compare p{margin:0 0 8px;color:#e8ecff}
+    .compare ul{margin:8px 0 0 18px;color:#cfe1ff}
+    @media(max-width:900px){ .compare{grid-template-columns:1fr} }
 
     /* Sidebar */
     .sidebar .block{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px}
@@ -171,7 +161,7 @@
     .modal.show{display:flex}
     .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
     .modal-card h3{margin:0 0 12px;font-size:1.2rem}
-    .modal-card textarea, .modal-card input{width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700}
+    .modal-card textarea, .modal-card input{width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:#var(--ink);padding:10px;font-weight:700}
     .fb-status{margin-top:8px;font-weight:800}
     .fb-status.ok{color:var(--ok)}
     .fb-status.err{color:var(--bad)}
@@ -233,7 +223,7 @@
       <!-- IZQUIERDA -->
       <div>
 
-        <!-- Certificaciones destacadas (arriba del todo) -->
+        <!-- Certificaciones destacadas -->
         <div id="certificaciones" class="card" style="margin-top:12px">
           <h2>Certificaciones destacadas</h2>
           <div class="muted">Accede a la página de cada certificación para guía, banco de preguntas y simulador.</div>
@@ -242,10 +232,20 @@
               <h3 style="margin:0 0 6px">Azure Administrator — Associate (AZ-104)</h3>
               <p class="muted">Gestión de identidad, redes, almacenamiento, compute y continuidad.</p>
               <div class="cta-row">
-                <a class="cta-btn" href="/quiz.html?quiz=az-104">▶ Ver certificación</a>
+                <a class="cta-btn" href="/quiz.html?quiz=az-104">▶ EMPEZAR ESTUDIO</a>
                 <span class="chip">Nivel Associate</span>
               </div>
             </article>
+
+            <article class="card">
+              <h3 style="margin:0 0 6px">Azure Solutions Architect — Expert (AZ-305)</h3>
+              <p class="muted">Arquitecturas seguras, resilientes y de coste optimizado a escala.</p>
+              <div class="cta-row">
+                <a class="cta-btn" href="/quiz.html?quiz=az-305">▶ EMPEZAR ESTUDIO</a>
+                <span class="chip">Nivel Expert</span>
+              </div>
+            </article>
+
             <article class="card">
               <h3 style="margin:0 0 6px">Azure Fundamentals (AZ-900)</h3>
               <p class="muted">Principios de nube, precios, SLA, identidad y servicios core de Azure.</p>
@@ -254,10 +254,19 @@
                 <span class="chip">Nivel Fundamentals</span>
               </div>
             </article>
+
+            <article class="card">
+              <h3 style="margin:0 0 6px">Security Engineer (AZ-500)</h3>
+              <p class="muted">Seguridad de identidades, datos, redes y cargas en Azure.</p>
+              <div class="cta-row">
+                <a class="cta-btn" href="#" aria-disabled="true" onclick="return false;">⏳ Coming Soon</a>
+                <span class="chip">Nivel Associate/Expert</span>
+              </div>
+            </article>
           </div>
         </div>
 
-        <!-- Mapa de certificaciones Azure -->
+        <!-- Mapa de certificaciones -->
         <div class="card" style="margin-top:12px">
           <h2>Mapa de certificaciones de Azure</h2>
           <p class="muted">El portfolio se organiza por <b>nivel</b>. Los códigos de versión cambian con el tiempo; aquí mostramos los nombres (el código actual lo verás en cada guía).</p>
@@ -291,43 +300,73 @@
                 <li>AI-102 · AI Engineer</li>
               </ul>
             </div>
+          </div>
+        </div>
 
-            <div class="card">
-              <h3 style="margin:0 0 6px">Recomendado por rutas</h3>
-              <div class="check">
-                <div>🧭 <b>Arquitecto:</b> AZ-900 → AZ-305 → (AZ-500/DP-203)</div>
-                <div>💻 <b>Desarrollador:</b> AZ-900 → AZ-204 → (AI-102)</div>
-                <div>🛠️ <b>Ops:</b> AZ-900 → AZ-104 → (AZ-500/SC-300)</div>
-                <div>📊 <b>Data:</b> DP-900 → DP-203 → (AI-102)</div>
+        <!-- Rutas recomendadas por rol (con iconos y colores) -->
+        <div class="card" style="margin-top:12px">
+          <h2>Rutas recomendadas por rol</h2>
+          <div class="routes-grid">
+            <div class="route-card arch">
+              <div class="route-ico">🧭</div>
+              <div>
+                <div class="route-title" style="color:var(--arch)">Arquitecto</div>
+                <div class="route-path">AZ-900 → <b>AZ-305</b> → (AZ-500 / DP-203)</div>
               </div>
             </div>
+            <div class="route-card dev">
+              <div class="route-ico">💻</div>
+              <div>
+                <div class="route-title" style="color:var(--dev)">Desarrollador</div>
+                <div class="route-path">AZ-900 → <b>AZ-204</b> → (AI-102)</div>
+              </div>
+            </div>
+            <div class="route-card ops">
+              <div class="route-ico">🛠️</div>
+              <div>
+                <div class="route-title" style="color:var(--ops)">Ops</div>
+                <div class="route-path">AZ-900 → <b>AZ-104</b> → (AZ-500 / SC-300)</div>
+              </div>
+            </div>
+            <div class="route-card data">
+              <div class="route-ico">📊</div>
+              <div>
+                <div class="route-title" style="color:var(--data)">Data</div>
+                <div class="route-path">DP-900 → <b>DP-203</b> → (AI-102)</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-            <div class="card">
-              <h3 style="margin:0 0 6px">Associate vs Expert</h3>
-
-              <table class="tbl" aria-label="Comparativa niveles">
-                <caption class="visually-hidden">Comparativa entre niveles Associate y Expert</caption>
-                <thead>
-                  <tr>
-                    <th class="rounded-top-left">Nivel</th>
-                    <th>Enfoque</th>
-                    <th class="rounded-top-right">Dificultad</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="rounded-bottom-left" data-label="Nivel">Associate</td>
-                    <td data-label="Enfoque">Operación y diseño a nivel suscripción/servicios</td>
-                    <td class="rounded-bottom-right" data-label="Dificultad"><span class="badge-diff">Media</span></td>
-                  </tr>
-                  <tr>
-                    <td class="rounded-bottom-left" data-label="Nivel">Expert</td>
-                    <td data-label="Enfoque">Arquitecturas complejas, gobierno y resiliencia</td>
-                    <td class="rounded-bottom-right" data-label="Dificultad"><span class="badge-diff">Alta</span></td>
-                  </tr>
-                </tbody>
-              </table>
-
+        <!-- Associate vs Expert (cards con iconos y badges) -->
+        <div class="card" style="margin-top:12px">
+          <h2>Associate vs Expert</h2>
+          <div class="compare">
+            <div class="col arch">
+              <div class="head">
+                <h3><span class="icon">🎓</span>Associate</h3>
+                <span class="badge-diff">Dificultad: Media</span>
+              </div>
+              <p>Operación y diseño a nivel suscripción/servicios. Dominio del día a día y buenas prácticas.</p>
+              <ul>
+                <li>Identidad & RBAC, costes y gobernanza básica</li>
+                <li>VNets, subredes, NSG, LB</li>
+                <li>VM/VMSS, Storage, Backup/ASR</li>
+                <li>Monitor, Alertas y Advisor</li>
+              </ul>
+            </div>
+            <div class="col pro">
+              <div class="head">
+                <h3><span class="icon">🏛️</span>Expert</h3>
+                <span class="badge-diff high">Dificultad: Alta</span>
+              </div>
+              <p>Arquitecturas complejas, gobierno y resiliencia a escala. Decisiones multi-suscripción y multi-región.</p>
+              <ul>
+                <li>CAF, políticas, landing zones y segmentación</li>
+                <li>Patrones hub & spoke, Private Link/DNS</li>
+                <li>Alta disponibilidad y DR multi-región</li>
+                <li>Automatización (Bicep/Terraform), seguridad avanzada</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -387,33 +426,20 @@
               </div>
             </article>
             <article class="card">
-              <b>Patrones de integración</b>
-              <p class="muted">Service Bus, Event Grid/Hub, Functions y colas.</p>
+              <b>Landing Zone y gobernanza</b>
+              <p class="muted">CAF, Policy, RBAC, segmentación y Bicep.</p>
               <div class="cta-row">
-                <a class="btn azure" href="/content/azure-landing-zone.html">Leer</a><span class="chip">Integración</span>
+                <a class="btn azure" href="/content/azure-landing-zone.html">Leer</a><span class="chip">Gobernanza</span>
               </div>
             </article>
             <article class="card">
               <b>Backup inmutable y ciber-recuperación</b>
-              <p class="muted">WORM, cuentas aisladas, pruebas periódicas y vault.</p>
+              <p class="muted">WORM, cuentas aisladas, drills y vault.</p>
               <div class="cta-row">
                 <a class="btn azure" href="/content/immutable-backup-cyberrecovery.html">Leer</a><span class="chip">Seguridad</span>
               </div>
             </article>
           </div>
-
-          <details style="margin-top:10px">
-            <summary>Checklist por dominios (AZ-104)</summary>
-            <div class="check">
-              <div>🔐 <b>Identidad & Acceso:</b> Entra ID, RBAC, PIM, Conditional Access.</div>
-              <div>🌐 <b>Redes:</b> VNets, routing, endpoints, Private Link, DNS privado.</div>
-              <div>⚙️ <b>Compute:</b> VM/VMSS, Load Balancer, Scale Sets, actualizaciones.</div>
-              <div>📦 <b>Storage:</b> Blob/Files, SAS, replicación, lifecycle.</div>
-              <div>🔄 <b>Integración:</b> Service Bus, Event Grid/Hub, API Management.</div>
-              <div>👁️ <b>Observabilidad:</b> Monitor, Log Analytics, Alerts, Advisor.</div>
-              <div>🧯 <b>Resiliencia & Coste:</b> Zonas, multirregión, Well-Architected/CAF.</div>
-            </div>
-          </details>
         </div>
 
         <!-- Preguntas frecuentes -->
@@ -439,7 +465,7 @@
           <div class="grid cols-3">
             <div class="card"><b>VNet</b><br><span class="muted">Virtual Network</span></div>
             <div class="card"><b>NSG</b><br><span class="muted">Network Security Group</span></div>
-            <div class="card"><b>PL/PL DNS</b><br><span class="muted">Private Link / DNS</span></div>
+            <div class="card"><b>PL / DNS Privado</b><br><span class="muted">Private Link / Private DNS</span></div>
             <div class="card"><b>KV</b><br><span class="muted">Key Vault</span></div>
             <div class="card"><b>ASR</b><br><span class="muted">Site Recovery</span></div>
             <div class="card"><b>VMSS</b><br><span class="muted">Virtual Machine Scale Sets</span></div>
@@ -465,9 +491,9 @@
           <h3>Resumen rápido</h3>
           <div class="mini">Recomendado para AZ-104:</div>
           <div style="display:grid;gap:6px;margin-top:6px">
-            <div><span class="pill">6–10 semanas</span> de preparación</div>
-            <div><span class="pill">900+</span> preguntas en banco</div>
-            <div><span class="pill">3</span> simulacros cronometrados</div>
+            <div><span class="chip">6–10 semanas</span> de preparación</div>
+            <div><span class="chip">900+</span> preguntas en banco</div>
+            <div><span class="chip">3</span> simulacros cronometrados</div>
           </div>
         </div>
 
@@ -526,6 +552,7 @@
       <div>
         <div style="font-weight:800">Simuladores</div>
         <div><a href="/quiz.html?quiz=az-104">AZ-104</a></div>
+        <div><a href="/quiz.html?quiz=az-305">AZ-305</a></div>
         <div><a href="/quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
       </div>
       <div>

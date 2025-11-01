@@ -14,29 +14,35 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
-  <title>AWS · ITHub — Guías de estudio y simuladores para certificaciones Amazon AWS</title>
+  <title>AWS · ITHub — Guías de estudio y simuladores para certificaciones Amazon Web Services</title>
   <meta name="description" content="Prepárate para certificaciones de AWS con rutas de estudio, resúmenes, hojas de trucos y simuladores. De Cloud Practitioner a Professional y especialidades.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="author" content="ITHub">
-  <meta name="keywords" content="AWS, certificaciones AWS, SAA-C03, SAP-C02, DVA, SOA, DAS, SCS, rutas de estudio AWS, simulador AWS">
+  <meta name="keywords" content="AWS, certificaciones AWS, CLF-C02, SAA-C03, SAP-C02, DVA-C02, SOA-C02, SCS-C02, rutas de estudio AWS, simulador AWS">
 
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
       --stroke:#283056;--aws:#ff9900;
-      --radius:16px;--shadow:0 12px 28px rgba(6,12,40,.45);
-      --cta:linear-gradient(180deg,#ffb84d,#ff9900);
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --cta:linear-gradient(180deg,#ffcc80,#ff9900);
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+
+      /* Paleta por rol (inspirada en Azure, adaptada a AWS) */
+      --arch:#ffd699;    --arch-ring:#a76a12;
+      --dev:#b8ffcb;     --dev-ring:#2f7c49;
+      --ops:#ffe0a8;     --ops-ring:#b37823;
+      --data:#ffd0a6;    --data-ring:#c56f24;
     }
     *{box-sizing:border-box}
     body{
       margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
       color:var(--ink);
       background:
-        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.12),transparent 60%),
-        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.10),transparent 60%),
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.14),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(255,153,0,.10),transparent 60%),
         var(--bg);
-      line-height:1.65;overflow-x:hidden;
+      line-height:1.6;overflow-x:hidden;
     }
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
@@ -44,7 +50,7 @@
     /* Accesibilidad */
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
     .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
-    :focus-visible{outline:3px solid #ffcc80;outline-offset:3px;border-radius:10px;}
+    :focus-visible{outline:3px solid #ffd699;outline-offset:3px;border-radius:10px;}
     @media (prefers-reduced-motion: reduce){
       *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
@@ -62,11 +68,11 @@
     .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150;
       border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
     .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #ff990055;background:var(--cta); color:#111; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase;}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #ff990055;background:var(--cta); color:#181300; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase;}
     .pill-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
     .btn.aws{border-color:#ff990066}
-    .btn.aws:hover{border-color:#ff9900;color:#ffd7a0}
+    .btn.aws:hover{border-color:#ff9900;color:#ffe3bf}
     @media (max-width:720px){
       nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
       .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
@@ -77,70 +83,69 @@
     .hero h1{margin:0 0 6px;font-size:clamp(1.6rem,3.6vw,2.4rem);line-height:1.2}
     .lead{color:var(--muted);max-width:880px}
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-    .tag-aws{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.45);color:#ffd7a0;font-weight:800}
+    .tag-aws{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.45);color:#ffe3bf;font-weight:800}
 
     /* Layout 2 columnas */
-    .layout{display:grid;grid-template-columns:1fr 330px;gap:20px;margin-top:16px}
+    .layout{display:grid;grid-template-columns:1fr 330px;gap:16px;margin-top:14px}
     @media(max-width:980px){ .layout{grid-template-columns:1fr} }
 
     /* Cards */
-    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .card h2{margin:0 0 10px;font-size:1.25rem}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    .card h2{margin:0 0 8px;font-size:1.2rem}
     .muted{color:var(--muted)}
-    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:12px 18px;border-radius:12px;border:0;background:var(--cta);color:#111;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(255,153,0,.2);min-height:44px;}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta);color:#1a1200;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(255,153,0,.22);min-height:44px;}
     .cta-btn[aria-disabled="true"]{opacity:.7;cursor:not-allowed;filter:grayscale(.2)}
-    .chip{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid #39446e;color:#cfe1ff;font-weight:800}
-    .grid{display:grid;gap:16px}
+    .chip{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;border:1px solid #39446e;color:#cfe1ff;font-weight:800}
+    .grid{display:grid;gap:12px}
     @media(min-width:720px){ .grid.cols-2{grid-template-columns:repeat(2,1fr)} .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
+    .grid.cols-mapa{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 
-    /* ====== Mapa de certificaciones ====== */
-    .map-grid{
-      display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:16px; margin-top:12px; align-items:start;
+    /* Badges */
+    .badge-diff{
+      display:inline-flex;align-items:center;gap:6px;justify-content:center;
+      min-width:90px;padding:6px 12px;border-radius:999px;
+      background:rgba(255,153,0,.18);border:1px solid rgba(255,153,0,.45);
+      font-weight:900;color:#ffe3bf;
     }
-    .map-card{background:linear-gradient(180deg,#12193a,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:16px 18px}
-    .map-card h3{margin:0 0 8px;font-size:1.05rem;letter-spacing:.2px}
-    .map-card ul{margin:0;padding-left:22px;line-height:1.75;font-size:.98rem}
-    .map-note{ margin-top:6px;color:var(--muted) }
+    .badge-diff.high{background:rgba(255,107,107,.22);border-color:rgba(255,107,107,.45)}
 
-    /* ✅ Rutas: alineado y seguido */
-    .route-list{
-      display:grid;
-      grid-template-columns:128px 1fr;   /* columna fija para el rol */
-      column-gap:12px; row-gap:8px;
-      align-items:start;
+    /* Rutas horizontales por rol */
+    .routes-grid{display:grid;gap:14px;grid-template-columns:repeat(2, minmax(300px,1fr))}
+    .route-card{
+      display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--stroke);
+      border-radius:16px;padding:14px;position:relative;overflow:hidden;
     }
-    .route-role{display:flex;align-items:center;gap:8px;font-weight:900}
-    .route-role .emoji{width:18px;text-align:center}
-    .route-path{color:#e8ecff; word-break:break-word}
-    .route-path b{color:#ffd7a0}
+    .route-card::before{
+      content:"";position:absolute;left:0;top:0;bottom:0;width:6px;border-radius:16px 0 0 16px;opacity:.9;
+    }
+    .route-card.arch::before{background:linear-gradient(180deg,var(--arch),var(--arch-ring))}
+    .route-card.dev::before{background:linear-gradient(180deg,var(--dev),var(--dev-ring))}
+    .route-card.ops::before{background:linear-gradient(180deg,var(--ops),var(--ops-ring))}
+    .route-card.data::before{background:linear-gradient(180deg,var(--data),var(--data-ring))}
+    .route-ico{font-size:22px;line-height:1.1;margin-top:2px}
+    .route-title{font-weight:900;margin-bottom:6px}
+    .route-path{color:#cfe1ff}
+    @media(max-width:900px){ .routes-grid{grid-template-columns:1fr} }
 
-    /* Comparativa */
-    .cmp-table{
-      width:100%; border-collapse:separate; border-spacing:0; overflow:hidden;
-      border-radius:14px; border:1px solid var(--stroke); margin-top:4px
+    /* Comparativa Associate vs Professional */
+    .compare{display:grid;gap:16px;grid-template-columns:repeat(2, minmax(300px,1fr))}
+    .compare .col{
+      background:var(--surface2);border:1px solid var(--stroke);border-radius:16px;padding:16px;position:relative;
     }
-    .cmp-table th, .cmp-table td{ padding:12px 14px; background:#121838; border-bottom:1px solid #24305b; vertical-align:top }
-    .cmp-table thead th{ background:#172047; font-size:.95rem }
-    .cmp-table tr:last-child td{ border-bottom:none }
-    .badge{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:4px 12px;border-radius:999px;border:1px solid #ff990055;background:rgba(255,153,0,.12);color:#ffd7a0;font-weight:900
-    }
-    @media (max-width:700px){
-      .cmp-table{ display:none }
-      .cmp-cards{ display:grid; gap:10px }
-      .cmp-card{ background:#121838; border:1px solid var(--stroke); border-radius:14px; padding:12px }
-      .cmp-card h4{ margin:0 0 6px }
-      .cmp-card .row{ margin:4px 0 }
-    }
+    .compare .col.arch{box-shadow:0 10px 24px rgba(255,153,0,.18)}
+    .compare .col.pro{box-shadow:0 10px 24px rgba(255,107,107,.14)}
+    .compare .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .compare h3{margin:0;display:flex;align-items:center}
+    .compare p{margin:0 0 8px;color:#e8ecff}
+    .compare ul{margin:8px 0 0 18px;color:#cfe1ff}
+    @media(max-width:900px){ .compare{grid-template-columns:1fr} }
 
     /* Sidebar */
-    .sidebar .block{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px;margin-bottom:12px}
-    .sidebar h3{margin:0 0 8px;font-size:1rem}
+    .sidebar .block{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px}
+    .sidebar h3{margin:0 0 6px;font-size:1rem}
     .mini{color:var(--muted);font-size:.92rem}
-    .a-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid #ff990055;background:rgba(255,153,0,.12);color:#ffd7a0;font-weight:800}
+    .a-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:8px;border:1px solid #ff990055;background:rgba(255,153,0,.12);color:#ffe3bf;font-weight:800}
 
     /* Footer */
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
@@ -151,13 +156,17 @@
     /* Modal */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
     .modal.show{display:flex}
-    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
     .modal-card h3{margin:0 0 12px;font-size:1.2rem}
     .modal-card textarea, .modal-card input{width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700}
     .fb-status{margin-top:8px;font-weight:800}
     .fb-status.ok{color:var(--ok)}
     .fb-status.err{color:var(--bad)}
     .fb-status.info{color:var(--muted)}
+
+    details{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:10px}
+    details+details{margin-top:8px}
+    details summary{cursor:pointer;font-weight:900}
   </style>
 </head>
 <body>
@@ -193,7 +202,7 @@
     <!-- HERO AWS -->
     <section class="hero">
       <div class="container">
-        <h1>Prepárate para las certificaciones oficiales de <span style="color:#ffb84d">AWS</span></h1>
+        <h1>Prepárate para las certificaciones oficiales de <span style="color:#ffcc80">AWS</span></h1>
         <p class="lead">Guías prácticas, rutas de estudio, hojas de trucos y simuladores. Cobertura desde <b>Cloud Practitioner</b> hasta <b>Professional</b> y especialidades.</p>
         <div class="tags" aria-label="Áreas de AWS">
           <span class="tag-aws">Cloud Practitioner</span>
@@ -210,190 +219,254 @@
     <section class="container layout">
       <!-- IZQUIERDA -->
       <div>
-        <!-- ✅ Certificaciones destacadas (arriba del todo) -->
-        <div id="certificaciones" class="card">
+
+        <!-- Certificaciones destacadas -->
+        <div id="certificaciones" class="card" style="margin-top:12px">
           <h2>Certificaciones destacadas</h2>
           <div class="muted">Accede a la página de cada certificación para guía, banco de preguntas y simulador.</div>
           <div class="grid cols-2" style="margin-top:12px">
             <article class="card">
-              <h3 style="margin:0 0 6px">Solutions Architect — Associate (SAA)</h3>
-              <p class="muted">Diseño de arquitecturas seguras, resilientes y rentables en AWS.</p>
+              <h3 style="margin:0 0 6px">Solutions Architect — Associate (SAA-C03)</h3>
+              <p class="muted">Diseño de arquitecturas bien arquitectadas, resilientes y coste-eficientes.</p>
               <div class="cta-row">
-                <a class="cta-btn" href="/quiz.html?quiz=aws-saa-c03">▶ Ver certificación</a>
+                <a class="cta-btn" href="/quiz.html?quiz=aws-saa-c03">▶ EMPEZAR ESTUDIO</a>
                 <span class="chip">Nivel Associate</span>
               </div>
             </article>
+
             <article class="card">
-              <h3 style="margin:0 0 6px">Cloud Practitioner (CLF)</h3>
-              <p class="muted">Fundamentos de la nube AWS: facturación, soporte, seguridad y servicios core.</p>
+              <h3 style="margin:0 0 6px">Cloud Practitioner (CLF-C02)</h3>
+              <p class="muted">Fundamentos de la nube AWS: modelo de responsabilidad, facturación y servicios core.</p>
               <div class="cta-row">
                 <a class="cta-btn" href="#" aria-disabled="true" onclick="return false;">⏳ Coming Soon</a>
-                <span class="chip">Nivel Fundacional</span>
+                <span class="chip">Nivel Foundational</span>
               </div>
             </article>
           </div>
         </div>
 
-        <!-- ===== Mapa de certificaciones AWS ===== -->
-        <div class="card" style="margin-top:16px">
+        <!-- Mapa de certificaciones -->
+        <div class="card" style="margin-top:12px">
           <h2>Mapa de certificaciones de AWS</h2>
           <p class="muted">El portfolio se organiza por <b>nivel</b>. Los códigos de versión cambian con el tiempo; aquí mostramos los nombres (el código actual lo verás en cada guía).</p>
 
-          <div class="map-grid">
-            <div class="map-card">
-              <h3>Fundacional</h3>
-              <ul><li>Cloud Practitioner (CLF)</li></ul>
+          <div class="grid cols-mapa" style="margin-top:14px">
+            <div class="card">
+              <h3 style="margin:0 0 6px">Fundamental</h3>
+              <ul style="margin:0;padding-left:18px">
+                <li>Cloud Practitioner (CLF)</li>
+              </ul>
             </div>
 
-            <div class="map-card">
-              <h3>Associate</h3>
-              <ul>
+            <div class="card">
+              <h3 style="margin:0 0 6px">Associate</h3>
+              <ul style="margin:0;padding-left:18px">
                 <li>Solutions Architect (SAA)</li>
                 <li>Developer (DVA)</li>
                 <li>SysOps Administrator (SOA)</li>
               </ul>
             </div>
 
-            <div class="map-card">
-              <h3>Professional</h3>
-              <ul>
+            <div class="card">
+              <h3 style="margin:0 0 6px">Professional</h3>
+              <ul style="margin:0;padding-left:18px">
                 <li>Solutions Architect (SAP)</li>
                 <li>DevOps Engineer (DOP)</li>
               </ul>
             </div>
 
-            <div class="map-card">
-              <h3>Specialty (especialidades)</h3>
-              <ul>
+            <div class="card">
+              <h3 style="margin:0 0 6px">Especialty (especialidades)</h3>
+              <ul style="margin:0;padding-left:18px">
                 <li>Security (SCS)</li>
                 <li>Advanced Networking (ANS)</li>
                 <li>Data Analytics (DAS)</li>
                 <li>Machine Learning (MLS)</li>
                 <li>Databases (DBS)</li>
-                <li>AWS for SAP (PAS)</li>
+                <li>SAP on AWS (PAS)</li>
               </ul>
             </div>
+          </div>
+        </div>
 
-            <div class="map-card">
-              <h3>Recomendado por rutas</h3>
-              <div class="route-list">
-                <div class="route-role"><span class="emoji">🧭</span> Arquitecto:</div>
+        <!-- Rutas recomendadas por rol -->
+        <div class="card" style="margin-top:12px">
+          <h2>Rutas recomendadas por rol</h2>
+          <div class="routes-grid">
+            <div class="route-card arch">
+              <div class="route-ico">🧭</div>
+              <div>
+                <div class="route-title" style="color:var(--arch)">Arquitecto</div>
                 <div class="route-path">CLF → <b>SAA</b> → <b>SAP</b> → (SCS/DAS/ANS)</div>
-
-                <div class="route-role"><span class="emoji">💻</span> Desarrollador:</div>
+              </div>
+            </div>
+            <div class="route-card dev">
+              <div class="route-ico">💻</div>
+              <div>
+                <div class="route-title" style="color:var(--dev)">Desarrollador</div>
                 <div class="route-path">CLF → <b>DVA</b> → <b>DOP</b> → (MLS)</div>
-
-                <div class="route-role"><span class="emoji">🛠️</span> Ops:</div>
+              </div>
+            </div>
+            <div class="route-card ops">
+              <div class="route-ico">🛠️</div>
+              <div>
+                <div class="route-title" style="color:var(--ops)">Ops</div>
                 <div class="route-path">CLF → <b>SOA</b> → <b>DOP</b> → (SCS)</div>
-
-                <div class="route-role"><span class="emoji">📊</span> Data:</div>
+              </div>
+            </div>
+            <div class="route-card data">
+              <div class="route-ico">📊</div>
+              <div>
+                <div class="route-title" style="color:var(--data)">Data</div>
                 <div class="route-path">CLF → <b>DAS/DBS</b> → <b>MLS</b></div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <div class="map-card">
-              <h3>Associate vs Professional</h3>
-              <table class="cmp-table" aria-label="Comparativa niveles">
-                <thead><tr><th>Nivel</th><th>Enfoque</th><th>Dificultad</th></tr></thead>
-                <tbody>
-                  <tr>
-                    <td>Associate</td>
-                    <td>Diseño y operación a nivel cuenta/servicios</td>
-                    <td><span class="badge">Media</span></td>
-                  </tr>
-                  <tr>
-                    <td>Professional</td>
-                    <td>Arquitecturas complejas multi-cuenta y resiliencia</td>
-                    <td><span class="badge">Alta</span></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="cmp-cards" aria-label="Comparativa niveles (móvil)">
-                <div class="cmp-card">
-                  <h4>Associate</h4>
-                  <div class="row"><b>Enfoque:</b> Diseño y operación a nivel cuenta/servicios</div>
-                  <div class="row"><b>Dificultad:</b> <span class="badge">Media</span></div>
-                </div>
-                <div class="cmp-card">
-                  <h4>Professional</h4>
-                  <div class="row"><b>Enfoque:</b> Arquitecturas complejas multi-cuenta y resiliencia</div>
-                  <div class="row"><b>Dificultad:</b> <span class="badge">Alta</span></div>
-                </div>
+        <!-- Associate vs Professional -->
+        <div class="card" style="margin-top:12px">
+          <h2>Associate vs Professional</h2>
+          <div class="compare">
+            <div class="col arch">
+              <div class="head">
+                <h3>🎓 Associate</h3>
+                <span class="badge-diff">Dificultad: Media</span>
               </div>
+              <p>Diseño y operación a nivel cuenta/servicios. Buenas prácticas del Well-Architected.</p>
+              <ul>
+                <li>IAM, control de costes, cuentas y Organizations</li>
+                <li>VPC: subredes, NACL/SG, LB, NAT/IGW, Endpoints</li>
+                <li>EC2, ASG, ALB/NLB, S3/EFS/EBS</li>
+                <li>CloudWatch, CloudTrail, Config, Budgets</li>
+              </ul>
+            </div>
+            <div class="col pro">
+              <div class="head">
+                <h3>🏛️ Professional</h3>
+                <span class="badge-diff high">Dificultad: Alta</span>
+              </div>
+              <p>Arquitecturas complejas multi-cuenta y multi-región con resiliencia y gobierno.</p>
+              <ul>
+                <li>Landing zone (Control Tower), SCP, arquitectura multi-cuenta</li>
+                <li>Patrones híbridos, PrivateLink, Transit Gateway</li>
+                <li>Alta disponibilidad multi-AZ/región y DR</li>
+                <li>Automatización (CDK/Terraform), seguridad avanzada</li>
+              </ul>
             </div>
           </div>
-
-          <div class="map-note">Tip: si ya trabajas con AWS, puedes saltar directo a <b>SAA</b>. Para roles de arquitectura senior apunta a <b>SAP (Professional)</b> tras SAA.</div>
         </div>
 
         <!-- Rutas de estudio -->
-        <div class="card" style="margin-top:16px">
+        <div class="card" style="margin-top:12px">
           <h2>Rutas de estudio sugeridas</h2>
           <details open>
-            <summary>Plan 7 días (intensivo) — SAA</summary>
-            <ul style="margin:8px 0 0 22px">
-              <li><b>Fundamentos:</b> IAM, VPC básico, EC2, S3, RDS.</li>
-              <li><b>HA & Networking:</b> Subnets, NAT/IGW, ALB/NLB, Auto Scaling.</li>
-              <li><b>Storage & CDN:</b> S3 (seguridad, eventos), EFS/FSx, CloudFront.</li>
-              <li><b>Serverless:</b> Lambda, API Gateway, SQS/SNS, EventBridge.</li>
-              <li><b>Observabilidad & Seguridad:</b> CloudWatch, Config, KMS, WAF.</li>
-              <li><b>Datos:</b> RDS/Aurora, DynamoDB, Backup & DR.</li>
-              <li><b>Simulacros + repaso dirigido:</b> errores frecuentes.</li>
-            </ul>
+            <summary>Plan 7 días (intensivo) — SAA-C03</summary>
+            <div class="check">
+              <div>1️⃣ <b>Fundamentos:</b> IAM, cuentas, costos, Well-Architected.</div>
+              <div>2️⃣ <b>Red:</b> VPC, subredes, NACL/SG, Endpoints.</div>
+              <div>3️⃣ <b>Almacenamiento:</b> S3 (cifrado, bloqueo público, lifecycle), EFS/EBS.</div>
+              <div>4️⃣ <b>Cómputo:</b> EC2 + Auto Scaling + ALB/NLB.</div>
+              <div>5️⃣ <b>Datos:</b> RDS/Aurora y DynamoDB (HA/backup).</div>
+              <div>6️⃣ <b>Serverless:</b> Lambda, API Gateway, EventBridge.</div>
+              <div>7️⃣ <b>Observabilidad + simulacros:</b> CloudWatch/Trail/Config.</div>
+            </div>
           </details>
 
           <details>
-            <summary>Plan 14 días — SAA</summary>
-            <ul style="margin:8px 0 0 22px">
-              <li>Sem 1: <b>Redes</b> (VPC, routing, endpoints, PrivateLink), <b>Compute</b> (EC2, ASG, ELB).</li>
-              <li>Sem 2: <b>Storage & Data</b> (S3, EFS, RDS, Dynamo), <b>Integración</b> (SQS/SNS/EB), <b>Seguridad</b> (IAM/KMS), y 2 simulacros cronometrados.</li>
-            </ul>
+            <summary>Plan 14 días — SAA-C03</summary>
+            <div class="check">
+              <div>Sem 1: Redes (VPC, routing, TGW, PrivateLink), Compute (EC2/ASG/LB).</div>
+              <div>Sem 2: S3/EFS/EBS + RDS/Aurora/DynamoDB, seguridad (KMS/Secrets), y 2 simulacros cronometrados.</div>
+            </div>
           </details>
 
           <details>
             <summary>Plan 30 días — de Cero a Associate</summary>
-            <ul style="margin:8px 0 0 22px">
-              <li>Sem 1: Fundamentos + IAM + S3.</li>
-              <li>Sem 2: Redes (VPC, subnets, NAT, endpoints) + práctica labo.</li>
-              <li>Sem 3: Compute (EC2/ASG/ELB) + Serverless.</li>
-              <li>Sem 4: Bases de datos + seguridad + 3 simulacros finales.</li>
-            </ul>
+            <div class="check">
+              <div>Sem 1: CLF (fundamentos, precios, responsabilidad compartida).</div>
+              <div>Sem 2: Redes y compute con prácticas guiadas.</div>
+              <div>Sem 3: Datos y serverless con integración.</div>
+              <div>Sem 4: Seguridad/costes + 3 simulacros finales.</div>
+            </div>
           </details>
-          <div class="cta-row"><a class="cta-btn" href="#contenidos">📘 Ver resúmenes</a></div>
+          <div class="cta-row"><a class="cta-btn" href="#contenidos">📘 Descargar checklist (próx.)</a></div>
         </div>
 
-        <!-- Contenido clave SAA -->
-        <div id="contenidos" class="card" style="margin-top:16px">
-          <h2>Contenido clave SAA (resúmenes y hojas de trucos)</h2>
-          <div class="grid cols-2" style="margin-top:12px">
+        <!-- Contenido clave -->
+        <div id="contenidos" class="card" style="margin-top:12px">
+          <h2>Contenido clave (resúmenes y hojas de trucos)</h2>
+          <div class="grid cols-2" style="margin-top:10px">
             <article class="card">
               <b>Alta disponibilidad en VPC</b>
-              <p class="muted">VPC multi-AZ, ALB/NLB, Auto Scaling, NAT redundante y endpoints.</p>
+              <p class="muted">Zonas, Auto Scaling, ALB/NLB, NAT redundantes y errores comunes.</p>
               <div class="cta-row">
                 <a class="btn aws" href="/content/aws-vpc-ha.html">Leer</a><span class="chip">Redes</span>
               </div>
             </article>
             <article class="card">
               <b>S3: seguridad y rendimiento</b>
-              <p class="muted">Bloqueo público, SSE-KMS, políticas, versionado, multi-part, lifecycle.</p>
+              <p class="muted">Bloqueo público, SSE-KMS, versionado y multipart upload.</p>
               <div class="cta-row">
                 <a class="btn aws" href="/content/aws-s3-design-saac03.html">Leer</a><span class="chip">Storage</span>
               </div>
             </article>
             <article class="card">
               <b>Patrones con SQS y SNS</b>
-              <p class="muted">Fan-out, filtros, DLQ, FIFO, reintentos y desacoplo.</p>
+              <p class="muted">Colas FIFO, DLQ, *fan-out* y filtros por atributos.</p>
               <div class="cta-row">
                 <a class="btn aws" href="/content/aws-sqs-sns-patterns.html">Leer</a><span class="chip">Integración</span>
               </div>
             </article>
             <article class="card">
               <b>Backup inmutable y ciber-recuperación</b>
-              <p class="muted">WORM, cuentas aisladas, pruebas periódicas y vault.</p>
+              <p class="muted">WORM, cuentas aisladas, copias fuera de banda y *drills*.</p>
               <div class="cta-row">
                 <a class="btn aws" href="/content/immutable-backup-cyberrecovery.html">Leer</a><span class="chip">Seguridad</span>
               </div>
             </article>
+          </div>
+        </div>
+
+        <!-- Preguntas frecuentes -->
+        <div class="card" style="margin-top:12px">
+          <h2>Preguntas frecuentes</h2>
+          <details open>
+            <summary>¿Qué certificación empiezo primero?</summary>
+            <p class="muted">Si partes de cero, comienza por <b>CLF-C02</b>. Si ya trabajas con AWS, salta a <b>SAA-C03</b> o <b>SAP-C02</b> según tu rol y experiencia.</p>
+          </details>
+          <details>
+            <summary>¿Cuánto tiempo necesito?</summary>
+            <p class="muted">De 6 a 10 semanas para SAA-C03 estudiando 1–2 h/día. Intensivo 7 días si ya dominas conceptos.</p>
+          </details>
+          <details>
+            <summary>¿Qué puntuación aprueba?</summary>
+            <p class="muted">AWS usa evaluación por dominios. Apunta a ≥ 75–80% en nuestros simuladores cronometrados.</p>
+          </details>
+        </div>
+
+        <!-- Glosario exprés -->
+        <div class="card" style="margin-top:12px">
+          <h2>Glosario exprés de siglas AWS</h2>
+          <div class="grid cols-3">
+            <div class="card"><b>VPC</b><br><span class="muted">Virtual Private Cloud</span></div>
+            <div class="card"><b>SG / NACL</b><br><span class="muted">Security Group / Network ACL</span></div>
+            <div class="card"><b>TGW</b><br><span class="muted">Transit Gateway</span></div>
+            <div class="card"><b>KMS</b><br><span class="muted">Key Management Service</span></div>
+            <div class="card"><b>ASG</b><br><span class="muted">Auto Scaling Group</span></div>
+            <div class="card"><b>WAF</b><br><span class="muted">Web Application Firewall</span></div>
+          </div>
+        </div>
+
+        <!-- Consejos -->
+        <div class="card" style="margin-top:12px">
+          <h2>Consejos rápidos para el examen</h2>
+          <div class="check">
+            <div>✅ Identifica <b>SLA/coste/seguridad/latencia</b> antes de elegir servicio.</div>
+            <div>✅ Prioriza <b>PaaS/Serverless</b> cuando sea posible (menor *operational overhead*).</div>
+            <div>✅ Usa siempre <b>múltiples AZ</b>; multirregión si hay RTO/RPO estrictos.</div>
+            <div>✅ Para acceso privado a PaaS, emplea <b>Interface/Gateway Endpoints</b> o <b>PrivateLink</b>.</div>
+            <div>✅ Automatiza con <b>CloudFormation/CDK/Terraform</b> y aplica *guardrails* con SCP/Config.</div>
           </div>
         </div>
       </div>
@@ -402,21 +475,24 @@
       <aside class="sidebar">
         <div class="block">
           <h3>Resumen rápido</h3>
-          <div class="mini">Recomendado para SAA:</div>
+          <div class="mini">Recomendado para SAA-C03:</div>
           <div style="display:grid;gap:6px;margin-top:6px">
-            <div><span class="badge">8–12 semanas</span> de preparación</div>
-            <div><span class="badge">1200+</span> preguntas en banco</div>
-            <div><span class="badge">3</span> simulacros cronometrados</div>
+            <div><span class="chip">6–10 semanas</span> de preparación</div>
+            <div><span class="chip">1200+</span> preguntas en banco</div>
+            <div><span class="chip">3</span> simulacros cronometrados</div>
           </div>
         </div>
 
         <div class="block">
           <h3>Ruta corta (14 días)</h3>
-          <ol class="mini" style="margin:0 0 8px 18px">
-            <li>VPC, IAM, EC2 + ASG/ELB</li>
-            <li>S3/EFS/FSx, RDS/Dynamo</li>
-            <li>Lambda, API GW, SQS/SNS</li>
-            <li>Observabilidad + 2 simulacros</li>
+          <ol class="mini" style="margin:0 0 6px 18px">
+            <li>IAM, cuentas/Organizations, Well-Architected</li>
+            <li>VPC: subredes, SG/NACL, Endpoints, NAT/IGW</li>
+            <li>S3/EFS/EBS · cifrado KMS, lifecycle</li>
+            <li>EC2 + Auto Scaling + ALB/NLB</li>
+            <li>RDS/Aurora + DynamoDB</li>
+            <li>Lambda + API GW + EventBridge</li>
+            <li>CloudWatch/Trail/Config + 2 simulacros</li>
           </ol>
           <a class="a-btn" href="#contenidos">Ver resúmenes</a>
         </div>
@@ -424,18 +500,20 @@
         <div class="block">
           <h3>Recursos oficiales</h3>
           <div style="display:grid;gap:8px">
-            <a class="a-btn" href="#" title="AWS Well-Architected">Well-Architected</a>
-            <a class="a-btn" href="#" title="Exam Guides">Guías de examen</a>
-            <a class="a-btn" href="#" title="Whitepapers">Whitepapers</a>
-            <a class="a-btn" href="#" title="FAQs de servicios">FAQs por servicio</a>
+            <a class="a-btn" href="https://aws.amazon.com/training/" target="_blank" rel="noopener">AWS Training & Certification</a>
+            <a class="a-btn" href="https://aws.amazon.com/certification/certification-prep/" target="_blank" rel="noopener">Learning Paths</a>
+            <a class="a-btn" href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" target="_blank" rel="noopener">Exam Guide SAA-C03</a>
+            <a class="a-btn" href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">Well-Architected Framework</a>
+            <a class="a-btn" href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">FAQs por servicio</a>
+            <a class="a-btn" href="https://calculator.aws/#/" target="_blank" rel="noopener">AWS Pricing Calculator</a>
           </div>
         </div>
 
         <div class="block">
           <h3>Próximos directos</h3>
           <div class="mini">
-            <div style="display:flex;justify-content:space-between"><span>Arquitecturas resilientes</span><span>Mié 19:00</span></div>
-            <div style="display:flex;justify-content:space-between"><span>Preguntas tricky SAA</span><span>Lun 18:30</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Arquitecturas resilientes en AWS</span><span>Mié 19:00</span></div>
+            <div style="display:flex;justify-content:space-between"><span>Preguntas tricky SAA-C03</span><span>Lun 18:30</span></div>
           </div>
         </div>
 
@@ -456,23 +534,21 @@
     <div class="container f-grid">
       <div>
         <div class="brand" style="text-transform:none">
-          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#ffd699 0%,#ff9900 100%);box-shadow:0 0 0 6px rgba(255,153,0,.18)"></span>
           <span>ITHub.es</span>
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
       <div>
         <div style="font-weight:800">Simuladores</div>
-        <div><a href="/quiz.html?quiz=az-104">AZ-104</a></div>
         <div><a href="/quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
+        <div><a href="/quiz.html?quiz=az-104">AZ-104</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
-        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-        <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
-        <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
         <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
         <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
+        <div><a href="/content/immutable-backup-cyberrecovery.html">Backup inmutable</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contacto</div>
@@ -597,7 +673,7 @@
       const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
       const u = getCurrentUser();
       const note = {
-        id, type:'feedback', title:'Feedback web ITHub',
+        id, type:'feedback', title:'Feedback web ITHub (AWS portada)',
         message, email: from || (u?.email || null), userId: u?.id || u?.email || null,
         path: location.pathname + location.search, ua: navigator.userAgent,
         createdAt: new Date().toISOString()
