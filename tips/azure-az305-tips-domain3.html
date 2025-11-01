@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>AZ-305 · D3 · Infraestructura</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:#0f1320;color:#e8ecff;line-height:1.7}
+    .wrap{max-width:900px;margin:0 auto;padding:18px}
+    h1,h2{margin:.2rem 0 .6rem}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:14px;padding:16px;margin:12px 0}
+    code{background:#0b1225;border:1px solid #283056;padding:2px 6px;border-radius:6px}
+    a{color:#bcd3ff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>AZ-305 — D3: Infraestructura</h1>
+    <div class="card">
+      <h2>Claves rápidas</h2>
+      <ul>
+        <li>Alta disponibilidad: Zonas, VMSS, Application Gateway/Front Door.</li>
+        <li>Acceso seguro: Bastion, JIT, Private Endpoints, NSG/UDR.</li>
+        <li>Imagen dorada con <strong>SIG</strong> y aprovisionamiento con Bicep/Terraform.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Patrones que caen</h2>
+      <ul>
+        <li>Hub-spoke con UDR hacia FW, DNS privado y egress controlado.</li>
+        <li>Escalado horizontal con VMSS y autoscale.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

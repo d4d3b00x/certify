@@ -68,8 +68,17 @@
       border-radius:14px;padding:14px 16px;cursor:pointer;transition:transform .08s,border .12s,box-shadow .12s
     }
     .dom-item:hover{transform:translateY(-1px);border-color:#3a4883;box-shadow:0 10px 24px rgba(0,0,0,.25)}
-    .dom-dot{width:14px;height:14px;border-radius:50%;border:2px solid currentColor}
-    .dom-code{font-weight:900;min-width:42px;text-align:center;color:#cbd6ff}
+    /* circulito para D1, D2... con color de la plataforma */
+    .dom-code{
+      width:36px;height:36px;min-width:36px;
+      display:grid;place-items:center;
+      border-radius:999px;
+      background:var(--brand);
+      color:#fff;
+      font-weight:900;
+      letter-spacing:.2px;
+      box-shadow:0 6px 14px color-mix(in srgb, var(--brand) 28%, transparent), inset 0 0 0 2px color-mix(in srgb, #000 15%, transparent);
+    }
     .dom-title{font-weight:800}
     .dom-item.active{outline:3px solid var(--brand-ring)}
 
@@ -369,12 +378,31 @@
           ['D4','Configurar y administrar redes (20–25%)'],
           ['D5','Monitorizar y mantener recursos (10–15%)'],
         ],
+      },
+      /* === NUEVO: AZ-305 === */
+      'az-305': {
+        title: 'MICROSOFT AZURE SOLUTIONS ARCHITECT — EXPERT (AZ-305)',
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg',
+        blurb: 'Diseña soluciones en Azure: identidad y gobierno, datos y continuidad, infraestructura y aplicaciones.',
+        domains: [
+          ['D1','Diseñar identidad, gobernanza y monitoreo (25–30%)'],
+          ['D2','Diseñar soluciones de datos y continuidad (20–25%)'],
+          ['D3','Diseñar infraestructuras (25–30%)'],
+          ['D4','Diseñar soluciones de aplicación (15–20%)'],
+        ],
       }
     };
 
     const DOMAIN_FILES = {
       'az-104': { D1:'/tips/azure-az104-tips-domain1.html', D2:'/tips/azure-az104-tips-domain2.html', D3:'/tips/azure-az104-tips-domain3.html', D4:'/tips/azure-az104-tips-domain4.html', D5:'/tips/azure-az104-tips-domain5.html' },
-      'aws-saa-c03': { D1:'/tips/aws-saa-c03-tips-domain1.html', D2:'/tips/aws-saa-c03-tips-domain2.html', D3:'/tips/aws-saa-c03-tips-domain3.html', D4:'/tips/aws-saa-c03-tips-domain4.html' }
+      'aws-saa-c03': { D1:'/tips/aws-saa-c03-tips-domain1.html', D2:'/tips/aws-saa-c03-tips-domain2.html', D3:'/tips/aws-saa-c03-tips-domain3.html', D4:'/tips/aws-saa-c03-tips-domain4.html' },
+      /* === NUEVO: ficheros de notas AZ-305 === */
+      'az-305': {
+        D1:'/tips/azure-az305-tips-domain1.html',
+        D2:'/tips/azure-az305-tips-domain2.html',
+        D3:'/tips/azure-az305-tips-domain3.html',
+        D4:'/tips/azure-az305-tips-domain4.html'
+      }
     };
 
     const cfg = CONFIG[QUIZ];
@@ -392,13 +420,14 @@
       provText.textContent = cfg.blurb;
       simTitle.textContent = `${QUIZ.toUpperCase()} · Simulador de examen`;
 
+      /* === Lista de dominios con circulito coloreado === */
       dlist.innerHTML = cfg.domains.map(([d,txt]) =>
         `<li class="dom-item" data-dn="${d}">
-           <span class="dom-dot" style="color:${BRAND_CLR}"></span>
            <span class="dom-code">${d}</span>
            <span class="dom-title">${txt}</span>
          </li>`).join('');
 
+      /* === Chips del simulador (independientes del clic en la lista) === */
       chips.innerHTML = cfg.domains.map(([d]) =>
         `<label class="chip-dom" data-dn="${d}">
            <input type="checkbox" value="${d}" hidden>
@@ -424,17 +453,20 @@
           lbl.classList.toggle('on', !!cb.checked);
         });
       }
+      /* Importante: quitamos el acoplamiento lista → chips */
       function toggleChipFor(domainCode){
-        const chip = chips.querySelector(`.chip-dom[data-dn="${domainCode}"]`);
-        if(!chip) return;
-        const cb = chip.querySelector('input[type="checkbox"]');
-        cb.checked = !cb.checked; updateChipVisuals();
+        /* función ya no usada; se deja por si se necesita más adelante */
       }
+
+      /* === Al hacer clic en un dominio: SOLO abrir notas === */
       dlist.addEventListener('click', (ev)=>{
         const li = ev.target.closest('.dom-item'); if(!li) return;
         dlist.querySelectorAll('.dom-item').forEach(x=>x.classList.remove('active'));
-        li.classList.add('active'); toggleChipFor(li.dataset.dn); loadDomainNotes(li.dataset.dn);
+        li.classList.add('active');
+        loadDomainNotes(li.dataset.dn);
       });
+
+      /* Los chips siguen funcionando de forma manual */
       chips.addEventListener('click', (ev)=>{
         const wrap = ev.target.closest('.chip-dom'); if(!wrap) return;
         const cb = wrap.querySelector('input[type="checkbox"]'); cb.checked = !cb.checked; updateChipVisuals();
