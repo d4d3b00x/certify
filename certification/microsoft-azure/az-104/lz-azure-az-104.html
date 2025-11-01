@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AZ-104 · ithub — Administrator Associate</title>
+  <meta name="description" content="Temario, recursos y enlace al simulador de Microsoft Azure AZ-104 (Administrator Associate) en ithub." />
+
+  <!-- ===== Estilos base de la página (layout y contenido) ===== -->
+  <style>
+    :root{
+      --bg:#0f1724; --bg1:#071025; --bg2:#061827;
+      --card:#0b1220; --text:#e6eef6; --muted:#9aa4b2;
+      --accent:#0078D4; /* Azure */
+      --glass:rgba(255,255,255,0.04); --glass-2:rgba(255,255,255,0.02);
+      --border:rgba(255,255,255,0.06); --shadow:0 8px 30px rgba(0,0,0,0.35);
+      --radius:12px; --info:#60a5fa; --ok:#23c55e; --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--text);
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      line-height:1.5;
+    }
+    a{color:var(--text); text-decoration:none}
+
+    /* ===== Header estilo quiz.html ===== */
+    header.q-header{
+      position:sticky; top:0; z-index:1000;
+      backdrop-filter:saturate(120%) blur(8px);
+      background:linear-gradient(180deg, rgba(10,14,28,0.88), rgba(10,14,28,0.50));
+      border-bottom:1px solid #283056;
+    }
+    .q-header .inner{
+      max-width:1200px; margin:0 auto; padding:12px 24px;
+      display:flex; align-items:center; gap:14px;
+    }
+    .q-brand{display:flex; align-items:center; gap:10px}
+    .q-logo{width:36px; height:36px; border-radius:10px; background:#121838; display:grid; place-items:center; border:1px solid #283056}
+    .q-logo svg{width:22px; height:22px}
+    .q-name{font-weight:800; letter-spacing:.2px}
+    nav.q-nav{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
+    nav.q-nav a{color:var(--muted); padding:8px 10px; border-radius:8px}
+    nav.q-nav a:hover{background:rgba(255,255,255,.06); color:#fff}
+
+    /* ===== Footer estilo quiz.html ===== */
+    footer.q-footer{
+      margin-top:36px; border-top:1px solid #283056;
+      background:linear-gradient(0deg, rgba(10,14,28,0.5), rgba(10,14,28,0.3));
+      color:var(--muted);
+    }
+    .q-footer .inner{max-width:1200px; margin:0 auto; padding:22px 24px}
+    .q-footer .cols{display:grid; grid-template-columns:2fr 1fr 1fr; gap:14px}
+    .q-footer a{color:var(--muted)}
+    .q-footer a:hover{color:#fff}
+    .q-foot-bottom{margin-top:14px; display:flex; justify-content:space-between; align-items:center; gap:10px; border-top:1px solid #283056; padding-top:12px}
+
+    /* ===== Página interna AZ-104 ===== */
+    .container{max-width:1200px; margin:0 auto; padding:24px}
+    .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .grid{display:grid; grid-template-columns:1fr 360px; gap:22px}
+    @media (max-width:1080px){ .grid{grid-template-columns:1fr} }
+
+    .crumbs{color:var(--muted); font-size:13px; margin-bottom:8px}
+    .title{font-size:28px; margin:6px 0 8px}
+    .subtitle{color:var(--muted); margin:0 0 12px}
+
+    .tabs{display:flex; gap:8px; flex-wrap:wrap; border-bottom:1px solid var(--border); padding-bottom:8px; margin-bottom:12px}
+    .tab-btn{background:transparent; border:1px solid var(--border); color:var(--muted); padding:8px 12px; border-radius:10px; cursor:pointer}
+    .tab-btn.active{background:var(--accent); color:#0a0f18; border-color:transparent; font-weight:800}
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    .table-like{border:1px solid var(--border); border-radius:10px; overflow:hidden}
+    .row{display:grid; grid-template-columns:1fr auto; gap:8px; padding:8px 10px; border-top:1px solid var(--border)}
+    .row:first-child{border-top:none}
+    .badge{display:inline-block; background:rgba(255,255,255,.06); color:var(--muted); padding:4px 8px; border-radius:999px; font-size:12px}
+    .list{margin:0; padding-left:18px}
+    .list li{margin:8px 0}
+
+    .side .kpi{display:grid; grid-template-columns:auto 1fr; gap:8px; align-items:center; background:rgba(255,255,255,.04);
+      border:1px solid var(--border); border-radius:10px; padding:10px; margin-bottom:10px}
+    .side .kpi .v{font-weight:800}
+    .chips{display:flex; gap:8px; flex-wrap:wrap}
+    .chip{font-size:12px; padding:6px 8px; border-radius:8px; background:rgba(255,255,255,.06)}
+  </style>
+
+  <!-- ===== Tu snippet de Analytics + “Q GLOBAL (SIMULADOR)” (header/footer & estilos del quiz.html) ===== -->
+  <script>
+  /* ===================== Google Analytics (opcional) ===================== */
+  (function () {
+    try {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK";
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", "G-DYZ3GCXHEK");
+    } catch {}
+  })();
+
+  /* ====================================================================== */
+  /* =====================  Q GLOBAL (SIMULADOR)  ========================= */
+  /* ====================================================================== */
+
+  (() => {
+  /* ===================== CONFIG ===================== */
+  const API_URL     = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+  const PROGRESS_URL= `${API_URL}/progress`;
+  const RESULTS_URL = `${API_URL}/results`;
+
+  /* ===================== ESTADO ===================== */
+  const S = {
+    quizId: "aws-saa-c03",
+    track: "architect",
+    mode: "exam",
+    qs: [], idx: 0, answers: {}, marked: {}, markTimes: {},
+    startedAt: null, elapsedSec: 0, timerId: null, timeLimit: 0,
+    certi: "AWS Certified Solutions Architect — Associate (SAA-C03)",
+    prefs: { count: 65, explanations: "after", tags: [] },
+    sessionId: null, saveDebounce: null, saveEveryNsec: 15, hasInitialUpsert: false,
+    loading: false, finished: false, savingResult: false, _afterRenderScroll: null
+  };
+  let __SEQ = 0;
+
+  const QUIZ_TO_EXAM = { "aws-saa-c03": "SAA-C03", "az-104": "AZ-104", "az-305": "AZ-305" };
+  const QUIZZES = {
+    "aws-saa-c03": { track:"architect", certi:"AWS Certified Solutions Architect — Associate (SAA-C03)", domNames:{D1:"Diseño seguro",D2:"Resiliencia",D3:"Alto rendimiento",D4:"Optimización de coste"} },
+    "az-104": { track:"az-104-architect", certi:"Microsoft Azure Administrator — Associate (AZ-104)", domNames:{D1:"Identidades y gobierno",D2:"Almacenamiento",D3:"Cómputo",D4:"Redes",D5:"Monitorización"} },
+    "az-305": { track:"az-305-architect", certi:"Microsoft Azure Solutions Architect Expert (AZ-305)", domNames:{D1:"Diseño de infraestructura",D2:"Datos/almacenamiento",D3:"Seguridad/identidad",D4:"BC/DR"} }
+  };
+
+  /* ===================== CSS inyectado por el quiz (para header/footer/tema) ===================== */
+  (function injectCSS(){
+    const css = `
+    :root{
+      --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9; --stroke:#283056;
+      --accent:#6c8bff; --accent-2:#3e64ff; --accent-ring:rgba(108,139,255,.28);
+      --ok:#2bdc8c; --ok-bg:#0f2d1f; --ok-ink:#c9ffe6;
+      --bad:#ff6b6b; --bad-bg:#3a1518; --bad-ink:#ffd4d4;
+      --mark:#ffd24d; --mark-bg:#3a2e12; --mark-ring:rgba(255,210,77,.35);
+    }
+    #view{ margin-top:16px; }
+    /* (… resto del CSS del quiz recortado para brevedad …) */
+    `;
+    const st = document.createElement("style");
+    st.innerHTML = css;
+    document.head.appendChild(st);
+  })();
+
+  /* === Helpers mínimos del quiz necesarios para scroll con header sticky === */
+  function smartScrollTo(el, align='start'){
+    if(!el) return;
+    const rect = el.getBoundingClientRect();
+    const header = document.querySelector('header');
+    const offset = (header ? header.offsetHeight : 0) + 10;
+    const top = rect.top + window.scrollY - (align==='center' ? window.innerHeight/2 - rect.height/2 : offset);
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+  window.smartScrollTo = smartScrollTo;
+  /* Exponemos start() pero NO lo llamamos en esta página */
+  window.start = function(){};
+  })();
+  </script>
+</head>
+<body>
+
+  <!-- ===== Header (estilo quiz.html) ===== -->
+  <header class="q-header">
+    <div class="inner">
+      <a class="q-brand" href="/">
+        <span class="q-logo" aria-hidden>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#0078D4"/><stop offset="1" stop-color="#7ec7ff"/></linearGradient></defs>
+            <path d="M2 17c3-2 6-4 10-4s7 2 10 4" stroke="url(#g)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="q-name">ithub</span>
+      </a>
+      <nav class="q-nav">
+        <a href="/certificaciones">Certificaciones</a>
+        <a href="/articulos">Artículos</a>
+        <a href="/guias">Guías</a>
+        <a href="/contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="crumbs">Microsoft Azure › Certificaciones › <b>AZ-104 Administrator Associate</b></div>
+
+    <section class="grid">
+      <!-- ===== Contenido principal ===== -->
+      <article class="card">
+        <h1 class="title">AZ-104 · Microsoft Azure Administrator (Associate)</h1>
+        <p class="subtitle">
+          Implementación, gestión y monitorización de <b>identidad</b>, <b>gobernanza</b>, <b>almacenamiento</b>, <b>cómputo</b> y <b>redes</b> en Azure.
+          En esta página tienes el <b>temario</b>, <b>recursos</b>, el <b>enlace al simulador</b> y la <b>práctica</b>.
+        </p>
+
+        <!-- Tabs -->
+        <div class="tabs" role="tablist" aria-label="Secciones AZ-104">
+          <button class="tab-btn active" data-tab="temario" role="tab" aria-selected="true">Temario</button>
+          <button class="tab-btn" data-tab="recursos" role="tab" aria-selected="false">Recursos</button>
+          <button class="tab-btn" data-tab="simulador" role="tab" aria-selected="false">Simulador (enlace)</button>
+          <button class="tab-btn" data-tab="practica" role="tab" aria-selected="false">Práctica</button>
+        </div>
+
+        <!-- Temario -->
+        <div id="panel-temario" class="tab-panel active" role="tabpanel">
+          <div class="table-like">
+            <div class="row"><span><b>1. Identidad y gobernanza</b> — Entra ID (AAD), RBAC, PIM, suscripciones, Azure Policy</span> <span class="badge">Identidad</span></div>
+            <div class="row"><span><b>2. Almacenamiento</b> — Cuentas, replicación (LRS/ZRS/GZRS), SAS, lifecycle, Azure Files/NFS</span> <span class="badge">Datos</span></div>
+            <div class="row"><span><b>3. Cómputo</b> — VMs, Availability Sets, VM Scale Sets, imágenes, extensiones</span> <span class="badge">Compute</span></div>
+            <div class="row"><span><b>4. Redes</b> — VNets, subredes, NSG, UDR, NAT, Peering, VPN/ER, Private Link</span> <span class="badge">Redes</span></div>
+            <div class="row"><span><b>5. Seguridad y protección</b> — Defender for Cloud, Key Vault, cifrado, Backup, Site Recovery</span> <span class="badge">Seguridad</span></div>
+            <div class="row"><span><b>6. Monitorización</b> — Azure Monitor, Log Analytics, alertas, métricas</span> <span class="badge">Ops</span></div>
+            <div class="row"><span><b>7. Coste y gobierno</b> — Tags, budgets/costs, cumplimiento</span> <span class="badge">Coste</span></div>
+          </div>
+
+          <h3 style="margin-top:12px">Objetivos de aprendizaje</h3>
+          <ul class="list">
+            <li>Gestionar <b>accesos</b> con RBAC, <b>PIM</b> y <b>Policy</b>.</li>
+            <li>Desplegar y operar infra con <b>buenas prácticas</b> de compute, redes y datos.</li>
+            <li>Implantar <b>monitorización</b>, <b>resiliencia</b> (Backup/ASR) y <b>seguridad</b> (Defender/Key Vault).</li>
+          </ul>
+        </div>
+
+        <!-- Recursos -->
+        <div id="panel-recursos" class="tab-panel" role="tabpanel" aria-hidden="true">
+          <h3>Guías recomendadas</h3>
+          <div class="table-like">
+            <div class="row"><span>RBAC y PIM en escenarios de acceso</span> <a href="#">Leer</a></div>
+            <div class="row"><span>Redes: VNets, Peering y Private Link</span> <a href="#">Leer</a></div>
+            <div class="row"><span>Backup y ASR: patrones de recuperación</span> <a href="#">Leer</a></div>
+          </div>
+
+          <h3 style="margin-top:12px">Enlaces oficiales</h3>
+          <div class="chips">
+            <a class="chip" href="#" target="_blank" rel="noopener">Exam Guide AZ-104</a>
+            <a class="chip" href="#" target="_blank" rel="noopener">Microsoft Learn</a>
+            <a class="chip" href="#" target="_blank" rel="noopener">Well-Architected (Azure)</a>
+          </div>
+
+          <h3 style="margin-top:12px">Descargables</h3>
+          <div class="table-like">
+            <div class="row"><span>Checklist previo al examen</span> <a href="#">PDF</a></div>
+            <div class="row"><span>Runbook de operaciones</span> <a href="#">DOCX</a></div>
+            <div class="row"><span>Glosario AZ-104</span> <a href="#">PDF</a></div>
+          </div>
+        </div>
+
+        <!-- Simulador (enlace) -->
+        <div id="panel-simulador" class="tab-panel" role="tabpanel" aria-hidden="true">
+          <p>El simulador de <b>AZ-104</b> está disponible aquí:</p>
+          <p><a class="chip" href="/azure/az-104/simulador">Abrir simulador AZ-104</a></p>
+          <p class="list small" style="color:var(--muted)">Nota: no se embebe aquí para mantener la página ligera.</p>
+        </div>
+
+        <!-- Práctica -->
+        <div id="panel-practica" class="tab-panel" role="tabpanel" aria-hidden="true">
+          <h3>Laboratorios prácticos</h3>
+          <ul class="list">
+            <li>Identidad: Entra ID + Grupos + RBAC — <a href="#">Abrir lab</a></li>
+            <li>Redes: Hub-Spoke + Peering + NSG/UDR — <a href="#">Abrir lab</a></li>
+            <li>VMSS con autoscale y health probes — <a href="#">Abrir lab</a></li>
+            <li>Storage ZRS + Lifecycle + SAS — <a href="#">Abrir lab</a></li>
+            <li>Backup/ASR: protección VM y failover — <a href="#">Abrir lab</a></li>
+            <li>Monitor: alertas + Kusto — <a href="#">Abrir lab</a></li>
+          </ul>
+
+          <h3 style="margin-top:12px">Estrategia de estudio</h3>
+          <ol class="list">
+            <li><b>Sem 1–2:</b> Identidad y gobernanza</li>
+            <li><b>Sem 3–4:</b> Redes y almacenamiento</li>
+            <li><b>Sem 5–6:</b> Compute y seguridad</li>
+            <li><b>Sem 7:</b> Monitorización</li>
+            <li><b>Sem 8:</b> Simulacros cronometrados + repaso</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- ===== Sidebar ===== -->
+      <aside class="card side" aria-label="Resumen AZ-104">
+        <div class="kpi"><span class="v">Nivel</span><span>Associate</span></div>
+        <div class="kpi"><span class="v">Duración</span><span>6–10 semanas</span></div>
+        <div class="kpi"><span class="v">Formato</span><span>Opción múltiple · ~120 min</span></div>
+        <div class="kpi"><span class="v">Requisitos</span><span>Experiencia práctica con Azure (recomendada)</span></div>
+
+        <h3 style="margin:12px 0 6px">Consejos clave</h3>
+        <ul class="list">
+          <li>Si piden <b>menos operación</b>, prioriza PaaS/gestionado.</li>
+          <li><b>Seguridad</b>: RBAC, PIM, Key Vault, Defender.</li>
+          <li>En <b>redes</b>, usa Private Link/Endpoints en PaaS.</li>
+        </ul>
+
+        <h3 style="margin:12px 0 6px">Enlaces rápidos</h3>
+        <div class="chips">
+          <a class="chip" href="#">Blueprint AZ-104</a>
+          <a class="chip" href="#">Preguntas tricky</a>
+          <a class="chip" href="#">Checklist final</a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- ===== Footer (estilo quiz.html) ===== -->
+  <footer class="q-footer">
+    <div class="inner">
+      <div class="cols">
+        <div><strong>ithub</strong><br/>Recursos, simuladores y guías para certificaciones IT.</div>
+        <div><a href="/legal/privacidad">Privacidad</a><br/><a href="/legal/terminos">Términos</a></div>
+        <div><a href="/contacto">Contacto</a><br/><a href="/about">Sobre nosotros</a></div>
+      </div>
+      <div class="q-foot-bottom">
+        <span>© 2025 ithub</span>
+        <span style="color:var(--muted)">Microsoft Azure · AZ-104</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tabs JS (ligero, sin dependencias) -->
+  <script>
+    const btns = document.querySelectorAll('.tab-btn');
+    const panels = {
+      temario: document.getElementById('panel-temario'),
+      recursos: document.getElementById('panel-recursos'),
+      simulador: document.getElementById('panel-simulador'),
+      practica: document.getElementById('panel-practica')
+    };
+    btns.forEach(b=>{
+      b.addEventListener('click', ()=>{
+        btns.forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        const tab = b.dataset.tab;
+        Object.values(panels).forEach(p=>{p.classList.remove('active'); p.setAttribute('aria-hidden','true');});
+        panels[tab].classList.add('active');
+        panels[tab].setAttribute('aria-hidden','false');
+        try{ window.smartScrollTo(document.querySelector('main')); }catch{}
+      });
+    });
+  </script>
+</body>
+</html>

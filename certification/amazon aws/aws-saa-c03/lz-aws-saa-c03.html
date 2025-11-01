@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f1320" />
+  <title>AWS · ITHub — Guías y simuladores para certificaciones AWS</title>
+  <meta name="description" content="Prepárate para certificaciones de AWS con rutas de estudio compactas, resúmenes, descargas útiles y simuladores. De Cloud Practitioner a especialidades.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="author" content="ITHub">
+  <meta name="keywords" content="AWS, SAA-C03, Solutions Architect Associate, simulador AWS, rutas estudio AWS, preguntas examen AWS">
+
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --btn-bg:linear-gradient(180deg,#ffb84d,#ff9900);--btn-ink:#0f1320;
+
+      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
+      --pill-ring:#2a3150;
+
+      --cta-aws:linear-gradient(180deg,#ffb84d,#ff9900);
+
+      --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.12),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.10),transparent 60%),
+        var(--bg);
+      line-height:1.6;overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    /* Accesibilidad base */
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
+    :focus-visible{outline:3px solid #ffcc80;outline-offset:3px;border-radius:10px;}
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+    }
+
+    /* HEADER (como tu plantilla) */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .brand img.site-logo{height:42px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
+    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+
+    .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #ff990055;background:var(--cta-aws); color:#111; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase;}
+    .pill-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
+    .btn.aws{border-color:#ff990066}
+    .btn.aws:hover{border-color:#ff9900;color:#ffd7a0}
+    @media (max-width:720px){
+      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
+    }
+
+    /* HERO compacto */
+    .hero{padding:22px 0 10px}
+    .hero h1{margin:0 0 6px;font-size:clamp(1.5rem,3.4vw,2.2rem);line-height:1.2}
+    .lead{color:var(--muted);max-width:840px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .tag-aws{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,153,0,.15);border:1px solid rgba(255,153,0,.45);color:#ffd7a0;font-weight:800}
+
+    /* LAYOUT de dos columnas (elimina el hueco vacío) */
+    .layout{display:grid;grid-template-columns:1fr 330px;gap:16px;margin-top:14px}
+    @media(max-width:980px){ .layout{grid-template-columns:1fr} }
+
+    /* Secciones izquierda */
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta-aws);color:#111;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(255,153,0,.2);min-height:44px;}
+    .link-muted{color:#cdd6ff;text-decoration:underline dotted}
+
+    .certs-grid{display:grid;gap:12px}
+    @media(min-width:720px){ .certs-grid{grid-template-columns:repeat(2,1fr)}}
+    .cert{display:flex;flex-direction:column;gap:8px}
+    .cert .title{font-weight:900}
+    .cert .meta{display:flex;gap:8px;align-items:center;color:#ffd7a0}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,153,0,.45);background:rgba(255,153,0,.15);font-weight:800}
+
+    /* Sidebar derecha compacta */
+    .sidebar .block{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px}
+    .sidebar h3{margin:0 0 6px;font-size:1rem}
+    .mini{color:var(--muted);font-size:.92rem}
+    .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 10px}
+    .kv b{color:#ffd7a0}
+    .list{display:grid;gap:8px}
+    .li{display:flex;justify-content:space-between;gap:6px}
+    .a-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:8px;border:1px solid #ff990055;background:rgba(255,153,0,.12);color:#ffd7a0;font-weight:800}
+    .dl{display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px dashed #334; border-radius:10px}
+    .dl a{font-weight:800}
+    .chip{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;border:1px solid #39446e;color:#cfe1ff;font-weight:800}
+    .hr{height:1px;background:var(--stroke);margin:8px 0}
+
+    /* Footer (como tu plantilla) */
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+    .f-grid{display:grid;gap:14px}
+    @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- CABECERA -->
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      </div>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a class="link-btn" href="#certificaciones">CERTIFICACIONES</a>
+        <a class="link-btn" href="#contenidos">CONTENIDOS</a>
+        <a class="link-btn" href="/score/ranking.html">RANKING</a>
+      </nav>
+
+      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+
+        <div id="userArea" style="display:none;align-items:center;gap:6px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- HERO AWS -->
+    <section class="hero">
+      <div class="container">
+        <h1>Prepárate para las certificaciones oficiales de <span style="color:#ffb84d">AWS</span></h1>
+        <p class="lead">Material actualizado, guías prácticas y simuladores. Cobertura desde <b>Cloud Practitioner</b> hasta <b>Professional</b> y especialidades.</p>
+        <div class="tags">
+          <span class="tag-aws">Cloud Practitioner</span>
+          <span class="tag-aws">Solutions Architect</span>
+          <span class="tag-aws">Developer</span>
+          <span class="tag-aws">SysOps</span>
+          <span class="tag-aws">Security</span>
+          <span class="tag-aws">Data/ML</span>
+        </div>
+        <div class="cta-row">
+          <a class="cta-btn" href="#certificaciones">Ver certificaciones</a>
+          <a class="btn aws" href="#contenidos">Guías y consejos</a>
+          <a class="btn aws" href="#descargas">Recursos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- LAYOUT 2 columnas (izquierda contenido / derecha sidebar compacta) -->
+    <section class="container layout">
+      <!-- IZQUIERDA: contenido sin huecos -->
+      <div>
+        <!-- Certificaciones destacadas -->
+        <div id="certificaciones" class="card">
+          <h2 style="margin:0 0 8px">Certificaciones destacadas</h2>
+          <div class="mini">Accede al simulador desde la página de cada certificación.</div>
+          <div class="certs-grid" style="margin-top:12px">
+            <div class="card cert">
+              <div class="title">SAA-C03 · Solutions Architect — Associate</div>
+              <div class="meta"><span class="pill">Simulador</span><span class="pill">Guía de examen</span></div>
+              <div class="cta-row">
+                <a class="cta-btn" href="quiz.html?quiz=aws-saa-c03">▶ Empezar simulador</a>
+                <a class="btn aws" href="content/aws-vpc-ha.html">Ver guía</a>
+              </div>
+            </div>
+            <div class="card cert">
+              <div class="title">CLF-C02 · Cloud Practitioner</div>
+              <div class="meta"><span class="pill">Resumen</span><span class="pill">Preguntas clave</span></div>
+              <div class="cta-row">
+                <a class="btn aws" href="#contenidos">Resumen rápido</a>
+                <a class="btn aws" href="/score/ranking.html?quiz=aws-saa-c03">Ranking SAA</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenidos clave -->
+        <div id="contenidos" class="card" style="margin-top:12px">
+          <h2 style="margin:0 0 8px">Contenido clave por certificación</h2>
+          <div class="mini">Lo esencial para el examen: resúmenes y hojas de trucos.</div>
+
+          <div class="certs-grid" style="margin-top:12px">
+            <article class="card">
+              <div><b>Alta disponibilidad en VPC</b></div>
+              <p class="mini">VPC multi-AZ, Auto Scaling, ALB y NAT redundantes. Errores comunes en SAA-C03.</p>
+              <div class="cta-row">
+                <a class="btn aws" href="content/aws-vpc-ha.html">Leer</a>
+                <span class="chip">SAA-C03</span>
+              </div>
+            </article>
+            <article class="card">
+              <div><b>S3: seguridad y rendimiento</b></div>
+              <p class="mini">Bloqueo público, SSE-KMS, versionado y multipart upload.</p>
+              <div class="cta-row">
+                <a class="btn aws" href="content/aws-s3-design-saac03.html">Leer</a>
+                <span class="chip">SAA-C03</span>
+              </div>
+            </article>
+            <article class="card">
+              <div><b>Patrones con SQS y SNS</b></div>
+              <p class="mini">Colas FIFO + DLQ, fan-out y filtros.</p>
+              <div class="cta-row">
+                <a class="btn aws" href="content/aws-sqs-sns-patterns.html">Leer</a>
+                <span class="chip">SAA-C03</span>
+              </div>
+            </article>
+            <article class="card">
+              <div><b>Backup inmutable y recuperación</b></div>
+              <p class="mini">Diseña un vault WORM con aislamiento y drills.</p>
+              <div class="cta-row">
+                <a class="btn aws" href="content/immutable-backup-cyberrecovery.html">Leer</a>
+                <span class="chip">AWS · Azure</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- DERECHA: sidebar compacta -->
+      <aside class="sidebar">
+        <div class="block">
+          <h3>Resumen rápido</h3>
+          <div class="kv">
+            <span>Duración sugerida</span><b>8–12 sem</b>
+            <span>Banco preguntas</span><b>1200+</b>
+            <span>Tasa de éxito</span><b>78%</b>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Ruta de estudio</h3>
+          <div class="list">
+            <div class="li"><span>1) Fundamentos · IAM, EC2, principios</span><a class="a-btn" href="#contenidos">Docs</a></div>
+            <div class="li"><span>2) Redes y seguridad · VPC, NACL, WAF</span><a class="a-btn" href="#contenidos">Best practices</a></div>
+            <div class="li"><span>3) Datos y serverless · RDS, Lambda</span><a class="a-btn" href="#contenidos">Labs</a></div>
+            <div class="li"><span>4) Simulacros cronometrados</span><a class="a-btn" href="#certificaciones">Review</a></div>
+          </div>
+        </div>
+
+        <div id="descargas" class="block">
+          <h3>Descargables útiles</h3>
+          <div class="list">
+            <div class="dl"><span>Cheat-sheet de servicios core</span><a href="#" class="link-muted">PDF</a></div>
+            <div class="dl"><span>Plantilla Well-Architected</span><a href="#" class="link-muted">DOCX</a></div>
+            <div class="dl"><span>Checklist previo al examen</span><a href="#" class="link-muted">PDF</a></div>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Enlaces oficiales</h3>
+          <div class="list">
+            <a class="a-btn" href="#">Guías de examen</a>
+            <a class="a-btn" href="#">Whitepapers</a>
+            <a class="a-btn" href="#">FAQs por servicio</a>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Próximos webinars / directos</h3>
+          <div class="list mini">
+            <div class="li"><span>Arquitecturas resilientes en AWS</span><span>Mié 19:00</span></div>
+            <div class="li"><span>Revisión de preguntas tricky SAA-A</span><span>Lun 18:30</span></div>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Soporte y comunidad</h3>
+          <div class="list">
+            <a class="a-btn" href="#">Foro</a>
+            <a class="a-btn" href="#">Discord</a>
+            <a class="a-btn" href="#">Coaching</a>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Plan sugerido 8–12 semanas</h3>
+          <div class="mini">
+            <div>• Sem 1–2: Fundamentos + IAM + S3</div>
+            <div>• Sem 3–4: Redes (VPC, seguridad)</div>
+            <div>• Sem 5–6: Datos (RDS, Dynamo) + Lambda</div>
+            <div>• Sem 7–8: Arquitectura y resiliencia</div>
+            <div>• Sem 9–12: Simulacros + repasos</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Pie -->
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHub.es</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
+      </div>
+      <div>
+        <div style="font-weight:800">Simuladores</div>
+        <div><a href="quiz.html?quiz=az-104">AZ-104</a></div>
+        <div><a href="quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">Contenidos</div>
+        <div><a href="content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+        <div><a href="content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
+        <div><a href="content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
+        <div><a href="content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">Contacto</div>
+        <button id="footerContactBtn" type="button"
+                style="background:none;border:none;color:#cfe1ff;
+                       font-weight:800;display:inline-flex;align-items:center;
+                       gap:6px;cursor:pointer;padding:0;margin-top:6px;">
+          💬 <span>Contáctanos</span>
+        </button>
+      </div>
+    </div>
+    <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+  </footer>
+
+  <!-- Región de estado accesible -->
+  <div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
+
+  <!-- Modal Feedback -->
+  <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
+    <div class="modal-card" role="document" tabindex="-1">
+      <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
+      <p class="muted" style="margin:0 0 8px">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
+
+      <label class="visualmente-hidden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
+      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
+      <label class="visualmente-hidden" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
+      <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
+
+      <div id="fbStatus" class="fb-status" aria-live="polite"></div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+        <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
+        <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
+        <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Diagnóstico (reutilizado si lo necesitas más adelante) -->
+  <div class="modal" id="diagModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="diagTitle">
+    <div class="modal-card" style="max-height:88vh;overflow:auto" role="document" tabindex="-1">
+      <h3 id="diagTitle">🧭 Mini-test Diagnóstico</h3>
+      <div class="mini">Disponible desde la sección de simuladores.</div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="pill-btn" id="btnOkFeedback" type="button">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Año
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const srStatus = document.getElementById('srStatus');
+
+    /* ===== AUTH ===== */
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function isAuthed(){ return !!getCurrentUser(); }
+    function renderHeaderAuth(){
+      const u=getCurrentUser();
+      const login=document.getElementById('btnLogin');
+      const signup=document.getElementById('btnSignup');
+      const userArea=document.getElementById('userArea');
+      const nameTop=document.getElementById('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    }
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    renderHeaderAuth();
+
+    /* ✅ NUEVO: abrir modal de feedback desde el footer */
+    document.getElementById('footerContactBtn')?.addEventListener('click', ()=>{
+      document.getElementById('feedbackModal').classList.add('show');
+      document.getElementById('feedbackModal').setAttribute('aria-hidden','false');
+    });
+  </script>
+</body>
+</html>

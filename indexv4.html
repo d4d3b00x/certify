@@ -63,6 +63,7 @@
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    /* ✅ Logo un poco más grande */
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
@@ -81,16 +82,23 @@
     }
 
     /* Secciones */
+    /* ✅ HERO más compacto */
     .hero{padding:24px 0 8px;text-align:center}
     .hero h1{margin:0 0 2px;font-size:clamp(1.6rem,3.8vw,2.6rem);line-height:1.2}
     .lead{color:var(--muted);max-width:820px;margin:4px auto 0;font-size:.95rem}
     .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+    /* Botones del hero ligeramente más pequeños */
+    .hero .btn{height:36px;min-height:36px;padding:0 12px;border-radius:10px;font-size:.92rem}
+
+    /* ✅ “Logo” del hero (emoji) más grande y alineado */
+    .hero-emoji{display:inline-flex;align-items:center;justify-content:center;
+      font-size:1.35em;line-height:0;margin-right:.35em;transform:translateY(4px)}
 
     section{padding:26px 0}
     .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
     .muted{color:var(--muted);font-size:.95rem}
 
-    /* Tarjetas (estilo base) */
+    /* Tarjetas simulador */
     .grid{display:grid;gap:14px;margin-top:12px}
     @media(min-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1140px){.grid{grid-template-columns:repeat(3,1fr)}}
@@ -109,13 +117,25 @@
     .grid{ gap:10px; } .sim-card{ padding:14px; border-radius:16px; gap:10px; }
     .prov-pill{ padding:6px 12px; font-size:12px; } .sim-title{ font-size:.98rem; }
 
-    /* ===== NUEVA SECCIÓN: Catálogo de fabricantes (dos tarjetas) ===== */
-    .vendor-grid{display:grid;gap:14px;margin-top:12px}
-    @media(min-width:820px){.vendor-grid{grid-template-columns:repeat(2,1fr)}}
-    .vendor-card .v-title{font-size:1.2rem;font-weight:900}
-    .vendor-card p{margin:0;color:var(--muted);max-width:560px}
-    .vendor-azure .accent{background:linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))}
-    .vendor-aws .accent{background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))}
+    /* Centro de contenidos */
+    .filter-bar{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;margin-top:10px}
+    .filter-bar label{font-weight:900;white-space:nowrap}
+    .filter-bar select{appearance:none;background:#0f1630;border:1px solid var(--stroke);border-radius:10px;color:var(--ink);font-weight:800;padding:10px 12px;min-width:260px;}
+    .carousel{position:relative;margin-top:12px}
+    .track{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;min-height:420px;align-items:start;align-content:start;}
+    .track.compact{min-height:auto;justify-content:center}
+    @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
+    @media(max-width:560px){ .track{grid-template-columns:1fr} }
+    .slide{display:none} .slide.show{display:block}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+    .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .cc-meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;}
+    .cc-meta .grow{ display:inline-flex; align-items:center; gap:8px; margin-right:auto; }
+    .tiny-btn{display:inline-flex;align-items:center;justify-content:center;height:28px; padding:0 10px; border-radius:8px;border:1px solid #3b2fff44; background:var(--btn-bg);color:#fff; font-weight:900; cursor:pointer;white-space:nowrap;}
+
+    .car-btn{position:absolute;top:45%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.95);color:#0f1320;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:2}
+    .car-btn[disabled]{opacity:.5;cursor:not-allowed}
+    .car-prev{left:-10px}.car-next{right:-10px}
 
     /* How & CTA */
     .how-grid{display:grid;gap:10px;margin-top:12px}
@@ -172,7 +192,7 @@
 
       <nav class="menu" aria-label="Navegación principal">
         <a class="link-btn" href="#simuladores">SIMULADORES</a>
-        <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
+        <a class="link-btn" href="#contenidos">CONTENIDOS</a>
         <a class="link-btn" href="/score/ranking.html">RANKING</a>
       </nav>
 
@@ -193,6 +213,7 @@
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
+        <!-- ✅ emoji envuelto para poder estilizarlo -->
         <h1 id="hero-title"><span class="hero-emoji" aria-hidden="true">🎮</span>Aprende mientras compites contra el resto de Quizzers de la comunidad.</h1>
         <p class="lead">Simula <strong>exámenes y certificaciones IT</strong> con preguntas centradas en aprobar. Sube tu nivel y mide tu progreso.</p>
         <div class="hero-actions" role="group" aria-label="Acciones principales">
@@ -243,36 +264,6 @@
       </div>
     </section>
 
-    <!-- Catálogo de fabricantes -->
-    <section aria-labelledby="fab-title">
-      <div class="container">
-        <div id="fab-title" class="sec-title">CATÁLOGO DE FABRICANTES</div>
-        <div class="vendor-grid">
-          <!-- Azure -->
-          <article class="sim-card sim-azure vendor-card vendor-azure">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="prov-pill prov-azure">MICROSOFT AZURE</div>
-            <div class="v-title">Explora las certificaciones de Azure</div>
-            <p>Rutas y simuladores para AZ-104, AZ-305 y más.</p>
-            <div class="btns-row" role="group" aria-label="Acciones Microsoft Azure">
-              <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html" role="button">🔎 CATÁLOGO AZURE</a>
-            </div>
-          </article>
-
-          <!-- AWS -->
-          <article class="sim-card sim-aws vendor-card vendor-aws">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="prov-pill prov-aws">AMAZON AWS</div>
-            <div class="v-title">Explora las certificaciones de AWS</div>
-            <p>Rutas y simuladores para SAA-C03 y siguientes.</p>
-            <div class="btns-row" role="group" aria-label="Acciones Amazon AWS">
-              <a class="cta-btn" href="/certification/amazon aws/index.html" role="button">🔎 CATÁLOGO AWS</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <!-- Simuladores -->
     <section id="simuladores" aria-labelledby="sim-title">
       <div class="container">
@@ -283,6 +274,103 @@
       </div>
     </section>
 
+    <!-- Centro de contenidos -->
+    <section id="contenidos" aria-labelledby="content-title">
+      <div class="container">
+        <div id="content-title" class="sec-title">CONTENIDO CLAVE POR CERTIFICACIÓN</div>
+        <div class="muted">Solo lo esencial: resúmenes rápidos, hojas de trucos y guías prácticas enfocadas en el examen.</div>
+
+        <div class="filter-bar" role="group" aria-label="Filtrar contenidos">
+          <label for="examSelect">Selecciona Certificación:</label>
+          <select id="examSelect" name="examSelect">
+            <option value="all">TODAS</option>
+            <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
+            <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
+          </select>
+        </div>
+
+        <div class="carousel" role="region" aria-label="Carrusel de contenidos">
+          <button class="car-btn car-prev" type="button" aria-label="Anterior">‹</button>
+          <div class="track" id="contentTrack">
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🌐 <strong>VNet Peering vs. VPN Gateway</strong></div>
+              <p class="muted">Aprende cuándo usar <strong>VNet Peering</strong> para baja latencia y cuándo elegir <strong>VPN Gateway</strong> para cifrado y conectividad híbrida.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/vnet-peering-vpn.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🔐 <strong>Checklist de seguridad Azure</strong></div>
+              <p class="muted">Revisa <strong>RBAC mínimo</strong>, <strong>MFA</strong>, <strong>PIM</strong>, <strong>Azure Policy</strong> y <strong>Defender for Cloud</strong> para reforzar la seguridad. Alineado con AZ-104.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/azure-security-checklist.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="mixed">
+              <div class="cc-head">💾 <strong>Backup inmutable y recuperación</strong></div>
+              <p class="muted">Diseña un <strong>vault WORM</strong> con aislamiento y <em>drills</em> de prueba. Comparativa Azure-AWS.</p>
+              <div class="cc-meta">
+                <span class="grow">
+                  <span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span> ·
+                  <span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span>
+                </span>
+                <a class="tiny-btn" href="content/immutable-backup-cyberrecovery.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="aws-saa-c03">
+              <div class="cc-head">🏗️ <strong>Alta disponibilidad en VPC</strong></div>
+              <p class="muted">VPC multi-AZ, Auto Scaling, ALB y NAT redundantes. Errores comunes en SAA-C03.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span></span>
+                <a class="tiny-btn" href="content/aws-vpc-ha.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🗂️ <strong>Azure Storage: claves rápidas</strong></div>
+              <p class="muted">SAS, RBAC, replicación LRS–GZRS, inmutabilidad y CMK.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/azure-storage-az104.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🔗 <strong>Conectividad híbrida en Azure</strong></div>
+              <p class="muted">VPN S2S, ExpressRoute con BGP, hub-spoke, Firewall y DNS privado.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/azure-hybrid-connectivity-az305.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="aws-saa-c03">
+              <div class="cc-head">📦 <strong>S3: seguridad y rendimiento</strong></div>
+              <p class="muted">Bloqueo público, SSE-KMS, versionado y optimización con multipart upload.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span></span>
+                <a class="tiny-btn" href="content/aws-s3-design-saac03.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="aws-saa-c03">
+              <div class="cc-head">📨 <strong>Patrones con SQS y SNS</strong></div>
+              <p class="muted">Colas FIFO y DLQ con fan-out de SNS, reintentos y filtros.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span></span>
+                <a class="tiny-btn" href="content/aws-sqs-sns-patterns.html" role="button">Leer</a>
+              </div>
+            </article>
+          </div>
+          <button class="car-btn car-next" type="button" aria-label="Siguiente">›</button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- Pie -->
@@ -297,21 +385,19 @@
       </div>
       <div>
         <div style="font-weight:800">Simuladores</div>
-        <div><a href="/quiz.html?quiz=az-104">AZ-104</a></div>
-        <div><a href="/quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
-        <div><a href="/quiz.html?quiz=az-305">AZ-305</a></div>
+        <div><a href="quiz.html?quiz=az-104">AZ-104</a></div>
+        <div><a href="quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
-        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-        <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
-        <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
-        <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
-        <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
+        <div><a href="content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+        <div><a href="content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
+        <div><a href="content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
+        <div><a href="content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
       </div>
+      <!-- 🔻 MODIFICADO: botón que abre el modal -->
       <div>
-        <div style="font-weight:800">Colaborador</div>
-        💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
         <div style="font-weight:800">Contacto</div>
         <button id="footerContactBtn" type="button"
                 style="background:none;border:none;color:#cfe1ff;
@@ -360,7 +446,6 @@
             <label for="diagExam" style="font-weight:900">Selecciona examen</label>
             <select id="diagExam" style="margin:6px 0 6px">
               <option value="AZ-104">AZ-104 · Microsoft Azure Administrator</option>
-              <option value="AZ-305">AZ-305 · Microsoft Solutions Architect Expert</option>
               <option value="SAA-C03">SAA-C03 · AWS Solutions Architect Associate</option>
             </select>
           </div>
@@ -370,7 +455,7 @@
             </label>
           </div>
         </div>
-        <p id="diagNote" class="muted" style="margin:6px 0 10px">Hasta 12 preguntas (máx. 3 por dominio). Verás un resumen por dominios al finalizar.</p>
+        <p id="diagNote" class="muted" style="margin:6px 0 10px">Se seleccionan 3 preguntas por dominio (4×3) y verás un resumen por dominios al finalizar.</p>
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
           <button class="btn" id="btnCloseDiag1" type="button">CANCELAR</button>
           <button class="pill-btn" id="btnStartDiag" type="button">COMENZAR (12 PREGUNTAS)</button>
@@ -450,27 +535,27 @@
 
     /* ===== SIMULADORES ===== */
     const CATALOG = [
-      {id:'AZ-104',provider:'MICROSOFT AZURE (ENGLISH)',title:'Administrator Associate',quiz:'az-104', providerClass:'prov-azure', simClass:'sim-azure', accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))'},
-      {id:'SAA-C03',provider:'AMAZON AWS (ENGLISH)',title:'Solutions Architect Associate',quiz:'aws-saa-c03', providerClass:'prov-aws',   simClass:'sim-aws',   accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))'},
-      {id:'AZ-305',provider:'MICROSOFT AZURE (ESPAÑOL)',title:'Architect Expert',quiz:'az-305', providerClass:'prov-azure', simClass:'sim-azure', accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))'}
+      {id:'AZ-104',provider:'MICROSOFT AZURE',title:'Administrator Associate',quiz:'az-104', providerClass:'prov-azure', simClass:'sim-azure', accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))'},
+      {id:'SAA-C03',provider:'AMAZON AWS',title:'Solutions Architect Associate',quiz:'aws-saa-c03', providerClass:'prov-aws',   simClass:'sim-aws',   accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))'},
+      {id:'AZ-305',provider:'MICROSOFT AZURE',title:'Architect Expert',quiz:'az-305', providerClass:'prov-azure', simClass:'sim-azure', accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', comingSoon:true}
     ];
     const simGrid=document.getElementById('simGrid');
 
     function renderSims(){
       simGrid.innerHTML='';
-      const authed = !!getCurrentUser();
+      const authed = isAuthed();
       CATALOG.forEach(c=>{
         const el=document.createElement('article'); el.className=`sim-card ${c.simClass}`; el.setAttribute('role','listitem');
-        const startLabel = authed ? '▶ Empezar' : '🔒 Login to Start';
-        const startHref  = authed ? `quiz.html?quiz=${c.quiz}` : '/login/login.html';
-        const loginMsg = authed ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
+        const startLabel = c.comingSoon ? '⏳ Coming Soon' : (authed ? '▶ Empezar' : '🔒 Login to Start');
+        const startHref  = c.comingSoon ? '#' : (authed ? `quiz.html?quiz=${c.quiz}` : '/login/login.html');
+        const loginMsg = (authed || c.comingSoon) ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
         el.innerHTML=`
           <span class="accent" style="background:${c.accent}" aria-hidden="true"></span>
           <div class="prov-pill ${c.providerClass}">${c.provider}</div>
           <div class="sim-title">${c.id} ${c.title}</div>
           <div class="btns-row" role="group" aria-label="Acciones de simulador ${c.id}">
-            <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}" role="button">🏆 Ranking</a>
-            <a class="cta-btn start-btn" data-quiz="${c.quiz}" href="${startHref}">${startLabel}</a>
+            ${c.comingSoon?'':`<a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}" role="button">🏆 Ranking</a>`}
+            <a class="cta-btn ${c.comingSoon?'':'start-btn'}" ${c.comingSoon?'aria-disabled="true"':''} ${c.comingSoon?'':`data-quiz="${c.quiz}"`} href="${startHref}" ${c.comingSoon?'onclick="return false;" aria-label="Próximamente"':''}>${startLabel}</a>
           </div>
           ${loginMsg}
         `;
@@ -481,7 +566,7 @@
 
     document.addEventListener('click', e=>{
       const b=e.target.closest('.start-btn'); if(!b) return;
-      if(!!getCurrentUser()){
+      if(isAuthed()){
         const url=new URL('quiz.html', location.href);
         url.searchParams.set('quiz', b.dataset.quiz);
         location.href=url.toString();
@@ -489,6 +574,30 @@
         location.href='/login/login.html';
       }
     });
+
+    /* ===== Carrusel ===== */
+    const track = document.getElementById('contentTrack');
+    const allSlides = Array.from(track.querySelectorAll('.slide'));
+    const prevBtn = document.querySelector('.car-prev');
+    theNextBtn = document.querySelector('.car-next'); /* avoid const hoist issue */
+    const nextBtn = theNextBtn;
+    const select  = document.getElementById('examSelect');
+    const PAGE_SIZE = 6; let page = 0; let filter = 'all';
+    function filteredSlides(){ return filter==='all' ? allSlides : allSlides.filter(s => s.dataset.exam === filter || s.dataset.exam === 'mixed'); }
+    function renderCarousel(){
+      allSlides.forEach(s => s.classList.remove('show'));
+      const items = filteredSlides();
+      const start = page * PAGE_SIZE;
+      const end   = Math.min(start + PAGE_SIZE, items.length);
+      items.slice(start, end).forEach(s => s.classList.add('show'));
+      track.classList.toggle('compact', (end-start) < PAGE_SIZE);
+      prevBtn.disabled = (page === 0);
+      nextBtn.disabled = (end >= items.length);
+    }
+    select.addEventListener('change', ()=>{ filter = select.value; page = 0; renderCarousel(); srStatus.textContent='Filtro actualizado'; });
+    prevBtn.addEventListener('click', ()=>{ if(page>0){ page--; renderCarousel(); }});
+    nextBtn.addEventListener('click', ()=>{ const total = filteredSlides().length; if((page+1)*PAGE_SIZE < total){ page++; renderCarousel(); }});
+    renderCarousel();
 
     /* ===== Modal helpers ===== */
     const fbModal = document.getElementById('feedbackModal');
@@ -612,19 +721,6 @@
 
     /* ===== MINI-TEST DIAGNÓSTICO ===== */
     const DIAG_BANK=[
-      { exam:"AZ-305", domain:"Identidad y gobernanza", q:"Debes imponer etiquetado obligatorio y restringir regiones desde un Management Group para varias suscripciones. ¿Qué usarías?", options:["Iniciativa de Azure Policy asignada al Management Group","RBAC a nivel de suscripción","Microsoft Defender for Cloud","Activity Log"], answerIndex:0 },
-      { exam:"AZ-305", domain:"Identidad y gobernanza", q:"Quieres estandarizar la creación de nuevas suscripciones con baseline de políticas y RBAC integrado en CI/CD. ¿La mejor opción?", options:["Azure Lighthouse","Plantillas Bicep/ARM + Policy-as-Code en DevOps","Azure Arc para servidores","Azure Advisor"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Arquitectura de red", q:"Necesitas un hub-and-spoke global con salida a Internet inspeccionada centralmente, conectividad a sedes y simplificar la administración. ¿Qué eliges?", options:["Emparejamiento VNet en malla","Azure Virtual WAN con hub seguro (Azure Firewall Premium)","Application Gateway por spoke","NVAs dedicadas en cada spoke"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Arquitectura de red", q:"Aplicación global multi-región: balanceo L7, WAF gestionado, TLS y enrutamiento al endpoint más cercano. ¿Qué servicio?", options:["Traffic Manager","Azure Front Door (Standard/Premium)","Application Gateway","Load Balancer"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Cómputo y contenedores", q:"Microservicios en contenedores con autoscaling, zonas, upgrades controlados y add-ons (Ingress/CSI). ¿Qué plataforma?", options:["Azure Container Instances","AKS (Azure Kubernetes Service)","App Service Web Apps","Azure Functions"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Integración y serverless", q:"Necesitas procesar eventos de creación de blobs de forma elástica y sin gestionar servidores. ¿Qué patrón?", options:["Logic Apps con disparador programado","Azure Functions + Event Grid","WebJobs en App Service","Service Fabric stateful"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Datos y almacenamiento", q:"Requisito de base de datos global con latencia de un dígito de ms, escalado elástico y multi-master. ¿Qué opción?", options:["Azure SQL Managed Instance","Azure Cosmos DB","Azure Database for PostgreSQL Flexible Server","SQL Server en VM"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Datos y almacenamiento", q:"Necesitas un lago de datos con espacios tipo carpeta, ACLs POSIX y compatibilidad con Spark/Synapse. ¿Qué eliges?", options:["Azure Files","ADLS Gen2 (Blob con namespace jerárquico)","Managed Disks","Queue Storage"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Seguridad", q:"Gestión de secretos, claves y certificados con protección HSM, soft-delete y purge protection. ¿Qué SKU?", options:["Azure Key Vault Premium (HSM)","Azure App Configuration","Managed Identity del recurso","Azure Key Vault Standard"], answerIndex:0 },
-      { exam:"AZ-305", domain:"Continuidad y recuperación", q:"Debes orquestar DR entre regiones para VMs críticas con RPO de minutos y failover automatizado. ¿La mejor elección?", options:["Azure Backup (Recovery Services Vault)","Traffic Manager","Availability Sets","Azure Site Recovery (ASR)"], answerIndex:3 },
-      { exam:"AZ-305", domain:"Observabilidad y operaciones", q:"Centralizar logs multi-suscripción, normalizar datos con DCR y disparar alertas KQL. ¿Qué combinarías?", options:["Azure Service Health","Azure Monitor + Log Analytics Workspace + Data Collection Rules","Network Watcher","Exportar Activity Log a Storage sin workspace"], answerIndex:1 },
-      { exam:"AZ-305", domain:"Coste y eficiencia", q:"Quieres optimizar coste en cómputo (VMs, AKS) manteniendo flexibilidad de tamaño y región. ¿Qué opción?", options:["Instancias Reservadas 3 años específicas","Savings Plan de Compute","Spot VMs","Dedicated Hosts"], answerIndex:1 },
-
       { exam:"AZ-104", domain:"Identidades y gobernanza", q:"¿Qué servicio centraliza reglas de acceso a nivel de suscripción y grupos de recursos?", options:["Azure Policy","Azure Blueprints","RBAC (roles)","Privileged Identity Management"], answerIndex:2 },
       { exam:"AZ-104", domain:"Identidades y gobernanza", q:"Para asignar permisos temporales con aprobación, ¿qué usarías?", options:["Access Reviews","Privileged Identity Management (PIM)","Conditional Access","User Access Administrator"], answerIndex:1 },
       { exam:"AZ-104", domain:"Identidades y gobernanza", q:"¿Qué herramienta audita cambios en roles y asignaciones?", options:["Activity Log","Change Tracking","Azure Monitor Metrics","Network Watcher"], answerIndex:0 },
@@ -637,7 +733,6 @@
       { exam:"AZ-104", domain:"Red y conectividad", q:"¿Qué conectividad usarías para on-prem estable y SLA con BGP?", options:["Site-to-Site VPN","Point-to-Site VPN","ExpressRoute","VNet Peering"], answerIndex:2 },
       { exam:"AZ-104", domain:"Red y conectividad", q:"Para exponer web multizona con TLS y WAF gestionado:", options:["Azure Traffic Manager","Application Gateway","Front Door","Load Balancer"], answerIndex:2 },
       { exam:"AZ-104", domain:"Red y conectividad", q:"¿Cómo aislar subredes y filtrar nivel L7 centralmente?", options:["NSG + UDR","Azure Firewall o WAF en hub","Peering directo","Privatelink DNS"], answerIndex:1 },
-
       { exam:"SAA-C03", domain:"Diseño seguro", q:"Para secretos con rotación automática y KMS integrado:", options:["Secrets Manager","Parameter Store","S3 SSE-S3","CloudHSM"], answerIndex:0 },
       { exam:"SAA-C03", domain:"Diseño seguro", q:"Acceso a S3 sin Internet desde VPC:", options:["Gateway VPC Endpoint","Interface Endpoint","NAT Gateway","Internet Gateway"], answerIndex:0 },
       { exam:"SAA-C03", domain:"Diseño seguro", q:"MFA obligatorio para acceso a consola raíz:", options:["IAM Policy","SCP","AWS Organizations Tag Policy","No es posible"], answerIndex:1 },
@@ -701,41 +796,13 @@
 
     let session={ exam:"AZ-104", immediate:false, questions:[], answers:[], i:0 };
 
-    // === FIX: selector genérico por examen (soporta AZ-305)
     function pickQuestions(exam){
-      const TOTAL=12, MAX_PER_DOMAIN=3;
-      const pool=DIAG_BANK.filter(x=>x.exam===exam);
-
-      // Agrupar por dominio
-      const groups={};
-      pool.forEach(q=>{
-        (groups[q.domain] ||= []).push(q);
-      });
-      // Mezclar cada grupo para variedad
-      Object.values(groups).forEach(arr=>{
-        for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
-      });
-
-      // Round-robin entre dominios respetando MAX_PER_DOMAIN
-      const domains=Object.keys(groups);
-      const takenPerDomain=Object.fromEntries(domains.map(d=>[d,0]));
-      const out=[];
-      let progressed=true;
-      while(out.length<TOTAL && progressed){
-        progressed=false;
-        for(const d of domains){
-          if(out.length>=TOTAL) break;
-          const idx=takenPerDomain[d];
-          if(idx<Math.min(groups[d].length, MAX_PER_DOMAIN)){
-            out.push(groups[d][idx]);
-            takenPerDomain[d]++;
-            progressed=true;
-          }
-        }
-      }
+      const domains={"AZ-104":["Identidades y gobernanza","Almacenamiento","Cómputo","Red y conectividad"],
+                     "SAA-C03":["Diseño seguro","Alta disponibilidad y resiliencia","Rendimiento y escalabilidad","Coste y eficiencia"]}[exam];
+      const pool=DIAG_BANK.filter(x=>x.exam===exam); const out=[];
+      domains.forEach(d=>{ const subset=pool.filter(x=>x.domain===d); for(let j=0;j<3 && j<subset.length;j++) out.push(subset[j]); });
       return out;
     }
-
     function percent(a,b){ return b? Math.round((a/b)*100):0; }
 
     function renderHeatmap(container, result){
@@ -828,7 +895,7 @@
 
     document.addEventListener('DOMContentLoaded', maybeAddViewLastBtn);
 
-    /* Abrir modal de feedback desde el footer */
+    /* ✅ NUEVO: abrir modal de feedback desde el footer */
     document.getElementById('footerContactBtn')?.addEventListener('click', ()=>{
       document.getElementById('btnFeedback')?.click();
     });

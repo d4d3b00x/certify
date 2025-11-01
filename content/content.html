@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f1320" />
+  <title>ITHub: simuladores y recursos de la comunidad para aprobar certificaciones IT (Azure, AWS, GCP, CISCO..)</title>
+  <meta name="description" content="Practica con simuladores de exámenes AZ-104 y SAA-C03, resúmenes y hojas de trucos. Aprende, practica y compite para aprobar tus certificaciones IT.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="author" content="ITHub">
+  <meta name="keywords" content="simulador AZ-104, simulador SAA-C03, exámenes certificación IT, preguntas AZ-104, preguntas AWS SAA-C03, práctica certificaciones, recursos gratis IT">
+
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);--btn-ink:#fff;
+      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
+      --pill-ring:#2a3150;
+      --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
+      --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
+      --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
+      --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.12),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.12),transparent 60%),
+        var(--bg);
+      line-height:1.6;overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    /* Accesibilidad base */
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
+    :focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px;}
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+    }
+
+    /* HEADER */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .brand img.site-logo{height:42px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
+    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+
+    .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;}
+    .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
+    .btn:hover{border-color:#3a4580}
+    @media (max-width:720px){
+      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
+    }
+
+    /* Contenidos */
+    section{padding:26px 0}
+    .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
+    .muted{color:var(--muted);font-size:.95rem}
+
+    .filter-bar{display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px 14px;margin-top:10px}
+    .filter-bar label{font-weight:900;white-space:nowrap}
+    .filter-bar select{appearance:none;background:#0f1630;border:1px solid var(--stroke);border-radius:10px;color:var(--ink);font-weight:800;padding:10px 12px;min-width:260px;}
+    .carousel{position:relative;margin-top:12px}
+    .track{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px;min-height:420px;align-items:start;align-content:start;}
+    .track.compact{min-height:auto;justify-content:center}
+    @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
+    @media(max-width:560px){ .track{grid-template-columns:1fr} }
+    .slide{display:none} .slide.show{display:block}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow);}
+    .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .cc-meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;}
+    .cc-meta .grow{ display:inline-flex; align-items:center; gap:8px; margin-right:auto; }
+    .tiny-btn{display:inline-flex;align-items:center;justify-content:center;height:28px; padding:0 10px; border-radius:8px;border:1px solid #3b2fff44; background:var(--btn-bg);color:#fff; font-weight:900; cursor:pointer;white-space:nowrap;}
+
+    .car-btn{position:absolute;top:45%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.95);color:#0f1320;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:2}
+    .car-btn[disabled]{opacity:.5;cursor:not-allowed}
+    .car-prev{left:-10px}.car-next{right:-10px}
+
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+    .f-grid{display:grid;gap:14px}
+    @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- CABECERA -->
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      </div>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a class="link-btn" href="/">HOME</a>
+        <a class="link-btn" href="#contenidos">CONTENIDOS</a>
+        <a class="link-btn" href="/score/ranking.html">RANKING</a>
+      </nav>
+
+      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+
+        <div id="userArea" style="display:none;align-items:center;gap:6px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+
+    <!-- Centro de contenidos -->
+    <section id="contenidos" aria-labelledby="content-title">
+      <div class="container">
+        <div id="content-title" class="sec-title">CONTENIDO CLAVE POR CERTIFICACIÓN</div>
+        <div class="muted">Solo lo esencial: resúmenes rápidos, hojas de trucos y guías prácticas enfocadas en el examen.</div>
+
+        <div class="filter-bar" role="group" aria-label="Filtrar contenidos">
+          <label for="examSelect">Selecciona Certificación:</label>
+          <select id="examSelect" name="examSelect">
+            <option value="all">TODAS</option>
+            <option value="az-104">AZ-104 · Microsoft Azure Administrator</option>
+            <option value="aws-saa-c03">SAA-C03 · AWS Solutions Architect Associate</option>
+          </select>
+        </div>
+
+        <div class="carousel" role="region" aria-label="Carrusel de contenidos">
+          <button class="car-btn car-prev" type="button" aria-label="Anterior">‹</button>
+          <div class="track" id="contentTrack">
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🌐 <strong>VNet Peering vs. VPN Gateway</strong></div>
+              <p class="muted">Aprende cuándo usar <strong>VNet Peering</strong> para baja latencia y cuándo elegir <strong>VPN Gateway</strong> para cifrado y conectividad híbrida.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/vnet-peering-vpn.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🔐 <strong>Checklist de seguridad Azure</strong></div>
+              <p class="muted">Revisa <strong>RBAC mínimo</strong>, <strong>MFA</strong>, <strong>PIM</strong>, <strong>Azure Policy</strong> y <strong>Defender for Cloud</strong> para reforzar la seguridad. Alineado con AZ-104.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/azure-security-checklist.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="mixed">
+              <div class="cc-head">💾 <strong>Backup inmutable y recuperación</strong></div>
+              <p class="muted">Diseña un <strong>vault WORM</strong> con aislamiento y <em>drills</em> de prueba. Comparativa Azure-AWS.</p>
+              <div class="cc-meta">
+                <span class="grow">
+                  <span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span> ·
+                  <span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span>
+                </span>
+                <a class="tiny-btn" href="content/immutable-backup-cyberrecovery.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="aws-saa-c03">
+              <div class="cc-head">🏗️ <strong>Alta disponibilidad en VPC</strong></div>
+              <p class="muted">VPC multi-AZ, Auto Scaling, ALB y NAT redundantes. Errores comunes en SAA-C03.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span></span>
+                <a class="tiny-btn" href="content/aws-vpc-ha.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🗂️ <strong>Azure Storage: claves rápidas</strong></div>
+              <p class="muted">SAS, RBAC, replicación LRS–GZRS, inmutabilidad y CMK.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/azure-storage-az104.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="az-104">
+              <div class="cc-head">🔗 <strong>Conectividad híbrida en Azure</strong></div>
+              <p class="muted">VPN S2S, ExpressRoute con BGP, hub-spoke, Firewall y DNS privado.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-azure" aria-label="Azure">AZURE</span><span>AZ-104</span></span>
+                <a class="tiny-btn" href="content/azure-hybrid-connectivity-az305.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="aws-saa-c03">
+              <div class="cc-head">📦 <strong>S3: seguridad y rendimiento</strong></div>
+              <p class="muted">Bloqueo público, SSE-KMS, versionado y optimización con multipart upload.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span></span>
+                <a class="tiny-btn" href="content/aws-s3-design-saac03.html" role="button">Leer</a>
+              </div>
+            </article>
+
+            <article class="card slide" data-exam="aws-saa-c03">
+              <div class="cc-head">📨 <strong>Patrones con SQS y SNS</strong></div>
+              <p class="muted">Colas FIFO y DLQ con fan-out de SNS, reintentos y filtros.</p>
+              <div class="cc-meta">
+                <span class="grow"><span class="prov-pill prov-aws" aria-label="AWS">AWS</span><span>SAA-C03</span></span>
+                <a class="tiny-btn" href="content/aws-sqs-sns-patterns.html" role="button">Leer</a>
+              </div>
+            </article>
+          </div>
+          <button class="car-btn car-next" type="button" aria-label="Siguiente">›</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Pie -->
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHub.es</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
+      </div>
+      <div>
+        <div style="font-weight:800">Simuladores</div>
+        <div><a href="quiz.html?quiz=az-104">AZ-104</a></div>
+        <div><a href="quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">Contenidos</div>
+        <div><a href="content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+        <div><a href="content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
+        <div><a href="content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
+        <div><a href="content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">Contacto</div>
+        <button id="footerContactBtn" type="button"
+                style="background:none;border:none;color:#cfe1ff;
+                       font-weight:800;display:inline-flex;align-items:center;
+                       gap:6px;cursor:pointer;padding:0;margin-top:6px;">
+          💬 <span>Contáctanos</span>
+        </button>
+      </div>
+    </div>
+    <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+  </footer>
+
+  <!-- Región de estado accesible -->
+  <div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
+
+  <script>
+    // Año
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const srStatus = document.getElementById('srStatus');
+
+    /* ===== AUTH (solo para cabecera) ===== */
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function renderHeaderAuth(){
+      const u=getCurrentUser();
+      const login=document.getElementById('btnLogin');
+      const signup=document.getElementById('btnSignup');
+      const userArea=document.getElementById('userArea');
+      const nameTop=document.getElementById('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    }
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    renderHeaderAuth();
+
+    /* ===== Carrusel de contenidos ===== */
+    const track = document.getElementById('contentTrack');
+    const allSlides = Array.from(track.querySelectorAll('.slide'));
+    const prevBtn = document.querySelector('.car-prev');
+    const nextBtn = document.querySelector('.car-next');
+    const select  = document.getElementById('examSelect');
+    const PAGE_SIZE = 6; let page = 0; let filter = 'all';
+
+    function filteredSlides(){ return filter==='all' ? allSlides : allSlides.filter(s => s.dataset.exam === filter || s.dataset.exam === 'mixed'); }
+    function renderCarousel(){
+      allSlides.forEach(s => s.classList.remove('show'));
+      const items = filteredSlides();
+      const start = page * PAGE_SIZE;
+      const end   = Math.min(start + PAGE_SIZE, items.length);
+      items.slice(start, end).forEach(s => s.classList.add('show'));
+      track.classList.toggle('compact', (end-start) < PAGE_SIZE);
+      prevBtn.disabled = (page === 0);
+      nextBtn.disabled = (end >= items.length);
+    }
+    select.addEventListener('change', ()=>{ filter = select.value; page = 0; renderCarousel(); srStatus.textContent='Filtro actualizado'; });
+    prevBtn.addEventListener('click', ()=>{ if(page>0){ page--; renderCarousel(); }});
+    nextBtn.addEventListener('click', ()=>{ const total = filteredSlides().length; if((page+1)*PAGE_SIZE < total){ page++; renderCarousel(); }});
+    renderCarousel();
+  </script>
+</body>
+</html>
