@@ -60,7 +60,7 @@ let __SEQ = 0;
 const QUIZ_TO_EXAM = {
   "aws-saa-c03": "SAA-C03",
   "az-104": "AZ-104",
-  "az-305": "AZ-305"        // <— NUEVO
+  "az-305": "AZ-305"
 };
 const QUIZZES = {
   "aws-saa-c03": {
@@ -73,7 +73,7 @@ const QUIZZES = {
     certi: "Microsoft Azure Administrator — Associate (AZ-104)",
     domNames: { D1:"Identidades y gobierno", D2:"Almacenamiento", D3:"Cómputo", D4:"Redes", D5:"Monitorización" }
   },
-  "az-305": {                                  // <— NUEVO
+  "az-305": {
     track: "az-305-architect",
     certi: "Microsoft Azure Solutions Architect Expert (AZ-305)",
     domNames: { D1:"Diseño de infraestructura", D2:"Datos/almacenamiento", D3:"Seguridad/identidad", D4:"BC/DR" }
@@ -131,8 +131,8 @@ const QUIZZES = {
          border-radius:12px; padding:12px; }
   .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
   .link-list{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
-  .link-item a{ text-decoration:none; font-weight:800; }
-  .link-item small{ display:block; color:var(--muted); word-break:break-all; }
+  .link-item .link-title{ font-weight:800; }
+  .link-item small a{ color:var(--accent); text-decoration:underline; word-break:break-all; }
 
   .controls{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; justify-content:flex-end; }
   .controls.centered{ justify-content:center; }
@@ -402,7 +402,7 @@ async function start(quizId="aws-saa-c03", overrides={}){
 
     filtered = shuffle(filtered).slice(0, desiredCount).map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice(): [];
-      const order = shuffle([...Array(opts.length).keys()]); 
+      const order = shuffle([...Array(opts.length).keys()]);
       const optionsShuffled = order.map(i=>opts[i]);
       const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? order.indexOf(q.correctAnswer) : null;
       return { ...q, _optOrder: order, _options: optionsShuffled, _correct: correctIndex };
@@ -458,7 +458,7 @@ function kpis(container){
 
 /* ===================== Render principal ===================== */
 
-/* --- Util: renderizar enlaces/recursos (restaurado) --- */
+/* --- Util: renderizar enlaces/recursos (título NO clicable; URL SÍ clicable) --- */
 function renderLinksBox(links){
   const list = Array.isArray(links) ? links.filter(Boolean) : [];
   if(!list.length) return null;
@@ -473,10 +473,24 @@ function renderLinksBox(links){
       const u = new URL(url, location.origin);
       const host = u.hostname.replace(/^www\./,'');
       if(!label) label = host;
+
       const li = h('li', { class: 'link-item' });
-      const a = h('a', { href: u.href, target: '_blank', rel: 'noopener', html: `🔗 ${label}` });
-      const small = h('small', { html: u.href });
-      li.appendChild(a);
+
+      // Título visual (no clicable)
+      const titleEl = document.createElement('div');
+      titleEl.className = 'link-title';
+      titleEl.textContent = `🔗 ${label}`;
+
+      // URL clicable en <small> que abre en nueva pestaña
+      const small = document.createElement('small');
+      const a = document.createElement('a');
+      a.href = u.href;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = u.href;
+      small.appendChild(a);
+
+      li.appendChild(titleEl);
       li.appendChild(small);
       ul.appendChild(li);
     }catch{ /* ignora urls inválidas */ }
@@ -535,7 +549,7 @@ function renderQuiz(){
       const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
       expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
 
-      // === Zona de URL/enlaces externos (RESTABLECIDO) ===
+      // Zona de URL/enlaces externos (título no clicable; URL clicable)
       const linksBox = renderLinksBox(q.links);
       if(linksBox) expBox.appendChild(linksBox);
 

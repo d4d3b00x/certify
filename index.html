@@ -11,16 +11,14 @@
     gtag('config', 'G-DYZ3GCXHEK');
   </script>
 
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
   <title>ITHub: simuladores y recursos de la comunidad para aprobar certificaciones IT (Azure, AWS, GCP, CISCO..)</title>
-    <meta name="description" content="Practica con simuladores de exámenes AZ-104 y SAA-C03, resúmenes y hojas de trucos. Aprende, practica y compite para aprobar tus certificaciones IT.">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="author" content="ITHub">
-    <meta name="keywords" content="simulador AZ-104, simulador SAA-C03, exámenes certificación IT, preguntas AZ-104, preguntas AWS SAA-C03, práctica certificaciones, recursos gratis IT">
-
+  <meta name="description" content="Practica con simuladores de exámenes AZ-104 y SAA-C03, resúmenes y hojas de trucos. Aprende, practica y compite para aprobar tus certificaciones IT.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="author" content="ITHub">
+  <meta name="keywords" content="simulador AZ-104, simulador SAA-C03, exámenes certificación IT, preguntas AZ-104, preguntas AWS SAA-C03, práctica certificaciones, recursos gratis IT">
 
   <style>
     :root{
@@ -65,7 +63,8 @@
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-    .brand img.site-logo{height:34px;width:auto;display:block}
+    /* ✅ Logo un poco más grande */
+    .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
     nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
@@ -83,10 +82,18 @@
     }
 
     /* Secciones */
-    .hero{padding:36px 0 14px;text-align:center}
-    .hero h1{margin:0 0 4px;font-size:clamp(1.9rem,4.4vw,3.1rem)}
-    .lead{color:var(--muted);max-width:900px;margin:6px auto 0}
-    .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+    /* ✅ HERO más compacto */
+    .hero{padding:24px 0 8px;text-align:center}
+    .hero h1{margin:0 0 2px;font-size:clamp(1.6rem,3.8vw,2.6rem);line-height:1.2}
+    .lead{color:var(--muted);max-width:820px;margin:4px auto 0;font-size:.95rem}
+    .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+    /* Botones del hero ligeramente más pequeños */
+    .hero .btn{height:36px;min-height:36px;padding:0 12px;border-radius:10px;font-size:.92rem}
+
+    /* ✅ “Logo” del hero (emoji) más grande y alineado */
+    .hero-emoji{display:inline-flex;align-items:center;justify-content:center;
+      font-size:1.35em;line-height:0;margin-right:.35em;transform:translateY(4px)}
+
     section{padding:26px 0}
     .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
     .muted{color:var(--muted);font-size:.95rem}
@@ -206,7 +213,8 @@
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
-        <h1 id="hero-title">🎮 Aprende, practica y compite contra el resto de Quizzers de la comunidad.</h1>
+        <!-- ✅ emoji envuelto para poder estilizarlo -->
+        <h1 id="hero-title"><span class="hero-emoji" aria-hidden="true">🎮</span>Aprende, practica y compite contra el resto de Quizzers de la comunidad.</h1>
         <p class="lead">Simula <strong>exámenes y certificaciones IT</strong> con preguntas centradas en aprobar. Sube tu nivel y mide tu progreso.</p>
         <div class="hero-actions" role="group" aria-label="Acciones principales">
           <a class="btn" href="/score/ranking.html" role="button">🏆 VER RANKING GLOBAL</a>
@@ -251,8 +259,6 @@
             <div>✅ <b>Preguntas marcadas</b> y repaso dirigido</div>
             <div>✅ <b>Objetivo semanal</b> de preguntas, racha e insignias</div>
             <div>✅ <b>Estadísticas</b> de acierto, tiempo y evolución</div>
-
-
           </div>
         </div>
       </div>
@@ -373,7 +379,7 @@
       <div>
         <div class="brand" style="text-transform:none">
           <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
-        <span>ITHub.es</span>
+          <span>ITHub.es</span>
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
@@ -891,7 +897,6 @@
 
     /* ✅ NUEVO: abrir modal de feedback desde el footer */
     document.getElementById('footerContactBtn')?.addEventListener('click', ()=>{
-      // reutilizamos el mismo handler que ya resetea campos y abre el modal
       document.getElementById('btnFeedback')?.click();
     });
   </script>
