@@ -52,13 +52,16 @@ const S = {
 
   savingResult: false,
 
-  /* scroll objetivo tras render */
   _afterRenderScroll: null
 };
 let __SEQ = 0;
 
 /* ===================== MAPAS ===================== */
-const QUIZ_TO_EXAM = { "aws-saa-c03": "SAA-C03", "az-104": "AZ-104" };
+const QUIZ_TO_EXAM = {
+  "aws-saa-c03": "SAA-C03",
+  "az-104": "AZ-104",
+  "az-305": "AZ-305"        // <— NUEVO
+};
 const QUIZZES = {
   "aws-saa-c03": {
     track: "architect",
@@ -70,6 +73,11 @@ const QUIZZES = {
     certi: "Microsoft Azure Administrator — Associate (AZ-104)",
     domNames: { D1:"Identidades y gobierno", D2:"Almacenamiento", D3:"Cómputo", D4:"Redes", D5:"Monitorización" }
   },
+  "az-305": {                                  // <— NUEVO
+    track: "az-305-architect",
+    certi: "Microsoft Azure Solutions Architect Expert (AZ-305)",
+    domNames: { D1:"Diseño de infraestructura", D2:"Datos/almacenamiento", D3:"Seguridad/identidad", D4:"BC/DR" }
+  }
 };
 
 /* ===================== CSS ===================== */
@@ -117,6 +125,14 @@ const QUIZZES = {
 
   .expl{ border:1px dashed var(--stroke); border-radius:12px; padding:12px; margin-top:12px; background:var(--surface); }
   .expl .ttl{ font-weight:900; margin-bottom:8px; }
+
+  /* === Enlaces/recursos (restaurado) === */
+  .refs{ margin-top:10px; background:var(--surface2); border:1px solid var(--stroke);
+         border-radius:12px; padding:12px; }
+  .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
+  .link-list{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+  .link-item a{ text-decoration:none; font-weight:800; }
+  .link-item small{ display:block; color:var(--muted); word-break:break-all; }
 
   .controls{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; justify-content:flex-end; }
   .controls.centered{ justify-content:center; }
@@ -229,7 +245,7 @@ function transformQuestions(items){
       correctAnswer: (typeof it.answerIndex==='number'?it.answerIndex:null),
       explanation: it.explanation || '',
       explanationRich: it.explanationRich || '',
-      links: Array.isArray(it.links) ? it.links.slice() : [],
+      links: Array.isArray(it.links) ? it.links.slice() : [],   // <- enlaces
       category: it.category || 'General',
       domain
     };
@@ -336,6 +352,17 @@ function startTimer(){
 }
 function stopTimer(){ if(S.timerId){ clearInterval(S.timerId); S.timerId=null; } }
 
+/* ===================== Fallback local AZ-305 ===================== */
+function localAz305Fallback(){
+  return [
+    { question:"¿Cuál es el servicio de Azure más adecuado para ejecutar contenedores sin administrar infraestructura?", options:["AKS","Azure Container Instances","App Service","Service Fabric"], correctAnswer:1, explanation:"ACI ejecuta contenedores sin orquestación ni VMs." },
+    { question:"¿Qué usarías para IaC nativo en Azure?", options:["ARM Templates","Terraform","Bicep","Todas las anteriores"], correctAnswer:3, explanation:"ARM, Bicep y Terraform son válidos." },
+    { question:"¿Qué componente permite acceso condicional basado en riesgo?", options:["PIM","Conditional Access","Azure Policy","Defender"], correctAnswer:1, explanation:"Se gestiona con políticas de Conditional Access." },
+    { question:"¿Dónde almacenar secretos de forma segura?", options:["Storage","Key Vault","ConfigMap","App Settings"], correctAnswer:1, explanation:"Key Vault." },
+    { question:"¿Qué solución monitoriza rendimiento de apps?", options:["Application Insights","Azure Monitor","Log Analytics","Todas"], correctAnswer:3, explanation:"AI y LA dentro del marco de Azure Monitor." },
+  ];
+}
+
 /* ===================== START público ===================== */
 async function start(quizId="aws-saa-c03", overrides={}){
   const seq=++__SEQ; stopTimer(); S.finished=false;
@@ -351,7 +378,18 @@ async function start(quizId="aws-saa-c03", overrides={}){
 
   try{
     const exam=QUIZ_TO_EXAM[quizId] || "SAA-C03";
-    const raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 3, domainTags: tags });
+
+    // 1) API
+    let raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 3, domainTags: tags });
+
+    // 2) Fallback local si AZ-305 sin datos
+    if ((!raw || raw.length === 0) && quizId === "az-305") {
+      raw = localAz305Fallback().map((q,i)=>({
+        exam:"AZ-305", questionId:`AZ-305-local-${i}`, question:q.question, options:q.options,
+        answerIndex:q.correctAnswer, explanation:q.explanation, category:"General"
+      }));
+    }
+
     if(__SEQ!==seq) return;
 
     let all = transformQuestions(raw);
@@ -360,10 +398,11 @@ async function start(quizId="aws-saa-c03", overrides={}){
       filtered = all;
       toast("No hay preguntas para esos dominios. Mostrando todas.", 2300);
     }
+    if (filtered.length===0) throw new Error("No se encontraron preguntas para este quiz.");
 
     filtered = shuffle(filtered).slice(0, desiredCount).map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice(): [];
-      const order = shuffle([...Array(opts.length).keys()]);
+      const order = shuffle([...Array(opts.length).keys()]); 
       const optionsShuffled = order.map(i=>opts[i]);
       const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? order.indexOf(q.correctAnswer) : null;
       return { ...q, _optOrder: order, _options: optionsShuffled, _correct: correctIndex };
@@ -381,7 +420,6 @@ async function start(quizId="aws-saa-c03", overrides={}){
     startTimer();
     saveProgress({full:true,reason:'start'});
 
-    // Evento para la página + scroll inmediato
     window.dispatchEvent(new Event('quiz:started'));
     const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
     smartScrollTo(qCard,'start');
@@ -418,25 +456,39 @@ function kpis(container){
   if(elA) elA.textContent=String(a); if(elP) elP.textContent=`${p}%`; if(elM) elM.textContent=String(m);
 }
 
-/* ===================== Leyenda dominios ===================== */
-function domainsInBank(){ const set=new Set(); S.qs.forEach(q=>{ if(q.domain) set.add(q.domain); }); return [...set].sort(); }
-function renderLegend(panel){
-  const host=h('div'); host.appendChild(h('h3',{html:'DOMINIOS'}));
-  const wrap=h('div',{class:'legend'});
-  const active = new Set(S.prefs.tags||[]);
-  const list = domainsInBank();
-  if(list.length===0) wrap.appendChild(h('div',{class:'muted',html:'—'}));
-  list.forEach(d=>{
-    const chip=h('span',{class:'chip'+(active.has(d)?' on':'')});
-    chip.appendChild(h('i',{class:'led'}));
-    chip.appendChild(document.createTextNode(` ${d}`));
-    wrap.appendChild(chip);
-  });
-  host.appendChild(wrap);
-  panel.appendChild(host);
+/* ===================== Render principal ===================== */
+
+/* --- Util: renderizar enlaces/recursos (restaurado) --- */
+function renderLinksBox(links){
+  const list = Array.isArray(links) ? links.filter(Boolean) : [];
+  if(!list.length) return null;
+
+  const ul = h('ul', { class: 'link-list' });
+  for(const it of list){
+    let url='', label='';
+    if(typeof it === 'string'){ url = it; }
+    else if (it && typeof it === 'object'){ url = it.url || it.href || ''; label = it.title || it.text || ''; }
+    if(!url) continue;
+    try{
+      const u = new URL(url, location.origin);
+      const host = u.hostname.replace(/^www\./,'');
+      if(!label) label = host;
+      const li = h('li', { class: 'link-item' });
+      const a = h('a', { href: u.href, target: '_blank', rel: 'noopener', html: `🔗 ${label}` });
+      const small = h('small', { html: u.href });
+      li.appendChild(a);
+      li.appendChild(small);
+      ul.appendChild(li);
+    }catch{ /* ignora urls inválidas */ }
+  }
+  if(!ul.children.length) return null;
+
+  const box = h('div', { class: 'refs' });
+  box.appendChild(h('h4', { html: 'Recursos y enlaces' }));
+  box.appendChild(ul);
+  return box;
 }
 
-/* ===================== Render principal ===================== */
 function renderQuiz(){
   const root=document.getElementById('view'); if(!root) return;
   root.innerHTML='';
@@ -461,10 +513,10 @@ function renderQuiz(){
     qCard.appendChild(h('div',{html:'No hay preguntas que mostrar.'}));
   }else{
     const pct=Math.round((S.idx/Math.max(1,S.qs.length))*100); fill.style.width=`${pct}%`;
-    const dom=h('div',{class:'domain'});
-    dom.appendChild(h('i',{class:'dot'}));
-    dom.appendChild(h('span',{html:`${(q.category||'general')} ${q.domain?`(${String(q.domain).toLowerCase()})`:''}`}));
-    qCard.appendChild(dom);
+
+    // Etiqueta superior con categoría y posible dominio (si viene)
+    const domLabel = (q.category||'general') + (q.domain?` (${String(q.domain).toLowerCase()})`:'');
+    qCard.appendChild(h('div',{class:'domain',html:`<i class="dot"></i><span>${domLabel}</span>`}));
 
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${S.idx+1}.</b> ${q.question}`}));
 
@@ -482,13 +534,18 @@ function renderQuiz(){
       expBox=h('div',{class:'expl'});
       const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
       expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
+
+      // === Zona de URL/enlaces externos (RESTABLECIDO) ===
+      const linksBox = renderLinksBox(q.links);
+      if(linksBox) expBox.appendChild(linksBox);
+
       qCard.appendChild(expBox);
     }
   }
 
   // Controles inferiores
   const ctr=h('div',{class:'controls'});
-  const back=h('button',{class:'btn',html:`Atrás <span class="keycap">B</span>`, title:'Atrás (B)'}); back.disabled=S.idx===0;
+  const back=h('button',{class:'btn',html:`← Atrás <span class="keycap">B</span>`, title:'Atrás (B)'}); back.disabled=S.idx===0;
   back.onclick=()=>{ S.idx=Math.max(0,S.idx-1); S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); };
 
   const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} <span class="keycap">M</span>`, title:'Marcar (M)'});
@@ -527,8 +584,7 @@ function renderQuiz(){
   });
   pList.appendChild(dots); side.appendChild(pList);
 
-  const pLegend=h('div',{class:'panel'});
-  renderLegend(pLegend); side.appendChild(pLegend);
+  // (Leyenda dominios del sidebar desactivada a petición)
 
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
@@ -536,7 +592,6 @@ function renderQuiz(){
   kpis(wrap);
   enableHotkeys();
 
-  // ===== Scroll post-render =====
   if (S._afterRenderScroll === 'explanation') {
     const target = expBox || ctr;
     smartScrollTo(target || qCard, 'start');
@@ -545,7 +600,6 @@ function renderQuiz(){
   }
   S._afterRenderScroll = null;
 
-  // avisar a la página de que se ha renderizado
   window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
 }
 
@@ -560,7 +614,7 @@ function hasPendingMarked(){
 function onSelect(i){
   if(typeof S.answers[S.idx]!=='undefined') return;
   S.answers[S.idx]=i;
-  S._afterRenderScroll='explanation';      // <- al elegir, baja a la explicación/respuesta
+  S._afterRenderScroll='explanation';
   saveProgress({reason:'answer'});
   renderQuiz();
 }
@@ -578,7 +632,6 @@ async function finish(){
   for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
 
-  // desglose por dominio
   const cfg = QUIZZES[S.quizId] || {};
   const byDomain = {};
   S.qs.forEach((q,idx)=>{
@@ -598,15 +651,13 @@ async function finish(){
   saveProgress({finished:true,reason:'finish'});
   await saveResultRemoteOnce(result);
 
-  // Emitir eventos para la UI
   window.dispatchEvent(new Event('quiz:ended'));
   window.dispatchEvent(new CustomEvent('quiz:results', {
     detail: { score: correct, total, byDomain }
   }));
 
-  // Modal básico (fallback) si la página no muestra el suyo
   setTimeout(()=>{
-    if (document.querySelector('#quizResultModal')) return; // la página tiene su modal
+    if (document.querySelector('#quizResultModal')) return;
     const bd=h('div',{class:'qg-backdrop',style:'position:fixed;inset:0;background:rgba(10,12,24,.65);display:flex;align-items:center;justify-content:center;z-index:2147483000'});
     const m=h('div',{class:'qg-modal',style:'max-width:680px;width:100%;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:20px;color:var(--ink)'});
     m.appendChild(h('h3',{html:'Resultados del examen'}));
