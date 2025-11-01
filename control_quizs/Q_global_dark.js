@@ -52,6 +52,9 @@ const S = {
 
   savingResult: false,
 
+  // NUEVO: bloquear botón Finalizar tras primer click
+  finishLocked: false,
+
   _afterRenderScroll: null
 };
 let __SEQ = 0;
@@ -126,7 +129,6 @@ const QUIZZES = {
   .expl{ border:1px dashed var(--stroke); border-radius:12px; padding:12px; margin-top:12px; background:var(--surface); }
   .expl .ttl{ font-weight:900; margin-bottom:8px; }
 
-  /* === Enlaces/recursos (restaurado) === */
   .refs{ margin-top:10px; background:var(--surface2); border:1px solid var(--stroke);
          border-radius:12px; padding:12px; }
   .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
@@ -245,7 +247,7 @@ function transformQuestions(items){
       correctAnswer: (typeof it.answerIndex==='number'?it.answerIndex:null),
       explanation: it.explanation || '',
       explanationRich: it.explanationRich || '',
-      links: Array.isArray(it.links) ? it.links.slice() : [],   // <- enlaces
+      links: Array.isArray(it.links) ? it.links.slice() : [],
       category: it.category || 'General',
       domain
     };
@@ -365,7 +367,7 @@ function localAz305Fallback(){
 
 /* ===================== START público ===================== */
 async function start(quizId="aws-saa-c03", overrides={}){
-  const seq=++__SEQ; stopTimer(); S.finished=false;
+  const seq=++__SEQ; stopTimer(); S.finished=false; S.finishLocked=false; // reset lock al empezar
 
   const cfg = QUIZZES[quizId] || QUIZZES["aws-saa-c03"];
   S.quizId=quizId; S.track=cfg.track; S.certi=cfg.certi; S.mode="exam";
@@ -458,7 +460,7 @@ function kpis(container){
 
 /* ===================== Render principal ===================== */
 
-/* --- Util: renderizar enlaces/recursos (título NO clicable; URL SÍ clicable) --- */
+/* --- Util: renderizar enlaces/recursos --- */
 function renderLinksBox(links){
   const list = Array.isArray(links) ? links.filter(Boolean) : [];
   if(!list.length) return null;
@@ -476,12 +478,10 @@ function renderLinksBox(links){
 
       const li = h('li', { class: 'link-item' });
 
-      // Título visual (no clicable)
       const titleEl = document.createElement('div');
       titleEl.className = 'link-title';
       titleEl.textContent = `🔗 ${label}`;
 
-      // URL clicable en <small> que abre en nueva pestaña
       const small = document.createElement('small');
       const a = document.createElement('a');
       a.href = u.href;
@@ -493,7 +493,7 @@ function renderLinksBox(links){
       li.appendChild(titleEl);
       li.appendChild(small);
       ul.appendChild(li);
-    }catch{ /* ignora urls inválidas */ }
+    }catch{}
   }
   if(!ul.children.length) return null;
 
@@ -528,7 +528,6 @@ function renderQuiz(){
   }else{
     const pct=Math.round((S.idx/Math.max(1,S.qs.length))*100); fill.style.width=`${pct}%`;
 
-    // Etiqueta superior con categoría y posible dominio (si viene)
     const domLabel = (q.category||'general') + (q.domain?` (${String(q.domain).toLowerCase()})`:'');
     qCard.appendChild(h('div',{class:'domain',html:`<i class="dot"></i><span>${domLabel}</span>`}));
 
@@ -549,7 +548,6 @@ function renderQuiz(){
       const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
       expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
 
-      // Zona de URL/enlaces externos (título no clicable; URL clicable)
       const linksBox = renderLinksBox(q.links);
       if(linksBox) expBox.appendChild(linksBox);
 
@@ -565,10 +563,27 @@ function renderQuiz(){
   const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} <span class="keycap">M</span>`, title:'Marcar (M)'});
   mark.onclick=()=>{ S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; saveProgress({reason:'mark'}); renderQuiz(); };
 
-  const nextLabel = S.idx===S.qs.length-1 ? `Finalizar <span class="keycap">N</span>` : `Siguiente <span class="keycap">N</span>`;
+  const isLast = S.idx===S.qs.length-1;
+  const nextLabel = isLast ? `Finalizar <span class="keycap">N</span>` : `Siguiente <span class="keycap">N</span>`;
   const next=h('button',{class:'btn primary',html:nextLabel, title:'Siguiente (N) / Finalizar (N)'});
-  next.onclick=()=>{ if(S.idx===S.qs.length-1){ if(hasPendingMarked()){ toast('No puedes finalizar: hay preguntas marcadas sin responder.'); return; } return finish(); } S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); };
-  if(S.idx===S.qs.length-1 && hasPendingMarked()) next.disabled=true;
+
+  // si última y hay marcadas sin responder, o ya bloqueado, deshabilitar
+  if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
+
+  next.onclick=()=>{
+    if(!isLast){
+      S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz();
+      return;
+    }
+    // Última: proteger y deshabilitar
+    if(hasPendingMarked()){ toast('No puedes finalizar: hay preguntas marcadas sin responder.'); return; }
+    if(S.finishLocked) return;
+    S.finishLocked = true;
+    next.disabled = true;
+    // (opcional UX) cambiar texto mientras finaliza
+    try { next.innerHTML = 'Finalizando…'; } catch {}
+    finish();
+  };
 
   ctr.appendChild(back); ctr.appendChild(mark); ctr.appendChild(next);
   qCard.appendChild(ctr);
@@ -597,8 +612,6 @@ function renderQuiz(){
     dots.appendChild(d);
   });
   pList.appendChild(dots); side.appendChild(pList);
-
-  // (Leyenda dominios del sidebar desactivada a petición)
 
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
@@ -641,6 +654,7 @@ function doPause(){
 /* ===================== Finalizar ===================== */
 async function finish(){
   if(hasPendingMarked()){ toast('No puedes finalizar: hay marcadas sin responder.'); return; }
+  if (S.finished) return;
   S.finished=true; stopTimer();
   const total=S.qs.length; let correct=0;
   for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
@@ -672,7 +686,7 @@ async function finish(){
 
   setTimeout(()=>{
     if (document.querySelector('#quizResultModal')) return;
-    const bd=h('div',{class:'qg-backdrop',style:'position:fixed;inset:0;background:rgba(10,12,24,.65);display:flex;align-items:center;justify-content:center;z-index:2147483000'});
+    const bd=h('div',{id:'quizResultModal',class:'qg-backdrop',style:'position:fixed;inset:0;background:rgba(10,12,24,.65);display:flex;align-items:center;justify-content:center;z-index:2147483000'});
     const m=h('div',{class:'qg-modal',style:'max-width:680px;width:100%;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:20px;color:var(--ink)'});
     m.appendChild(h('h3',{html:'Resultados del examen'}));
     m.appendChild(h('div',{html:`<div style="display:flex;gap:10px;justify-content:space-between;background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:10px 12px;margin-top:8px"><strong>Puntuación</strong><span>${correct}/${total} (${pct}%)</span></div>`}));
@@ -697,8 +711,17 @@ function enableHotkeys(){
 
     if(ev.key==='n'||ev.key==='N'){
       ev.preventDefault();
-      if(S.idx===S.qs.length-1){ if(hasPendingMarked()) { toast('No puedes finalizar: marcadas sin responder.'); return; } finish(); }
-      else{ S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav-key'}); renderQuiz(); }
+      if(S.idx===S.qs.length-1){
+        if(S.finishLocked) return; // bloqueado: no permitir
+        if(hasPendingMarked()) { toast('No puedes finalizar: marcadas sin responder.'); return; }
+        // bloquear también desde teclado
+        S.finishLocked = true;
+        const btn = document.querySelector('.controls .btn.primary');
+        if(btn) btn.disabled = true;
+        finish();
+      } else {
+        S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav-key'}); renderQuiz();
+      }
     }
     if(ev.key==='b'||ev.key==='B'){ ev.preventDefault(); if(S.idx>0){ S.idx--; S._afterRenderScroll='question'; saveProgress({reason:'nav-key'}); renderQuiz(); } }
     if(ev.key==='m'||ev.key==='M'){ ev.preventDefault(); S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; saveProgress({reason:'mark-key'}); renderQuiz(); }

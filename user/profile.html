@@ -293,6 +293,7 @@
             <div class="tabs">
               <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
               <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
+              <button id="tabAZ305" class="tab-btn" type="button">AZ-305</button>
               <button id="tabAWS"  class="tab-btn" type="button">AWS SAA-C03</button>
             </div>
           </div>
@@ -356,7 +357,7 @@
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
     const toNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;
     const pad = n => String(n).padStart(2,'0');
-    const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
     const fmtDuration = sec => { sec = toInt(sec); if (!sec || sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`; };
     const fmtDateTime = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; } };
     const norm = s => (s||"").toString().trim().toLowerCase();
@@ -421,7 +422,8 @@
     }
 
     /* ===================== RANKING MINI (global) ===================== */
-    const QUIZZES = ["az-104","aws-saa-c03"];
+    // ✅ Incluir AZ-305 para que sume en el ranking global
+    const QUIZZES = ["az-104","az-305","aws-saa-c03"];
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
 
@@ -625,17 +627,18 @@
 
     window.__filters = {days:'all', minPct:0, fromDate:null};
     const activeFilterKey = ()=> {
-      const t = document.querySelector('.tab-btn.active')?.textContent || 'All';
-      return t.toLowerCase().includes('aws') ? 'aws-saa-c03'
-           : t.toLowerCase().includes('az')  ? 'az-104'
-           : 'all';
+      const t = (document.querySelector('.tab-btn.active')?.textContent || 'All').toLowerCase();
+      if(t.includes('aws')) return 'aws-saa-c03';
+      if(t.includes('az-305')) return 'az-305';
+      if(t.includes('az')) return 'az-104';
+      return 'all';
     };
 
     function renderResults(rows, filter="all"){
       const root = byId("resultsWrap");
       let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
       const f = filter.toLowerCase();
-      if (f==="az-104" || f==="aws-saa-c03") list = list.filter(x=>x.quizId===f);
+      if (f==="az-104" || f==="aws-saa-c03" || f==="az-305") list = list.filter(x=>x.quizId===f);
 
       const { days, minPct } = window.__filters || {};
       if (days && days!=="all"){
@@ -881,10 +884,12 @@
     function activateTab(which){
       byId("tabAll").classList.toggle("active", which==="all");
       byId("tabAZ").classList.toggle("active", which==="az-104");
+      byId("tabAZ305").classList.toggle("active", which==="az-305");
       byId("tabAWS").classList.toggle("active", which==="aws-saa-c03");
     }
     byId("tabAll").onclick  = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
     byId("tabAZ").onclick   = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
+    byId("tabAZ305").onclick= ()=>{ activateTab("az-305"); renderResults(window.__myRows||[], "az-305"); };
     byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
 
     byId('rangeSel').onchange = (e)=>{

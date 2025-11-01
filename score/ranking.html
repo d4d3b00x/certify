@@ -176,10 +176,14 @@
       <div class="header-row">
         <h2>🏆 RANKING GLOBAL</h2>
         <div class="tabs" role="tablist">
+          <!-- Alcance temporal -->
           <button class="tab" id="tab-global" aria-pressed="true" onclick="setScope('global')">Global</button>
           <button class="tab" id="tab-season" aria-pressed="false" onclick="setScope('season')">Temporada (mes)</button>
           <button class="tab" id="tab-week" aria-pressed="false" onclick="setScope('week')">Semanal</button>
+          <!-- Filtro de Examen -->
+          <button class="tab" id="tab-all-exams" aria-pressed="true" onclick="clearExam()">Todos</button>
           <button class="tab" id="tab-az" aria-pressed="false" onclick="setExam('az-104')">AZ-104</button>
+          <button class="tab" id="tab-az305" aria-pressed="false" onclick="setExam('az-305')">AZ-305</button>
           <button class="tab" id="tab-aws" aria-pressed="false" onclick="setExam('aws-saa-c03')">SAA-C03</button>
         </div>
       </div>
@@ -261,6 +265,7 @@
         <h4 class="name-strong">Simuladores</h4>
         <ul>
           <li><a href="/#simuladores">AZ-104</a></li>
+          <li><a href="/#simuladores">AZ-305</a></li>
           <li><a href="/#simuladores">SAA-C03</a></li>
         </ul>
       </div>
@@ -317,28 +322,25 @@
 
     /* ======= Config API ======= */
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-    const QUIZZES = ["az-104","aws-saa-c03"];
+    const QUIZZES = ["az-104","az-305","aws-saa-c03"]; // incluye AZ-305
 
     /* ======= Utils ======= */
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
-    const toNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
-    // Fecha SOLO con día/mes/año (sin hora)
     const fmtDate = (iso)=>{ if (!iso) return "—"; try{ return new Date(iso).toLocaleDateString([], {year:'numeric',month:'short',day:'2-digit'});}catch{ return iso; }};
-
     function weekKey(d){ const dt=new Date(d); const onejan=new Date(dt.getFullYear(),0,1); const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7); return `${dt.getFullYear()}-W${String(week).padStart(2,'0')}`; }
 
     function pointsForAttempt(r){
       const correct = toInt(r.correct), total = toInt(r.total), dur = toInt(r.durationSec);
-      let pts = correct * 5; // base
+      let pts = correct * 5;
       const pct = total>0 ? (correct/total)*100 : (r.pct||0);
-      if (pct >= 70) pts += 50;               // aprobado
-      if (total>0 && dur>0 && (dur/total) <= 30) pts += 10; // rápido (≤30s/pregunta)
+      if (pct >= 70) pts += 50;
+      if (total>0 && dur>0 && (dur/total) <= 30) pts += 10;
       return { pts, passed: pct>=70, pct };
     }
     function levelFromXP(xp){
-      const lvl = Math.max(1, Math.floor(xp/150)+1); // 150 XP por nivel
+      const lvl = Math.max(1, Math.floor(xp/150)+1);
       const cur = xp % 150; const p = Math.max(0, Math.min(100, Math.floor((cur/150)*100)));
       return {lvl, progress:p};
     }
@@ -355,7 +357,7 @@
         quizId: (x.quizId || "-").toLowerCase(),
         correct: Number(x.correct)||0,
         total: Number(x.total)||0,
-        pct: Number(x.pct||0),
+        pct: Number(x.pct)||0,
         durationSec: Number(x.durationSec)||0,
         ts: x.ts || null
       })).filter(r=> QUIZZES.includes(r.quizId));
@@ -381,7 +383,6 @@
         }
         const u=byUser.get(key);
 
-        // racha
         if(passed){
           u.passed++;
           const t=d? d.getTime():0;
@@ -400,7 +401,6 @@
         u.last=r.ts||u.last;
       });
 
-      // badges adicionales post-proceso
       for(const u of byUser.values()){
         if(u.streak>=3) u.badges.add('streak');
         if(u.attempts>=10) u.badges.add('grinder');
@@ -478,16 +478,31 @@
       document.getElementById('board').innerHTML = html;
     }
 
-    // Estado UI
+    // ===== Estado UI / Filtros =====
     let SCOPE='global', EXAM=null, CACHE=null;
+
     function setScope(x){ SCOPE=x; syncTabs(); render(); }
-    function setExam(x){ EXAM=x; syncTabs(); render(); }
+
+    // Toggle de examen: si pulsas el mismo, vuelve a "Todos"
+    function setExam(x){
+      EXAM = (EXAM === x) ? null : x;
+      syncTabs(); render();
+    }
+    function clearExam(){
+      EXAM = null;
+      syncTabs(); render();
+    }
+
     function syncTabs(){
       const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
+      // alcance temporal
       set('tab-global', SCOPE==='global');
       set('tab-season', SCOPE==='season');
       set('tab-week', SCOPE==='week');
+      // exámenes
+      set('tab-all-exams', EXAM===null);
       set('tab-az', EXAM==='az-104');
+      set('tab-az305', EXAM==='az-305');
       set('tab-aws', EXAM==='aws-saa-c03');
     }
 
@@ -496,7 +511,7 @@
       node.innerHTML = 'Cargando…';
       try{
         if (!CACHE){
-          const res = await fetch(`${"https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"}/results?limit=3000`, {mode:"cors", cache:"no-store"});
+          const res = await fetch(`${API_BASE}/results?limit=3000`, {mode:"cors", cache:"no-store"});
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
           const items = Array.isArray(data.items) ? data.items : [];
@@ -506,10 +521,10 @@
             quizId: (x.quizId || "-").toLowerCase(),
             correct: Number(x.correct)||0,
             total: Number(x.total)||0,
-            pct: Number(x.pct||0),
+            pct: Number(x.pct)||0,
             durationSec: Number(x.durationSec)||0,
             ts: x.ts || null
-          })).filter(r=> ["az-104","aws-saa-c03"].includes(r.quizId));
+          })).filter(r=> ["az-104","az-305","aws-saa-c03"].includes(r.quizId));
         }
         const filtered = CACHE.filter(r=> !EXAM || r.quizId===EXAM);
         const list = aggregate(filtered, SCOPE, null);
@@ -518,6 +533,8 @@
         node.innerHTML = `<p style="color:var(--muted)">Error cargando API: ${e.message}</p>`;
       }
     }
+    // init
+    syncTabs();
     render();
   </script>
 </body>
