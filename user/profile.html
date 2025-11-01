@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
@@ -12,7 +12,7 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CertiFY — Perfil del Estudiante</title>
+  <title>CertiFY — Perfil del Estudiante </title>
 
   <style>
     :root{
@@ -22,7 +22,7 @@
       --radius:16px;
 
       /* Acentos */
-      --accent:#ff9900; --accent-2:#ffb84d; --accent-ring:rgba(255,153,0,.28);
+      --accent:#ff9900; --accent-2:#ffb84d;
       --accent-az:#0078d4; --accent-az-2:#5fb3ff;
 
       --ok:#25b873; --ok-ink:#b9f4d6; --ok-bg:#0e1f1a;
@@ -54,11 +54,11 @@
       padding:18px;
       box-shadow:var(--shadow);
       color:var(--ink);
+      margin-bottom:12px;
     }
 
-    /* Hero */
+    /* Hero (texto sintetizado) */
     .hero{
-      text-align:left;
       padding:16px 18px;
       background:linear-gradient(180deg, #111937 0, #0f1633 100%);
       border:1px solid var(--stroke);
@@ -85,7 +85,7 @@
     .col-right{ display:flex; flex-direction:column; gap:var(--gap); }
     .col-right > .card{ width:100%; }
 
-    /* Perfil */
+    /* Perfil (columna izquierda) */
     .profile{ display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:center; }
     .avatar{
       width:86px; height:86px; border-radius:14px; overflow:hidden;
@@ -128,8 +128,10 @@
     .tab-btn{ border:1px solid transparent; background:transparent; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:900; color:#e2e7ff; }
     .tab-btn.active{ background:var(--surface2); border-color:var(--stroke); }
 
-    /* Tabla resultados */
-    .table-wrap{ background:var(--surface); border:1px solid var(--stroke); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto; }
+    /* Tabla resultados & marcadas */
+    .table-wrap{
+      background:var(--surface); border:1px solid var(--stroke); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto;
+    }
     table{ width:100%; min-width:680px; border-collapse:separate; border-spacing:0; }
     thead th{
       position:sticky; top:0; z-index:1;
@@ -160,7 +162,7 @@
     .kpi h4{ margin:0; font-size:1rem; color:#cbd6ff; font-weight:900; }
     .kpi .n{ font-size:1.4rem; font-weight:900; }
 
-    /* Heatmap & badges */
+    /* Heatmap & badges (perfil izquierda) */
     .heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
     .heat i{display:block;height:14px;border-radius:4px;background:#0b1024;border:1px solid var(--stroke)}
     .heat i.lv1{background:#15224a}
@@ -174,37 +176,33 @@
       border:1px solid var(--stroke);border-radius:10px;padding:6px 8px;font-weight:800;background:var(--surface2);color:var(--ink)
     }
 
-    /* ====== Estilos Ranking Global (fila única) ====== */
-    .rank-mini table{min-width:880px}
+    /* ====== Estilos Ranking Global (mini, sin “Último”, sin scroll) ====== */
+    .rank-mini .table-wrap{overflow-x:hidden}
+    .rank-mini table{min-width:0;width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
     .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
-    .medal.gold{background:linear-gradient(135deg,#ffd662,#ffb300);box-shadow:0 2px 6px rgba(255,179,0,.35)}
-    .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf);box-shadow:0 2px 6px rgba(0,0,0,.12)}
-    .medal.bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a);box-shadow:0 2px 6px rgba(0,0,0,.12)}
-    .points-chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:900;border:1px solid var(--stroke);background:var(--surface2);color:#e8ecff}
-    .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);border:none;color:#fff;box-shadow:var(--shadow)}
-    .namebox{display:inline-flex;align-items:center;gap:8px}
+    .medal.gold{background:linear-gradient(135deg,#ffd662,#ffb300)}
+    .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf)}
+    .medal.bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a)}
+    .points-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-weight:900;border:1px solid var(--stroke);background:var(--surface2)}
+    .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff;border:none}
+    .namebox{display:inline-flex;align-items:center;gap:8px;justify-content:flex-start;white-space:nowrap}
     .avatar-sm{width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
     .name-strong{font-weight:900}
     .name-gold{color:var(--gold)} .name-silver{color:var(--silver)} .name-bronze{color:var(--bronze)}
-    .level-inline{display:inline-flex;align-items:center;gap:8px;font-weight:900;padding:4px 10px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.04)}
-    .level-inline .bar{display:inline-block;height:8px;width:110px;background:#0a0f25;border-radius:999px;position:relative;overflow:hidden}
-    .level-inline .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
-    .ibadges{display:inline-flex;align-items:center;gap:8px;justify-content:center}
-    .ibadge{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;border:1px solid var(--stroke);background:var(--surface2);font-size:14px}
-    .ibadge.fast{background:rgba(255,179,0,.14);border-color:rgba(255,179,0,.35)}
-    .ibadge.perfect{background:rgba(124,77,255,.18);border-color:rgba(124,77,255,.38)}
-    .ibadge.ok{background:rgba(46,204,113,.15);border-color:rgba(46,204,113,.35)}
-    .ibadge.streak{background:rgba(255,111,97,.14);border-color:rgba(255,111,97,.35)}
-    .ibadge.grinder{background:rgba(100,181,246,.16);border-color:rgba(100,181,246,.35)}
-    .ibadge.veteran{background:rgba(255,214,98,.18);border-color:rgba(255,214,98,.45)}
-    .ibadge.sharp{background:rgba(0,200,170,.15);border-color:rgba(0,200,170,.38)}
+    .level-inline{display:inline-flex;align-items:center;gap:6px}
+    .level-inline .bar{width:90px;height:6px;background:#0b1024;border-radius:999px;overflow:hidden}
+    .level-inline .bar i{display:block;height:100%;background:linear-gradient(90deg,#6c8bff,#3e64ff)}
+    .ibadges{display:inline-flex;align-items:center;gap:6px;justify-content:center}
+    .ibadge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--surface2)}
+    .ibadge.fast{color:#ffb84d}.ibadge.perfect{color:#bb86fc}.ibadge.ok{color:#4ee69a}.ibadge.streak{color:#ff6b6b}.ibadge.grinder{color:#64b5f6}.ibadge.sharp{color:#00c8aa}.ibadge.veteran{color:#ffd662}
   </style>
 </head>
 <body>
   <div class="wrap">
+    <!-- Hero sintetizado -->
     <section class="card hero">
       <h1>Bienvenido a tu perfil.</h1>
-      <p class="desc">Gestiona tu perfil y revisa tus últimos resultados.</p>
+      <p class="desc">Gestiona tu cuenta, consulta tu ranking y revisa tus últimos exámenes y logros.</p>
     </section>
 
     <section class="authbar" id="authBar">
@@ -216,6 +214,7 @@
     </section>
 
     <section class="grid">
+      <!-- ===== Columna izquierda (RESTO IGUAL QUE TENÍAS) ===== -->
       <div class="col-left">
         <article class="card">
           <h3 style="margin:0 0 10px;font-weight:900">Perfil</h3>
@@ -279,16 +278,18 @@
         </article>
       </div>
 
+      <!-- ===== Columna derecha ===== -->
       <div class="col-right">
-        <!-- NUEVA sección: Ranking Global (fila para el usuario) -->
+        <!-- RANKING GLOBAL mini (sin columna “Último”) -->
         <article class="card rank-mini">
           <h3 style="margin:0 0 10px;font-weight:900;">🏆 Ranking Global</h3>
           <div id="rankMiniWrap" class="table-wrap">Cargando…</div>
         </article>
 
+        <!-- ÚLTIMOS EXÁMENES -->
         <article class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
-            <h3 style="margin:0;font-weight:900">Tus últimos resultados</h3>
+            <h3 style="margin:0;font-weight:900">📘 Últimos Exámenes</h3>
             <div class="tabs">
               <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
               <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
@@ -326,6 +327,7 @@
           </div>
         </article>
 
+        <!-- PREGUNTAS MARCADAS (la que pedías recuperar) -->
         <article class="card">
           <h3 style="margin:0 0 10px;font-weight:900;">Tus pregunta marcadas</h3>
           <div id="markedWrap" class="table-wrap">
@@ -356,10 +358,7 @@
     const pad = n => String(n).padStart(2,'0');
     const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     const fmtDuration = sec => { sec = toInt(sec); if (!sec || sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`; };
-    // Perfil: fecha completa (lista resultados)
     const fmtDateTime = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; } };
-    // Ranking mini: SOLO fecha
-    const fmtDateOnly = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleDateString([], {year:'numeric',month:'short',day:'2-digit'});}catch{ return iso; } };
     const norm = s => (s||"").toString().trim().toLowerCase();
 
     function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
@@ -432,12 +431,12 @@
       const pct = total>0 ? (correct/total)*100 : (r.pct||0);
       if (pct >= 70) pts += 50;
       if (total>0 && dur>0 && (dur/total) <= 30) pts += 10;
-      return { pts, passed: pct>=70, pct };
+      return { pts, passed: pct>=70 };
     }
     function levelFromXP(xp){
       const lvl = Math.max(1, Math.floor(xp/150)+1);
-      const cur = xp % 150; const p = Math.max(0, Math.min(100, Math.floor((cur/150)*100)));
-      return {lvl, progress:p};
+      const prog = Math.max(0, Math.min(100, Math.floor((xp%150)/150*100)));
+      return {lvl, prog};
     }
     async function fetchAllResults(limit=3000){
       const r = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors",cache:"no-store"});
@@ -458,38 +457,27 @@
     function aggregateGlobal(rows){
       const byUser=new Map();
       rows.forEach(r=>{
-        const {pts,passed,pct}=pointsForAttempt(r);
+        const {pts,passed}=pointsForAttempt(r);
         const key=(r.userId||'')+'|'+(r.userName||'');
         if(!byUser.has(key)){
-          byUser.set(key,{userId:r.userId,userName:r.userName,xp:0,attempts:0,passed:0,last:r.ts,badges:new Set(),lastPassTs:null,streak:0,correctSum:0,totalSum:0});
+          byUser.set(key,{userId:r.userId,userName:r.userName,xp:0,attempts:0,passed:0,badges:new Set(),correctSum:0,totalSum:0});
         }
         const u=byUser.get(key);
-        if(passed){
-          u.passed++;
-          const t=r.ts? new Date(r.ts).getTime():0;
-          if(u.lastPassTs && (t-u.lastPassTs)<=1000*60*60*24*7){ u.streak++; } else { u.streak=1; }
-          u.lastPassTs=t;
-        }
-        u.xp+=pts;
-        u.attempts++;
-        u.correctSum+=toInt(r.correct);
-        u.totalSum+=toInt(r.total);
-        if(pct===100) u.badges.add('perfect');
+        if(passed) u.passed++;
+        u.xp+=pts; u.attempts++; u.correctSum+=toInt(r.correct); u.totalSum+=toInt(r.total);
         if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+        if((r.correct|0)===(r.total|0) && r.total>0) u.badges.add('perfect');
         if(passed) u.badges.add('ok');
-        if(r.ts && (!u.last || r.ts>u.last)) u.last=r.ts;
       });
-      // post badges
       for(const u of byUser.values()){
-        if(u.streak>=3) u.badges.add('streak');
         if(u.attempts>=10) u.badges.add('grinder');
         if(u.xp>=2000) u.badges.add('veteran');
         const acc=u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
         if(acc>=90) u.badges.add('sharp');
       }
-      const list=[...byUser.values()].map(u=>{ const lv=levelFromXP(u.xp); return {...u,lvl:lv.lvl,prog:lv.progress}; })
-        .sort((a,b)=>{ if(b.xp!==a.xp) return b.xp-a.xp; if(b.passed!==a.passed) return b.passed-a.passed; return String(a.userName).localeCompare(String(b.userName)); });
-      return list;
+      return [...byUser.values()]
+        .map(u=>{ const {lvl,prog}=levelFromXP(u.xp); return {...u,lvl,prog}; })
+        .sort((a,b)=> b.xp-a.xp || b.passed-a.passed || String(a.userName).localeCompare(String(b.userName)));
     }
     function medalCell(rank){
       if(rank===1) return `<span class="medal gold">1</span>`;
@@ -508,7 +496,6 @@
       if(s.has('fast')) out+=`<span class="ibadge fast" title="Rápido">⚡</span>`;
       if(s.has('perfect')) out+=`<span class="ibadge perfect" title="Perfect">💯</span>`;
       if(s.has('ok')) out+=`<span class="ibadge ok" title="Pro">✅</span>`;
-      if(s.has('streak')) out+=`<span class="ibadge streak" title="Racha">🔥</span>`;
       if(s.has('grinder')) out+=`<span class="ibadge grinder" title="Grinder">💪</span>`;
       if(s.has('sharp')) out+=`<span class="ibadge sharp" title="Preciso">🧠</span>`;
       if(s.has('veteran')) out+=`<span class="ibadge veteran" title="Veterano">🏅</span>`;
@@ -517,63 +504,50 @@
     async function renderMyGlobalRank(){
       const host=byId('rankMiniWrap'); host.textContent='Cargando…';
       const me=getUserAny(); if(!me){ host.innerHTML='<p class="muted" style="text-align:center">Inicia sesión para ver tu ranking.</p>'; return; }
-
       try{
         const all=await fetchAllResults(3000);
         const agg=aggregateGlobal(all);
         const uid=(me.userId||me.id||'').toString();
-        const uemail=(me.email||'').toLowerCase();
-
-        // localizar mi entrada por userId o por nombre/email
-        let idx=-1;
-        const found=agg.find((x,i)=>{
-          const matchId = uid && (x.userId||'').toString()===uid;
-          const matchEmail = false; // no viene email en agregación
-          const matchName = (x.userName||'').trim()=== (me.name||me.displayName||me.userName||'').trim();
-          if(matchId || matchEmail || matchName){ idx=i; return true; }
-          return false;
-        });
-
-        if(!found){ host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>'; return; }
-
-        const rank = idx+1;
-        const initials = initialsOf(found.userName);
+        const foundIndex=agg.findIndex(x=> (x.userId||'').toString()===uid || (x.userName||'').trim()===(me.name||me.displayName||me.userName||'').trim());
+        if(foundIndex<0){ host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>'; return; }
+        const row=agg[foundIndex], rank=foundIndex+1;
         const pointsCls = rank<=3 ? 'points-chip top' : 'points-chip';
         const nameCls = nameClassByRank(rank);
+        const initials = initialsOf(row.userName);
 
-        let html = `<table>
-          <thead><tr>
-            <th>#</th>
-            <th>Puntos</th>
-            <th>Quizzer</th>
-            <th>Nivel</th>
-            <th>Aprobados</th>
-            <th>Intentos</th>
-            <th>Último</th>
-            <th>Insignias</th>
-          </tr></thead>
-          <tbody>
-            <tr>
-              <td>${medalCell(rank)}</td>
-              <td><span class="${pointsCls}">⭐ ${found.xp}</span></td>
-              <td style="text-align:left">
-                <span class="namebox">
-                  <span class="avatar-sm">${initials}</span>
-                  <span class="${nameCls}">${escapeHtml(found.userName)}</span>
-                </span>
-              </td>
-              <td><span class="level-inline">Lv ${found.lvl}<span class="bar"><i style="width:${found.prog}%"></i></span></span></td>
-              <td>${found.passed}</td>
-              <td>${found.attempts}</td>
-              <td>${found.last? fmtDateOnly(found.last):'—'}</td>
-              <td>${badgesSmallHTML(found.badges)}</td>
-            </tr>
-          </tbody>
-        </table>`;
-
-        host.innerHTML=html;
+        host.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Puntos</th>
+                <th>Quizzer</th>
+                <th>Nivel</th>
+                <th>Aprobados</th>
+                <th>Intentos</th>
+                <th>Insignias</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${medalCell(rank)}</td>
+                <td><span class="${pointsCls}">⭐ ${row.xp}</span></td>
+                <td style="text-align:left">
+                  <span class="namebox">
+                    <span class="avatar-sm">${initials}</span>
+                    <span class="${nameCls}">${escapeHtml(row.userName)}</span>
+                  </span>
+                </td>
+                <td><span class="level-inline">Lv ${row.lvl} <span class="bar"><i style="width:${row.prog}%"></i></span></span></td>
+                <td>${row.passed}</td>
+                <td>${row.attempts}</td>
+                <td>${badgesSmallHTML(row.badges)}</td>
+              </tr>
+            </tbody>
+          </table>`;
       }catch(e){
-        host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking: ${escapeHtml(e.message)}</p>`;
+        host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking.</p>`;
+        console.warn(e);
       }
     }
     /* ================================================================ */
@@ -925,9 +899,25 @@
     };
 
     // ===== Init =====
+    function renderProfile(){
+      const u=getUserAny()||{};
+      byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
+      byId("userEmailTxt").textContent = u.email || "—";
+      const box = byId("avatarBox");
+      box.innerHTML = "";
+      if (u.avatarUrl){
+        const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar";
+        im.onload = () => { box.innerHTML = ""; box.appendChild(im); }
+        im.onerror = () => { box.textContent = initialsOf(u.name); }
+      }else{
+        box.textContent = initialsOf(u.name);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", async ()=>{
       renderAuth();
       loadRemoteMe();
+      renderProfile();
 
       try{
         const rows = await fetchMyResults(500);
@@ -936,7 +926,17 @@
         renderHeat14(rows);
         renderBadges(rows);
 
-        const tr = computeTrend(rows);
+        const tr = (function computeTrend(rows){
+          const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
+          if (ordered.length<6) return {delta:0, dir:'='};
+          const mid = Math.floor(ordered.length/2);
+          const prev = ordered.slice(0, mid);
+          const last = ordered.slice(mid);
+          const avg = a => Math.round(a.reduce((s,x)=>s+(x.pct||0),0)/Math.max(1,a.length));
+          const p1=avg(prev), p2=avg(last), d=p2-p1;
+          return {delta:d, dir: d>0?'up':(d<0?'down':'=')};
+        })(rows);
+
         const arrow = tr.dir==='up'?'⬆️':(tr.dir==='down'?'⬇️':'➡️');
         byId('trendHint').textContent = `${arrow} Trend vs. previous period: ${tr.delta>0?'+':''}${tr.delta}%`;
 
@@ -950,9 +950,10 @@
         console.warn('Results fetch failed:', e);
       }
 
-      // Render ranking mini (global)
+      // Ranking Global mini
       renderMyGlobalRank();
 
+      // Marcadas
       try{
         const marked = await fetchMyMarked(200);
         renderMarked(marked);
