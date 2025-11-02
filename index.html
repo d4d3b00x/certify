@@ -23,21 +23,16 @@
   <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
-
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
       --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
       --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
-      --btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);--btn-ink:#fff;
-
       --pill-bg:linear-gradient(180deg,#151b31,#12182c);
       --pill-ring:#2a3150;
       --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
       --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
-
       --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
-
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
     }
 
@@ -67,7 +62,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-    /* Logo un poco más grande */
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
@@ -114,7 +108,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .grid{ gap:10px; } .sim-card{ padding:14px; border-radius:16px; gap:10px; }
     .prov-pill{ padding:6px 12px; font-size:12px; } .sim-title{ font-size:.98rem; }
 
-    /* ===== NUEVA SECCIÓN: Catálogo de fabricantes (dos tarjetas) ===== */
+    /* ===== Catálogo de fabricantes (dos tarjetas) ===== */
     .vendor-grid{display:grid;gap:14px;margin-top:12px}
     @media(min-width:820px){.vendor-grid{grid-template-columns:repeat(2,1fr)}}
     .vendor-card .v-title{font-size:1.2rem;font-weight:900}
@@ -122,15 +116,25 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .vendor-azure .accent{background:linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))}
     .vendor-aws .accent{background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))}
 
-    /* Modales, quiz, etc. (igual que antes) */
-    .how-grid{display:grid;gap:10px;margin-top:12px}
-    @media(min-width:820px){.how-grid{grid-template-columns:repeat(4,1fr)}}
-    .how-step{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px}
+    /* ===== Journey (4 hitos) ===== */
+    .journey{padding:26px 0}
+    .journey h2{margin:0 0 10px;font-size:1.6rem;font-weight:900;text-transform:uppercase}
+    .timeline{display:grid;gap:14px;margin-top:12px}
+    @media(min-width:820px){.timeline{grid-template-columns:repeat(4,1fr)}}
+    .step{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:16px}
+    .step .icon{width:44px;height:44px;border-radius:999px;display:grid;place-items:center;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 8px 18px rgba(80,90,240,.25);font-size:22px;margin-bottom:10px}
+    .step h3{margin:0 0 6px;font-size:1.05rem}
+    .step p{margin:0;color:var(--muted)}
+    .journey-cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+
+    /* ===== CTA dos columnas (captura) ===== */
     .cta{display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1px solid var(--stroke);border-radius:14px;overflow:hidden;background:var(--surface);margin-top:14px}
     @media(max-width:820px){.cta{grid-template-columns:1fr}}
-    .cta .left{padding:18px}.cta .right{padding:18px;background:var(--surface2)}
+    .cta .left{padding:18px}
+    .cta .right{padding:18px;background:var(--surface2)}
     .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,153,0,.12);border:1px solid rgba(255,153,0,.3);color:#ffd7a0;font-weight:800}
 
+    /* Modales, quiz, etc. (igual que antes) */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
     .modal.show{display:flex}
     .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
@@ -195,7 +199,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
-        <h1 id="hero-title"><span class="hero-emoji" aria-hidden="true">🎮</span>Estudia y aprende, mientras te divirtes compitiendo contra la comunidad IT Quizzers</h1>
+        <h1 id="hero-title"><span class="hero-emoji" aria-hidden="true">🎮</span>Aprende mientras compites contra el resto de Quizzers de la comunidad.</h1>
         <p class="lead">Simula <strong>exámenes y certificaciones IT</strong> con preguntas centradas en aprobar. Sube tu nivel y mide tu progreso.</p>
         <div class="hero-actions" role="group" aria-label="Acciones principales">
           <a class="btn" href="/score/ranking.html" role="button">🏆 VER RANKING GLOBAL</a>
@@ -204,48 +208,40 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-    <!-- Cómo funciona + CTA -->
-    <section aria-labelledby="plan-title">
+    <!-- NUEVO: 4 hitos -->
+    <section class="journey" aria-labelledby="journey-title">
       <div class="container">
-        <div id="plan-title" class="sec-title">APRUEBA TU CERTIFICACIÓN IT</div>
-        <div class="how-grid">
-          <div class="how-step">
-            <strong>1) Diagnóstico inicial</strong><br>
-            <span class="muted">Mini-test por dominios. Prioriza dónde estudiar.</span>
-            <div id="diagBtns" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-              <button class="pill-btn" id="btnOpenDiag" type="button">Iniciar diagnóstico</button>
-              <!-- "Ver último resultado" se inyecta por JS solo si hay datos -->
+        <h2 id="journey-title">🚀 TU VIAJE HACIA LA CERTIFICACIÓN IT</h2>
+        <div class="timeline">
+          <div class="step">
+            <div class="icon">🧭</div>
+            <h3>1) Diagnóstico inicial</h3>
+            <p>Mini-test por dominios para priorizar dónde estudiar. Obtén tu plan.</p>
+            <div class="journey-cta">
+              <button class="pill-btn" id="btnOpenDiag" type="button">INICIAR DIAGNÓSTICO</button>
+              <div id="diagBtns" style="display:flex;gap:8px;flex-wrap:wrap"></div>
             </div>
           </div>
-          <div class="how-step"><strong>2) Domina lo esencial</strong><br><span class="muted">APrendete nuestros resúmenes y hojas de trucos por dominio y certificación . Focalizate en lo importante. </span></div>
-          <div class="how-step"><strong>3) Practica con propósito</strong><br><span class="muted">Utiliza nuestros simuladores con explicaciones centradas en lo importante de cada certificación y enlaces oficiales.</span></div>
-          <div class="how-step"><strong>4) Ensayo final</strong><br><span class="muted">¿Te sientes preparado? Realiza el modo examen cronometrado (en desarrollo). Repite hasta tu objetivo.</span></div>
-        </div>
-
-        <div class="cta" role="region" aria-labelledby="beta-title">
-          <div class="left">
-            <span class="tag" id="beta-title">ÚNETE A NUESTRA COMUNIDAD DE QUIZZERS!</span>
-            <h2 style="margin:8px 0 6px;font-size:clamp(1.4rem,3.6vw,2rem)">Regístrate y empieza tu camino de aprendizaje hacia tu certificación!</h2>
-            <p class="muted">Guardamos tu progreso, lo analizamos, y te proponemos consejos de aprendizaje para reforzar tus áreas de mejora según los dominios de cada examen.</p>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-              <a class="pill-btn" href="/login/login.html?view=signup" role="button">CREAR CUENTA</a>
-            </div>
+          <div class="step">
+            <div class="icon">📚</div>
+            <h3>2) Domina lo esencial</h3>
+            <p>Resúmenes y hojas de trucos por dominio y certificación. Enfoque a lo importante.</p>
           </div>
-          <div class="right" aria-label="Ventajas"><br>
-            <div>✅ <b>Rutas de estudio</b> de 7/14/30 días</div>
-            <div>✅ <b>Consejos y Tips</b> especificos de cada certificación</div>
-            <div>✅ <b>Simulador adaptativo</b> por dominio</div>
-            <div>✅ <b>Análisis por dominio</b> tras cada intento</div>
-            <div>✅ <b>Explicación + enlaces oficiales</b> en cada respuesta</div>
-            <div>✅ <b>Preguntas marcadas</b> y repaso dirigido</div>
-            <div>✅ <b>Objetivo semanal</b> de preguntas, racha e insignias</div>
-            <div>✅ <b>Estadísticas</b> de acierto, tiempo y evolución</div>
+          <div class="step">
+            <div class="icon">🎯</div>
+            <h3>3) Practica con propósito</h3>
+            <p>Simuladores con explicaciones claras y enlaces oficiales. Mejora continua.</p>
+          </div>
+          <div class="step">
+            <div class="icon">⏱️</div>
+            <h3>4) Ensayo final</h3>
+            <p>Modo examen cronometrado (en desarrollo). Repite hasta alcanzar tu objetivo.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- NUEVO: Catálogo de fabricantes (dos tarjetas grandes, estilo sim-card) -->
+    <!-- Catálogo de fabricantes -->
     <section aria-labelledby="fab-title">
       <div class="container">
         <div id="fab-title" class="sec-title">CATÁLOGO DE FABRICANTES</div>
@@ -285,7 +281,32 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-    <!-- (Eliminada la sección de CONTENIDO CLAVE) -->
+    <!-- CTA (captura) ANTES DEL FOOTER -->
+    <section aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta" role="region" aria-labelledby="cta-title">
+          <div class="left">
+            <span class="tag" id="cta-title">ÚNETE A NUESTRA COMUNIDAD DE QUIZZERS!</span>
+            <h2 style="margin:10px 0 8px;font-size:clamp(1.4rem,3.6vw,2.2rem)">Regístrate y empieza tu camino de aprendizaje hacia tu certificación!</h2>
+            <p class="muted">Guardamos tu progreso, lo analizamos y te proponemos consejos de aprendizaje por dominios para reforzar lo importante.</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              <a class="pill-btn" href="/login/login.html?view=signup" role="button">CREAR CUENTA</a>
+            </div>
+          </div>
+          <div class="right" aria-label="Beneficios">
+            <div>✅ <b>Rutas de estudio</b> de 7/14/30 días</div>
+            <div>✅ <b>Consejos y Tips</b> específicos de cada certificación</div>
+            <div>✅ <b>Simulador adaptativo</b> por dominio</div>
+            <div>✅ <b>Análisis por dominio</b> tras cada intento</div>
+            <div>✅ <b>Explicación + enlaces oficiales</b> en cada respuesta</div>
+            <div>✅ <b>Preguntas marcadas</b> y repaso dirigido</div>
+            <div>✅ <b>Objetivo semanal</b> de preguntas, racha e insignias</div>
+            <div>✅ <b>Estadísticas</b> de acierto, tiempo y evolución</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Pie -->
@@ -300,9 +321,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
         <div>
         <div style="font-weight:800">Simuladores</div>
-        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZURE ADMINISTRATOR AZ104</a></div>
-        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZURE ARCHITECT AZ305</a></div>
-        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">AWS ARCHITECT SAAC03</a></div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
@@ -506,7 +527,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
     renderSims();
 
-    // Click en "Empezar/Certificación": usa la URL declarada en data-href y respeta el login gate
+    // Click en "Empezar/Certificación"
     document.addEventListener('click', e=>{
       const b=e.target.closest('.start-btn'); if(!b) return;
       if(!!getCurrentUser()){
@@ -553,7 +574,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       if(container.__trapHandler){ container.removeEventListener('keydown', container.__trapHandler); container.__trapHandler=null; }
     }
 
-    /* ===== Feedback → POST /items (tabla notes) ===== */
+    /* ===== Feedback → POST /items ===== */
     const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
     const NOTES_ENDPOINT = `${API_BASE}/items`;
 

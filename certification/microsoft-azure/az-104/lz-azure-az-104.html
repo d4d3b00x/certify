@@ -107,7 +107,7 @@
     .chip-dom.on{background:rgba(108,139,255,.14); border-color:#4a5cc3; box-shadow:0 0 0 2px rgba(108,139,255,.28) inset;}
     .chip-dom.on .led{background:#6c8bff; border-color:#6c8bff}
 
-    /* Segmented base (luego lo reforzamos para el simulador) */
+    /* Segmented base */
     .segmented{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:6px}
     .segmented input{display:none}
     .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
@@ -133,7 +133,7 @@
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
 
-    /* ========= ESTILO ESPECIAL DEL SIMULADOR (como la captura) ========= */
+    /* ========= ESTILO ESPECIAL DEL SIMULADOR ========= */
     #simCard{
       position:relative;
       background:
@@ -154,33 +154,23 @@
       text-shadow:0 10px 28px rgba(0,120,212,.35);
       margin-bottom:6px;
     }
-    /* segmented reforzado dentro del simulador */
-    #simCard .segmented{
-      background:rgba(255,255,255,.04);
-      border:1px solid #2a3b6d;
-      padding:6px;
-    }
+    #simCard .segmented{background:rgba(255,255,255,.04);border:1px solid #2a3b6d;padding:6px}
     #simCard .segmented input:checked + label{
       background:linear-gradient(180deg,#164d86,#0e3570);
       border:1px solid rgba(0,120,212,.55);
       box-shadow:0 0 0 2px rgba(0,120,212,.30) inset;
     }
-    /* select a juego */
     #simCard select{
       background:#0f1b3a;color:var(--ink);
       border:1px solid #2a3b6d;border-radius:10px;
       padding:10px 12px;font-weight:800;min-width:84px;
     }
-    /* chips más redondos */
     #simCard .chip-dom{
       padding:10px 14px;border-radius:999px;
       border-color:#2a3b6d;background:transparent;color:#d6e5ff;
       box-shadow:0 2px 0 rgba(0,0,0,.12);
     }
-    #simCard .chip-dom.on{
-      background:rgba(0,120,212,.08); border-color:#3a62b3;
-      box-shadow:0 0 0 2px rgba(0,120,212,.22) inset;
-    }
+    #simCard .chip-dom.on{background:rgba(0,120,212,.08); border-color:#3a62b3; box-shadow:0 0 0 2px rgba(0,120,212,.22) inset;}
     #simCard .chip-dom .led{width:14px;height:14px;border:2px solid #6a78b4}
     #simCard .chip-dom.on .led{background:#0078d4;border-color:#0078d4}
   </style>
@@ -234,43 +224,10 @@
           <h2 class="sec-title" style="margin:10px 0 6px;text-transform:uppercase">Tips de estudio AZ-104</h2>
           <p class="muted" style="margin-top:0">Tarjetas y artículos clave orientados al examen. Repasa en orden o salta a lo que necesites.</p>
 
-          <!-- Carrusel solo AZ-104 -->
+          <!-- Carrusel AZ-104 -->
           <div class="carousel" role="region" aria-label="Contenidos AZ-104">
             <button class="car-btn car-prev" type="button" aria-label="Anterior">‹</button>
-            <div class="track" id="contentTrack">
-              <article class="card">
-                <div class="cc-head">🌐 <strong>VNet Peering vs. VPN Gateway</strong></div>
-                <p class="muted">Cuándo usar <strong>Peering</strong> para baja latencia y cuándo <strong>VPN Gateway</strong> para cifrado e híbrido.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-104</span></span>
-                  <a class="tiny-btn" href="/content/vnet-peering-vpn.html">Leer</a>
-                </div>
-              </article>
-              <article class="card">
-                <div class="cc-head">🔐 <strong>Checklist de seguridad Azure</strong></div>
-                <p class="muted">RBAC mínimo, MFA, PIM, Azure Policy y Defender for Cloud. Alineado a AZ-104.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-104</span></span>
-                  <a class="tiny-btn" href="/content/azure-security-checklist.html">Leer</a>
-                </div>
-              </article>
-              <article class="card">
-                <div class="cc-head">🗂️ <strong>Azure Storage: claves rápidas</strong></div>
-                <p class="muted">SAS, RBAC, replicación LRS–GZRS, inmutabilidad y CMK.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-104</span></span>
-                  <a class="tiny-btn" href="/content/azure-storage-az104.html">Leer</a>
-                </div>
-              </article>
-              <article class="card">
-                <div class="cc-head">🔗 <strong>Conectividad híbrida</strong></div>
-                <p class="muted">VPN S2S, ExpressRoute con BGP, hub-spoke y DNS privado.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-104</span></span>
-                  <a class="tiny-btn" href="/content/azure-hybrid-connectivity-az305.html">Leer</a>
-                </div>
-              </article>
-            </div>
+            <div class="track" id="contentTrack"><!-- se rellena por JS --></div>
             <button class="car-btn car-next" type="button" aria-label="Siguiente">›</button>
           </div>
         </section>
@@ -294,7 +251,7 @@
             <ul id="domainsList" class="domains-list"></ul>
           </section>
 
-          <!-- DERECHA: simulador (REMAQUETADO COMO LA CAPTURA) -->
+          <!-- DERECHA: simulador (remarcado) -->
           <aside class="panel" id="simCard" aria-label="Simulador AZ-104">
             <h3 id="simTitle">AZ-104 · Simulador de examen</h3>
 
@@ -362,7 +319,7 @@
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.</p>
       </div>
-     <div>
+      <div>
         <div style="font-weight:800">Simuladores</div>
         <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
         <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
@@ -475,6 +432,71 @@
       }
     };
 
+    /* ===== Tips de estudio por certificación (solo AZ-104) ===== */
+    const CONTENTS = {
+      'az-104': [
+        {
+          icon:'🔐',
+          title:'Identidad y acceso (Entra ID)',
+          blurb:'RBAC mínimo, MFA, PIM, grupos y asignaciones.',
+          href:'/content/azure-identity-az104.html'
+        },
+        {
+          icon:'🗂️',
+          title:'Azure Storage: claves rápidas',
+          blurb:'SAS, RBAC, replicación LRS–GZRS, inmutabilidad y CMK.',
+          href:'/content/azure-storage-az104.html'
+        },
+        {
+          icon:'🌐',
+          title:'Seguridad de red',
+          blurb:'NSG/ASG, Azure Firewall, DDoS, endpoints privados.',
+          href:'/content/azure-network-security-az104.html'
+        },
+        {
+          icon:'📈',
+          title:'Monitorización y alertas',
+          blurb:'Azure Monitor, métricas, registros y alertas de acción.',
+          href:'/content/azure-monitoring-alerts-az104.html'
+        },
+        {
+          icon:'🖥️',
+          title:'Compute & Alta disponibilidad',
+          blurb:'VMSS, zonas, conjuntos de disponibilidad e imágenes.',
+          href:'/content/azure-compute-availability-az104.html'
+        },
+        {
+          icon:'💾',
+          title:'Backup y recuperación',
+          blurb:'Azure Backup, snapshots, vault y restauraciones.',
+          href:'/content/azure-backup-recovery-az104.html'
+        },
+        {
+          icon:'💰',
+          title:'Coste y gobierno',
+          blurb:'Cost Management + Budgets, tags, Azure Policy.',
+          href:'/content/azure-cost-governance-az104.html'
+        }
+      ]
+    };
+
+    function renderTips(quiz){
+      const list = CONTENTS[quiz] || [];
+      const track = document.getElementById('contentTrack');
+      track.innerHTML = list.map(item => `
+        <article class="card">
+          <div class="cc-head">${item.icon} <strong>${item.title}</strong></div>
+          <p class="muted">${item.blurb}</p>
+          <div class="cc-meta">
+            <span class="grow"><span>AZURE</span><span>${quiz.toUpperCase()}</span></span>
+            <a class="tiny-btn" href="${item.href}">Leer</a>
+          </div>
+        </article>
+      `).join('');
+    }
+    renderTips(QUIZ);
+
+    /* ===== chips/domains + notas ===== */
     const badgeLogo=document.getElementById('provLogo'),
           provText=document.getElementById('provText'),
           dlist=document.getElementById('domainsList'),
@@ -583,7 +605,7 @@
       }
     });
 
-    /* ===== Resultados modal (si tu motor lo dispara) ===== */
+    /* ===== Resultados modal ===== */
     const qrModal = document.getElementById('quizResultModal');
     const qrClose = document.getElementById('qrClose');
     const qrGrid  = document.getElementById('quizDomainsGrid');

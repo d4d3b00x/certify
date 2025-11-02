@@ -1,232 +1,579 @@
-<!doctype html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DYZ3GCXHEK');
-</script>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="theme-color" content="#0f1320" />
-<title>Contenidos — ITHub</title>
-<meta name="description" content="Índice de contenidos para preparar AZ-104, AZ-305 y SAA-C03 con filtros por examen y proveedor.">
-<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<meta name="author" content="ITHub">
-<meta name="keywords" content="AZ-104, AZ-305, SAA-C03, contenidos, estudio, Azure, AWS">
-<style>
-:root{ --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9; --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4; --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45); --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff); --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b; }
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
-.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-.brand img.site-logo{height:42px;width:auto;display:block}
-nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
-nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
-.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150; border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
-.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7a67ff,#5f48ff);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s, background .12s;font-size:13px;text-transform:uppercase;}
-.pill-btn:hover{transform:translateY(-1px)}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
-.btn:hover{border-color:#3a4580}
-main{padding:18px 0 10px}
-.hero-page{padding:18px 0 6px}
-.hero-page h1{margin:0 0 4px;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2}
-.muted{color:var(--muted)}
-.grid{display:grid;gap:14px}
-@media(min-width:860px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
-.card h3{margin:0;font-size:1.05rem}
-.badges{display:flex;gap:6px;flex-wrap:wrap}
-.badge{display:inline-flex;gap:6px;align-items:center;font-weight:900;padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:var(--surface2);font-size:.8rem}
-.badge.azure{border-color:rgba(0,120,212,.3)} .badge.aws{border-color:rgba(255,153,0,.35)}
-.controls{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-.input{border:1px solid var(--stroke);border-radius:10px;background:#0b1225;color:var(--ink);padding:10px;min-width:280px;font-weight:700}
-select.input{min-width:200px}
-footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
-.f-grid{display:grid;gap:14px}
-@media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
-footer a{color:#cfe1ff}
-footer a:hover{text-decoration:underline}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IT Hub .es — RANKING GLOBAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
+      --stroke:#283056; --shadow:0 12px 28px rgba(6,12,40,.45);
+      --violet:#7b5cff; --violet-2:#6246ff;
+      --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
+      --chip:#0f1430; --chip2:#101738;
+      --tab-bg:#1b2140; --tab-on:rgba(108,139,255,.3);
+      --grad1:rgba(255,153,0,.12); --grad2:rgba(0,120,212,.12);
+      --azulite1:#6c8bff; --azulite2:#3e64ff; --azuliteDot:#a9bbff;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html, body{ overflow-x:hidden }                 /* evita desbordes horizontales */
+    body{
+      font-family:"Roboto Condensed","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue",sans-serif;
+      font-weight:400;color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%,var(--grad1),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,var(--grad2),transparent 60%),
+        var(--bg);
+      line-height:1.4;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px; overflow-x:clip} /* clip anti-scroll fantasma */
+
+    /* ===== Header ===== */
+    header{
+      position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.92),rgba(15,19,32,.72));
+      border-bottom:1px solid var(--stroke)
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      height:auto;padding:8px 0; flex-wrap:wrap;  /* <— responsive: permite varias filas */
+    }
+    .brand,.menu,.actions{ min-width:0 }          /* permite encoger en flex */
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .brand .logo{
+      width:26px;height:26px;border-radius:9px;
+      background:linear-gradient(180deg,#7b8cff,#4c66ff);
+      box-shadow:0 0 0 8px rgba(108,139,255,.12)
+    }
+    .brand span{font-weight:900}
+    .brand small{opacity:.7;margin-left:4px}
+
+    .menu{
+      display:flex;gap:clamp(12px,4vw,24px);color:#aeb7e6;font-weight:800;letter-spacing:.04em;
+      text-transform:uppercase;margin:0 auto
+    }
+    .menu a{padding:6px 0;border-radius:8px}
+    .menu a:hover{color:#fff}
+
+    .actions{display:flex;align-items:center;gap:12px}
+    .userbox{
+      display:flex;align-items:center;gap:8px;
+      padding:6px 8px;border:1px solid var(--stroke);border-radius:9999px;
+      background:rgba(20,26,55,.6)
+    }
+    .userbox .name{font-weight:900;letter-spacing:.02em}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:8px 12px;border-radius:12px;border:1px solid var(--stroke);
+      cursor:pointer;font-weight:800;background:transparent;color:var(--ink)
+    }
+    .btn.primary{
+      background:linear-gradient(180deg,var(--violet),var(--violet-2));
+      border:none;box-shadow:var(--shadow);color:#fff
+    }
+    .btn.equal{min-width:auto} /* no fuerces ancho fijo en móvil */
+    #menuToggle{ display:none } /* se muestra solo en XS */
+
+    /* ===== Página ===== */
+    .wrap{padding:20px 0 28px}
+    .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);
+      border-radius:14px;padding:16px 16px;box-shadow:var(--shadow)}
+    .header-row{display:flex;align-items:center;justify-content:space-between;margin:6px 0 12px;gap:8px;flex-wrap:wrap}
+    .header-row h2{margin:0;color:var(--ink);font-size:1.25rem;font-weight:600}
+
+    .tabs{display:flex;gap:6px;flex-wrap:wrap}
+    .tab{
+      border:1px solid var(--stroke);background:var(--tab-bg);color:var(--ink);
+      padding:6px 10px;border-radius:999px;cursor:pointer;font-weight:500;font-size:.85rem;
+      position:relative;transition:.15s ease
+    }
+    .tab[aria-pressed="true"]{
+      background:linear-gradient(180deg,var(--azulite1),var(--azulite2));
+      color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(95,125,255,.35);
+    }
+    .tab[aria-pressed="true"]::after{
+      content:""; position:absolute; top:-6px; right:-6px;
+      width:8px;height:8px;border-radius:50%;
+      background:var(--azuliteDot); box-shadow:0 0 0 4px rgba(108,139,255,.25);
+    }
+
+    /* ===== Tabla ===== */
+    .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow);padding:10px;overflow-x:auto}
+    table{width:100%;min-width:820px;border-collapse:collapse}
+    thead th{background:var(--surface2);color:var(--ink);font-weight:600;text-align:center;padding:8px 6px;border-bottom:1px solid var(--stroke);font-size:.9rem}
+    tbody td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--stroke);background:var(--surface);color:var(--ink);font-size:.9rem}
+    tbody tr:nth-child(even) td{background:var(--chip2)}
+    tbody tr:hover td{background:var(--chip)}
+
+    .col-rank{width:50px}
+    .col-points{width:110px}
+    .col-name{text-align:left}
+    .col-level{white-space:nowrap}
+    .col-num{width:90px}
+
+    .medal{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-weight:600;font-size:.85rem;color:#1b1830}
+    .gold{background:linear-gradient(135deg,#ffd662,#ffb300)}
+    .silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf)}
+    .bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a)}
+
+    .namebox{display:inline-flex;align-items:center;gap:6px}
+    .avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);font-weight:500;font-size:.75rem;color:#fff;display:flex;align-items:center;justify-content:center}
+    .name-strong{font-weight:600;font-size:.95rem}
+    .name-gold{color:var(--gold)} .name-silver{color:var(--silver)} .name-bronze{color:var(--bronze)}
+
+    .points-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;font-weight:500;font-size:.85rem;border:1px solid var(--stroke);background:var(--surface2);color:var(--ink)}
+    .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff;border:none}
+
+    .level{display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:.85rem;padding:2px 6px;border-radius:999px;border:1px solid var(--stroke);background:rgba(0,0,0,.04)}
+    .level .bar{height:6px;width:90px;background:#0a0f25;border-radius:999px;overflow:hidden;position:relative}
+    .level .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
+
+    .below-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+    @media (max-width:980px){.below-grid{grid-template-columns:1fr}}
+    h3{font-weight:600;font-size:1rem;margin-bottom:6px;color:var(--ink)}
+    .rule-list{margin:0 0 4px 18px;color:var(--ink)}
+    .legend-item{display:flex;align-items:center;gap:10px;margin:6px 0;color:var(--ink)}
+    .legend-name{font-weight:600}
+
+    /* Footer */
+    footer{margin-top:24px;border-top:1px solid var(--stroke);background:linear-gradient(180deg,var(--bg),var(--surface))}
+    .footwrap{max-width:1100px;margin:0 auto;padding:18px 20px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:16px;font-size:.85rem}
+    @media(max-width:920px){.footwrap{grid-template-columns:1fr}}
+    .footbrand{display:flex;gap:12px;align-items:flex-start}
+    .footlogo{width:28px;height:28px;border-radius:8px;background:linear-gradient(180deg,#7b8cff,#4c66ff)}
+    .footcol h4{font-weight:600;font-size:.95rem;margin-bottom:6px;color:var(--ink)}
+    .footcol li{margin:4px 0;color:var(--ink)}
+    .footsmall{color:var(--muted);margin-top:8px}
+
+    /* ====== RESPONSIVE HEADER LAYOUT ====== */
+    @media (max-width: 820px){
+      .container{ padding:0 14px }
+      .brand{ flex:1 1 auto }
+      .brand small{ display:none }                 /* oculta “.es” para ganar ancho */
+      .actions{ order:2; margin-left:auto; gap:8px }
+      .menu{
+        order:3; width:100%; justify-content:space-between;
+        gap:10px; margin-top:8px; font-size:.85rem;
+      }
+      .menu a{ padding:4px 0 }
+    }
+
+    /* Nav colapsable + ultra compacto en XS */
+    @media (max-width:560px){
+      #menuToggle{ display:inline-flex }
+      #mainMenu{ display:none }
+      #mainMenu.open{ display:flex; flex-wrap:wrap; row-gap:6px }
+      .actions .btn{ padding:6px 10px; font-size:.85rem }
+      .userbox{ display:none } /* opcional: oculta la userbox en XS */
+    }
+  </style>
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <i class="logo"></i>
+        <span>IT&nbsp;Hub</span><small>.es</small>
+      </div>
 
-<header role="banner">
-  <div class="container nav">
-    <div class="brand">
-      <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-    
+      <nav class="menu" id="mainMenu" aria-label="principal">
+        <a href="/">Home</a>
+        <a href="/#simuladores">Simuladores</a>
+        <a href="/#contenidos">Contenidos</a>
+      </nav>
+
+      <!-- actions renderizadas por JS (incluye botón ☰) -->
+      <div class="actions" id="navActions"></div>
     </div>
-    <nav class="menu" aria-label="Navegación principal">
-      <a class="link-btn" href="/">HOME</a>
-      <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
-      <a class="link-btn" href="/score/ranking.html">RANKING</a>
-    </nav>
-    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
-      <div id="userArea" style="display:none;align-items:center;gap:6px">
-        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+  </header>
+
+  <main class="container wrap">
+    <!-- Ranking -->
+    <section class="card">
+      <div class="header-row">
+        <h2>🏆 RANKING GLOBAL</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab" id="tab-global" aria-pressed="true" onclick="setScope('global')">Global</button>
+          <button class="tab" id="tab-season" aria-pressed="false" onclick="setScope('season')">Temporada (mes)</button>
+          <button class="tab" id="tab-week" aria-pressed="false" onclick="setScope('week')">Semanal</button>
+          <button class="tab" id="tab-all-exams" aria-pressed="true" onclick="clearExam()">Todos</button>
+          <button class="tab" id="tab-az" aria-pressed="false" onclick="setExam('az-104')">AZ-104</button>
+          <button class="tab" id="tab-az305" aria-pressed="false" onclick="setExam('az-305')">AZ-305</button>
+          <button class="tab" id="tab-aws" aria-pressed="false" onclick="setExam('aws-saa-c03')">SAA-C03</button>
+        </div>
+      </div>
+      <div class="table-wrap" id="board">Cargando…</div>
+    </section>
+
+    <!-- Reglas + Leyenda -->
+    <div class="below-grid">
+      <section class="card">
+        <h3>⚙️ Reglas de puntos</h3>
+        <ul class="rule-list">
+          <li><b>+5</b> por respuesta correcta.</li>
+          <li><b>+50</b> por examen aprobado (≥70%).</li>
+          <li><b>+10</b> bonus rápido (≤30s/pregunta).</li>
+          <li><b>Racha</b>: +5 extra por cada aprobado consecutivo dentro de 7 días.</li>
+          <li><b>Nivel</b>: cada 150 XP subes de nivel (la barra indica progreso).</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h3>🎖️ Insignias</h3>
+        <div class="legend-item">
+          <span class="ibadge" style="background:rgba(255,179,0,.14);border-color:rgba(255,179,0,.35)">⚡</span>
+          <span class="legend-name">Rápido</span>
+          <span style="color:var(--muted)">— Media ≤ 30s por pregunta en el intento.</span>
+        </div>
+        <div class="legend-item">
+          <span class="ibadge" style="background:rgba(124,77,255,.18);border-color:rgba(124,77,255,.38)">💯</span>
+          <span class="legend-name">Perfect</span>
+          <span style="color:var(--muted)">— 100% de aciertos.</span>
+        </div>
+        <div class="legend-item">
+          <span class="ibadge" style="background:rgba(46,204,113,.15);border-color:rgba(46,204,113,.35)">✅</span>
+          <span class="legend-name">Pro</span>
+          <span style="color:var(--muted)">— Examen aprobado (≥ 70%).</span>
+        </div>
+        <div class="legend-item">
+          <span class="ibadge" style="background:rgba(255,111,97,.14);border-color:rgba(255,111,97,.35)">🔥</span>
+          <span class="legend-name">Racha</span>
+          <span style="color:var(--muted)">— ≥ 3 aprobados consecutivos en ≤ 7 días.</span>
+        </div>
+        <div class="legend-item">
+          <span class="ibadge" style="background:rgba(100,181,246,.16);border-color:rgba(100,181,246,.35)">💪</span>
+          <span class="legend-name">Grinder</span>
+          <span style="color:var(--muted)">— ≥ 10 intentos totales.</span>
+        </div>
+        <div class="legend-item">
+          <span class="ibadge" style="background:rgba(0,200,170,.15);border-color:rgba(0,200,170,.38)">🧠</span>
+          <span class="legend-name">Preciso</span>
+          <span style="color:var(--muted)">— Precisión media ≥ 90%.</span>
+        </div>
+        <div class="legend-item">
+          <span class="ibadge" style="background:rgba(255,214,98,.18);border-color:rgba(255,214,98,.45)">🏅</span>
+          <span class="legend-name">Veterano</span>
+          <span style="color:var(--muted)">— ≥ 2000 XP acumulados.</span>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footwrap">
+      <div class="footbrand">
+        <i class="footlogo"></i>
+        <div>
+          <h4 class="name-strong">ITHub.es</h4>
+          <p style="margin:6px 0 10px;color:var(--muted)">
+            Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.
+            <br/>Todo lo que necesitas en un sólo lugar.
+          </p>
+          <div class="footsmall">© 2025 ITHub.es</div>
+        </div>
+      </div>
+
+      <div class="footcol">
+        <h4>Simuladores</h4>
+        <ul>
+          <li><a href="/#simuladores">AZ-104</a></li>
+          <li><a href="/#simuladores">AZ-305</a></li>
+          <li><a href="/#simuladores">SAA-C03</a></li>
+        </ul>
+      </div>
+
+      <div class="footcol">
+        <h4>Contenidos</h4>
+        <ul>
+          <li><a href="/#contenidos">Azure · Landing Zone</a></li>
+          <li><a href="/#contenidos">Azure · Storage (AZ-104)</a></li>
+          <li><a href="/#contenidos">Azure · Conectividad híbrida</a></li>
+          <li><a href="/#contenidos">AWS · S3 diseño</a></li>
+          <li><a href="/#contenidos">AWS · SQS & SNS</a></li>
+        </ul>
+      </div>
+
+      <div class="footcol">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:infoweb@ithub.es">infoweb(at)ithub.es</a></li>
+        </ul>
       </div>
     </div>
-  </div>
-</header>
+  </footer>
 
-<main id="main" tabindex="-1">
-  <div class="container hero-page">
-    <h1>Contenidos de estudio</h1>
-    <p class="muted">Colección curada para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b>. Usa filtros para encontrar lo que necesitas.</p>
-    <div class="controls">
-      <input id="q" class="input" placeholder="Buscar por título o palabras clave…">
-      <select id="exam" class="input">
-        <option value="">Filtrar por examen</option>
-        <option value="AZ-104">AZ-104</option>
-        <option value="AZ-305">AZ-305</option>
-        <option value="SAA-C03">SAA-C03</option>
-      </select>
-      <select id="vendor" class="input">
-        <option value="">Proveedor</option>
-        <option value="Azure">Azure</option>
-        <option value="AWS">AWS</option>
-      </select>
-    </div>
-  </div>
-  <div class="container grid cols-3" id="cards"></div>
-</main>
+  <script>
+    /* ======= Cabecera: sesión + botón menú ======= */
+    function getUserAny(){
+      let u=null;
+      try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
+      if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}
+      return u;
+    }
+    function attachMenuToggle(){
+      const t=document.getElementById('menuToggle');
+      const m=document.getElementById('mainMenu');
+      if(t && m){
+        t.addEventListener('click', ()=>{
+          m.classList.toggle('open');
+          t.setAttribute('aria-expanded', m.classList.contains('open'));
+        });
+      }
+    }
+    (function renderHeaderUser(){
+      const box=document.getElementById('navActions');
+      const u=getUserAny();
+      if(u && (u.name||u.displayName||u.userName)){
+        const name=(u.name||u.displayName||u.userName||'Usuario').toUpperCase();
+        box.innerHTML = `
+          <button class="btn" id="menuToggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
+          <div class="userbox">
+            <span>🔥 <span class="name">${name}</span></span>
+            <a class="btn primary" href="/user/profile.html">PERFIL</a>
+            <button class="btn primary" id="logoutBtn">LOGOUT</button>
+          </div>`;
+        document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
+          try{ localStorage.removeItem('currentUser'); localStorage.removeItem('certify_user'); }catch{}
+          location.reload();
+        });
+      } else {
+        box.innerHTML = `
+          <button class="btn" id="menuToggle" aria-expanded="false" aria-controls="mainMenu">☰</button>
+          <a class="btn" href="/login/login.html">LOGIN</a>
+          <a class="btn primary" href="/login/login.html#signup">CREAR CUENTA</a>`;
+      }
+      attachMenuToggle();
+    })();
 
-<footer role="contentinfo">
-  <div class="container f-grid">
-    <div>
-      <div class="brand" style="text-transform:none">
-        <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
-        <span>ITHub.es</span>
-      </div>
-      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
-    </div>
-    <div>
-      <div style="font-weight:800">Simuladores</div>
-      <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
-      <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
-      <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
-    </div>
-    <div>
-      <div style="font-weight:800">Contenidos</div>
-      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-      <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
-      <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
-      <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
-      <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
-    </div>
-    <div>
-      <div style="font-weight:800">Colaborador</div>
-      💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
-      <div style="font-weight:800">Contacto</div>
-      <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff; font-weight:800;display:inline-flex;align-items:center; gap:6px;cursor:pointer;padding:0;margin-top:6px;"> 💬 <span>Contáctanos</span> </button>
-    </div>
-  </div>
-  <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
-</footer>
+    /* ======= API / Config ======= */
+    const API_BASE="https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+    const QUIZZES=["az-104","az-305","aws-saa-c03"];
 
-<div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
+    /* ======= Utils ======= */
+    const toInt=v=>Number.isFinite(Number(v))?(Number(v)|0):0;
+    const pick=v=>(typeof v==="string"?v.trim():"");
+    const getName=x=>pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+    const fmtDate=iso=>{ if(!iso) return "—"; try{ return new Date(iso).toLocaleDateString([], {year:'numeric',month:'short',day:'2-digit'});}catch{return iso;} };
+    function weekKey(d){const dt=new Date(d);const onejan=new Date(dt.getFullYear(),0,1);const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7);return`${dt.getFullYear()}-W${String(week).padStart(2,'0')}`;}
 
-<script>
-document.getElementById('y').textContent = new Date().getFullYear();
+    function pointsForAttempt(r){
+      const correct=toInt(r.correct), total=toInt(r.total), dur=toInt(r.durationSec);
+      let pts=correct*5;
+      const pct=total>0?(correct/total)*100:(r.pct||0);
+      if(pct>=70) pts+=50;
+      if(total>0 && dur>0 && (dur/total)<=30) pts+=10;
+      return { pts, passed:pct>=70, pct };
+    }
+    function levelFromXP(xp){
+      const lvl=Math.max(1,Math.floor(xp/150)+1);
+      const cur=xp%150; const p=Math.max(0,Math.min(100,Math.floor((cur/150)*100)));
+      return { lvl, progress:p };
+    }
 
-function getCurrentUser(){
-  try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; }
-}
-function renderHeaderAuth(){
-  const u=getCurrentUser();
-  const login=document.getElementById('btnLogin');
-  const signup=document.getElementById('btnSignup');
-  const userArea=document.getElementById('userArea');
-  const nameTop=document.getElementById('userNameTop');
-  if(u){
-    login.style.display='none'; signup.style.display='none'; userArea.style.display='flex';
-    nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
-  } else {
-    login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none';
-  }
-}
-renderHeaderAuth();
+    /* ======= URL helpers ======= */
+    function normalizeExam(q){
+      if(!q) return null;
+      const s=String(q).toLowerCase().replace(/\s+/g,'').replace('%20','');
+      if(s==='az104' || s==='az-104') return 'az-104';
+      if(s==='az305' || s==='az-305') return 'az-305';
+      if(s==='saa' || s==='saac03' || s==='saa-c03' || s==='aws' || s==='awssaa') return 'aws-saa-c03';
+      return QUIZZES.includes(s) ? s : null;
+    }
+    function normalizeScope(x){
+      const v=String(x||'').toLowerCase();
+      return (v==='season'||v==='week') ? v : 'global';
+    }
+    function readParams(){
+      const p=new URLSearchParams(location.search);
+      const ex=normalizeExam(p.get('quiz'));
+      const sc=normalizeScope(p.get('scope')||'global');
+      return {ex, sc};
+    }
+    function writeParams(){
+      const p=new URLSearchParams();
+      if(EXAM) p.set('quiz', EXAM);
+      if(SCOPE!=='global') p.set('scope', SCOPE);
+      const qs=p.toString();
+      const url = qs ? `${location.pathname}?${qs}` : location.pathname;
+      history.replaceState(null,'',url);
+    }
 
-/* SOLO LOS QUE EXISTEN (9) + nivel */
-const CONTENT = [
-  // Transversales (multi-examen)
-  {title:"Backup inmutable & Ciberrecuperación", href:"/content/immutable-backup-cyberrecovery.html", exam:["AZ-104","AZ-305","SAA-C03"], vendor:["Azure","AWS"], level:"avanzado", summary:"Estrategia 3-2-1-1-0, WORM (S3/Azure Blob), vault aislado, aislamiento de redes y runbooks de recuperación."},
-  {title:"VNet Peering vs. VPN Gateway", href:"/content/vnet-peering-vpn.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Cuándo usar peering vs VPN, tránsito en hub-spoke, UDR y limitaciones habituales del examen."},
+    /* ======= Agregación + Insignias ======= */
+    function aggregate(rows, scope, exam){
+      const now=new Date(); const curMonth=now.getMonth(), curYear=now.getFullYear(); const wkKey=weekKey(now);
+      const byUser=new Map();
 
-  // Azure AZ-104
-  {title:"Identidad y Acceso (AZ-104)", href:"/content/azure-identity-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC, PIM, Access Reviews, Managed Identities y mejores prácticas con Key Vault."},
-  {title:"Seguridad de red (AZ-104)", href:"/content/azure-network-security-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"NSG/ASG, UDR, Azure Firewall, WAF y Private Endpoints para servicios PaaS."},
-  {title:"Cómputo y disponibilidad (AZ-104)", href:"/content/azure-compute-availability-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"VM, VMSS, zonas/sets de disponibilidad, imágenes con SIG y actualizaciones controladas."},
-  {title:"Backup & Recovery (AZ-104)", href:"/content/azure-backup-recovery-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Recovery Services Vault, políticas, soft-delete, cross-region restore y escenarios de examen."},
-  {title:"Monitorización y alertas (AZ-104)", href:"/content/azure-monitoring-alerts-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Azure Monitor, Log Analytics, DCR, alertas métricas y de logs, Action Groups."},
-  {title:"Coste y gobernanza (AZ-104)", href:"/content/azure-cost-governance-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Budgets, Cost Management, Azure Advisor, etiquetado, y Policy para control de costes."},
-  {title:"Azure Storage (AZ-104)", href:"/content/azure-storage-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC vs claves, SAS de delegación de usuario, WORM, replicación (LRS/ZRS/GRS/GZRS) y Private Endpoints."},
-  {title:"Checklist de seguridad Azure", href:"/content/azure-security-checklist.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Lista de verificación por identidad, red, datos y postura con puntos típicos de examen."},
+      rows.forEach(r=>{
+        if(exam && r.quizId!==exam) return;
+        const d=r.ts? new Date(r.ts): null;
+        if(scope==='season' && d && (d.getMonth()!==curMonth || d.getFullYear()!==curYear)) return;
+        if(scope==='week' && d && weekKey(d)!==wkKey) return;
 
-  // Azure AZ-305
-  {title:"Azure Landing Zone", href:"/content/azure-landing-zone.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"CAF, Management Groups, suscripciones, Policy-as-Code, arquitectura hub-spoke y automatización."},
-  {title:"Conectividad híbrida (AZ-305)", href:"/content/azure-hybrid-connectivity-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"VPN/ExpressRoute, BGP, Private Link, DNS privado y patrones de seguridad."},
-  {title:"Arquitectura de red (AZ-305)", href:"/content/azure-network-architecture-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"Hub-Spoke vs Virtual WAN, segmentación, rutas y diseño DNS en entornos empresariales."},
-  {title:"Alta disponibilidad y DR (AZ-305)", href:"/content/azure-ha-dr-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Pares regionales, zonas, ASR, Front Door/AppGW y estrategias de failover multi-región."},
-  {title:"Elección de datos (AZ-305)", href:"/content/azure-data-choices-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"SQL MI vs Azure SQL, Cosmos DB, PostgreSQL Flexible, ADLS Gen2 y analítica con Synapse."},
-  {title:"Coste y fiabilidad (AZ-305)", href:"/content/azure-cost-reliability-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Reserva vs Savings Plan, patrones resilientes y decisiones de coste en arquitectura."},
-  {title:"Seguridad & Zero Trust (AZ-305)", href:"/content/azure-security-zero-trust-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"PIM, Key Vault, Defender for Cloud, segmentación y acceso privado a PaaS."},
+        const {pts, passed, pct}=pointsForAttempt(r);
+        const key=(r.userId||'')+'|'+(r.userName||'');
+        if(!byUser.has(key)){
+          byUser.set(key, {userId:r.userId, userName:r.userName, xp:0, attempts:0, passed:0, last:r.ts,
+                           badges:new Set(), lastPassTs:null, streak:0,
+                           correctSum:0, totalSum:0});
+        }
+        const u=byUser.get(key);
 
-  // AWS SAA-C03
-  {title:"IAM y Organizations (SAA-C03)", href:"/content/aws-iam-organizations-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"Roles, MFA, políticas, SCP y guardrails multi-cuenta con Organizations."},
-  {title:"VPC avanzado: Endpoints (SAA-C03)", href:"/content/aws-vpc-advanced-endpoints-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Transit Gateway, endpoints gateway/interface, PrivateLink y patrones de aislamiento."},
-  {title:"Datos y almacenamiento (SAA-C03)", href:"/content/aws-databases-storage-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"RDS, Aurora, DynamoDB, S3 con KMS, clases de almacenamiento y lifecycle."},
-  {title:"Elasticidad y compute (SAA-C03)", href:"/content/aws-compute-elasticity-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"ASG + ALB/NLB, ECS/EKS, Lambda, despliegues blue/green y coste."},
-  {title:"Observabilidad (SAA-C03)", href:"/content/aws-observability-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"CloudWatch, CloudTrail, X-Ray y Config con escenarios frecuentes de examen."},
-  {title:"S3: diseño (SAA-C03)", href:"/content/aws-s3-design-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Bloqueo público, SSE-KMS, WORM, multipart upload, rendimiento y endpoints."},
-  {title:"VPC Alta Disponibilidad (SAA-C03)", href:"/content/aws-vpc-ha.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Topologías Multi-AZ, NAT por AZ, HA de balanceadores y observabilidad de red."}
-];
+        if(passed){
+          u.passed++;
+          const t=d? d.getTime():0;
+          if(u.lastPassTs && (t-u.lastPassTs)<=1000*60*60*24*7){ u.streak++; } else { u.streak=1; }
+          u.lastPassTs=t;
+        }
 
+        u.xp += pts;
+        u.attempts++;
+        u.correctSum += Number(r.correct)||0;
+        u.totalSum += Number(r.total)||0;
 
-function tag(el, t, cls=""){ const s=document.createElement("span"); s.className="badge "+cls; s.textContent=t; el.appendChild(s); }
+        if(pct===100) u.badges.add('perfect');
+        if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+        if(passed) u.badges.add('ok');
+        u.last=r.ts||u.last;
+      });
 
-function render(){
-  const q=(document.getElementById('q').value||"").toLowerCase().trim();
-  const exam=document.getElementById('exam').value;
-  const vendor=document.getElementById('vendor').value;
-  const root=document.getElementById('cards');
-  root.innerHTML="";
-  CONTENT.filter(c=>{
-    const hitsQ = !q || (c.title.toLowerCase().includes(q) || c.summary.toLowerCase().includes(q));
-    const hitsE = !exam || c.exam.includes(exam);
-    const hitsV = !vendor || c.vendor.includes(vendor);
-    return hitsQ && hitsE && hitsV;
-  }).forEach(c=>{
-    const card=document.createElement('article'); card.className="card";
-    card.innerHTML = `<h3><a href="${c.href}">${c.title}</a></h3>
-      <p class="muted">${c.summary}</p>
-      <div class="badges"></div>
-      <div><a class="pill-btn" href="${c.href}">ABRIR</a></div>`;
-    const b=card.querySelector(".badges");
-    // Nivel
-    tag(b, `Nivel: ${c.level[0].toUpperCase()+c.level.slice(1)}`);
-    // Exámenes
-    c.exam.forEach(e=>tag(b,e, e.startsWith("AZ")?"azure":"aws"));
-    // Proveedor
-    c.vendor.forEach(v=>tag(b,v, v==="Azure"?"azure":"aws"));
-    root.appendChild(card);
-  });
-}
-["q","exam","vendor"].forEach(id=>document.getElementById(id).addEventListener("input", render));
-render();
-</script>
+      for(const u of byUser.values()){
+        if(u.streak>=3) u.badges.add('streak');
+        if(u.attempts>=10) u.badges.add('grinder');
+        if(u.xp>=2000) u.badges.add('veteran');
+        const acc = u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
+        if(acc>=90) u.badges.add('sharp');
+      }
+
+      const list=[...byUser.values()].map(u=>{ const lvl=levelFromXP(u.xp); return {...u, lvl:lvl.lvl, prog:lvl.progress}; })
+        .sort((a,b)=>{ if(b.xp!==a.xp) return b.xp-a.xp; if(b.passed!==a.passed) return b.passed-a.passed; return String(a.userName).localeCompare(String(b.userName)); });
+      return list;
+    }
+
+    /* ======= Render ======= */
+    function medalCell(i){
+      if (i===0) return `<span class="medal gold">1</span>`;
+      if (i===1) return `<span class="medal silver">2</span>`;
+      if (i===2) return `<span class="medal bronze">3</span>`;
+      return String(i+1);
+    }
+    function nameClass(i){
+      if (i===0) return "name-strong name-gold";
+      if (i===1) return "name-strong name-silver";
+      if (i===2) return "name-strong name-bronze";
+      return "name-strong";
+    }
+    function pointsChipClass(i){ return i<3 ? "points-chip top" : "points-chip"; }
+
+    function renderBadgesSmall(set){
+      const s=new Set(set);
+      let out='<span class="ibadges">';
+      if(s.has('fast')) out+=`<span class="ibadge" title="Rápido">⚡</span>`;
+      if(s.has('perfect')) out+=`<span class="ibadge" title="Perfect">💯</span>`;
+      if(s.has('ok')) out+=`<span class="ibadge" title="Pro">✅</span>`;
+      if(s.has('streak')) out+=`<span class="ibadge" title="Racha">🔥</span>`;
+      if(s.has('grinder')) out+=`<span class="ibadge" title="Grinder">💪</span>`;
+      if(s.has('sharp')) out+=`<span class="ibadge" title="Preciso">🧠</span>`;
+      if(s.has('veteran')) out+=`<span class="ibadge" title="Veterano">🏅</span>`;
+      out+='</span>';
+      return out;
+    }
+
+    function renderBoard(list){
+      let html = `<table><thead><tr>
+        <th class="col-rank">#</th>
+        <th class="col-points">Puntos</th>
+        <th class="col-name">Quizzer</th>
+        <th class="col-num col-level">Nivel</th>
+        <th class="col-num">Aprobados</th>
+        <th class="col-num">Intentos</th>
+        <th class="col-num">Último</th>
+        <th>Insignias</th>
+      </tr></thead><tbody>`;
+
+      list.forEach((u,i)=>{
+        const initials = String(u.userName||'').trim().slice(0,2).toUpperCase() || 'QQ';
+        html += `<tr>
+          <td>${medalCell(i)}</td>
+          <td><span class="${pointsChipClass(i)}">⭐ ${u.xp}</span></td>
+          <td class="col-name">
+            <span class="namebox">
+              <span class="avatar">${initials}</span>
+              <span class="${nameClass(i)}">${u.userName||'(no name)'}</span>
+            </span>
+          </td>
+          <td class="col-level"><span class="level">Lv ${u.lvl}<span class="bar"><i style="width:${u.prog}%"></i></span></span></td>
+          <td>${u.passed}</td>
+          <td>${u.attempts}</td>
+          <td>${u.last? fmtDate(u.last) : '—'}</td>
+          <td>${renderBadgesSmall(u.badges)}</td>
+        </tr>`;
+      });
+
+      html += `</tbody></table>`;
+      document.getElementById('board').innerHTML = html;
+    }
+
+    // ===== Estado UI / Filtros =====
+    let SCOPE='global', EXAM=null, CACHE=null;
+
+    function setScope(x){ SCOPE=x; syncTabs(); writeParams(); render(); }
+    function setExam(x){ EXAM = (EXAM === x) ? null : x; syncTabs(); writeParams(); render(); }
+    function clearExam(){ EXAM = null; syncTabs(); writeParams(); render(); }
+
+    function syncTabs(){
+      const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
+      set('tab-global', SCOPE==='global');
+      set('tab-season', SCOPE==='season');
+      set('tab-week', SCOPE==='week');
+      set('tab-all-exams', EXAM===null);
+      set('tab-az', EXAM==='az-104');
+      set('tab-az305', EXAM==='az-305');
+      set('tab-aws', EXAM==='aws-saa-c03');
+    }
+
+    async function render(){
+      const node = document.getElementById('board');
+      node.innerHTML = 'Cargando…';
+      try{
+        if (!CACHE){
+          const res = await fetch(`${API_BASE}/results?limit=3000`, {mode:"cors", cache:"no-store"});
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+          const items = Array.isArray(data.items) ? data.items : [];
+          CACHE = items.map(x=>({
+            userId: x.userId || "(unknown)",
+            userName: getName(x),
+            quizId: (x.quizId || "-").toLowerCase(),
+            correct: Number(x.correct)||0,
+            total: Number(x.total)||0,
+            pct: Number(x.pct)||0,
+            durationSec: Number(x.durationSec)||0,
+            ts: x.ts || null
+          })).filter(r=> QUIZZES.includes(r.quizId));
+        }
+        const filtered = CACHE.filter(r=> !EXAM || r.quizId===EXAM);
+        const list = aggregate(filtered, SCOPE, EXAM);
+        renderBoard(list.slice(0,50));
+      }catch(e){
+        node.innerHTML = `<p style="color:var(--muted)">Error cargando API: ${e.message}</p>`;
+      }
+    }
+
+    // ===== Init =====
+    (function initFromUrl(){
+      const p=new URLSearchParams(location.search);
+      const ex=p.get('quiz'); const sc=p.get('scope');
+      const mapExam=(q)=>{ if(!q) return null; q=q.toLowerCase(); if(q==='az104')return'az-104'; if(q==='az305')return'az-305'; if(q==='aws'||q==='saa-c03')return'aws-saa-c03'; return q;};
+      const mapScope=(s)=>['season','week'].includes((s||'').toLowerCase())?(s||'global'):'global';
+      EXAM = mapExam(ex);
+      SCOPE = mapScope(sc);
+      syncTabs(); writeParams(); render();
+    })();
+  </script>
 </body>
 </html>
