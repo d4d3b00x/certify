@@ -1,45 +1,13 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="auto">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IT Hub .es — RANKING GLOBAL</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ================== THEME SYSTEM ================== */
+    /* ======== DARK THEME (fijo) ======== */
     :root{
-      /* Dark (default) */
-      --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
-      --stroke:#283056; --shadow:0 12px 28px rgba(6,12,40,.45);
-      --violet:#7b5cff; --violet-2:#6246ff;
-      --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
-      --chip:#0f1430; --chip2:#101738;
-      --tab-bg:#1b2140; --tab-on:rgba(108,139,255,.3);
-      --grad1:rgba(255,153,0,.12); --grad2:rgba(0,120,212,.12);
-    }
-    /* Light palette */
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f7f8fd; --surface:#ffffff; --surface2:#f1f3ff; --ink:#0f1320; --muted:#5a6396;
-        --stroke:#dfe3f6; --shadow:0 10px 24px rgba(0,10,40,.08);
-        --violet:#5a6bff; --violet-2:#3b55ff;
-        --gold:#c69200; --silver:#7a7a7a; --bronze:#a06d45;
-        --chip:#ffffff; --chip2:#f7f8ff;
-        --tab-bg:#eef1ff; --tab-on:rgba(91,118,255,.25);
-        --grad1:rgba(255,153,0,.10); --grad2:rgba(0,120,212,.10);
-      }
-    }
-    /* Manual toggle overrides */
-    [data-theme="light"]{
-      --bg:#f7f8fd; --surface:#ffffff; --surface2:#f1f3ff; --ink:#0f1320; --muted:#5a6396;
-      --stroke:#dfe3f6; --shadow:0 10px 24px rgba(0,10,40,.08);
-      --violet:#5a6bff; --violet-2:#3b55ff;
-      --gold:#c69200; --silver:#7a7a7a; --bronze:#a06d45;
-      --chip:#ffffff; --chip2:#f7f8ff;
-      --tab-bg:#eef1ff; --tab-on:rgba(91,118,255,.25);
-      --grad1:rgba(255,153,0,.10); --grad2:rgba(0,120,212,.10);
-    }
-    [data-theme="dark"]{
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
       --stroke:#283056; --shadow:0 12px 28px rgba(6,12,40,.45);
       --violet:#7b5cff; --violet-2:#6246ff;
@@ -67,19 +35,12 @@
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
       border-bottom:1px solid var(--stroke)}
-    [data-theme="light"] header{
-      background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.65));
-    }
     .nav{height:54px;display:flex;align-items:center;justify-content:space-between}
     .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:1rem}
     .brand .logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(180deg,#7b8cff,#4c66ff);}
     .menu{display:flex;gap:18px;color:var(--muted);font-weight:500;font-size:.9rem;text-transform:uppercase}
     .menu a:hover{color:var(--ink)}
     .actions{display:flex;align-items:center;gap:8px}
-    .toggle{
-      border:1px solid var(--stroke);background:var(--surface2);color:var(--ink);
-      padding:6px 10px;border-radius:999px;font-weight:600;font-size:.85rem;cursor:pointer;
-    }
 
     .wrap{padding:20px 0 28px}
     .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);
@@ -125,9 +86,7 @@
 
     /* Nivel */
     .level{display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:.85rem;padding:2px 6px;border-radius:999px;border:1px solid var(--stroke);background:rgba(0,0,0,.04)}
-    [data-theme="light"] .level{background:rgba(0,0,0,.03)}
     .level .bar{height:6px;width:90px;background:#0a0f25;border-radius:999px;overflow:hidden;position:relative}
-    [data-theme="light"] .level .bar{background:#e1e5ff}
     .level .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
 
     /* Insignias pequeñas en tabla */
@@ -163,9 +122,7 @@
         <a href="/#simuladores">SIMULADORES</a>
         <a href="/#contenidos">CONTENIDOS</a>
       </nav>
-      <div class="actions">
-        <button id="themeToggle" class="toggle" title="Cambiar tema">🌙</button>
-      </div>
+      <div class="actions"><!-- (sin toggle de tema) --></div>
     </div>
   </header>
 
@@ -288,22 +245,6 @@
   </footer>
 
   <script>
-    /* ======= Tema claro/oscuro (auto + manual) ======= */
-    (function(){
-      const html = document.documentElement;
-      const btn = document.getElementById('themeToggle');
-      const saved = localStorage.getItem('ith_theme');
-      if(saved){ html.setAttribute('data-theme', saved); btn.textContent = saved==='light'?'🌙':'☀️'; }
-
-      btn.addEventListener('click', ()=>{
-        const cur = html.getAttribute('data-theme') || 'auto';
-        const next = cur==='light' ? 'dark' : (cur==='dark' ? 'auto' : 'light');
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('ith_theme', next);
-        btn.textContent = next==='light'?'🌙':(next==='dark'?'☀️':'🌗');
-      });
-    })();
-
     /* ======= API / Config ======= */
     const API_BASE="https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const QUIZZES=["az-104","az-305","aws-saa-c03"];
@@ -448,12 +389,7 @@
     let SCOPE='global', EXAM=null, CACHE=null;
 
     function setScope(x){ SCOPE=x; syncTabs(); render(); }
-
-    // Toggle de examen: si pulsas el mismo, vuelve a "Todos"
-    function setExam(x){
-      EXAM = (EXAM === x) ? null : x;
-      syncTabs(); render();
-    }
+    function setExam(x){ EXAM = (EXAM === x) ? null : x; syncTabs(); render(); }
     function clearExam(){ EXAM = null; syncTabs(); render(); }
 
     function syncTabs(){
