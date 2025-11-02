@@ -29,7 +29,7 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    /* ===== Header (como captura) ===== */
+    /* ===== Header ===== */
     header{
       position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.92),rgba(15,19,32,.72));
@@ -154,7 +154,7 @@
         <a href="/#contenidos">Contenidos</a>
       </nav>
 
-      <div class="actions" id="navActions"><!-- user chip se pinta por JS --></div>
+      <div class="actions" id="navActions"></div>
     </div>
   </header>
 
@@ -247,11 +247,13 @@
         </div>
       </div>
 
-       <div>
-        <div style="font-weight:800">Simuladores</div>
-        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
-        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
-        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
+      <div class="footcol">
+        <h4>Simuladores</h4>
+        <ul>
+          <li><a href="/#simuladores">AZ-104</a></li>
+          <li><a href="/#simuladores">AZ-305</a></li>
+          <li><a href="/#simuladores">SAA-C03</a></li>
+        </ul>
       </div>
 
       <div class="footcol">
@@ -275,7 +277,7 @@
   </footer>
 
   <script>
-    /* ======= Cabecera: sesión (user chip + botones) ======= */
+    /* ======= Cabecera: sesión ======= */
     function getUserAny(){
       let u=null;
       try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
@@ -327,6 +329,34 @@
       const lvl=Math.max(1,Math.floor(xp/150)+1);
       const cur=xp%150; const p=Math.max(0,Math.min(100,Math.floor((cur/150)*100)));
       return { lvl, progress:p };
+    }
+
+    /* ======= URL helpers (quiz & scope) ======= */
+    function normalizeExam(q){
+      if(!q) return null;
+      const s=String(q).toLowerCase().replace(/\s+/g,'').replace('%20','');
+      if(s==='az104' || s==='az-104') return 'az-104';
+      if(s==='az305' || s==='az-305') return 'az-305';
+      if(s==='saa' || s==='saac03' || s==='saa-c03' || s==='aws' || s==='awssaa') return 'aws-saa-c03';
+      return QUIZZES.includes(s) ? s : null;
+    }
+    function normalizeScope(x){
+      const v=String(x||'').toLowerCase();
+      return (v==='season'||v==='week') ? v : 'global';
+    }
+    function readParams(){
+      const p=new URLSearchParams(location.search);
+      const ex=normalizeExam(p.get('quiz'));
+      const sc=normalizeScope(p.get('scope')||'global');
+      return {ex, sc};
+    }
+    function writeParams(){
+      const p=new URLSearchParams();
+      if(EXAM) p.set('quiz', EXAM);
+      if(SCOPE!=='global') p.set('scope', SCOPE);
+      const qs=p.toString();
+      const url = qs ? `${location.pathname}?${qs}` : location.pathname;
+      history.replaceState(null,'',url);
     }
 
     /* ======= Agregación + Insignias ======= */
@@ -447,9 +477,9 @@
     // ===== Estado UI / Filtros =====
     let SCOPE='global', EXAM=null, CACHE=null;
 
-    function setScope(x){ SCOPE=x; syncTabs(); render(); }
-    function setExam(x){ EXAM = (EXAM === x) ? null : x; syncTabs(); render(); }
-    function clearExam(){ EXAM = null; syncTabs(); render(); }
+    function setScope(x){ SCOPE=x; syncTabs(); writeParams(); render(); }
+    function setExam(x){ EXAM = (EXAM === x) ? null : x; syncTabs(); writeParams(); render(); }
+    function clearExam(){ EXAM = null; syncTabs(); writeParams(); render(); }
 
     function syncTabs(){
       const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
@@ -489,9 +519,16 @@
         node.innerHTML = `<p style="color:var(--muted)">Error cargando API: ${e.message}</p>`;
       }
     }
-    // init
-    syncTabs();
-    render();
+
+    // ===== Init: leer parámetros y pintar =====
+    (function initFromUrl(){
+      const {ex, sc} = readParams();
+      if(ex) EXAM = ex;
+      if(sc) SCOPE = sc;
+      syncTabs();
+      writeParams();
+      render();
+    })();
   </script>
 </body>
 </html>
