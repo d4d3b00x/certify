@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -617,7 +618,7 @@
     </div>
   </div>
 
-  <script>
+  <<script>
     // Año
     document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -630,4 +631,110 @@
       const userArea=document.getElementById('userArea');
       const nameTop=document.getElementById('userNameTop');
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.displ
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    }
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    renderHeaderAuth();
+
+    /* ===== Modal helpers ===== */
+    const fbModal = document.getElementById('feedbackModal');
+    let lastFocus = null;
+    function trapFocus(container){
+      function handler(e){
+        if(e.key!=='Tab') return;
+        const focusables = container.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])');
+        const list = Array.from(focusables).filter(el=>el.offsetParent!==null);
+        if(!list.length) return;
+        const first = list[0], last = list[list.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+      container.__trapHandler = handler;
+      container.addEventListener('keydown', handler);
+    }
+    function releaseTrap(container){
+      if(container.__trapHandler){ container.removeEventListener('keydown', container.__trapHandler); container.__trapHandler=null; }
+    }
+    function openModal(modal){
+      lastFocus = document.activeElement;
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden','false');
+      modal.querySelector('.modal-card')?.focus();
+      trapFocus(modal);
+      document.addEventListener('keydown', escCloser);
+    }
+    function closeModal(modal){
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden','true');
+      releaseTrap(modal);
+      document.removeEventListener('keydown', escCloser);
+      if(lastFocus) lastFocus.focus();
+    }
+    function escCloser(e){ if(e.key==='Escape'){ document.querySelectorAll('.modal.show').forEach(m=>closeModal(m)); } }
+
+    // Abrir desde el footer
+    document.getElementById('footerContactBtn')?.addEventListener('click', ()=> openModal(fbModal));
+    // Cerrar al hacer click fuera
+    fbModal.addEventListener('click',e=>{ if(e.target===fbModal) closeModal(fbModal); });
+    // Botones del modal
+    document.getElementById('btnCancelFeedback')?.addEventListener('click',()=> closeModal(fbModal));
+    document.getElementById('btnOkFeedback')?.addEventListener('click',()=> closeModal(fbModal));
+
+    /* ===== Envío Feedback ===== */
+    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
+    const NOTES_ENDPOINT = `${API_BASE}/items`;
+
+    const fbEmail   = document.getElementById('feedbackEmail');
+    const fbText    = document.getElementById('feedbackText');
+    const fbStatus  = document.getElementById('fbStatus');
+    const btnFbSend = document.getElementById('btnSendFeedback');
+    const btnFbOk   = document.getElementById('btnOkFeedback');
+    const btnFbCancel = document.getElementById('btnCancelFeedback');
+
+    btnFbSend?.addEventListener('click', async ()=>{
+      const message = (fbText.value||'').trim();
+      const from    = (fbEmail.value||'').trim();
+      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; return; }
+
+      fbEmail.disabled = fbText.disabled = true;
+      btnFbSend.disabled = true;
+      fbStatus.textContent = 'Enviando…';
+      fbStatus.className = 'fb-status info';
+
+      const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
+      const u = getCurrentUser();
+      const note = {
+        id, type:'feedback', title:'Feedback web ITHub (AWS portada)',
+        message, email: from || (u?.email || null), userId: u?.id || u?.email || null,
+        path: location.pathname + location.search, ua: navigator.userAgent,
+        createdAt: new Date().toISOString()
+      };
+
+      const params = new URLSearchParams();
+      params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
+
+      const ctl = new AbortController();
+      const timeoutId = setTimeout(()=>ctl.abort(), 10000);
+
+      try{
+        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
+        clearTimeout(timeoutId);
+        if(!res.ok){
+          const text = await res.text().catch(()=> '');
+          throw new Error(`HTTP ${res.status} ${text}`);
+        }
+        fbStatus.textContent = '¡Gracias! Mensaje recibido. 👌';
+        fbStatus.className = 'fb-status ok';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        btnFbOk.focus();
+      }catch(err){
+        console.error('Error guardando feedback:', err);
+        fbStatus.textContent = 'No se pudo enviar la info.';
+        fbStatus.className = 'fb-status err';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        btnFbOk.focus();
+      }
+    });
+  </script>
+</body>
+</html>
