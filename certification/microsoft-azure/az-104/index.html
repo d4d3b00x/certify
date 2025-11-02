@@ -133,9 +133,7 @@
     .compare .col{
       background:var(--surface2);border:1px solid var(--stroke);border-radius:16px;padding:16px;position:relative;
     }
-    .compare .col .icon{
-      font-size:22px;margin-right:8px;opacity:.95
-    }
+    .compare .col .icon{font-size:22px;margin-right:8px;opacity:.95}
     .compare .col.arch{box-shadow:0 10px 24px rgba(0,120,212,.18)}
     .compare .col.pro{box-shadow:0 10px 24px rgba(255,107,107,.14)}
     .compare .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -223,7 +221,7 @@
       <!-- IZQUIERDA -->
       <div>
 
-        <!-- Certificaciones destacadas -->
+        <!-- 1) Certificaciones destacadas -->
         <div id="certificaciones" class="card" style="margin-top:12px">
           <h2>Certificaciones destacadas</h2>
           <div class="muted">Accede a la página de cada certificación para guía, banco de preguntas y simulador.</div>
@@ -232,7 +230,7 @@
               <h3 style="margin:0 0 6px">Azure Administrator — Associate (AZ-104)</h3>
               <p class="muted">Gestión de identidad, redes, almacenamiento, compute y continuidad.</p>
               <div class="cta-row">
-                <a class="cta-btn" href="/quiz.html?quiz=az-104">▶ EMPEZAR ESTUDIO</a>
+                <a class="cta-btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">▶ EMPEZAR ESTUDIO</a>
                 <span class="chip">Nivel Associate</span>
               </div>
             </article>
@@ -266,7 +264,42 @@
           </div>
         </div>
 
-        <!-- Mapa de certificaciones -->
+        <!-- 2) Rutas recomendadas por rol -->
+        <div class="card" style="margin-top:12px">
+          <h2>Rutas recomendadas por rol</h2>
+          <div class="routes-grid">
+            <div class="route-card arch">
+              <div class="route-ico">🧭</div>
+              <div>
+                <div class="route-title" style="color:var(--arch)">Arquitecto</div>
+                <div class="route-path">AZ-900 → <b>AZ-305</b> → (AZ-500 / DP-203)</div>
+              </div>
+            </div>
+            <div class="route-card dev">
+              <div class="route-ico">💻</div>
+              <div>
+                <div class="route-title" style="color:var(--dev)">Desarrollador</div>
+                <div class="route-path">AZ-900 → <b>AZ-204</b> → (AI-102)</div>
+              </div>
+            </div>
+            <div class="route-card ops">
+              <div class="route-ico">🛠️</div>
+              <div>
+                <div class="route-title" style="color:var(--ops)">Ops</div>
+                <div class="route-path">AZ-900 → <b>AZ-104</b> → (AZ-500 / SC-300)</div>
+              </div>
+            </div>
+            <div class="route-card data">
+              <div class="route-ico">📊</div>
+              <div>
+                <div class="route-title" style="color:var(--data)">Data</div>
+                <div class="route-path">DP-900 → <b>DP-203</b> → (AI-102)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3) Mapa de certificaciones -->
         <div class="card" style="margin-top:12px">
           <h2>Mapa de certificaciones de Azure</h2>
           <p class="muted">El portfolio se organiza por <b>nivel</b>. Los códigos de versión cambian con el tiempo; aquí mostramos los nombres (el código actual lo verás en cada guía).</p>
@@ -303,42 +336,7 @@
           </div>
         </div>
 
-        <!-- Rutas recomendadas por rol (con iconos y colores) -->
-        <div class="card" style="margin-top:12px">
-          <h2>Rutas recomendadas por rol</h2>
-          <div class="routes-grid">
-            <div class="route-card arch">
-              <div class="route-ico">🧭</div>
-              <div>
-                <div class="route-title" style="color:var(--arch)">Arquitecto</div>
-                <div class="route-path">AZ-900 → <b>AZ-305</b> → (AZ-500 / DP-203)</div>
-              </div>
-            </div>
-            <div class="route-card dev">
-              <div class="route-ico">💻</div>
-              <div>
-                <div class="route-title" style="color:var(--dev)">Desarrollador</div>
-                <div class="route-path">AZ-900 → <b>AZ-204</b> → (AI-102)</div>
-              </div>
-            </div>
-            <div class="route-card ops">
-              <div class="route-ico">🛠️</div>
-              <div>
-                <div class="route-title" style="color:var(--ops)">Ops</div>
-                <div class="route-path">AZ-900 → <b>AZ-104</b> → (AZ-500 / SC-300)</div>
-              </div>
-            </div>
-            <div class="route-card data">
-              <div class="route-ico">📊</div>
-              <div>
-                <div class="route-title" style="color:var(--data)">Data</div>
-                <div class="route-path">DP-900 → <b>DP-203</b> → (AI-102)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Associate vs Expert (cards con iconos y badges) -->
+        <!-- 4) Associate vs Expert -->
         <div class="card" style="margin-top:12px">
           <h2>Associate vs Expert</h2>
           <div class="compare">
@@ -371,7 +369,7 @@
           </div>
         </div>
 
-        <!-- Rutas de estudio -->
+        <!-- 5) Rutas de estudio -->
         <div class="card" style="margin-top:12px">
           <h2>Rutas de estudio sugeridas</h2>
           <details open>
@@ -407,7 +405,7 @@
           <div class="cta-row"><a class="cta-btn" href="#certificaciones">📘 Descargar checklist (próx.)</a></div>
         </div>
 
-        <!-- Contenido clave -->
+        <!-- 6) Contenido clave -->
         <div id="contenidos" class="card" style="margin-top:12px">
           <h2>Contenido clave (resúmenes y hojas de trucos)</h2>
           <div class="grid cols-2" style="margin-top:10px">
@@ -442,7 +440,7 @@
           </div>
         </div>
 
-        <!-- Preguntas frecuentes -->
+        <!-- 7) Preguntas frecuentes -->
         <div class="card" style="margin-top:12px">
           <h2>Preguntas frecuentes</h2>
           <details open>
@@ -459,20 +457,7 @@
           </details>
         </div>
 
-        <!-- Glosario exprés -->
-        <div class="card" style="margin-top:12px">
-          <h2>Glosario exprés de siglas Azure</h2>
-          <div class="grid cols-3">
-            <div class="card"><b>VNet</b><br><span class="muted">Virtual Network</span></div>
-            <div class="card"><b>NSG</b><br><span class="muted">Network Security Group</span></div>
-            <div class="card"><b>PL / DNS Privado</b><br><span class="muted">Private Link / Private DNS</span></div>
-            <div class="card"><b>KV</b><br><span class="muted">Key Vault</span></div>
-            <div class="card"><b>ASR</b><br><span class="muted">Site Recovery</span></div>
-            <div class="card"><b>VMSS</b><br><span class="muted">Virtual Machine Scale Sets</span></div>
-          </div>
-        </div>
-
-        <!-- Consejos -->
+        <!-- 8) Consejos -->
         <div class="card" style="margin-top:12px">
           <h2>Consejos rápidos para el examen</h2>
           <div class="check">
@@ -498,6 +483,51 @@
         </div>
 
         <div class="block">
+          <h3>Formato del examen</h3>
+          <ul class="mini" style="margin:0 0 6px 18px">
+            <li><b>Duración:</b> 100–120 min (aprox.)</li>
+            <li><b>Preguntas:</b> 40–60 (elección múltiple, arrastrar, casos)</li>
+            <li><b>Puntuación:</b> escala 100–1000, apruebas con <b>700</b></li>
+            <li><b>Idioma:</b> inglés (con traducciones disponibles en algunos exámenes, incl. español)</li>
+          </ul>
+        </div>
+
+        <div class="block">
+          <h3>Política de reintentos</h3>
+          <div class="mini">
+            • 1er fallo → puedes reintentar tras <b>24 h</b>.<br>
+            • 2º fallo → espera <b>14 días</b> (aplica también para 3º–5º).<br>
+            • Máximo <b>5 intentos</b> por examen en 12 meses.
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Validez y renovación</h3>
+          <div class="mini">
+            Las certificaciones de rol de Azure se <b>renuevan gratis cada año</b> con un
+            <b>assessment online</b> en Microsoft Learn (disponible 6 meses antes de caducar).
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Registro y precio</h3>
+          <div class="mini">
+            Reserva en <b>Pearson VUE</b>. Precio típico: <b>≈ 165 USD</b> (varía por país/moneda).
+            Posibles descuentos para estudiantes o eventos.
+          </div>
+        </div>
+
+        <div class="block">
+          <h3>Enlaces por certificación</h3>
+          <div style="display:grid;gap:8px">
+            <a class="a-btn" href="https://learn.microsoft.com/credentials/certifications/azure-administrator/" target="_blank" rel="noopener">AZ-104 · Exam Guide</a>
+            <a class="a-btn" href="https://learn.microsoft.com/credentials/certifications/solutions-architect-expert/" target="_blank" rel="noopener">AZ-305 · Exam Guide</a>
+            <a class="a-btn" href="https://learn.microsoft.com/credentials/certifications/azure-fundamentals/" target="_blank" rel="noopener">AZ-900 · Exam Guide</a>
+            <a class="a-btn" href="https://learn.microsoft.com/credentials/certifications/azure-security-engineer/" target="_blank" rel="noopener">AZ-500 · Exam Guide</a>
+          </div>
+        </div>
+
+        <div class="block">
           <h3>Ruta corta (14 días)</h3>
           <ol class="mini" style="margin:0 0 6px 18px">
             <li>VNet, Entra ID, VM/VMSS + LB</li>
@@ -506,17 +536,6 @@
             <li>Monitor + 2 simulacros</li>
           </ol>
           <a class="a-btn" href="#contenidos">Ver resúmenes</a>
-        </div>
-
-        <div class="block">
-          <h3>Recursos oficiales</h3>
-          <div style="display:grid;gap:8px">
-            <a class="a-btn" href="https://learn.microsoft.com/credentials/" target="_blank" rel="noopener">Microsoft Credentials</a>
-            <a class="a-btn" href="https://learn.microsoft.com/training/" target="_blank" rel="noopener">Learning Paths</a>
-            <a class="a-btn" href="https://learn.microsoft.com/azure/" target="_blank" rel="noopener">Docs de Azure</a>
-            <a class="a-btn" href="https://learn.microsoft.com/azure/cloud-adoption-framework/" target="_blank" rel="noopener">Cloud Adoption Framework</a>
-            <a class="a-btn" href="https://pricing.azure.com/" target="_blank" rel="noopener">Calculadora de precios</a>
-          </div>
         </div>
 
         <div class="block">
@@ -531,7 +550,6 @@
           <h3>Comunidad</h3>
           <div style="display:grid;gap:8px">
             <a class="a-btn" href="#">Foro</a>
-            <a class="a-btn" href="#">Discord</a>
             <a class="a-btn" href="#">Coaching 1:1</a>
           </div>
         </div>
@@ -612,110 +630,4 @@
       const userArea=document.getElementById('userArea');
       const nameTop=document.getElementById('userNameTop');
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
-    }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
-    renderHeaderAuth();
-
-    /* ===== Modal helpers ===== */
-    const fbModal = document.getElementById('feedbackModal');
-    let lastFocus = null;
-    function trapFocus(container){
-      function handler(e){
-        if(e.key!=='Tab') return;
-        const focusables = container.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])');
-        const list = Array.from(focusables).filter(el=>el.offsetParent!==null);
-        if(!list.length) return;
-        const first = list[0], last = list[list.length-1];
-        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
-        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
-      }
-      container.__trapHandler = handler;
-      container.addEventListener('keydown', handler);
-    }
-    function releaseTrap(container){
-      if(container.__trapHandler){ container.removeEventListener('keydown', container.__trapHandler); container.__trapHandler=null; }
-    }
-    function openModal(modal){
-      lastFocus = document.activeElement;
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden','false');
-      modal.querySelector('.modal-card')?.focus();
-      trapFocus(modal);
-      document.addEventListener('keydown', escCloser);
-    }
-    function closeModal(modal){
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden','true');
-      releaseTrap(modal);
-      document.removeEventListener('keydown', escCloser);
-      if(lastFocus) lastFocus.focus();
-    }
-    function escCloser(e){ if(e.key==='Escape'){ document.querySelectorAll('.modal.show').forEach(m=>closeModal(m)); } }
-
-    // Abrir desde el footer
-    document.getElementById('footerContactBtn')?.addEventListener('click', ()=> openModal(fbModal));
-    // Cerrar al hacer click fuera
-    fbModal.addEventListener('click',e=>{ if(e.target===fbModal) closeModal(fbModal); });
-    // Botones del modal
-    document.getElementById('btnCancelFeedback')?.addEventListener('click',()=> closeModal(fbModal));
-    document.getElementById('btnOkFeedback')?.addEventListener('click',()=> closeModal(fbModal));
-
-    /* ===== Envío Feedback ===== */
-    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
-    const NOTES_ENDPOINT = `${API_BASE}/items`;
-
-    const fbEmail   = document.getElementById('feedbackEmail');
-    const fbText    = document.getElementById('feedbackText');
-    const fbStatus  = document.getElementById('fbStatus');
-    const btnFbSend = document.getElementById('btnSendFeedback');
-    const btnFbOk   = document.getElementById('btnOkFeedback');
-    const btnFbCancel = document.getElementById('btnCancelFeedback');
-
-    btnFbSend?.addEventListener('click', async ()=>{
-      const message = (fbText.value||'').trim();
-      const from    = (fbEmail.value||'').trim();
-      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; return; }
-
-      fbEmail.disabled = fbText.disabled = true;
-      btnFbSend.disabled = true;
-      fbStatus.textContent = 'Enviando…';
-      fbStatus.className = 'fb-status info';
-
-      const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
-      const u = getCurrentUser();
-      const note = {
-        id, type:'feedback', title:'Feedback web ITHub (Azure portada)',
-        message, email: from || (u?.email || null), userId: u?.id || u?.email || null,
-        path: location.pathname + location.search, ua: navigator.userAgent,
-        createdAt: new Date().toISOString()
-      };
-
-      const params = new URLSearchParams();
-      params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
-
-      const ctl = new AbortController();
-      const timeoutId = setTimeout(()=>ctl.abort(), 10000);
-
-      try{
-        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
-        clearTimeout(timeoutId);
-        if(!res.ok){
-          const text = await res.text().catch(()=> '');
-          throw new Error(`HTTP ${res.status} ${text}`);
-        }
-        fbStatus.textContent = '¡Gracias! Mensaje recibido. 👌';
-        fbStatus.className = 'fb-status ok';
-        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
-        btnFbOk.focus();
-      }catch(err){
-        console.error('Error guardando feedback:', err);
-        fbStatus.textContent = 'No se pudo enviar la info.';
-        fbStatus.className = 'fb-status err';
-        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
-        btnFbOk.focus();
-      }
-    });
-  </script>
-</body>
-</html>
+      else{ login.style.displ
