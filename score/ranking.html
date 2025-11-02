@@ -6,7 +6,6 @@
   <title>IT Hub .es — RANKING GLOBAL</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* ======== DARK THEME (fijo) ======== */
     :root{
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
       --stroke:#283056; --shadow:0 12px 28px rgba(6,12,40,.45);
@@ -17,7 +16,6 @@
       --grad1:rgba(255,153,0,.12); --grad2:rgba(0,120,212,.12);
     }
 
-    /* ================== BASE ================== */
     *{box-sizing:border-box;margin:0;padding:0}
     body{
       font-family:"Roboto Condensed","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue",sans-serif;
@@ -31,17 +29,46 @@
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    /* Header */
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
-      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
-      border-bottom:1px solid var(--stroke)}
-    .nav{height:54px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:1rem}
-    .brand .logo{width:18px;height:18px;border-radius:4px;background:linear-gradient(180deg,#7b8cff,#4c66ff);}
-    .menu{display:flex;gap:18px;color:var(--muted);font-weight:500;font-size:.9rem;text-transform:uppercase}
-    .menu a:hover{color:var(--ink)}
-    .actions{display:flex;align-items:center;gap:8px}
+    /* ===== Header (como captura) ===== */
+    header{
+      position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.92),rgba(15,19,32,.72));
+      border-bottom:1px solid var(--stroke)
+    }
+    .nav{height:60px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .brand .logo{
+      width:26px;height:26px;border-radius:9px;
+      background:linear-gradient(180deg,#7b8cff,#4c66ff);
+      box-shadow:0 0 0 8px rgba(108,139,255,.12)
+    }
+    .brand span{font-weight:900}
+    .brand small{opacity:.7;margin-left:4px}
+    .menu{
+      display:flex;gap:36px;color:#aeb7e6;font-weight:800;letter-spacing:.04em;
+      text-transform:uppercase;margin:0 auto
+    }
+    .menu a{padding:6px 0;border-radius:8px}
+    .menu a:hover{color:#fff}
+    .actions{display:flex;align-items:center;gap:12px}
+    .userbox{
+      display:flex;align-items:center;gap:12px;
+      padding:8px 10px;border:1px solid var(--stroke);border-radius:9999px;
+      background:rgba(20,26,55,.6)
+    }
+    .userbox .name{font-weight:900;letter-spacing:.02em}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 16px;border-radius:14px;border:1px solid var(--stroke);
+      cursor:pointer;font-weight:900;background:transparent;color:var(--ink)
+    }
+    .btn.primary{
+      background:linear-gradient(180deg,var(--violet),var(--violet-2));
+      border:none;box-shadow:var(--shadow);color:#fff
+    }
+    .btn.equal{min-width:108px}
 
+    /* ===== Página ===== */
     .wrap{padding:20px 0 28px}
     .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);
       border-radius:14px;padding:16px 16px;box-shadow:var(--shadow)}
@@ -55,7 +82,7 @@
     }
     .tab[aria-pressed="true"]{outline:2px solid var(--tab-on)}
 
-    /* Tabla */
+    /* ===== Tabla ===== */
     .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow);padding:10px;overflow-x:auto}
     table{width:100%;min-width:820px;border-collapse:collapse}
     thead th{background:var(--surface2);color:var(--ink);font-weight:600;text-align:center;padding:8px 6px;border-bottom:1px solid var(--stroke);font-size:.9rem}
@@ -116,13 +143,18 @@
   <!-- Header -->
   <header>
     <div class="container nav">
-      <div class="brand"><i class="logo"></i><span>IT&nbsp;Hub</span><small>.es</small></div>
-      <nav class="menu">
-        <a href="/">HOME</a>
-        <a href="/#simuladores">SIMULADORES</a>
-        <a href="/#contenidos">CONTENIDOS</a>
+      <div class="brand">
+        <i class="logo"></i>
+        <span>IT&nbsp;Hub</span><small>.es</small>
+      </div>
+
+      <nav class="menu" aria-label="principal">
+        <a href="/">Home</a>
+        <a href="/#simuladores">Simuladores</a>
+        <a href="/#contenidos">Contenidos</a>
       </nav>
-      <div class="actions"><!-- (sin toggle de tema) --></div>
+
+      <div class="actions" id="navActions"><!-- user chip se pinta por JS --></div>
     </div>
   </header>
 
@@ -215,13 +247,11 @@
         </div>
       </div>
 
-      <div class="footcol">
-        <h4>Simuladores</h4>
-        <ul>
-          <li><a href="/#simuladores">AZ-104</a></li>
-          <li><a href="/#simuladores">AZ-305</a></li>
-          <li><a href="/#simuladores">SAA-C03</a></li>
-        </ul>
+       <div>
+        <div style="font-weight:800">Simuladores</div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
       </div>
 
       <div class="footcol">
@@ -245,6 +275,35 @@
   </footer>
 
   <script>
+    /* ======= Cabecera: sesión (user chip + botones) ======= */
+    function getUserAny(){
+      let u=null;
+      try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
+      if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}
+      return u;
+    }
+    (function renderHeaderUser(){
+      const box=document.getElementById('navActions');
+      const u=getUserAny();
+      if(u && (u.name||u.displayName||u.userName)){
+        const name=(u.name||u.displayName||u.userName||'Usuario').toUpperCase();
+        box.innerHTML = `
+          <div class="userbox">
+            <span>🔥 <span class="name">${name}</span></span>
+            <a class="btn primary equal" href="/user/profile.html">PERFIL</a>
+            <button class="btn primary equal" id="logoutBtn">LOGOUT</button>
+          </div>`;
+        document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
+          try{ localStorage.removeItem('currentUser'); localStorage.removeItem('certify_user'); }catch{}
+          location.reload();
+        });
+      } else {
+        box.innerHTML = `
+          <a class="btn" href="/login/login.html">LOGIN</a>
+          <a class="btn primary" href="/login/login.html#signup">CREAR CUENTA</a>`;
+      }
+    })();
+
     /* ======= API / Config ======= */
     const API_BASE="https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const QUIZZES=["az-104","az-305","aws-saa-c03"];
@@ -394,11 +453,9 @@
 
     function syncTabs(){
       const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
-      // alcance
       set('tab-global', SCOPE==='global');
       set('tab-season', SCOPE==='season');
       set('tab-week', SCOPE==='week');
-      // exámenes
       set('tab-all-exams', EXAM===null);
       set('tab-az', EXAM==='az-104');
       set('tab-az305', EXAM==='az-305');

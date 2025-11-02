@@ -63,6 +63,7 @@
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    /* Logo un poco más grande */
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
@@ -117,7 +118,7 @@
     .vendor-azure .accent{background:linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))}
     .vendor-aws .accent{background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))}
 
-    /* How & CTA */
+    /* Modales, quiz, etc. (igual que antes) */
     .how-grid{display:grid;gap:10px;margin-top:12px}
     @media(min-width:820px){.how-grid{grid-template-columns:repeat(4,1fr)}}
     .how-step{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px}
@@ -126,20 +127,17 @@
     .cta .left{padding:18px}.cta .right{padding:18px;background:var(--surface2)}
     .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,153,0,.12);border:1px solid rgba(255,153,0,.3);color:#ffd7a0;font-weight:800}
 
-    /* Modales */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
     .modal.show{display:flex}
     .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
     .modal-card h3{margin:0 0 12px;font-size:1.2rem}
     .modal-card textarea, .modal-card input, .modal-card select{width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700}
 
-    /* Estados del feedback */
     .fb-status{margin-top:8px;font-weight:800}
     .fb-status.ok{color:var(--ok)}
     .fb-status.err{color:var(--bad)}
     .fb-status.info{color:var(--muted)}
 
-    /* Quiz */
     .q-meta{display:flex;justify-content:space-between;align-items:center;color:#cbd3ff;font-weight:800;margin:0 0 8px}
     .q-block{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px;overflow:hidden}
     .q-title{font-weight:900;margin:0 0 10px;font-size:1.05rem}
@@ -215,9 +213,9 @@
               <!-- "Ver último resultado" se inyecta por JS solo si hay datos -->
             </div>
           </div>
-          <div class="how-step"><strong>2) Domina lo esencial</strong><br><span class="muted">Aprendete nuestros resúmenes y hojas de trucos por dominio y certificación . Focalizate en lo importante. </span></div>
+          <div class="how-step"><strong>2) Domina lo esencial</strong><br><span class="muted">APrendete nuestros resúmenes y hojas de trucos por dominio y certificación . Focalizate en lo importante. </span></div>
           <div class="how-step"><strong>3) Practica con propósito</strong><br><span class="muted">Utiliza nuestros simuladores con explicaciones centradas en lo importante de cada certificación y enlaces oficiales.</span></div>
-          <div class="how-step"><strong>4) Ensayo final</strong><br><span class="muted">¿Te sientes preparado? Realiza simulaciones con 65q (modo examen en desarrollo). Repite hasta tu objetivo.</span></div>
+          <div class="how-step"><strong>4) Ensayo final</strong><br><span class="muted">¿Te sientes preparado? Realiza el modo examen cronometrado (en desarrollo). Repite hasta tu objetivo.</span></div>
         </div>
 
         <div class="cta" role="region" aria-labelledby="beta-title">
@@ -243,10 +241,10 @@
       </div>
     </section>
 
-    <!-- Catálogo de fabricantes -->
+    <!-- NUEVO: Catálogo de fabricantes (dos tarjetas grandes, estilo sim-card) -->
     <section aria-labelledby="fab-title">
       <div class="container">
-        <div id="fab-title" class="sec-title">CERTIFICACIONES DE FABRICANTES</div>
+        <div id="fab-title" class="sec-title">CATÁLOGO DE FABRICANTES</div>
         <div class="vendor-grid">
           <!-- Azure -->
           <article class="sim-card sim-azure vendor-card vendor-azure">
@@ -283,6 +281,7 @@
       </div>
     </section>
 
+    <!-- (Eliminada la sección de CONTENIDO CLAVE) -->
   </main>
 
   <!-- Pie -->
@@ -295,16 +294,16 @@
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
-      <div>
+        <div>
         <div style="font-weight:800">Simuladores</div>
-        <div><a href="/quiz.html?quiz=az-104">AZ-104</a></div>
-        <div><a href="/quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
-        <div><a href="/quiz.html?quiz=az-305">AZ-305</a></div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
         <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-        <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+        <div><a href="content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
         <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
         <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
         <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
@@ -370,7 +369,7 @@
             </label>
           </div>
         </div>
-        <p id="diagNote" class="muted" style="margin:6px 0 10px">Hasta 12 preguntas (máx. 3 por dominio). Verás un resumen por dominios al finalizar.</p>
+        <p id="diagNote" class="muted" style="margin:6px 0 10px">Se seleccionan 3 preguntas por dominio (4×3) y verás un resumen por dominios al finalizar.</p>
         <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
           <button class="btn" id="btnCloseDiag1" type="button">CANCELAR</button>
           <button class="pill-btn" id="btnStartDiag" type="button">COMENZAR (12 PREGUNTAS)</button>
@@ -450,9 +449,33 @@
 
     /* ===== SIMULADORES ===== */
     const CATALOG = [
-      {id:'AZ-104',provider:'MICROSOFT AZURE (ENGLISH)',title:'Administrator Associate',quiz:'az-104', providerClass:'prov-azure', simClass:'sim-azure', accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))'},
-      {id:'SAA-C03',provider:'AMAZON AWS (ENGLISH)',title:'Solutions Architect Associate',quiz:'aws-saa-c03', providerClass:'prov-aws',   simClass:'sim-aws',   accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))'},
-      {id:'AZ-305',provider:'MICROSOFT AZURE (ESPAÑOL)',title:'Architect Expert',quiz:'az-305', providerClass:'prov-azure', simClass:'sim-azure', accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))'}
+      {
+        id:'AZ-104',
+        provider:'MICROSOFT AZURE (ENGLISH)',
+        title:'Administrator Associate',
+        quiz:'az-104',
+        startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html',
+        providerClass:'prov-azure', simClass:'sim-azure',
+        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))'
+      },
+      {
+        id:'SAA-C03',
+        provider:'AMAZON AWS (ENGLISH)',
+        title:'Solutions Architect Associate',
+        quiz:'aws-saa-c03',
+        startUrl:'/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html',
+        providerClass:'prov-aws', simClass:'sim-aws',
+        accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))'
+      },
+      {
+        id:'AZ-305',
+        provider:'MICROSOFT AZURE (ESPAÑOL)',
+        title:'Architect Expert',
+        quiz:'az-305',
+        startUrl:'/certification/microsoft-azure/az-305/lz-azure-az-305.html',
+        providerClass:'prov-azure', simClass:'sim-azure',
+        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))'
+      }
     ];
     const simGrid=document.getElementById('simGrid');
 
@@ -461,8 +484,8 @@
       const authed = !!getCurrentUser();
       CATALOG.forEach(c=>{
         const el=document.createElement('article'); el.className=`sim-card ${c.simClass}`; el.setAttribute('role','listitem');
-        const startLabel = authed ? '▶ Empezar' : '🔒 Login to Start';
-        const startHref  = authed ? `quiz.html?quiz=${c.quiz}` : '/login/login.html';
+        const startLabel = authed ? '▶ Certificación' : '🔒 Login to Start';
+        const startHref  = authed ? c.startUrl : '/login/login.html';
         const loginMsg = authed ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
         el.innerHTML=`
           <span class="accent" style="background:${c.accent}" aria-hidden="true"></span>
@@ -470,7 +493,7 @@
           <div class="sim-title">${c.id} ${c.title}</div>
           <div class="btns-row" role="group" aria-label="Acciones de simulador ${c.id}">
             <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}" role="button">🏆 Ranking</a>
-            <a class="cta-btn start-btn" data-quiz="${c.quiz}" href="${startHref}">${startLabel}</a>
+            <a class="cta-btn start-btn" data-href="${c.startUrl}" href="${startHref}">${startLabel}</a>
           </div>
           ${loginMsg}
         `;
@@ -479,15 +502,16 @@
     }
     renderSims();
 
+    // Click en "Empezar/Certificación": usa la URL declarada en data-href y respeta el login gate
     document.addEventListener('click', e=>{
       const b=e.target.closest('.start-btn'); if(!b) return;
       if(!!getCurrentUser()){
-        const url=new URL('quiz.html', location.href);
-        url.searchParams.set('quiz', b.dataset.quiz);
-        location.href=url.toString();
+        const url=b.dataset.href || b.getAttribute('href');
+        location.href = url;
       }else{
         location.href='/login/login.html';
       }
+      e.preventDefault();
     });
 
     /* ===== Modal helpers ===== */
@@ -701,41 +725,16 @@
 
     let session={ exam:"AZ-104", immediate:false, questions:[], answers:[], i:0 };
 
-    // === FIX: selector genérico por examen (soporta AZ-305)
     function pickQuestions(exam){
-      const TOTAL=12, MAX_PER_DOMAIN=3;
-      const pool=DIAG_BANK.filter(x=>x.exam===exam);
-
-      // Agrupar por dominio
-      const groups={};
-      pool.forEach(q=>{
-        (groups[q.domain] ||= []).push(q);
-      });
-      // Mezclar cada grupo para variedad
-      Object.values(groups).forEach(arr=>{
-        for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
-      });
-
-      // Round-robin entre dominios respetando MAX_PER_DOMAIN
-      const domains=Object.keys(groups);
-      const takenPerDomain=Object.fromEntries(domains.map(d=>[d,0]));
-      const out=[];
-      let progressed=true;
-      while(out.length<TOTAL && progressed){
-        progressed=false;
-        for(const d of domains){
-          if(out.length>=TOTAL) break;
-          const idx=takenPerDomain[d];
-          if(idx<Math.min(groups[d].length, MAX_PER_DOMAIN)){
-            out.push(groups[d][idx]);
-            takenPerDomain[d]++;
-            progressed=true;
-          }
-        }
-      }
+      const domains={
+        "AZ-104":["Identidades y gobernanza","Almacenamiento","Cómputo","Red y conectividad"],
+        "AZ-305":["Identidad y gobernanza","Arquitectura de red","Cómputo y contenedores","Datos y almacenamiento"],
+        "SAA-C03":["Diseño seguro","Alta disponibilidad y resiliencia","Rendimiento y escalabilidad","Coste y eficiencia"]
+      }[exam];
+      const pool=DIAG_BANK.filter(x=>x.exam===exam); const out=[];
+      domains.forEach(d=>{ const subset=pool.filter(x=>x.domain===d); for(let j=0;j<3 && j<subset.length;j++) out.push(subset[j]); });
       return out;
     }
-
     function percent(a,b){ return b? Math.round((a/b)*100):0; }
 
     function renderHeatmap(container, result){

@@ -15,12 +15,9 @@
   <meta name="theme-color" content="#0f1320" />
 
   <title>AZ-104: Simulador y Guía de Estudio — Microsoft Azure Administrator | ITHub</title>
-<link rel="canonical" href="https://beta.ithub.es/certification/microsoft-azure/az-104/lz-azure-az-104.html" />
-<meta name="description" content="Simulador AZ-104 con preguntas por dominios (D1-D5), métricas y guía de estudio en tarjetas. Practica Microsoft Azure Administrator y supera 700/1000." />
-<meta name="keywords" content="AZ-104, simulador AZ-104, preguntas AZ-104 en español, Microsoft Azure Administrator, guía de estudio AZ-104, dominios D1 D2 D3 D4 D5" />
-
-
-
+  <link rel="canonical" href="https://beta.ithub.es/certification/microsoft-azure/az-104/lz-azure-az-104.html" />
+  <meta name="description" content="Simulador AZ-104 con preguntas por dominios (D1-D5), métricas y guía de estudio en tarjetas. Practica Microsoft Azure Administrator y supera 700/1000." />
+  <meta name="keywords" content="AZ-104, simulador AZ-104, preguntas AZ-104 en español, Microsoft Azure Administrator, guía de estudio AZ-104, dominios D1 D2 D3 D4 D5" />
 
   <style>
     :root{
@@ -109,15 +106,18 @@
     .chip-dom .led{width:10px;height:10px;border-radius:999px;background:transparent;border:2px solid #5c6bb2}
     .chip-dom.on{background:rgba(108,139,255,.14); border-color:#4a5cc3; box-shadow:0 0 0 2px rgba(108,139,255,.28) inset;}
     .chip-dom.on .led{background:#6c8bff; border-color:#6c8bff}
+
+    /* Segmented base (luego lo reforzamos para el simulador) */
     .segmented{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:6px}
     .segmented input{display:none}
     .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
     .segmented input:checked + label{background:#0f1630;border:1px solid #4c66c9}
+
     #startBtn{background:#0078d4;color:#0b0f22;border-color:transparent;box-shadow:0 10px 24px rgba(0,120,212,.35)}
     #infoDom{margin-top:16px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:none}
     .info-empty{color:var(--muted);border:1px dashed var(--stroke);padding:12px;border-radius:10px;background:#0f1630}
 
-    /* Modal resultados */
+    /* ====== Modal resultados ====== */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
     .modal.show{display:flex}
     .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
@@ -132,6 +132,57 @@
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
+
+    /* ========= ESTILO ESPECIAL DEL SIMULADOR (como la captura) ========= */
+    #simCard{
+      position:relative;
+      background:
+        radial-gradient(95% 140% at 100% 0, rgba(0,120,212,.18), transparent 60%),
+        linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid rgba(0,120,212,.45);
+      box-shadow:
+        0 0 0 1px rgba(55,149,229,.25) inset,
+        0 22px 40px rgba(0,0,0,.55);
+    }
+    #simCard::after{
+      content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none;
+      box-shadow:0 0 0 3px rgba(0,120,212,.25);
+    }
+    #simTitle{
+      font-size:clamp(1.4rem,3.0vw,2.0rem);
+      font-weight:900; line-height:1.2; letter-spacing:.2px;
+      text-shadow:0 10px 28px rgba(0,120,212,.35);
+      margin-bottom:6px;
+    }
+    /* segmented reforzado dentro del simulador */
+    #simCard .segmented{
+      background:rgba(255,255,255,.04);
+      border:1px solid #2a3b6d;
+      padding:6px;
+    }
+    #simCard .segmented input:checked + label{
+      background:linear-gradient(180deg,#164d86,#0e3570);
+      border:1px solid rgba(0,120,212,.55);
+      box-shadow:0 0 0 2px rgba(0,120,212,.30) inset;
+    }
+    /* select a juego */
+    #simCard select{
+      background:#0f1b3a;color:var(--ink);
+      border:1px solid #2a3b6d;border-radius:10px;
+      padding:10px 12px;font-weight:800;min-width:84px;
+    }
+    /* chips más redondos */
+    #simCard .chip-dom{
+      padding:10px 14px;border-radius:999px;
+      border-color:#2a3b6d;background:transparent;color:#d6e5ff;
+      box-shadow:0 2px 0 rgba(0,0,0,.12);
+    }
+    #simCard .chip-dom.on{
+      background:rgba(0,120,212,.08); border-color:#3a62b3;
+      box-shadow:0 0 0 2px rgba(0,120,212,.22) inset;
+    }
+    #simCard .chip-dom .led{width:14px;height:14px;border:2px solid #6a78b4}
+    #simCard .chip-dom.on .led{background:#0078d4;border-color:#0078d4}
   </style>
 </head>
 <body>
@@ -178,7 +229,7 @@
           <button id="tabGuide" class="tab-btn" role="tab" aria-selected="false" aria-controls="studyGuide">📘 TIPS DE ESTUDIO</button>
         </div>
 
-        <!-- ===== GUÍA DE ESTUDIO (solo visible cuando la pestaña está activa) ===== -->
+        <!-- ===== GUÍA DE ESTUDIO ===== -->
         <section id="studyGuide" aria-label="Guía de estudio AZ-104" role="tabpanel" aria-labelledby="tabGuide">
           <h2 class="sec-title" style="margin:10px 0 6px;text-transform:uppercase">Tips de estudio AZ-104</h2>
           <p class="muted" style="margin-top:0">Tarjetas y artículos clave orientados al examen. Repasa en orden o salta a lo que necesites.</p>
@@ -226,7 +277,7 @@
       </div>
     </section>
 
-    <!-- ===== DOMINIOS & SIMULADOR (por defecto visible) ===== -->
+    <!-- ===== DOMINIOS & SIMULADOR ===== -->
     <section id="domsim" role="tabpanel" aria-labelledby="tabSim">
       <div class="wrap">
         <div class="grid-sim">
@@ -243,7 +294,7 @@
             <ul id="domainsList" class="domains-list"></ul>
           </section>
 
-          <!-- DERECHA: simulador -->
+          <!-- DERECHA: simulador (REMAQUETADO COMO LA CAPTURA) -->
           <aside class="panel" id="simCard" aria-label="Simulador AZ-104">
             <h3 id="simTitle">AZ-104 · Simulador de examen</h3>
 
@@ -259,19 +310,27 @@
 
             <div class="field" style="margin-top:10px">
               <label>Preguntas</label>
-              <select id="qCount" style="border:1px solid var(--stroke);border-radius:10px;padding:8px 10px;background:var(--surface2);color:var(--ink)">
-                <option>5</option><option>10</option><option>15</option><option>30</option><option selected>5</option>
+              <select id="qCount">
+                <option>5</option><option>10</option><option>15</option><option>30</option><option>65</option>
               </select>
             </div>
 
             <div class="field" style="margin-top:10px">
               <label>Dominios (filtro opcional)</label>
-              <div id="domainChips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+              <div id="domainChips" style="display:flex;flex-wrap:wrap;gap:10px"></div>
               <div style="color:var(--muted)">Déjalo vacío para incluir todos los dominios.</div>
             </div>
 
-            <div class="field" style="margin-top:12px">
+            <div class="field" style="margin-top:14px">
               <button id="startBtn" class="pill-btn" type="button">▶ Empezar</button>
+            </div>
+
+            <div class="field" style="margin-top:6px;color:var(--muted)">
+              Atajos:
+              <span style="display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:2px 8px;border-radius:8px;background:#0f1a36;border:1px solid #2a3b6d;font-weight:900">N</span> Siguiente,
+              <span style="display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:2px 8px;border-radius:8px;background:#0f1a36;border:1px solid #2a3b6d;font-weight:900">B</span> Anterior,
+              <span style="display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:2px 8px;border-radius:8px;background:#0f1a36;border:1px solid #2a3b6d;font-weight:900">M</span> Marcar,
+              <span style="display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:2px 8px;border-radius:8px;background:#0f1a36;border:1px solid #2a3b6d;font-weight:900">1-9</span> elegir.
             </div>
           </aside>
         </div>
@@ -303,11 +362,11 @@
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.</p>
       </div>
-      <div>
+     <div>
         <div style="font-weight:800">Simuladores</div>
-        <div><a href="/quiz.html?quiz=az-104">AZ-104</a></div>
-        <div><a href="/quiz.html?quiz=az-305">AZ-305</a></div>
-        <div><a href="/quiz.html?quiz=aws-saa-c03">SAA-C03</a></div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
@@ -361,7 +420,7 @@
     document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
     renderHeaderAuth();
 
-    /* ===== Tabs (solo una vista visible) ===== */
+    /* ===== Tabs ===== */
     const tabSim   = document.getElementById('tabSim');
     const tabGuide = document.getElementById('tabGuide');
     const secSim   = document.getElementById('domsim');
@@ -369,16 +428,13 @@
 
     function activate(tab){
       const isGuide = (tab === 'guide');
-      // botones
       tabGuide.classList.toggle('active', isGuide);
       tabGuide.setAttribute('aria-selected', isGuide ? 'true' : 'false');
       tabSim.classList.toggle('active', !isGuide);
       tabSim.setAttribute('aria-selected', !isGuide ? 'true' : 'false');
-      // contenido
       secGuide.classList.toggle('open', isGuide);
       secGuide.style.display = isGuide ? 'block' : 'none';
       secSim.style.display    = isGuide ? 'none'  : 'block';
-      // scroll al inicio de la sección visible
       (isGuide ? secGuide : secSim).scrollIntoView({behavior:'smooth', block:'start'});
     }
     tabGuide.addEventListener('click', ()=>activate('guide'));
