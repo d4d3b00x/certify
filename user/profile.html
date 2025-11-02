@@ -5,14 +5,14 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} 
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-DYZ3GCXHEK');
   </script>
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CertiFY — Perfil del Estudiante </title>
+  <title>ITHub.es. Perfil de Quizzer. Estadísticas, avances y resultados.</title>
 
   <style>
     :root{
@@ -22,11 +22,10 @@
       --radius:16px;
 
       /* Acentos */
-      --accent:#ff9900; --accent-2:#ffb84d; 
-      --accent-az:#0078d4; --accent-az-2:#5fb3ff;
+      --accent:#7b5cff; --accent-2:#8166ff; /* morado suave para header buttons */
+      --accent-warn:#ffb84d;
 
-      --ok:#25b873; --ok-ink:#b9f4d6; --ok-bg:#0e1f1a;
-      --danger:#ff6b6b; --gap:12px;
+      --ok:#25b873; --danger:#ff6b6b; --gap:12px;
 
       /* Ranking extras */
       --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
@@ -42,67 +41,139 @@
         radial-gradient(1200px 520px at 88% -10%, #1a1430 0, transparent 60%),
         linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
       line-height:1.6; min-height:100vh; overflow-x:hidden;
-      display:flex; flex-direction:column; 
+      display:flex; flex-direction:column;
     }
 
-    .wrap{max-width:1200px;margin:0 auto;padding:20px; width:100%}
+    a{color:inherit}
 
-    /* ===== Header ===== */
+    .wrap{max-width:1200px;margin:0 auto;padding:20px;width:100%}
+
+    /* ====== HEADER estilo IT Hub ====== */
     header.site{
-      position:sticky; top:0; z-index:10; 
-      backdrop-filter: saturate(130%) blur(6px);
-      background:linear-gradient(180deg, rgba(17,25,55,.85), rgba(15,22,51,.75));
-      border-bottom:1px solid var(--stroke);
+      position:sticky; top:0; z-index:20;
+      background:linear-gradient(180deg,#0e1222 0%, #0b0f1c 100%);
+      border-bottom:1px solid rgba(40,48,86,.6);
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
     }
     .nav{
-      max-width:1200px; margin:0 auto; padding:10px 20px; 
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      max-width:1200px; margin:0 auto; padding:10px 20px;
+      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
     }
-    .brand{display:flex; align-items:center; gap:10px; font-weight:900;}
-    .logo{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;background:linear-gradient(180deg,#6c8bff,#3e64ff); color:#fff; font-weight:900}
-    .navlinks{display:flex;gap:8px;flex-wrap:wrap}
-    .navlinks a{padding:8px 12px;border-radius:10px;border:1px solid var(--stroke);text-decoration:none;color:var(--ink);font-weight:800;background:var(--surface2)}
-    .auth{display:flex;align-items:center;gap:8px}
+    /* Marca */
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
+    .brand .badge{
+      width:30px;height:30px;border-radius:10px;
+      background:linear-gradient(180deg,#7693ff,#6a7cff);
+      display:grid;place-items:center; color:white; font-weight:900;
+      box-shadow:inset 0 -4px 8px rgba(0,0,0,.25);
+    }
+    .brand .name{
+      display:flex;align-items:baseline;gap:6px;
+    }
+    .brand .name b{font-size:1.05rem}
+    .brand .name .dot{opacity:.9}
+    .brand .name .es{opacity:.7;font-weight:800}
+
+    /* Nav centrado */
+    .navlinks{
+      display:flex; align-items:center; justify-content:center; gap:28px;
+      font-weight:900;
+    }
+    .navlinks a{
+      text-decoration:none; color:#bac4ff; letter-spacing:.5px;
+    }
+    .navlinks a:hover{ color:#ffffff; text-shadow:0 0 12px rgba(123,92,255,.35); }
+
+    /* Grupo derecho: cápsula */
+    .usercapsule{
+      display:flex; align-items:center; gap:10px; padding:6px;
+      background:linear-gradient(180deg, rgba(16,22,43,.9), rgba(10,14,30,.9));
+      border:1px solid var(--stroke); border-radius:999px;
+      box-shadow:var(--shadow);
+    }
+    .chip-user{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px;
+      border-radius:999px; font-weight:900; color:#e8ecff;
+      background:linear-gradient(180deg, rgba(124,146,255,.18), rgba(90,110,220,.14));
+      border:1px solid rgba(70,80,150,.7);
+      white-space:nowrap;
+    }
+    .chip-user .flame{ color:var(--accent-warn); }
 
     .btn{appearance:none;border:1px solid var(--stroke);cursor:pointer;background:var(--surface2);color:var(--ink);
       font-weight:900;letter-spacing:.2px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);
       transition:transform .08s, box-shadow .12s, filter .12s, border-color .12s; text-decoration:none;}
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.35); }
+    .btn.pill{ border-radius:999px; padding:10px 16px; }
     .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border-color:transparent; }
+    .btn.ghost{ background:transparent; border-color:rgba(80,92,160,.6); }
     .btn.small{ padding:6px 10px; font-size:.9rem; }
-    .btn.upper{ text-transform:uppercase; letter-spacing:.3px; }
     .hidden{display:none !important}
 
-    /* Tarjetas */
-    .card{ background:linear-gradient(180deg, var(--card), #0f1633); border:1px solid var(--stroke); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow); color:var(--ink); margin-bottom:12px; }
+    /* ====== Tarjetas y resto del perfil ====== */
+    .card{
+      background:linear-gradient(180deg, var(--card), #0f1633);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--shadow);
+      color:var(--ink);
+      margin-bottom:12px;
+    }
 
-    /* Hero */
-    .hero{ padding:16px 18px; background:linear-gradient(180deg, #111937 0, #0f1633 100%); border:1px solid var(--stroke); border-radius:var(--radius); margin:12px 0 var(--gap); }
+    /* Hero (texto sintetizado) */
+    .hero{
+      padding:16px 18px;
+      background:linear-gradient(180deg, #111937 0, #0f1633 100%);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      margin:12px 0 var(--gap);
+    }
     .hero h1{ margin:4px 0 6px; font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem); font-weight:900; color:var(--ink); }
     .hero .desc{ color:var(--muted); margin:0; }
 
-    /* Authbar (estatus) */
-    .authbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px; background:var(--surface); border:1px solid var(--stroke); border-radius:999px; color:var(--ink); font-weight:800; box-shadow:var(--shadow); margin:0 0 var(--gap); }
+    /* Barra de autenticación (estado) */
+    .authbar{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:10px 14px; background:var(--surface);
+      border:1px solid var(--stroke); border-radius:999px;
+      color:var(--ink); font-weight:800; box-shadow:var(--shadow);
+      margin:0 0 var(--gap);
+    }
     .authbar .actions{ display:flex; gap:8px; }
 
     /* Grid principal */
     .grid{ display:grid; grid-template-columns: 320px minmax(0,1fr); gap:var(--gap); align-items:start; }
-    @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
+    @media (max-width:900px){
+      .grid{ grid-template-columns:1fr; }
+      .nav{ grid-template-columns:auto auto; grid-template-rows:auto auto; }
+      .navlinks{ order:3; grid-column:1/-1; padding-top:6px; }
+    }
     .col-right{ display:flex; flex-direction:column; gap:var(--gap); }
     .col-right > .card{ width:100%; }
 
-    /* Perfil */
+    /* Perfil (columna izquierda) */
     .profile{ display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:center; }
-    .avatar{ width:86px; height:86px; border-radius:14px; overflow:hidden; border:1px solid var(--stroke); background:var(--surface); display:flex; align-items:center; justify-content:center; font-weight:900; color:#cbd6ff; font-size:1.4rem; }
+    .avatar{
+      width:86px; height:86px; border-radius:14px; overflow:hidden;
+      border:1px solid var(--stroke); background:var(--surface);
+      display:flex; align-items:center; justify-content:center; font-weight:900; color:#cbd6ff; font-size:1.4rem;
+    }
     .avatar img{ width:100%; height:100%; object-fit:cover; }
     .muted{ color:var(--muted) }
     .divider{ border:0; border-top:1px solid var(--stroke); margin:12px 0; }
 
-    /* Inputs */
+    /* Campos / inputs */
     .field{ display:flex; flex-direction:column; gap:6px; margin:8px 0; }
     .field label{ font-weight:900; color:#cbd6ff; }
-    .control{ display:flex; align-items:center; gap:8px; border:1px solid var(--stroke); border-radius:12px; padding:10px 12px; background:var(--surface2); }
-    .control input{ border:none; outline:none; background:transparent; width:100%; font-weight:800; color:var(--ink); padding:4px 0; }
+    .control{
+      display:flex; align-items:center; gap:8px;
+      border:1px solid var(--stroke); border-radius:12px; padding:10px 12px; background:var(--surface2);
+    }
+    .control input{
+      border:none; outline:none; background:transparent; width:100%;
+      font-weight:800; color:var(--ink); padding:4px 0;
+    }
     .control input::placeholder{ color:#7f8ac2; }
     .hint{ font-size:.92rem; color:var(--muted) }
 
@@ -111,27 +182,41 @@
     .tab-btn{ border:1px solid transparent; background:transparent; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:900; color:#e2e7ff; }
     .tab-btn.active{ background:var(--surface2); border-color:var(--stroke); }
 
-    /* Tabla */
-    .table-wrap{ background:var(--surface); border:1px solid var(--stroke); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto; }
+    /* Tabla resultados & marcadas */
+    .table-wrap{
+      background:var(--surface); border:1px solid var(--stroke); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto;
+    }
     table{ width:100%; min-width:680px; border-collapse:separate; border-spacing:0; }
-    thead th{ position:sticky; top:0; z-index:1; background:var(--surface2); color:#dbe3ff; font-weight:900; text-align:center; padding:10px; border-bottom:1px solid var(--stroke) }
+    thead th{
+      position:sticky; top:0; z-index:1;
+      background:var(--surface2); color:#dbe3ff; font-weight:900; letter-spacing:.01em; text-align:center; padding:10px; border-bottom:1px solid var(--stroke)
+    }
     tbody td{ padding:10px; text-align:center; border-bottom:1px solid #1f2446; background:var(--surface); color:var(--ink) }
     tbody tr:nth-child(even) td{ background:#171d36 }
     tbody tr:hover td{ background:#1b2240 }
 
-    .badge{ display:inline-block; padding:4px 10px; border-radius:999px; font-weight:900; font-size:.8rem; background:rgba(108,139,255,.12); color:#cbd6ff; border:1px solid var(--stroke); }
-    .chip{ display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; background:rgba(108,139,255,.10); color:#d8e2ff; border:1px solid var(--stroke); font-weight:800; }
+    .badge{
+      display:inline-block; padding:4px 10px; border-radius:999px; font-weight:900; font-size:.8rem;
+      background:rgba(108,139,255,.12); color:#cbd6ff; border:1px solid var(--stroke);
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px;
+      background:rgba(108,139,255,.10); color:#d8e2ff; border:1px solid var(--stroke); font-weight:800;
+    }
     .pct{ display:flex; align-items:center; justify-content:center; gap:8px; font-variant-numeric:tabular-nums; font-weight:900; }
     .pbar{ position:relative; flex:1 1 120px; height:8px; background:#0b1024; border-radius:999px; overflow:hidden; max-width:160px; margin:0 auto; }
     .pbar>i{ position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
 
     /* KPIs */
     .kpis{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-    .kpi{ text-align:center; border:1px solid var(--stroke); border-radius:12px; padding:12px; background:linear-gradient(180deg, var(--surface2), var(--surface)); }
+    .kpi{
+      text-align:center; border:1px solid var(--stroke); border-radius:12px; padding:12px;
+      background:linear-gradient(180deg, var(--surface2), var(--surface));
+    }
     .kpi h4{ margin:0; font-size:1rem; color:#cbd6ff; font-weight:900; }
     .kpi .n{ font-size:1.4rem; font-weight:900; }
 
-    /* Heatmap & badges */
+    /* Heatmap & badges (perfil izquierda) */
     .heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
     .heat i{display:block;height:14px;border-radius:4px;background:#0b1024;border:1px solid var(--stroke)}
     .heat i.lv1{background:#15224a}
@@ -140,7 +225,12 @@
     .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
     .badge-chip{border:1px solid var(--stroke);background:var(--surface2);color:#dbe3ff;border-radius:999px;padding:6px 10px;font-weight:900}
 
-    /* Ranking mini */
+    .tool{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0}
+    .tool select, .tool input[type="range"]{
+      border:1px solid var(--stroke);border-radius:10px;padding:6px 8px;font-weight:800;background:var(--surface2);color:var(--ink)
+    }
+
+    /* ====== Estilos Ranking Global (mini) ====== */
     .rank-mini .table-wrap{overflow-x:hidden}
     .rank-mini table{min-width:0;width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
     .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
@@ -175,24 +265,33 @@
   </style>
 </head>
 <body>
-  <!-- ===== Header con login ===== -->
+
+  <!-- ===== HEADER ===== -->
   <header class="site">
     <nav class="nav">
-      <div class="brand">
-        <div class="logo">CF</div>
-        <div>CertiFY</div>
+      <!-- Marca -->
+      <a class="brand" href="/" aria-label="IT Hub">
+        <div class="badge">□</div>
+        <div class="name">
+          <b>IT&nbsp;&nbsp;Hub</b><span class="dot">.</span><span class="es">es</span>
+        </div>
+      </a>
+
+      <!-- Nav centrado -->
+      <div class="navlinks" aria-label="Navegación principal">
+        <a href="/">HOME</a>
+        <a href="/content/content.html">CONTENIDOS</a>
+        <a href="/score/ranking.html">RANKING</a>
       </div>
-      <div class="navlinks">
-        <a href="/">Inicio</a>
-        <a href="/quiz">Quizzes</a>
-        <a href="/score/ranking.html">Ranking</a>
-        <a href="/support">Ayuda</a>
-      </div>
-      <div class="auth">
-        <span id="hdrUser" class="muted">No conectado</span>
-        <button id="btnHdrLogin" class="btn small">Iniciar sesión</button>
-        <button id="btnHdrSignup" class="btn small">Crear cuenta</button>
-        <button id="btnHdrLogout" class="btn small hidden">Salir</button>
+
+      <!-- Cápsula derecha (dinámica) -->
+      <div class="usercapsule">
+        <span id="hdrUser" class="chip-user hidden"><span class="flame">🔥</span><span id="hdrUserName">USER</span></span>
+        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/user/profile.html">PERFIL</a> <!-- TODO: ajusta ruta -->
+        <button id="btnHdrLogout" class="btn pill primary hidden">LOGOUT</button>
+
+        <button id="btnHdrLogin" class="btn pill primary">LOGIN</button>
+        <button id="btnHdrSignup" class="btn pill ghost">CREAR CUENTA</button>
       </div>
     </nav>
   </header>
@@ -204,7 +303,6 @@
       <p class="desc">Gestiona tu cuenta, consulta tu ranking y revisa tus últimos exámenes y logros.</p>
     </section>
 
-    <!-- Barra de estado (opcional) -->
     <section class="authbar" id="authBar">
       <span id="authText" class="muted">🔒 No has iniciado sesión</span>
       <div class="actions">
@@ -214,7 +312,7 @@
     </section>
 
     <section class="grid">
-      <!-- Columna izquierda -->
+      <!-- ===== Columna izquierda ===== -->
       <div class="col-left">
         <article class="card">
           <h3 style="margin:0 0 10px;font-weight:900">Perfil</h3>
@@ -278,13 +376,15 @@
         </article>
       </div>
 
-      <!-- Columna derecha -->
+      <!-- ===== Columna derecha ===== -->
       <div class="col-right">
+        <!-- RANKING GLOBAL mini -->
         <article class="card rank-mini">
           <h3 style="margin:0 0 10px;font-weight:900;">🏆 Ranking Global</h3>
           <div id="rankMiniWrap" class="table-wrap">Cargando…</div>
         </article>
 
+        <!-- ÚLTIMOS EXÁMENES -->
         <article class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
             <h3 style="margin:0;font-weight:900">📘 Últimos Exámenes</h3>
@@ -322,10 +422,11 @@
 
           <div style="display:flex;gap:8px;justify-content:space-between;margin-top:10px;align-items:center;">
             <div id="trendHint" class="muted">—</div>
-            <a class="btn upper" href="/score/ranking.html">🏆 LEADERBOARD</a>
+            <a class="btn" href="/score/ranking.html">🏆 LEADERBOARD</a>
           </div>
         </article>
 
+        <!-- PREGUNTAS MARCADAS -->
         <article class="card">
           <h3 style="margin:0 0 10px;font-weight:900;">Tus pregunta marcadas</h3>
           <div id="markedWrap" class="table-wrap">
@@ -349,20 +450,20 @@
   <footer class="site">
     <div class="foot">
       <div style="display:flex;align-items:center;gap:10px">
-        <div class="logo" style="width:24px;height:24px">CF</div>
-        <strong>CertiFY</strong>
+        <div class="brand" style="gap:8px">
+          <div class="badge" style="width:22px;height:22px;border-radius:7px">□</div>
+          <strong>IT Hub<span class="dot">.</span><span class="es">es</span></strong>
+        </div>
         <span class="muted">© <span id="yearNow"></span></span>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="/privacy">Privacidad</a>
-        <a href="/terms">Términos</a>
-        <a href="mailto:soporte@certify.app">Soporte</a>
-        <span class="muted">v1.3.0</span>
+       
+        <span class="muted">v0.9.2</span>
       </div>
     </div>
   </footer>
 
-  <!-- ===== Modal Login/Signup (funciona con localStorage + /me) ===== -->
+  <!-- ===== Modal Login/Signup ===== -->
   <div id="authModal" class="modal" aria-hidden="true" role="dialog" aria-label="Autenticación">
     <div class="modal-card">
       <div class="modal-head">
@@ -377,7 +478,7 @@
         <label for="authEmail">Email</label>
         <div class="control"><input id="authEmail" type="email" placeholder="tú@correo.com"></div>
       </div>
-      <div class="hint">Guardaremos estos datos en tu navegador (localStorage). Si existe un backend, podrás ampliarlo para emitir un token.</div>
+      <div class="hint">Guardaremos estos datos en tu navegador (localStorage). Si tienes backend, podrás emitir token y hacer <code>/me</code>.</div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
         <button id="authCancel" class="btn">Cancelar</button>
         <button id="authSubmit" class="btn primary">Continuar</button>
@@ -386,475 +487,442 @@
     </div>
   </div>
 
-<script>
-  const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-  const AUTH_KEY = "currentUser";
-  const GOAL_KEY = "weeklyGoal";
+  <script>
+    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+    const AUTH_KEY = "currentUser";
+    const GOAL_KEY = "weeklyGoal";
 
-  const byId = id => document.getElementById(id);
-  const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
-  const pad = n => String(n).padStart(2,'0');
-  const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
-  const fmtDuration = sec => { sec = toInt(sec); if (!sec || sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`; };
-  const fmtDateTime = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; } };
-  const norm = s => (s||"").toString().trim().toLowerCase();
-  function initialsOf(name){ const s=(name||"").trim(); if(!s) return "👤"; const parts=s.split(/\s+/).slice(0,2); return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤"; }
+    const byId = id => document.getElementById(id);
+    const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
+    const pad = n => String(n).padStart(2,'0');
+    const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    const fmtDuration = sec => { sec = toInt(sec); if (!sec || sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`; };
+    const fmtDateTime = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; } };
+    const norm = s => (s||"").toString().trim().toLowerCase();
+    const initialsOf = (name)=>{ const s=(name||"").trim(); if(!s) return "👤"; const parts=s.split(/\s+/).slice(0,2); return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤"; };
 
-  function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
-  function getUserAny(){ let u=getUser(); if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} } return u; }
-  function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
+    function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
+    function getUserAny(){ let u=getUser(); if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} } return u; }
+    function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
 
-  const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
-  const setGoal = (n)=> localStorage.setItem(GOAL_KEY, String(Math.max(1,toInt(n))));
-  const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
+    const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
+    const setGoal = (n)=> localStorage.setItem(GOAL_KEY, String(Math.max(1,toInt(n))));
 
-  /* ===== Header Auth render ===== */
-  function renderHeaderAuth(){
-    const u = getUserAny();
-    const hdrUser = byId('hdrUser');
-    const btnL = byId('btnHdrLogin');
-    const btnS = byId('btnHdrSignup');
-    const btnO = byId('btnHdrLogout');
-    if(u){
-      hdrUser.textContent = `👋 ${u.name||u.displayName||u.userName||u.email}`;
-      btnL.classList.add('hidden');
-      btnS.classList.add('hidden');
-      btnO.classList.remove('hidden');
-    }else{
-      hdrUser.textContent = 'No conectado';
-      btnL.classList.remove('hidden');
-      btnS.classList.remove('hidden');
-      btnO.classList.add('hidden');
-    }
-  }
+    const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
 
-  /* ===== Sección de estado (authbar) ===== */
-  function renderAuth(){
-    const u = getUserAny();
-    const authText = byId("authText");
-    const btnLogout = byId("btnLogout");
-    const btnHome = byId("btnHome");
-    if (u){
-      authText.textContent = `✅ Signed in as: ${u.name||u.displayName||u.userName||''} (${u.email||''})`;
-      btnLogout.classList.remove("hidden");
-      btnHome.classList.remove("hidden");
-    }else{
-      authText.textContent = "🔒 You’re not signed in.";
-      btnLogout.classList.add("hidden");
-      btnHome.classList.add("hidden");
-    }
-    renderProfileForm();
-    renderGoalUI();
-    renderHeaderAuth();
-  }
+    /* ===== Header dinámico según sesión ===== */
+    function renderHeaderAuth(){
+      const u = getUserAny();
+      const pillName = byId('hdrUser');
+      const pillNameTxt = byId('hdrUserName');
+      const btnPerfil = byId('btnHdrPerfil');
+      const btnLogout = byId('btnHdrLogout');
+      const btnLogin = byId('btnHdrLogin');
+      const btnSignup = byId('btnHdrSignup');
 
-  function renderProfileForm(){
-    const u = getUserAny() || {};
-    byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
-    byId("userEmailTxt").textContent = u.email || "—";
-    byId("name").value = u.name || "";
-    byId("email").value = u.email || "";
-    byId("avatarUrl").value = u.avatarUrl || "";
-    const box = byId("avatarBox");
-    box.innerHTML = "";
-    if (u.avatarUrl){
-      const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar";
-      im.onload = () => { box.innerHTML = ""; box.appendChild(im); }
-      im.onerror = () => { box.textContent = initialsOf(u.name); }
-    }else{
-      box.textContent = initialsOf(u.name);
-    }
-  }
-
-  async function loadRemoteMe(){
-    const u = getUserAny(); if(!u) return;
-    try{
-      const res = await fetch(`${API_BASE}/me`, {mode:"cors",cache:"no-store"});
-      if(res.ok){
-        const data = await res.json();
-        const merged = {...u, ...data};
-        setUser(merged);
+      if(u){
+        pillNameTxt.textContent = (u.name || u.displayName || u.userName || u.email || 'USER').toUpperCase();
+        pillName.classList.remove('hidden');
+        btnPerfil.classList.remove('hidden');
+        btnLogout.classList.remove('hidden');
+        btnLogin.classList.add('hidden');
+        btnSignup.classList.add('hidden');
+      }else{
+        pillName.classList.add('hidden');
+        btnPerfil.classList.add('hidden');
+        btnLogout.classList.add('hidden');
+        btnLogin.classList.remove('hidden');
+        btnSignup.classList.remove('hidden');
       }
-    }catch{}
-  }
+    }
 
-  // ==== Modal helpers ====
-  const showModal = (id)=> byId(id).classList.add('show');
-  const hideModal = (id)=> byId(id).classList.remove('show');
-
-  function openAuthModal(mode){
-    byId('authTitle').textContent = mode==='signup'? 'Crear cuenta' : 'Iniciar sesión';
-    byId('authMsg').textContent = '';
-    const u = getUserAny();
-    byId('authName').value = (u && u.name) || '';
-    byId('authEmail').value = (u && u.email) || '';
-    showModal('authModal');
-    setTimeout(()=> byId('authEmail').focus(), 50);
-  }
-
-  function doLocalAuth(){
-    const name = (byId('authName').value||'').trim();
-    const email = (byId('authEmail').value||'').trim();
-    if(!email){ byId('authMsg').textContent = 'Introduce un email válido'; return; }
-    const user = { name: name||email.split('@')[0], email };
-    setUser(user);
-    byId('authMsg').textContent = 'Hecho. Sesión iniciada en este navegador.';
-    hideModal('authModal');
-  }
-
-  // ====== Ranking mini (incluye AZ-305) ======
-  const QUIZZES = ["az-104","az-305","aws-saa-c03"];
-  const pick = v => (typeof v === "string" ? v.trim() : "");
-  const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
-
-  function pointsForAttempt(r){
-    const correct = toInt(r.correct), total = toInt(r.total), dur = toInt(r.durationSec);
-    let pts = correct * 5;
-    const pct = total>0 ? (correct/total)*100 : (r.pct||0);
-    if (pct >= 70) pts += 50;
-    if (total>0 && dur>0 && (dur/total) <= 30) pts += 10;
-    return { pts, passed: pct>=70 };
-  }
-  function levelFromXP(xp){
-    const lvl = Math.max(1, Math.floor(xp/150)+1);
-    const prog = Math.max(0, Math.min(100, Math.floor((xp%150)/150*100)));
-    return {lvl, prog};
-  }
-  async function fetchAllResults(limit=3000){
-    const r = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors",cache:"no-store"});
-    const data = await r.json();
-    if(!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
-    const items = Array.isArray(data.items)? data.items: [];
-    return items.map(x=>({
-      userId: x.userId || "(unknown)",
-      userName: getName(x),
-      quizId: (x.quizId || "-").toLowerCase(),
-      correct: Number(x.correct)||0,
-      total: Number(x.total)||0,
-      pct: Number(x.pct||0),
-      durationSec: Number(x.durationSec)||0,
-      ts: x.ts || null
-    })).filter(r=> QUIZZES.includes(r.quizId));
-  }
-  function aggregateGlobal(rows){
-    const byUser=new Map();
-    rows.forEach(r=>{
-      const {pts,passed}=pointsForAttempt(r);
-      const key=(r.userId||'')+'|'+(r.userName||'');
-      if(!byUser.has(key)){
-        byUser.set(key,{userId:r.userId,userName:r.userName,xp:0,attempts:0,passed:0,badges:new Set(),correctSum:0,totalSum:0});
+    /* ===== Barra de estado (authbar) ===== */
+    function renderAuth(){
+      const u = getUserAny();
+      const authText = byId("authText");
+      const btnLogout = byId("btnLogout");
+      const btnHome = byId("btnHome");
+      if (u){
+        authText.textContent = `✅ Signed in as: ${u.name||u.displayName||u.userName||''} (${u.email||''})`;
+        btnLogout.classList.remove("hidden");
+        btnHome.classList.remove("hidden");
+      }else{
+        authText.textContent = "🔒 You’re not signed in.";
+        btnLogout.classList.add("hidden");
+        btnHome.classList.add("hidden");
       }
-      const u=byUser.get(key);
-      if(passed) u.passed++;
-      u.xp+=pts; u.attempts++; u.correctSum+=toInt(r.correct); u.totalSum+=toInt(r.total);
-      if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
-      if((r.correct|0)===(r.total|0) && r.total>0) u.badges.add('perfect');
-      if(passed) u.badges.add('ok');
-    });
-    for(const u of byUser.values()){
-      if(u.attempts>=10) u.badges.add('grinder');
-      if(u.xp>=2000) u.badges.add('veteran');
-      const acc=u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
-      if(acc>=90) u.badges.add('sharp');
+      renderProfileForm();
+      renderGoalUI();
+      renderHeaderAuth();
     }
-    return [...byUser.values()]
-      .map(u=>{ const {lvl,prog}=levelFromXP(u.xp); return {...u,lvl,prog}; })
-      .sort((a,b)=> b.xp-a.xp || b.passed-a.passed || String(a.userName).localeCompare(String(b.userName)));
-  }
-  function medalCell(rank){
-    if(rank===1) return `<span class="medal gold">1</span>`;
-    if(rank===2) return `<span class="medal silver">2</span>`;
-    if(rank===3) return `<span class="medal bronze">3</span>`;
-    return String(rank);
-  }
-  function nameClassByRank(rank){
-    if(rank===1) return "name-strong name-gold";
-    if(rank===2) return "name-strong name-silver";
-    if(rank===3) return "name-strong name-bronze";
-    return "name-strong";
-  }
-  function badgesSmallHTML(set){
-    const s=new Set(set); let out='<span class="ibadges">';
-    if(s.has('fast')) out+=`<span class="ibadge fast" title="Rápido">⚡</span>`;
-    if(s.has('perfect')) out+=`<span class="ibadge perfect" title="Perfect">💯</span>`;
-    if(s.has('ok')) out+=`<span class="ibadge ok" title="Pro">✅</span>`;
-    if(s.has('grinder')) out+=`<span class="ibadge grinder" title="Grinder">💪</span>`;
-    if(s.has('sharp')) out+=`<span class="ibadge sharp" title="Preciso">🧠</span>`;
-    if(s.has('veteran')) out+=`<span class="ibadge veteran" title="Veterano">🏅</span>`;
-    out+='</span>'; return out;
-  }
-  async function renderMyGlobalRank(){
-    const host=byId('rankMiniWrap'); host.textContent='Cargando…';
-    const me=getUserAny(); if(!me){ host.innerHTML='<p class="muted" style="text-align:center">Inicia sesión para ver tu ranking.</p>'; return; }
-    try{
-      const all=await fetchAllResults(3000);
-      const agg=aggregateGlobal(all);
-      const uid=(me.userId||me.id||'').toString();
-      const foundIndex=agg.findIndex(x=> (x.userId||'').toString()===uid || (x.userName||'').trim()===(me.name||me.displayName||me.userName||'').trim());
-      if(foundIndex<0){ host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>'; return; }
-      const row=agg[foundIndex], rank=foundIndex+1;
-      const pointsCls = rank<=3 ? 'points-chip top' : 'points-chip';
-      const nameCls = nameClassByRank(rank);
-      const initials = initialsOf(row.userName);
 
-      host.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Puntos</th>
-              <th>Quizzer</th>
-              <th>Nivel</th>
-              <th>Aprobados</th>
-              <th>Intentos</th>
-              <th>Insignias</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${medalCell(rank)}</td>
-              <td><span class="${pointsCls}">⭐ ${row.xp}</span></td>
-              <td style="text-align:left">
-                <span class="namebox">
-                  <span class="avatar-sm">${initials}</span>
-                  <span class="${nameCls}">${escapeHtml(row.userName)}</span>
-                </span>
-              </td>
-              <td><span class="level-inline">Lv ${row.lvl} <span class="bar"><i style="width:${row.prog}%"></i></span></span></td>
-              <td>${row.passed}</td>
-              <td>${row.attempts}</td>
-              <td>${badgesSmallHTML(row.badges)}</td>
-            </tr>
-          </tbody>
-        </table>`;
-    }catch(e){
-      host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking.</p>`;
-      console.warn(e);
+    function renderProfileForm(){
+      const u = getUserAny() || {};
+      byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
+      byId("userEmailTxt").textContent = u.email || "—";
+      byId("name").value = u.name || "";
+      byId("email").value = u.email || "";
+      byId("avatarUrl").value = u.avatarUrl || "";
+      const box = byId("avatarBox");
+      box.innerHTML = "";
+      if (u.avatarUrl){
+        const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar";
+        im.onload = () => { box.innerHTML = ""; box.appendChild(im); }
+        im.onerror = () => { box.textContent = initialsOf(u.name); }
+      }else{
+        box.textContent = initialsOf(u.name);
+      }
     }
-  }
 
-  async function fetchMyResults(limit=500){
-    const u = getUserAny(); if (!u) return [];
-    const uid = (u.userId || u.id || "").toString();
-    const uemail = norm(u.email);
+    async function loadRemoteMe(){
+      const u = getUserAny(); if(!u) return;
+      try{
+        const res = await fetch(`${API_BASE}/me`, {mode:"cors",cache:"no-store"});
+        if(res.ok){
+          const data = await res.json();
+          const merged = {...u, ...data};
+          setUser(merged);
+        }
+      }catch{}
+    }
 
-    const qs = new URLSearchParams({ limit: String(limit) });
-    if (uid) qs.set("userId", uid);
-    if (uemail) qs.set("email", uemail);
+    // ==== Modal helpers ====
+    const showModal = (id)=> byId(id).classList.add('show');
+    const hideModal = (id)=> byId(id).classList.remove('show');
 
-    const res = await fetch(`${API_BASE}/results?${qs.toString()}`, {mode:"cors",cache:"no-store"});
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+    function openAuthModal(mode){
+      byId('authTitle').textContent = mode==='signup'? 'Crear cuenta' : 'Iniciar sesión';
+      byId('authMsg').textContent = '';
+      const u = getUserAny();
+      byId('authName').value = (u && u.name) || '';
+      byId('authEmail').value = (u && u.email) || '';
+      showModal('authModal');
+      setTimeout(()=> byId('authEmail').focus(), 50);
+    }
 
-    const items = Array.isArray(data.items) ? data.items : [];
+    function doLocalAuth(){
+      const name = (byId('authName').value||'').trim();
+      const email = (byId('authEmail').value||'').trim();
+      if(!email){ byId('authMsg').textContent = 'Introduce un email válido'; return; }
+      const user = { name: name||email.split('@')[0], email };
+      setUser(user);
+      byId('authMsg').textContent = 'Hecho. Sesión iniciada en este navegador.';
+      hideModal('authModal');
+    }
 
-    const isMine = (x) => {
-      const xid = (x.userId || x.id || x?.user?.id || "").toString();
-      const xemail = norm(x.email || x.userEmail || x?.user?.email || x?.profile?.email);
-      return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
+    /* ===================== RANKING MINI (global) ===================== */
+    const QUIZZES = ["az-104","az-305","aws-saa-c03"];
+    const pick = v => (typeof v === "string" ? v.trim() : "");
+    const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+
+    function pointsForAttempt(r){
+      const correct = toInt(r.correct), total = toInt(r.total), dur = toInt(r.durationSec);
+      let pts = correct * 5;
+      const pct = total>0 ? (correct/total)*100 : (r.pct||0);
+      if (pct >= 70) pts += 50;
+      if (total>0 && dur>0 && (dur/total) <= 30) pts += 10;
+      return { pts, passed: pct>=70 };
+    }
+    function levelFromXP(xp){
+      const lvl = Math.max(1, Math.floor(xp/150)+1);
+      const prog = Math.max(0, Math.min(100, Math.floor((xp%150)/150*100)));
+      return {lvl, prog};
+    }
+    async function fetchAllResults(limit=3000){
+      const r = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors",cache:"no-store"});
+      const data = await r.json();
+      if(!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      const items = Array.isArray(data.items)? data.items: [];
+      return items.map(x=>({
+        userId: x.userId || "(unknown)",
+        userName: getName(x),
+        quizId: (x.quizId || "-").toLowerCase(),
+        correct: Number(x.correct)||0,
+        total: Number(x.total)||0,
+        pct: Number(x.pct||0),
+        durationSec: Number(x.durationSec)||0,
+        ts: x.ts || null
+      })).filter(r=> QUIZZES.includes(r.quizId));
+    }
+    function aggregateGlobal(rows){
+      const byUser=new Map();
+      rows.forEach(r=>{
+        const {pts,passed}=pointsForAttempt(r);
+        const key=(r.userId||'')+'|'+(r.userName||'');
+        if(!byUser.has(key)){
+          byUser.set(key,{userId:r.userId,userName:r.userName,xp:0,attempts:0,passed:0,badges:new Set(),correctSum:0,totalSum:0});
+        }
+        const u=byUser.get(key);
+        if(passed) u.passed++;
+        u.xp+=pts; u.attempts++; u.correctSum+=toInt(r.correct); u.totalSum+=toInt(r.total);
+        if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+        if((r.correct|0)===(r.total|0) && r.total>0) u.badges.add('perfect');
+        if(passed) u.badges.add('ok');
+      });
+      for(const u of byUser.values()){
+        if(u.attempts>=10) u.badges.add('grinder');
+        if(u.xp>=2000) u.badges.add('veteran');
+        const acc=u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
+        if(acc>=90) u.badges.add('sharp');
+      }
+      return [...byUser.values()]
+        .map(u=>{ const {lvl,prog}=levelFromXP(u.xp); return {...u,lvl,prog}; })
+        .sort((a,b)=> b.xp-a.xp || b.passed-a.passed || String(a.userName).localeCompare(String(b.userName)));
+    }
+    function medalCell(rank){
+      if(rank===1) return `<span class="medal gold">1</span>`;
+      if(rank===2) return `<span class="medal silver">2</span>`;
+      if(rank===3) return `<span class="medal bronze">3</span>`;
+      return String(rank);
+    }
+    function nameClassByRank(rank){
+      if(rank===1) return "name-strong name-gold";
+      if(rank===2) return "name-strong name-silver";
+      if(rank===3) return "name-strong name-bronze";
+      return "name-strong";
+    }
+    function badgesSmallHTML(set){
+      const s=new Set(set); let out='<span class="ibadges">';
+      if(s.has('fast')) out+=`<span class="ibadge fast" title="Rápido">⚡</span>`;
+      if(s.has('perfect')) out+=`<span class="ibadge perfect" title="Perfect">💯</span>`;
+      if(s.has('ok')) out+=`<span class="ibadge ok" title="Pro">✅</span>`;
+      if(s.has('grinder')) out+=`<span class="ibadge grinder" title="Grinder">💪</span>`;
+      if(s.has('sharp')) out+=`<span class="ibadge sharp" title="Preciso">🧠</span>`;
+      if(s.has('veteran')) out+=`<span class="ibadge veteran" title="Veterano">🏅</span>`;
+      out+='</span>'; return out;
+    }
+    async function renderMyGlobalRank(){
+      const host=byId('rankMiniWrap'); host.textContent='Cargando…';
+      const me=getUserAny(); if(!me){ host.innerHTML='<p class="muted" style="text-align:center">Inicia sesión para ver tu ranking.</p>'; return; }
+      try{
+        const all=await fetchAllResults(3000);
+        const agg=aggregateGlobal(all);
+        const uid=(me.userId||me.id||'').toString();
+        const foundIndex=agg.findIndex(x=> (x.userId||'').toString()===uid || (x.userName||'').trim()===(me.name||me.displayName||me.userName||'').trim());
+        if(foundIndex<0){ host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>'; return; }
+        const row=agg[foundIndex], rank=foundIndex+1;
+        const pointsCls = rank<=3 ? 'points-chip top' : 'points-chip';
+        const nameCls = nameClassByRank(rank);
+        const initials = initialsOf(row.userName);
+
+        host.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Puntos</th>
+                <th>Quizzer</th>
+                <th>Nivel</th>
+                <th>Aprobados</th>
+                <th>Intentos</th>
+                <th>Insignias</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${medalCell(rank)}</td>
+                <td><span class="${pointsCls}">⭐ ${row.xp}</span></td>
+                <td style="text-align:left">
+                  <span class="namebox">
+                    <span class="avatar-sm">${initials}</span>
+                    <span class="${nameCls}">${escapeHtml(row.userName)}</span>
+                  </span>
+                </td>
+                <td><span class="level-inline">Lv ${row.lvl} <span class="bar"><i style="width:${row.prog}%"></i></span></span></td>
+                <td>${row.passed}</td>
+                <td>${row.attempts}</td>
+                <td>${badgesSmallHTML(row.badges)}</td>
+              </tr>
+            </tbody>
+          </table>`;
+      }catch(e){
+        host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking.</p>`;
+        console.warn(e);
+      }
+    }
+    /* ================================================================ */
+
+    async function fetchMyResults(limit=500){
+      const u = getUserAny(); if (!u) return [];
+      const uid = (u.userId || u.id || "").toString();
+      const uemail = norm(u.email);
+
+      const qs = new URLSearchParams({ limit: String(limit) });
+      if (uid) qs.set("userId", uid);
+      if (uemail) qs.set("email", uemail);
+
+      const res = await fetch(`${API_BASE}/results?${qs.toString()}`, {mode:"cors",cache:"no-store"});
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+      const items = Array.isArray(data.items) ? data.items : [];
+
+      const isMine = (x) => {
+        const xid = (x.userId || x.id || x?.user?.id || "").toString();
+        const xemail = norm(x.email || x.userEmail || x?.user?.email || x?.profile?.email);
+        return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
+      };
+
+      const mine = items.filter(isMine);
+
+      const pick = v => (typeof v === "string" ? v.trim() : "");
+      const getName2 = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+
+      return mine.map(x => ({
+        userId: x.userId || x.id || "(unknown)",
+        userName: getName2(x),
+        quizId: (x.quizId || "-").toLowerCase(),
+        correct: (x.correct|0),
+        total: (x.total|0),
+        pct: (x.pct|0),
+        durationSec: (x.durationSec|0),
+        ts: x.ts || null
+      }));
+    }
+
+    function calcKPIs(rows){
+      const n = rows.length;
+      const avg = n ? Math.round(rows.reduce((a,b)=>a + ((b.pct|0)||0),0)/n) : 0;
+      const best = rows.reduce((m,b)=> Math.max(m, (b.pct|0)||0), 0);
+      byId("kpiAttempts").textContent = String(n);
+      byId("kpiAvg").textContent = `${avg}%`;
+      byId("kpiBest").textContent = `${best}%`;
+    }
+
+    function computeStreak(rows){
+      if (!rows.length) return 0;
+      const datesSet = new Set(rows.filter(r=>r.ts).map(r=> new Date(r.ts)).map(d=> toDateOnly(d).toISOString().slice(0,10)));
+      let streak = 0;
+      let cursor = toDateOnly(new Date());
+      while (datesSet.has(cursor.toISOString().slice(0,10))){
+        streak++;
+        cursor = new Date(cursor.getTime() - 86400000);
+      }
+      return streak;
+    }
+    function weeklyProgress(rows){
+      const goal = getGoal();
+      const attempts = rows.filter(r=> r.ts && isWithinDays(r.ts, 6)).length;
+      const pct = Math.min(100, Math.round((attempts / Math.max(1,goal)) * 100));
+      return { attempts, goal, pct };
+    }
+    function renderGoalUI(){
+      const goal = getGoal();
+      byId("weeklyGoal").value = goal;
+      byId("goalText").textContent = `0 / ${goal}`;
+      byId("goalFill").style.width = `0%`;
+    }
+
+    window.__filters = {days:'all', minPct:0, fromDate:null};
+    const activeFilterKey = ()=> {
+      const t = (document.querySelector('.tab-btn.active')?.textContent || 'All').toLowerCase();
+      if(t.includes('aws')) return 'aws-saa-c03';
+      if(t.includes('az-305')) return 'az-305';
+      if(t.includes('az')) return 'az-104';
+      return 'all';
     };
 
-    const mine = items.filter(isMine);
+    function renderResults(rows, filter="all"){
+      const root = byId("resultsWrap");
+      let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
+      const f = filter.toLowerCase();
+      if (f==="az-104" || f==="aws-saa-c03" || f==="az-305") list = list.filter(x=>x.quizId===f);
 
-    const pick = v => (typeof v === "string" ? v.trim() : "");
-    const getName2 = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
-
-    return mine.map(x => ({
-      userId: x.userId || x.id || "(unknown)",
-      userName: getName2(x),
-      quizId: (x.quizId || "-").toLowerCase(),
-      correct: (x.correct|0),
-      total: (x.total|0),
-      pct: (x.pct|0),
-      durationSec: (x.durationSec|0),
-      ts: x.ts || null
-    }));
-  }
-
-  function calcKPIs(rows){
-    const n = rows.length;
-    const avg = n ? Math.round(rows.reduce((a,b)=>a + ((b.pct|0)||0),0)/n) : 0;
-    const best = rows.reduce((m,b)=> Math.max(m, (b.pct|0)||0), 0);
-    byId("kpiAttempts").textContent = String(n);
-    byId("kpiAvg").textContent = `${avg}%`;
-    byId("kpiBest").textContent = `${best}%`;
-  }
-
-  function computeStreak(rows){
-    if (!rows.length) return 0;
-    const datesSet = new Set(rows.filter(r=>r.ts).map(r=> new Date(r.ts)).map(d=> toDateOnly(d).toISOString().slice(0,10)));
-    let streak = 0;
-    let cursor = toDateOnly(new Date());
-    while (datesSet.has(cursor.toISOString().slice(0,10))){
-      streak++;
-      cursor = new Date(cursor.getTime() - 86400000);
-    }
-    return streak;
-  }
-  function weeklyProgress(rows){
-    const goal = getGoal();
-    const attempts = rows.filter(r=> r.ts && isWithinDays(r.ts, 6)).length;
-    const pct = Math.min(100, Math.round((attempts / Math.max(1,goal)) * 100));
-    return { attempts, goal, pct };
-  }
-  function renderGoalUI(){
-    const goal = getGoal();
-    byId("weeklyGoal").value = goal;
-    byId("goalText").textContent = `0 / ${goal}`;
-    byId("goalFill").style.width = `0%`;
-  }
-
-  window.__filters = {days:'all', minPct:0, fromDate:null};
-  const activeFilterKey = ()=> {
-    const t = (document.querySelector('.tab-btn.active')?.textContent || 'All').toLowerCase();
-    if(t.includes('aws')) return 'aws-saa-c03';
-    if(t.includes('az-305')) return 'az-305';
-    if(t.includes('az')) return 'az-104';
-    return 'all';
-  };
-
-  function renderResults(rows, filter="all"){
-    const root = byId("resultsWrap");
-    let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
-    const f = filter.toLowerCase();
-    if (f==="az-104" || f==="aws-saa-c03" || f==="az-305") list = list.filter(x=>x.quizId===f);
-
-    const { days, minPct } = window.__filters || {};
-    if (days && days!=="all"){
-      const cutoff = Date.now() - Number(days)*86400000;
-      list = list.filter(x=> x.ts && new Date(x.ts).getTime() >= cutoff);
-    }
-    if (typeof minPct === "number"){
-      list = list.filter(x=> (x.pct|0) >= minPct);
-    }
-
-    byId("filterCount").textContent = list.length ? `${list.length} shown` : '0 shown';
-
-    const rowsForKpi = (f==="all" ? rows : rows.filter(x=>x.quizId===f));
-    calcKPIs(rowsForKpi);
-
-    const streak = computeStreak(rows);
-    byId("streakDays").textContent = String(streak);
-    const {attempts, goal, pct} = weeklyProgress(rows);
-    byId("goalText").textContent = `${attempts} / ${goal}`;
-    byId("goalFill").style.width = `${pct}%`;
-
-    if (!list.length){
-      root.innerHTML = `<div class="table-wrap"><p style="text-align:center;margin:12px 0;">No results yet.</p></div>`;
-      return;
-    }
-    let html = `<table>
-      <thead><tr>
-        <th>#</th><th>QUIZ</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th><th>Review</th>
-      </tr></thead><tbody>`;
-    list.slice(0,10).forEach((r,i)=>{
-      const pct = Math.min(100, Math.max(0, (r.pct|0)));
-      html += `<tr>
-        <td>${i+1}</td>
-        <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
-        <td>${r.correct}</td>
-        <td>${r.total}</td>
-        <td>
-          <div class="pct">
-            <div class="pbar"><i style="width:${pct}%"></i></div>
-            <span>${pct}%</span>
-          </div>
-        </td>
-        <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
-        <td>${fmtDateTime(r.ts)}</td>
-        <td><span class="review-icon" title="Review coming soon">🔍</span></td>
-      </tr>`;
-    });
-    html += `</tbody></table>`;
-    root.innerHTML = html;
-  }
-
-  /* ======== MARCADAS ======== */
-  function getLastSessionId() {
-    const keys = Object.keys(localStorage).filter(k => k.startsWith("quiz.session."));
-    keys.sort().reverse();
-    for (const k of keys) {
-      const sid = localStorage.getItem(k);
-      if (sid) return sid;
-    }
-    return null;
-  }
-
-  async function fetchMyMarked(limit=200){
-    const out = [];
-    try{
-      const u = getUserAny();
-      if (u && (u.userId || u.id || u.email)) {
-        const uid = (u.userId || u.id || "").toString();
-        const uemail = norm(u.email);
-        const qs = new URLSearchParams({ limit: String(limit) });
-        if (uid) qs.set("userId", uid);
-        if (uemail) qs.set("email", uemail);
-
-        const r = await fetch(`${API_BASE}/progress?${qs.toString()}`, {mode:"cors",cache:"no-store"});
-        const data = await r.json().catch(()=> ({}));
-        if (r.ok && Array.isArray(data.items)) {
-          const sessions = data.items.slice().sort((a,b)=> String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));
-          for (const it of sessions) {
-            const quiz = String(it.quizId||'-').toLowerCase();
-            const items = Array.isArray(it.markedItems) ? it.markedItems : [];
-            if (items.length){
-              for (const m of items) {
-                out.push({
-                  quizId: quiz,
-                  questionId: m.questionId || null,
-                  question: m.question || '(no text)',
-                  domain: m.domain || null,
-                  category: m.category || null,
-                  sessionId: m.sessionId || it.sessionId || '',
-                  idx: (typeof m.index==='number'? m.index : null),
-                  markedAt: m.markedAt || it.updatedAt || it.startedAt || null
-                });
-              }
-              continue;
-            }
-            const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
-            const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
-            Object.entries(markedMap).forEach(([idxStr,flag])=>{
-              if(!flag) return;
-              const idx = parseInt(idxStr,10);
-              const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
-              out.push({
-                quizId: quiz,
-                questionId: qid,
-                question: '(marked question — open session to review)',
-                domain: null, category: null, sessionId: it.sessionId || '',
-                idx, markedAt: it.updatedAt || it.startedAt || null
-              });
-            });
-          }
-        }
+      const { days, minPct } = window.__filters || {};
+      if (days && days!=="all"){
+        const cutoff = Date.now() - Number(days)*86400000;
+        list = list.filter(x=> x.ts && new Date(x.ts).getTime() >= cutoff);
+      }
+      if (typeof minPct === "number"){
+        list = list.filter(x=> (x.pct|0) >= minPct);
       }
 
-      if (out.length === 0) {
-        const sid = getLastSessionId();
-        if (sid) {
-          const r2 = await fetch(`${API_BASE}/progress?sessionId=${encodeURIComponent(sid)}`, {mode:"cors",cache:"no-store"});
-          const data2 = await r2.json().catch(()=> ({}));
-          if (r2.ok && data2 && data2.item) {
-            const it = data2.item;
-            const quiz = String(it.quizId||'-').toLowerCase();
-            const items = Array.isArray(it.markedItems) ? it.markedItems : [];
-            if (items.length){
-              for (const m of items) {
-                out.push({
-                  quizId: quiz,
-                  questionId: m.questionId || null,
-                  question: m.question || '(no text)',
-                  domain: m.domain || null,
-                  category: m.category || null,
-                  sessionId: m.sessionId || it.sessionId || '',
-                  idx: (typeof m.index==='number'? m.index : null),
-                  markedAt: m.markedAt || it.updatedAt || it.startedAt || null
-                });
+      byId("filterCount").textContent = list.length ? `${list.length} shown` : '0 shown';
+
+      const rowsForKpi = (f==="all" ? rows : rows.filter(x=>x.quizId===f));
+      calcKPIs(rowsForKpi);
+
+      const streak = computeStreak(rows);
+      byId("streakDays").textContent = String(streak);
+      const {attempts, goal, pct} = weeklyProgress(rows);
+      byId("goalText").textContent = `${attempts} / ${goal}`;
+      byId("goalFill").style.width = `${pct}%`;
+
+      if (!list.length){
+        root.innerHTML = `<div class="table-wrap"><p style="text-align:center;margin:12px 0;">No results yet.</p></div>`;
+        return;
+      }
+      let html = `<table>
+        <thead><tr>
+          <th>#</th><th>QUIZ</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th><th>Review</th>
+        </tr></thead><tbody>`;
+      list.slice(0,10).forEach((r,i)=>{
+        const pct = Math.min(100, Math.max(0, (r.pct|0)));
+        html += `<tr>
+          <td>${i+1}</td>
+          <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
+          <td>${r.correct}</td>
+          <td>${r.total}</td>
+          <td>
+            <div class="pct">
+              <div class="pbar"><i style="width:${pct}%"></i></div>
+              <span>${pct}%</span>
+            </div>
+          </td>
+          <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
+          <td>${fmtDateTime(r.ts)}</td>
+          <td><span class="review-icon" title="Review coming soon">🔍</span></td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+      root.innerHTML = html;
+    }
+
+    /* ======== MARCADAS ======== */
+    function getLastSessionId() {
+      const keys = Object.keys(localStorage).filter(k => k.startsWith("quiz.session."));
+      keys.sort().reverse();
+      for (const k of keys) {
+        const sid = localStorage.getItem(k);
+        if (sid) return sid;
+      }
+      return null;
+    }
+
+    async function fetchMyMarked(limit=200){
+      const out = [];
+      try{
+        const u = getUserAny();
+        if (u && (u.userId || u.id || u.email)) {
+          const uid = (u.userId || u.id || "").toString();
+          const uemail = norm(u.email);
+          const qs = new URLSearchParams({ limit: String(limit) });
+          if (uid) qs.set("userId", uid);
+          if (uemail) qs.set("email", uemail);
+
+          const r = await fetch(`${API_BASE}/progress?${qs.toString()}`, {mode:"cors",cache:"no-store"});
+          const data = await r.json().catch(()=> ({}));
+          if (r.ok && Array.isArray(data.items)) {
+            const sessions = data.items.slice().sort((a,b)=> String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));
+            for (const it of sessions) {
+              const quiz = String(it.quizId||'-').toLowerCase();
+              const items = Array.isArray(it.markedItems) ? it.markedItems : [];
+              if (items.length){
+                for (const m of items) {
+                  out.push({
+                    quizId: quiz,
+                    questionId: m.questionId || null,
+                    question: m.question || '(no text)',
+                    domain: m.domain || null,
+                    category: m.category || null,
+                    sessionId: m.sessionId || it.sessionId || '',
+                    idx: (typeof m.index==='number'? m.index : null),
+                    markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+                  });
+                }
+                continue;
               }
-            } else {
               const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
               const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
               Object.entries(markedMap).forEach(([idxStr,flag])=>{
@@ -872,172 +940,219 @@
             }
           }
         }
+
+        if (out.length === 0) {
+          const sid = getLastSessionId();
+          if (sid) {
+            const r2 = await fetch(`${API_BASE}/progress?sessionId=${encodeURIComponent(sid)}`, {mode:"cors",cache:"no-store"});
+            const data2 = await r2.json().catch(()=> ({}));
+            if (r2.ok && data2 && data2.item) {
+              const it = data2.item;
+              const quiz = String(it.quizId||'-').toLowerCase();
+              const items = Array.isArray(it.markedItems) ? it.markedItems : [];
+              if (items.length){
+                for (const m of items) {
+                  out.push({
+                    quizId: quiz,
+                    questionId: m.questionId || null,
+                    question: m.question || '(no text)',
+                    domain: m.domain || null,
+                    category: m.category || null,
+                    sessionId: m.sessionId || it.sessionId || '',
+                    idx: (typeof m.index==='number'? m.index : null),
+                    markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+                  });
+                }
+              } else {
+                const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
+                const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
+                Object.entries(markedMap).forEach(([idxStr,flag])=>{
+                  if(!flag) return;
+                  const idx = parseInt(idxStr,10);
+                  const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
+                  out.push({
+                    quizId: quiz,
+                    questionId: qid,
+                    question: '(marked question — open session to review)',
+                    domain: null, category: null, sessionId: it.sessionId || '',
+                    idx, markedAt: it.updatedAt || it.startedAt || null
+                  });
+                });
+              }
+            }
+          }
+        }
+
+        out.sort((a,b)=> String(b.markedAt||'').localeCompare(String(a.markedAt||'')));
+        return out.slice(0, 50);
+      }catch(e){
+        console.warn('Marked fetch failed:', e);
+        return out.slice(0,50);
       }
-
-      out.sort((a,b)=> String(b.markedAt||'').localeCompare(String(a.markedAt||'')));
-      return out.slice(0, 50);
-    }catch(e){
-      console.warn('Marked fetch failed:', e);
-      return out.slice(0,50);
     }
-  }
 
-  function renderMarked(rows){
-    const body = byId('markedBody');
-    if(!rows.length){
-      body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>`;
-      return;
+    function renderMarked(rows){
+      const body = byId('markedBody');
+      if(!rows.length){
+        body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>`;
+        return;
+      }
+      body.innerHTML = rows.map((r,i)=>`
+        <tr>
+          <td>${i+1}</td>
+          <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
+          <td style="text-align:left">${escapeHtml(r.question)}</td>
+          <td>${escapeHtml(r.domain || r.category || '')}</td>
+        </tr>
+      `).join('');
     }
-    body.innerHTML = rows.map((r,i)=>`
-      <tr>
-        <td>${i+1}</td>
-        <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
-        <td style="text-align:left">${escapeHtml(r.question)}</td>
-        <td>${escapeHtml(r.domain || r.category || '')}</td>
-      </tr>
-    `).join('');
-  }
 
-  function computeTrend(rows){
-    const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
-    if (ordered.length<6) return {delta:0, dir:'='};
-    const mid = Math.floor(ordered.length/2);
-    const prev = ordered.slice(0, mid);
-    const last = ordered.slice(mid);
-    const avg = a => Math.round(a.reduce((s,x)=>s+(x.pct||0),0)/Math.max(1,a.length));
-    const p1=avg(prev), p2=avg(last), d=p2-p1;
-    return {delta:d, dir: d>0?'up':(d<0?'down':'=')};
-  }
-
-  function renderHeat14(rows){
-    const root = byId('heat14'); if(!root) return;
-    root.innerHTML = '';
-    const now = toDateOnly(new Date());
-    const perDay = {};
-    rows.forEach(r=>{
-      if(!r.ts) return;
-      const key = toDateOnly(new Date(r.ts)).toISOString().slice(0,10);
-      perDay[key] = (perDay[key]||0)+1;
-    });
-    for(let i=13;i>=0;i--){
-      const d = new Date(now.getTime()-i*86400000);
-      const k = d.toISOString().slice(0,10);
-      const n = perDay[k]||0;
-      const cell = document.createElement('i');
-      if(n>=3) cell.className='lv3'; else if(n===2) cell.className='lv2'; else if(n===1) cell.className='lv1';
-      root.appendChild(cell);
-    }
-  }
-
-  function computeBadges(rows){
-    const n=rows.length;
-    const streak = computeStreak(rows);
-    const hasFast = rows.some(r=> (r.durationSec||0) <= 600);
-    const avg = n? Math.round(rows.reduce((a,b)=>a+(b.pct||0),0)/n) : 0;
-    const badges=[];
-    if(n>=5) badges.push('🏁 Warm-up (5 attempts)');
-    if(streak>=3) badges.push('🔥 Consistent (3-day streak)');
-    if(hasFast) badges.push('⚡ Fast Thinker (<10m)');
-    if(avg>=70) badges.push('🛡️ Solid (avg ≥70%)');
-    if(avg>=85) badges.push('🌟 Elite (avg ≥85%)');
-    return badges;
-  }
-  function renderBadges(rows){
-    const b = computeBadges(rows);
-    const host = byId('badgesBox'); 
-    host.innerHTML = b.map(x=>`<span class="badge-chip">${escapeHtml(x)}</span>`).join('') || '<span class="muted">No badges yet.</span>';
-  }
-
-  // ===== Eventos header/auth =====
-  byId('btnHdrLogin').onclick = ()=> openAuthModal('login');
-  byId('btnHdrSignup').onclick = ()=> openAuthModal('signup');
-  byId('btnHdrLogout').onclick = ()=> { localStorage.removeItem(AUTH_KEY); renderAuth(); };
-
-  byId('authClose').onclick = ()=> hideModal('authModal');
-  byId('authCancel').onclick = ()=> hideModal('authModal');
-  byId('authSubmit').onclick = doLocalAuth;
-  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hideModal('authModal'); });
-
-  // ===== Eventos existentes =====
-  byId("btnHome").onclick = ()=>{ location.href = "/"; };
-  byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = "/"; };
-  byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
-  byId("btnSaveGoal").onclick = ()=>{
-    const val = Math.max(1, Number(byId("weeklyGoal").value)||1);
-    setGoal(val);
-    const rows = window.__myRows || [];
-    const {attempts, goal, pct} = weeklyProgress(rows);
-    byId("goalText").textContent = `${attempts} / ${goal}`;
-    byId("goalFill").style.width = `${pct}%`;
-  };
-
-  function activateTab(which){
-    byId("tabAll").classList.toggle("active", which==="all");
-    byId("tabAZ").classList.toggle("active", which==="az-104");
-    byId("tabAZ305").classList.toggle("active", which==="az-305");
-    byId("tabAWS").classList.toggle("active", which==="aws-saa-c03");
-  }
-  byId("tabAll").onclick  = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
-  byId("tabAZ").onclick   = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
-  byId("tabAZ305").onclick= ()=>{ activateTab("az-305"); renderResults(window.__myRows||[], "az-305"); };
-  byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
-
-  byId('rangeSel').onchange = (e)=>{
-    window.__filters = window.__filters || {}; window.__filters.days = e.target.value;
-    renderResults(window.__myRows||[], activeFilterKey());
-  };
-  byId('minPct').oninput = (e)=>{
-    const v=Number(e.target.value)||0; byId('minPctVal').textContent=v; window.__filters.minPct=v; renderResults(window.__myRows||[], activeFilterKey());
-  };
-
-  // ===== Init =====
-  function renderProfile(){
-    const u=getUserAny()||{};
-    byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
-    byId("userEmailTxt").textContent = u.email || "—";
-    const box = byId("avatarBox"); box.innerHTML = "";
-    if (u.avatarUrl){ const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar"; im.onload = () => { box.innerHTML = ""; box.appendChild(im); }; im.onerror = () => { box.textContent = initialsOf(u.name); }; }
-    else { box.textContent = initialsOf(u.name); }
-  }
-
-  document.addEventListener("DOMContentLoaded", async ()=>{
-    byId('yearNow').textContent = new Date().getFullYear();
-    renderAuth();
-    renderProfile();
-    loadRemoteMe();
-
-    try{
-      const rows = await fetchMyResults(500);
-      window.__myRows = rows;
-      renderResults(rows, "all");
-      renderHeat14(rows);
-      renderBadges(rows);
-
+    function computeTrend(rows){
       const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
-      let delta = 0; let dir = '=';
-      if(ordered.length>=6){
-        const mid = Math.floor(ordered.length/2);
-        const avg = a => Math.round(a.reduce((s,x)=>s+(x.pct||0),0)/Math.max(1,a.length));
-        delta = avg(ordered.slice(mid)) - avg(ordered.slice(0,mid));
-        dir = delta>0?'up':(delta<0?'down':'=');
-      }
-      const arrow = dir==='up'?'⬆️':(dir==='down'?'⬇️':'➡️');
-      byId('trendHint').textContent = `${arrow} Trend vs. previous period: ${delta>0?'+':''}${delta}%`;
-
-      const plan = weeklyProgress(rows);
-      if(plan.attempts < plan.goal){
-        const remain = Math.max(0, plan.goal - plan.attempts);
-        byId('trendHint').textContent += ` • ${remain} to reach weekly goal`;
-      }
-    }catch(e){
-      byId("resultsWrap").innerHTML = `<div class="table-wrap"><p style=\"text-align:center;color:#ff8f8f;\">Error loading results or not signed in.</p></div>`;
-      console.warn('Results fetch failed:', e);
+      if (ordered.length<6) return {delta:0, dir:'='};
+      const mid = Math.floor(ordered.length/2);
+      const prev = ordered.slice(0, mid);
+      const last = ordered.slice(mid);
+      const avg = a => Math.round(a.reduce((s,x)=>s+(x.pct||0),0)/Math.max(1,a.length));
+      const p1=avg(prev), p2=avg(last), d=p2-p1;
+      return {delta:d, dir: d>0?'up':(d<0?'down':'=')};
     }
 
-    renderMyGlobalRank();
+    function renderHeat14(rows){
+      const root = byId('heat14'); if(!root) return;
+      root.innerHTML = '';
+      const now = toDateOnly(new Date());
+      const perDay = {};
+      rows.forEach(r=>{
+        if(!r.ts) return;
+        const key = toDateOnly(new Date(r.ts)).toISOString().slice(0,10);
+        perDay[key] = (perDay[key]||0)+1;
+      });
+      for(let i=13;i>=0;i--){
+        const d = new Date(now.getTime()-i*86400000);
+        const k = d.toISOString().slice(0,10);
+        const n = perDay[k]||0;
+        const cell = document.createElement('i');
+        if(n>=3) cell.className='lv3'; else if(n===2) cell.className='lv2'; else if(n===1) cell.className='lv1';
+        root.appendChild(cell);
+      }
+    }
 
-    try{ const marked = await fetchMyMarked(200); renderMarked(marked); }catch(e){ console.warn('Marked render failed:', e); }
-  });
-</script>
+    function computeBadges(rows){
+      const n=rows.length;
+      const streak = computeStreak(rows);
+      const hasFast = rows.some(r=> (r.durationSec||0) <= 600);
+      const avg = n? Math.round(rows.reduce((a,b)=>a+(b.pct||0),0)/n) : 0;
+      const badges=[];
+      if(n>=5) badges.push('🏁 Warm-up (5 attempts)');
+      if(streak>=3) badges.push('🔥 Consistent (3-day streak)');
+      if(hasFast) badges.push('⚡ Fast Thinker (<10m)');
+      if(avg>=70) badges.push('🛡️ Solid (avg ≥70%)');
+      if(avg>=85) badges.push('🌟 Elite (avg ≥85%)');
+      return badges;
+    }
+    function renderBadges(rows){
+      const b = computeBadges(rows);
+      const host = byId('badgesBox');
+      host.innerHTML = b.map(x=>`<span class="badge-chip">${escapeHtml(x)}</span>`).join('') || '<span class="muted">No badges yet.</span>';
+    }
+
+    // ===== Eventos header/auth =====
+    byId('btnHdrLogin').onclick  = ()=> openAuthModal('login');
+    byId('btnHdrSignup').onclick = ()=> openAuthModal('signup');
+    byId('btnHdrLogout').onclick = ()=> { localStorage.removeItem(AUTH_KEY); renderAuth(); };
+    byId('authClose').onclick = ()=> hideModal('authModal');
+    byId('authCancel').onclick = ()=> hideModal('authModal');
+    byId('authSubmit').onclick = doLocalAuth;
+
+    // ===== Eventos existentes =====
+    byId("btnHome").onclick = ()=>{ location.href = "/"; };
+    byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = "/"; };
+    byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
+    byId("btnSaveGoal").onclick = ()=>{
+      const val = Math.max(1, Number(byId("weeklyGoal").value)||1);
+      setGoal(val);
+      const rows = window.__myRows || [];
+      const {attempts, goal, pct} = weeklyProgress(rows);
+      byId("goalText").textContent = `${attempts} / ${goal}`;
+      byId("goalFill").style.width = `${pct}%`;
+    };
+
+    function activateTab(which){
+      byId("tabAll").classList.toggle("active", which==="all");
+      byId("tabAZ").classList.toggle("active", which==="az-104");
+      byId("tabAZ305").classList.toggle("active", which==="az-305");
+      byId("tabAWS").classList.toggle("active", which==="aws-saa-c03");
+    }
+    byId("tabAll").onclick  = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
+    byId("tabAZ").onclick   = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
+    byId("tabAZ305").onclick= ()=>{ activateTab("az-305"); renderResults(window.__myRows||[], "az-305"); };
+    byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
+
+    // ===== Init =====
+    function renderProfile(){
+      const u=getUserAny()||{};
+      byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
+      byId("userEmailTxt").textContent = u.email || "—";
+      const box = byId("avatarBox");
+      box.innerHTML = "";
+      if (u.avatarUrl){
+        const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar";
+        im.onload = () => { box.innerHTML = ""; box.appendChild(im); }
+        im.onerror = () => { box.textContent = initialsOf(u.name); }
+      }else{
+        box.textContent = initialsOf(u.name);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      byId('yearNow').textContent = new Date().getFullYear();
+      renderAuth();
+      loadRemoteMe();
+      renderProfile();
+
+      try{
+        const rows = await fetchMyResults(500);
+        window.__myRows = rows;
+        renderResults(rows, "all");
+        renderHeat14(rows);
+        renderBadges(rows);
+
+        const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
+        let delta = 0; let dir = '=';
+        if(ordered.length>=6){
+          const mid = Math.floor(ordered.length/2);
+          const avg = a => Math.round(a.reduce((s,x)=>s+(x.pct||0),0)/Math.max(1,a.length));
+          delta = avg(ordered.slice(mid)) - avg(ordered.slice(0,mid));
+          dir = delta>0?'up':(delta<0?'down':'=');
+        }
+        const arrow = dir==='up'?'⬆️':(dir==='down'?'⬇️':'➡️');
+        byId('trendHint').textContent = `${arrow} Trend vs. previous period: ${delta>0?'+':''}${delta}%`;
+
+        const plan = weeklyProgress(rows);
+        if(plan.attempts < plan.goal){
+          const remain = Math.max(0, plan.goal - plan.attempts);
+          byId('trendHint').textContent += ` • ${remain} to reach weekly goal`;
+        }
+      }catch(e){
+        document.getElementById("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#ff8f8f;">Error loading results or not signed in.</p></div>`;
+        console.warn('Results fetch failed:', e);
+      }
+
+      // Ranking Global mini
+      renderMyGlobalRank();
+
+      // Marcadas
+      try{
+        const marked = await fetchMyMarked(200);
+        renderMarked(marked);
+      }catch(e){
+        console.warn('Marked render failed:', e);
+      }
+    });
+
+    // Accesibilidad: cerrar modal con Escape
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hideModal('authModal'); });
+  </script>
 </body>
 </html>
