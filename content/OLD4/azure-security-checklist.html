@@ -14,11 +14,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
-  <title>Azure Storage (AZ‑104) — ITHub</title>
-  <meta name="description" content="Puntos clave de Azure Storage para AZ‑104: RBAC vs claves, SAS, WORM, redundancia, Private Endpoints.">
+  <title>Checklist Seguridad Azure (AZ‑104) — ITHub</title>
+  <meta name="description" content="Lista práctica de seguridad para AZ‑104: identidad, Policy, red, datos y operaciones.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="author" content="ITHub">
-  <meta name="keywords" content="AZ-104, Azure Storage, RBAC, SAS, WORM, ZRS, GRS, Private Endpoint">
+  <meta name="keywords" content="AZ-104, seguridad, RBAC, Policy, Key Vault, Defender for Cloud">
 
   <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
@@ -96,6 +96,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
   <header role="banner">
     <div class="container nav">
       <div class="brand">
@@ -103,7 +105,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
 
       <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="#simuladores">HOME</a>
+        <a class="link-btn" href="#simuladores">SIMULADORES</a>
         <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
         <a class="link-btn" href="/score/ranking.html">RANKING</a>
       </nav>
@@ -123,14 +125,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   <main id="main" tabindex="-1">
     <div class="container article">
 
-<h1>Azure Storage para AZ‑104</h1>
-<p class="lead">Acceso con AAD, SAS delegada, inmutabilidad y redundancia zonal/geo, además de Private Endpoints.</p>
-<h2>Claves</h2>
-<ul>
-  <li>Preferir <b>RBAC + AAD</b> a Shared Keys.</li>
-  <li><b>User Delegation SAS</b> para acceso temporal.</li>
-  <li><b>ZRS</b> (intra‑región multi‑zona) vs <b>GZRS</b> (geo).</li>
-  <li>PE + DNS privado para acceso interno.</li>
+<h1>Checklist de Seguridad Azure (AZ‑104)</h1>
+<p class="lead">Repaso práctico por dominios de seguridad tal como se evalúan en AZ‑104.</p>
+<h2>Identidad</h2>
+<ul class="checklist">
+  <li><b>RBAC</b> y <b>PIM</b> para privilegios JIT.</li>
+  <li><b>Conditional Access</b> (MFA, riesgo).</li>
+</ul>
+<h2>Datos</h2>
+<ul class="checklist">
+  <li><b>Key Vault</b> con <b>Purge Protection</b>.</li>
+  <li>Blob <b>WORM</b> + <b>Versioning</b>.</li>
 </ul>
     </div>
   </main>
@@ -139,13 +144,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <div>
         <div class="brand" style="text-transform:none">
           <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
-          
+          <span>ITHub.es</span>
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
       <div>
         <div style="font-weight:800">Simuladores</div>
-        <div><a href="/">Home</a></div>
         <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
         <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
         <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>

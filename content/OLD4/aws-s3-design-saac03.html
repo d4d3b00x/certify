@@ -14,11 +14,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
-  <title>Azure Storage (AZ‑104) — ITHub</title>
-  <meta name="description" content="Puntos clave de Azure Storage para AZ‑104: RBAC vs claves, SAS, WORM, redundancia, Private Endpoints.">
+  <title>AWS S3 Diseño (SAA‑C03) — ITHub</title>
+  <meta name="description" content="Seguridad, rendimiento y coste en Amazon S3 para SAA‑C03: cifrado, clases, endpoints, WORM y patrones.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="author" content="ITHub">
-  <meta name="keywords" content="AZ-104, Azure Storage, RBAC, SAS, WORM, ZRS, GRS, Private Endpoint">
+  <meta name="keywords" content="SAA-C03, S3, SSE-KMS, Object Lock, clases de almacenamiento, VPC endpoint">
 
   <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
@@ -96,6 +96,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
   <header role="banner">
     <div class="container nav">
       <div class="brand">
@@ -103,7 +105,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
 
       <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="#simuladores">HOME</a>
+        <a class="link-btn" href="#simuladores">SIMULADORES</a>
         <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
         <a class="link-btn" href="/score/ranking.html">RANKING</a>
       </nav>
@@ -123,15 +125,52 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   <main id="main" tabindex="-1">
     <div class="container article">
 
-<h1>Azure Storage para AZ‑104</h1>
-<p class="lead">Acceso con AAD, SAS delegada, inmutabilidad y redundancia zonal/geo, además de Private Endpoints.</p>
-<h2>Claves</h2>
-<ul>
-  <li>Preferir <b>RBAC + AAD</b> a Shared Keys.</li>
-  <li><b>User Delegation SAS</b> para acceso temporal.</li>
-  <li><b>ZRS</b> (intra‑región multi‑zona) vs <b>GZRS</b> (geo).</li>
-  <li>PE + DNS privado para acceso interno.</li>
-</ul>
+    <h1>Amazon S3: diseño para SAA‑C03</h1>
+    <p class="lead">Bloqueo público, <b>SSE‑KMS</b>, <b>Object Lock</b>, <b>VPC Endpoints</b> y <b>lifecycle</b> son candidatos frecuentes.</p>
+
+<figure role="img" aria-label="Plano de seguridad S3">
+<svg viewBox="0 0 900 260" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2d3a75"/>
+      <stop offset="1" stop-color="#142051"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="900" height="260" fill="url(#g1)" rx="12" ry="12" />
+  <g font-family="Inter, Arial" font-size="14" fill="#e8ecff">
+    <text x="16" y="26" font-size="18" font-weight="900">Plano de seguridad S3</text>
+    <text x="16" y="46" fill="#cfe1ff">KMS + BPA + Políticas mínimas</text>
+  </g>
+  <g>
+    <rect x="24" y="80" width="250" height="120" rx="12" fill="#0f1633" stroke="#2a3150"/>
+    <text x="44" y="110" fill="#e8ecff" font-weight="900">Bloque A</text>
+    <text x="44" y="136" fill="#cfe1ff">Entrada</text>
+  </g>
+  <g>
+    <rect x="326" y="80" width="250" height="120" rx="12" fill="#0f1633" stroke="#2a3150"/>
+    <text x="346" y="110" fill="#e8ecff" font-weight="900">Bloque B</text>
+    <text x="346" y="136" fill="#cfe1ff">Proceso</text>
+  </g>
+  <g>
+    <rect x="628" y="80" width="250" height="120" rx="12" fill="#0f1633" stroke="#2a3150"/>
+    <text x="648" y="110" fill="#e8ecff" font-weight="900">Bloque C</text>
+    <text x="648" y="136" fill="#cfe1ff">Salida</text>
+  </g>
+  <g stroke="#6c8bff" stroke-width="3">
+    <line x1="274" y1="140" x2="326" y2="140"/>
+    <line x1="576" y1="140" x2="628" y2="140"/>
+  </g>
+</svg>
+<figcaption>KMS + BPA + Políticas mínimas</figcaption>
+</figure>
+
+    <h2>Checklist</h2>
+    <ul>
+      <li>Bloqueo público a nivel cuenta/bucket.</li>
+      <li>Encriptación <b>KMS</b>.</li>
+      <li>Object Lock (Governance/Compliance).</li>
+      <li>Gateway Endpoint + condición <span class="kbd">aws:SourceVpce</span>.</li>
+    </ul>
     </div>
   </main>
   <footer role="contentinfo">
@@ -139,13 +178,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <div>
         <div class="brand" style="text-transform:none">
           <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
-          
+          <span>ITHub.es</span>
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
       <div>
         <div style="font-weight:800">Simuladores</div>
-        <div><a href="/">Home</a></div>
         <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
         <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
         <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
