@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Azure Landing Zone — CertifyLab</title>
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --stroke:#283056;--brand:#6c8bff;--azure:#0078d4;--aws:#ff9900;
+      --shadow:0 12px 28px rgba(6,12,40,.45);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);background:var(--bg);line-height:1.6}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));
+      backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .logo-pill{width:16px;height:30px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);
+      box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    a{color:inherit;text-decoration:none}
+    .btn, .pill{display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 14px;border-radius:12px;
+      border:1px solid var(--stroke);font-weight:900}
+    .pill{background:linear-gradient(180deg,#7a67ff,#5f48ff);border-color:#3b2fff44;color:#fff}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.95rem;margin-top:6px}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid #2a3150;font-weight:800}
+    .chip.az{background:rgba(0,120,212,.16);color:#9fd2ff;border-color:rgba(0,120,212,.4)}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block;background:#0078d4}
+    h1{font-size:clamp(1.6rem,4.2vw,2.2rem);margin:16px 0 6px}
+    h2{margin:22px 0 8px;font-size:1.25rem}
+    section{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;
+      box-shadow:var(--shadow);padding:16px;margin:14px 0}
+    pre{background:#0b122a;border:1px solid #22305f;border-radius:10px;padding:12px;overflow:auto}
+    code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;color:#cde1ff}
+    ul{margin:8px 0 0 18px}
+    .toc{display:grid;gap:6px}
+    footer{border-top:1px solid var(--stroke);color:#9ca8d9;margin-top:20px;padding:16px 0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="logo-pill"></span> <span>CertifyLab</span></div>
+      <a class="btn" href="/index.html">← Volver</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="meta"><span class="dot" title="Azure · AZ-305"></span> <span>Aplica: AZ-305</span> · <span>Lectura: 8 min</span></div>
+    <h1>Arquitectura de Landing Zone en Azure</h1>
+    <p class="muted">Referencia de diseño para organizar identidades, políticas, red y suscripciones en una zona de aterrizaje empresarial.</p>
+
+    <section>
+      <h2>Resumen</h2>
+      <p>Una <em>Landing Zone</em> estandariza cómo desplegar cargas en Azure: jerarquía de <strong>Management Groups</strong>, separación por <strong>suscripciones</strong>, <strong>red hub-spoke</strong>, <strong>identidad</strong> y <strong>políticas</strong> que aplican seguridad por defecto.</p>
+      <div class="meta"><span class="chip az">AZURE</span><span>Blueprint de referencia</span></div>
+    </section>
+
+    <section>
+      <h2>Índice</h2>
+      <div class="toc">
+        <a href="#mg">1. Management Groups y suscripciones</a>
+        <a href="#rbac">2. Identidad y RBAC</a>
+        <a href="#policy">3. Azure Policy y gobernanza</a>
+        <a href="#net">4. Red: Hub-Spoke + conectividad</a>
+        <a href="#ops">5. Operación: Monitor, Backup, Costes</a>
+        <a href="#seg">6. Seguridad de base</a>
+        <a href="#deploy">7. Despliegue rápido (Bicep)</a>
+        <a href="#check">8. Checklist</a>
+      </div>
+    </section>
+
+    <section id="mg">
+      <h2>1) Management Groups y suscripciones</h2>
+      <ul>
+        <li><strong>Raíz</strong> ➜ <code>contoso</code>; hijos: <code>platform</code>, <code>corp</code>, <code>online</code>.</li>
+        <li><strong>Suscripciones</strong>: separar <em>connectivity</em>, <em>identity</em>, <em>management</em> (plataforma) y una por dominio de negocio.</li>
+        <li>Políticas y budgets heredados en MG; excepciones a nivel de suscripción.</li>
+      </ul>
+    </section>
+
+    <section id="rbac">
+      <h2>2) Identidad y RBAC</h2>
+      <ul>
+        <li>Azure AD como autoridad. Grupos de seguridad mapeados a roles: <em>Owner</em> (plataforma limitada), <em>Contributor</em> (apps), <em>Reader</em>.</li>
+        <li>Usa <strong>Privileged Identity Management</strong> y acceso <em>just-in-time</em>.</li>
+        <li>Identidades administradas para workloads; evita secretos en código.</li>
+      </ul>
+    </section>
+
+    <section id="policy">
+      <h2>3) Azure Policy y gobernanza</h2>
+      <ul>
+        <li>Asignar <em>policy sets</em>: etiquetado obligatorio, regiones permitidas, sku aprobadas, Defender habilitado.</li>
+        <li>Denegar IP públicas en subredes sensibles, exigir Azure Backup y cifrado.</li>
+      </ul>
+    </section>
+
+    <section id="net">
+      <h2>4) Red: Hub-Spoke + conectividad</h2>
+      <ul>
+        <li><strong>Hub</strong>: Firewall/NSG, Azure Bastion, VPN/ExpressRoute, DNS privado.</li>
+        <li><strong>Spokes</strong> por dominio: subredes <code>web</code>, <code>app</code>, <code>data</code> con NSG.</li>
+        <li>Emparejamiento <em>peering</em> controlado y UDR para inspección por Firewall.</li>
+      </ul>
+      <pre><code># Ejemplo UDR (az cli)
+az network route-table route create   --route-table-name rt-spoke-app --resource-group rg-net   --name default-to-fw --address-prefix 0.0.0.0/0 --next-hop-type VirtualAppliance --next-hop-ip-address 10.0.0.4
+</code></pre>
+    </section>
+
+    <section id="ops">
+      <h2>5) Operación: Monitor, Backup, Costes</h2>
+      <ul>
+        <li>Log Analytics + Azure Monitor (alerteras y dashboards).</li>
+        <li>Azure Backup y políticas de retención por tipo de dato.</li>
+        <li>Cost Management con budgets y tags <code>costCenter</code>.</li>
+      </ul>
+    </section>
+
+    <section id="seg">
+      <h2>6) Seguridad de base</h2>
+      <ul>
+        <li>Microsoft Defender for Cloud con recomendaciones <em>secure score</em>.</li>
+        <li>Just-in-Time para VM, bloqueo de <em>Public Network Access</em> en PaaS.</li>
+        <li>Clave gestionada por cliente (CMK) para datos sensibles.</li>
+      </ul>
+    </section>
+
+    <section id="deploy">
+      <h2>7) Despliegue rápido (Bicep)</h2>
+      <pre><code>// Hub virtual network (bicep)
+param location string = resourceGroup().location
+resource vnet 'Microsoft.Network/virtualNetworks@2023-09-01' = {
+  name: 'vnet-hub'
+  location: location
+  properties:{
+    addressSpace:{ addressPrefixes: ['10.0.0.0/16'] }
+    subnets:[
+      { name:'AzureFirewallSubnet', properties:{ addressPrefix:'10.0.0.0/24' } },
+      { name:'GatewaySubnet', properties:{ addressPrefix:'10.0.1.0/27' } },
+      { name:'shared', properties:{ addressPrefix:'10.0.10.0/24' } }
+    ]
+  }
+}
+</code></pre>
+    </section>
+
+    <section id="check">
+      <h2>8) Checklist</h2>
+      <ul>
+        <li>¿Tienes MG y suscripciones separadas por plataforma/negocio?</li>
+        <li>¿Policies aplicadas en MG con excepciones mínimas?</li>
+        <li>¿Hub-Spoke con inspección y DNS privado centralizados?</li>
+        <li>¿PIM, Backup, Defender y budgets habilitados?</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container">© <span id="y"></span> CertifyLab — <a href="/index.html">Inicio</a></footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>

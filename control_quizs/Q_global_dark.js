@@ -52,7 +52,7 @@ const S = {
 
   savingResult: false,
 
-  // NUEVO: bloquear botón Finalizar tras primer click
+  // Bloqueo del botón Finalizar tras primer click
   finishLocked: false,
 
   _afterRenderScroll: null
@@ -163,6 +163,37 @@ const QUIZZES = {
   .toast{ position:fixed; left:50%; bottom:18px; transform:translateX(-50%); background:#0e1530; color:#fff;
           padding:10px 14px; border-radius:10px; box-shadow:0 10px 24px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s; z-index:99999; }
   .toast.show{ opacity:1; }
+
+  /* ===== KPIs bajo la quiz ===== */
+  .kpis-under-quiz{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:12px;
+    margin-top:16px;
+  }
+  @media (max-width:700px){
+    .kpis-under-quiz{ grid-template-columns:1fr; }
+  }
+  .kpi-card{
+    background:var(--surface);
+    border:1px solid var(--stroke);
+    border-radius:14px;
+    padding:14px 16px;
+  }
+  .kpi-card h4{
+    margin:0 0 6px 0;
+    font-size:.9rem;
+    color:var(--muted);
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+  }
+  .kpi-card .n{
+    font-size:1.6rem;
+    line-height:1.2;
+    font-weight:1000;
+    color:#fff;
+  }
   `;
   const st = document.createElement("style");
   st.innerHTML = css;
@@ -367,7 +398,7 @@ function localAz305Fallback(){
 
 /* ===================== START público ===================== */
 async function start(quizId="aws-saa-c03", overrides={}){
-  const seq=++__SEQ; stopTimer(); S.finished=false; S.finishLocked=false; // reset lock al empezar
+  const seq=++__SEQ; stopTimer(); S.finished=false; S.finishLocked=false;
 
   const cfg = QUIZZES[quizId] || QUIZZES["aws-saa-c03"];
   S.quizId=quizId; S.track=cfg.track; S.certi=cfg.certi; S.mode="exam";
@@ -381,10 +412,8 @@ async function start(quizId="aws-saa-c03", overrides={}){
   try{
     const exam=QUIZ_TO_EXAM[quizId] || "SAA-C03";
 
-    // 1) API
     let raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 3, domainTags: tags });
 
-    // 2) Fallback local si AZ-305 sin datos
     if ((!raw || raw.length === 0) && quizId === "az-305") {
       raw = localAz305Fallback().map((q,i)=>({
         exam:"AZ-305", questionId:`AZ-305-local-${i}`, question:q.question, options:q.options,
@@ -439,23 +468,31 @@ async function start(quizId="aws-saa-c03", overrides={}){
 function showLoading(){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:'Cargando preguntas…'})); }
 function showError(msg){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:`<b>Error:</b> ${msg}`})); }
 
-/* ===================== KPIs simples debajo ===================== */
-function kpis(container){
-  if(!container) return;
-  let host=document.getElementById('kpis-under-quiz');
-  const a=Object.keys(S.answers).length;
-  let c=0; for(const [i,v] of Object.entries(S.answers)){ const idx=+i; if(S.qs[idx] && S.qs[idx]._correct===v) c++; }
-  const m=Object.values(S.marked||{}).filter(Boolean).length;
-  const p=a?Math.round((c/a)*100):0;
-  if(!host){
-    host=h('section',{id:'kpis-under-quiz',class:'kpis-under-quiz'});
-    host.appendChild(h('div',{class:'kpi-card',html:`<h4>Respondidas</h4><div class="n" id="kA">0</div>`}));
-    host.appendChild(h('div',{class:'kpi-card',html:`<h4>Aciertos %</h4><div class="n" id="kP">0%</div>`}));
-    host.appendChild(h('div',{class:'kpi-card',html:`<h4>Marcadas</h4><div class="n" id="kM">0</div>`}));
-    container.parentNode.insertBefore(host, container.nextSibling);
+/* ===================== KPIs simples debajo (con estilo) ===================== */
+function renderKpisBelow(container){
+  if(!container || !container.parentNode) return;
+
+  // Cálculo actualizado
+  const answered = Object.keys(S.answers).length;
+  let correct = 0;
+  for(const [i,v] of Object.entries(S.answers)){
+    const idx = +i;
+    if(S.qs[idx] && S.qs[idx]._correct === v) correct++;
   }
-  const elA=document.getElementById('kA'), elP=document.getElementById('kP'), elM=document.getElementById('kM');
-  if(elA) elA.textContent=String(a); if(elP) elP.textContent=`${p}%`; if(elM) elM.textContent=String(m);
+  const marked = Object.values(S.marked||{}).filter(Boolean).length;
+  const pct = answered ? Math.round((correct/answered)*100) : 0;
+
+  // Quitar bloque previo si existe
+  const old = document.getElementById('kpis-under-quiz');
+  if(old && old.parentNode) old.parentNode.removeChild(old);
+
+  // Construir
+  const host = h('section',{id:'kpis-under-quiz',class:'kpis-under-quiz'});
+  host.appendChild(h('div',{class:'kpi-card',html:`<h4>Respondidas</h4><div class="n" id="kA">${answered}</div>`}));
+  host.appendChild(h('div',{class:'kpi-card',html:`<h4>Aciertos %</h4><div class="n" id="kP">${pct}%</div>`}));
+  host.appendChild(h('div',{class:'kpi-card',html:`<h4>Marcadas</h4><div class="n" id="kM">${marked}</div>`}));
+
+  container.insertAdjacentElement('afterend', host);
 }
 
 /* ===================== Render principal ===================== */
@@ -567,7 +604,6 @@ function renderQuiz(){
   const nextLabel = isLast ? `Finalizar <span class="keycap">N</span>` : `Siguiente <span class="keycap">N</span>`;
   const next=h('button',{class:'btn primary',html:nextLabel, title:'Siguiente (N) / Finalizar (N)'});
 
-  // si última y hay marcadas sin responder, o ya bloqueado, deshabilitar
   if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
 
   next.onclick=()=>{
@@ -575,12 +611,10 @@ function renderQuiz(){
       S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz();
       return;
     }
-    // Última: proteger y deshabilitar
     if(hasPendingMarked()){ toast('No puedes finalizar: hay preguntas marcadas sin responder.'); return; }
     if(S.finishLocked) return;
     S.finishLocked = true;
     next.disabled = true;
-    // (opcional UX) cambiar texto mientras finaliza
     try { next.innerHTML = 'Finalizando…'; } catch {}
     finish();
   };
@@ -616,7 +650,9 @@ function renderQuiz(){
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
 
-  kpis(wrap);
+  // KPIs con formato
+  renderKpisBelow(wrap);
+
   enableHotkeys();
 
   if (S._afterRenderScroll === 'explanation') {
@@ -712,9 +748,8 @@ function enableHotkeys(){
     if(ev.key==='n'||ev.key==='N'){
       ev.preventDefault();
       if(S.idx===S.qs.length-1){
-        if(S.finishLocked) return; // bloqueado: no permitir
+        if(S.finishLocked) return;
         if(hasPendingMarked()) { toast('No puedes finalizar: marcadas sin responder.'); return; }
-        // bloquear también desde teclado
         S.finishLocked = true;
         const btn = document.querySelector('.controls .btn.primary');
         if(btn) btn.disabled = true;
