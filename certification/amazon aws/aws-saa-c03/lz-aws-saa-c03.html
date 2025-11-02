@@ -14,16 +14,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
 
-  <title>SAA-C03: Simulador y Guía — AWS Solutions Architect Associate | ITHub</title>
-  <link rel="canonical" href="https://beta.ithub.es/certification/aws/saa-c03/portada-saa-c03.html" />
-  <meta name="description" content="Simulador SAA-C03 con preguntas por dominios (D1–D4), métricas y guía de estudio en tarjetas. Practica AWS Solutions Architect Associate y supera 720/1000." />
-  <meta name="keywords" content="SAA-C03, simulador SAA-C03, preguntas AWS en español, AWS Solutions Architect Associate, guía de estudio SAA-C03, dominios" />
+  <title>SAA-C03: Simulador y Guía de Estudio — AWS Solutions Architect Associate | ITHub</title>
+  <link rel="canonical" href="https://beta.ithub.es/certification/amazon-aws/saa-c03/lz-aws-saa-c03.html" />
+  <meta name="description" content="Simulador SAA-C03 con preguntas por dominios (D1–D4), rutas y nube de conceptos. Practica AWS Solutions Architect Associate y supera 720/1000." />
+  <meta name="keywords" content="SAA-C03, simulador SAA-C03, preguntas AWS en español, AWS Solutions Architect Associate, guía de estudio SAA-C03, dominios, rutas" />
 
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
       --stroke:#283056;--aws:#ff9900;--radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
       --cta:linear-gradient(180deg,#ffd699,#ff9900);
+      --ok:#20d38a;--warn:#ffd76b;--bad:#ff6b6b;
     }
     *{box-sizing:border-box}
     body{
@@ -64,8 +65,8 @@
     .kpi b{display:block;font-size:.82rem;color:#ffc680;text-transform:uppercase;letter-spacing:.4px}
     .kpi .num{font-weight:900;font-size:1.12rem}
 
-    /* Tabs */
-    .tabbar{display:flex;gap:12px;margin-top:8px}
+    /* Tabs (botonera) — rutas 2º */
+    .tabbar{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
     .tab-btn{display:inline-flex;align-items:center;gap:10px;justify-content:center;min-height:44px;padding:10px 16px;border-radius:12px;font-weight:900;cursor:pointer;border:1px solid #2a3150;background:transparent;color:#e8ecff}
     .tab-btn.active{background:var(--cta);border-color:transparent;color:#0b1930;box-shadow:0 10px 22px rgba(255,153,0,.22)}
 
@@ -75,7 +76,7 @@
     .muted{color:var(--muted)}
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
 
-    /* Carrusel */
+    /* Carrusel (no usado en nube) */
     .carousel{position:relative;margin-top:12px}
     .track{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px}
     @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
@@ -107,18 +108,53 @@
     .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
     .segmented input:checked + label{background:#0f1630;border:1px solid #ffb066}
     #startBtn{background:#ff9900;color:#111;border-color:transparent;box-shadow:0 10px 24px rgba(255,153,0,.35)}
-    #infoDom{margin-top:16px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:none}
-    .info-empty{color:var(--muted);border:1px dashed var(--stroke);padding:12px;border-radius:10px;background:#0f1630}
 
-    /* Modal resultados */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
-    .modal.show{display:flex}
-    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
-    .diag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-    @media(max-width:640px){.diag-grid{grid-template-columns:1fr}}
+    /* ====== Notas dominio ====== */
+    #infoDom{margin-top:16px;background:linear-gradient(180deg,#0f1736,#0e1430);border:1px solid var(--stroke);border-radius:16px;padding:0;box-shadow:0 20px 42px rgba(0,0,0,.45);display:none;overflow:hidden}
+    .info-head{display:flex;gap:10px;align-items:center;justify-content:space-between;background:
+      radial-gradient(120% 120% at 100% -10%, rgba(255,153,0,.25), transparent 60%),
+      linear-gradient(180deg, #2b1a08, #1d1408);padding:16px;border-bottom:1px solid #5f4627}
+    .info-head h3{margin:0;font-size:1.2rem;letter-spacing:.2px}
+    .info-body{padding:16px}
     .meter{position:relative;height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
     .meter>span{position:absolute;left:0;top:0;height:100%;width:0;transition:width .35s}
     .m-ok{background:#3ad97a} .m-warn{background:#ffd66b} .m-bad{background:#ff6b6b}
+
+    /* ========= ESTILO ESPECIAL DEL SIMULADOR ========= */
+    #simCard{ position:relative; background:
+        radial-gradient(95% 140% at 100% 0, rgba(255,153,0,.18), transparent 60%),
+        linear-gradient(180deg,#1a1421,#130f1b);
+      border:1px solid rgba(255,153,0,.45); box-shadow:0 0 0 1px rgba(255,153,0,.25) inset, 0 22px 40px rgba(0,0,0,.55); }
+    #simCard::after{ content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none; box-shadow:0 0 0 3px rgba(255,153,0,.25); }
+    #simTitle{ font-size:clamp(1.4rem,3.0vw,2.0rem); font-weight:900; line-height:1.2; margin-bottom:6px; }
+
+    /* ===== RUTAS & CONTENIDO ===== */
+    #routesContent{display:none;margin-top:14px}
+    #routesContent.open{display:block}
+    .routes-wrap{display:grid;gap:14px}
+    .route-block{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:12px}
+    .route-title{display:flex;align-items:center;gap:8px;font-weight:900}
+    details.rc{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:10px}
+    details.rc summary{cursor:pointer;font-weight:900;list-style:none}
+    details.rc summary::-webkit-details-marker{display:none}
+    .num{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:5px;background:#1e2a55;border:1px solid #33417a;font-weight:900;margin-right:6px}
+    .content-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media(max-width:860px){.content-grid{grid-template-columns:1fr}}
+    .content-card{background:var(--surface2);border:1px solid var(--stroke);border-radius:14px;padding:14px}
+    .content-card h4{margin:0 0 6px}
+    .tag{display:inline-flex;align-items:center;gap:6px;border:1px solid #5f4627;border-radius:999px;padding:6px 10px;margin-left:8px;font-weight:900;background:#1a1421}
+
+    /* ===== Concept Cloud (chips-bubble) ===== */
+    .concept-toolbar{}
+    .concept-cloud{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+    @media(max-width:1180px){.concept-cloud{grid-template-columns:repeat(4,1fr)}}
+    @media(max-width:860px){.concept-cloud{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:560px){.concept-cloud{grid-template-columns:repeat(2,1fr)}}
+    .chip-bubble{position:relative;display:flex;flex-direction:column;justify-content:center;gap:6px;min-height:96px;padding:14px;border-radius:18px;border:1px solid #5f4627;background:linear-gradient(180deg,#1b1426,#151022);box-shadow:0 12px 24px rgba(0,0,0,.25);transform:translateZ(0);transition:transform .12s ease, box-shadow .12s ease;overflow:hidden}
+    .chip-bubble:hover{transform:scale(1.05);box-shadow:0 18px 38px rgba(0,0,0,.36)}
+    .chip-bubble .cb-title{font-weight:900}
+    .chip-bubble .cb-tip{color:var(--muted);opacity:.95;font-size:.95rem}
+    .chip-bubble b{color:#ffd699}
 
     /* Footer */
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2));margin-top:22px}
@@ -143,8 +179,8 @@
         <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
         <div id="userArea" style="display:none;align-items:center;gap:6px">
           <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+          <a class="pill-btn" href="/user/profile.html" role="button" style="background:linear-gradient(180deg,#ffcf6a,#ff9900);color:#111">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button" style="background:linear-gradient(180deg,#ffcf6a,#ff9900);color:#111">LOGOUT</button>
         </div>
       </div>
     </div>
@@ -156,58 +192,59 @@
       <div class="container">
         <span class="eyebrow">AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA‑C03)</span>
         <h1>Portada de la certificación SAA‑C03</h1>
-        <p>Domina el diseño de arquitecturas seguras, resilientes, de alto rendimiento y optimizadas en coste sobre AWS. Aquí tienes <b>Tips de Estudio</b> y <b>Dominios & Simulador</b> en pestañas.</p>
+        <p>Diseña arquitecturas <b>seguras</b>, <b>resilientes</b>, de <b>alto rendimiento</b> y <b>optimizadas en coste</b> en AWS. Aquí tienes <b>Dominios & Simulador</b>, <b>Rutas & Contenido</b> y la nueva <b>Nube de Conceptos</b> con búsqueda instantánea.</p>
 
-     
-
-        <!-- Botonera de pestañas -->
+        <!-- Botonera de pestañas (Rutas en 2º lugar) -->
         <div class="tabbar" role="tablist" aria-label="Vistas de SAA-C03">
           <button id="tabSim" class="tab-btn active" role="tab" aria-selected="true" aria-controls="domsim">🧭 DOMINIOS & SIMULADOR</button>
+          <button id="tabRoutes" class="tab-btn" role="tab" aria-selected="false" aria-controls="routesContent">📋 RUTAS & CONTENIDO</button>
           <button id="tabGuide" class="tab-btn" role="tab" aria-selected="false" aria-controls="studyGuide">📘 TIPS DE ESTUDIO</button>
         </div>
 
-        <!-- ===== GUÍA DE ESTUDIO ===== -->
+        <!-- ===== GUÍA DE ESTUDIO (NUBE DE CONCEPTOS) ===== -->
         <section id="studyGuide" aria-label="Guía de estudio SAA-C03" role="tabpanel" aria-labelledby="tabGuide">
           <h2 class="sec-title" style="margin:10px 0 6px;text-transform:uppercase">Tips de estudio SAA‑C03</h2>
-          <p class="muted" style="margin-top:0">Tarjetas y artículos clave orientados al examen. Repasa en orden o salta a lo que necesites.</p>
+          <p class="muted" style="margin-top:0">Explora la nube de conceptos. Pasa el ratón por cada burbuja para ver un tip y abre el contenido al instante. Filtra con búsqueda.</p>
 
-          <div class="carousel" role="region" aria-label="Contenidos SAA-C03">
-            <button class="car-btn car-prev" type="button" aria-label="Anterior">‹</button>
-            <div class="track" id="contentTrack">
-              <article class="card">
-                <div class="cc-head">🔐 <strong>Seguridad en AWS: cuentas, IAM e identidades</strong></div>
-                <p class="muted">MFA, SCPs, IAM Roles vs. Users, AWS Organizations y control de acceso a múltiples cuentas.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AWS</span><span>SAA‑C03</span></span>
-                  <a class="tiny-btn" href="/content/aws-security-iam-saa.html">Leer</a>
+          <div class="concept-toolbar" style="display:flex;gap:10px;align-items:center;margin:10px 0 6px">
+            <input id="conceptSearch" type="search" placeholder="Buscar conceptos (ej: VPC, S3, IAM)" aria-label="Buscar conceptos"
+                   style="flex:1;min-height:42px;border-radius:12px;border:1px solid var(--stroke);background:var(--surface2);color:var(--ink);padding:8px 12px;font-weight:700" />
+          </div>
+
+          <div id="conceptCloud" class="concept-cloud" role="list"></div>
+        </section>
+
+        <!-- ===== RUTAS & CONTENIDO ===== -->
+        <section id="routesContent" aria-label="Rutas y contenido clave" role="tabpanel" aria-labelledby="tabRoutes">
+          <div class="routes-wrap">
+            <div class="route-block">
+              <div class="route-title">🧭 Rutas de estudio sugeridas</div>
+              <details class="rc" open>
+                <summary>▶ Plan 7 días (intensivo) — SAA‑C03</summary>
+                <div style="padding:10px 0 0 4px">
+                  <div><span class="num">1</span><b>Fundamentos:</b> Cuentas multi‑cuenta, IAM Roles, SCPs, SSO.</div>
+                  <div><span class="num">2</span><b>Red:</b> VPC, subnets, NACL/SG, NAT Gateway, PrivateLink, Route 53.</div>
+                  <div><span class="num">3</span><b>Cómputo:</b> EC2/ASG, ALB/NLB, Lambda, ECS/Fargate.</div>
+                  <div><span class="num">4</span><b>Datos:</b> S3 (clases), RDS/Aurora, DynamoDB, caché.</div>
+                  <div><span class="num">5</span><b>Observabilidad y seguridad:</b> CloudWatch, CloudTrail, KMS, Config.</div>
+                  <div><span class="num">6</span><b>HA & DR:</b> Multi‑AZ/Región, Backup, RTO/RPO, pilot‑light.</div>
+                  <div><span class="num">7</span><b>Simulacros + repaso dirigido:</b> errores frecuentes.</div>
                 </div>
-              </article>
-              <article class="card">
-                <div class="cc-head">⚙️ <strong>Alta disponibilidad y resiliencia</strong></div>
-                <p class="muted">Multi‑AZ vs Multi‑Region, patrones con ALB/NLB, Auto Scaling y RTO/RPO.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AWS</span><span>SAA‑C03</span></span>
-                  <a class="tiny-btn" href="/content/aws-resilience-ha-saa.html">Leer</a>
-                </div>
-              </article>
-              <article class="card">
-                <div class="cc-head">🚀 <strong>Alto rendimiento</strong></div>
-                <p class="muted">Elige entre EC2/Auto Scaling, ECS/Fargate, Lambda; caché con ElastiCache y CDN con CloudFront.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AWS</span><span>SAA‑C03</span></span>
-                  <a class="tiny-btn" href="/content/aws-performance-saa.html">Leer</a>
-                </div>
-              </article>
-              <article class="card">
-                <div class="cc-head">💸 <strong>Optimización de costes</strong></div>
-                <p class="muted">RI/Savings Plans, S3 Storage Classes, Compute Optimizer, Cost Explorer y presupuestos.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AWS</span><span>SAA‑C03</span></span>
-                  <a class="tiny-btn" href="/content/aws-cost-optimization-saa.html">Leer</a>
-                </div>
-              </article>
+              </details>
+              <details class="rc">
+                <summary>▶ Plan 14 días — SAA‑C03</summary>
+                <div style="padding:10px 0 0 4px">Divide el plan de 7 días en sprints de 2 días por bloque + 4 sesiones de práctica.</div>
+              </details>
+              <details class="rc">
+                <summary>▶ Plan 30 días — de Cero a Associate</summary>
+                <div style="padding:10px 0 0 4px">Profundiza en cada dominio con laboratorios: Control Tower/Organizations, VPC avanzadas y patrones de resiliencia.</div>
+              </details>
             </div>
-            <button class="car-btn car-next" type="button" aria-label="Siguiente">›</button>
+
+            <div class="route-block">
+              <div class="route-title">📚 Contenido por temas</div>
+              <div id="routesGrid" class="content-grid" style="margin-top:8px"></div>
+            </div>
           </div>
         </section>
       </div>
@@ -247,7 +284,7 @@
             <div class="field" style="margin-top:10px">
               <label>Preguntas</label>
               <select id="qCount" style="border:1px solid var(--stroke);border-radius:10px;padding:8px 10px;background:var(--surface2);color:var(--ink)">
-                <option>5</option><option>10</option><option>15</option><option>30</option><option selected>5</option>
+                <option>5</option><option>10</option><option>15</option><option>30</option><option>65</option>
               </select>
             </div>
 
@@ -265,12 +302,12 @@
 
         <!-- Notas del dominio -->
         <section id="infoDom" class="panel" aria-live="polite">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin:0 0 10px">
+          <div class="info-head">
             <h3 id="infoTitle" style="margin:0">Notas del dominio</h3>
             <button id="infoClose" class="pill-btn" type="button">✖ Cerrar</button>
           </div>
-          <div id="infoContent" class="info-content">
-            <div class="info-empty">Selecciona un dominio para ver notas concisas aquí.</div>
+          <div id="infoContent" class="info-body">
+            <div class="info-empty">Selecciona un dominio para ver notas ampliadas.</div>
           </div>
         </section>
 
@@ -290,17 +327,17 @@
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.</p>
       </div>
-       <div>
+      <div>
         <div style="font-weight:800">Simuladores</div>
         <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
-        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+        <div><a href="/certification/amazon-aws/saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
         <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
-        <div><a href="/content/aws-security-iam-saa.html">AWS · Seguridad (SAA)</a></div>
-        <div><a href="/content/aws-resilience-ha-saa.html">AWS · Resiliencia</a></div>
-        <div><a href="/content/aws-cost-optimization-saa.html">AWS · Costes</a></div>
+        <div><a href="/content/aws-iam-organizations-saac03.html">AWS · IAM & Organizations</a></div>
+        <div><a href="/content/aws-vpc-ha.html">AWS · VPC HA</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Compute & Elasticidad</a></div>
       </div>
       <div>
         <div style="font-weight:800">Contacto</div>
@@ -314,7 +351,7 @@
   </footer>
 
   <!-- Modal resultados -->
-  <div class="modal" id="quizResultModal" aria-hidden="true">
+  <div class="modal" id="quizResultModal" aria-hidden="true" style="display:none;">
     <div class="modal-card">
       <h3>📊 Resultados del examen</h3>
       <div id="quizScoreBox" class="panel" style="padding:12px;margin:0 0 12px;background:var(--surface2)">
@@ -351,34 +388,42 @@
     /* ===== Tabs ===== */
     const tabSim   = document.getElementById('tabSim');
     const tabGuide = document.getElementById('tabGuide');
+    const tabRoutes= document.getElementById('tabRoutes');
     const secSim   = document.getElementById('domsim');
     const secGuide = document.getElementById('studyGuide');
+    const secRoutes= document.getElementById('routesContent');
 
-    function activate(tab){
-      const isGuide = (tab === 'guide');
+    function showSection(which){
+      const isGuide  = which === 'guide';
+      const isRoutes = which === 'routes';
+      const isSim = !isGuide && !isRoutes;
+
       tabGuide.classList.toggle('active', isGuide);
       tabGuide.setAttribute('aria-selected', isGuide ? 'true' : 'false');
-      tabSim.classList.toggle('active', !isGuide);
-      tabSim.setAttribute('aria-selected', !isGuide ? 'true' : 'false');
+
+      tabRoutes.classList.toggle('active', isRoutes);
+      tabRoutes.setAttribute('aria-selected', isRoutes ? 'true' : 'false');
+
+      tabSim.classList.toggle('active', isSim);
+      tabSim.setAttribute('aria-selected', isSim ? 'true' : 'false');
+
       secGuide.classList.toggle('open', isGuide);
-      secGuide.style.display = isGuide ? 'block' : 'none';
-      secSim.style.display    = isGuide ? 'none'  : 'block';
-      (isGuide ? secGuide : secSim).scrollIntoView({behavior:'smooth', block:'start'});
+      secGuide.style.display  = isGuide ? 'block' : 'none';
+
+      secRoutes.classList.toggle('open', isRoutes);
+      secRoutes.style.display = isRoutes ? 'block' : 'none';
+
+      secSim.style.display    = isSim ? 'block' : 'none';
+
+      (isGuide ? secGuide : (isRoutes ? secRoutes : secSim))
+        .scrollIntoView({behavior:'smooth', block:'start'});
     }
-    tabGuide.addEventListener('click', ()=>activate('guide'));
-    tabSim  .addEventListener('click', ()=>activate('sim'));
 
-    /* ===== Carrusel simple ===== */
-    (function(){
-      const track = document.getElementById('contentTrack');
-      const prev = document.querySelector('.car-prev');
-      const next = document.querySelector('.car-next');
-      function scrollByCards(dir){ track.scrollBy({left: dir * (track.clientWidth * 0.9), behavior:'smooth'}); }
-      prev.addEventListener('click', ()=>scrollByCards(-1));
-      next.addEventListener('click', ()=>scrollByCards(1));
-    })();
+    tabGuide.addEventListener('click', ()=>showSection('guide'));
+    tabSim  .addEventListener('click', ()=>showSection('sim'));
+    tabRoutes.addEventListener('click', ()=>showSection('routes'));
 
-    /* ===== DOMINIOS & SIMULADOR ===== */
+    /* ===== Configuración SAA-C03 ===== */
     const QUIZ = 'aws-saa-c03';
     const CONFIG = {
       'aws-saa-c03': {
@@ -401,6 +446,7 @@
       }
     };
 
+    /* ===== Render: dominios y chips ===== */
     const badgeLogo=document.getElementById('provLogo'),
           provText=document.getElementById('provText'),
           dlist=document.getElementById('domainsList'),
@@ -421,18 +467,27 @@
          <span class="dom-code">${d}</span>
          <span class="dom-title">${txt}</span>
        </li>`).join('');
-    chips.innerHTML = cfg.domains.map(([d]) =>
+
+    const chipsWrap = document.createElement('div');
+    chipsWrap.id = 'domainChips';
+    chipsWrap.style.display = 'flex';
+    chipsWrap.style.flexWrap = 'wrap';
+    chipsWrap.style.gap = '8px';
+    document.getElementById('simCard').querySelector('.field:nth-of-type(3)').prepend(chipsWrap);
+
+    chipsWrap.innerHTML = cfg.domains.map(([d]) =>
       `<label class="chip-dom" data-dn="${d}">
          <input type="checkbox" value="${d}" hidden>
          <span class="led"></span> ${d}
        </label>`).join('');
+
     function updateChipVisuals(){
-      chips.querySelectorAll('.chip-dom').forEach(lbl=>{
+      chipsWrap.querySelectorAll('.chip-dom').forEach(lbl=>{
         const cb = lbl.querySelector('input[type="checkbox"]');
         lbl.classList.toggle('on', !!cb.checked);
       });
     }
-    chips.addEventListener('click', (ev)=>{
+    chipsWrap.addEventListener('click', (ev)=>{
       const wrap = ev.target.closest('.chip-dom'); if(!wrap) return;
       const cb = wrap.querySelector('input[type="checkbox"]'); cb.checked = !cb.checked; updateChipVisuals();
     });
@@ -497,7 +552,7 @@
       if (quizActive) return;
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
       const count = parseInt(qCount.value,10) || 65;
-      const tags = Array.from(chips.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
+      const tags = Array.from(chipsWrap.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
       if(typeof window.start === 'function'){
         setQuizActive(true);
         window.start(QUIZ, { count, tags });
@@ -509,7 +564,7 @@
       }
     });
 
-    /* ===== Resultados modal (si tu motor lo dispara) ===== */
+    /* ===== Resultados modal ===== */
     const qrModal = document.getElementById('quizResultModal');
     const qrClose = document.getElementById('qrClose');
     const qrGrid  = document.getElementById('quizDomainsGrid');
@@ -537,11 +592,75 @@
         });
       }
       qrModal.classList.add('show');
+      qrModal.style.display = 'flex';
     }
-    qrClose.addEventListener('click', ()=> qrModal.classList.remove('show'));
-    qrModal.addEventListener('click', (e)=>{ if(e.target===qrModal) qrModal.classList.remove('show'); });
+    qrClose.addEventListener('click', ()=>{ qrModal.classList.remove('show'); qrModal.style.display='none'; });
+    qrModal.addEventListener('click', (e)=>{ if(e.target===qrModal){ qrModal.classList.remove('show'); qrModal.style.display='none'; } });
     window.quizResults = showResultsModal;
     window.addEventListener('quiz:results', (e)=> showResultsModal(e.detail||{}));
+
+    /* ===== Rutas (tarjetas enlazadas a /content/) ===== */
+    const ROUTES = [
+      { slug:'aws-compute-elasticity-saac03',     title:'Compute & Elasticidad',    tag:'Compute',    blurb:'EC2/ASG, patrones de escalado y elección de servicios.' },
+      { slug:'aws-databases-storage-saac03',      title:'Bases de datos y Storage', tag:'Datos',      blurb:'RDS/Aurora, DynamoDB, S3, EBS y copias.' },
+      { slug:'aws-iam-organizations-saac03',      title:'IAM & Organizations',      tag:'Seguridad',  blurb:'Roles, policies, SCPs y multi‑cuenta.' },
+      { slug:'aws-observability-saac03',          title:'Observabilidad',           tag:'Monitoreo',  blurb:'CloudWatch, CloudTrail, Config, X‑Ray.' },
+      { slug:'aws-s3-design-saac03',              title:'Diseño con S3',            tag:'Storage',    blurb:'Clases, políticas, lifecycle y CRR.' },
+      { slug:'aws-sqs-sns-patterns',              title:'Patrones con SQS/SNS',     tag:'Mensajería', blurb:'Desacoplo, fan‑out y colas DLQ.' },
+      { slug:'aws-vpc-advanced-endpoints-saac03', title:'VPC avanzada & Endpoints', tag:'Red',        blurb:'PrivateLink, Gateway/Interface endpoints.' },
+      { slug:'aws-vpc-ha',                        title:'Alta disponibilidad en VPC',tag:'Red',       blurb:'Multi‑AZ, balanceo y rutas.' }
+    ];
+    function renderRoutes(){
+      const grid = document.getElementById('routesGrid');
+      grid.innerHTML = ROUTES.map(it=>`
+        <div class="content-card">
+          <h4>${it.title}</h4>
+          <p class="muted" style="margin:6px 0 10px">${it.blurb}</p>
+          <div>
+            <a class="tiny-btn" href="/content/${it.slug}.html">LEER</a>
+            <span class="tag">${it.tag}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* ===== Nube de conceptos ===== */
+    const CONCEPTS = [
+      { key:'iam',  title:'IAM & Roles',           tip:'Usa roles + STS para accesos temporales y evita claves largas.', href:'/content/aws-iam-organizations-saac03.html' },
+      { key:'scp',  title:'SCPs',                  tip:'Las SCPs limitan el máximo permiso efectivo en la cuenta.', href:'/content/aws-iam-organizations-saac03.html' },
+      { key:'s3',   title:'S3: clases',            tip:'IA para acceso poco frecuente, Glacier para archivado.', href:'/content/aws-s3-design-saac03.html' },
+      { key:'ddb',  title:'DynamoDB',              tip:'Cuida particiones: claves hot → on‑demand + caché.', href:'/content/aws-databases-storage-saac03.html' },
+      { key:'alb',  title:'ALB vs NLB',            tip:'ALB capa 7 (WAF); NLB capa 4 y ultra rendimiento.', href:'/content/aws-vpc-ha.html' },
+      { key:'endp', title:'VPC Endpoints',         tip:'Gateway para S3/DynamoDB; Interface para el resto.', href:'/content/aws-vpc-advanced-endpoints-saac03.html' },
+      { key:'asg',  title:'Auto Scaling',          tip:'Escala por métricas/pasos y combina con Spot.', href:'/content/aws-compute-elasticity-saac03.html' },
+      { key:'mess', title:'SQS/SNS',               tip:'Fan‑out con SNS→SQS, DLQ para reintentos.', href:'/content/aws-sqs-sns-patterns.html' },
+      { key:'obs',  title:'Observabilidad',        tip:'CloudWatch + Logs + Alarms; auditoría con CloudTrail.', href:'/content/aws-observability-saac03.html' }
+    ];
+    function renderConceptCloud(){
+      const cloud = document.getElementById('conceptCloud');
+      cloud.innerHTML = CONCEPTS.map(c=>`
+        <a role="listitem" class="chip-bubble" data-key="${c.key}" data-title="${c.title.toLowerCase()}" data-tip="${c.tip.toLowerCase()}" href="${c.href}">
+          <span class="cb-title">${c.title}</span>
+          <span class="cb-tip">${c.tip} <b>Leer →</b></span>
+        </a>
+      `).join('');
+    }
+    function hookConceptSearch(){
+      const input = document.getElementById('conceptSearch');
+      const cloud = document.getElementById('conceptCloud');
+      input.addEventListener('input', ()=>{
+        const q = input.value.trim().toLowerCase();
+        cloud.querySelectorAll('.chip-bubble').forEach(b=>{
+          const hay = (b.dataset.title + ' ' + b.dataset.tip + ' ' + b.dataset.key);
+          b.style.display = hay.includes(q) ? 'flex' : 'none';
+        });
+      });
+    }
+
+    // Render inicial
+    renderRoutes();
+    renderConceptCloud();
+    hookConceptSearch();
   </script>
 </body>
 </html>

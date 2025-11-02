@@ -28,7 +28,7 @@
       --cta:linear-gradient(180deg,#ffcc80,#ff9900);
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
 
-      /* Paleta por rol (inspirada en Azure, adaptada a AWS) */
+      /* Paleta por rol */
       --arch:#ffd699;    --arch-ring:#a76a12;
       --dev:#b8ffcb;     --dev-ring:#2f7c49;
       --ops:#ffe0a8;     --ops-ring:#b37823;
@@ -357,107 +357,6 @@
           </div>
         </div>
 
-        <!-- Rutas de estudio -->
-        <div class="card" style="margin-top:12px">
-          <h2>Rutas de estudio sugeridas</h2>
-          <details open>
-            <summary>Plan 7 días (intensivo) — SAA-C03</summary>
-            <div class="check">
-              <div>1️⃣ <b>Fundamentos:</b> IAM, cuentas, costos, Well-Architected.</div>
-              <div>2️⃣ <b>Red:</b> VPC, subredes, NACL/SG, Endpoints.</div>
-              <div>3️⃣ <b>Almacenamiento:</b> S3 (cifrado, bloqueo público, lifecycle), EFS/EBS.</div>
-              <div>4️⃣ <b>Cómputo:</b> EC2 + Auto Scaling + ALB/NLB.</div>
-              <div>5️⃣ <b>Datos:</b> RDS/Aurora y DynamoDB (HA/backup).</div>
-              <div>6️⃣ <b>Serverless:</b> Lambda, API Gateway, EventBridge.</div>
-              <div>7️⃣ <b>Observabilidad + simulacros:</b> CloudWatch/Trail/Config.</div>
-            </div>
-          </details>
-
-          <details>
-            <summary>Plan 14 días — SAA-C03</summary>
-            <div class="check">
-              <div>Sem 1: Redes (VPC, routing, TGW, PrivateLink), Compute (EC2/ASG/LB).</div>
-              <div>Sem 2: S3/EFS/EBS + RDS/Aurora/DynamoDB, seguridad (KMS/Secrets), y 2 simulacros cronometrados.</div>
-            </div>
-          </details>
-
-          <details>
-            <summary>Plan 30 días — de Cero a Associate</summary>
-            <div class="check">
-              <div>Sem 1: CLF (fundamentos, precios, responsabilidad compartida).</div>
-              <div>Sem 2: Redes y compute con prácticas guiadas.</div>
-              <div>Sem 3: Datos y serverless con integración.</div>
-              <div>Sem 4: Seguridad/costes + 3 simulacros finales.</div>
-            </div>
-          </details>
-          <div class="cta-row"><a class="cta-btn" href="#contenidos">📘 Descargar checklist (próx.)</a></div>
-        </div>
-
-        <!-- Contenido clave -->
-        <div id="contenidos" class="card" style="margin-top:12px">
-          <h2>Contenido clave (resúmenes y hojas de trucos)</h2>
-          <div class="grid cols-2" style="margin-top:10px">
-            <article class="card">
-              <b>Alta disponibilidad en VPC</b>
-              <p class="muted">Zonas, Auto Scaling, ALB/NLB, NAT redundantes y errores comunes.</p>
-              <div class="cta-row">
-                <a class="btn aws" href="/content/aws-vpc-ha.html">Leer</a><span class="chip">Redes</span>
-              </div>
-            </article>
-            <article class="card">
-              <b>S3: seguridad y rendimiento</b>
-              <p class="muted">Bloqueo público, SSE-KMS, versionado y multipart upload.</p>
-              <div class="cta-row">
-                <a class="btn aws" href="/content/aws-s3-design-saac03.html">Leer</a><span class="chip">Storage</span>
-              </div>
-            </article>
-            <article class="card">
-              <b>Patrones con SQS y SNS</b>
-              <p class="muted">Colas FIFO, DLQ, *fan-out* y filtros por atributos.</p>
-              <div class="cta-row">
-                <a class="btn aws" href="/content/aws-sqs-sns-patterns.html">Leer</a><span class="chip">Integración</span>
-              </div>
-            </article>
-            <article class="card">
-              <b>Backup inmutable y ciber-recuperación</b>
-              <p class="muted">WORM, cuentas aisladas, copias fuera de banda y *drills*.</p>
-              <div class="cta-row">
-                <a class="btn aws" href="/content/immutable-backup-cyberrecovery.html">Leer</a><span class="chip">Seguridad</span>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <!-- Preguntas frecuentes -->
-        <div class="card" style="margin-top:12px">
-          <h2>Preguntas frecuentes</h2>
-          <details open>
-            <summary>¿Qué certificación empiezo primero?</summary>
-            <p class="muted">Si partes de cero, comienza por <b>CLF-C02</b>. Si ya trabajas con AWS, salta a <b>SAA-C03</b> o <b>SAP-C02</b> según tu rol y experiencia.</p>
-          </details>
-          <details>
-            <summary>¿Cuánto tiempo necesito?</summary>
-            <p class="muted">De 6 a 10 semanas para SAA-C03 estudiando 1–2 h/día. Intensivo 7 días si ya dominas conceptos.</p>
-          </details>
-          <details>
-            <summary>¿Qué puntuación aprueba?</summary>
-            <p class="muted">AWS usa evaluación por dominios. Apunta a ≥ 75–80% en nuestros simuladores cronometrados.</p>
-          </details>
-        </div>
-
-        <!-- Glosario exprés -->
-        <div class="card" style="margin-top:12px">
-          <h2>Glosario exprés de siglas AWS</h2>
-          <div class="grid cols-3">
-            <div class="card"><b>VPC</b><br><span class="muted">Virtual Private Cloud</span></div>
-            <div class="card"><b>SG / NACL</b><br><span class="muted">Security Group / Network ACL</span></div>
-            <div class="card"><b>TGW</b><br><span class="muted">Transit Gateway</span></div>
-            <div class="card"><b>KMS</b><br><span class="muted">Key Management Service</span></div>
-            <div class="card"><b>ASG</b><br><span class="muted">Auto Scaling Group</span></div>
-            <div class="card"><b>WAF</b><br><span class="muted">Web Application Firewall</span></div>
-          </div>
-        </div>
-
         <!-- Consejos -->
         <div class="card" style="margin-top:12px">
           <h2>Consejos rápidos para el examen</h2>
@@ -473,29 +372,7 @@
 
       <!-- DERECHA -->
       <aside class="sidebar">
-        <div class="block">
-          <h3>Resumen rápido</h3>
-          <div class="mini">Recomendado para SAA-C03:</div>
-          <div style="display:grid;gap:6px;margin-top:6px">
-            <div><span class="chip">6–10 semanas</span> de preparación</div>
-            <div><span class="chip">1200+</span> preguntas en banco</div>
-            <div><span class="chip">3</span> simulacros cronometrados</div>
-          </div>
-        </div>
-
-        <div class="block">
-          <h3>Ruta corta (14 días)</h3>
-          <ol class="mini" style="margin:0 0 6px 18px">
-            <li>IAM, cuentas/Organizations, Well-Architected</li>
-            <li>VPC: subredes, SG/NACL, Endpoints, NAT/IGW</li>
-            <li>S3/EFS/EBS · cifrado KMS, lifecycle</li>
-            <li>EC2 + Auto Scaling + ALB/NLB</li>
-            <li>RDS/Aurora + DynamoDB</li>
-            <li>Lambda + API GW + EventBridge</li>
-            <li>CloudWatch/Trail/Config + 2 simulacros</li>
-          </ol>
-          <a class="a-btn" href="#contenidos">Ver resúmenes</a>
-        </div>
+        <!-- (Resumen rápido y Ruta corta eliminados) -->
 
         <div class="block">
           <h3>Recursos oficiales</h3>
