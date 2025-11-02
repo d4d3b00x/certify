@@ -14,6 +14,8 @@
       --chip:#0f1430; --chip2:#101738;
       --tab-bg:#1b2140; --tab-on:rgba(108,139,255,.3);
       --grad1:rgba(255,153,0,.12); --grad2:rgba(0,120,212,.12);
+      /* Azulite activo */
+      --azulite1:#6c8bff; --azulite2:#3e64ff; --azuliteDot:#a9bbff;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -78,9 +80,19 @@
     .tabs{display:flex;gap:6px;flex-wrap:wrap}
     .tab{
       border:1px solid var(--stroke);background:var(--tab-bg);color:var(--ink);
-      padding:6px 10px;border-radius:999px;cursor:pointer;font-weight:500;font-size:.85rem
+      padding:6px 10px;border-radius:999px;cursor:pointer;font-weight:500;font-size:.85rem;
+      position:relative;transition:.15s ease
     }
-    .tab[aria-pressed="true"]{outline:2px solid var(--tab-on)}
+    /* ACTIVO en "azulite": fondo, texto y puntito indicador */
+    .tab[aria-pressed="true"]{
+      background:linear-gradient(180deg,var(--azulite1),var(--azulite2));
+      color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(95,125,255,.35);
+    }
+    .tab[aria-pressed="true"]::after{
+      content:""; position:absolute; top:-6px; right:-6px;
+      width:8px;height:8px;border-radius:50%;
+      background:var(--azuliteDot); box-shadow:0 0 0 4px rgba(108,139,255,.25);
+    }
 
     /* ===== Tabla ===== */
     .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow);padding:10px;overflow-x:auto}
@@ -115,10 +127,6 @@
     .level{display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:.85rem;padding:2px 6px;border-radius:999px;border:1px solid var(--stroke);background:rgba(0,0,0,.04)}
     .level .bar{height:6px;width:90px;background:#0a0f25;border-radius:999px;overflow:hidden;position:relative}
     .level .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
-
-    /* Insignias pequeñas en tabla */
-    .ibadges{display:inline-flex;align-items:center;gap:6px;justify-content:center}
-    .ibadge{width:22px;height:22px;border-radius:50%;border:1px solid var(--stroke);background:var(--surface2);font-size:13px;display:flex;align-items:center;justify-content:center}
 
     /* Reglas + Leyenda (dos columnas) */
     .below-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
@@ -331,7 +339,7 @@
       return { lvl, progress:p };
     }
 
-    /* ======= URL helpers (quiz & scope) ======= */
+    /* ======= URL helpers ======= */
     function normalizeExam(q){
       if(!q) return null;
       const s=String(q).toLowerCase().replace(/\s+/g,'').replace('%20','');
@@ -520,14 +528,15 @@
       }
     }
 
-    // ===== Init: leer parámetros y pintar =====
+    // ===== Init =====
     (function initFromUrl(){
-      const {ex, sc} = readParams();
-      if(ex) EXAM = ex;
-      if(sc) SCOPE = sc;
-      syncTabs();
-      writeParams();
-      render();
+      const p=new URLSearchParams(location.search);
+      const ex=p.get('quiz'); const sc=p.get('scope');
+      const mapExam=(q)=>{ if(!q) return null; q=q.toLowerCase(); if(q==='az104')return'az-104'; if(q==='az305')return'az-305'; if(q==='aws'||q==='saa-c03')return'aws-saa-c03'; return q;};
+      const mapScope=(s)=>['season','week'].includes((s||'').toLowerCase())?(s||'global'):'global';
+      EXAM = mapExam(ex);
+      SCOPE = mapScope(sc);
+      syncTabs(); writeParams(); render();
     })();
   </script>
 </body>

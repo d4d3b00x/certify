@@ -1,100 +1,254 @@
 <!doctype html>
 <html lang="es">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Backup inmutable & Ciberrecuperación — CertifyLab</title>
-<link rel="stylesheet" href="/style_global.css">
+<meta name="theme-color" content="#0f1320" />
+<title>Backup inmutable y Ciberrecuperación — ITHub</title>
+<meta name="description" content="Guía completa 3-2-1-1-0 con WORM, Object Lock, Immutable Blob, vault aislado y runbooks para escenarios de ransomware en AWS/Azure.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="author" content="ITHub">
+<meta name="keywords" content="backup inmutable, ciberrecuperación, ransomware, S3 Object Lock, Azure Immutable Blob, vault, clean room, landing room">
 <style>
-  :root{--bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;--aws:#ff9900;--azure:#0078d4}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-  .wrap{max-width:1100px;margin:0 auto;padding:16px 20px 40px}
-  header{position:sticky;top:0;background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.65));backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
-  .nav{height:60px;display:flex;align-items:center;justify-content:space-between}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--stroke);border-radius:10px}
-  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid #ff990033;background:#ff99001a;color:#ffd7a0;padding:6px 10px;border-radius:999px}
-  h1{font-size:clamp(1.6rem,4vw,2.2rem);margin:16px 0 8px}
-  .grid{display:grid;gap:16px}
-  @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
-  .card{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px}
-  .call{border-left:6px solid var(--aws);background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px}
-  table{width:100%;border-collapse:collapse}
-  th,td{padding:10px;border-bottom:1px solid var(--stroke)}
-  th{color:var(--muted);text-align:left}
-  footer{border-top:1px solid var(--stroke);margin-top:28px;padding-top:16px;color:#9ca8d9}
+:root{ --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9; --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4; --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45); --btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);--btn-ink:#fff; --pill-bg:linear-gradient(180deg,#151b31,#12182c); --pill-ring:#2a3150; --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff); --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b; }
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+/* Accesibilidad */
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+.skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
+:focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px;}
+@media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important} }
+/* HEADER */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:42px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
+nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring); border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--btn-bg);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s, background .12s;font-size:13px;text-transform:uppercase;}
+.pill-btn:hover{transform:translateY(-1px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
+.btn:hover{border-color:#3a4580}
+/* CONTENIDO */
+main{padding:18px 0 10px}
+.hero-page{padding:18px 0 6px}
+.hero-page h1{margin:0 0 4px;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2}
+.breadcrumbs{color:var(--muted);font-size:.92rem;margin:0 0 8px}
+.article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.section{margin:14px 0}
+.toc{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:12px}
+.card{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px}
+.grid{display:grid;gap:14px}
+@media(min-width:860px){.grid.cols-2{grid-template-columns:1fr 1fr}.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+pre{background:#0b122a;border:1px solid #22305f;border-radius:10px;padding:12px;overflow:auto}
+code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;color:#cde1ff}
+.muted{color:var(--muted)}
+.meter{position:relative;height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
+.meter > span{position:absolute;left:0;top:0;height:100%;display:block}
+.m-ok{background:var(--ok)}
+.m-warn{background:var(--warn)}
+.m-bad{background:var(--bad)}
+/* FOOTER */
+footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+.f-grid{display:grid;gap:14px}
+@media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+footer a{color:#cfe1ff}
+footer a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap nav">
-    <div style="font-weight:900;display:flex;align-items:center;gap:10px">
-      <span style="width:10px;height:10px;border-radius:50%;background:var(--aws)"></span> CertifyLab
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      <span>ITHub.es</span>
     </div>
-    <div style="display:flex;gap:8px">
-      <a class="btn" href="../index.html">↩ Volver</a>
-      <a class="btn" href="../quiz.html?quiz=aws-saa-c03">Practicar SAA-C03</a>
+    <nav class="menu" aria-label="Navegación principal">
+      <a class="link-btn" href="/#simuladores">SIMULADORES</a>
+      <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
+      <a class="link-btn" href="/score/ranking.html">RANKING</a>
+    </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
     </div>
   </div>
 </header>
-
-<main class="wrap">
-  <span class="badge">🟧 SAA-C03 · (aplica también a AZ-104)</span>
+<main id="main" tabindex="-1">
+<div class="container hero-page">
+  <div class="breadcrumbs"><a href="/content/content.html">Contenidos</a> · Backup inmutable y Ciberrecuperación</div>
   <h1>Backup inmutable & Ciberrecuperación</h1>
-  <p class="lead" style="color:#9ca8d9">Diseña una estrategia 3-2-1-1-0 con capas de inmutabilidad y un entorno de recuperación seguro (landing/clean room) para superar escenarios de ransomware.</p>
+  <p class="muted">Estrategia 3-2-1-1-0 con capas WORM y un entorno aislado de recuperación (landing/clean room) para volver al negocio con garantías.</p>
+</div>
+<div class="container article">
 
-  <div class="grid">
-    <div class="card">
-      <h3>Principios 3-2-1-1-0</h3>
-      <ul>
-        <li><b>3</b> copias de los datos, en <b>2</b> medios distintos.</li>
-        <li><b>1</b> copia off-site y <b>1</b> <b>inmutable</b> (WORM/locked).</li>
-        <li><b>0</b> errores: pruebas de restauración verificadas.</li>
-      </ul>
-      <p>En AWS: S3 + S3 Glacier con <b>Object Lock</b>, versiones y MFA-Delete; en Azure: Blob con <b>Immutable Policies</b> (time-based/legal hold) y versiones.</p>
-    </div>
-
-    <div class="card">
-      <h3>Arquitectura de recuperación</h3>
-      <ul>
-        <li><b>Landing/Clean Room</b> aislada (cuentas/proyectos/vnets separadas) sin acceso saliente por defecto.</li>
-        <li>Herramientas de <b>malware scanning</b> y análisis forense antes de rehidratar producción.</li>
-        <li>Orquestación (SRM/Azure Site Recovery/Runbooks) para levantar servicios mínimos viables.</li>
-      </ul>
-    </div>
-  </div>
-
-  <h2>Controles de inmutabilidad</h2>
-  <table>
-    <thead><tr><th>Plataforma</th><th>Mecanismo</th><th>Claves del examen</th></tr></thead>
-    <tbody>
-      <tr><td>AWS S3</td><td><b>Object Lock</b> (Compliance/Governance) + Versioning + MFA-Delete</td><td>WORM a nivel objeto; retention legal vs governance; protege frente a borrados lógicos.</td></tr>
-      <tr><td>Azure Blob</td><td><b>Immutable Policy</b> (time-based/legal hold) + Versioning + Soft Delete</td><td>Bloqueo en contenedor; no modificable hasta expirar; útil para ransomware.</td></tr>
-      <tr><td>Backups</td><td>Copia aislada/vault con <b>air-gap lógico</b></td><td>Acceso solo de escritura; restauración pull desde vault hacia entorno limpio.</td></tr>
-    </tbody>
-  </table>
-
-  <div class="call" style="margin-top:16px">
-    <b>Tip de examen:</b> si te piden “no permitir <i>overwrite</i> ni borrado por 30 días” → habilita <b>WORM</b> (S3 Object Lock / Blob Immutable) con periodo; si te piden “inmutable pero con excepción manual” → modo <i>Governance</i> (S3) con permisos adecuados.
-  </div>
-
-  <h2>Runbook de recuperación (alto nivel)</h2>
-  <ol>
-    <li>Detección/aislamiento. Corta accesos y congela cambios.</li>
-    <li>Activa <b>landing room</b> y restaura desde vault inmutable.</li>
-    <li>Escanea y valida integridad (hashing / AV / EDR).</li>
-    <li>Arranque por olas (DB → app → frontend). DNS/Traffic Manager/Route 53.</li>
-    <li>Retorno controlado a producción, post-mortem y endurecimiento.</li>
+<section class="section toc">
+  <strong>En esta guía:</strong>
+  <ol style="margin:6px 0 0">
+    <li>Modelo 3-2-1-1-0 y principios</li>
+    <li>Controles de inmutabilidad (AWS/Azure)</li>
+    <li>Arquitectura de <em>landing/clean room</em></li>
+    <li>Runbook paso a paso y pruebas</li>
+    <li>Métricas, auditoría y FAQs</li>
   </ol>
+</section>
 
-  <h2>Preguntas tipo examen</h2>
+<section class="section">
+  <div class="grid cols-2">
+    <div class="card">
+      <h2>1) Modelo 3-2-1-1-0</h2>
+      <ul>
+        <li><b>3</b> copias — producción + 2 copias.</li>
+        <li><b>2</b> medios distintos — almacenamiento primario y secundario distinto.</li>
+        <li><b>1</b> off-site — región/cuenta distinta.</li>
+        <li><b>1</b> <b>inmutable</b> (WORM) — no sobrescribible ni borrable.</li>
+        <li><b>0</b> errores — restauraciones verificadas y documentadas.</li>
+      </ul>
+      <div class="meter" aria-label="Prioridad: inmutabilidad y pruebas"><span class="m-ok" style="width:72%"></span></div>
+    </div>
+    <div class="card">
+      <h2>2) Controles de inmutabilidad</h2>
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr><th style="text-align:left;color:var(--muted)">Plataforma</th><th style="text-align:left;color:var(--muted)">Mecanismo</th><th style="text-align:left;color:var(--muted)">Claves</th></tr></thead>
+        <tbody>
+          <tr><td>AWS S3</td><td><b>Object Lock</b> Governance/Compliance, versioning, MFA-Delete</td><td>WORM por objeto, retención, legal hold.</td></tr>
+          <tr><td>Azure Blob</td><td><b>Immutable Policy</b> (time-based/legal hold) + versioning + soft delete</td><td>Bloqueo a nivel de contenedor.</td></tr>
+          <tr><td>Backups</td><td>Vault aislado con <em>air-gap lógico</em></td><td>Rutas <em>pull</em>, acceso de solo escritura desde prod.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h2>3) Arquitectura de <em>landing/clean room</em></h2>
+    <ul>
+      <li>Cuenta/suscripción separada, VNet/VPC aislada, sin salida a Internet por defecto.</li>
+      <li>Restauración desde <b>vault inmutable</b> hacia landing; nunca desde prod.</li>
+      <li>Herramientas de análisis: EDR/AV, sandbox, escaneo de hash.</li>
+      <li>Orquestación con SRM/ASR o Runbooks para “mínimo viable” (DB → app → web).</li>
+    </ul>
+    <pre><code># Azure Blob (WORM)
+az storage container immutability-policy create \
+  --account-name mystorage --container-name backups --period 30 --policy-mode Locked</code></pre>
+    <pre><code># S3 Object Lock
+aws s3api put-object-lock-configuration --bucket backups \
+  --object-lock-configuration 'RetentionDays=30,Mode=COMPLIANCE'</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <div class="grid cols-2">
+    <div class="card">
+      <h2>4) Runbook de recuperación</h2>
+      <ol>
+        <li>Aislar: cortar accesos, congelar cambios.</li>
+        <li>Activar landing; restaurar desde vault inmutable.</li>
+        <li>Escanear/validar integridad (hash/AV/EDR).</li>
+        <li>Arranque por olas y conmutación de DNS/traffic.</li>
+        <li>Retorno a prod y post-mortem con mejoras.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>KPIs y auditoría</h2>
+      <ul>
+        <li>RPO/RTO reales por servicio.</li>
+        <li>Tasa de restauraciones exitosas (%).</li>
+        <li>Tiempo de <em>air-gap</em> y rotación de claves.</li>
+        <li>Evidencias firmadas de retención WORM.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section card">
+  <h2>FAQs</h2>
+  <p><b>¿Puedo borrar antes de tiempo en Governance?</b> Solo con permisos especiales; en Compliance/Locked no.</p>
+  <p><b>¿Qué retención elegir?</b> Ajusta a tu amenaza y normativa (p.ej. 30–90 días mínimo para ransomware).</p>
+</section>
+
+<section class="section card">
+  <h2>Checklist</h2>
   <ul>
-    <li>“Evitar eliminación por error/malicioso de backups 14 días” → <b>Object Lock / Immutable Policy</b> (time-based).</li>
-    <li>“Permitir solo un equipo restaurar datos desde vault aislado” → <b>RBAC estricto</b> + red aislada + logs/auditoría.</li>
-    <li>“Demostrar que los datos no se alteran durante el periodo” → modo <b>Compliance</b> / <b>Legal hold</b>.</li>
+    <li>WORM habilitado (S3 Object Lock / Blob Immutable).</li>
+    <li>Vault aislado con acceso solo <em>pull</em>.</li>
+    <li>Prueba de restauración mensual documentada.</li>
+    <li>Runbooks versionados y personas asignadas.</li>
   </ul>
-
-  <footer>© <span id="y"></span> CertifyLab — Recurso asociado a SAA-C03 (y aplicable a AZ-104).</footer>
+</section>
+</div>
 </main>
-<script>document.getElementById('y').textContent=new Date().getFullYear();</script>
+<footer role="contentinfo">
+  <div class="container f-grid">
+    <div>
+      <div class="brand" style="text-transform:none">
+        <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+        <span>ITHub.es</span>
+      </div>
+      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
+    </div>
+    <div>
+      <div style="font-weight:800">Simuladores</div>
+      <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
+      <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+      <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
+    </div>
+    <div>
+      <div style="font-weight:800">Contenidos</div>
+      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+      <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+      <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
+      <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
+      <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
+    </div>
+    <div>
+      <div style="font-weight:800">Colaborador</div>
+      💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
+      <div style="font-weight:800">Contacto</div>
+      <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff; font-weight:800;display:inline-flex;align-items:center; gap:6px;cursor:pointer;padding:0;margin-top:6px;"> 💬 <span>Contáctanos</span> </button>
+    </div>
+  </div>
+  <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+</footer>
+<div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
+<script>
+// Año
+document.getElementById('y').textContent = new Date().getFullYear();
+// Auth
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+function renderHeaderAuth(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+  else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+}
+renderHeaderAuth();
+document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+// Feedback desde footer
+document.getElementById('footerContactBtn')?.addEventListener('click', ()=>{ try{ document.getElementById('btnFeedback')?.click(); }catch{} });
+</script>
 </body>
 </html>

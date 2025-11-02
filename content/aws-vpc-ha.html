@@ -1,87 +1,138 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VPC Alta Disponibilidad — CertifyLab</title>
-  <style>
-    :root{
-      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
-      --stroke:#283056;--aws:#ff9900;--shadow:0 12px 28px rgba(6,12,40,.45);
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-      color:var(--ink);background:var(--bg);line-height:1.6}
-    .container{max-width:900px;margin:0 auto;padding:20px}
-    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
-    .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
-    .logo-pill{width:16px;height:30px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);
-      box-shadow:0 0 0 6px rgba(108,139,255,.18)}
-    a{color:inherit;text-decoration:none}
-    .btn, .pill{display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 14px;border-radius:12px;
-      border:1px solid var(--stroke);font-weight:900}
-    .pill{background:linear-gradient(180deg,#7a67ff,#5f48ff);border-color:#3b2fff44;color:#fff}
-    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.95rem;margin-top:6px}
-    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid #2a3150;font-weight:800}
-    .chip.aws{background:rgba(255,153,0,.18);color:#ffd79a;border-color:rgba(255,153,0,.4)}
-    .dot{width:10px;height:10px;border-radius:999px;display:inline-block;background:#ff9900}
-    h1{font-size:clamp(1.6rem,4.2vw,2.2rem);margin:16px 0 6px}
-    h2{margin:22px 0 8px;font-size:1.25rem}
-    section{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;
-      box-shadow:var(--shadow);padding:16px;margin:14px 0}
-    pre{background:#0b122a;border:1px solid #22305f;border-radius:10px;padding:12px;overflow:auto}
-    code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;color:#cde1ff}
-    ul{margin:8px 0 0 18px}
-    footer{border-top:1px solid var(--stroke);color:#9ca8d9;margin-top:20px;padding:16px 0}
-  </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#0f1320" />
+<title>VPC de Alta Disponibilidad — ITHub</title>
+<meta name="description" content="Topologías Multi-AZ, NAT por AZ, balanceo, observabilidad y seguridad para VPC altamente disponibles.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="author" content="ITHub">
+<meta name="keywords" content="VPC, alta disponibilidad, Multi-AZ, NAT, ALB, NLB, Terraform, SAA-C03">
+<style>
+:root{ --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9; --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4; --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45); --btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);--btn-ink:#fff; --pill-bg:linear-gradient(180deg,#151b31,#12182c); --pill-ring:#2a3150; --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff); --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b; }
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+/* Accesibilidad */
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+.skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
+:focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px;}
+@media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important} }
+/* HEADER */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:42px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
+nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring); border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--btn-bg);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s, background .12s;font-size:13px;text-transform:uppercase;}
+.pill-btn:hover{transform:translateY(-1px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
+.btn:hover{border-color:#3a4580}
+/* CONTENIDO */
+main{padding:18px 0 10px}
+.hero-page{padding:18px 0 6px}
+.hero-page h1{margin:0 0 4px;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2}
+.breadcrumbs{color:var(--muted);font-size:.92rem;margin:0 0 8px}
+.article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+.section{margin:14px 0}
+.toc{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:12px}
+.card{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:14px}
+.grid{display:grid;gap:14px}
+@media(min-width:860px){.grid.cols-2{grid-template-columns:1fr 1fr}.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+pre{background:#0b122a;border:1px solid #22305f;border-radius:10px;padding:12px;overflow:auto}
+code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;color:#cde1ff}
+.muted{color:var(--muted)}
+.meter{position:relative;height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
+.meter > span{position:absolute;left:0;top:0;height:100%;display:block}
+.m-ok{background:var(--ok)}
+.m-warn{background:var(--warn)}
+.m-bad{background:var(--bad)}
+/* FOOTER */
+footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+.f-grid{display:grid;gap:14px}
+@media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+footer a{color:#cfe1ff}
+footer a:hover{text-decoration:underline}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div class="brand"><span class="logo-pill"></span> <span>CertifyLab</span></div>
-      <a class="btn" href="/index.html">← Volver</a>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      <span>ITHub.es</span>
     </div>
-  </header>
+    <nav class="menu" aria-label="Navegación principal">
+      <a class="link-btn" href="/#simuladores">SIMULADORES</a>
+      <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
+      <a class="link-btn" href="/score/ranking.html">RANKING</a>
+    </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
+    </div>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+<div class="container hero-page">
+  <div class="breadcrumbs"><a href="/content/content.html">Contenidos</a> · AWS · VPC Alta Disponibilidad</div>
+  <h1>Alta disponibilidad en VPC: patrones prácticos</h1>
+  <p class="muted">Diseño Multi-AZ con balanceo, NAT redundante, subredes por capa y servicios gestionados resilientes.</p>
+</div>
+<div class="container article">
 
-  <main class="container">
-    <div class="meta"><span class="dot" title="AWS · SAA-C03"></span> <span>Aplica: SAA-C03</span> · <span>Lectura: 7 min</span></div>
-    <h1>Alta disponibilidad en VPC: patrones prácticos</h1>
-    <p class="muted">Diseño Multi-AZ con balanceo, NAT redundante, subredes por capa y servicios gestionados resilientes.</p>
-
-    <section>
-      <h2>Topología base Multi-AZ</h2>
-      <ul>
-        <li>Subredes <strong>públicas</strong> y <strong>privadas</strong> en al menos 2 AZ.</li>
-        <li><strong>ALB</strong> en subredes públicas; <strong>ASG</strong> en privadas con <em>spread</em> por AZ.</li>
-        <li><strong>NAT Gateway por AZ</strong> (evita single point). Tablas de ruta por subred.</li>
-      </ul>
-      <pre><code># Rutas típicas (ejemplo)
+<section class="section grid cols-2">
+  <div class="card">
+    <h2>Topología base Multi-AZ</h2>
+    <ul>
+      <li>Subredes <b>públicas</b> y <b>privadas</b> en al menos 2 AZ.</li>
+      <li><b>ALB</b> en públicas; <b>ASG</b> en privadas con balance entre AZ.</li>
+      <li><b>NAT Gateway por AZ</b> y tablas de ruta por subred.</li>
+    </ul>
+    <pre><code># Rutas típicas
 # Privadas -> 0.0.0.0/0 via NAT de su AZ
-# Públicas  -> 0.0.0.0/0 via Internet Gateway
-</code></pre>
-    </section>
-
-    <section>
-      <h2>Servicios gestionados resilientes</h2>
-      <ul>
-        <li><strong>RDS Multi-AZ</strong> con réplicas de lectura si procede.</li>
-        <li><strong>ElastiCache</strong> con clúster multi-AZ y auto-failover.</li>
-        <li><strong>EFS</strong> para compartido; <strong>S3</strong> como capa duradera.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Balanceo y salud</h2>
-      <ul>
-        <li><strong>ALB</strong> para HTTP/HTTPS; <strong>NLB</strong> para TCP/alta perf.</li>
-        <li><strong>Route 53</strong> con health checks y <em>failover</em> geo o multi-value.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Plantilla Terraform (fragmento)</h2>
-      <pre><code>resource "aws_nat_gateway" "this" {
+# Públicas  -> 0.0.0.0/0 via Internet Gateway</code></pre>
+  </div>
+  <div class="card">
+    <h2>Servicios gestionados</h2>
+    <ul>
+      <li><b>RDS Multi-AZ</b> y réplicas.</li>
+      <li><b>ElastiCache</b> multi-AZ y auto-failover.</li>
+      <li><b>EFS</b> y <b>S3</b> para datos duraderos.</li>
+    </ul>
+  </div>
+</section>
+<section class="section grid cols-2">
+  <div class="card">
+    <h2>Balanceo y salud</h2>
+    <ul>
+      <li><b>ALB</b> HTTP/HTTPS; <b>NLB</b> TCP/alta perf.</li>
+      <li><b>Route 53</b> con health checks y <em>failover</em>.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Terraform (fragmento)</h2>
+    <pre><code>resource "aws_nat_gateway" "this" {
   allocation_id = aws_eip.nat[count.index].id
   subnet_id     = aws_subnet.public[count.index].id
   count         = length(var.azs)
@@ -92,31 +143,79 @@ resource "aws_route" "private_egress" {
   route_table_id         = aws_route_table.private[each.value].id
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = aws_nat_gateway.this[index(var.azs, each.value)].id
+}</code></pre>
+  </div>
+</section>
+<section class="section card">
+  <h2>Observabilidad y seguridad</h2>
+  <ul>
+    <li>VPC Flow Logs + CloudWatch; alarmas en ALB/ASG.</li>
+    <li>NACL mínimas; <b>Security Groups</b> como frontera principal.</li>
+    <li>PrivateLink/Interface Endpoints para PaaS sin Internet.</li>
+  </ul>
+</section>
+<section class="section card">
+  <h2>Checklist de HA</h2>
+  <ul>
+    <li>NAT <b>por AZ</b> y tablas correctas.</li>
+    <li>ASG min=2, max≥4 y balance.</li>
+    <li>Datos en servicios Multi-AZ.</li>
+    <li>Pruebas de fallo (AZ down).</li>
+  </ul>
+</section>
+</div>
+</main>
+<footer role="contentinfo">
+  <div class="container f-grid">
+    <div>
+      <div class="brand" style="text-transform:none">
+        <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+        <span>ITHub.es</span>
+      </div>
+      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
+    </div>
+    <div>
+      <div style="font-weight:800">Simuladores</div>
+      <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
+      <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+      <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
+    </div>
+    <div>
+      <div style="font-weight:800">Contenidos</div>
+      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+      <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+      <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
+      <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
+      <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
+    </div>
+    <div>
+      <div style="font-weight:800">Colaborador</div>
+      💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
+      <div style="font-weight:800">Contacto</div>
+      <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff; font-weight:800;display:inline-flex;align-items:center; gap:6px;cursor:pointer;padding:0;margin-top:6px;"> 💬 <span>Contáctanos</span> </button>
+    </div>
+  </div>
+  <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+</footer>
+<div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
+<script>
+// Año
+document.getElementById('y').textContent = new Date().getFullYear();
+// Auth
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+function renderHeaderAuth(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+  else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
 }
-</code></pre>
-    </section>
-
-    <section>
-      <h2>Observabilidad y seguridad</h2>
-      <ul>
-        <li>Logs de flujo VPC + CloudWatch; alarmas de salud en ALB/ASG.</li>
-        <li>NACL mínimas, <strong>Security Groups</strong> como frontera principal.</li>
-        <li>Privatelink/Interface Endpoints para PaaS sin Internet.</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Checklist de HA</h2>
-      <ul>
-        <li>NAT <strong>por AZ</strong> y tablas de ruta correctas.</li>
-        <li>ASG con <em>min=2</em>, <em>max>=4</em> y balance entre AZ.</li>
-        <li>Datos en servicios gestionados Multi-AZ.</li>
-        <li>Pruebas de fallo: simula AZ down (chaos tests).</li>
-      </ul>
-    </section>
-  </main>
-
-  <footer class="container">© <span id="y"></span> CertifyLab — <a href="/index.html">Inicio</a></footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+renderHeaderAuth();
+document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+// Feedback desde footer
+document.getElementById('footerContactBtn')?.addEventListener('click', ()=>{ try{ document.getElementById('btnFeedback')?.click(); }catch{} });
+</script>
 </body>
 </html>

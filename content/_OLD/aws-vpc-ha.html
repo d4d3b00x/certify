@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VPC Alta Disponibilidad — CertifyLab</title>
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --stroke:#283056;--aws:#ff9900;--shadow:0 12px 28px rgba(6,12,40,.45);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);background:var(--bg);line-height:1.6}
+    .container{max-width:900px;margin:0 auto;padding:20px}
+    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:60px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .logo-pill{width:16px;height:30px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);
+      box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    a{color:inherit;text-decoration:none}
+    .btn, .pill{display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 14px;border-radius:12px;
+      border:1px solid var(--stroke);font-weight:900}
+    .pill{background:linear-gradient(180deg,#7a67ff,#5f48ff);border-color:#3b2fff44;color:#fff}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.95rem;margin-top:6px}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid #2a3150;font-weight:800}
+    .chip.aws{background:rgba(255,153,0,.18);color:#ffd79a;border-color:rgba(255,153,0,.4)}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block;background:#ff9900}
+    h1{font-size:clamp(1.6rem,4.2vw,2.2rem);margin:16px 0 6px}
+    h2{margin:22px 0 8px;font-size:1.25rem}
+    section{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;
+      box-shadow:var(--shadow);padding:16px;margin:14px 0}
+    pre{background:#0b122a;border:1px solid #22305f;border-radius:10px;padding:12px;overflow:auto}
+    code{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;color:#cde1ff}
+    ul{margin:8px 0 0 18px}
+    footer{border-top:1px solid var(--stroke);color:#9ca8d9;margin-top:20px;padding:16px 0}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><span class="logo-pill"></span> <span>CertifyLab</span></div>
+      <a class="btn" href="/index.html">← Volver</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="meta"><span class="dot" title="AWS · SAA-C03"></span> <span>Aplica: SAA-C03</span> · <span>Lectura: 7 min</span></div>
+    <h1>Alta disponibilidad en VPC: patrones prácticos</h1>
+    <p class="muted">Diseño Multi-AZ con balanceo, NAT redundante, subredes por capa y servicios gestionados resilientes.</p>
+
+    <section>
+      <h2>Topología base Multi-AZ</h2>
+      <ul>
+        <li>Subredes <strong>públicas</strong> y <strong>privadas</strong> en al menos 2 AZ.</li>
+        <li><strong>ALB</strong> en subredes públicas; <strong>ASG</strong> en privadas con <em>spread</em> por AZ.</li>
+        <li><strong>NAT Gateway por AZ</strong> (evita single point). Tablas de ruta por subred.</li>
+      </ul>
+      <pre><code># Rutas típicas (ejemplo)
+# Privadas -> 0.0.0.0/0 via NAT de su AZ
+# Públicas  -> 0.0.0.0/0 via Internet Gateway
+</code></pre>
+    </section>
+
+    <section>
+      <h2>Servicios gestionados resilientes</h2>
+      <ul>
+        <li><strong>RDS Multi-AZ</strong> con réplicas de lectura si procede.</li>
+        <li><strong>ElastiCache</strong> con clúster multi-AZ y auto-failover.</li>
+        <li><strong>EFS</strong> para compartido; <strong>S3</strong> como capa duradera.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Balanceo y salud</h2>
+      <ul>
+        <li><strong>ALB</strong> para HTTP/HTTPS; <strong>NLB</strong> para TCP/alta perf.</li>
+        <li><strong>Route 53</strong> con health checks y <em>failover</em> geo o multi-value.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Plantilla Terraform (fragmento)</h2>
+      <pre><code>resource "aws_nat_gateway" "this" {
+  allocation_id = aws_eip.nat[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
+  count         = length(var.azs)
+}
+
+resource "aws_route" "private_egress" {
+  for_each               = toset(var.azs)
+  route_table_id         = aws_route_table.private[each.value].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.this[index(var.azs, each.value)].id
+}
+</code></pre>
+    </section>
+
+    <section>
+      <h2>Observabilidad y seguridad</h2>
+      <ul>
+        <li>Logs de flujo VPC + CloudWatch; alarmas de salud en ALB/ASG.</li>
+        <li>NACL mínimas, <strong>Security Groups</strong> como frontera principal.</li>
+        <li>Privatelink/Interface Endpoints para PaaS sin Internet.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Checklist de HA</h2>
+      <ul>
+        <li>NAT <strong>por AZ</strong> y tablas de ruta correctas.</li>
+        <li>ASG con <em>min=2</em>, <em>max>=4</em> y balance entre AZ.</li>
+        <li>Datos en servicios gestionados Multi-AZ.</li>
+        <li>Pruebas de fallo: simula AZ down (chaos tests).</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="container">© <span id="y"></span> CertifyLab — <a href="/index.html">Inicio</a></footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
