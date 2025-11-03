@@ -677,7 +677,7 @@ function hasPendingMarked(){
 function onSelect(i){
   if(typeof S.answers[S.idx]!=='undefined') return;
   S.answers[S.idx]=i;
-  S._afterRenderScroll='explanation';
+  S._afterRenderScroll='question';
   saveProgress({reason:'answer'});
   renderQuiz();
 }
