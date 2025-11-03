@@ -5,79 +5,101 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AZ‑104 — Dominio 1 · Administrar identidades y gobierno</title>
 <style>
-  body{margin:0;background:#0f1320;color:#e8ecff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
-  a{color:#9fc4ff}
-  .wrap{max-width:900px;margin:0 auto;padding:22px}
-  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #2b3566;background:#141a37;
-          padding:8px 12px;border-radius:999px;font-weight:900;color:#cbd6ff}
-  h1{margin:8px 0 6px;font-size:1.55rem}
-  h2{margin:18px 0 8px;font-size:1.15rem}
-  .muted{color:#9ca8d9}
-  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:12px;padding:14px;margin:10px 0}
-  ul{padding-left:18px;margin:6px 0}
-  li+li{margin-top:6px}
-  .ok{color:#9ff0c9}
-  .warn{color:#ffd063}
-  .bad{color:#ffb0b0}
-  code, .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-
-  .toc{background:#10183a;border:1px solid #283056;border-radius:10px;padding:10px;margin:10px 0}
-  .toc a{color:#cfe1ff;text-decoration:none}
-  .toc li+li{margin-top:4px}
-  .resources a{word-break:break-all}
+:root{
+  --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+  --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
+  --blue:#74a8ff;--purple:#c59cff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+  color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+a{color:var(--accent)}
+.wrap{max-width:1000px;margin:0 auto;padding:28px}
+.badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
+  padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
+h1{margin:10px 0 10px;font-size:1.9rem}
+h2{margin:22px 0 10px;font-size:1.25rem}
+.muted{color:var(--muted)}
+.card{background:linear-gradient(180deg,#101a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
+ul{padding-left:18px;margin:6px 0}
+li+li{margin-top:6px}
+.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+.toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
+.toc a{color:#e3ecff;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
+.pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
+.hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
+.note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
+.tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
+.warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
+kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
+pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
+.footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <span class="badge">Azure · Identidades</span>
+  <span class="badge">Azure · Identidades y Gobierno</span>
   <h1>AZ‑104 — Dominio 1 · Administrar identidades y gobierno</h1>
-  <p class="muted">Azure AD/Microsoft Entra, RBAC, control de acceso y políticas.</p>
-<div class="toc">
-  <strong>Índice</strong>
-  <ul>
-    <li><a href="#patrones">Patrones que puntúan</a></li>
-    <li><a href="#errores">Errores comunes</a></li>
-    <li><a href="#checklist">Lista de estudio</a></li>
-    <li><a href="#pista">Pista de examen</a></li>
-    <li><a href="#recursos">Recursos oficiales</a></li>
-  </ul>
-</div>
-
-<div class=\"card\" id=\"patrones\"><h2>Patrones que puntúan</h2>
-<ul>
-<li><strong>RBAC al mínimo</strong>: roles integrados o personalizados; asignación en el ámbito correcto (suscripción/grupo de recursos/recurso).</li>
-<li><strong>Identidades administradas</strong> para apps; evita secretos en código; usa Key Vault.</li>
-<li><strong>Políticas con Azure Policy</strong> para cumplimiento (ubicación, SKU, tags obligatorios).</li>
-<li><strong>Inicios seguros</strong>: MFA, acceso condicional, PIM para roles privilegiados.</li>
-</ul>
-</div>
-<div class=\"card\" id=\"errores\"><h2>Errores comunes</h2>
-<ul>
-<li class="bad">Asignar <em>Owner</em> a grupos completos sin justificación.</li>
-<li class="bad">No usar identidades administradas y guardar secretos en variables.</li>
-</ul>
-</div>
-<div class=\"card\" id=\"checklist\"><h2>Lista de estudio</h2>
-<ul>
-<li>Ámbitos RBAC, herencia y denegación explícita con Policy.</li>
-<li>Key Vault: RBAC vs políticas de acceso, firewalls y endpoints privados.</li>
-</ul>
-</div>
-<div class=\"card\" id=\"pista\"><h2>Pista de examen</h2>
-<p>Si la pregunta habla de <em>imponer</em> reglas, piensa en <strong>Azure Policy</strong>; si es delegar permisos, <strong>RBAC</strong>.</p>
-</div>
-
-<div class="card resources" id="recursos">
-  <h2>Recursos oficiales</h2>
-  <ul>
-    <li><a href="https://learn.microsoft.com/azure/role-based-access-control/overview" target="_blank" rel="noopener">RBAC en Azure</a></li>
-<li><a href="https://learn.microsoft.com/entra/identity/" target="_blank" rel="noopener">Microsoft Entra ID (Azure AD)</a></li>
-<li><a href="https://learn.microsoft.com/azure/governance/policy/overview" target="_blank" rel="noopener">Azure Policy</a></li>
-<li><a href="https://learn.microsoft.com/azure/key-vault/general/basic-concepts" target="_blank" rel="noopener">Key Vault</a></li>
-  </ul>
-  <p class="muted">Enlaces a documentación oficial para ampliar y validar conceptos clave.</p>
-</div>
-
+  <p class="muted">Entra ID (Azure AD), RBAC, PIM, Azure Policy, Resource Graph, Tags y gobierno multi-suscripción.</p>
+  
+    <div class="toc">
+      <div class="kicker">Índice</div>
+      <div class="grid">
+        <a href="#conceptos">Conceptos clave</a>
+        <a href="#decision">Guía de decisión</a>
+        <a href="#comandos">Comandos útiles</a>
+        <a href="#escenarios">Escenarios de examen</a>
+        <a href="#errores">Errores comunes</a>
+        <a href="#cross">Cross-links entre dominios</a>
+      </div>
+    </div>
+    
+    <div class="card" id="conceptos"><h2>Conceptos clave</h2>
+      <ul><li><strong>Microsoft Entra ID</strong>: Inquilino, objetos (usuarios, grupos, roles), apps y entidades de servicio; consentimiento y permisos.</li><li><strong>RBAC vs KV Access</strong>: RBAC de Azure (Owner/Contributor/Reader/Data) vs políticas de acceso propias de Key Vault.</li><li><strong>PIM</strong>: Asignaciones elegibles, activación JIT con MFA, revisiones de acceso y auditoría.</li><li><strong>Azure Policy</strong>: Definiciones, iniciativas, parámetros, efectos (Deny/Audit/Modify/DeployIfNotExists), cumplimiento.</li><li><strong>Resource Graph</strong>: Inventario multi-suscripción con KQL para estándares y reporting.</li><li><strong>Management Groups</strong>: Aplicar políticas y RBAC por encima de suscripciones.</li><li><strong>Tags</strong>: Clave:valor, estandarización y herencia con Policy.</li></ul>
+      <div class="hl note" style="margin-top:10px">
+        <span class="pill">📘 Tip del examen</span>
+        En preguntas de *observabilidad*, piensa en **Azure Monitor + Log Analytics + Alertas** antes de automatizar.
+      </div>
+    </div>
+    
+    <div class="card" id="decision"><h2>Guía de decisión (rápida)</h2>
+      <ul><li><strong>Imponer estándares</strong>: Azure Policy.</li><li><strong>Delegar permisos</strong>: RBAC mínimo e idealmente a grupos.</li><li><strong>Acceso privilegiado</strong>: PIM + JIT + MFA.</li><li><strong>Inventario global</strong>: Azure Resource Graph.</li></ul>
+      <p class="muted">Recuerda revisar costes de ingestión, retención y tablas dedicadas antes de habilitar diagnósticos masivos.</p>
+    </div>
+    
+    <div class="card" id="comandos"><h2>Comandos útiles</h2>
+      <div class="grid">
+        <div class='card' style='background:#0c1332'><div class='kicker'>RBAC</div><pre><code>az role assignment create --assignee <objId> --role Reader --scope /subscriptions/<subId></code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Policy</div><pre><code>az policy assignment create --name denyPublicIP --policy <policyId> --scope <scope></code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Graph</div><pre><code>az graph query -q "resources | where type =~ 'microsoft.compute/virtualmachines'"</code></pre></div>
+      </div>
+      <p class="muted">Incluye <kbd>az</kbd> CLI, consultas <kbd>KQL</kbd> y opciones de portal.</p>
+    </div>
+    
+    <div class="card" id="escenarios"><h2>Escenarios de examen (tipo test)</h2>
+      <ul><li><strong>Exigir tag costCenter</strong>: Policy con efecto Deny/Modify.</li><li><strong>App sin secretos en código</strong>: Identidad Administrada + KV.</li><li><strong>Auditoría de roles privilegiados</strong>: PIM + access reviews.</li><li><strong>Lectura a auditores multi-sub</strong>: Group Reader a nivel Management Group.</li></ul>
+      <div class="hl tip" style="margin-top:10px">
+        <span class="pill">🎯 Estrategia</span>
+        Valora ruido vs. señal: usa reglas de supresión, horarios silenciosos y grupos de acción específicos.
+      </div>
+    </div>
+    
+    <div class="card warnbox" id="errores"><h2>Errores comunes</h2>
+      <ul><li><strong>Owner a grupos enteros</strong>: Usa roles mínimos o personalizados.</li><li><strong>Sin cuentas break-glass</strong>: Crea cuentas de emergencia con exclusiones controladas y monitorización.</li><li><strong>Confundir Blueprints</strong>: Usa Bicep/ARM + Policy; Blueprints clásicos en desuso.</li></ul>
+    </div>
+    
+    <div class="card" id="cross"><h2>Cross-links entre dominios</h2>
+      <ul><li><strong>Storage</strong>: Policy para ubicación/SKU y PE obligatorios.</li><li><strong>Redes</strong>: Policy para impedir IP públicas; forzar NSG/UDR.</li><li><strong>Monitor</strong>: Policy para diagnósticos a Log Analytics.</li></ul>
+      <p class="muted">Relaciona monitoreo con identidades, redes, cómputo y almacenamiento para respuestas completas.</p>
+    </div>
+    
+  
+    <div class="footer">
+      <span class="pill">🧠 Consejo</span> Crea dashboards y *workbooks* por dominio (Identidades, Redes, Cómputo, Storage) y practica KQL con datos de demo.
+      <span class="pill">🔗</span> Usa *Action Groups* reutilizables y *Action Rules* para suprimir ruido en cambios planificados.
+    </div>
+    
 </div>
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AZ‑104 — Dominio 1 · Administrar identidades y gobierno</title>
+<style>
+  body{margin:0;background:#0f1320;color:#e8ecff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:#9fc4ff}
+  .wrap{max-width:900px;margin:0 auto;padding:22px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #2b3566;background:#141a37;
+          padding:8px 12px;border-radius:999px;font-weight:900;color:#cbd6ff}
+  h1{margin:8px 0 6px;font-size:1.55rem}
+  h2{margin:18px 0 8px;font-size:1.15rem}
+  .muted{color:#9ca8d9}
+  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:12px;padding:14px;margin:10px 0}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:#9ff0c9}
+  .warn{color:#ffd063}
+  .bad{color:#ffb0b0}
+  code, .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+
+  .toc{background:#10183a;border:1px solid #283056;border-radius:10px;padding:10px;margin:10px 0}
+  .toc a{color:#cfe1ff;text-decoration:none}
+  .toc li+li{margin-top:4px}
+  .resources a{word-break:break-all}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">Azure · Identidades</span>
+  <h1>AZ‑104 — Dominio 1 · Administrar identidades y gobierno</h1>
+  <p class="muted">Azure AD/Microsoft Entra, RBAC, control de acceso y políticas.</p>
+<div class="toc">
+  <strong>Índice</strong>
+  <ul>
+    <li><a href="#patrones">Patrones que puntúan</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#checklist">Lista de estudio</a></li>
+    <li><a href="#pista">Pista de examen</a></li>
+    <li><a href="#recursos">Recursos oficiales</a></li>
+  </ul>
+</div>
+
+<div class=\"card\" id=\"patrones\"><h2>Patrones que puntúan</h2>
+<ul>
+<li><strong>RBAC al mínimo</strong>: roles integrados o personalizados; asignación en el ámbito correcto (suscripción/grupo de recursos/recurso).</li>
+<li><strong>Identidades administradas</strong> para apps; evita secretos en código; usa Key Vault.</li>
+<li><strong>Políticas con Azure Policy</strong> para cumplimiento (ubicación, SKU, tags obligatorios).</li>
+<li><strong>Inicios seguros</strong>: MFA, acceso condicional, PIM para roles privilegiados.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"errores\"><h2>Errores comunes</h2>
+<ul>
+<li class="bad">Asignar <em>Owner</em> a grupos completos sin justificación.</li>
+<li class="bad">No usar identidades administradas y guardar secretos en variables.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"checklist\"><h2>Lista de estudio</h2>
+<ul>
+<li>Ámbitos RBAC, herencia y denegación explícita con Policy.</li>
+<li>Key Vault: RBAC vs políticas de acceso, firewalls y endpoints privados.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"pista\"><h2>Pista de examen</h2>
+<p>Si la pregunta habla de <em>imponer</em> reglas, piensa en <strong>Azure Policy</strong>; si es delegar permisos, <strong>RBAC</strong>.</p>
+</div>
+
+<div class="card resources" id="recursos">
+  <h2>Recursos oficiales</h2>
+  <ul>
+    <li><a href="https://learn.microsoft.com/azure/role-based-access-control/overview" target="_blank" rel="noopener">RBAC en Azure</a></li>
+<li><a href="https://learn.microsoft.com/entra/identity/" target="_blank" rel="noopener">Microsoft Entra ID (Azure AD)</a></li>
+<li><a href="https://learn.microsoft.com/azure/governance/policy/overview" target="_blank" rel="noopener">Azure Policy</a></li>
+<li><a href="https://learn.microsoft.com/azure/key-vault/general/basic-concepts" target="_blank" rel="noopener">Key Vault</a></li>
+  </ul>
+  <p class="muted">Enlaces a documentación oficial para ampliar y validar conceptos clave.</p>
+</div>
+
+</div>
+</body>
+</html>

@@ -5,78 +5,101 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AZ‑104 — Dominio 2 · Implementar y administrar almacenamiento</title>
 <style>
-  body{margin:0;background:#0f1320;color:#e8ecff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
-  a{color:#9fc4ff}
-  .wrap{max-width:900px;margin:0 auto;padding:22px}
-  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #2b3566;background:#141a37;
-          padding:8px 12px;border-radius:999px;font-weight:900;color:#cbd6ff}
-  h1{margin:8px 0 6px;font-size:1.55rem}
-  h2{margin:18px 0 8px;font-size:1.15rem}
-  .muted{color:#9ca8d9}
-  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:12px;padding:14px;margin:10px 0}
-  ul{padding-left:18px;margin:6px 0}
-  li+li{margin-top:6px}
-  .ok{color:#9ff0c9}
-  .warn{color:#ffd063}
-  .bad{color:#ffb0b0}
-  code, .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-
-  .toc{background:#10183a;border:1px solid #283056;border-radius:10px;padding:10px;margin:10px 0}
-  .toc a{color:#cfe1ff;text-decoration:none}
-  .toc li+li{margin-top:4px}
-  .resources a{word-break:break-all}
+:root{
+  --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+  --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
+  --blue:#74a8ff;--purple:#c59cff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+  color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+a{color:var(--accent)}
+.wrap{max-width:1000px;margin:0 auto;padding:28px}
+.badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
+  padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
+h1{margin:10px 0 10px;font-size:1.9rem}
+h2{margin:22px 0 10px;font-size:1.25rem}
+.muted{color:var(--muted)}
+.card{background:linear-gradient(180deg,#101a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
+ul{padding-left:18px;margin:6px 0}
+li+li{margin-top:6px}
+.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+.toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
+.toc a{color:#e3ecff;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
+.pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
+.hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
+.note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
+.tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
+.warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
+kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
+pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
+.footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <span class="badge">Azure · Almacenamiento</span>
   <h1>AZ‑104 — Dominio 2 · Implementar y administrar almacenamiento</h1>
-  <p class="muted">Cuentas de almacenamiento, redundancia, seguridad y rendimiento.</p>
-<div class="toc">
-  <strong>Índice</strong>
-  <ul>
-    <li><a href="#patrones">Patrones que puntúan</a></li>
-    <li><a href="#errores">Errores comunes</a></li>
-    <li><a href="#checklist">Lista de estudio</a></li>
-    <li><a href="#pista">Pista de examen</a></li>
-    <li><a href="#recursos">Recursos oficiales</a></li>
-  </ul>
-</div>
-
-<div class=\"card\" id=\"patrones\"><h2>Patrones que puntúan</h2>
-<ul>
-<li><strong>Tipo de cuenta correcto</strong>: <em>StorageV2</em> para funciones modernas; Premium para latencia baja.</li>
-<li><strong>Redundancia</strong>: LRS para coste, ZRS para alta disponibilidad zonal, GRS/RA‑GRS para DR regional.</li>
-<li><strong>Seguridad</strong>: puntos de conexión privados, <em>Azure AD auth</em> para Azure Files, cifrado con claves gestionadas por cliente (CMK) cuando sea necesario.</li>
-<li><strong>Ciclo de vida</strong>: reglas para mover de Hot→Cool→Archive y eliminar versiones antiguas.</li>
-</ul>
-</div>
-<div class=\"card\" id=\"errores\"><h2>Errores comunes</h2>
-<ul>
-<li class="bad">Exponer Blob públicamente sin restricciones.</li>
-<li class="bad">Usar SAS de larga duración sin <em>stored access policy</em>.</li>
-</ul>
-</div>
-<div class=\"card\" id=\"checklist\"><h2>Lista de estudio</h2>
-<ul>
-<li>Comparar Azure Files vs Blob; instantáneas, replicación y rendimiento.</li>
-<li>AzCopy/Azure Storage Explorer y características de NFS/SMB.</li>
-</ul>
-</div>
-<div class=\"card\" id=\"pista\"><h2>Pista de examen</h2>
-<p>Para compartir archivos con identidades de AD: <strong>Azure Files + Azure AD DS</strong> o <strong>Kerberos</strong>.</p>
-</div>
-
-<div class="card resources" id="recursos">
-  <h2>Recursos oficiales</h2>
-  <ul>
-    <li><a href="https://learn.microsoft.com/azure/storage/common/storage-account-overview" target="_blank" rel="noopener">Cuentas de almacenamiento</a></li>
-<li><a href="https://learn.microsoft.com/azure/storage/common/storage-redundancy" target="_blank" rel="noopener">Redundancia de datos</a></li>
-<li><a href="https://learn.microsoft.com/azure/storage/files/storage-files-identity-auth-active-directory-domain-service" target="_blank" rel="noopener">Azure Files — Identidad</a></li>
-  </ul>
-  <p class="muted">Enlaces a documentación oficial para ampliar y validar conceptos clave.</p>
-</div>
-
+  <p class="muted">StorageV2, redundancia (LRS/ZRS/GRS), seguridad (SAS/CMK), ADLS Gen2, Files (SMB/NFS), ciclo de vida y rendimiento.</p>
+  
+    <div class="toc">
+      <div class="kicker">Índice</div>
+      <div class="grid">
+        <a href="#conceptos">Conceptos clave</a>
+        <a href="#decision">Guía de decisión</a>
+        <a href="#comandos">Comandos útiles</a>
+        <a href="#escenarios">Escenarios de examen</a>
+        <a href="#errores">Errores comunes</a>
+        <a href="#cross">Cross-links entre dominios</a>
+      </div>
+    </div>
+    
+    <div class="card" id="conceptos"><h2>Conceptos clave</h2>
+      <ul><li><strong>Tipos de cuenta</strong>: StorageV2 general; Premium para latencia; ADLS Gen2 para jerarquía/ACLs POSIX.</li><li><strong>Redundancia</strong>: LRS/ZRS/GRS/RA-GRS — costo vs RPO/DR.</li><li><strong>Acceso</strong>: SAS ad-hoc/policy, Azure AD, firewall y redes confiables.</li><li><strong>Cifrado</strong>: SSE con MS-managed por defecto; CMK con KV; doble cifrado opcional.</li><li><strong>ADLS Gen2</strong>: ABFS, ACLs, rendimiento big data.</li><li><strong>Azure Files</strong>: SMB/NFS, Kerberos con Entra ID, snapshots y File Sync.</li><li><strong>Rendimiento</strong>: Niveles Hot/Cool/Archive y límites de tasa.</li></ul>
+      <div class="hl note" style="margin-top:10px">
+        <span class="pill">📘 Tip del examen</span>
+        En preguntas de *observabilidad*, piensa en **Azure Monitor + Log Analytics + Alertas** antes de automatizar.
+      </div>
+    </div>
+    
+    <div class="card" id="decision"><h2>Guía de decisión (rápida)</h2>
+      <ul><li><strong>Compartir ficheros con identidades</strong>: Azure Files + Entra ID/AD DS.</li><li><strong>Privacidad estricta</strong>: Private Endpoints + firewall; evita contenedores públicos.</li><li><strong>Optimizar costes</strong>: Lifecycle para mover/borrar versiones y expiración.</li><li><strong>Recuperación</strong>: Versioning + soft delete en Blob/Files.</li></ul>
+      <p class="muted">Recuerda revisar costes de ingestión, retención y tablas dedicadas antes de habilitar diagnósticos masivos.</p>
+    </div>
+    
+    <div class="card" id="comandos"><h2>Comandos útiles</h2>
+      <div class="grid">
+        <div class='card' style='background:#0c1332'><div class='kicker'>Cuenta Storage</div><pre><code>az storage account create --name <acct> --sku Standard_ZRS --kind StorageV2</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>SAS</div><pre><code>az storage container generate-sas --permissions rl --expiry 2026-01-01 --auth-mode login</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>PE Blob</div><pre><code>az network private-endpoint create --group-ids blob --connection-name pe-st --name pe1 ...</code></pre></div>
+      </div>
+      <p class="muted">Incluye <kbd>az</kbd> CLI, consultas <kbd>KQL</kbd> y opciones de portal.</p>
+    </div>
+    
+    <div class="card" id="escenarios"><h2>Escenarios de examen (tipo test)</h2>
+      <ul><li><strong>Evitar Internet en Blob</strong>: Firewall + redes seleccionadas + Private Endpoint.</li><li><strong>Migrar NAS</strong>: Azure File Sync con tiering y snapshots.</li><li><strong>Auditar accesos</strong>: Diagnósticos → Log Analytics y KQL.</li></ul>
+      <div class="hl tip" style="margin-top:10px">
+        <span class="pill">🎯 Estrategia</span>
+        Valora ruido vs. señal: usa reglas de supresión, horarios silenciosos y grupos de acción específicos.
+      </div>
+    </div>
+    
+    <div class="card warnbox" id="errores"><h2>Errores comunes</h2>
+      <ul><li><strong>SAS sin caducidad</strong>: Usa stored access policy con expiración corta.</li><li><strong>Soft delete deshabilitado</strong>: Actívalo con retención adecuada.</li></ul>
+    </div>
+    
+    <div class="card" id="cross"><h2>Cross-links entre dominios</h2>
+      <ul><li><strong>Identidades</strong>: RBAC + PIM para KV/Storage.</li><li><strong>Redes</strong>: Private Endpoints + DNS privado.</li><li><strong>Monitor</strong>: Métricas de capacidad/latencia y alertas.</li></ul>
+      <p class="muted">Relaciona monitoreo con identidades, redes, cómputo y almacenamiento para respuestas completas.</p>
+    </div>
+    
+  
+    <div class="footer">
+      <span class="pill">🧠 Consejo</span> Crea dashboards y *workbooks* por dominio (Identidades, Redes, Cómputo, Storage) y practica KQL con datos de demo.
+      <span class="pill">🔗</span> Usa *Action Groups* reutilizables y *Action Rules* para suprimir ruido en cambios planificados.
+    </div>
+    
 </div>
 </body>
 </html>

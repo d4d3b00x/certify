@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AZ‑104 — Dominio 3 · Desplegar y administrar cómputo</title>
+<style>
+  body{margin:0;background:#0f1320;color:#e8ecff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:#9fc4ff}
+  .wrap{max-width:900px;margin:0 auto;padding:22px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #2b3566;background:#141a37;
+          padding:8px 12px;border-radius:999px;font-weight:900;color:#cbd6ff}
+  h1{margin:8px 0 6px;font-size:1.55rem}
+  h2{margin:18px 0 8px;font-size:1.15rem}
+  .muted{color:#9ca8d9}
+  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:12px;padding:14px;margin:10px 0}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:#9ff0c9}
+  .warn{color:#ffd063}
+  .bad{color:#ffb0b0}
+  code, .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+
+  .toc{background:#10183a;border:1px solid #283056;border-radius:10px;padding:10px;margin:10px 0}
+  .toc a{color:#cfe1ff;text-decoration:none}
+  .toc li+li{margin-top:4px}
+  .resources a{word-break:break-all}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">Azure · Cómputo</span>
+  <h1>AZ‑104 — Dominio 3 · Desplegar y administrar cómputo</h1>
+  <p class="muted">Máquinas virtuales, scale sets, imágenes y disponibilidad.</p>
+<div class="toc">
+  <strong>Índice</strong>
+  <ul>
+    <li><a href="#patrones">Patrones que puntúan</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#checklist">Lista de estudio</a></li>
+    <li><a href="#pista">Pista de examen</a></li>
+    <li><a href="#recursos">Recursos oficiales</a></li>
+  </ul>
+</div>
+
+<div class=\"card\" id=\"patrones\"><h2>Patrones que puntúan</h2>
+<ul>
+<li><strong>Disponibilidad</strong>: Zonas de disponibilidad o Conjuntos de disponibilidad; balanceo con Azure Load Balancer/ALB.</li>
+<li><strong>Escalado</strong>: VMSS con reglas de CPU, cola o métrica personalizada; <em>custom image</em> o Shared Image Gallery.</li>
+<li><strong>Gestión</strong>: extensiones de VM, Update Manager y Azure Monitor para inventario y parches.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"errores\"><h2>Errores comunes</h2>
+<ul>
+<li class="bad">Una sola instancia crítica sin SLA.</li>
+<li class="bad">No separar datos de SO en discos gestionados distintos (OS vs datos).</li>
+</ul>
+</div>
+<div class=\"card\" id=\"checklist\"><h2>Lista de estudio</h2>
+<ul>
+<li>Tipos de disco (Standard/Premium SSD, Ultra), IOPS/throughput y emparejamiento.</li>
+<li>Backup de VM y restauraciones a nivel de archivo/disco.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"pista\"><h2>Pista de examen</h2>
+<p>Para consistencia a escala, piensa en <strong>VMSS + imágenes compartidas</strong>.</p>
+</div>
+
+<div class="card resources" id="recursos">
+  <h2>Recursos oficiales</h2>
+  <ul>
+    <li><a href="https://learn.microsoft.com/azure/virtual-machines/" target="_blank" rel="noopener">Máquinas virtuales en Azure</a></li>
+<li><a href="https://learn.microsoft.com/azure/virtual-machine-scale-sets/overview" target="_blank" rel="noopener">Scale Sets</a></li>
+<li><a href="https://learn.microsoft.com/azure/virtual-machines/disks-types" target="_blank" rel="noopener">Discos administrados</a></li>
+  </ul>
+  <p class="muted">Enlaces a documentación oficial para ampliar y validar conceptos clave.</p>
+</div>
+
+</div>
+</body>
+</html>

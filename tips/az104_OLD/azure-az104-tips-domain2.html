@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AZ‑104 — Dominio 2 · Implementar y administrar almacenamiento</title>
+<style>
+  body{margin:0;background:#0f1320;color:#e8ecff;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:#9fc4ff}
+  .wrap{max-width:900px;margin:0 auto;padding:22px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #2b3566;background:#141a37;
+          padding:8px 12px;border-radius:999px;font-weight:900;color:#cbd6ff}
+  h1{margin:8px 0 6px;font-size:1.55rem}
+  h2{margin:18px 0 8px;font-size:1.15rem}
+  .muted{color:#9ca8d9}
+  .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:12px;padding:14px;margin:10px 0}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:#9ff0c9}
+  .warn{color:#ffd063}
+  .bad{color:#ffb0b0}
+  code, .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+
+  .toc{background:#10183a;border:1px solid #283056;border-radius:10px;padding:10px;margin:10px 0}
+  .toc a{color:#cfe1ff;text-decoration:none}
+  .toc li+li{margin-top:4px}
+  .resources a{word-break:break-all}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">Azure · Almacenamiento</span>
+  <h1>AZ‑104 — Dominio 2 · Implementar y administrar almacenamiento</h1>
+  <p class="muted">Cuentas de almacenamiento, redundancia, seguridad y rendimiento.</p>
+<div class="toc">
+  <strong>Índice</strong>
+  <ul>
+    <li><a href="#patrones">Patrones que puntúan</a></li>
+    <li><a href="#errores">Errores comunes</a></li>
+    <li><a href="#checklist">Lista de estudio</a></li>
+    <li><a href="#pista">Pista de examen</a></li>
+    <li><a href="#recursos">Recursos oficiales</a></li>
+  </ul>
+</div>
+
+<div class=\"card\" id=\"patrones\"><h2>Patrones que puntúan</h2>
+<ul>
+<li><strong>Tipo de cuenta correcto</strong>: <em>StorageV2</em> para funciones modernas; Premium para latencia baja.</li>
+<li><strong>Redundancia</strong>: LRS para coste, ZRS para alta disponibilidad zonal, GRS/RA‑GRS para DR regional.</li>
+<li><strong>Seguridad</strong>: puntos de conexión privados, <em>Azure AD auth</em> para Azure Files, cifrado con claves gestionadas por cliente (CMK) cuando sea necesario.</li>
+<li><strong>Ciclo de vida</strong>: reglas para mover de Hot→Cool→Archive y eliminar versiones antiguas.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"errores\"><h2>Errores comunes</h2>
+<ul>
+<li class="bad">Exponer Blob públicamente sin restricciones.</li>
+<li class="bad">Usar SAS de larga duración sin <em>stored access policy</em>.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"checklist\"><h2>Lista de estudio</h2>
+<ul>
+<li>Comparar Azure Files vs Blob; instantáneas, replicación y rendimiento.</li>
+<li>AzCopy/Azure Storage Explorer y características de NFS/SMB.</li>
+</ul>
+</div>
+<div class=\"card\" id=\"pista\"><h2>Pista de examen</h2>
+<p>Para compartir archivos con identidades de AD: <strong>Azure Files + Azure AD DS</strong> o <strong>Kerberos</strong>.</p>
+</div>
+
+<div class="card resources" id="recursos">
+  <h2>Recursos oficiales</h2>
+  <ul>
+    <li><a href="https://learn.microsoft.com/azure/storage/common/storage-account-overview" target="_blank" rel="noopener">Cuentas de almacenamiento</a></li>
+<li><a href="https://learn.microsoft.com/azure/storage/common/storage-redundancy" target="_blank" rel="noopener">Redundancia de datos</a></li>
+<li><a href="https://learn.microsoft.com/azure/storage/files/storage-files-identity-auth-active-directory-domain-service" target="_blank" rel="noopener">Azure Files — Identidad</a></li>
+  </ul>
+  <p class="muted">Enlaces a documentación oficial para ampliar y validar conceptos clave.</p>
+</div>
+
+</div>
+</body>
+</html>
