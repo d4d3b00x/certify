@@ -87,23 +87,16 @@
     .segmented input{display:none}
     .segmented label{flex:1;text-align:center;padding:12px 14px;border-radius:10px;cursor:pointer;font-weight:900;color:#d9e6ff;user-select:none}
     .segmented input:checked + label{background:linear-gradient(180deg,#183e79,#122e5e);border:1px solid #4a7fd8;box-shadow:0 0 0 2px rgba(0,120,212,.28) inset}
-    /* Estilo de botón deshabilitado (Examen) */
-    .segmented label.disabled{
-      opacity:.45; cursor:not-allowed; filter:grayscale(40%);
-      border:1px dashed #3a476f; background:#0d1630;
-      pointer-events:none;
-    }
+    .segmented label.disabled{opacity:.45; cursor:not-allowed; filter:grayscale(40%);border:1px dashed #3a476f; background:#0d1630; pointer-events:none;}
 
-    /* ====== SIMULADOR: sombreado azul (doble marco + halo) ====== */
+    /* ====== SIMULADOR: sombreado azul ====== */
     #simCard{
       position:relative;border-radius:20px;padding:16px;
       background:
         radial-gradient(120% 160% at 10% -10%, rgba(120,185,255,.14), transparent 60%),
         linear-gradient(180deg,#0e152b,#0a1124);
       border:1px solid rgba(90,150,240,.35);
-      box-shadow:
-        0 22px 44px rgba(0,0,0,.55),
-        inset 0 0 0 1px rgba(0,120,212,.20);
+      box-shadow:0 22px 44px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,120,212,.20);
       overflow:hidden; z-index:0;
     }
     #simCard::before{
@@ -114,22 +107,27 @@
     #simCard::after{
       content:"";position:absolute;inset:-4px;border-radius:22px;pointer-events:none;
       border:2px solid rgba(110,170,255,.65);
-      box-shadow:
-        0 0 0 5px rgba(0,120,212,.15),
-        inset 0 0 18px rgba(114,170,255,.28),
-        0 0 22px rgba(0,120,212,.28);
+      box-shadow:0 0 0 5px rgba(0,120,212,.15), inset 0 0 18px rgba(114,170,255,.28), 0 0 22px rgba(0,120,212,.28);
       z-index:0;
     }
     #simCard *{position:relative;z-index:1}
 
-    /* Título del simulador (un poco más pequeño) */
-    #simTitle{
-      font-size:clamp(1.4rem,2.4vw,1.9rem); /* <— reducido */
-      font-weight:900;line-height:1.15;margin:0 0 8px;
-      text-shadow:0 12px 28px rgba(0,120,212,.35);
-    }
+    /* Título más pequeño */
+    #simTitle{font-size:clamp(1.4rem,2.4vw,1.9rem); font-weight:900; line-height:1.15; margin:0 0 8px; text-shadow:0 12px 28px rgba(0,120,212,.35);}
 
     #startBtn{background:var(--cta);color:#09132a;border:1px solid #4a8edf;box-shadow:0 10px 28px rgba(0,120,212,.36)}
+
+    /* ===== ESTADO BLOQUEADO ===== */
+    #startBtn.locked{
+      background:linear-gradient(180deg,#6fa4ff,#355ff6);
+      color:#fff; border:1px solid rgba(71,103,220,.6);
+      box-shadow:0 12px 26px rgba(53,95,246,.35);
+    }
+    #startBtn.locked .lock{
+      display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:5px;
+      background:linear-gradient(180deg,#ffd699,#ff9900);color:#111;font-weight:900;box-shadow:0 0 0 3px rgba(255,153,0,.18);font-size:12px;
+    }
+
     #qCount{
       background:#0f1b3a;color:var(--ink);
       border:1px solid #2a3b6d;border-radius:10px;
@@ -141,19 +139,12 @@
     #studyGuide.open{display:block}
     .muted{color:var(--muted)}
     .cloud-toolbar{display:flex;gap:10px;align-items:center;margin:10px 0 8px}
-    .cloud-toolbar input[type="search"]{
-      flex:1;min-height:44px;border-radius:12px;border:1px solid var(--stroke);
-      background:var(--surface2);color:var(--ink);padding:10px 12px;font-weight:800;
-    }
+    .cloud-toolbar input[type="search"]{flex:1;min-height:44px;border-radius:12px;border:1px solid var(--stroke);background:var(--surface2);color:var(--ink);padding:10px 12px;font-weight:800;}
     .concept-cloud{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
     @media(max-width:1180px){.concept-cloud{grid-template-columns:repeat(4,1fr)}}
     @media(max-width:860px){.concept-cloud{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:560px){.concept-cloud{grid-template-columns:repeat(2,1fr)}}
-    .chip-bubble{
-      position:relative;display:flex;flex-direction:column;gap:6px;min-height:110px;
-      padding:14px;border-radius:16px;border:1px solid #2a355f;background:linear-gradient(180deg,#11193a,#0e1632);
-      box-shadow:0 12px 24px rgba(0,0,0,.28);transition:transform .12s ease, box-shadow .12s ease;
-    }
+    .chip-bubble{position:relative;display:flex;flex-direction:column;gap:6px;min-height:110px;padding:14px;border-radius:16px;border:1px solid #2a355f;background:linear-gradient(180deg,#11193a,#0e1632);box-shadow:0 12px 24px rgba(0,0,0,.28);transition:transform .12s ease, box-shadow .12s ease;}
     .chip-bubble:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(0,0,0,.36)}
     .chip-bubble .cb-title{font-weight:900}
     .chip-bubble .cb-tip{color:var(--muted)}
@@ -370,8 +361,11 @@
     // Año
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    /* ===== AUTH header ===== */
+    /* ===== Helpers de sesión ===== */
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function isLoggedIn(){ return !!getCurrentUser(); }
+
+    /* ===== AUTH header ===== */
     function renderHeaderAuth(){
       const u=getCurrentUser();
       const login=document.getElementById('btnLogin');
@@ -381,7 +375,11 @@
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
       else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{
+      localStorage.removeItem('currentUser');
+      renderHeaderAuth();
+      renderStartButton(); // sincroniza estado del botón al cerrar sesión
+    });
     renderHeaderAuth();
 
     /* ===== Tabs ===== */
@@ -502,6 +500,24 @@
     }
     document.getElementById('infoClose').addEventListener('click', ()=>{ infoDom.style.display='none'; });
 
+    /* ====== Estado del botón START según sesión ====== */
+    function renderStartButton(){
+      if (!startBtn) return;
+      if (isLoggedIn()){
+        startBtn.classList.remove('locked');
+        startBtn.dataset.locked = "false";
+        startBtn.innerHTML = '▶ Empezar';
+      }else{
+        startBtn.classList.add('locked');
+        startBtn.dataset.locked = "true";
+        startBtn.innerHTML = '<span class="lock">🔒</span>Login to Start';
+      }
+      // no dejamos el botón deshabilitado permanentemente; controlamos por dataset
+      startBtn.disabled = false;
+    }
+    // Llamada inicial
+    renderStartButton();
+
     // Simulador
     let quizActive = false;
     const header = document.querySelector('header');
@@ -514,8 +530,12 @@
     }
     function setQuizActive(on){
       quizActive = !!on;
-      startBtn.disabled = quizActive;
-      startBtn.textContent = quizActive ? '⏳ En marcha…' : '▶ Empezar';
+      // Mantiene título correcto respetando estado bloqueado
+      if (quizActive){
+        startBtn.textContent = '⏳ En marcha…';
+      }else{
+        renderStartButton();
+      }
       startBtn.setAttribute('aria-disabled', quizActive ? 'true' : 'false');
     }
     function waitForQuizMount(timeout=4000){
@@ -530,11 +550,16 @@
     window.addEventListener('quiz:ended',   ()=>{ setQuizActive(false); });
 
     startBtn.addEventListener('click', async ()=>{
+      // Si no hay sesión => ir a login y no lanzar nada
+      if (startBtn.dataset.locked === "true"){
+        window.location.href = '/login/login.html';
+        return;
+      }
       if (quizActive) return;
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
       const count = parseInt(qCount.value,10) || 65;
-      /* === Los filtros de dominios NO aplican: siempre enviamos todos === */
-      const tags = []; // <- ignoramos los chips marcados a propósito
+      // Filtros de dominio desactivados a propósito:
+      const tags = [];
       if(typeof window.start === 'function'){
         setQuizActive(true);
         window.start(QUIZ, { count, tags });
