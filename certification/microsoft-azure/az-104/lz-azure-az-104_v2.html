@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b1026" />
+
+  <title>AZ-104 · Ruta guiada, Tips, Concept Cloud y Simulador | ITHub</title>
+  <link rel="canonical" href="https://beta.ithub.es/certification/microsoft-azure/az-104/lz-azure-az-104.html" />
+  <meta name="description" content="Nueva portada AZ-104 con diseño tipo dashboard: consejos rápidos, ruta guiada, nube de conceptos, dominios y simulador por temas." />
+  <meta name="keywords" content="AZ-104, Microsoft Azure Administrator, simulador, ruta de estudio, consejos, dominios AZ-104, nube de conceptos" />
+
+  <style>
+    /* ====== THEME ====== */
+    :root{
+      --bg:#0b1026; --bg2:#0e1533;
+      --card:#0f1a40; --card2:#111f4d;
+      --ink:#e9eeff; --muted:#a9b6ea; --stroke:#2b3c7a;
+      --azure:#2ea3ff; --cta:linear-gradient(180deg,#8fd0ff,#2ea3ff);
+      --ok:#20d38a; --warn:#ffd76b; --bad:#ff6b6b;
+      --radius:16px; --shadow:0 14px 36px rgba(5,12,40,.55);
+      --glow:0 0 0 8px rgba(46,163,255,.12);
+    }
+    *{box-sizing:border-box}
+    html:focus-within{scroll-behavior:smooth}
+    @media (prefers-reduced-motion: reduce){
+      html:focus-within{scroll-behavior:auto}
+      *{animation:none!important;transition:none!important}
+    }
+    body{
+      margin:0; font-family:Inter, ui-sans-serif, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 520px at 95% -10%, rgba(46,163,255,.16), transparent 60%),
+        radial-gradient(1000px 480px at 10% 0%, rgba(118,199,255,.12), transparent 60%),
+        var(--bg);
+      line-height:1.6; overflow-x:hidden;
+      display:grid; grid-template-columns:300px 1fr; min-height:100vh; gap:0;
+    }
+
+    /* ====== SIDEBAR ====== */
+    aside#side{
+      position:sticky; top:0; height:100dvh; overflow:auto;
+      background:linear-gradient(180deg, rgba(9,14,36,.9), rgba(9,14,36,.65));
+      backdrop-filter: blur(12px);
+      border-right:1px solid var(--stroke);
+      padding:16px 14px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .brand img{height:44px}
+    .side-block{margin-top:12px; background:var(--card); border:1px solid var(--stroke); border-radius:14px; padding:12px}
+    .side-title{font-weight:900; font-size:.92rem; letter-spacing:.2px; margin-bottom:8px; color:#d9e6ff}
+
+    /* Mapa de certificaciones (2º bloque) */
+    .certmap .citem{
+      display:flex; align-items:center; gap:10px; padding:10px;
+      background:linear-gradient(180deg,#0f1a3b,#0d1834);
+      border:1px solid #2f458c; border-radius:12px; margin-bottom:8px;
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
+    }
+    .certmap .citem:hover{border-color:#4980ff; background:#0f2048}
+    .cico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:#12265e;border:1px solid #3b62d9}
+    .cmeta{display:flex;flex-direction:column;line-height:1.2}
+    .ctitle{font-weight:900}
+    .ctag{font-size:12px;color:#b7c7ff}
+    .cstate{margin-left:auto;font-size:12px;border:1px solid #3b62d9;border-radius:999px;padding:2px 8px;background:#0d1739}
+
+    /* Índice de página */
+    nav#toc a{
+      display:flex;align-items:center;gap:8px; padding:10px; border-radius:10px;
+      color:#dfe6ff; text-decoration:none; border:1px solid transparent;
+      font-weight:800;
+    }
+    nav#toc a:hover, nav#toc a[aria-current="true"]{border-color:#3e61d8; background:#101f49}
+    .progress{
+      height:6px;background:#0b1433;border:1px solid var(--stroke);border-radius:999px;overflow:hidden;margin-top:10px
+    }
+    .progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--azure),#76c7ff)}
+
+    /* ====== MAIN ====== */
+    main{min-width:0}
+    .container{max-width:1120px;margin:0 auto;padding:0 20px}
+
+    /* HERO */
+    .hero{padding:18px 0 12px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:900;color:#e7f3ff;background:rgba(46,163,255,.18);border:1px solid rgba(46,163,255,.45);border-radius:999px;padding:6px 10px}
+    h1{margin:10px 0;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.15}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid #2ea3ff66;
+      background:var(--cta);color:#08203c;font-weight:900;cursor:pointer;box-shadow:0 8px 22px rgba(46,163,255,.26)
+    }
+    .btn.secondary{background:transparent;color:#cfe3ff;border-color:#3553b5}
+    .muted{color:var(--muted)}
+
+    /* Generic blocks */
+    .sec{padding:14px 0}
+    .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+    @media(max-width:960px){ body{grid-template-columns:1fr} aside#side{position:static;height:auto} .grid-2{grid-template-columns:1fr} }
+    .panel{background:var(--card2);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+
+    /* CONSEJOS RÁPIDOS (de tu captura) */
+    .tips-card{background:linear-gradient(180deg,#0d1a3b,#0b1633);border:1px solid #2c3d77;border-radius:20px;padding:16px;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+    .tips-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .tip{display:flex;gap:10px;align-items:flex-start}
+    .tick{flex:0 0 24px;height:24px;border-radius:8px;background:#0f2b2a;border:1px solid #1d7b61;display:grid;place-items:center;box-shadow:var(--glow)}
+    .tick svg{width:14px;height:14px;fill:#20d38a}
+
+    /* TIMELINE Ruta */
+    .timeline{display:grid;gap:12px}
+    .step{
+      border:1px solid #344a96;background:linear-gradient(180deg,#0e1b42,#0d1838);
+      border-radius:14px;padding:14px;position:relative;box-shadow:0 12px 28px rgba(0,0,0,.35)
+    }
+    .step::before{
+      content:""; position:absolute; left:16px; top:-10px; bottom:-10px; width:2px; background:linear-gradient(180deg,#3553b5,transparent);
+    }
+    .k{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;background:#142453;border:1px solid #3c63dd;font-weight:900;margin-right:6px}
+    .step h4{margin:.2rem 0 .3rem}
+
+    /* Concept Cloud */
+    .cloud-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+    .cloud-toolbar input{
+      flex:1;min-height:44px;border-radius:12px;border:1px solid var(--stroke);
+      background:#101d47;color:var(--ink);padding:10px 12px;font-weight:800;
+    }
+    .cloud{display:flex;flex-wrap:wrap;gap:12px}
+    .bubble{
+      position:relative;display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;
+      background:linear-gradient(180deg,#101c44,#0e1836);border:1px solid #2c3f84;color:#e8f0ff;cursor:pointer;
+      box-shadow:0 12px 24px rgba(0,0,0,.28);transition:.16s;max-width:100%;
+    }
+    .bubble:hover{transform:translateY(-2px);border-color:#4b7cff}
+    .bubble .dot{width:10px;height:10px;border-radius:999px;background:#6fb1ff;box-shadow:0 0 0 4px rgba(111,177,255,.18)}
+    .bubble .title{font-weight:900;white-space:nowrap}
+    .bubble .blurb{display:none}
+    .bubble:hover .blurb{display:inline;color:#d4e5ff}
+    .bubble .go{display:none}
+    .bubble:hover .go{display:inline-flex;margin-left:6px}
+    .bubble .go a{border:1px solid #3c63dd;background:#3053e8;color:#fff;border-radius:10px;padding:6px 10px;font-weight:900}
+    .mini{font-size:.9rem} .med{font-size:1.02rem} .big{font-size:1.12rem}
+
+    /* Dominios & Simulador */
+    .domains{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+    .dom{
+      display:flex;align-items:center;gap:10px;border:1px solid #31428a;background:#0f1a40;border-radius:14px;padding:12px;cursor:pointer
+    }
+    .dom:hover{border-color:#4b7cff}
+    .dcode{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:#2ea3ff;color:#0a1b33;font-weight:900}
+    #simCard{
+      position:relative;background:linear-gradient(180deg,#0f1a42,#0e1738);
+      border:1px solid #3a57b5;border-radius:16px;padding:16px;box-shadow:0 22px 44px rgba(0,0,0,.55)
+    }
+    #simCard .segmented{display:flex;gap:8px;background:#0e1a3e;border:1px solid #31428a;border-radius:10px;padding:6px}
+    #simCard .segmented input{display:none}
+    #simCard .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
+    #simCard .segmented input:checked + label{background:#132459;border:1px solid #4e73f0}
+    #simCard select{background:#0f1d48;color:var(--ink);border:1px solid #31428a;border-radius:10px;padding:10px 12px;font-weight:800}
+    .chip-dom{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #2f3f82;background:#0f193f;font-weight:900;cursor:pointer}
+    .chip-dom.on{box-shadow:inset 0 0 0 2px rgba(46,163,255,.35);border-color:#4b7cff}
+    .chip-dom .led{width:12px;height:12px;border-radius:999px;border:2px solid #6a78b4}
+    .chip-dom.on .led{background:#2ea3ff;border-color:#2ea3ff}
+    .kbd{display:inline-flex;align-items:center;justify-content:center;min-width:28px;padding:2px 8px;border-radius:8px;background:#0e1a3f;border:1px solid #2b3f88;font-weight:900}
+
+    /* Table styles inside notes */
+    .table{width:100%;border-collapse:separate;border-spacing:0 6px;font-size:.95rem}
+    .table tr{background:#0e1630}
+    .table td,.table th{padding:10px;border-top:1px solid #2a3b6d;border-bottom:1px solid #2a3b6d}
+    .table th{background:#101a3f;text-align:left}
+
+    /* Footer */
+    footer{border-top:1px solid var(--stroke);padding:26px 0;color:#aebbf1;background:linear-gradient(180deg,rgba(22,27,45,.66),rgba(22,27,45,.28));margin-top:22px}
+    footer a{color:#d7e6ff} footer a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside id="side" aria-label="Barra lateral">
+    <div class="brand">
+      <img src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      <div style="font-weight:900">ITHub.es</div>
+    </div>
+
+    <!-- (2) Mapa de certificaciones -->
+    <div class="side-block certmap" aria-labelledby="certmap">
+      <div id="certmap" class="side-title">Mapa de certificaciones</div>
+      <a class="citem" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">
+        <div class="cico">AZ</div>
+        <div class="cmeta"><span class="ctitle">AZ-104</span><span class="ctag">Administrator</span></div>
+        <span class="cstate">Estás aquí</span>
+      </a>
+      <a class="citem" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">
+        <div class="cico">AZ</div>
+        <div class="cmeta"><span class="ctitle">AZ-305</span><span class="ctag">Architect</span></div>
+        <span class="cstate">Avanzado</span>
+      </a>
+      <a class="citem" href="/certification/amazon-aws/saa-c03/lz-aws-saa-c03.html">
+        <div class="cico">AWS</div>
+        <div class="cmeta"><span class="ctitle">SAA-C03</span><span class="ctag">Solutions Architect</span></div>
+        <span class="cstate">Relacionado</span>
+      </a>
+    </div>
+
+    <!-- Índice de página -->
+    <div class="side-block">
+      <div class="side-title">Secciones</div>
+      <nav id="toc" aria-label="Índice">
+        <a href="#hero"        data-toc>🚀 Resumen</a>
+        <a href="#tips"        data-toc>✅ Consejos</a>
+        <a href="#ruta"        data-toc>🧭 Ruta guiada</a>
+        <a href="#cloud"       data-toc>🔎 Concept Cloud</a>
+        <a href="#sim"         data-toc>🎯 Dominios & Simulador</a>
+        <a href="#recursos"    data-toc>📚 Recursos clave</a>
+      </nav>
+      <div class="progress" aria-hidden="true"><span id="readProgress"></span></div>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main>
+    <div class="container">
+      <!-- HERO -->
+      <section id="hero" class="hero sec" aria-label="Resumen">
+        <span class="eyebrow">MICROSOFT AZURE ADMINISTRATOR — ASSOCIATE (AZ-104)</span>
+        <h1>AZ-104: Administra Azure con seguridad, resiliencia y control de costes</h1>
+        <p class="muted">Nueva portada tipo <b>dashboard</b> con una <b>ruta guiada</b>, <b>consejos rápidos</b>, <b>nube de conceptos</b>, y el <b>simulador</b> por dominios. Todo pensado para estudiar de forma <b>moderna</b> y <b>accesible</b>.</p>
+        <div class="cta-row">
+          <a class="btn" href="#sim">▶ Empezar simulador</a>
+          <a class="btn secondary" href="#ruta">Ver ruta de 7–14–30 días</a>
+        </div>
+      </section>
+
+      <!-- CONSEJOS RÁPIDOS -->
+      <section id="tips" class="sec" aria-label="Consejos rápidos">
+        <div class="tips-card">
+          <h3>Consejos rápidos para el examen</h3>
+          <ul class="tips-list">
+            <li class="tip"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.285 6.707l-11 11-5.657-5.657 1.414-1.414 4.243 4.243 9.586-9.586z"/></svg></span> Identifica siempre <b>requisitos</b> (SLA, coste, seguridad, latencia) antes de elegir servicio.</li>
+            <li class="tip"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.285 6.707l-11 11-5.657-5.657 1.414-1.414 4.243 4.243 9.586-9.586z"/></svg></span> Prefiere soluciones <b>PaaS/Serverless</b> cuando el caso lo permita.</li>
+            <li class="tip"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.285 6.707l-11 11-5.657-5.657 1.414-1.414 4.243 4.243 9.586-9.586z"/></svg></span> Zonas de disponibilidad por defecto; multirregión si hay <b>RTO/RPO</b> estrictos.</li>
+            <li class="tip"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.285 6.707l-11 11-5.657-5.657 1.414-1.414 4.243 4.243 9.586-9.586z"/></svg></span> Para acceso privado a servicios PaaS, usa <b>Private Link</b> y <b>DNS privado</b>.</li>
+            <li class="tip"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.285 6.707l-11 11-5.657-5.657 1.414-1.414 4.243 4.243 9.586-9.586z"/></svg></span> Automatiza con <b>Bicep/Terraform</b> para reducir errores y repetir despliegues.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- RUTA GUIADA -->
+      <section id="ruta" class="sec" aria-label="Ruta guiada">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Plan 7 días (intensivo)</h3>
+            <div class="timeline">
+              <div class="step"><div class="k">1</div><h4>Fundamentos</h4><p class="muted">Entra ID, RBAC, suscripciones, Resource Groups, Policy/locks/tags.</p></div>
+              <div class="step"><div class="k">2</div><h4>Redes</h4><p class="muted">VNet, subnets, NSG/ASG, UDR, DNS privado, Peering, VPN/ER, Private Link.</p></div>
+              <div class="step"><div class="k">3</div><h4>Storage</h4><p class="muted">Tipos de cuenta, SAS, redundancia (LRS→GZRS), lifecycle e inmutabilidad.</p></div>
+              <div class="step"><div class="k">4</div><h4>Compute</h4><p class="muted">VM/VMSS, Availability Sets/Zones, imágenes (SIG), Update Management.</p></div>
+              <div class="step"><div class="k">5</div><h4>Observabilidad & Seguridad</h4><p class="muted">Monitor/Logs, Action Groups, Defender for Cloud, Key Vault.</p></div>
+              <div class="step"><div class="k">6</div><h4>Datos & DR</h4><p class="muted">Backup, snapshots, ASR, SQL/CosmosDB básico.</p></div>
+              <div class="step"><div class="k">7</div><h4>Simulacros y repaso</h4><p class="muted">Errores frecuentes por dominio + simulador completo.</p></div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Planes 14 y 30 días</h3>
+            <p class="muted"><b>14 días:</b> duplica cada bloque en 2 jornadas + 4 sesiones de práctica.</p>
+            <p class="muted"><b>30 días:</b> añade laboratorios (Policy, redes avanzadas, Bicep) y 6 simulacros completos.</p>
+            <div class="cta-row">
+              <a href="#sim" class="btn">Lanzar simulador</a>
+              <a href="#recursos" class="btn secondary">Abrir recursos</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NUBE DE CONCEPTOS -->
+      <section id="cloud" class="sec" aria-label="Nube de conceptos">
+        <div class="panel">
+          <div class="cloud-toolbar">
+            <input id="cloudSearch" type="search" placeholder="Buscar conceptos (RBAC, Storage, VPN…)" aria-label="Buscar conceptos">
+          </div>
+          <div id="conceptCloud" class="cloud" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- DOMINIOS & SIMULADOR -->
+      <section id="sim" class="sec" aria-label="Dominios y Simulador">
+        <div class="grid-2">
+          <div class="panel">
+            <h3>Dominios del examen</h3>
+            <ul id="domainsList" class="domains"></ul>
+            <div id="infoDom" class="panel" style="display:none;margin-top:12px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">
+                <h4 id="infoTitle" style="margin:0">Notas del dominio</h4>
+                <button id="infoClose" class="btn secondary" type="button">Cerrar</button>
+              </div>
+              <div id="infoContent"></div>
+            </div>
+          </div>
+
+          <aside id="simCard" aria-label="Simulador AZ-104">
+            <h3 style="margin-top:0">AZ-104 · Simulador</h3>
+            <div class="segmented">
+              <input type="radio" id="modePractice" name="mode" value="practice" checked>
+              <label for="modePractice">Práctica</label>
+              <input type="radio" id="modeExam" name="mode" value="exam" disabled>
+              <label for="modeExam" title="Modo examen próximamente">Examen</label>
+            </div>
+
+            <div style="margin-top:10px">
+              <label for="qCount"><b>Preguntas</b></label><br/>
+              <select id="qCount"><option>5</option><option>10</option><option>15</option><option>30</option><option>65</option></select>
+            </div>
+
+            <div style="margin-top:10px">
+              <label><b>Dominios (filtro opcional)</b></label>
+              <div id="domainChips" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"></div>
+              <div class="muted">Déjalo vacío para incluir todos los dominios.</div>
+            </div>
+
+            <div style="margin-top:14px">
+              <button id="startBtn" class="btn" type="button">▶ Empezar</button>
+            </div>
+
+            <div class="muted" style="margin-top:8px">
+              Atajos:
+              <span class="kbd">N</span> Siguiente,
+              <span class="kbd">B</span> Anterior,
+              <span class="kbd">M</span> Marcar,
+              <span class="kbd">1-9</span> elegir.
+            </div>
+          </aside>
+        </div>
+
+        <!-- Área de preguntas -->
+        <main id="view" style="padding:0;margin-top:12px"></main>
+      </section>
+
+      <!-- RECURSOS CLAVE -->
+      <section id="recursos" class="sec" aria-label="Recursos clave">
+        <div class="panel">
+          <h3>Resúmenes y hojas de trucos</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="panel" style="background:#0e1b42">
+              <h4>Alta disponibilidad en redes</h4>
+              <p class="muted">Zonas, Standard LB, App Gateway y patrones de resiliencia.</p>
+              <a class="btn" href="/content/azure-network-security-az104.html">LEER</a>
+            </div>
+            <div class="panel" style="background:#0e1b42">
+              <h4>Storage: seguridad y costes</h4>
+              <p class="muted">SAS, RBAC, redundancia, lifecycle y acceso privado.</p>
+              <a class="btn" href="/content/azure-storage-az104.html">LEER</a>
+            </div>
+            <div class="panel" style="background:#0e1b42">
+              <h4>Landing Zone y gobernanza</h4>
+              <p class="muted">CAF, Policy, RBAC, segmentación y Bicep.</p>
+              <a class="btn" href="/content/azure-landing-zone.html">LEER</a>
+            </div>
+            <div class="panel" style="background:#0e1b42">
+              <h4>Backup inmutable & Ciber-recuperación</h4>
+              <p class="muted">WORM, cuentas aisladas, drills y vault.</p>
+              <a class="btn" href="/content/immutable-backup-cyberrecovery.html">LEER</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer role="contentinfo">
+        <div class="container">
+          © <span id="y"></span> ITHub.es — <a href="/">Home</a> ·
+          <a href="/content/content.html">Contenidos</a> ·
+          <a href="/score/ranking.html">Ranking</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Modal resultados (oculto por defecto, gestionado por el motor) -->
+  <div class="modal" id="quizResultModal" aria-hidden="true" style="display:none;">
+    <div class="modal-card">
+      <h3>📊 Resultados del examen</h3>
+      <div id="quizScoreBox" class="panel" style="padding:12px;margin:0 0 12px;background:#0e1b42">
+        <strong id="quizScoreText">Puntuación</strong>
+      </div>
+      <div id="quizDomainsGrid" class="diag-grid"></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+        <button class="btn secondary" id="qrClose">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Motor del simulador -->
+  <script src="/control_quizs/Q_global_dark.js" defer></script>
+
+  <script>
+    // Año
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    /* ===== Progress + TOC active ===== */
+    const readBar = document.getElementById('readProgress');
+    const tocLinks = [...document.querySelectorAll('[data-toc]')];
+    const anchors = tocLinks.map(a => document.querySelector(a.getAttribute('href')));
+    function onScroll(){
+      const doc = document.documentElement;
+      const h = doc.scrollHeight - doc.clientHeight;
+      const p = Math.min(100, Math.max(0, (window.scrollY / h) * 100));
+      readBar.style.width = p + '%';
+
+      let active = 0;
+      anchors.forEach((sec,i)=>{
+        if(sec && sec.getBoundingClientRect().top <= 120) active = i;
+      });
+      tocLinks.forEach((a,i)=>a.setAttribute('aria-current', i===active ? 'true':'false'));
+    }
+    document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+    /* ===== Concept Cloud data ===== */
+    const CLOUD = [
+      { slug:'azure-identity-az104',             title:'Identidad & RBAC',     blurb:'Entra ID, MFA, PIM y mínimo privilegio.' },
+      { slug:'azure-storage-az104',              title:'Azure Storage',        blurb:'SAS, LRS→GZRS, ADLS Gen2 e inmutabilidad.' },
+      { slug:'azure-network-security-az104',     title:'Seguridad de red',     blurb:'NSG/ASG, UDR, Firewall, Private Endpoints.' },
+      { slug:'azure-monitoring-alerts-az104',    title:'Monitorización',       blurb:'Logs/Métricas, alertas y action groups.' },
+      { slug:'azure-compute-availability-az104', title:'Compute & HA',         blurb:'VMSS, AZ/AS, SIG, Update Management.' },
+      { slug:'azure-backup-recovery-az104',      title:'Backup & Recovery',    blurb:'Vaults, snapshots, restauración y ASR.' },
+      { slug:'azure-cost-governance-az104',      title:'Coste & Gobierno',     blurb:'Budgets, Policy, locks y tags.' },
+      { slug:'azure-landing-zone',               title:'Landing Zone',         blurb:'CAF, estructura de suscripciones y políticas base.' },
+      { slug:'azure-security-checklist',         title:'Checklist seguridad',  blurb:'MFA, Secure Score, Defender for Cloud.' },
+      { slug:'vnet-peering-vpn',                 title:'Peering vs VPN',       blurb:'Cuándo peering y cuándo VPN Gateway.' }
+    ];
+    function renderCloud(){
+      const host = document.getElementById('conceptCloud');
+      const sizes = ['mini','med','big'];
+      host.innerHTML = CLOUD.map((c,i)=>`
+        <div class="bubble ${sizes[i%sizes.length]}" data-title="${c.title.toLowerCase()}" data-tip="${c.blurb.toLowerCase()}">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="title">${c.title}</span>
+          <span class="blurb"> · ${c.blurb}</span>
+          <span class="go"><a href="/content/${c.slug}.html" aria-label="Leer ${c.title}">Leer →</a></span>
+        </div>
+      `).join('');
+    }
+    renderCloud();
+    document.getElementById('cloudSearch').addEventListener('input', (ev)=>{
+      const q = ev.target.value.trim().toLowerCase();
+      document.querySelectorAll('#conceptCloud .bubble').forEach(b=>{
+        const hay = (b.dataset.title+' '+b.dataset.tip);
+        b.style.display = hay.includes(q) ? 'inline-flex' : 'none';
+      });
+    });
+
+    /* ===== Dominios + Notas ===== */
+    const DOMAINS = [
+      ['D1','Administrar identidades y gobierno (15–20%)'],
+      ['D2','Implementar y administrar almacenamiento (15–20%)'],
+      ['D3','Desplegar y administrar cómputo (20–25%)'],
+      ['D4','Configurar y administrar redes (20–25%)'],
+      ['D5','Monitorizar y mantener recursos (10–15%)']
+    ];
+    const DOMAIN_FILES = {
+      D1:'/tips/azure-az104-tips-domain1.html',
+      D2:'/tips/azure-az104-tips-domain2.html',
+      D3:'/tips/azure-az104-tips-domain3.html',
+      D4:'/tips/azure-az104-tips-domain4.html',
+      D5:'/tips/azure-az104-tips-domain5.html'
+    };
+    const DOMAINS_INLINE = {
+      D1:{title:'D1 — Administrar identidades y gobierno (15–20%)', html:`
+        <table class="table">
+          <tr><th>Escenario</th><th>Respuesta</th></tr>
+          <tr><td>Permisos Dev en un RG</td><td><b>Contributor</b> al <b>grupo</b> en ese <b>RG</b>.</td></tr>
+          <tr><td>Acceso temporal</td><td><b>PIM</b> (JIT) + MFA.</td></tr>
+          <tr><td>Restringir regiones</td><td><b>Azure Policy</b> allowed locations.</td></tr>
+          <tr><td>Evitar borrado</td><td><b>Lock</b> CanNotDelete en RG.</td></tr>
+        </table>
+      `},
+      D2:{title:'D2 — Implementar y administrar almacenamiento (15–20%)', html:`
+        <table class="table">
+          <tr><th>Escenario</th><th>Solución</th></tr>
+          <tr><td>Analítica con jerarquía</td><td><b>ADLS Gen2</b> (HNS)</td></tr>
+          <tr><td>Tráfico privado</td><td><b>Private Endpoint</b> + bloquear público</td></tr>
+          <tr><td>WORM 7 años</td><td><b>Inmutabilidad</b> time-based + versiones</td></tr>
+          <tr><td>Copia 10 TB</td><td><b>AzCopy</b> o <b>Import/Export</b></td></tr>
+        </table>
+      `},
+      D3:{title:'D3 — Desplegar y administrar cómputo (20–25%)', html:`
+        <table class="table">
+          <tr><th>Escenario</th><th>Solución</th></tr>
+          <tr><td>Sin downtime</td><td><b>App Service</b> + deployment slots</td></tr>
+          <tr><td>Escalado</td><td><b>VMSS</b> + upgrades</td></tr>
+          <tr><td>Golden image</td><td><b>Shared Image Gallery</b></td></tr>
+        </table>
+      `},
+      D4:{title:'D4 — Configurar y administrar redes (20–25%)', html:`
+        <ul>
+          <li><b>Peering</b> para baja latencia intra-región</li>
+          <li><b>VPN</b> IPsec; <b>ExpressRoute</b> privado con SLA</li>
+          <li><b>Private Link</b> para PaaS con IP privada</li>
+          <li><b>Standard LB</b> (L4), <b>App Gateway</b> (L7/WAF)</li>
+        </ul>
+      `},
+      D5:{title:'D5 — Monitorizar y mantener recursos (10–15%)', html:`
+        <ul>
+          <li><b>Métricas</b> vs <b>Logs</b> (KQL)</li>
+          <li><b>Action Groups</b> para notificar</li>
+          <li><b>VM/Container Insights</b>, <b>App Insights</b></li>
+          <li><b>Update Management</b> & Change Tracking</li>
+        </ul>
+      `}
+    };
+
+    const dlist = document.getElementById('domainsList');
+    const chipsWrap = document.getElementById('domainChips');
+    const infoDom = document.getElementById('infoDom');
+    const infoTitle = document.getElementById('infoTitle');
+    const infoContent = document.getElementById('infoContent');
+
+    dlist.innerHTML = DOMAINS.map(([d,txt])=>`
+      <li class="dom" data-dn="${d}">
+        <span class="dcode">${d}</span>
+        <span>${txt}</span>
+      </li>
+    `).join('');
+
+    chipsWrap.innerHTML = DOMAINS.map(([d])=>`
+      <label class="chip-dom"><input type="checkbox" value="${d}" hidden><span class="led"></span>${d}</label>
+    `).join('');
+
+    function updateChipVisuals(){
+      chipsWrap.querySelectorAll('.chip-dom').forEach(lbl=>{
+        const cb = lbl.querySelector('input'); lbl.classList.toggle('on', cb.checked);
+      });
+    }
+    chipsWrap.addEventListener('click', ev=>{
+      const wrap = ev.target.closest('.chip-dom'); if(!wrap) return;
+      const cb = wrap.querySelector('input'); cb.checked = !cb.checked; updateChipVisuals();
+    }); updateChipVisuals();
+
+    dlist.addEventListener('click', async (ev)=>{
+      const li = ev.target.closest('.dom'); if(!li) return;
+      const code = li.dataset.dn;
+      const inline = DOMAINS_INLINE[code];
+      infoDom.style.display = 'block';
+      if(inline){ infoTitle.textContent = inline.title; infoContent.innerHTML = inline.html; return; }
+      const file = DOMAIN_FILES[code];
+      infoTitle.textContent = code + ' — Notas';
+      infoContent.innerHTML = '<div class="muted">Cargando…</div>';
+      try{
+        const res = await fetch(file, {cache:'no-store'});
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        doc.querySelectorAll('script,link').forEach(n=>n.remove());
+        const src = doc.querySelector('.wrap') || doc.body;
+        infoContent.innerHTML = src ? src.innerHTML : html;
+      }catch(e){
+        infoContent.innerHTML = '<div class="muted">No se pudieron cargar las notas.</div>';
+      }
+    });
+    document.getElementById('infoClose').addEventListener('click', ()=> infoDom.style.display='none');
+
+    /* ===== Simulador hooks ===== */
+    const startBtn = document.getElementById('startBtn');
+    const qCount = document.getElementById('qCount');
+    const view = document.getElementById('view');
+    let quizActive = false;
+    function setQuizActive(on){
+      quizActive = !!on;
+      startBtn.disabled = quizActive;
+      startBtn.textContent = quizActive ? '⏳ En marcha…' : '▶ Empezar';
+      startBtn.setAttribute('aria-disabled', quizActive ? 'true' : 'false');
+    }
+    function waitForQuizMount(timeout=4000){
+      return new Promise(resolve=>{
+        if(view.children.length>0) return resolve();
+        const obs = new MutationObserver(()=>{ if(view.children.length>0){ obs.disconnect(); resolve(); }});
+        obs.observe(view,{childList:true}); setTimeout(()=>{ obs.disconnect(); resolve(); }, timeout);
+      });
+    }
+    window.addEventListener('quiz:started', ()=> setQuizActive(true));
+    window.addEventListener('quiz:ended',   ()=> setQuizActive(false));
+
+    startBtn.addEventListener('click', async ()=>{
+      if(quizActive) return;
+      const count = parseInt(qCount.value,10) || 65;
+      const tags = Array.from(chipsWrap.querySelectorAll('input:checked')).map(cb=>cb.value);
+      if(typeof window.start === 'function'){
+        setQuizActive(true);
+        window.start('az-104', { count, tags });
+        await waitForQuizMount();
+        document.querySelector('#view')?.scrollIntoView({behavior:'smooth', block:'start'});
+      }else{
+        setQuizActive(false);
+        alert('Motor de simulador no cargado.');
+      }
+    });
+
+    // Modal results close
+    document.getElementById('qrClose')?.addEventListener('click', ()=>{
+      const m = document.getElementById('quizResultModal'); if(m){ m.classList.remove('show'); m.style.display='none'; }
+    });
+  </script>
+</body>
+</html>
