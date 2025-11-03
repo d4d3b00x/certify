@@ -190,8 +190,8 @@
     <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <span class="eyebrow">AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA‑C03)</span>
-        <h1>Portada de la certificación SAA‑C03</h1>
+        <span class="eyebrow">AWS CERTIFIED SOLUTIONS ARCHITECT — ASSOCIATE (SAA-C03)</span>
+        <h1>Portada de la certificación SAA-C03</h1>
         <p>Diseña arquitecturas <b>seguras</b>, <b>resilientes</b>, de <b>alto rendimiento</b> y <b>optimizadas en coste</b> en AWS. Aquí tienes <b>Dominios & Simulador</b>, <b>Rutas & Contenido</b> y la nueva <b>Nube de Conceptos</b> con búsqueda instantánea.</p>
 
         <!-- Botonera de pestañas (Rutas en 2º lugar) -->
@@ -203,7 +203,7 @@
 
         <!-- ===== GUÍA DE ESTUDIO (NUBE DE CONCEPTOS) ===== -->
         <section id="studyGuide" aria-label="Guía de estudio SAA-C03" role="tabpanel" aria-labelledby="tabGuide">
-          <h2 class="sec-title" style="margin:10px 0 6px;text-transform:uppercase">Tips de estudio SAA‑C03</h2>
+          <h2 class="sec-title" style="margin:10px 0 6px;text-transform:uppercase">Tips de estudio SAA-C03</h2>
           <p class="muted" style="margin-top:0">Explora la nube de conceptos. Pasa el ratón por cada burbuja para ver un tip y abre el contenido al instante. Filtra con búsqueda.</p>
 
           <div class="concept-toolbar" style="display:flex;gap:10px;align-items:center;margin:10px 0 6px">
@@ -220,19 +220,19 @@
             <div class="route-block">
               <div class="route-title">🧭 Rutas de estudio sugeridas</div>
               <details class="rc" open>
-                <summary>▶ Plan 7 días (intensivo) — SAA‑C03</summary>
+                <summary>▶ Plan 7 días (intensivo) — SAA-C03</summary>
                 <div style="padding:10px 0 0 4px">
-                  <div><span class="num">1</span><b>Fundamentos:</b> Cuentas multi‑cuenta, IAM Roles, SCPs, SSO.</div>
+                  <div><span class="num">1</span><b>Fundamentos:</b> Cuentas multi-cuenta, IAM Roles, SCPs, SSO.</div>
                   <div><span class="num">2</span><b>Red:</b> VPC, subnets, NACL/SG, NAT Gateway, PrivateLink, Route 53.</div>
                   <div><span class="num">3</span><b>Cómputo:</b> EC2/ASG, ALB/NLB, Lambda, ECS/Fargate.</div>
                   <div><span class="num">4</span><b>Datos:</b> S3 (clases), RDS/Aurora, DynamoDB, caché.</div>
                   <div><span class="num">5</span><b>Observabilidad y seguridad:</b> CloudWatch, CloudTrail, KMS, Config.</div>
-                  <div><span class="num">6</span><b>HA & DR:</b> Multi‑AZ/Región, Backup, RTO/RPO, pilot‑light.</div>
+                  <div><span class="num">6</span><b>HA & DR:</b> Multi-AZ/Región, Backup, RTO/RPO, pilot-light.</div>
                   <div><span class="num">7</span><b>Simulacros + repaso dirigido:</b> errores frecuentes.</div>
                 </div>
               </details>
               <details class="rc">
-                <summary>▶ Plan 14 días — SAA‑C03</summary>
+                <summary>▶ Plan 14 días — SAA-C03</summary>
                 <div style="padding:10px 0 0 4px">Divide el plan de 7 días en sprints de 2 días por bloque + 4 sesiones de práctica.</div>
               </details>
               <details class="rc">
@@ -269,7 +269,7 @@
 
           <!-- DERECHA: simulador -->
           <aside class="panel" id="simCard" aria-label="Simulador SAA-C03">
-            <h3 id="simTitle">SAA‑C03 · Simulador de examen</h3>
+            <h3 id="simTitle">SAA-C03 · Simulador de examen</h3>
 
             <div class="field">
               <label>Modo</label>
@@ -382,7 +382,7 @@
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
       else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); updateStartCta(); });
     renderHeaderAuth();
 
     /* ===== Tabs ===== */
@@ -428,7 +428,7 @@
     const CONFIG = {
       'aws-saa-c03': {
         logo: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg',
-        blurb: 'Dominios oficiales de SAA‑C03 con notas rápidas para el examen.',
+        blurb: 'Dominios oficiales de SAA-C03 con notas rápidas para el examen.',
         domains: [
           ['D1','Diseñar arquitecturas seguras (30%)'],
           ['D2','Diseñar arquitecturas resilientes (26%)'],
@@ -521,6 +521,19 @@
     }
     document.getElementById('infoClose').addEventListener('click', ()=>{ infoDom.style.display='none'; });
 
+    // ===== CTA dinámico del simulador (login/start) =====
+    function updateStartCta(){
+      const u = getCurrentUser();
+      if(u){
+        startBtn.textContent = '▶ Empezar';
+        startBtn.title = 'Inicia el simulador';
+      }else{
+        startBtn.textContent = '🔐 Login para empezar';
+        startBtn.title = 'Debes iniciar sesión para usar el simulador';
+      }
+    }
+    updateStartCta();
+
     // Simulador
     let quizActive = false;
     const header = document.querySelector('header');
@@ -534,7 +547,7 @@
     function setQuizActive(on){
       quizActive = !!on;
       startBtn.disabled = quizActive;
-      startBtn.textContent = quizActive ? '⏳ En marcha…' : '▶ Empezar';
+      startBtn.textContent = quizActive ? '⏳ En marcha…' : (getCurrentUser() ? '▶ Empezar' : '🔐 Login para empezar');
       startBtn.setAttribute('aria-disabled', quizActive ? 'true' : 'false');
     }
     function waitForQuizMount(timeout=4000){
@@ -550,6 +563,12 @@
 
     startBtn.addEventListener('click', async ()=>{
       if (quizActive) return;
+      // Si no hay sesión -> ir a login
+      if(!getCurrentUser()){
+        window.location.href = '/login/login.html';
+        return;
+      }
+      // Con sesión -> iniciar simulador
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
       const count = parseInt(qCount.value,10) || 65;
       const tags = Array.from(chipsWrap.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
@@ -603,12 +622,12 @@
     const ROUTES = [
       { slug:'aws-compute-elasticity-saac03',     title:'Compute & Elasticidad',    tag:'Compute',    blurb:'EC2/ASG, patrones de escalado y elección de servicios.' },
       { slug:'aws-databases-storage-saac03',      title:'Bases de datos y Storage', tag:'Datos',      blurb:'RDS/Aurora, DynamoDB, S3, EBS y copias.' },
-      { slug:'aws-iam-organizations-saac03',      title:'IAM & Organizations',      tag:'Seguridad',  blurb:'Roles, policies, SCPs y multi‑cuenta.' },
-      { slug:'aws-observability-saac03',          title:'Observabilidad',           tag:'Monitoreo',  blurb:'CloudWatch, CloudTrail, Config, X‑Ray.' },
+      { slug:'aws-iam-organizations-saac03',      title:'IAM & Organizations',      tag:'Seguridad',  blurb:'Roles, policies, SCPs y multi-cuenta.' },
+      { slug:'aws-observability-saac03',          title:'Observabilidad',           tag:'Monitoreo',  blurb:'CloudWatch, CloudTrail, Config, X-Ray.' },
       { slug:'aws-s3-design-saac03',              title:'Diseño con S3',            tag:'Storage',    blurb:'Clases, políticas, lifecycle y CRR.' },
-      { slug:'aws-sqs-sns-patterns',              title:'Patrones con SQS/SNS',     tag:'Mensajería', blurb:'Desacoplo, fan‑out y colas DLQ.' },
+      { slug:'aws-sqs-sns-patterns',              title:'Patrones con SQS/SNS',     tag:'Mensajería', blurb:'Desacoplo, fan-out y colas DLQ.' },
       { slug:'aws-vpc-advanced-endpoints-saac03', title:'VPC avanzada & Endpoints', tag:'Red',        blurb:'PrivateLink, Gateway/Interface endpoints.' },
-      { slug:'aws-vpc-ha',                        title:'Alta disponibilidad en VPC',tag:'Red',       blurb:'Multi‑AZ, balanceo y rutas.' }
+      { slug:'aws-vpc-ha',                        title:'Alta disponibilidad en VPC',tag:'Red',       blurb:'Multi-AZ, balanceo y rutas.' }
     ];
     function renderRoutes(){
       const grid = document.getElementById('routesGrid');
@@ -629,11 +648,11 @@
       { key:'iam',  title:'IAM & Roles',           tip:'Usa roles + STS para accesos temporales y evita claves largas.', href:'/content/aws-iam-organizations-saac03.html' },
       { key:'scp',  title:'SCPs',                  tip:'Las SCPs limitan el máximo permiso efectivo en la cuenta.', href:'/content/aws-iam-organizations-saac03.html' },
       { key:'s3',   title:'S3: clases',            tip:'IA para acceso poco frecuente, Glacier para archivado.', href:'/content/aws-s3-design-saac03.html' },
-      { key:'ddb',  title:'DynamoDB',              tip:'Cuida particiones: claves hot → on‑demand + caché.', href:'/content/aws-databases-storage-saac03.html' },
+      { key:'ddb',  title:'DynamoDB',              tip:'Cuida particiones: claves hot → on-demand + caché.', href:'/content/aws-databases-storage-saac03.html' },
       { key:'alb',  title:'ALB vs NLB',            tip:'ALB capa 7 (WAF); NLB capa 4 y ultra rendimiento.', href:'/content/aws-vpc-ha.html' },
       { key:'endp', title:'VPC Endpoints',         tip:'Gateway para S3/DynamoDB; Interface para el resto.', href:'/content/aws-vpc-advanced-endpoints-saac03.html' },
       { key:'asg',  title:'Auto Scaling',          tip:'Escala por métricas/pasos y combina con Spot.', href:'/content/aws-compute-elasticity-saac03.html' },
-      { key:'mess', title:'SQS/SNS',               tip:'Fan‑out con SNS→SQS, DLQ para reintentos.', href:'/content/aws-sqs-sns-patterns.html' },
+      { key:'mess', title:'SQS/SNS',               tip:'Fan-out con SNS→SQS, DLQ para reintentos.', href:'/content/aws-sqs-sns-patterns.html' },
       { key:'obs',  title:'Observabilidad',        tip:'CloudWatch + Logs + Alarms; auditoría con CloudTrail.', href:'/content/aws-observability-saac03.html' }
     ];
     function renderConceptCloud(){

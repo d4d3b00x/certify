@@ -93,6 +93,17 @@
     .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
     .segmented input:checked + label{background:#0f1630;border:1px solid #4c66c9}
     #startBtn{background:#0078d4;color:#0b0f22;border-color:transparent;box-shadow:0 10px 24px rgba(0,120,212,.35)}
+    /* ---- estado bloqueado del botón ---- */
+    #startBtn.locked{
+      background:linear-gradient(180deg,#6fa4ff,#355ff6);
+      color:#fff; border:1px solid rgba(71,103,220,.6);
+      box-shadow:0 12px 26px rgba(53,95,246,.35);
+    }
+    #startBtn.locked .lock{
+      display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:5px;
+      background:linear-gradient(180deg,#ffd699,#ff9900);color:#111;font-weight:900;box-shadow:0 0 0 3px rgba(255,153,0,.18);font-size:12px;
+    }
+
     #infoDom{margin-top:16px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:none}
     .info-empty{color:var(--muted);border:1px dashed var(--stroke);padding:12px;border-radius:10px;background:#0f1630}
 
@@ -113,46 +124,44 @@
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
 
 
-/* ========= ESTILO ESPECIAL DEL SIMULADOR (AZ-104 style) ========= */
-#simCard{
-  position:relative;
-  background:
-    radial-gradient(95% 140% at 100% 0, rgba(0,120,212,.18), transparent 60%),
-    linear-gradient(180deg,#111937,#0f1633);
-  border:1px solid rgba(0,120,212,.45);
-  box-shadow:
-    0 0 0 1px rgba(55,149,229,.25) inset,
-    0 22px 40px rgba(0,0,0,.55);
-}
-#simCard::after{
-  content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none;
-  box-shadow:0 0 0 3px rgba(0,120,212,.25);
-}
-#simTitle{
-  font-size:clamp(1.4rem,3.0vw,2.0rem);
-  font-weight:900; line-height:1.2; letter-spacing:.2px;
-  text-shadow:0 10px 28px rgba(0,120,212,.35);
-  margin-bottom:6px;
-}
-#simCard .segmented{ background:rgba(255,255,255,.04); border:1px solid #2a3b6d; padding:6px; }
-#simCard .segmented input:checked + label{
-  background:linear-gradient(180deg,#164d86,#0e3570);
-  border:1px solid rgba(0,120,212,.55);
-  box-shadow:0 0 0 2px rgba(0,120,212,.30) inset;
-}
-#simCard select{
-  background:#0f1b3a;color:var(--ink);
-  border:1px solid #2a3b6d;border-radius:10px; padding:10px 12px;font-weight:800;min-width:84px;
-}
-#simCard .chip-dom{
-  padding:10px 14px;border-radius:999px; border-color:#2a3b6d;background:transparent;color:#d6e5ff;
-  box-shadow:0 2px 0 rgba(0,0,0,.12);
-}
-#simCard .chip-dom.on{ background:rgba(0,120,212,.08); border-color:#3a62b3; box-shadow:0 0 0 2px rgba(0,120,212,.22) inset; }
-#simCard .chip-dom .led{width:14px;height:14px;border:2px solid #6a78b4}
-#simCard .chip-dom.on .led{background:#0078d4;border-color:#0078d4}
-
-
+    /* ========= ESTILO ESPECIAL DEL SIMULADOR (AZ-104 style) ========= */
+    #simCard{
+      position:relative;
+      background:
+        radial-gradient(95% 140% at 100% 0, rgba(0,120,212,.18), transparent 60%),
+        linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid rgba(0,120,212,.45);
+      box-shadow:
+        0 0 0 1px rgba(55,149,229,.25) inset,
+        0 22px 40px rgba(0,0,0,.55);
+    }
+    #simCard::after{
+      content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none;
+      box-shadow:0 0 0 3px rgba(0,120,212,.25);
+    }
+    #simTitle{
+      font-size:clamp(1.4rem,3.0vw,2.0rem);
+      font-weight:900; line-height:1.2; letter-spacing:.2px;
+      text-shadow:0 10px 28px rgba(0,120,212,.35);
+      margin-bottom:6px;
+    }
+    #simCard .segmented{ background:rgba(255,255,255,.04); border:1px solid #2a3b6d; padding:6px; }
+    #simCard .segmented input:checked + label{
+      background:linear-gradient(180deg,#164d86,#0e3570);
+      border:1px solid rgba(0,120,212,.55);
+      box-shadow:0 0 0 2px rgba(0,120,212,.30) inset;
+    }
+    #simCard select{
+      background:#0f1b3a;color:var(--ink);
+      border:1px solid #2a3b6d;border-radius:10px; padding:10px 12px;font-weight:800;min-width:84px;
+    }
+    #simCard .chip-dom{
+      padding:10px 14px;border-radius:999px; border-color:#2a3b6d;background:transparent;color:#d6e5ff;
+      box-shadow:0 2px 0 rgba(0,0,0,.12);
+    }
+    #simCard .chip-dom.on{ background:rgba(0,120,212,.08); border-color:#3a62b3; box-shadow:0 0 0 2px rgba(0,120,212,.22) inset; }
+    #simCard .chip-dom .led{width:14px;height:14px;border:2px solid #6a78b4}
+    #simCard .chip-dom.on .led{background:#0078d4;border-color:#0078d4}
   </style>
 </head>
 <body>
@@ -185,7 +194,6 @@
         <span class="eyebrow">AZURE SOLUTIONS ARCHITECT — EXPERT (AZ-305)</span>
         <h1>Portada de la certificación AZ-305</h1>
         <p>Diseña soluciones de infraestructura en Azure: identidad y gobierno, almacenamiento de datos, continuidad de negocio e infraestructura. Aquí tienes <b>Tips de Estudio</b> y <b>Dominios & Simulador</b> en pestañas.</p>
-
 
         <!-- Botonera de pestañas -->
         <div class="tabbar" role="tablist" aria-label="Vistas de AZ-305">
@@ -357,8 +365,11 @@
     // Año
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    /* ===== AUTH header ===== */
+    /* ===== AUTH helpers ===== */
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function isLoggedIn(){ return !!getCurrentUser(); }
+
+    /* ===== AUTH header ===== */
     function renderHeaderAuth(){
       const u=getCurrentUser();
       const login=document.getElementById('btnLogin');
@@ -368,7 +379,11 @@
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
       else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{
+      localStorage.removeItem('currentUser');
+      renderHeaderAuth();
+      renderStartButton(); // sincroniza el botón tras cerrar sesión
+    });
     renderHeaderAuth();
 
     /* ===== Tabs ===== */
@@ -474,7 +489,7 @@
       infoTitle.textContent = `${domainCode} — Notas`;
       infoDom.style.display = 'block';
       infoContent.innerHTML = `<div class="info-empty">Cargando notas…</div>`;
-      if(!file){ infoContent.innerHTML = `<div class=\"info-empty\">No hay archivo de notas asignado para <b>${domainCode}</b>.</div>`; return; }
+      if(!file){ infoContent.innerHTML = `<div class="info-empty">No hay archivo de notas asignado para <b>${domainCode}</b>.</div>`; return; }
       try{
         const res = await fetch(file, {cache:'no-store'});
         const html = await res.text();
@@ -484,10 +499,27 @@
         infoContent.innerHTML = src ? src.innerHTML : html;
         infoDom.scrollIntoView({behavior:'smooth', block:'start'});
       }catch(e){
-        infoContent.innerHTML = `<div class=\"info-empty\">No se pudieron cargar las notas de <b>${domainCode}</b>.</div>`;
+        infoContent.innerHTML = `<div class="info-empty">No se pudieron cargar las notas de <b>${domainCode}</b>.</div>`;
       }
     }
     document.getElementById('infoClose').addEventListener('click', ()=>{ infoDom.style.display='none'; });
+
+    /* ===== Botón START según sesión ===== */
+    function renderStartButton(){
+      if (!startBtn) return;
+      if (isLoggedIn()){
+        startBtn.classList.remove('locked');
+        startBtn.dataset.locked = "false";
+        startBtn.innerHTML = '▶ Empezar';
+      }else{
+        startBtn.classList.add('locked');
+        startBtn.dataset.locked = "true";
+        startBtn.innerHTML = '<span class="lock">🔒</span>Login to Start';
+      }
+      startBtn.disabled = false; // nunca lo dejamos bloqueado por disabled
+    }
+    // Pintado inicial
+    renderStartButton();
 
     // Simulador
     let quizActive = false;
@@ -501,8 +533,11 @@
     }
     function setQuizActive(on){
       quizActive = !!on;
-      startBtn.disabled = quizActive;
-      startBtn.textContent = quizActive ? '⏳ En marcha…' : '▶ Empezar';
+      if (quizActive){
+        startBtn.textContent = '⏳ En marcha…';
+      }else{
+        renderStartButton(); // restaura label según sesión
+      }
       startBtn.setAttribute('aria-disabled', quizActive ? 'true' : 'false');
     }
     function waitForQuizMount(timeout=4000){
@@ -517,6 +552,11 @@
     window.addEventListener('quiz:ended',   ()=>{ setQuizActive(false); });
 
     startBtn.addEventListener('click', async ()=>{
+      // Si está bloqueado por falta de sesión, redirige a login
+      if (startBtn.dataset.locked === "true"){
+        window.location.href = '/login/login.html';
+        return;
+      }
       if (quizActive) return;
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
       const count = parseInt(qCount.value,10) || 65;
