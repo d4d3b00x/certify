@@ -168,6 +168,12 @@
     details{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:10px}
     details+details{margin-top:8px}
     details summary{cursor:pointer;font-weight:900}
+
+    /* >>> CAMBIO SOLICITADO: resaltar la sección de certificaciones <<< */
+    #certificaciones{
+      border:2px solid #0078d4;
+      box-shadow:0 0 20px rgba(0,120,212,.25);
+    }
   </style>
 </head>
 <body>
@@ -223,7 +229,7 @@
 
         <!-- 1) Certificaciones destacadas -->
         <div id="certificaciones" class="card" style="margin-top:12px">
-          <h2>Certificaciones destacadas</h2>
+          <h2>CERTIFICACION DISPONIBLES EN ITHUB</h2>
           <div class="muted">Accede a la página de cada certificación para guía, banco de preguntas y simulador.</div>
           <div class="grid cols-2" style="margin-top:12px">
             <article class="card">
@@ -386,7 +392,7 @@
           </details>
         </div>
 
-        <!-- 6) Consejos -->
+        <!-- 6) Consejos 
         <div class="card" style="margin-top:12px">
           <h2>Consejos rápidos para el examen</h2>
           <div class="check">
@@ -396,7 +402,7 @@
             <div>✅ Para acceso privado a servicios PaaS, usa <b>Private Link</b> y DNS privado.</div>
             <div>✅ Automatiza con <b>Bicep/Terraform</b> para reducir errores y repetir despliegues.</div>
           </div>
-        </div>
+        </div>-->
       </div>
 
       <!-- DERECHA -->
