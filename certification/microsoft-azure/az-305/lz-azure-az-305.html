@@ -464,6 +464,8 @@
          <input type="checkbox" value="${d}" hidden>
          <span class="led"></span> ${d}
        </label>`).join('');
+
+    /* === Dots seleccionables solo para visual (no afectan al quiz) === */
     function updateChipVisuals(){
       chips.querySelectorAll('.chip-dom').forEach(lbl=>{
         const cb = lbl.querySelector('input[type="checkbox"]');
@@ -472,7 +474,10 @@
     }
     chips.addEventListener('click', (ev)=>{
       const wrap = ev.target.closest('.chip-dom'); if(!wrap) return;
-      const cb = wrap.querySelector('input[type="checkbox"]'); cb.checked = !cb.checked; updateChipVisuals();
+      const cb = wrap.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;           // permite marcar/desmarcar
+      updateChipVisuals();                // enciende/apaga visualmente
+      // No hacemos nada más: no almacenamos ni aplicamos filtros
     });
     updateChipVisuals();
 
@@ -560,7 +565,11 @@
       if (quizActive) return;
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
       const count = parseInt(qCount.value,10) || 65;
-      const tags = Array.from(chips.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
+
+      // *** IGNORAR SELECCIONES DE DOMINIO ***
+      // Siempre lanzar con todos los dominios (sin filtro)
+      const tags = []; 
+
       if(typeof window.start === 'function'){
         setQuizActive(true);
         window.start(QUIZ, { count, tags });

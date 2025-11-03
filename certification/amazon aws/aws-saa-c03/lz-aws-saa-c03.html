@@ -267,7 +267,7 @@
             <ul id="domainsList" class="domains-list"></ul>
           </section>
 
-          <!-- DERECHA: simulador -->
+            <!-- DERECHA: simulador -->
           <aside class="panel" id="simCard" aria-label="Simulador SAA-C03">
             <h3 id="simTitle">SAA-C03 · Simulador de examen</h3>
 
@@ -571,7 +571,8 @@
       // Con sesión -> iniciar simulador
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
       const count = parseInt(qCount.value,10) || 65;
-      const tags = Array.from(chipsWrap.querySelectorAll('input[type="checkbox"]:checked')).map(cb=>cb.value);
+      // IGNORAR FILTROS DE DOMINIO -> incluir todos
+      const tags = [];
       if(typeof window.start === 'function'){
         setQuizActive(true);
         window.start(QUIZ, { count, tags });
