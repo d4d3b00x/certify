@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
 
-  <title>AZ-305: Simulador y Guía de Estudio — Microsoft Azure Solutions Architect Expert | ITHub</title>
+  <title>AZ-305: Simulador y Guía de Estudio — Azure Solutions Architect Expert | ITHub</title>
   <link rel="canonical" href="https://beta.ithub.es/certification/microsoft-azure/az-305/lz-azure-az-305.html" />
   <meta name="description" content="Simulador AZ-305 con preguntas por dominios (D1-D4), métricas y guía de estudio en tarjetas. Practica Designing Microsoft Azure Infrastructure Solutions y supera 700/1000." />
   <meta name="keywords" content="AZ-305, simulador AZ-305, preguntas AZ-305 en español, Azure Solutions Architect Expert, guía de estudio AZ-305, dominios D1 D2 D3 D4" />
@@ -55,26 +55,13 @@
     .tab-btn{ display:inline-flex;align-items:center;gap:10px;justify-content:center; min-height:44px;padding:10px 16px;border-radius:12px;font-weight:900;cursor:pointer; border:1px solid #2a3150;background:transparent;color:#e8ecff; }
     .tab-btn.active{background:var(--cta);border-color:transparent;color:#0b1930;box-shadow:0 10px 22px rgba(0,120,212,.22)}
 
-    /* Guía de estudio */
+    /* Guía de estudio (base) */
     #studyGuide{display:none;margin-top:14px}
     #studyGuide.open{display:block}
     .muted{color:var(--muted)}
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
 
-    /* Carrusel */
-    .carousel{position:relative;margin-top:12px}
-    .track{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px}
-    @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
-    @media(max-width:560px){ .track{grid-template-columns:1fr} }
-    .car-btn{position:absolute;top:45%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.95);color:#0f1320;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:2}
-    .car-btn[disabled]{opacity:.5;cursor:not-allowed}
-    .car-prev{left:-10px}.car-next{right:-10px}
-    .tiny-btn{display:inline-flex;align-items:center;justify-content:center;height:28px; padding:0 10px; border-radius:8px;border:1px solid #3b2fff44; background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff; font-weight:900; cursor:pointer;white-space:nowrap;}
-    .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-    .cc-meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;}
-    .cc-meta .grow{ display:inline-flex; align-items:center; gap:8px; margin-right:auto; }
-
-    /* ====== DOMINIOS & SIMULADOR ====== */
+    /* DOMINIOS & SIMULADOR */
     .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
     .grid-sim{display:grid;grid-template-columns:1.35fr .85fr;gap:16px;margin-top:16px}
     @media(max-width:860px){.grid-sim{grid-template-columns:1fr}}
@@ -93,75 +80,81 @@
     .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
     .segmented input:checked + label{background:#0f1630;border:1px solid #4c66c9}
     #startBtn{background:#0078d4;color:#0b0f22;border-color:transparent;box-shadow:0 10px 24px rgba(0,120,212,.35)}
-    /* ---- estado bloqueado del botón ---- */
-    #startBtn.locked{
-      background:linear-gradient(180deg,#6fa4ff,#355ff6);
-      color:#fff; border:1px solid rgba(71,103,220,.6);
-      box-shadow:0 12px 26px rgba(53,95,246,.35);
-    }
-    #startBtn.locked .lock{
-      display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:5px;
-      background:linear-gradient(180deg,#ffd699,#ff9900);color:#111;font-weight:900;box-shadow:0 0 0 3px rgba(255,153,0,.18);font-size:12px;
-    }
+    #startBtn.locked{ background:linear-gradient(180deg,#6fa4ff,#355ff6); color:#fff; border:1px solid rgba(71,103,220,.6); box-shadow:0 12px 26px rgba(53,95,246,.35); }
+    #startBtn.locked .lock{ display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:5px;background:linear-gradient(180deg,#ffd699,#ff9900);color:#111;font-weight:900;box-shadow:0 0 0 3px rgba(255,153,0,.18);font-size:12px; }
 
     #infoDom{margin-top:16px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:none}
     .info-empty{color:var(--muted);border:1px dashed var(--stroke);padding:12px;border-radius:10px;background:#0f1630}
 
-    /* Modal resultados */
+    /* Modal resultados (NUEVA) */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
     .modal.show{display:flex}
-    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .modal-card{width:min(860px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .res-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .res-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-weight:900}
+    .res-pass{background:linear-gradient(180deg,#3ad97a,#1fb764);color:#0a1e14;box-shadow:0 0 0 4px rgba(58,217,122,.18)}
+    .res-fail{background:linear-gradient(180deg,#ff8a8a,#ff5f5f);color:#290a0a;box-shadow:0 0 0 4px rgba(255,95,95,.18)}
+    .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 4px}
+    @media(max-width:640px){ .metric-grid{grid-template-columns:repeat(2,1fr)} }
+    .metric{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:10px}
+    .metric b{display:block;font-size:.75rem;color:#9fb6ff;letter-spacing:.25px}
+    .metric .big{font-weight:900;font-size:1.4rem}
+    .res-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin-top:8px}
+    .res-table th{font-size:.82rem;color:#9fb6ff;text-align:left;padding:0 8px}
+    .res-row{background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;overflow:hidden}
+    .res-row td{padding:10px 8px;vertical-align:middle}
+    .bar{height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
+    .bar>span{display:block;height:100%}
+    .bar-ok{background:#3ad97a}
+    .bar-warn{background:#ffd66b}
+    .bar-bad{background:#ff6b6b}
+    .res-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .btn-ghost{background:transparent;border:1px solid #2a3150;color:#e8ecff;border-radius:10px;min-height:40px;padding:0 12px;font-weight:900;cursor:pointer}
+    .btn-ghost:hover{border-color:#3c4a7e}
+    .btn-primary{background:var(--cta);border:1px solid #2a3150;color:#0b1930;border-radius:10px;min-height:40px;padding:0 12px;font-weight:900;cursor:pointer}
     .diag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
     @media(max-width:640px){.diag-grid{grid-template-columns:1fr}}
-    .meter{position:relative;height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
-    .meter>span{position:absolute;left:0;top:0;height:100%;width:0;transition:width .35s}
-    .m-ok{background:#3ad97a} .m-warn{background:#ffd66b} .m-bad{background:#ff6b6b}
-
-    /* Footer */
+    /* FOOTER */
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2));margin-top:22px}
-    .f-grid{display:grid;gap:14px}
+    .f-grid{display:grid;gap:14px;align-items:flex-start}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
-
-
-    /* ========= ESTILO ESPECIAL DEL SIMULADOR (AZ-104 style) ========= */
+    .footer-spacer{height:1px}
+    /* Simulador (AZ-104 style) + tips */
     #simCard{
       position:relative;
       background:
         radial-gradient(95% 140% at 100% 0, rgba(0,120,212,.18), transparent 60%),
         linear-gradient(180deg,#111937,#0f1633);
       border:1px solid rgba(0,120,212,.45);
-      box-shadow:
-        0 0 0 1px rgba(55,149,229,.25) inset,
-        0 22px 40px rgba(0,0,0,.55);
+      box-shadow:0 0 0 1px rgba(55,149,229,.25) inset, 0 22px 40px rgba(0,0,0,.55);
     }
-    #simCard::after{
-      content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none;
-      box-shadow:0 0 0 3px rgba(0,120,212,.25);
-    }
-    #simTitle{
-      font-size:clamp(1.4rem,3.0vw,2.0rem);
-      font-weight:900; line-height:1.2; letter-spacing:.2px;
-      text-shadow:0 10px 28px rgba(0,120,212,.35);
-      margin-bottom:6px;
-    }
+    #simCard::after{ content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none; box-shadow:0 0 0 3px rgba(0,120,212,.25); }
+    #simTitle{ font-size:clamp(1.4rem,3.0vw,2.0rem); font-weight:900; line-height:1.2; letter-spacing:.2px; text-shadow:0 10px 28px rgba(0,120,212,.35); margin-bottom:6px; }
     #simCard .segmented{ background:rgba(255,255,255,.04); border:1px solid #2a3b6d; padding:6px; }
-    #simCard .segmented input:checked + label{
-      background:linear-gradient(180deg,#164d86,#0e3570);
-      border:1px solid rgba(0,120,212,.55);
-      box-shadow:0 0 0 2px rgba(0,120,212,.30) inset;
-    }
-    #simCard select{
-      background:#0f1b3a;color:var(--ink);
-      border:1px solid #2a3b6d;border-radius:10px; padding:10px 12px;font-weight:800;min-width:84px;
-    }
-    #simCard .chip-dom{
-      padding:10px 14px;border-radius:999px; border-color:#2a3b6d;background:transparent;color:#d6e5ff;
-      box-shadow:0 2px 0 rgba(0,0,0,.12);
-    }
+    #simCard .segmented input:checked + label{ background:linear-gradient(180deg,#164d86,#0e3570); border:1px solid rgba(0,120,212,.55); box-shadow:0 0 0 2px rgba(0,120,212,.30) inset; }
+    #simCard select{ background:#0f1b3a;color:var(--ink); border:1px solid #2a3b6d;border-radius:10px; padding:10px 12px;font-weight:800;min-width:84px; }
+    #simCard .chip-dom{ padding:10px 14px;border-radius:999px; border-color:#2a3b6d;background:transparent;color:#d6e5ff; box-shadow:0 2px 0 rgba(0,0,0,.12); }
     #simCard .chip-dom.on{ background:rgba(0,120,212,.08); border-color:#3a62b3; box-shadow:0 0 0 2px rgba(0,120,212,.22) inset; }
     #simCard .chip-dom .led{width:14px;height:14px;border:2px solid #6a78b4}
     #simCard .chip-dom.on .led{background:#0078d4;border-color:#0078d4}
+    #tips305 .pill{ display:inline-flex; align-items:center; gap:8px; font-size:.86rem; font-weight:900; letter-spacing:.2px; background:rgba(0,120,212,.16); border:1px solid rgba(0,120,212,.45); color:#d7e8ff; padding:6px 10px; border-radius:999px; margin:0 0 8px; }
+    #tips305 h2{ margin:10px 0 6px; text-transform:uppercase }
+    #tips305 .lead{ color:var(--muted); margin:0 0 14px }
+    #tips305 .search{ display:flex; align-items:center; gap:10px; margin:8px 0 18px; background:linear-gradient(180deg,#0f1a35,#0c152b); border:1px solid var(--stroke); border-radius:12px; padding:10px 12px; box-shadow:var(--shadow); }
+    #tips305 .search input{ all:unset; flex:1; color:var(--ink); font-weight:700; letter-spacing:.2px; padding:6px 2px; }
+    #tips305 .grid{ display:grid; gap:12px; grid-template-columns:repeat(4, minmax(180px, 1fr)); }
+    @media (max-width:1024px){ #tips305 .grid{ grid-template-columns:repeat(3, 1fr);} }
+    @media (max-width:760px){  #tips305 .grid{ grid-template-columns:repeat(2, 1fr);} }
+    @media (max-width:520px){  #tips305 .grid{ grid-template-columns:1fr;} }
+    #tips305 .tile{ background:linear-gradient(180deg,#122046,#0f1c3b); border:1px solid var(--stroke); border-radius:14px; padding:14px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px; min-height:160px; transition:transform .12s ease, border-color .12s ease, background .12s ease; }
+    #tips305 .tile:hover{ transform:translateY(-2px); background:linear-gradient(180deg,#152650,#112042); border-color:#2f3c6e; }
+    #tips305 .tile h3{ margin:0; font-size:1.02rem; line-height:1.25; display:flex; align-items:center; gap:8px; }
+    #tips305 .dot{ width:12px;height:12px;border-radius:999px;background:linear-gradient(180deg,#7bd3ff,#1ea0ff); box-shadow:0 0 0 4px rgba(0,120,212,.18); flex:0 0 12px; }
+    #tips305 .tile p{ margin:0; color:var(--muted) }
+    #tips305 .btn{ margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:6px; min-height:34px; padding:0 12px; border-radius:10px; border:1px solid #3b2fff44; background:linear-gradient(180deg,#6c8bff,#3e64ff); color:#fff; font-weight:900; text-decoration:none; filter:saturate(1); transition:filter .12s ease, transform .08s ease; }
+    #tips305 .btn:hover{ filter:brightness(1.06); transform:translateY(-1px) }
+    .hidden{ display:none !important; }
   </style>
 </head>
 <body>
@@ -191,8 +184,8 @@
     <!-- HERO -->
     <section class="hero">
       <div class="container">
-        <span class="eyebrow">MICROSOFT AZURE SOLUTIONS ARCHITECT — EXPERT (AZ-305)</span>
-        <h1>Portada de la certificación <a href="/certification/microsoft-azure/az-104/index.html"><span style="color:#76c7ff">AZURE</span></a> / AZ-305</h1>
+        <span class="eyebrow">AZURE SOLUTIONS ARCHITECT — EXPERT (AZ-305)</span>
+        <h1>Portada de la certificación AZ-305</h1>
         <p>Diseña soluciones de infraestructura en Azure: identidad y gobierno, almacenamiento de datos, continuidad de negocio e infraestructura. Aquí tienes <b>Tips de Estudio</b> y <b>Dominios & Simulador</b> en pestañas.</p>
 
         <!-- Botonera de pestañas -->
@@ -201,47 +194,58 @@
           <button id="tabGuide" class="tab-btn" role="tab" aria-selected="false" aria-controls="studyGuide">📘 TIPS DE ESTUDIO</button>
         </div>
 
-        <!-- ===== GUÍA DE ESTUDIO ===== -->
+        <!-- ===== GUÍA DE ESTUDIO (incrustada) ===== -->
         <section id="studyGuide" aria-label="Guía de estudio AZ-305" role="tabpanel" aria-labelledby="tabGuide">
-          <h2 class="sec-title" style="margin:10px 0 6px;text-transform:uppercase">Tips de estudio AZ-305</h2>
-          <p class="muted" style="margin-top:0">Tarjetas y artículos clave orientados al examen. Repasa en orden o salta a lo que necesites.</p>
-          <div class="carousel" role="region" aria-label="Contenidos AZ-305">
-            <button class="car-btn car-prev" type="button" aria-label="Anterior">‹</button>
-            <div class="track" id="contentTrack">
-              <article class="card">
-                <div class="cc-head">🏛️ <strong>Landing Zone &amp; gobierno</strong></div>
-                <p class="muted">Fundamentos de diseño: jerarquía de gestión, políticas, RBAC y blueprints.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-305</span></span>
-                  <a class="tiny-btn" href="/content/azure-landing-zone.html">Leer</a>
-                </div>
+          <div id="tips305" class="container" style="padding:0">
+            <div class="pill">TIPS DE ESTUDIO · AZ-305</div>
+            <h2 style="margin:6px 0 8px">Explora conceptos clave y abre los artículos al instante</h2>
+            <p class="lead">Pasa el ratón para ver el tip y usa el buscador para filtrar. Cada tarjeta abre un artículo de referencia del dominio AZ-305.</p>
+
+            <label class="search" aria-label="Buscar conceptos">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 21l-4.2-4.2M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+                      stroke="#9fb2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input id="tipsSearch" type="search" placeholder="Buscar (ej: RBAC, Storage, VPN, DR, Zero Trust)">
+            </label>
+
+            <section id="tipsGrid" class="grid" aria-label="Lista de tips">
+              <article class="tile" data-tags="zero trust security identidad governance policy defender identity rbac">
+                <h3><span class="dot" aria-hidden="true"></span> Zero Trust y gobierno</h3>
+                <p>Principios Zero Trust, segmentación, hardening de identidad, Policy vs RBAC y controles en capas.</p>
+                <a class="btn" href="/content/azure-security-zero-trust-az305.html">Leer →</a>
               </article>
-              <article class="card">
-                <div class="cc-head">🔗 <strong>Conectividad híbrida</strong></div>
-                <p class="muted">VPN/ER, DNS privado, patrones hub-spoke y BGP en soluciones de arquitectura.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-305</span></span>
-                  <a class="tiny-btn" href="/content/azure-hybrid-connectivity-az305.html">Leer</a>
-                </div>
+
+              <article class="tile" data-tags="cost reliability fiabilidad costos resiliencia zonas zrs gzs ha">
+                <h3><span class="dot" aria-hidden="true"></span> Cost & Reliability</h3>
+                <p>Patrones de resiliencia (ZRS/GZRS, zonas, colas), trade-offs de coste, pruebas de caos y SLOs.</p>
+                <a class="btn" href="/content/azure-cost-reliability-az305.html">Leer →</a>
               </article>
-              <article class="card">
-                <div class="cc-head">💾 <strong>Diseño de datos</strong></div>
-                <p class="muted">Elección entre SQL, Cosmos DB, Storage, particionado, costos y disponibilidad.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-305</span></span>
-                  <a class="tiny-btn" href="/content/azure-data-architecture-az305.html">Leer</a>
-                </div>
+
+              <article class="tile" data-tags="data datos elecciones sql cosmos lakehouse particionado consistencia cap">
+                <h3><span class="dot" aria-hidden="true"></span> Data choices</h3>
+                <p>Elección entre SQL/Cosmos/Storage, partición y consistencia, costos, disponibilidad y seguridad.</p>
+                <a class="btn" href="/content/azure-data-choices-az305.html">Leer →</a>
               </article>
-              <article class="card">
-                <div class="cc-head">🛡️ <strong>Continuidad de negocio</strong></div>
-                <p class="muted">RPO/RTO, ZRS/GZRS, Backup, Site Recovery (ASR) y patrones de resiliencia.</p>
-                <div class="cc-meta">
-                  <span class="grow"><span>AZURE</span><span>AZ-305</span></span>
-                  <a class="tiny-btn" href="/content/azure-bcdr-az305.html">Leer</a>
-                </div>
+
+              <article class="tile" data-tags="ha dr continuidad negocio backup recovery rpo rto asr grs gzrs runbooks">
+                <h3><span class="dot" aria-hidden="true"></span> HA & DR</h3>
+                <p>Modelos Activo/Activo vs Activo/Pasivo, RPO/RTO, ASR, GRS/GZRS, pruebas y runbooks.</p>
+                <a class="btn" href="/content/azure-ha-dr-az305.html">Leer →</a>
               </article>
-            </div>
-            <button class="car-btn car-next" type="button" aria-label="Siguiente">›</button>
+
+              <article class="tile" data-tags="red network hybrid connectivity vpn expressroute dns privado hub spoke bgp">
+                <h3><span class="dot" aria-hidden="true"></span> Conectividad híbrida</h3>
+                <p>VPN/ER, patrones hub-spoke, BGP, DNS privado, SNAT/UDR y límites de flujo.</p>
+                <a class="btn" href="/content/azure-hybrid-connectivity-az305.html">Leer →</a>
+              </article>
+
+              <article class="tile" data-tags="network arquitectura vnet nsg waf firewall balanceador appgw peering rutas">
+                <h3><span class="dot" aria-hidden="true"></span> Arquitectura de red</h3>
+                <p>Diseño de VNet, NSG/ASG, WAF/Firewall, balanceo L4/L7, peering y rutas.</p>
+                <a class="btn" href="/content/azure-network-architecture-az305.html">Leer →</a>
+              </article>
+            </section>
           </div>
         </section>
       </div>
@@ -318,11 +322,11 @@
   <footer role="contentinfo">
     <div class="container f-grid">
       <div>
-        <div class="brand" style="text-transform:none">
+        <div class="brand" style="text-transform:none;display:flex;align-items:center;gap:10px;">
           <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8fd0ff 0%,#0078d4 100%);box-shadow:0 0 0 6px rgba(0,120,212,.18)"></span>
-          <span>ITHub.es</span>
+          <span style="font-weight:900">ITHub.es</span>
         </div>
-        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.</p>
+        <p style="margin:8px 0 0;max-width:520px">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.</p>
       </div>
       <div>
         <div style="font-weight:800">Simuladores</div>
@@ -341,19 +345,43 @@
         <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;margin-top:6px;">💬 <span>Contáctanos</span></button>
       </div>
     </div>
-    <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+    <div class="container" style="margin-top:12px;font-size:12px;display:flex;justify-content:space-between;gap:10px;align-items:center;">
+      <span>© <span id="y"></span> ITHub.es</span>
+      <span class="footer-spacer"></span>
+    </div>
   </footer>
 
-  <!-- Modal resultados -->
-  <div class="modal" id="quizResultModal" aria-hidden="true">
+  <!-- Modal resultados (NUEVA) -->
+  <div class="modal" id="quizResultModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resTitle">
     <div class="modal-card">
-      <h3>📊 Resultados del examen</h3>
-      <div id="quizScoreBox" class="panel" style="padding:12px;margin:0 0 12px;background:var(--surface2)">
-        <strong id="quizScoreText">Puntuación</strong>
+      <div class="res-head">
+        <h3 id="resTitle" style="margin:0;font-size:1.2rem">📊 Resultados del simulador</h3>
+        <span id="resBadge" class="res-badge res-pass" style="display:none">APTO</span>
+        <span id="resBadgeFail" class="res-badge res-fail" style="display:none">NO APTO</span>
       </div>
-      <div id="quizDomainsGrid" class="diag-grid"></div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-        <button class="pill-btn" id="qrClose">Cerrar</button>
+
+      <div id="resMetrics" class="metric-grid" aria-label="Resumen"></div>
+
+      <div style="margin-top:6px">
+        <table class="res-table" aria-label="Desglose por dominio">
+          <thead>
+            <tr>
+              <th>Dominio</th>
+              <th style="width:40%">Progreso</th>
+              <th>Aciertos</th>
+              <th>Fallos</th>
+              <th>Total</th>
+              <th>%</th>
+            </tr>
+          </thead>
+          <tbody id="resBody"></tbody>
+        </table>
+      </div>
+
+      <div class="res-actions">
+        <button id="resReview" class="btn-ghost" type="button">Revisar respuestas</button>
+        <button id="resRetry" class="btn-ghost" type="button">Reintentar</button>
+        <button id="qrClose" class="btn-primary" type="button">Cerrar</button>
       </div>
     </div>
   </div>
@@ -382,7 +410,7 @@
     document.getElementById('btnLogout')?.addEventListener('click', ()=>{
       localStorage.removeItem('currentUser');
       renderHeaderAuth();
-      renderStartButton(); // sincroniza el botón tras cerrar sesión
+      renderStartButton();
     });
     renderHeaderAuth();
 
@@ -406,14 +434,21 @@
     tabGuide.addEventListener('click', ()=>activate('guide'));
     tabSim  .addEventListener('click', ()=>activate('sim'));
 
-    /* ===== Carrusel simple ===== */
+    /* ===== Tips Grid (buscador) ===== */
     (function(){
-      const track = document.getElementById('contentTrack');
-      const prev = document.querySelector('.car-prev');
-      const next = document.querySelector('.car-next');
-      function scrollByCards(dir){ track.scrollBy({left: dir * (track.clientWidth * 0.9), behavior:'smooth'}); }
-      prev.addEventListener('click', ()=>scrollByCards(-1));
-      next.addEventListener('click', ()=>scrollByCards(1));
+      const q = document.getElementById('tipsSearch');
+      if(!q) return;
+      const cards = Array.from(document.querySelectorAll('#tipsGrid .tile'));
+      function norm(s){ return (s||'').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); }
+      function apply(){
+        const t = norm(q.value);
+        if(!t){ cards.forEach(c=>c.classList.remove('hidden')); return; }
+        cards.forEach(c=>{
+          const hay = norm(c.textContent) + ' ' + norm(c.dataset.tags||'');
+          c.classList.toggle('hidden', !hay.includes(t));
+        });
+      }
+      q.addEventListener('input', apply);
     })();
 
     /* ===== DOMINIOS & SIMULADOR ===== */
@@ -464,8 +499,6 @@
          <input type="checkbox" value="${d}" hidden>
          <span class="led"></span> ${d}
        </label>`).join('');
-
-    /* === Dots seleccionables solo para visual (no afectan al quiz) === */
     function updateChipVisuals(){
       chips.querySelectorAll('.chip-dom').forEach(lbl=>{
         const cb = lbl.querySelector('input[type="checkbox"]');
@@ -474,10 +507,7 @@
     }
     chips.addEventListener('click', (ev)=>{
       const wrap = ev.target.closest('.chip-dom'); if(!wrap) return;
-      const cb = wrap.querySelector('input[type="checkbox"]');
-      cb.checked = !cb.checked;           // permite marcar/desmarcar
-      updateChipVisuals();                // enciende/apaga visualmente
-      // No hacemos nada más: no almacenamos ni aplicamos filtros
+      const cb = wrap.querySelector('input[type="checkbox"]'); cb.checked = !cb.checked; updateChipVisuals();
     });
     updateChipVisuals();
 
@@ -521,14 +551,14 @@
         startBtn.dataset.locked = "true";
         startBtn.innerHTML = '<span class="lock">🔒</span>Login to Start';
       }
-      startBtn.disabled = false; // nunca lo dejamos bloqueado por disabled
+      startBtn.disabled = false;
     }
-    // Pintado inicial
     renderStartButton();
 
     // Simulador
     let quizActive = false;
     const header = document.querySelector('header');
+
     function smoothScrollTo(el){
       if(!el) return;
       const rect = el.getBoundingClientRect();
@@ -536,15 +566,17 @@
       const top = rect.top + window.scrollY - offset;
       window.scrollTo({ top, behavior:'smooth' });
     }
+
     function setQuizActive(on){
       quizActive = !!on;
       if (quizActive){
         startBtn.textContent = '⏳ En marcha…';
       }else{
-        renderStartButton(); // restaura label según sesión
+        renderStartButton();
       }
       startBtn.setAttribute('aria-disabled', quizActive ? 'true' : 'false');
     }
+
     function waitForQuizMount(timeout=4000){
       return new Promise(resolve=>{
         if (view.children.length>0) return resolve();
@@ -553,65 +585,134 @@
         setTimeout(()=>{ obs.disconnect(); resolve(); }, timeout);
       });
     }
+
+    function engineReady(){ return typeof window.start === 'function'; }
+    function waitForEngine(timeout=5000){
+      return new Promise(resolve=>{
+        if (engineReady()) return resolve(true);
+        const start = performance.now();
+        const id = setInterval(()=>{
+          if (engineReady() || performance.now()-start>timeout){ clearInterval(id); resolve(engineReady()); }
+        }, 50);
+      });
+    }
+
     window.addEventListener('quiz:started', ()=>{ setQuizActive(true); smoothScrollTo(document.querySelector('#view .question-card')||view); });
     window.addEventListener('quiz:ended',   ()=>{ setQuizActive(false); });
 
     startBtn.addEventListener('click', async ()=>{
-      // Si está bloqueado por falta de sesión, redirige a login
-      if (startBtn.dataset.locked === "true"){
-        window.location.href = '/login/login.html';
-        return;
-      }
+      if (startBtn.dataset.locked === "true"){ window.location.href = '/login/login.html'; return; }
       if (quizActive) return;
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
-      const count = parseInt(qCount.value,10) || 65;
 
-      // *** IGNORAR SELECCIONES DE DOMINIO ***
-      // Siempre lanzar con todos los dominios (sin filtro)
-      const tags = []; 
+      // ignorar selección de dominios => TODOS
+      const count = parseInt(qCount.value,10) || 65;
+      const tags = undefined;
+
+      const ok = await waitForEngine(6000);
+      if(!ok){ alert('Motor de simulador no cargado. Actualiza la página.'); return; }
 
       if(typeof window.start === 'function'){
         setQuizActive(true);
-        window.start(QUIZ, { count, tags });
-        await waitForQuizMount();
-        smoothScrollTo(document.querySelector('#view .question-card')||view);
+        try{
+          window.start(QUIZ, { count, tags });
+          await waitForQuizMount();
+          smoothScrollTo(document.querySelector('#view .question-card')||view);
+        }catch(e){
+          setQuizActive(false);
+          alert('No se pudo iniciar el simulador.');
+        }
       }else{
         setQuizActive(false);
         alert('Motor de simulador no cargado.');
       }
     });
 
-    /* ===== Resultados modal ===== */
+    /* ===== Nueva MODAL de resultados ===== */
     const qrModal = document.getElementById('quizResultModal');
     const qrClose = document.getElementById('qrClose');
-    const qrGrid  = document.getElementById('quizDomainsGrid');
-    const qrScore = document.getElementById('quizScoreText');
-    function percent(a,b){ return b ? Math.round((a/b)*100) : 0; }
-    function barClass(p){ return p<50?'m-bad':(p<75?'m-warn':'m-ok'); }
-    function showResultsModal(data){
-      const s = Number(data?.score||0), t = Number(data?.total||0);
-      qrScore.textContent = `Puntuación: ${s}/${t} (${percent(s,t)}%)`;
-      qrGrid.innerHTML = '';
-      const byDom = data?.byDomain || null;
-      if(byDom && Object.keys(byDom).length){
+    const resBody = document.getElementById('resBody');
+    const resMetrics = document.getElementById('resMetrics');
+    const resBadgePass = document.getElementById('resBadge');
+    const resBadgeFail = document.getElementById('resBadgeFail');
+    const btnRetry = document.getElementById('resRetry');
+    const btnReview = document.getElementById('resReview');
+
+    function pct(a,b){ return b ? Math.round((a/b)*100) : 0; }
+    function barCls(p){ return p<50?'bar-bad':(p<75?'bar-warn':'bar-ok'); }
+
+    function renderMetrics(data){
+      // Agregados robustos
+      const byDom = data?.byDomain || {};
+      let tot = Number(data?.total || 0);
+      let correct = Number(data?.correct || 0);
+
+      // Si no vienen, intenta inferirlos
+      if (!tot || !correct){
+        let c=0,t=0;
+        Object.values(byDom).forEach(d=>{ c += Number(d.correct||0); t += Number(d.total||0); });
+        if(!tot) tot = t;
+        if(!correct) correct = c;
+      }
+      const wrong = Math.max(0, tot - correct);
+      const score = Number(data?.score ?? correct); // si el motor usa puntos=aciertos, esto cuadra
+      const percent = pct(correct, tot);
+
+      // Badge (umbral configurable)
+      const PASS_THRESHOLD = 70;
+      if(percent >= PASS_THRESHOLD){ resBadgePass.style.display='inline-flex'; resBadgeFail.style.display='none'; }
+      else{ resBadgePass.style.display='none'; resBadgeFail.style.display='inline-flex'; }
+
+      // Métricas
+      resMetrics.innerHTML = `
+        <div class="metric"><b>Puntuación</b><div class="big">${score}</div></div>
+        <div class="metric"><b>Aciertos</b><div class="big">${correct}</div></div>
+        <div class="metric"><b>Fallos</b><div class="big">${wrong}</div></div>
+        <div class="metric"><b>Precisión</b><div class="big">${percent}%</div></div>
+      `;
+
+      // Tabla por dominio
+      resBody.innerHTML = '';
+      if (byDom && Object.keys(byDom).length){
         Object.entries(byDom).forEach(([code,info])=>{
-          const p = percent(info.correct, info.total);
-          const card = document.createElement('div');
-          card.className = 'panel';
-          card.style.padding='12px';
-          card.style.background='var(--surface2)';
-          card.innerHTML = `
-            <div style="font-weight:900;margin-bottom:6px">${info.name||code}</div>
-            <div class="meter"><span class="${barClass(p)}" style="width:${p}%"></span></div>
-            <div style="color:var(--muted);margin-top:6px">${info.correct}/${info.total} aciertos · ${p}%</div>
+          const name = info?.name || code;
+          const c = Number(info?.correct||0);
+          const t = Number(info?.total||0);
+          const w = Math.max(0, t - c);
+          const p = pct(c,t);
+          const tr = document.createElement('tr');
+          tr.className = 'res-row';
+          tr.innerHTML = `
+            <td style="font-weight:800">${name}</td>
+            <td>
+              <div class="bar"><span class="${barCls(p)}" style="width:${p}%"></span></div>
+            </td>
+            <td style="font-weight:800;color:#a8f0c6">${c}</td>
+            <td style="font-weight:800;color:#ffb3b3">${w}</td>
+            <td>${t}</td>
+            <td>${p}%</td>
           `;
-          qrGrid.appendChild(card);
+          resBody.appendChild(tr);
         });
       }
-      qrModal.classList.add('show');
     }
-    qrClose.addEventListener('click', ()=> qrModal.classList.remove('show'));
-    qrModal.addEventListener('click', (e)=>{ if(e.target===qrModal) qrModal.classList.remove('show'); });
+
+    function showResultsModal(payload){
+      try{ renderMetrics(payload||{}); }catch(_){}
+      qrModal.classList.add('show');
+      qrModal.setAttribute('aria-hidden','false');
+    }
+
+    qrClose.addEventListener('click', ()=>{ qrModal.classList.remove('show'); qrModal.setAttribute('aria-hidden','true'); });
+    qrModal.addEventListener('click', (e)=>{ if(e.target===qrModal){ qrModal.classList.remove('show'); qrModal.setAttribute('aria-hidden','true'); } });
+
+    btnRetry.addEventListener('click', ()=>{ qrModal.classList.remove('show'); qrModal.setAttribute('aria-hidden','true'); window.scrollTo({top:0,behavior:'smooth'}); });
+    btnReview.addEventListener('click', ()=>{
+      if (typeof window.review === 'function'){ try{ window.review(); }catch{} }
+      else { alert('Revisión no disponible en este modo.'); }
+    });
+
+    // Exponer para el motor
     window.quizResults = showResultsModal;
     window.addEventListener('quiz:results', (e)=> showResultsModal(e.detail||{}));
   </script>
