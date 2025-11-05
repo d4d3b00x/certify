@@ -84,50 +84,42 @@ svg{max-width:100%;height:auto;display:block}
   </div>
 </header>
 <main id="main" tabindex="-1">
-<link rel="canonical" href="/content/azure-data-choices-az305.html" />
-<meta name="description" content="SQL vs Cosmos DB vs Storage: consistencia, particionado, rendimiento, costos y continuidad. Guía del arquitecto para el AZ‑305.">
-<title>AZ-305 · Elección de datos</title>
+<link rel="canonical" href="/content/azure-network-security-az305.html" />
+<meta name="description" content="Endurece la red: segmentación por capas, inspección TLS, WAF, DDoS, Bastion y patrones de salida segura. Cheatsheet para el AZ‑305.">
+<title>AZ-305 · Seguridad de red</title>
 
 <div class="container hero-page">
-  <h1>Elección de datos (AZ‑305)</h1>
-  <div class="badge">Objetivo del examen: AZ‑305</div><div class="badge">Tema: Data</div>
-  <p class="muted">Selecciona el servicio correcto: latencia, transaccionalidad, modelo y costes. Luego diseña particionado, DR y seguridad.</p>
+  <h1>Seguridad de red (AZ‑305)</h1>
+  <div class="badge">Objetivo del examen: AZ‑305</div><div class="badge">Tema: Network Security</div>
+  <p class="muted">Del perímetro al micro‑segmento: diseña controles en Hub‑Spoke/vWAN, salida controlada y exposición pública mínima.</p>
 </div>
 <section><div class="container card">
-  <h2>Mapa rápido</h2>
+  <h2>Patrones y decisiones</h2>
   <table>
-    <tr><th>Necesidad</th><th>Servicio</th><th>Claves</th></tr>
-    <tr><td>Transacciones ACID & Relacional</td><td>Azure SQL / SQL MI</td><td>BC/HA, Columnstore, Auto‑failover groups.</td></tr>
-    <tr><td>Escala planetaria & latencia baja</td><td>Cosmos DB</td><td>5 niveles de consistencia, RU/s, partición por clave.</td></tr>
-    <tr><td>Streaming/analítica</td><td>Event Hub + ADX</td><td>Ingesta masiva, KQL, retención.</td></tr>
-    <tr><td>Objetos baratos</td><td>Azure Storage</td><td>Tiers, lifecycle, immutability (WORM).</td></tr>
+    <tr><th>Necesidad</th><th>Opción</th><th>Notas</th></tr>
+    <tr><td>Publicar apps</td><td>Front Door + WAF</td><td>Protección L7 y afinidad por sesión; geo‑filtering.</td></tr>
+    <tr><td>Salida segura</td><td>UDR 0/0 → Azure Firewall</td><td>Policy para bloquear salida directa a Internet.</td></tr>
+    <tr><td>Acceso admins</td><td>Azure Bastion / Just‑in‑Time</td><td>Evita puertos abiertos en VMs.</td></tr>
+    <tr><td>DDoS</td><td>DDoS Protection PRT</td><td>Requerido para cargas expuestas y compliance.</td></tr>
   </table>
-  <div class="tip">TIP: Si ves <i>escala global con escritura multi‑región</i> la respuesta casi siempre es <b>Cosmos DB</b> con consistencia <i>Session</i> o <i>Consistent Prefix</i>.</div>
+  <div class="warn">GOTCHA: NSG ≠ Firewall. NSG filtra L3/L4 por NIC/subred; Firewall hace NAT, FQDN, TLS inspección (Premium) y reglas en capa 7.</div>
 </div></section>
 <section><div class="container grid cols-2">
   <div class="card">
-    <h3>Diseño de particiones</h3>
+    <h3>Registro y monitoreo</h3>
     <ul>
-      <li><b>Cosmos</b>: clave con alta cardinalidad y acceso uniforme.</li>
-      <li><b>SQL</b>: sharding por tenant/region; usa elastic pools para cargas variables.</li>
+      <li>Enrutado de logs a Log Analytics + Microsoft Sentinel.</li>
+      <li>Policy para exigir NSG en subredes y deny tránsitos no deseados.</li>
     </ul>
   </div>
   <div class="card">
-    <h3>Seguridad y cumplimiento</h3>
-    <ul>
-      <li>Private Link, firewalls de servicio y VNet endpoints.</li>
-      <li>Transparent Data Encryption; Always Encrypted si hay datos sensibles.</li>
-      <li>Auditoría y Defender for Cloud.</li>
-    </ul>
+    <h3>Preguntas tipo examen</h3>
+    <ol>
+      <li>Bloquear salida de Spokes: UDR → Firewall (no NSG).</li>
+      <li>Segmentación por aplicación: ASG + NSG con reglas por grupo.</li>
+      <li>Zero‑trust a PaaS: Private Link + DNS Privado.</li>
+    </ol>
   </div>
-</div></section>
-<section><div class="container card">
-  <h2>Patrones de continuidad</h2>
-  <ul>
-    <li>Auto‑failover groups para SQL; RPO≈0, RTO minutos.</li>
-    <li>Cosmos DB multi‑region write; prioridad de failover.</li>
-    <li>Storage con RA‑GZRS para lectura geográfica.</li>
-  </ul>
 </div></section>
 
 </main>

@@ -18,8 +18,8 @@
   <meta name="description" content="Explora guías completas y prácticas para las certificaciones Microsoft Azure (AZ-104, AZ-305) y AWS (SAA-C03). Aprende los conceptos clave, practica con laboratorios guiados y prepárate para aprobar con ITHub.es." />
   <meta name="keywords" content="Azure, AWS, AZ-104, AZ-305, SAA-C03, certificaciones cloud, simuladores, contenidos de estudio, preparación examen, guías prácticas, ITHub" />
   <meta name="author" content="ITHub.es" />
-  
-<link rel="canonical" href="https://beta.ithub.es/content/content.html" />
+  <link rel="canonical" href="https://beta.ithub.es/content/content.html" />
+
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
@@ -53,7 +53,7 @@
     .grid{display:grid;gap:14px}
     @media(min-width:860px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
 
-    /* ===== Tarjeta base ===== */
+    /* Tarjeta */
     .card{
       background:linear-gradient(180deg,#111937,#0f1633);
       border:1px solid var(--stroke);
@@ -64,24 +64,23 @@
     }
     .card h3{margin:0;font-size:1.05rem}
 
-    /* ===== Borde + fondo por proveedor ===== */
+    /* Borde + fondo por proveedor */
     .card.azure{ border-color:var(--azure-border); background: linear-gradient(180deg, rgba(13,21,40,1) 0%, var(--azure-tint) 100%); }
     .card.aws  { border-color:var(--aws-border);   background: linear-gradient(180deg, rgba(13,21,40,1) 0%, var(--aws-tint)   100%); }
     .card.multi{ border-color:var(--multi-border); background: linear-gradient(180deg, rgba(13,21,40,1) 0%, var(--multi-tint) 100%); }
 
-    /* ===== Badges ===== */
+    /* Badges */
     .badges{display:flex;gap:6px;flex-wrap:wrap}
     .badge{
       display:inline-flex;gap:6px;align-items:center;font-weight:900;
       padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;
       background:var(--surface2);font-size:.8rem
     }
-    /* Colores sólidos más visibles */
     .badge.azure{ border-color:var(--azure-border); background:var(--azure-tint); color:#e8f4ff; }
     .badge.aws  { border-color:var(--aws-border);   background:var(--aws-tint);   color:#ffe7c2; }
     .badge.multi{ border-color:var(--multi-border); background:var(--multi-tint); color:#e9ebff; }
 
-    /* Botón pequeño SOLO dentro de las tarjetas */
+    /* Botón pequeño en tarjetas */
     .card .pill-btn{
       min-width:84px; min-height:36px; height:34px; padding:0 12px;
       font-size:12px; border-radius:10px;
@@ -206,8 +205,13 @@
   }
   renderHeaderAuth();
 
+  /* === ÍNDICE COMPLETO /content === */
   const CONTENT = [
+    /* Transversales */
+    { title:"Backup inmutable & Ciberrecuperación", href:"/content/immutable-backup-cyberrecovery.html", exam:["AZ-104","AZ-305","SAA-C03"], vendor:["Azure","AWS"], level:"avanzado", summary:"Estrategia 3-2-1-1-0, inmutabilidad (Blob/S3), bóvedas aisladas, redes cerradas y runbooks de respuesta." },
+    { title:"VNet Peering vs. VPN Gateway (AZ-104)", href:"/content/vnet-peering-vpn.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Comparativa y patrones: peering, tránsito en hub-spoke, cifrado, costes y laboratorio guiado." },
 
+    /* Azure AZ-104 */
     { title:"Identidad y Acceso (AZ-104)", href:"/content/azure-identity-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC, PIM, Access Reviews, Managed Identities, App Regs y mejores prácticas con Key Vault." },
     { title:"Seguridad de red (AZ-104)", href:"/content/azure-network-security-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"NSG/ASG, UDR, Azure Firewall, WAF, Private Endpoints y DNS privado para PaaS." },
     { title:"Azure Storage (AZ-104)", href:"/content/azure-storage-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC vs claves, SAS delegación de usuario, WORM, replicación (LRS/ZRS/GRS/GZRS) y PE." },
@@ -217,6 +221,7 @@
     { title:"Coste y gobernanza (AZ-104)", href:"/content/azure-cost-governance-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Budgets, Cost Management, etiquetado, Azure Advisor y Policy para control de gasto." },
     { title:"Checklist de seguridad Azure (AZ-104)", href:"/content/azure-security-checklist.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Lista priorizada: identidad, red, datos, backup, posture y puntos típicos de examen." },
 
+    /* Azure AZ-305 */
     { title:"Azure Landing Zone (AZ-305)", href:"/content/azure-landing-zone.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura de red base." },
     { title:"Conectividad híbrida (AZ-305)", href:"/content/azure-hybrid-connectivity-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"VPN/ER, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones HUB/SPOKE/vWAN." },
     { title:"Arquitectura de red (AZ-305)", href:"/content/azure-network-architecture-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial." },
@@ -224,7 +229,9 @@
     { title:"Elección de datos (AZ-305)", href:"/content/azure-data-choices-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"SQL MI vs Azure SQL, Cosmos DB, PostgreSQL Flexible, ADLS Gen2 y analítica con Synapse." },
     { title:"Coste y fiabilidad (AZ-305)", href:"/content/azure-cost-reliability-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Savings Plans/RI, right-sizing, elástico vs reservado y decisiones de resiliencia con coste." },
     { title:"Zero Trust en Azure (AZ-305)", href:"/content/azure-security-zero-trust-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"Identidad primero, microsegmentación, acceso privado a PaaS, Defender y verificación continua." },
+    { title:"Seguridad de red en Azure (AZ-305)", href:"/content/azure-network-security-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Diseño de control perimetral/L7, Azure Firewall Premium, WAF, Private Endpoints y DNS seguro." },
 
+    /* AWS SAA-C03 */
     { title:"IAM y Organizations (SAA-C03)", href:"/content/aws-iam-organizations-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"Principios de IAM, roles/políticas, MFA, multi-cuenta con Organizations y SCP." },
     { title:"Elasticidad de cómputo (SAA-C03)", href:"/content/aws-compute-elasticity-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Auto Scaling, ALB/NLB, EC2 tipos de compra (On-Demand/RI/Savings/Spot) y blue/green." },
     { title:"Bases de datos y almacenamiento (SAA-C03)", href:"/content/aws-databases-storage-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"RDS/Aurora (Multi-AZ/replicas), DynamoDB (WCU/RCU), S3 con KMS y lifecycle." },
@@ -257,12 +264,12 @@
         <div><a class="pill-btn" href="${c.href}">LEER</a></div>`;
       const b=card.querySelector(".badges");
       tag(b, `Nivel: ${c.level[0].toUpperCase()+c.level.slice(1)}`);
-      // Exámenes: fuerza azul para los que empiezan por AZ
+      // Exámenes (AZ=azul, SAA=aws)
       c.exam.forEach(e=>{
         const cls = e.startsWith("AZ") ? "azure" : (e.startsWith("SAA") ? "aws" : "");
         tag(b, e, cls);
       });
-      // Proveedor (Azure/AWS)
+      // Proveedores
       c.vendor.forEach(v=>tag(b, v, v==="Azure" ? "azure" : "aws"));
       if(c.vendor.length>1){ tag(b, "Multi", "multi"); }
       root.appendChild(card);
