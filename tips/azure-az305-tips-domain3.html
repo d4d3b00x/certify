@@ -1,112 +1,140 @@
-
-<section class="az305-doc wrap">
-<style>
-/* ===== AZ-305 domain doc (scoped) ===== */
-.az305-doc{--bg:#0f1320;--surface:#121830;--surface2:#0d1428;--ink:#e8ecff;--muted:#a7b2e8;--stroke:#283056;--ok:#3ad97a;--warn:#ffd66b;--bad:#ff6b6b;--accent:#6fa4ff;--azure:#0078d4;--pill:#1a2244}
-.az305-doc *{box-sizing:border-box}
-.az305-doc{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,transparent,transparent);padding:10px 0 2px}
-.az305-doc h1,.az305-doc h2,.az305-doc h3{margin:14px 0 10px;line-height:1.25}
-.az305-doc h1{font-size:clamp(1.4rem,2.6vw,2rem)}
-.az305-doc h2{font-size:clamp(1.2rem,2.2vw,1.4rem);border-bottom:1px solid #2a345c;padding-bottom:6px}
-.az305-doc h3{font-size:1.05rem;color:#d7e4ff}
-.az305-doc p{margin:6px 0;color:var(--ink)}
-.az305-doc .muted{color:var(--muted)}
-.az305-doc .grid{display:grid;gap:12px}
-@media(min-width:900px){.az305-doc .cols-2{grid-template-columns:1fr 1fr} .az305-doc .cols-3{grid-template-columns:repeat(3,1fr)}}
-.az305-doc .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:0 12px 28px rgba(6,12,40,.35)}
-.az305-doc .pill{display:inline-block;background:linear-gradient(180deg,#6fa4ff,#355ff6);color:#fff;font-weight:900;border:1px solid rgba(71,103,220,.6);border-radius:999px;padding:4px 10px;font-size:12px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.az305-doc .kbd{font-family:ui-monospace,Consolas,Menlo,monospace;background:#0b1225;border:1px solid #2b355d;border-radius:6px;padding:2px 6px;font-weight:800}
-/* list fixes even when parent CSS overrides */
-.az305-doc ul,.az305-doc ol{margin:8px 0 8px 22px;padding:0}
-.az305-doc li{display:list-item;margin:4px 0}
-.az305-doc ol{list-style:decimal}
-.az305-doc ul{list-style:disc}
-/* table */
-.az305-doc table{width:100%;border-collapse:separate;border-spacing:0;background:linear-gradient(180deg,#0e1733,#0b1329);border:1px solid #2a345c;border-radius:10px;overflow:hidden}
-.az305-doc th,.az305-doc td{padding:10px;border-bottom:1px solid #23305a;vertical-align:top}
-.az305-doc th{text-align:left;color:#cfe1ff;background:#0f1b3a}
-.az305-doc tr:last-child td{border-bottom:none}
-/* callouts */
-.az305-doc .tips{display:grid;gap:10px}
-.az305-doc .tip{background:linear-gradient(180deg,#0f233f,#0c1a34);border:1px solid #27407a;border-radius:12px;padding:10px;position:relative}
-.az305-doc .tip.ok{border-color:#2d8a57;background:linear-gradient(180deg,#0b2a20,#0a1f19)}
-.az305-doc .tip.warn{border-color:#b28900;background:linear-gradient(180deg,#2a220b,#1c1707)}
-.az305-doc .tip:before{content:attr(data-title);position:absolute;top:-10px;left:10px;background:var(--pill);border:1px solid #2a345c;color:#a9c6ff;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900}
-/* code blocks */
-.az305-doc pre{margin:8px 0;background:#0b1225;border:1px solid #2a345c;border-radius:10px;padding:10px;overflow:auto}
-.az305-doc code{font-family:ui-monospace,Consolas,Menlo,monospace;color:#bfe0ff}
-/* inline anchors for index */
-.az305-doc .index{margin:8px 0 14px}
-.az305-doc .index a{display:inline-block;margin:4px 6px 0 0;padding:6px 10px;border-radius:10px;background:#0f1b3a;border:1px solid #2a345c;color:#cfe1ff;text-decoration:none;font-weight:800}
-.az305-doc .index a:hover{background:#132349}
-.az305-doc .small{font-size:12px}
-</style>
-
-<h1>Diseño de continuidad de negocio</h1>
-<p class="muted">Piensa siempre en <strong>RPO/RTO</strong>, dependencias y alcance (zonal vs regional).</p>
-
-<div class="index">
-  <a href="#rpo">RPO/RTO</a>
-  <a href="#patrones">Patrones</a>
-  <a href="#backup">Copia de seguridad</a>
-  <a href="#asr">Azure Site Recovery</a>
-  <a href="#datos">Datos</a>
-  <a href="#resiliencia">Resiliencia app</a>
-</div>
-
-<h2 id="rpo">RPO/RTO objetivos</h2>
-<ul>
-  <li><strong>Tier 0:</strong> RPO≈0, RTO minutos ➜ Sincrónico zonal + DR activo‑activo.</li>
-  <li><strong>Tier 1:</strong> RPO &lt;= 15 min, RTO &lt;= 1 h ➜ ASR o réplicas geográficas.</li>
-  <li><strong>Tier 2:</strong> RPO horas, RTO horas‑días ➜ Backups + restauración.</li>
-</ul>
-
-<h2 id="patrones">Patrones de arquitectura</h2>
-<div class="grid cols-3">
-  <div class="card">
-    <h3>Activo‑pasivo</h3>
-    <ul><li>Primario atiende tráfico; secundario solo DR.</li><li>DNS con TTL bajo + <em>Traffic Manager/Front Door</em>.</li></ul>
+<!-- azure-az305-tips-domain3.html -->
+<section id="az305-d3" style="font-family:Inter,ui-sans-serif,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; line-height:1.6; color:#eaf0ff; background:transparent; margin:0; padding:0;">
+  <div style="margin:0 0 16px 0;">
+    <h1 style="margin:0 0 8px 0; font-weight:900; letter-spacing:.2px; color:#eaf0ff; font-size:clamp(24px,3.2vw,34px);">
+      Diseñar soluciones de continuidad de negocio (D3)
+    </h1>
+    <p style="margin:6px 0 10px 0; color:#aeb8d6;">
+      Traducir <strong style="color:#eaf0ff;">RPO/RTO</strong> en decisiones de <strong style="color:#eaf0ff;">HA/DR/Backup</strong>, con procedimientos probados y costes controlados.
+    </p>
   </div>
-  <div class="card">
-    <h3>Activo‑activo</h3>
-    <ul><li>Múltiples regiones con <strong>escritura distribuida</strong> (Cosmos multi‑write) o cola de eventos.</li><li>Requiere <em>idempotencia</em>.</li></ul>
+
+  <!-- Índice -->
+  <nav aria-label="Índice" style="display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 14px 0;">
+    <a href="#targets" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#0078d4"/></svg> Metas RPO/RTO
+    </a>
+    <a href="#tiers" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Catálogo de opciones
+    </a>
+    <a href="#asr" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Azure Site Recovery
+    </a>
+    <a href="#backup" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Backup &amp; retención
+    </a>
+    <a href="#storage-ha" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Zonas/parejas
+    </a>
+    <a href="#ops" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Runbooks &amp; pruebas
+    </a>
+    <a href="#exam" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Preguntas tipo
+    </a>
+  </nav>
+
+  <!-- RPO/RTO -->
+  <div id="targets" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Definir objetivos: RPO y RTO</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">RPO</strong>: pérdida máxima de datos aceptable.</li>
+      <li><strong style="color:#eaf0ff;">RTO</strong>: tiempo máximo de indisponibilidad.</li>
+      <li>Clasifica aplicaciones (Tier 0/1/2) y alinea coste vs objetivo.</li>
+    </ul>
   </div>
-  <div class="card">
-    <h3>Zonal</h3>
-    <ul><li>Servicios ZRS/zone‑redundant: App GW, AKS con nodepools zonales, SQL zone redundant.</li></ul>
+
+  <!-- Catálogo -->
+  <div id="tiers" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Catálogo de opciones HA/DR</h2>
+    <table style="width:100%; border-collapse:separate; border-spacing:0; border:1px solid #26345a; border-radius:12px; overflow:hidden; background:#101a32;">
+      <thead>
+        <tr>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Componente</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Opción</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">RPO/RTO típico</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Máquinas virtuales</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">ASR a región secundaria</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">minutos / horas</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Runbooks, orden de arranque y pruebas no disruptivas.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">SQL PaaS</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Auto-failover groups</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">~0 / ~30–60s</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Cadena de conexión y reintentos.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Cosmos DB</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Multi-región (read/write)</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">segundos / &lt;1min</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Consistencia adecuada + resolución de conflictos.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;">Storage</td>
+          <td style="padding:10px 12px;">GZRS/RA-GZRS + versioning</td>
+          <td style="padding:10px 12px;">minutos / n/a</td>
+          <td style="padding:10px 12px; color:#aeb8d6;">Protección ante pérdida de zona y borrados accidentales.</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-</div>
 
-<h2 id="backup">Backup</h2>
-<ul>
-  <li>Azure Backup para VM, SQL, Files, SAP HANA. GRS/GZRS en el <em>vault</em>. <strong>Soft delete</strong> habilitado.</li>
-  <li>Estrategia 3‑2‑1: producción, copia local/zonal, copia en región secundaria (o aislada).</li>
-  <li>Inmutabilidad: <em>Immutable vault</em> &amp; Blob immutability.</li>
-</ul>
+  <!-- ASR -->
+  <div id="asr" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Azure Site Recovery (ASR)</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>Replica VMs (Azure, VMware, Hyper-V) a otra región; snapshots consistentes con app.</li>
+      <li>Define <strong style="color:#eaf0ff;">Recovery Plans</strong> (grupos, secuencia, scripts, manual steps).</li>
+      <li>Pruebas <em>non-disruptive</em> en red aislada; reportes de cumplimiento.</li>
+      <li>Integra con Private Endpoints, NSG, balanceadores, IP estática vs dinámica.</li>
+    </ul>
+  </div>
 
-<h2 id="asr">Azure Site Recovery (ASR)</h2>
-<ul>
-  <li>Replica VM entre zonas o regiones; coordina <strong>planes de recuperación</strong> con scripts, runbooks y pruebas.</li>
-  <li>Usa <em>multi‑vNet</em> mapping, movilidad agent para Hyper‑V/VMware, o replicación nativa para Azure‑to‑Azure.</li>
-  <li>Siempre prueba failover (test failover) en red aislada.</li>
-</ul>
+  <!-- Backup -->
+  <div id="backup" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Backup, retención e inmutabilidad</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>Azure Backup para VMs, Files, SAP HANA, SQL en VM; <em>vault</em> con soft-delete e inmutabilidad.</li>
+      <li>SQL PaaS: puntos de restauración automáticos + LTR (hasta 10 años).</li>
+      <li>Blob: <em>versioning</em>, <em>change feed</em>, <em>immutability policy</em> (legal hold/time-based).</li>
+      <li>Prueba de restauración periódica (runbooks) y documentación de tiempos reales.</li>
+    </ul>
+  </div>
 
-<h2 id="datos">Datos y DR</h2>
-<ul>
-  <li><strong>SQL:</strong> Auto‑failover groups para grupo de DB; MI con geo‑replicación.</li>
-  <li><strong>Cosmos:</strong> multi‑región; consistencia adecuada al negocio.</li>
-  <li><strong>Storage:</strong> RA‑GZRS para lectura secundaria durante incidentes.</li>
-</ul>
+  <!-- Zonas & Paired regions -->
+  <div id="storage-ha" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Zonas de disponibilidad y regiones emparejadas</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Zonas</strong>: separa fallos dentro de la región (LB Standard, Zonal VMs, Zone-redundant PaaS).</li>
+      <li><strong style="color:#eaf0ff;">Paired region</strong>: actualizaciones coordinadas, prioridad en recuperación.</li>
+      <li>Datos soberanía/regulatorio: asegúralo con Policy + ubicación del vault/lake.</li>
+    </ul>
+  </div>
 
-<h2 id="resiliencia">Resiliencia de aplicación</h2>
-<ul>
-  <li>Circuit‑breaker y reintentos exponenciales.</li>
-  <li>Desacopla con Service Bus/Event Grid.</li>
-  <li>Usa <em>Managed Identities</em> y Key Vault con versiones.</li>
-  <li>Front Door para balanceo global y WAF; App Gateway para L7 interno.</li>
-</ul>
+  <!-- Operación -->
+  <div id="ops" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Runbooks, monitorización y pruebas</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>Runbooks declarativos (Automation/Functions) para conmutación y reversión.</li>
+      <li>Alertas: métricas de réplica/cola, fallas, latencias; Tablero de DR.</li>
+      <li>Pruebas de <em>chaos</em> controladas y simulacros anuales como mínimo.</li>
+    </ul>
+  </div>
 
-<div class="tip" data-title="Errores a evitar">
-  No probar <strong>plan de recuperación</strong>; olvidar dependencias (DNS, secretos, redes); usar GRS pensando que sustituye pruebas de DR.
-</div>
+  <!-- Examen -->
+  <div id="exam" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45);">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Preguntas tipo examen</h2>
+    <ol style="list-style:decimal; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>“Recuperar VMs ante caída regional” → <strong style="color:#eaf0ff;">ASR</strong> + Recovery Plans + pruebas no disruptivas.</li>
+      <li>“RPO≈0 y RTO&lt;1min para SQL PaaS” → <strong style="color:#eaf0ff;">Auto-failover groups</strong> + reintentos.</li>
+      <li>“Proteger ficheros ante ransomware” → <strong style="color:#eaf0ff;">Azure Backup</strong> con inmutabilidad y soft-delete.</li>
+      <li>“Logs críticos siempre disponibles” → <strong style="color:#eaf0ff;">GZRS</strong> + <em>immutability</em> / <em>versioning</em>.</li>
+    </ol>
+  </div>
 </section>

@@ -1,108 +1,167 @@
+<!-- azure-az305-tips-domain4.html -->
+<section id="az305-d4" style="font-family:Inter,ui-sans-serif,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; line-height:1.6; color:#eaf0ff; background:transparent; margin:0; padding:0;">
+  <div style="margin:0 0 16px 0;">
+    <h1 style="margin:0 0 8px 0; font-weight:900; letter-spacing:.2px; color:#eaf0ff; font-size:clamp(24px,3.2vw,34px);">
+      Diseñar soluciones de infraestructura (D4)
+    </h1>
+    <p style="margin:6px 0 10px 0; color:#aeb8d6;">
+      Selección de <strong style="color:#eaf0ff;">compute, red y seguridad</strong> con disponibilidad y coste óptimos. Decide entre <strong style="color:#eaf0ff;">VMs, VMSS, AKS y App Services</strong>; elige el balanceador y los límites de red adecuados.
+    </p>
+  </div>
 
-<section class="az305-doc wrap">
-<style>
-/* ===== AZ-305 domain doc (scoped) ===== */
-.az305-doc{--bg:#0f1320;--surface:#121830;--surface2:#0d1428;--ink:#e8ecff;--muted:#a7b2e8;--stroke:#283056;--ok:#3ad97a;--warn:#ffd66b;--bad:#ff6b6b;--accent:#6fa4ff;--azure:#0078d4;--pill:#1a2244}
-.az305-doc *{box-sizing:border-box}
-.az305-doc{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,transparent,transparent);padding:10px 0 2px}
-.az305-doc h1,.az305-doc h2,.az305-doc h3{margin:14px 0 10px;line-height:1.25}
-.az305-doc h1{font-size:clamp(1.4rem,2.6vw,2rem)}
-.az305-doc h2{font-size:clamp(1.2rem,2.2vw,1.4rem);border-bottom:1px solid #2a345c;padding-bottom:6px}
-.az305-doc h3{font-size:1.05rem;color:#d7e4ff}
-.az305-doc p{margin:6px 0;color:var(--ink)}
-.az305-doc .muted{color:var(--muted)}
-.az305-doc .grid{display:grid;gap:12px}
-@media(min-width:900px){.az305-doc .cols-2{grid-template-columns:1fr 1fr} .az305-doc .cols-3{grid-template-columns:repeat(3,1fr)}}
-.az305-doc .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:0 12px 28px rgba(6,12,40,.35)}
-.az305-doc .pill{display:inline-block;background:linear-gradient(180deg,#6fa4ff,#355ff6);color:#fff;font-weight:900;border:1px solid rgba(71,103,220,.6);border-radius:999px;padding:4px 10px;font-size:12px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.az305-doc .kbd{font-family:ui-monospace,Consolas,Menlo,monospace;background:#0b1225;border:1px solid #2b355d;border-radius:6px;padding:2px 6px;font-weight:800}
-/* list fixes even when parent CSS overrides */
-.az305-doc ul,.az305-doc ol{margin:8px 0 8px 22px;padding:0}
-.az305-doc li{display:list-item;margin:4px 0}
-.az305-doc ol{list-style:decimal}
-.az305-doc ul{list-style:disc}
-/* table */
-.az305-doc table{width:100%;border-collapse:separate;border-spacing:0;background:linear-gradient(180deg,#0e1733,#0b1329);border:1px solid #2a345c;border-radius:10px;overflow:hidden}
-.az305-doc th,.az305-doc td{padding:10px;border-bottom:1px solid #23305a;vertical-align:top}
-.az305-doc th{text-align:left;color:#cfe1ff;background:#0f1b3a}
-.az305-doc tr:last-child td{border-bottom:none}
-/* callouts */
-.az305-doc .tips{display:grid;gap:10px}
-.az305-doc .tip{background:linear-gradient(180deg,#0f233f,#0c1a34);border:1px solid #27407a;border-radius:12px;padding:10px;position:relative}
-.az305-doc .tip.ok{border-color:#2d8a57;background:linear-gradient(180deg,#0b2a20,#0a1f19)}
-.az305-doc .tip.warn{border-color:#b28900;background:linear-gradient(180deg,#2a220b,#1c1707)}
-.az305-doc .tip:before{content:attr(data-title);position:absolute;top:-10px;left:10px;background:var(--pill);border:1px solid #2a345c;color:#a9c6ff;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900}
-/* code blocks */
-.az305-doc pre{margin:8px 0;background:#0b1225;border:1px solid #2a345c;border-radius:10px;padding:10px;overflow:auto}
-.az305-doc code{font-family:ui-monospace,Consolas,Menlo,monospace;color:#bfe0ff}
-/* inline anchors for index */
-.az305-doc .index{margin:8px 0 14px}
-.az305-doc .index a{display:inline-block;margin:4px 6px 0 0;padding:6px 10px;border-radius:10px;background:#0f1b3a;border:1px solid #2a345c;color:#cfe1ff;text-decoration:none;font-weight:800}
-.az305-doc .index a:hover{background:#132349}
-.az305-doc .small{font-size:12px}
-</style>
+  <!-- Índice -->
+  <nav aria-label="Índice" style="display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 14px 0;">
+    <a href="#compute" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#0078d4"/></svg> Compute
+    </a>
+    <a href="#lb" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Balanceo/Front Door
+    </a>
+    <a href="#network" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Redes y DNS
+    </a>
+    <a href="#hybrid" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Conectividad híbrida
+    </a>
+    <a href="#security" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Seguridad
+    </a>
+    <a href="#availability" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Disponibilidad
+    </a>
+    <a href="#observability" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Observabilidad
+    </a>
+    <a href="#exam" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Preguntas tipo
+    </a>
+  </nav>
 
-<h1>Diseño de soluciones de infraestructura</h1>
-<p class="muted">Red, cómputo, contenedores y seguridad de plataforma. En el examen prima la <strong>segregación</strong>, <strong>privado por defecto</strong> y el <strong>menor coste que cumpla</strong>.</p>
+  <!-- Compute -->
+  <div id="compute" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Compute: cuándo elegir qué</h2>
+    <div style="display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr));">
+      <div>
+        <h3 style="margin:0 0 6px; font-weight:900; color:#eaf0ff;">App Service / Functions</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>HTTP/API, CI/CD rápido, autoscale; <em>Deployment Slots</em> para azul/verde.</li>
+          <li>Isolated v3 para redes privadas; <em>Private Endpoints</em> al backend.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin:0 0 6px; font-weight:900; color:#eaf0ff;">AKS (Kubernetes)</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>Microservicios/containers; <em>node pools</em> por tipo; autoscaler; Spot para trabajos batch.</li>
+          <li>Ingress + AGIC / NGINX; identidad gestionada; CSI Secrets con Key Vault.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin:0 0 6px; font-weight:900; color:#eaf0ff;">VMs / VM Scale Sets</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>SO/soft específico, stateful; VMSS para escala horizontal.</li>
+          <li>Galería de imágenes compartidas; Extensiones (Custom Script/DSC).</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin:0 0 6px; font-weight:900; color:#eaf0ff;">Coste</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li><em>Reserved Instances</em>/Savings Plans para cargas estables.</li>
+          <li>Spot para no críticos; autoapagado, <em>auto-shrink</em>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 
-<div class="index">
-  <a href="#red">Red</a>
-  <a href="#compute">Cómputo</a>
-  <a href="#containers">Contenedores (AKS)</a>
-  <a href="#ingreso">Ingreso &amp; seguridad</a>
-  <a href="#iaas">IaaS avanzado</a>
-</div>
+  <!-- Balanceadores -->
+  <div id="lb" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Balanceo global/regional y WAF</h2>
+    <table style="width:100%; border-collapse:separate; border-spacing:0; border:1px solid #26345a; border-radius:12px; overflow:hidden; background:#101a32;">
+      <thead>
+        <tr>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Servicio</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Capa</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Uso típico</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Azure Front Door</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Global L7 + WAF + CDN</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Web global, failover geográfico, aceleración.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Application Gateway (WAF)</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Regional L7</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Routing HTTP/HTTPS, mTLS, end-to-end TLS.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;">Azure Load Balancer</td>
+          <td style="padding:10px 12px;">L4 (TCP/UDP) zonal/global</td>
+          <td style="padding:10px 12px; color:#aeb8d6;">Backends VMs/VMSS; puertos no HTTP; HA interna/externa.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<h2 id="red">Red</h2>
-<div class="grid cols-2">
-  <div class="card">
-    <h3>Topologías</h3>
-    <ul>
-      <li><strong>Hub‑Spoke:</strong> hub con servicios compartidos (Firewall, Bastion, DNS) y spokes por app/entorno.</li>
-      <li><strong>Privado por defecto:</strong> PEs para PaaS; deshabilita IP pública salvo ingreso controlado.</li>
-      <li><strong>Rutas:</strong> UDR hacia Firewall/NVA; BGP en ExpressRoute.</li>
+  <!-- Redes -->
+  <div id="network" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">VNet, Private Link y DNS</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Arquitectura</strong>: Hub-Spoke, peering con <em>Use Remote Gateway</em> según topología.</li>
+      <li><strong style="color:#eaf0ff;">Private Endpoints</strong> a PaaS; deshabilita acceso público; usa <em>Private DNS Zones</em>.</li>
+      <li><strong style="color:#eaf0ff;">Nombres</strong>: DNS privado enlazado a spoke; <em>conditional forwarders</em> on-prem.</li>
+      <li><strong style="color:#eaf0ff;">NSG/ASG</strong> por segmentos; Azure Firewall para egress control y FQDN tags.</li>
     </ul>
   </div>
-  <div class="card">
-    <h3>DNS privado</h3>
-    <ul>
-      <li>Zonas de <em>privatelink</em> para endpoints privados.</li>
-      <li>Vincula (link) a todas las VNets que consuman el servicio.</li>
-      <li>Resolver central con forwarders si hay on‑prem.</li>
+
+  <!-- Híbrida -->
+  <div id="hybrid" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Conectividad híbrida</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">VPN</strong> para arranque/DR; <strong style="color:#eaf0ff;">ExpressRoute</strong> para producción estable.</li>
+      <li><strong style="color:#eaf0ff;">BGP</strong> recomendado; Gateway SKUs correctas (ErGw3AZ para alto rendimiento).</li>
+      <li>Rutas: <em>propagación controlada</em>, UDR para egress a Firewall.</li>
     </ul>
   </div>
-</div>
 
-<h2 id="compute">Cómputo</h2>
-<ul>
-  <li>VMSS flexible con <em>zones</em>, imágenes en Shared Image Gallery, <em>automatic repairs</em>.</li>
-  <li>App Service con PEs, slots, autoscale por métricas; Functions consumo/EP.</li>
-  <li>Discos: Premium SSD v2 para IOPS/coste; Ultra para latencias &lt; 1 ms.</li>
-</ul>
+  <!-- Seguridad -->
+  <div id="security" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Seguridad y cumplimiento</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>Zero-trust: identidad (Managed Identity), <em>least privilege</em>, Policy para baseline.</li>
+      <li>Key Vault con Private Endpoint; rotación automática de secretos/certificados.</li>
+      <li>Defender for Cloud recomendaciones + <em>Just-in-Time VM access</em>.</li>
+    </ul>
+  </div>
 
-<h2 id="containers">Contenedores (AKS)</h2>
-<ul>
-  <li>Red CNI Azure (subred dedicada) y <em>nodepools</em> por zona y SKU; usa Autoscaler.</li>
-  <li>Ingreso con NGINX o AGIC; para público global, Front Door ➜ App GW ➜ AKS.</li>
-  <li>Identidad con <em>Workload Identity</em>; secretos en Key Vault CSI driver.</li>
-  <li>Registro en ACR con <em>Private Endpoint</em>; despliegues con GitOps/Flux.</li>
-</ul>
+  <!-- Disponibilidad -->
+  <div id="availability" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Disponibilidad y escala</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Zonal</strong>: distribuye VM/VMSS por zonas; LB Standard zonal o <em>zone-redundant</em>.</li>
+      <li><strong style="color:#eaf0ff;">Autoscale</strong>: métricas de CPU/cola; reglas por horario y picos.</li>
+      <li><strong style="color:#eaf0ff;">Estado</strong>: para stateful usa discos compartidos/managed disks + Availability Sets.</li>
+    </ul>
+  </div>
 
-<h2 id="ingreso">Ingreso y seguridad</h2>
-<ul>
-  <li><strong>WAF:</strong> Front Door (global) o App Gateway (regional). DDoS Standard en el vNet perimetral.</li>
-  <li>NSG + Azure Firewall (políticas centralizadas). Microsegmentación con ASGs.</li>
-  <li>Bastion para administración; JIT VM Access (Defender).</li>
-</ul>
+  <!-- Observabilidad -->
+  <div id="observability" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px;">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Observabilidad</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>Diagnostic Settings a Log Analytics; métricas y logs con retención definida.</li>
+      <li>Alertas en Action Groups; Workbooks por dominio (red, compute, seguridad).</li>
+      <li>Service Health + Resource Health para RCA y SLA.</li>
+    </ul>
+  </div>
 
-<h2 id="iaas">IaaS avanzado</h2>
-<ul>
-  <li>Images Golden: SIG + versionado; actualización orquestada con VMSS.</li>
-  <li>Conf Mgmt: extensiones, Desired State (Guest Config), <em>Azure Automanage</em>.</li>
-  <li>Almacenamiento para IaaS: discos administrados, snapshots, <em>host caching</em> correcto.</li>
-</ul>
-
-<div class="tip" data-title="Preguntas tipo">
-  “Necesitas exponer APIs a partners con IPs restringidas y sin exponer PaaS a Internet” ➜ Private Endpoints + Front Door Premium con <em>Private Link</em> y WAF.
-</div>
+  <!-- Examen -->
+  <div id="exam" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45);">
+    <h2 style="margin:0 0 8px; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Preguntas tipo examen</h2>
+    <ol style="list-style:decimal; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>“Web global con WAF y failover” → <strong style="color:#eaf0ff;">Front Door (WAF)</strong> + backends en varias regiones.</li>
+      <li>“Balancear TCP interno entre VMs” → <strong style="color:#eaf0ff;">Load Balancer Standard</strong> interno.</li>
+      <li>“Privatizar PaaS” → <strong style="color:#eaf0ff;">Private Endpoints</strong> + Private DNS Zones.</li>
+      <li>“Minimizar coste sin perder capacidad” → <strong style="color:#eaf0ff;">Autoscale</strong> + Reserved/Savings + Spot para batch.</li>
+    </ol>
+  </div>
 </section>

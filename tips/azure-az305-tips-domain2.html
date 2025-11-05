@@ -1,136 +1,178 @@
+<!-- azure-az305-tips-domain2.html -->
+<section id="az305-d2" style="font-family:Inter,ui-sans-serif,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; line-height:1.6; color:#eaf0ff; background:transparent; margin:0; padding:0;">
+  <div style="margin:0 0 16px 0;">
+    <h1 style="margin:0 0 8px 0; font-weight:900; letter-spacing:.2px; color:#eaf0ff; font-size:clamp(24px,3.2vw,34px);">
+      Diseñar soluciones de almacenamiento de datos (D2)
+    </h1>
+    <p style="margin:6px 0 10px 0; color:#aeb8d6;">
+      El objetivo es seleccionar el servicio y patrón de datos óptimos considerando <strong style="color:#eaf0ff;">consistencia, latencia, coste, escalabilidad, seguridad y recuperación</strong>.
+    </p>
+  </div>
 
-<section class="az305-doc wrap">
-<style>
-/* ===== AZ-305 domain doc (scoped) ===== */
-.az305-doc{--bg:#0f1320;--surface:#121830;--surface2:#0d1428;--ink:#e8ecff;--muted:#a7b2e8;--stroke:#283056;--ok:#3ad97a;--warn:#ffd66b;--bad:#ff6b6b;--accent:#6fa4ff;--azure:#0078d4;--pill:#1a2244}
-.az305-doc *{box-sizing:border-box}
-.az305-doc{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,transparent,transparent);padding:10px 0 2px}
-.az305-doc h1,.az305-doc h2,.az305-doc h3{margin:14px 0 10px;line-height:1.25}
-.az305-doc h1{font-size:clamp(1.4rem,2.6vw,2rem)}
-.az305-doc h2{font-size:clamp(1.2rem,2.2vw,1.4rem);border-bottom:1px solid #2a345c;padding-bottom:6px}
-.az305-doc h3{font-size:1.05rem;color:#d7e4ff}
-.az305-doc p{margin:6px 0;color:var(--ink)}
-.az305-doc .muted{color:var(--muted)}
-.az305-doc .grid{display:grid;gap:12px}
-@media(min-width:900px){.az305-doc .cols-2{grid-template-columns:1fr 1fr} .az305-doc .cols-3{grid-template-columns:repeat(3,1fr)}}
-.az305-doc .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:0 12px 28px rgba(6,12,40,.35)}
-.az305-doc .pill{display:inline-block;background:linear-gradient(180deg,#6fa4ff,#355ff6);color:#fff;font-weight:900;border:1px solid rgba(71,103,220,.6);border-radius:999px;padding:4px 10px;font-size:12px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.az305-doc .kbd{font-family:ui-monospace,Consolas,Menlo,monospace;background:#0b1225;border:1px solid #2b355d;border-radius:6px;padding:2px 6px;font-weight:800}
-/* list fixes even when parent CSS overrides */
-.az305-doc ul,.az305-doc ol{margin:8px 0 8px 22px;padding:0}
-.az305-doc li{display:list-item;margin:4px 0}
-.az305-doc ol{list-style:decimal}
-.az305-doc ul{list-style:disc}
-/* table */
-.az305-doc table{width:100%;border-collapse:separate;border-spacing:0;background:linear-gradient(180deg,#0e1733,#0b1329);border:1px solid #2a345c;border-radius:10px;overflow:hidden}
-.az305-doc th,.az305-doc td{padding:10px;border-bottom:1px solid #23305a;vertical-align:top}
-.az305-doc th{text-align:left;color:#cfe1ff;background:#0f1b3a}
-.az305-doc tr:last-child td{border-bottom:none}
-/* callouts */
-.az305-doc .tips{display:grid;gap:10px}
-.az305-doc .tip{background:linear-gradient(180deg,#0f233f,#0c1a34);border:1px solid #27407a;border-radius:12px;padding:10px;position:relative}
-.az305-doc .tip.ok{border-color:#2d8a57;background:linear-gradient(180deg,#0b2a20,#0a1f19)}
-.az305-doc .tip.warn{border-color:#b28900;background:linear-gradient(180deg,#2a220b,#1c1707)}
-.az305-doc .tip:before{content:attr(data-title);position:absolute;top:-10px;left:10px;background:var(--pill);border:1px solid #2a345c;color:#a9c6ff;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900}
-/* code blocks */
-.az305-doc pre{margin:8px 0;background:#0b1225;border:1px solid #2a345c;border-radius:10px;padding:10px;overflow:auto}
-.az305-doc code{font-family:ui-monospace,Consolas,Menlo,monospace;color:#bfe0ff}
-/* inline anchors for index */
-.az305-doc .index{margin:8px 0 14px}
-.az305-doc .index a{display:inline-block;margin:4px 6px 0 0;padding:6px 10px;border-radius:10px;background:#0f1b3a;border:1px solid #2a345c;color:#cfe1ff;text-decoration:none;font-weight:800}
-.az305-doc .index a:hover{background:#132349}
-.az305-doc .small{font-size:12px}
-</style>
+  <!-- Índice -->
+  <nav aria-label="Índice" style="display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 14px 0;">
+    <a href="#map" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#0078d4"/></svg> Mapa de cargas → servicio
+    </a>
+    <a href="#sql" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> SQL (PaaS y MI)
+    </a>
+    <a href="#cosmos" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Cosmos DB
+    </a>
+    <a href="#storage" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Azure Storage
+    </a>
+    <a href="#analytics" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Analítica (Synapse/Fabric)
+    </a>
+    <a href="#security" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Seguridad &amp; red
+    </a>
+    <a href="#ha" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> HA/DR y copia
+    </a>
+    <a href="#patterns" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Patrones / Trampas
+    </a>
+    <a href="#exam" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none;">
+      <svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#6a78b4"/></svg> Preguntas tipo
+    </a>
+  </nav>
 
-<h1>Diseño de soluciones de almacenamiento de datos</h1>
-<p class="muted">El dominio evalúa tu capacidad para elegir el servicio adecuado, particionar, proteger costes y rendimiento.</p>
+  <!-- Mapa -->
+  <div id="map" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Mapa rápido carga → servicio</h2>
+    <table style="width:100%; border-collapse:separate; border-spacing:0; border:1px solid #26345a; border-radius:12px; overflow:hidden; background:#101a32;">
+      <thead>
+        <tr>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Carga</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Servicio</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Motivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">OLTP relacional</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Azure SQL DB / MI</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Transaccional, T-SQL, HA/DR integrados.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">NoSQL global</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Cosmos DB</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Latencia &lt;10 ms, replicación multi-región, 5 modelos API.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Ficheros/objetos</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;">Blob / Files / ADLS Gen2</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Coste/escala, jerarquía HNS para analítica.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;">Analítica/BIG data</td>
+          <td style="padding:10px 12px;">Synapse / Fabric Lakehouse</td>
+          <td style="padding:10px 12px; color:#aeb8d6;">SQL/Apache/Spark, separa cómputo y almacenamiento.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<div class="index">
-  <a href="#eleccion">Elección de almacén</a>
-  <a href="#sql">SQL (PaaS/VM)</a>
-  <a href="#cosmos">Cosmos DB</a>
-  <a href="#storage">Azure Storage</a>
-  <a href="#mig">Migración</a>
-  <a href="#seg">Seguridad &amp; DR</a>
-</div>
-
-<h2 id="eleccion">Elección rápida por caso</h2>
-<table>
-<thead><tr><th>Requisito</th><th>Servicio recomendado</th><th>Notas</th></tr></thead>
-<tbody>
-<tr><td>Relacional con transacciones</td><td>Azure SQL Database/MI</td><td>MI para compatibilidad total/SQL Agent; DB para SaaS multi‑tenant.</td></tr>
-<tr><td>NoSQL con latencia baja global</td><td>Cosmos DB</td><td>Multi‑región, 99.999% SLA con <em>multi‑write</em>.</td></tr>
-<tr><td>Lago de datos y analítica</td><td>ADLS Gen2</td><td>Jerarquía HDFS, Synapse/Databricks.</td></tr>
-<tr><td>Mensajería/colas</td><td>Service Bus/Storage Queues</td><td>SB para patrones enterprise y sesiones.</td></tr>
-<tr><td>Archiving</td><td>Blob Storage (Cool/Archive)</td><td>Tiers por ciclo de vida (Policy).</td></tr>
-</tbody>
-</table>
-
-<h2 id="sql">Azure SQL</h2>
-<div class="grid cols-2">
-  <div class="card">
-    <h3>Modelo</h3>
-    <ul>
-      <li><strong>Single/Elastic Pool:</strong> DTU/vCore; <em>zone redundant</em> y read replicas.</li>
-      <li><strong>Managed Instance:</strong> compatibilidad con SQL Server, enlaces de red privados.</li>
-      <li>Siempre usa <strong>Private Endpoints</strong> y Defender for SQL.</li>
+  <!-- SQL -->
+  <div id="sql" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Azure SQL (Database, Managed Instance, VM)</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">SQL DB (PaaS)</strong>: app nuevas, compatibilidad alta; HA/DR automático (zone redundant), autoscale serverless.</li>
+      <li><strong style="color:#eaf0ff;">Managed Instance</strong>: compatibilidad casi 100% con SQL Server; soporte Agent/Linked Servers; mejor para lift &amp; shift.</li>
+      <li><strong style="color:#eaf0ff;">SQL en VM</strong>: control total SO/FS, necesario para features no soportadas en MI.</li>
+      <li><strong style="color:#eaf0ff;">Disponibilidad</strong>: <em>Auto-failover groups</em> para DR multirregión; <em>Long-term backup retention</em> hasta 10 años.</li>
+      <li><strong style="color:#eaf0ff;">Rendimiento</strong>: DTU vs vCore; <em>Accelerated Networking</em>; TempDB en disco rápido.</li>
     </ul>
   </div>
-  <div class="card">
-    <h3>Disponibilidad</h3>
-    <ul>
-      <li><em>Zone redundant</em> y <strong>Auto-failover group</strong> para DR entre regiones.</li>
-      <li>Backups automáticos, PITR hasta 35 días (o más con LTR).</li>
-      <li>Para OLTP crítico global: AFG + read geo‑replicas.</li>
+
+  <!-- Cosmos -->
+  <div id="cosmos" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Cosmos DB: claves de diseño</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Partición</strong>: elige clave con alta cardinalidad y distribución uniforme; evita hot partitions.</li>
+      <li><strong style="color:#eaf0ff;">Modelado</strong>: diseña por consultas; datos desnormalizados; TTL para housekeeping.</li>
+      <li><strong style="color:#eaf0ff;">Consistencia</strong>: 5 niveles. Por defecto <em>Session</em> (mejor compromiso). <em>Strong</em> solo en una región.</li>
+      <li><strong style="color:#eaf0ff;">Multi-región</strong>: <em>Multi-master</em> si necesitas escrituras en varias regiones; resuelve conflictos (LWW/Custom).</li>
+      <li><strong style="color:#eaf0ff;">Coste</strong>: RU/s aprovisionadas o autoscale; mide RU de consultas; índices selectivos.</li>
     </ul>
   </div>
-</div>
 
-<h2 id="cosmos">Cosmos DB</h2>
-<ul>
-  <li><strong>API:</strong> Core (SQL) es la más usada en el examen.</li>
-  <li><strong>Partición:</strong> elige una clave de alta cardinalidad y acceso distribuido; evita <em>hot partition</em>.</li>
-  <li><strong>Consistencia:</strong> Strong, Bounded Staleness, Session (por defecto), Consistent Prefix, Eventual. Session suele equilibrar.</li>
-  <li><strong>RU/s:</strong> aprovisionadas vs autoscale. Calcula RU por operación; usa <em>bulk</em> si ingesta.</li>
-  <li><strong>Multi‑región:</strong> añade regiones y <em>multi-master</em> para escrituras locales; resuelve conflictos por <em>policy</em>.</li>
-</ul>
-
-<h2 id="storage">Azure Storage</h2>
-<div class="grid cols-2">
-  <div class="card">
-    <h3>Tipos y acceso</h3>
-    <ul>
-      <li><strong>Blob:</strong> Hot/Cool/Archive; <strong>immutability policy</strong> con <em>time-based</em> o <em>legal hold</em>.</li>
-      <li><strong>Files:</strong> SMB/NFS, Premium para IOPS predecibles.</li>
-      <li><strong>Queues/Tables:</strong> colas simples y NoSQL básico.</li>
-      <li>Siempre <strong>Private Endpoint</strong> y <em>Azure AD auth</em> cuando sea posible.</li>
+  <!-- Storage -->
+  <div id="storage" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Azure Storage: Blob, Files, Queues, Tables</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Redundancia</strong>: LRS &lt; ZRS &lt; GRS/GZRS. Para misión crítica: <em>GZRS</em> + <em>versioning</em> + <em>soft delete</em>.</li>
+      <li><strong style="color:#eaf0ff;">ADLS Gen2</strong>: jerarquía HNS, ACLs POSIX para analítica; usa <em>Private Endpoints</em>.</li>
+      <li><strong style="color:#eaf0ff;">Files</strong>: SMB/NFS; <em>Azure File Sync</em> para caché on-prem; backup con Azure Backup.</li>
+      <li><strong style="color:#eaf0ff;">Tiering</strong>: Hot/Cool/Archive con políticas de ciclo de vida (lifecycle).</li>
     </ul>
   </div>
-  <div class="card">
-    <h3>Redundancia</h3>
-    <ul>
-      <li>LRS/ZRS para alta disponibilidad zonal; GRS/GZRS para DR regional.</li>
-      <li><strong>RA‑GZRS</strong> expone punto de lectura secundaria.</li>
-      <li>Lifecycle Management para mover entre <em>tiers</em>.</li>
+
+  <!-- Analítica -->
+  <div id="analytics" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Synapse / Fabric / Databricks (visión)</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Lakehouse</strong> en ADLS/Fabric OneLake; separación almacenamiento/cómputo.</li>
+      <li><strong style="color:#eaf0ff;">Ingesta</strong>: Data Factory/Mapping Data Flows; streaming con Event Hubs/Kafka.</li>
+      <li><strong style="color:#eaf0ff;">Seguridad</strong>: acceso por <em>ABAC</em> (atributos) + <em>RBAC</em>; en Fabric, <em>workspaces</em> aislados.</li>
     </ul>
   </div>
-</div>
 
-<h2 id="mig">Migración</h2>
-<ul>
-  <li>SQL: DMA/DSMI; offline vs online con <em>Azure DMS</em>. Valida compatibilidad con <em>Data Migration Assistant</em>.</li>
-  <li>Datos masivos: <em>AzCopy</em>, <em>Data Box</em>, o <em>Storage Mover</em>.</li>
-  <li>Sincronización de archivos: <em>Azure File Sync</em> con <em>cloud tiering</em>.</li>
-</ul>
+  <!-- Seguridad -->
+  <div id="security" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Seguridad, identidad y red</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Identity</strong>: Managed Identity + Azure AD auth (SQL, Storage, Key Vault).</li>
+      <li><strong style="color:#eaf0ff;">Cifrado</strong>: SSE por defecto; para BYOK usa <em>Key Vault</em>; DDE para SQL/MI.</li>
+      <li><strong style="color:#eaf0ff;">Red</strong>: Private Endpoints; deshabilita acceso público; Firewall + Defender for Cloud.</li>
+      <li><strong style="color:#eaf0ff;">DLP</strong>: etiquetas/Policy para evitar blobs sin cifrar/etiquetas.</li>
+    </ul>
+  </div>
 
-<h2 id="seg">Seguridad y continuidad</h2>
-<ul>
-  <li><strong>Encryption-at-rest</strong> por defecto; para BYOK usa <em>CMK</em> en Key Vault.</li>
-  <li><strong>Backups:</strong> SQL PITR/LTR; Blob versioning + soft delete; cuentas con <em>version-level immutability</em>.</li>
-  <li><strong>DR:</strong> Storage con GRS/GZRS; SQL con Auto‑failover groups; Cosmos con multi‑región.</li>
-</ul>
+  <!-- HA/DR -->
+  <div id="ha" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Alta disponibilidad, DR y copia</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">RPO/RTO</strong> define el servicio: SQL AFG (minutos), Cosmos multi-región (segundos), Storage GZRS (minutos-horas).</li>
+      <li><strong style="color:#eaf0ff;">Backup</strong>: Azure Backup para SQL VM/Files; LTR en Azure SQL; snapshots para Blob.</li>
+      <li><strong style="color:#eaf0ff;">Geo</strong>: <em>paired regions</em> y reglas de residencia/latencia.</li>
+    </ul>
+  </div>
 
-<div class="tip" data-title="Errores a evitar">
-  Mezclar RBAC clásico (Access Keys) cuando puedes usar Entra RBAC; ignorar particionado en Cosmos; elegir GRS cuando necesitas <strong>consistencia de escritura</strong> (usa multi‑región de Cosmos).
-</div>
+  <!-- Patrones -->
+  <div id="patterns" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Patrones y trampas</h2>
+    <div style="display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr));">
+      <div>
+        <h3 style="margin:0 0 6px 0; font-weight:900; color:#eaf0ff;">Patrones</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>Private Link + RBAC + CMK cuando sea necesario.</li>
+          <li>Lifecycle para tiering automático en Blob.</li>
+          <li>Cosmos con TTL y partición compuesta.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin:0 0 6px 0; font-weight:900; color:#eaf0ff;">Trampas</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>Elegir Strong en Cosmos sin justificar; coste/latencia elevados.</li>
+          <li>Usar GRS pensando que es <em>readable</em> (solo RA-GRS lo es).</li>
+          <li>Dar acceso público a Storage por comodidad.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Examen -->
+  <div id="exam" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45);">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Preguntas tipo examen</h2>
+    <ol style="list-style:decimal; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>“NoSQL global con escrituras multi-región” → Cosmos <strong style="color:#eaf0ff;">multi-master</strong>, consistencia <em>Session</em>, clave de partición uniforme.</li>
+      <li>“Migrar SQL on-prem con Agent y Linked Servers” → <strong style="color:#eaf0ff;">Managed Instance</strong> + AFG para DR.</li>
+      <li>“Reducir coste de datos fríos” → <strong style="color:#eaf0ff;">Lifecycle</strong> Hot→Cool→Archive.</li>
+      <li>“Acceso a Storage sin Internet” → <strong style="color:#eaf0ff;">Private Endpoint</strong> + deshabilitar tráfico público.</li>
+    </ol>
+  </div>
 </section>
