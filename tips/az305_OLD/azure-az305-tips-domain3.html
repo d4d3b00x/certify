@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-305 — Dominio 3 · Continuidad de negocio</title>
+  <style>
+  :root{
+    --bg:#0b1020;--card:#101945;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+    --accent:#7ac7ff;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;--blue:#74a8ff;--purple:#c59cff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+    color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:var(--accent)}
+  .wrap{max-width:1100px;margin:0 auto;padding:26px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
+    padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
+  h1{margin:10px 0 10px;font-size:2.0rem}
+  h2{margin:22px 0 10px;font-size:1.28rem}
+  .muted{color:var(--muted)}
+  .card{background:linear-gradient(180deg,#0f1a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+  code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+  .toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
+  .toc a{color:#e3ecff;text-decoration:none}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
+  .pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
+  .hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
+  .note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
+  .tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
+  .warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
+  kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
+  pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
+  table{width:100%;border-collapse:collapse;margin:10px 0;border:1px solid var(--border)}
+  th,td{border:1px solid var(--border);padding:8px;text-align:left}
+  th{background:#0e1850}
+  .footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">AZ‑305 · Continuidad de negocio (BC/DR)</span>
+  <h1>AZ‑305 — Dominio 3 · Diseñar soluciones de continuidad de negocio</h1>
+  <p class="muted">RPO/RTO, niveles de resiliencia, ASR/Backup, patrones Active‑Active/Warm‑Standby/Pilot‑Light y pruebas.</p>
+  <div class="toc">
+    <div class="kicker">Índice</div>
+    <div class="grid">
+      <a href="#alcance">Alcance del dominio</a>
+<a href="#rpo_rto">RPO/RTO y niveles de resiliencia</a>
+<a href="#servicios">Servicios de continuidad y DR</a>
+<a href="#patrones">Patrones de arquitectura</a>
+<a href="#datos">Protección de datos y backups</a>
+<a href="#pruebas">Pruebas, runbooks y automatización</a>
+<a href="#escenarios">Escenarios de examen</a>
+<a href="#errores">Errores comunes</a>
+<a href="#checklist">Checklist final</a>
+    </div>
+  </div>
+  
+<div class="card" id="alcance">
+  <h2>Alcance</h2>
+  <p>Diseñar <strong>continuidad de negocio</strong>: alta disponibilidad (HA), recuperación ante desastres (DR), replicación entre zonas/regiones, pruebas y procedimientos.</p>
+</div>
+
+<div class="card" id="rpo_rto">
+  <h2>RPO/RTO y niveles</h2>
+  <ul>
+    <li><strong>RPO</strong>: pérdida máxima de datos tolerable. <strong>RTO</strong>: tiempo para restaurar servicio.</li>
+    <li><strong>ZRS/GZRS</strong> en Storage para resiliencia de datos; <strong>Availability Zones</strong> para cómputo.</li>
+    <li><strong>Activa-activa</strong> vs <strong>activa-pasiva</strong>: coste vs complejidad vs objetivos.</li>
+  </ul>
+  <table>
+    <tr><th>Objetivo</th><th>Opción</th><th>Notas</th></tr>
+    <tr><td>RPO≈0, RTO bajo</td><td>Activa-activa multirregión</td><td>Balanceo global (Front Door/Traffic Manager), replicación síncrona si aplica</td></tr>
+    <tr><td>RPO minutos, RTO horas</td><td>Activa-pasiva con réplicas</td><td>ASR, SQL Geo-Replica, Cosmos multi-región lectura</td></tr>
+  </table>
+</div>
+
+<div class="card" id="servicios">
+  <h2>Servicios de continuidad</h2>
+  <ul>
+    <li><strong>Azure Site Recovery (ASR)</strong>: orquestación de DR de VMs, failover/failback, test sin impacto.</li>
+    <li><strong>Azure Backup</strong>: políticas, retención, <em>Soft Delete</em>, inmutabilidad, vaults.</li>
+    <li><strong>Traffic Manager / Front Door</strong>: enrutamiento global por prioridad, latencia, salud.</li>
+    <li><strong>SQL</strong>: AG/Geo-Replica; <strong>Cosmos</strong>: multi-región; <strong>Storage</strong>: GZRS/RA-GRS.</li>
+  </ul>
+</div>
+
+<div class="card" id="patrones">
+  <h2>Patrones</h2>
+  <ul>
+    <li><strong>Pilot Light</strong>: componentes mínimos encendidos en DR; baja coste, RTO mayor.</li>
+    <li><strong>Warm Standby</strong>: infraestructura reducida en DR lista para escalar.</li>
+    <li><strong>Active-Active</strong>: requiere particionar estado/sesiones y resolver consistencia.</li>
+  </ul>
+  <div class="hl tip"><span class="pill">🎯 Elección rápida</span> Si el enunciado enfatiza <em>coste mínimo</em> y <em>recuperación esporádica</em>, selecciona <strong>Pilot Light</strong> + automatización de escalado.</div>
+</div>
+
+<div class="card" id="datos">
+  <h2>Protección de datos</h2>
+  <ul>
+    <li>Backups de <strong>SQL</strong> con PITR; <strong>Blob immutability</strong> para ransomware.</li>
+    <li><strong>Vaults</strong> separados, RBAC mínimo y alertas de eliminación.</li>
+    <li><strong>Pruebas de restauración</strong> periódicas con datos enmascarados.</li>
+  </ul>
+</div>
+
+<div class="card" id="pruebas">
+  <h2>Pruebas, runbooks y automatización</h2>
+  <ul>
+    <li><strong>Runbooks</strong> de failover: DNS, secretos, conexiones, claves.</li>
+    <li><strong>ASR test-failover</strong> en red aislada; <strong>chaos testing</strong> básico (apagados controlados).</li>
+    <li><strong>Infra as Code</strong> para reconstrucción rápida y reproducible.</li>
+  </ul>
+</div>
+
+<div class="card" id="escenarios">
+  <h2>Escenarios</h2>
+  <ul>
+    <li>“RPO≈0 para datos críticos” → replicación sincrónica/AG; evaluar latencia entre zonas.</li>
+    <li>“Sitio DR barato” → Pilot Light + ASR + automatización de escalado.</li>
+    <li>“Apps con estado de sesión” → Redis replicado/geo; afinidad si procede o <em>sticky</em> via Front Door.</li>
+  </ul>
+</div>
+
+<div class="card warnbox" id="errores">
+  <h2>Errores</h2>
+  <ul>
+    <li>No probar <strong>failover</strong> periódicamente.</li>
+    <li>Olvidar dependencias: DNS, secretos, IPs, PE, firewall.</li>
+    <li>Asumir GZRS = DR completa (no orquesta aplicaciones).</li>
+  </ul>
+</div>
+
+<div class="card" id="checklist">
+  <h2>Checklist</h2>
+  <ul>
+    <li>RPO/RTO por componente y matriz de criticidad.</li>
+    <li>Plan de pruebas y evidencias.</li>
+    <li>Runbooks versionados + IaC.</li>
+  </ul>
+</div>
+
+  <div class="footer">
+    <span class="pill">🧭 Recomendación</span> Crea <em>workbooks</em> por dominio y practica con <em>case studies</em> cronometrados: lee, decide, justifica en 90–120 s.
+  </div>
+</div>
+</body>
+</html>

@@ -1,37 +1,255 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>AZ-305 · D1 · Identidad, Gobernanza y Monitorización</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:#0f1320;color:#e8ecff;line-height:1.7}
-    .wrap{max-width:900px;margin:0 auto;padding:18px}
-    h1,h2{margin:.2rem 0 .6rem}
-    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:14px;padding:16px;margin:12px 0}
-    code{background:#0b1225;border:1px solid #283056;padding:2px 6px;border-radius:6px}
-    a{color:#bcd3ff}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <h1>AZ-305 — D1: Identidad, Gobernanza y Monitorización</h1>
-    <div class="card">
-      <h2>Claves rápidas</h2>
-      <ul>
-        <li>Diseña <strong>RBAC</strong> a mínimo privilegio. Usa <strong>PIM</strong> para elevaciones temporales.</li>
-        <li><strong>Azure Policy</strong> para cumplimiento (denegar, auditar, desplegar configuración).</li>
-        <li>Arquitecturas <em>hub-spoke</em> con <strong>Azure Firewall</strong> y DNS privado.</li>
-        <li>Monitorización con <strong>Azure Monitor</strong>, <strong>Log Analytics</strong> y <strong>Activity Log</strong>.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>Patrones que caen</h2>
-      <ul>
-        <li>Landing Zone + CAF: políticas, blueprints, etiquetas y gestión de costes.</li>
-        <li>Segregación por suscripciones y grupos de gestión.</li>
-      </ul>
+<!-- azure-az305-tips-domain1.html -->
+<section id="az305-d1" style="font-family:Inter,ui-sans-serif,-apple-system,'Segoe UI',Roboto,Arial,sans-serif; line-height:1.6; color:#eaf0ff; background:transparent; margin:0; padding:0;">
+  <!-- Encabezado -->
+  <div style="margin:0 0 16px 0;">
+    <h1 style="margin:0 0 8px 0; font-weight:900; letter-spacing:.2px; color:#eaf0ff; font-size:clamp(24px,3.2vw,34px);">Diseño de identidad, gobierno y monitorización (D1)</h1>
+    <p style="margin:6px 0 10px 0; color:#aeb8d6;">
+      El examen prioriza decisiones de <strong style="color:#eaf0ff;">arquitecto</strong>: ¿qué control aplica <strong style="color:#eaf0ff;">dónde</strong> y <strong style="color:#eaf0ff;">por qué</strong>?
+    </p>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Identidad</strong>: Entra ID (Azure AD) federada, PIM con acceso just-in-time, Access Reviews.</li>
+      <li><strong style="color:#eaf0ff;">Gobierno</strong>: Management Groups, RBAC, <em>Azure Policy</em>, Deployment Stacks, etiquetas y Cost Management.</li>
+      <li><strong style="color:#eaf0ff;">Monitorización</strong>: Azure Monitor, Log Analytics (KQL), métricas vs. logs, Alertas, Action Groups, Workbooks.</li>
+    </ul>
+
+    <!-- Callouts en grid -->
+    <div style="display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr)); margin-top:10px;">
+      <div style="display:flex; gap:10px; align-items:flex-start; padding:12px; border-radius:12px; border:1px solid rgba(58,217,122,.35); box-shadow:0 0 0 3px rgba(58,217,122,.15) inset; background:#0f1b31;">
+        <div style="font-size:18px;">⚡</div>
+        <div style="color:#dfe8ff;">
+          <strong style="color:#eaf0ff;">Tip:</strong> Para evitar desvíos a escala usa <strong style="color:#eaf0ff;">Azure Policy</strong> con <code>deny</code> o <code>deployIfNotExists</code>.
+        </div>
+      </div>
+      <div style="display:flex; gap:10px; align-items:flex-start; padding:12px; border-radius:12px; border:1px solid rgba(255,214,107,.35); box-shadow:0 0 0 3px rgba(255,214,107,.15) inset; background:#0f1b31;">
+        <div style="font-size:18px;">⚠️</div>
+        <div style="color:#dfe8ff;">
+          <strong style="color:#eaf0ff;">Confusión típica:</strong> RBAC autoriza <em>acciones</em>; Policy controla <em>configuración</em>.
+        </div>
+      </div>
     </div>
   </div>
-</body>
-</html>
+
+  <!-- Índice tipo chips con SVG -->
+  <nav aria-label="Índice" style="display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 14px 0;">
+    <!-- helper chip -->
+    <a href="#rbac" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#0078d4" /></svg>
+      RBAC recomendado
+    </a>
+    <a href="#pim" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      PIM &amp; acceso JIT
+    </a>
+    <a href="#policy" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      Azure Policy
+    </a>
+    <a href="#mg" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      Management Groups
+    </a>
+    <a href="#cost" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      Cost Management
+    </a>
+    <a href="#monitor" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      Monitor &amp; Logs
+    </a>
+    <a href="#alerts" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      Alertas &amp; Operación
+    </a>
+    <a href="#patterns" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      Patrones / Anti-patrones
+    </a>
+    <a href="#exam" style="display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:#1a2546; border:1px solid #26345a; color:#d7e6ff; font-weight:800; text-decoration:none; white-space:nowrap;">
+      <svg width="14" height="14" viewBox="0 0 14 14" style="display:block;"><circle cx="7" cy="7" r="5" fill="#6a78b4" /></svg>
+      Preguntas tipo
+    </a>
+  </nav>
+
+  <!-- CARD helper -->
+  <div id="rbac" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">RBAC recomendado</h2>
+    <p style="margin:4px 0 10px 0; color:#aeb8d6;">Asigna el rol más bajo que permita la tarea, en el <em>scope</em> correcto. Evita “Owner” por defecto.</p>
+
+    <table style="width:100%; border-collapse:separate; border-spacing:0; border:1px solid #26345a; border-radius:12px; overflow:hidden; background:#101a32;">
+      <thead>
+        <tr>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Necesidad</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Rol</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Ámbito</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Notas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Lectura global</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a;"><span style="display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2b3b68; background:#0f1b3a; color:#bcd3ff; font-weight:800; font-size:12px;">Reader</span></td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Management Group / Suscripción</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Auditoría/seguridad. Añade <span style="display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2b3b68; background:#0f1b3a; color:#bcd3ff; font-weight:800; font-size:12px;">Cost Management Reader</span> si procede.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Gestión de costes</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Cost Mgmt Reader/Contributor</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Suscripción / Grupo</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Evita dar “Owner” solo para ver costes.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Operar VM</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Virtual Machine Contributor</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;">Grupo de recursos</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Si necesita redes, añade también <span style="display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2b3b68; background:#0f1b3a; color:#bcd3ff; font-weight:800; font-size:12px;">Network Contributor</span>.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; color:#dfe8ff;">Menor privilegio</td>
+          <td style="padding:10px 12px; color:#dfe8ff;">Custom Role</td>
+          <td style="padding:10px 12px; color:#dfe8ff;">Ámbito mínimo necesario</td>
+          <td style="padding:10px 12px; color:#aeb8d6;">Modelo <em>deny-by-default</em> + permisos explícitos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PIM -->
+  <div id="pim" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Privileged Identity Management (PIM) &amp; acceso JIT</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Elegible vs. activo</strong>: el usuario es <em>eligible</em> y activa el rol solo cuando lo necesita.</li>
+      <li><strong style="color:#eaf0ff;">Controles</strong>: MFA, motivo, aprobación, límite de tiempo y ticket.</li>
+      <li><strong style="color:#eaf0ff;">En el examen</strong>: “minimizar privilegios” → PIM + roles finos (no Owner permanente).</li>
+    </ul>
+  </div>
+
+  <!-- Policy -->
+  <div id="policy" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Azure Policy: conformidad y corrección</h2>
+    <p style="margin:4px 0 10px 0; color:#aeb8d6;">Policy valida y corrige configuración a escala. Elige el <em>efecto</em> adecuado:</p>
+    <table style="width:100%; border-collapse:separate; border-spacing:0; border:1px solid #26345a; border-radius:12px; overflow:hidden; background:#101a32;">
+      <thead>
+        <tr>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Efecto</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Cuándo usar</th>
+          <th style="padding:10px 12px; background:#132347; text-align:left; color:#d5e3ff; font-weight:900;">Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;"><span style="display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2b3b68; background:#0f1b3a; color:#bcd3ff; font-weight:800; font-size:12px;">deny</span></td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Evitar configuraciones prohibidas</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Bloquear recursos sin etiqueta <code>costCenter</code>.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;"><span style="display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2b3b68; background:#0f1b3a; color:#bcd3ff; font-weight:800; font-size:12px;">audit</span></td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Detectar desviaciones sin bloquear</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Reportar VMs sin cifrado de disco.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#dfe8ff;"><span style="display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2b3b68; background:#0f1b3a; color:#bcd3ff; font-weight:800; font-size:12px;">append</span></td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Añadir config por defecto</td>
+          <td style="padding:10px 12px; border-bottom:1px solid #26345a; color:#aeb8d6;">Aplicar etiquetas/locations automáticas.</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px; color:#dfe8ff;"><span style="display:inline-block; padding:2px 8px; border-radius:999px; border:1px solid #2b3b68; background:#0f1b3a; color:#bcd3ff; font-weight:800; font-size:12px;">deployIfNotExists</span></td>
+          <td style="padding:10px 12px; color:#aeb8d6;">Remediar con despliegos</td>
+          <td style="padding:10px 12px; color:#aeb8d6;">Crear Diagnostic Settings hacia Log Analytics.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MG -->
+  <div id="mg" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Management Groups &amp; ámbitos</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>Separa <strong style="color:#eaf0ff;">plataformas/regiones/entornos</strong> (Prod/NonProd) y alinea Policies.</li>
+      <li>Baseline arriba; excepciones abajo (MG/Sub/RG).</li>
+      <li>Para ISVs/multi-unidad: MG por cliente/entorno + PIM+Groups.</li>
+    </ul>
+  </div>
+
+  <!-- Cost -->
+  <div id="cost" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Cost Management &amp; etiquetado</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li>Etiquetas mínimas: <code>costCenter</code>, <code>owner</code>, <code>env</code>, <code>app</code>.</li>
+      <li>Budgets + Alertas al 50/80/100%.</li>
+      <li>RBAC de costes: <strong style="color:#eaf0ff;">Cost Management Reader/Contributor</strong> (evita Owner).</li>
+    </ul>
+    <div style="display:flex; gap:10px; align-items:flex-start; padding:12px; border-radius:12px; border:1px solid rgba(255,214,107,.35); box-shadow:0 0 0 3px rgba(255,214,107,.15) inset; background:#0f1b31; margin-top:6px;">
+      <div style="font-size:18px;">💸</div>
+      <div style="color:#dfe8ff;"><strong style="color:#eaf0ff;">Trampa de examen:</strong> “Ver costes multi-sub” → vistas a nivel MG o exportaciones; no eleves privilegios.</div>
+    </div>
+  </div>
+
+  <!-- Monitor -->
+  <div id="monitor" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Azure Monitor: métricas y logs</h2>
+    <div style="display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr));">
+      <div>
+        <h3 style="margin:0 0 6px 0; font-weight:900; color:#eaf0ff;">Métricas</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>Valores numéricos agregados casi en tiempo real.</li>
+          <li>Alertas por umbral/series.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin:0 0 6px 0; font-weight:900; color:#eaf0ff;">Logs (Log Analytics)</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>KQL, retención y unión de tablas.</li>
+          <li>Diagnostic Settings: Log Analytics / Storage / Event Hub.</li>
+        </ul>
+      </div>
+    </div>
+    <pre style="background:#0b142b; border:1px solid #26345a; border-radius:12px; padding:12px; overflow:auto; color:#e7f0ff; margin-top:8px;"><code>Heartbeat
+| summarize lastBeat=max(TimeGenerated) by Computer
+| where lastBeat &gt; ago(1d)</code></pre>
+  </div>
+
+  <!-- Alertas -->
+  <div id="alerts" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Alertas, Action Groups y operación</h2>
+    <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Action Groups</strong>: email/SMS/Webhook/ITSM/Automation/Function.</li>
+      <li>Usa <em>Suppression</em> para ventanas de mantenimiento.</li>
+      <li><strong style="color:#eaf0ff;">Service Health</strong> para incidentes de plataforma.</li>
+    </ul>
+  </div>
+
+  <!-- Patrones -->
+  <div id="patterns" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45); margin:0 0 14px 0;">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Patrones y anti-patrones</h2>
+    <div style="display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr));">
+      <div>
+        <h3 style="margin:0 0 6px 0; font-weight:900; color:#eaf0ff;">Patrones</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li><strong style="color:#eaf0ff;">Landing Zone</strong> con MG + Policy baseline + RBAC mínimo.</li>
+          <li><strong style="color:#eaf0ff;">PIM JIT</strong> y Access Reviews trimestrales.</li>
+          <li><strong style="color:#eaf0ff;">Etiquetado obligatorio</strong> y presupuestos por equipo.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin:0 0 6px 0; font-weight:900; color:#eaf0ff;">Anti-patrones</h3>
+        <ul style="list-style:disc; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+          <li>Owner global “para ir rápido”.</li>
+          <li>Policies solo a nivel de suscripción.</li>
+          <li>Logs sin retención ni diagnóstico consistente.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Examen -->
+  <div id="exam" style="background:linear-gradient(180deg,#111b33,#0f1931); border:1px solid #26345a; border-radius:14px; padding:16px; box-shadow:0 10px 28px rgba(0,0,0,.45);">
+    <h2 style="margin:0 0 8px 0; font-weight:900; color:#eaf0ff; font-size:clamp(18px,2.4vw,24px);">Preguntas tipo examen</h2>
+    <ol style="list-style:decimal; padding-left:22px; margin:8px 0; color:#aeb8d6;">
+      <li><strong style="color:#eaf0ff;">Aplicar configuración por defecto y bloquear desviaciones</strong> → <strong style="color:#eaf0ff;">Azure Policy</strong> (<code>deny</code>/<code>deployIfNotExists</code>) a nivel MG.</li>
+      <li><strong style="color:#eaf0ff;">Minimizar privilegios de admin</strong> → <strong style="color:#eaf0ff;">PIM</strong> (elegible + MFA + aprobación) y roles específicos.</li>
+      <li><strong style="color:#eaf0ff;">Asegurar envío de logs</strong> → Policy DINE + Diagnostic Settings a Log Analytics.</li>
+      <li><strong style="color:#eaf0ff;">Visibilidad de costes sin acceso a recursos</strong> → <strong style="color:#eaf0ff;">Cost Management Reader</strong> a nivel MG/Sub.</li>
+      <li><strong style="color:#eaf0ff;">Detectar brechas multi-sub</strong> → Defender for Cloud + Workbooks + Service Health.</li>
+    </ol>
+  </div>
+</section>

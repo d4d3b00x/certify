@@ -594,8 +594,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const btnFbSend = document.getElementById('btnSendFeedback');
     const btnFbCancel = document.getElementById('btnCancelFeedback');
     const btnFbOk   = document.getElementById('btnOkFeedback');
+    const footerBtn = document.getElementById('footerContactBtn');
 
-    document.getElementById('btnFeedback').addEventListener('click',()=>{
+    function openFeedbackModal(){
       fbEmail.value = '';
       fbText.value  = '';
       fbStatus.textContent = '';
@@ -606,12 +607,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       fbEmail.disabled = fbText.disabled = false;
       btnFbSend.disabled = false;
       openModal(fbModal);
-    });
+    }
+
+    // Abrir modal desde el footer (y opcionalmente desde un botón superior si existiera)
+    footerBtn?.addEventListener('click', openFeedbackModal);
+    document.getElementById('btnFeedback')?.addEventListener('click', openFeedbackModal);
+
     btnFbCancel.addEventListener('click',()=> closeModal(fbModal));
     fbModal.addEventListener('click',e=>{ if(e.target===fbModal) closeModal(fbModal); });
     btnFbOk.addEventListener('click', ()=> closeModal(fbModal));
 
-    document.getElementById('btnSendFeedback').addEventListener('click', async ()=>{
+    btnFbSend.addEventListener('click', async ()=>{
       const message = (fbText.value||'').trim();
       const from    = (fbEmail.value||'').trim();
       if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; return; }
@@ -652,7 +658,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           throw new Error(`HTTP ${res.status} ${text}`);
         }
 
-        fbStatus.textContent = '¡Gracias! Mensaje recibo. 👌';
+        fbStatus.textContent = '¡Gracias! Mensaje recibido 👌';
         fbStatus.className = 'fb-status ok';
         btnFbSend.style.display   = 'none';
         btnFbCancel.style.display = 'none';
@@ -660,7 +666,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         btnFbOk.focus();
       }catch(err){
         console.error('Error guardando feedback:', err);
-        fbStatus.textContent = 'No se pudo enviar la info. :()';
+        fbStatus.textContent = 'No se pudo enviar la info. :(';
         fbStatus.className = 'fb-status err';
         btnFbSend.style.display   = 'none';
         btnFbCancel.style.display = 'none';
@@ -863,9 +869,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     document.addEventListener('DOMContentLoaded', maybeAddViewLastBtn);
 
     /* Abrir modal de feedback desde el footer */
-    document.getElementById('footerContactBtn')?.addEventListener('click', ()=>{
-      document.getElementById('btnFeedback')?.click();
-    });
+    // (ya está gestionado arriba con footerBtn -> openFeedbackModal)
   </script>
 </body>
 </html>

@@ -1,36 +1,108 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <title>AZ-305 · D4 · Soluciones de Aplicación</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;margin:0;background:#0f1320;color:#e8ecff;line-height:1.7}
-    .wrap{max-width:900px;margin:0 auto;padding:18px}
-    h1,h2{margin:.2rem 0 .6rem}
-    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid #283056;border-radius:14px;padding:16px;margin:12px 0}
-    code{background:#0b1225;border:1px solid #283056;padding:2px 6px;border-radius:6px}
-    a{color:#bcd3ff}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <h1>AZ-305 — D4: Soluciones de Aplicación</h1>
-    <div class="card">
-      <h2>Claves rápidas</h2>
-      <ul>
-        <li>Apps gestionadas: App Service/Functions/Container Apps.</li>
-        <li>Mensajería: Service Bus, Event Grid, Event Hubs.</li>
-        <li>Identidad app: Managed Identity + Key Vault.</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h2>Patrones que caen</h2>
-      <ul>
-        <li>Zero-trust con Private Endpoints + API Management.</li>
-        <li>Blue/Green, slots y CI/CD (Gh Actions/Azure DevOps).</li>
-      </ul>
-    </div>
+
+<section class="az305-doc wrap">
+<style>
+/* ===== AZ-305 domain doc (scoped) ===== */
+.az305-doc{--bg:#0f1320;--surface:#121830;--surface2:#0d1428;--ink:#e8ecff;--muted:#a7b2e8;--stroke:#283056;--ok:#3ad97a;--warn:#ffd66b;--bad:#ff6b6b;--accent:#6fa4ff;--azure:#0078d4;--pill:#1a2244}
+.az305-doc *{box-sizing:border-box}
+.az305-doc{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,transparent,transparent);padding:10px 0 2px}
+.az305-doc h1,.az305-doc h2,.az305-doc h3{margin:14px 0 10px;line-height:1.25}
+.az305-doc h1{font-size:clamp(1.4rem,2.6vw,2rem)}
+.az305-doc h2{font-size:clamp(1.2rem,2.2vw,1.4rem);border-bottom:1px solid #2a345c;padding-bottom:6px}
+.az305-doc h3{font-size:1.05rem;color:#d7e4ff}
+.az305-doc p{margin:6px 0;color:var(--ink)}
+.az305-doc .muted{color:var(--muted)}
+.az305-doc .grid{display:grid;gap:12px}
+@media(min-width:900px){.az305-doc .cols-2{grid-template-columns:1fr 1fr} .az305-doc .cols-3{grid-template-columns:repeat(3,1fr)}}
+.az305-doc .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:0 12px 28px rgba(6,12,40,.35)}
+.az305-doc .pill{display:inline-block;background:linear-gradient(180deg,#6fa4ff,#355ff6);color:#fff;font-weight:900;border:1px solid rgba(71,103,220,.6);border-radius:999px;padding:4px 10px;font-size:12px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.az305-doc .kbd{font-family:ui-monospace,Consolas,Menlo,monospace;background:#0b1225;border:1px solid #2b355d;border-radius:6px;padding:2px 6px;font-weight:800}
+/* list fixes even when parent CSS overrides */
+.az305-doc ul,.az305-doc ol{margin:8px 0 8px 22px;padding:0}
+.az305-doc li{display:list-item;margin:4px 0}
+.az305-doc ol{list-style:decimal}
+.az305-doc ul{list-style:disc}
+/* table */
+.az305-doc table{width:100%;border-collapse:separate;border-spacing:0;background:linear-gradient(180deg,#0e1733,#0b1329);border:1px solid #2a345c;border-radius:10px;overflow:hidden}
+.az305-doc th,.az305-doc td{padding:10px;border-bottom:1px solid #23305a;vertical-align:top}
+.az305-doc th{text-align:left;color:#cfe1ff;background:#0f1b3a}
+.az305-doc tr:last-child td{border-bottom:none}
+/* callouts */
+.az305-doc .tips{display:grid;gap:10px}
+.az305-doc .tip{background:linear-gradient(180deg,#0f233f,#0c1a34);border:1px solid #27407a;border-radius:12px;padding:10px;position:relative}
+.az305-doc .tip.ok{border-color:#2d8a57;background:linear-gradient(180deg,#0b2a20,#0a1f19)}
+.az305-doc .tip.warn{border-color:#b28900;background:linear-gradient(180deg,#2a220b,#1c1707)}
+.az305-doc .tip:before{content:attr(data-title);position:absolute;top:-10px;left:10px;background:var(--pill);border:1px solid #2a345c;color:#a9c6ff;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900}
+/* code blocks */
+.az305-doc pre{margin:8px 0;background:#0b1225;border:1px solid #2a345c;border-radius:10px;padding:10px;overflow:auto}
+.az305-doc code{font-family:ui-monospace,Consolas,Menlo,monospace;color:#bfe0ff}
+/* inline anchors for index */
+.az305-doc .index{margin:8px 0 14px}
+.az305-doc .index a{display:inline-block;margin:4px 6px 0 0;padding:6px 10px;border-radius:10px;background:#0f1b3a;border:1px solid #2a345c;color:#cfe1ff;text-decoration:none;font-weight:800}
+.az305-doc .index a:hover{background:#132349}
+.az305-doc .small{font-size:12px}
+</style>
+
+<h1>Diseño de soluciones de infraestructura</h1>
+<p class="muted">Red, cómputo, contenedores y seguridad de plataforma. En el examen prima la <strong>segregación</strong>, <strong>privado por defecto</strong> y el <strong>menor coste que cumpla</strong>.</p>
+
+<div class="index">
+  <a href="#red">Red</a>
+  <a href="#compute">Cómputo</a>
+  <a href="#containers">Contenedores (AKS)</a>
+  <a href="#ingreso">Ingreso &amp; seguridad</a>
+  <a href="#iaas">IaaS avanzado</a>
+</div>
+
+<h2 id="red">Red</h2>
+<div class="grid cols-2">
+  <div class="card">
+    <h3>Topologías</h3>
+    <ul>
+      <li><strong>Hub‑Spoke:</strong> hub con servicios compartidos (Firewall, Bastion, DNS) y spokes por app/entorno.</li>
+      <li><strong>Privado por defecto:</strong> PEs para PaaS; deshabilita IP pública salvo ingreso controlado.</li>
+      <li><strong>Rutas:</strong> UDR hacia Firewall/NVA; BGP en ExpressRoute.</li>
+    </ul>
   </div>
-</body>
-</html>
+  <div class="card">
+    <h3>DNS privado</h3>
+    <ul>
+      <li>Zonas de <em>privatelink</em> para endpoints privados.</li>
+      <li>Vincula (link) a todas las VNets que consuman el servicio.</li>
+      <li>Resolver central con forwarders si hay on‑prem.</li>
+    </ul>
+  </div>
+</div>
+
+<h2 id="compute">Cómputo</h2>
+<ul>
+  <li>VMSS flexible con <em>zones</em>, imágenes en Shared Image Gallery, <em>automatic repairs</em>.</li>
+  <li>App Service con PEs, slots, autoscale por métricas; Functions consumo/EP.</li>
+  <li>Discos: Premium SSD v2 para IOPS/coste; Ultra para latencias &lt; 1 ms.</li>
+</ul>
+
+<h2 id="containers">Contenedores (AKS)</h2>
+<ul>
+  <li>Red CNI Azure (subred dedicada) y <em>nodepools</em> por zona y SKU; usa Autoscaler.</li>
+  <li>Ingreso con NGINX o AGIC; para público global, Front Door ➜ App GW ➜ AKS.</li>
+  <li>Identidad con <em>Workload Identity</em>; secretos en Key Vault CSI driver.</li>
+  <li>Registro en ACR con <em>Private Endpoint</em>; despliegues con GitOps/Flux.</li>
+</ul>
+
+<h2 id="ingreso">Ingreso y seguridad</h2>
+<ul>
+  <li><strong>WAF:</strong> Front Door (global) o App Gateway (regional). DDoS Standard en el vNet perimetral.</li>
+  <li>NSG + Azure Firewall (políticas centralizadas). Microsegmentación con ASGs.</li>
+  <li>Bastion para administración; JIT VM Access (Defender).</li>
+</ul>
+
+<h2 id="iaas">IaaS avanzado</h2>
+<ul>
+  <li>Images Golden: SIG + versionado; actualización orquestada con VMSS.</li>
+  <li>Conf Mgmt: extensiones, Desired State (Guest Config), <em>Azure Automanage</em>.</li>
+  <li>Almacenamiento para IaaS: discos administrados, snapshots, <em>host caching</em> correcto.</li>
+</ul>
+
+<div class="tip" data-title="Preguntas tipo">
+  “Necesitas exponer APIs a partners con IPs restringidas y sin exponer PaaS a Internet” ➜ Private Endpoints + Front Door Premium con <em>Private Link</em> y WAF.
+</div>
+</section>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-305 — Dominio 4 · Infraestructura</title>
+  <style>
+  :root{
+    --bg:#0b1020;--card:#101945;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+    --accent:#7ac7ff;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;--blue:#74a8ff;--purple:#c59cff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+    color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:var(--accent)}
+  .wrap{max-width:1100px;margin:0 auto;padding:26px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
+    padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
+  h1{margin:10px 0 10px;font-size:2.0rem}
+  h2{margin:22px 0 10px;font-size:1.28rem}
+  .muted{color:var(--muted)}
+  .card{background:linear-gradient(180deg,#0f1a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+  code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+  .toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
+  .toc a{color:#e3ecff;text-decoration:none}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
+  .pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
+  .hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
+  .note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
+  .tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
+  .warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
+  kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
+  pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
+  table{width:100%;border-collapse:collapse;margin:10px 0;border:1px solid var(--border)}
+  th,td{border:1px solid var(--border);padding:8px;text-align:left}
+  th{background:#0e1850}
+  .footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">AZ‑305 · Infraestructura</span>
+  <h1>AZ‑305 — Dominio 4 · Diseñar soluciones de infraestructura</h1>
+  <p class="muted">Red híbrida, seguridad de perímetro, cómputo (VM/AKS), PE/Private DNS, balanceo global y automatización.</p>
+  <div class="toc">
+    <div class="kicker">Índice</div>
+    <div class="grid">
+      <a href="#alcance">Alcance del dominio</a>
+<a href="#redes">Red y conectividad</a>
+<a href="#compute">Cómputo y contenedores</a>
+<a href="#appseg">Seguridad de aplicación y acceso</a>
+<a href="#perf">Rendimiento, escalado y costes</a>
+<a href="#infraascode">Infraestructura como código</a>
+<a href="#escenarios">Escenarios de examen</a>
+<a href="#errores">Errores comunes</a>
+<a href="#checklist">Checklist final</a>
+    </div>
+  </div>
+  
+<div class="card" id="alcance">
+  <h2>Alcance</h2>
+  <p>Diseñar <strong>infraestructura</strong>: redes híbridas, perímetro, cómputo (VM/VMSS/AKS), balanceo, seguridad de capa 3–7 y automatización.</p>
+</div>
+
+<div class="card" id="redes">
+  <h2>Red y conectividad</h2>
+  <ul>
+    <li><strong>Topologías</strong>: Hub-Spoke, Virtual WAN, Landing Zone.</li>
+    <li><strong>Perímetro</strong>: Azure Firewall, DDoS, WAF (App GW/Front Door), Private DNS y Endpoints.</li>
+    <li><strong>Híbrido</strong>: VPN/ER, BGP, diseño de rutas (UDR), inspección centralizada en Hub.</li>
+    <li><strong>Privacidad</strong>: apóyate en <strong>Private Link/Endpoints</strong> para PaaS.</li>
+  </ul>
+</div>
+
+<div class="card" id="compute">
+  <h2>Cómputo y contenedores</h2>
+  <ul>
+    <li><strong>VM/VMSS</strong>: imágenes (SIG), orquestación de actualizaciones, discos (P, E, Ultra), proximity placement.</li>
+    <li><strong>AKS</strong>: nodos system/user, autoscaler, redes (CNI), Ingress (AGIC/Nginx), persistencia (CSI), secretos (CSI+KV).</li>
+    <li><strong>App Service/Container Apps</strong> cuando prime PaaS y despliegue rápido con slots.</li>
+    <li><strong>Mensajería</strong>: Service Bus, Event Grid, Event Hubs para desacoplar y absorber picos.</li>
+  </ul>
+</div>
+
+<div class="card" id="appseg">
+  <h2>Seguridad de aplicación y acceso</h2>
+  <ul>
+    <li><strong>Zero Trust</strong>: identidad primero (Managed Identity), <strong>Key Vault</strong>, PE, NSG/ASG, Defender.</li>
+    <li><strong>API Management</strong> para proteger y versionar APIs; políticas de ingreso y OAuth2/JWT con Entra.</li>
+    <li><strong>Secretos</strong> fuera del código: referencias a KV en App Service/Functions/AKS.</li>
+  </ul>
+</div>
+
+<div class="card" id="perf">
+  <h2>Rendimiento, escalado y costes</h2>
+  <ul>
+    <li><strong>Balanceo</strong>: ALB interno, App Gateway (L7), Front Door (global).</li>
+    <li><strong>Escalado</strong>: VMSS autoscaling (métricas/colas), AKS HPA/Cluster Autoscaler, slots para releases.</li>
+    <li><strong>Costes</strong>: Ahorro con RI/Savings Plans; discos adecuados (E/P/Ultra) y tamaños correctos.</li>
+  </ul>
+</div>
+
+<div class="card" id="infraascode">
+  <h2>Infraestructura como código</h2>
+  <ul>
+    <li><strong>Bicep/Terraform</strong> con módulos; pipelines (GitHub Actions/Azure DevOps); entornos por ramas.</li>
+    <li><strong>Política</strong> como código: pruebas de cumplimiento en PRs.</li>
+    <li><strong>Blue/Green</strong>, canary y <em>feature flags</em> (App Config).</li>
+  </ul>
+</div>
+
+<div class="card" id="escenarios">
+  <h2>Escenarios</h2>
+  <ul>
+    <li>“Publicar microservicios privados” → AKS + Internal LB + Private Link + APIM privado + Front Door/WAF.</li>
+    <li>“Picos impredecibles” → Container Apps/Functions + cola (SB) + autoscale por mensajes.</li>
+    <li>“Baja latencia intra-zona” → Proximity placement groups + discos Ultra.</li>
+  </ul>
+</div>
+
+<div class="card warnbox" id="errores">
+  <h2>Errores</h2>
+  <ul>
+    <li>Publicar PaaS sin Private Endpoints.</li>
+    <li>Meter secretos en variables de entorno sin KV.</li>
+    <li>Olvidar NSG/UDR coherentes con Azure Firewall.</li>
+  </ul>
+</div>
+
+<div class="card" id="checklist">
+  <h2>Checklist</h2>
+  <ul>
+    <li>Topología Hub-Spoke/Virtual WAN definida.</li>
+    <li>PE para servicios PaaS críticos + Private DNS.</li>
+    <li>Autoscaling probado + límites/quotas revisados.</li>
+  </ul>
+</div>
+
+  <div class="footer">
+    <span class="pill">🧭 Recomendación</span> Crea <em>workbooks</em> por dominio y practica con <em>case studies</em> cronometrados: lee, decide, justifica en 90–120 s.
+  </div>
+</div>
+</body>
+</html>

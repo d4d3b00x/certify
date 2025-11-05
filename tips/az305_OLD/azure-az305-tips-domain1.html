@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-305 — Dominio 1 · Identidad, Gobierno y Monitorización</title>
+  <style>
+  :root{
+    --bg:#0b1020;--card:#101945;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+    --accent:#7ac7ff;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;--blue:#74a8ff;--purple:#c59cff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+    color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
+  a{color:var(--accent)}
+  .wrap{max-width:1100px;margin:0 auto;padding:26px}
+  .badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
+    padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
+  h1{margin:10px 0 10px;font-size:2.0rem}
+  h2{margin:22px 0 10px;font-size:1.28rem}
+  .muted{color:var(--muted)}
+  .card{background:linear-gradient(180deg,#0f1a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
+  ul{padding-left:18px;margin:6px 0}
+  li+li{margin-top:6px}
+  .ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
+  code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+  .toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
+  .toc a{color:#e3ecff;text-decoration:none}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
+  .pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
+  .hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
+  .note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
+  .tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
+  .warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
+  kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
+  pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
+  table{width:100%;border-collapse:collapse;margin:10px 0;border:1px solid var(--border)}
+  th,td{border:1px solid var(--border);padding:8px;text-align:left}
+  th{background:#0e1850}
+  .footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">AZ‑305 · Identidad, Gobierno y Monitorización</span>
+  <h1>AZ‑305 — Dominio 1 · Diseñar identidad, gobierno y monitorización</h1>
+  <p class="muted">Entra ID, RBAC, PIM, Azure Policy, Resource Graph, Monitor y Key Vault aplicados al diseño de soluciones.</p>
+  <div class="toc">
+    <div class="kicker">Índice</div>
+    <div class="grid">
+      <a href="#alcance">Alcance del dominio</a>
+<a href="#identidad">Identidad y acceso (Entra ID)</a>
+<a href="#gobierno">Gobierno: RBAC, Policy, Management Groups</a>
+<a href="#monitor">Monitorización y observabilidad</a>
+<a href="#seguridad">Key Vault, Managed Identity, secretos</a>
+<a href="#decisiones">Guías de decisión</a>
+<a href="#escenarios">Escenarios típicos de examen</a>
+<a href="#errores">Errores a evitar</a>
+<a href="#checklist">Checklist de repaso</a>
+    </div>
+  </div>
+  
+<div class="card" id="alcance">
+  <h2>Alcance del dominio</h2>
+  <ul>
+    <li>Diseñar <strong>identidad</strong> (Microsoft Entra ID), <strong>autenticación/autorización</strong> y segregación de permisos.</li>
+    <li>Definir <strong>gobierno</strong>: jerarquía de <em>Management Groups</em>, suscripciones, naming, etiquetas y <strong>Azure Policy</strong>.</li>
+    <li>Planificar <strong>observabilidad</strong>: Azure Monitor, Log Analytics, métricas, alertas, diagnósticos.</li>
+  </ul>
+  <div class="hl note"><span class="pill">📘 Tip</span> Cuando la pregunta hable de “estándares obligatorios”, piensa primero en <strong>Azure Policy</strong> y su efecto (<code>Deny</code>/<code>Modify</code>/<code>DeployIfNotExists</code>).</div>
+</div>
+
+<div class="card" id="identidad">
+  <h2>Identidad y acceso (Entra ID)</h2>
+  <ul>
+    <li><strong>Inquilino</strong> y objetos: usuarios, grupos, roles, apps (registros) y <em>service principals</em>.</li>
+    <li><strong>Autenticación</strong>: MFA, Conditional Access (CA), acceso por riesgo, sesiones persistentes.</li>
+    <li><strong>PIM</strong> (Privileged Identity Management): asignaciones <em>elegibles</em>, activación JIT con MFA, duración y aprobadores.</li>
+    <li><strong>Aplicaciones</strong>: permisos delegados vs. de aplicación; consentimientos; certificados/secretos vs. <em>Managed Identity</em>.</li>
+  </ul>
+  <table>
+    <tr><th>Necesidad</th><th>Solución</th><th>Justificación</th></tr>
+    <tr><td>Evitar secretos en código</td><td>Managed Identity + Key Vault</td><td>Credenciales rotadas por plataforma, sin exponer secretos</td></tr>
+    <tr><td>Roles temporales</td><td>PIM JIT</td><td>Menos tiempo de exposición + auditoría</td></tr>
+    <tr><td>Bloquear acceso sin cumplimiento</td><td>Conditional Access</td><td>Requiere MFA, dispositivo, ubicación o riesgo</td></tr>
+  </table>
+</div>
+
+<div class="card" id="gobierno">
+  <h2>Gobierno: RBAC, Policy, Management Groups</h2>
+  <ul>
+    <li><strong>RBAC</strong>: asigna a <em>grupos</em>, con alcance mínimo; considera roles personalizados para datos (<em>Data Actions</em>).</li>
+    <li><strong>Management Groups</strong> (MG): aplica RBAC/Policy “por arriba”; separa <em>Prod/NonProd/Plataforma</em>.</li>
+    <li><strong>Azure Policy</strong>: define estándares (ubicación, SKUs, naming, tags, Private Endpoints); usa <strong>iniciativas</strong> para packs.</li>
+    <li><strong>Blueprints</strong>: reemplazados por plantillas (Bicep/ARM) + Policy; no te quedes en el servicio heredado.</li>
+  </ul>
+  <div class="hl tip"><span class="pill">🎯 Estrategia</span> Primero <strong>Policy</strong> para prevenir; luego automatiza con <strong>Bicep/Terraform</strong> y usa <strong>GitOps</strong> para trazabilidad.</div>
+</div>
+
+<div class="card" id="monitor">
+  <h2>Monitorización y observabilidad</h2>
+  <ul>
+    <li><strong>Azure Monitor</strong>: señales (métricas, logs, activity), <em>Diagnostic Settings</em> y <strong>Log Analytics</strong> (KQL).</li>
+    <li><strong>Alertas</strong>: métrica vs. log; grupos de acción; reglas de supresión (Action Rules) y programación de mantenimiento.</li>
+    <li><strong>Costes</strong>: tablas dedicadas, retención, <em>Basic Logs</em> vs <em>Analytics</em>; filtra a lo necesario.</li>
+  </ul>
+  <pre><code># Consulta KQL (VMs sin backup)
+Resources
+| where type =~ 'microsoft.compute/virtualmachines'
+| join kind=leftanti (
+  ResourceContainers | where type == 'microsoft.dataprotection/backupVaults'
+) on subscriptionId</code></pre>
+</div>
+
+<div class="card" id="seguridad">
+  <h2>Key Vault, Managed Identity, secretos</h2>
+  <ul>
+    <li><strong>Key Vault</strong>: claves, secretos, certificados; RBAC vs. Access Policies (usa RBAC si es posible).</li>
+    <li><strong>Managed HSM</strong> para requerimientos FIPS; <strong>Private Endpoints</strong> para acceso privado.</li>
+    <li><strong>Rotación</strong>: eventos + Automation/Functions; <strong>Azure App Config</strong> para parámetros.</li>
+  </ul>
+</div>
+
+<div class="card" id="decisiones">
+  <h2>Guías de decisión</h2>
+  <ul>
+    <li>Control preventivo → <strong>Policy</strong>. Control detectivo → <strong>Monitor + Alertas</strong>.</li>
+    <li>Permisos mínimos → <strong>RBAC a grupos</strong> + <strong>PIM</strong>.</li>
+    <li>Sin secretos → <strong>Managed Identity</strong> + <strong>Key Vault</strong>.</li>
+  </ul>
+</div>
+
+<div class="card" id="escenarios">
+  <h2>Escenarios típicos</h2>
+  <ul>
+    <li>“Exigir <em>tag</em> costCenter en todo” → Policy <code>Deny</code>/<code>Modify</code> a nivel MG.</li>
+    <li>“Auditar permisos privilegiados” → PIM + Access Reviews.</li>
+    <li>“App multi-región sin secretos” → Managed Identity + Private Endpoints + KV replicado.</li>
+  </ul>
+</div>
+
+<div class="card warnbox" id="errores">
+  <h2>Errores a evitar</h2>
+  <ul>
+    <li>Asignar <strong>Owner</strong> a usuarios individuales.</li>
+    <li>Enviar todos los diagnósticos “a lo loco” a Log Analytics.</li>
+    <li>Confiar en deny por defecto sin Policy/NSG/Firewall.</li>
+  </ul>
+</div>
+
+<div class="card" id="checklist">
+  <h2>Checklist de repaso</h2>
+  <ul>
+    <li>Jerarquía MG &amp; suscripciones definida.</li>
+    <li>Iniciativas Policy para seguridad, red, datos, costos.</li>
+    <li>RBAC mínimo en grupos + PIM + CA.</li>
+    <li>Monitor + Workbooks + alertas útiles, no ruidosas.</li>
+  </ul>
+</div>
+
+  <div class="footer">
+    <span class="pill">🧭 Recomendación</span> Crea <em>workbooks</em> por dominio y practica con <em>case studies</em> cronometrados: lee, decide, justifica en 90–120 s.
+  </div>
+</div>
+</body>
+</html>
