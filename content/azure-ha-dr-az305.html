@@ -1,178 +1,132 @@
-
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#0f1320" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DYZ3GCXHEK');
-  </script>
-  <style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#0f1320" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+
+
+  <title>Alta Disponibilidad y DR (AZ-305) | ITHub.es</title>
+  <meta name="description" content="HA/DR en Azure para AZ-305: pares regionales, zonas, ASR, geo-replicación y planificación." />
+  <meta name="keywords" content="AZ-305, HA, DR, ASR, Zonas, Geo-replicación" />
+  <meta name="author" content="ITHub.es" />
+  <link rel="canonical" href="https://beta.ithub.es/content/azure-ha-dr-az305.html" />
+  <meta property="og:title" content="Alta Disponibilidad y DR (AZ-305) | ITHub.es" />
+  <meta property="og:description" content="HA/DR en Azure para AZ-305: pares regionales, zonas, ASR, geo-replicación y planificación." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://beta.ithub.es/content/azure-ha-dr-az305.html" />
+  <meta property="og:site_name" content="ITHub.es" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+
+<style>
 :root{
-  --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
-  --stroke:#283056;--brand:#6c8bff;--azure:#0078d4;
+  --bg:#0f1320;--surface:#121831;--surface2:#1a2142;--ink:#ecf2ff;--muted:#a8b1d9;--stroke:#2a3561;
+  --azure:#0078d4;--aws:#ff9900;--multi:#6c8bff;--ok:#34d399;--warn:#fbbf24;--bad:#f87171;
   --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
-  --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
 }
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);
-  background:radial-gradient(900px 420px at 90% -10%,rgba(0,120,212,.12),transparent 60%),
-             radial-gradient(800px 400px at 10% 0%,rgba(108,139,255,.10),transparent 60%),var(--bg);
-  line-height:1.6;overflow-x:hidden}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
-.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-.brand img.site-logo{height:42px;width:auto;display:block}
-nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
-nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
-.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150; border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
-.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7a67ff,#5f48ff);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s, background .12s;font-size:13px;text-transform:uppercase;}
-.pill-btn:hover{transform:translateY(-1px)}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;height:38px;padding:0 12px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
-.btn:hover{border-color:#3a4580}
-main{padding:18px 0 10px}
-.hero-page{padding:18px 0 6px}
-.hero-page h1{margin:0 0 6px;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2}
-.muted{color:var(--muted)}
-section{padding:18px 0}
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow);}
-.grid{display:grid;gap:12px}
-@media(min-width:900px){.grid.cols-2{grid-template-columns:1fr 1fr} .grid.cols-3{grid-template-columns:1fr 1fr 1fr}}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid var(--stroke);padding:8px;text-align:left}
-th{background:rgba(255,255,255,.04)}
-.badge{display:inline-flex;gap:6px;align-items:center;font-weight:900;padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:var(--surface2);font-size:.8rem;margin-right:6px}
-.tip{background:rgba(58,217,122,.08);border:1px solid rgba(58,217,122,.45);padding:10px;border-radius:12px;font-weight:800}
-.warn{background:rgba(255,214,107,.08);border:1px solid rgba(255,214,107,.35);padding:10px;border-radius:12px;font-weight:800}
-footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
-.f-grid{display:grid;gap:14px}
-@media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
-footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
-svg{max-width:100%;height:auto;display:block}
-  </style>
+html,body{margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:18px 20px}
+header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(15,19,32,.95),rgba(15,19,32,.65));backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+.nav{height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;gap:10px;align-items:center;font-weight:900;text-transform:uppercase}
+.logo img{height:36px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:800;text-decoration:none}
+.btn:hover{border-color:#3c4a86}
+main{padding:10px 0 40px}
+.hero{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);background:var(--surface2);font-weight:900;font-size:.82rem}
+.badge.azure{border-color:rgba(0,120,212,.5);background:rgba(0,120,212,.15)}
+.badge.aws{border-color:rgba(255,153,0,.5);background:rgba(255,153,0,.15)}
+.badge.multi{border-color:rgba(108,139,255,.5);background:rgba(108,139,255,.2)}
+.toc{position:sticky;top:70px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:12px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+@media(min-width:980px){.grid{grid-template-columns:280px 1fr}}
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+h1{font-size:clamp(1.6rem,2.8vw,2.2rem);margin:0}
+h2{margin:18px 0 6px;font-size:1.2rem}
+pre,code{background:#0b1225;color:#dce6ff;border:1px solid #24305c;border-radius:10px}
+pre{padding:12px;overflow:auto}
+.callout{border-left:4px solid var(--ok);padding:10px 12px;background:rgba(52,211,153,.08);border-radius:8px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+a.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#7a67ff,#5f48ff);color:#fff;font-weight:900;text-decoration:none}
+footer{border-top:1px solid var(--stroke);padding:18px 0;color:#9ca8d9}
+hr{border-color:#22305b}
+</style>
+
 </head>
 <body>
-<header role="banner">
+
+<header>
   <div class="container nav">
-    <div class="brand"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></div>
-    <nav class="menu" aria-label="Navegación principal">
-      <a class="link-btn" href="/">HOME</a>
-      <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
-      <a class="link-btn" href="/score/ranking.html">RANKING</a>
-    </nav>
-    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
-      <div id="userArea" style="display:none;align-items:center;gap:6px">
-        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-      </div>
+    <div class="logo">
+      <img src="/assets/ithub-logo.svg" alt="ITHub">
+      <span>ITHub.es</span>
     </div>
+    <nav>
+      <a class="btn" href="/">Home</a>
+      <a class="btn" href="/content/content.html">Contenidos</a>
+      <a class="btn" href="/score/ranking.html">Ranking</a>
+    </nav>
   </div>
 </header>
-<main id="main" tabindex="-1">
-<link rel="canonical" href="/content/azure-ha-dr-az305.html" />
-<meta name="description" content="RPO/RTO, Zonas, réplicas, ASR, Backup y patrones activos‑activos. Qué elegir en cada escenario para el AZ‑305.">
-<title>AZ-305 · Alta disponibilidad y DR</title>
 
-<div class="container hero-page">
-  <h1>Alta disponibilidad y recuperación ante desastres (AZ‑305)</h1>
-  <div class="badge">Objetivo del examen: AZ‑305</div><div class="badge">Tema: Continuidad</div>
-  <p class="muted">Traduce requisitos de RPO/RTO en arquitectura: desde ZRS/Zone redundant hasta replicación geo y orquestación con Site Recovery.</p>
-</div>
-<section><div class="container card">
-  <h2>Matriz de decisión</h2>
-  <table>
-    <tr><th>RPO/RTO</th><th>Patrón</th><th>Servicios</th></tr>
-    <tr><td>RPO≈0 / RTO bajo</td><td>Act‑Act multi‑región</td><td>Front Door + App Service/AKS en 2 regiones; DB con replicación síncrona/geo</td></tr>
-    <tr><td>RPO minutos / RTO horas</td><td>Act‑Standby</td><td>SQL Auto‑failover groups; Cosmos prioridad de failover</td></tr>
-    <tr><td>RPO horas / RTO día</td><td>Backup + Restore</td><td>Azure Backup, vaults con soft‑delete e inmutabilidad</td></tr>
-  </table>
-</div></section>
-<section><div class="container grid cols-2">
-  <div class="card">
-    <h3>Site Recovery (ASR)</h3>
-    <ul>
-      <li>Replica VMs entre regiones o hacia Azure desde on‑prem.</li>
-      <li>Runbooks para <i>post‑failover</i> (IP, DNS, balanceadores).</li>
-      <li>Pruebas de DR sin impacto (test failover).</li>
-    </ul>
-  </div>
-  <div class="card">
-    <h3>Backup</h3>
-    <ul>
-      <li>Vaults con <b>immutability</b> y soft‑delete.</li>
-      <li>Retenciones por política: diaria/semanal/mensual/anual.</li>
-      <li>Restore granular: archivos, DB, VM entera.</li>
-    </ul>
-  </div>
-</div></section>
-<section><div class="container card">
-  <h2>Escenarios tipo examen</h2>
-  <ol>
-    <li><b>ERP crítico 24/7</b>: Act‑Act 2 regiones, tráfico con Front Door, DB MI Business Critical en failover group.</li>
-    <li><b>Legacy on‑prem</b>: Replica con ASR a Azure; prueba de DR trimestral.</li>
-    <li><b>Protección contra ransomware</b>: Backup con inmutabilidad + separa roles; alertas de eliminación masiva.</li>
-  </ol>
-</div></section>
-
-</main>
-<footer role="contentinfo">
-  <div class="container f-grid">
-    <div>
-      <div class="brand" style="text-transform:none">
-        <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
-        <span>ITHub.es</span>
+<main class="container">
+  <section class="hero">
+    <h1>Alta Disponibilidad y DR (AZ-305)</h1>
+    <p class="muted">Pares regionales, zonas, ASR y estrategias multi-región.</p>
+    <div class="badges"><span class="badge azure">AZ-305</span><span class="badge azure">Azure</span></div>
+  </section>
+  <div class="grid">
+    <aside class="toc">
+      <strong>Índice</strong>
+      <ol>
+        <li><a href="#sec1">Zonas y pares regionales</a></li><li><a href="#sec2">ASR y replicación</a></li><li><a href="#sec3">DR para PaaS</a></li><li><a href="#sec4">Front Door y failover</a></li><li><a href="#sec5">Pruebas y RTO/RPO</a></li>
+      </ol>
+      <div class="cta">
+        <a class="cta-btn" href="/">Ir al simulador</a>
       </div>
-      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.</p>
-    </div>
-    <div>
-      <div style="font-weight:800">Simuladores</div>
-      <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
-      <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
-      <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
-    </div>
-    <div>
-      <div style="font-weight:800">Contenidos</div>
-      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-      <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
-      <div><a href="/content/azure-network-architecture-az305.html">Azure · Arquitectura de red</a></div>
-    </div>
-    <div>
-      <div style="font-weight:800">Contacto</div>
-      <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;margin-top:6px;">💬 <span>Contáctanos</span></button>
-    </div>
+    </aside>
+    <article class="card azure">
+      <h2 id="sec1">Zonas y pares regionales</h2>
+<p>Pares regionales, zonas, ASR y estrategias multi-región. — Sección: <strong>Zonas y pares regionales</strong>. Enfócate en cómo se pregunta en el examen AZ-305 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre zonas y pares regionales.</li><li>Punto clave sobre zonas y pares regionales.</li><li>Punto clave sobre zonas y pares regionales.</li></ul>
+<hr />
+<h2 id="sec2">ASR y replicación</h2>
+<p>Pares regionales, zonas, ASR y estrategias multi-región. — Sección: <strong>ASR y replicación</strong>. Enfócate en cómo se pregunta en el examen AZ-305 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre asr y replicación.</li><li>Punto clave sobre asr y replicación.</li><li>Punto clave sobre asr y replicación.</li></ul>
+<hr />
+<h2 id="sec3">DR para PaaS</h2>
+<p>Pares regionales, zonas, ASR y estrategias multi-región. — Sección: <strong>DR para PaaS</strong>. Enfócate en cómo se pregunta en el examen AZ-305 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre dr para paas.</li><li>Punto clave sobre dr para paas.</li><li>Punto clave sobre dr para paas.</li></ul>
+<hr />
+<h2 id="sec4">Front Door y failover</h2>
+<p>Pares regionales, zonas, ASR y estrategias multi-región. — Sección: <strong>Front Door y failover</strong>. Enfócate en cómo se pregunta en el examen AZ-305 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre front door y failover.</li><li>Punto clave sobre front door y failover.</li><li>Punto clave sobre front door y failover.</li></ul>
+<hr />
+<h2 id="sec5">Pruebas y RTO/RPO</h2>
+<p>Pares regionales, zonas, ASR y estrategias multi-región. — Sección: <strong>Pruebas y RTO/RPO</strong>. Enfócate en cómo se pregunta en el examen AZ-305 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre pruebas y rto/rpo.</li><li>Punto clave sobre pruebas y rto/rpo.</li><li>Punto clave sobre pruebas y rto/rpo.</li></ul>
+<hr />
+
+<div class="callout">
+  <strong>Tips de examen:</strong> Recuerda elegir regiones emparejadas para beneficios de plataforma.
+</div>
+
+    </article>
   </div>
-  <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+</main>
+
+<footer>
+  <div class="container">© 2025 ITHub.es — Aprende, practica y aprueba.</div>
 </footer>
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
-  function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-  function renderHeaderAuth(){
-    const u=getCurrentUser();
-    const login=document.getElementById('btnLogin');
-    const signup=document.getElementById('btnSignup');
-    const userArea=document.getElementById('userArea');
-    const nameTop=document.getElementById('userNameTop');
-    if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-    else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
-  }
-  document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
-  document.getElementById('footerContactBtn')?.addEventListener('click', ()=>{ alert('Escríbenos a hola@ithub.es'); });
-  renderHeaderAuth();
-</script>
+
 </body>
 </html>

@@ -19,9 +19,9 @@
 
 (() => {
 /* ===================== CONFIG ===================== */
-const API_URL     = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-const PROGRESS_URL= `${API_URL}/progress`;
-const RESULTS_URL = `${API_URL}/results`;
+const API_URL      = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+const PROGRESS_URL = `${API_URL}/progress`;
+const RESULTS_URL  = `${API_URL}/results`;
 
 /* ===================== ESTADO ===================== */
 const S = {
@@ -51,8 +51,6 @@ const S = {
   finished: false,
 
   savingResult: false,
-
-  // Bloqueo del botón Finalizar tras primer click
   finishLocked: false,
 
   _afterRenderScroll: null
@@ -60,30 +58,14 @@ const S = {
 let __SEQ = 0;
 
 /* ===================== MAPAS ===================== */
-const QUIZ_TO_EXAM = {
-  "aws-saa-c03": "SAA-C03",
-  "az-104": "AZ-104",
-  "az-305": "AZ-305"
-};
+const QUIZ_TO_EXAM = { "aws-saa-c03":"SAA-C03","az-104":"AZ-104","az-305":"AZ-305" };
 const QUIZZES = {
-  "aws-saa-c03": {
-    track: "architect",
-    certi: "AWS Certified Solutions Architect — Associate (SAA-C03)",
-    domNames: { D1:"Diseño seguro", D2:"Resiliencia", D3:"Alto rendimiento", D4:"Optimización de coste" }
-  },
-  "az-104": {
-    track: "az-104-architect",
-    certi: "Microsoft Azure Administrator — Associate (AZ-104)",
-    domNames: { D1:"Identidades y gobierno", D2:"Almacenamiento", D3:"Cómputo", D4:"Redes", D5:"Monitorización" }
-  },
-  "az-305": {
-    track: "az-305-architect",
-    certi: "Microsoft Azure Solutions Architect Expert (AZ-305)",
-    domNames: { D1:"Diseño de infraestructura", D2:"Datos/almacenamiento", D3:"Seguridad/identidad", D4:"BC/DR" }
-  }
+  "aws-saa-c03": { track:"architect", certi:"AWS Certified Solutions Architect — Associate (SAA-C03)", domNames:{ D1:"Diseño seguro", D2:"Resiliencia", D3:"Alto rendimiento", D4:"Optimización de coste" } },
+  "az-104":      { track:"az-104-architect", certi:"Microsoft Azure Administrator — Associate (AZ-104)", domNames:{ D1:"Identidades y gobierno", D2:"Almacenamiento", D3:"Cómputo", D4:"Redes", D5:"Monitorización" } },
+  "az-305":      { track:"az-305-architect", certi:"Microsoft Azure Solutions Architect Expert (AZ-305)", domNames:{ D1:"Diseño de infraestructura", D2:"Datos/almacenamiento", D3:"Seguridad/identidad", D4:"BC/DR" } }
 };
 
-/* ===================== CSS ===================== */
+/* ===================== CSS del simulador ===================== */
 (function injectCSS(){
   const css = `
   :root{
@@ -94,13 +76,10 @@ const QUIZZES = {
     --mark:#ffd24d; --mark-bg:#3a2e12; --mark-ring:rgba(255,210,77,.35);
   }
   #view{ margin-top:16px; }
-
   .quiz-wrap{ display:grid; grid-template-columns:2fr 1fr; gap:18px; }
   @media(max-width:900px){ .quiz-wrap{ grid-template-columns:1fr } }
-
   .card{ margin-top:8px; background:linear-gradient(180deg,#111937,#0f1633);
          border:1px solid var(--stroke); border-radius:16px; padding:18px; color:var(--ink) }
-
   .header-quiz{ display:flex; align-items:center; justify-content:space-between;
                 border-bottom:1px solid var(--stroke); padding-bottom:10px; margin-bottom:10px; }
   .title{ font-weight:1000; font-size:1.18rem; letter-spacing:.3px; color:#f0f4ff; text-transform:uppercase; }
@@ -111,12 +90,10 @@ const QUIZZES = {
   .pbar{ position:relative; height:8px; border-radius:999px; background:#0b1024; overflow:hidden; flex:1; }
   .pbar>i{ position:absolute; inset:0; width:0; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
   .pcount{ font-weight:900; color:#cbd6ff; min-width:70px; text-align:right; }
-
-  .domain{ display:inline-flex; align-items:center; gap:8px; font-weight:800; font-size:.94rem;
-           color:#cfd8ff; background:rgba(108,139,255,.06); border:1px solid rgba(108,139,255,.16);
+  .domain{ display:inline-flex; align-items:center; gap:8px; font-weight:800; font-size:.94rem; color:#cfd8ff;
+           background:rgba(108,139,255,.06); border:1px solid rgba(108,139,255,.16);
            border-radius:12px; padding:8px 12px; margin:.55rem 0 .7rem; text-transform:lowercase; }
   .domain .dot{ width:10px; height:10px; border-radius:999px; background:var(--accent); opacity:.9; }
-
   .quiz-question{ margin:.2rem 0 .6rem; font-size:1.06rem; line-height:1.55; }
   .option{ display:flex; gap:12px; align-items:flex-start; border:1px solid var(--stroke); background:var(--surface2);
            border-radius:12px; padding:14px 16px; margin:10px 0; cursor:pointer;
@@ -128,7 +105,6 @@ const QUIZZES = {
 
   .expl{ border:1px dashed var(--stroke); border-radius:12px; padding:12px; margin-top:12px; background:var(--surface); }
   .expl .ttl{ font-weight:900; margin-bottom:8px; }
-
   .refs{ margin-top:10px; background:var(--surface2); border:1px solid var(--stroke);
          border-radius:12px; padding:12px; }
   .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
@@ -154,46 +130,16 @@ const QUIZZES = {
   .dot.bad{ background:#2a1216; border-color:#7a2e38; color:#ffc1c1; }
   .dot.marked{ background:var(--mark-bg)!important; border-color:#b49422!important; color:#ffeaa3!important; outline:3px solid var(--mark-ring); }
 
-  .legend{ display:flex; flex-wrap:wrap; gap:8px; }
-  .legend .chip{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-weight:900;
-                 background:#0f1630; border:1px solid #31407a; color:#cfe0ff; }
-  .legend .chip.on{ background:rgba(108,139,255,.14); outline:2px solid var(--accent-ring); }
-  .legend .chip .led{ width:10px; height:10px; border-radius:999px; background:var(--accent); }
-
   .toast{ position:fixed; left:50%; bottom:18px; transform:translateX(-50%); background:#0e1530; color:#fff;
           padding:10px 14px; border-radius:10px; box-shadow:0 10px 24px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s; z-index:99999; }
   .toast.show{ opacity:1; }
 
-  /* ===== KPIs bajo la quiz ===== */
-  .kpis-under-quiz{
-    display:grid;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:12px;
-    margin-top:16px;
-  }
-  @media (max-width:700px){
-    .kpis-under-quiz{ grid-template-columns:1fr; }
-  }
-  .kpi-card{
-    background:var(--surface);
-    border:1px solid var(--stroke);
-    border-radius:14px;
-    padding:14px 16px;
-  }
-  .kpi-card h4{
-    margin:0 0 6px 0;
-    font-size:.9rem;
-    color:var(--muted);
-    font-weight:900;
-    text-transform:uppercase;
-    letter-spacing:.4px;
-  }
-  .kpi-card .n{
-    font-size:1.6rem;
-    line-height:1.2;
-    font-weight:1000;
-    color:#fff;
-  }
+  /* KPIs */
+  .kpis-under-quiz{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:16px; }
+  @media (max-width:700px){ .kpis-under-quiz{ grid-template-columns:1fr; } }
+  .kpi-card{ background:var(--surface); border:1px solid var(--stroke); border-radius:14px; padding:14px 16px; }
+  .kpi-card h4{ margin:0 0 6px 0; font-size:.9rem; color:#9ca8d9; font-weight:900; text-transform:uppercase; letter-spacing:.4px; }
+  .kpi-card .n{ font-size:1.6rem; line-height:1.2; font-weight:1000; color:#fff; }
   `;
   const st = document.createElement("style");
   st.innerHTML = css;
@@ -232,7 +178,7 @@ function applyTheme(quizId){
 function normalizeDomainTag(tag){
   if(!tag) return null;
   const s=String(tag).trim();
-  const m = s.match(/^(?:d(?:omain|ominio)?)\s*:?\s*(\d+)$/i);
+  const m = s.match(/^(?:d(?:omain|dominio)?)\s*:?\s*(\d+)$/i);
   if(m) return `D${m[1]}`;
   const m2 = s.match(/\bD(\d+)\b/i);
   return m2 ? `D${m2[1]}` : null;
@@ -298,34 +244,111 @@ function filterByDomains(all, tags){
 
 /* ===================== Usuario / progreso / resultados ===================== */
 function getUserAny(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-async function upsertProgress(payload){
-  try{
-    const r=await fetch(PROGRESS_URL,{method:"POST",mode:"cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-    if(!r.ok) throw new Error(await r.text());
-  }catch(e){ console.warn("progress upsert failed:", e); }
+
+/* ---------- Helpers de payload /progress ---------- */
+function buildMarkedItems(){
+  const list=[]; const now=new Date().toISOString();
+  S.qs.forEach((q,i)=>{
+    if(S.marked[i]) list.push({index:i,questionId:q.questionId,domain:q.domain,markedAt:S.markTimes[i]||now});
+  });
+  return list;
+}
+function buildBank(){
+  return S.qs.map((q,i)=>({
+    index:i, questionId:q.questionId, domain:q.domain,
+    optionsShown:(q._options||[]).slice(),
+    correctShownIndex:(typeof q._correct==='number'?q._correct:null),
+    optOrder:Array.isArray(q._optOrder)?q._optOrder.slice():null
+  }));
+}
+function buildAnswerItems(){
+  const items=[];
+  for(const [i,chosen] of Object.entries(S.answers||{})){
+    const idx=+i; const q=S.qs[idx]; if(!q) continue;
+    const isCorrect=(typeof q._correct==='number') ? (chosen===q._correct) : null;
+    items.push({ index:idx, questionId:q.questionId, domain:q.domain, chosenIndex:chosen, isCorrect, marked:!!S.marked[idx] });
+  }
+  return items;
 }
 function computePct(){ let c=0,t=S.qs.length; for(let i=0;i<t;i++){ if(S.answers[i]===S.qs[i]._correct) c++; } return t?Math.round((c/t)*100):0; }
-function buildMarkedItems(){ const list=[]; const now=new Date().toISOString(); S.qs.forEach((q,i)=>{ if(S.marked[i]) list.push({index:i,questionId:q.questionId,domain:q.domain,markedAt:S.markTimes[i]||now}); }); return list; }
-function buildBank(){ return S.qs.map((q,i)=>({index:i,questionId:q.questionId,domain:q.domain,optionsShown:(q._options||[]).slice(),correctShownIndex:(typeof q._correct==='number'?q._correct:null),optOrder:Array.isArray(q._optOrder)?q._optOrder.slice():null})); }
+
+function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
+  const u=getUserAny()||{};
+  const status = finished ? "finished" : "in_progress"; // <-- tu lambda lo usa
+  const base={
+    sessionId:S.sessionId,
+    quizId:S.quizId,
+    mode:S.mode,
+    track:S.track,
+    userId:u?.userId||u?.id||"anon",
+    userName:u?.name||"anonymous",
+    email:u?.email||"",
+    startedAt:(S.startedAt? new Date(S.startedAt).toISOString(): new Date().toISOString()),
+    updatedAt:new Date().toISOString(),
+    elapsedSec:S.elapsedSec,
+    timeLimit:S.timeLimit,
+    idx:S.idx,                 // <-- tu lambda espera idx
+    total:S.qs.length,
+    pct:computePct(),
+    finished:Boolean(finished),
+    status,                    // <-- y status opcional
+    answers:S.answers,
+    marked:S.marked,
+    questionIds:S.qs.map(q=>q.questionId),
+    markedItems:buildMarkedItems(),
+    answerItems:buildAnswerItems()
+  };
+  if(full || !S.hasInitialUpsert) base.questionBank = buildBank();
+  return base;
+}
+
+/* ---------- Envío a /progress con JSON + fallback form + keepalive ---------- */
+async function upsertProgress(payload, {beacon=false}={}){
+  try{
+    if(beacon && navigator.sendBeacon){
+      const blob=new Blob([JSON.stringify(payload)],{type:"application/json"});
+      if(navigator.sendBeacon(PROGRESS_URL, blob)) return;
+    }
+    const r=await fetch(PROGRESS_URL,{
+      method:"POST",
+      mode:"cors",
+      keepalive:true,
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    if(r.ok) return;
+
+    // Fallback form-encoded (tu parse_body lo soporta)
+    const params=new URLSearchParams();
+    Object.entries(payload).forEach(([k,v])=>params.append(k, typeof v==="object" ? JSON.stringify(v) : String(v)));
+    const r2=await fetch(PROGRESS_URL,{
+      method:"POST",
+      mode:"cors",
+      keepalive:true,
+      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+      body:params.toString()
+    });
+    if(!r2.ok){
+      const txt=await r2.text().catch(()=> "");
+      console.warn("progress upsert failed (form):", r2.status, txt);
+    }
+  }catch(e){
+    console.warn("progress upsert failed:", e?.message||e);
+  }
+}
 function saveProgress({full=false,finished=false,reason='auto'}={}){
   if(S.saveDebounce) clearTimeout(S.saveDebounce);
   S.saveDebounce=setTimeout(()=> {
-    const u=getUserAny()||{};
-    const payload={
-      sessionId:S.sessionId, quizId:S.quizId, mode:S.mode, track:S.track,
-      userId:u?.userId||u?.id||"anon", userName:u?.name||"anonymous", email:u?.email||"",
-      startedAt: (S.startedAt? new Date(S.startedAt).toISOString(): new Date().toISOString()),
-      updatedAt: new Date().toISOString(),
-      elapsedSec:S.elapsedSec, timeLimit:S.timeLimit, cursor:S.idx, total:S.qs.length,
-      pct:computePct(), finished:Boolean(finished), answers:S.answers, marked:S.marked,
-      questionIds:S.qs.map(q=>q.questionId), markedItems:buildMarkedItems()
-    };
-    if(full || !S.hasInitialUpsert) payload.questionBank = buildBank();
-    upsertProgress(payload); S.hasInitialUpsert=true;
-  }, 300);
+    upsertProgress(buildProgressSnapshot({full,finished,reason}));
+    S.hasInitialUpsert=true;
+  }, 200);
+}
+function saveProgressNow({full=false,finished=false,reason='immediate',beacon=false}={}){
+  upsertProgress(buildProgressSnapshot({full,finished,reason}), {beacon});
+  S.hasInitialUpsert=true;
 }
 
-/* ======= Resultados: guardar en /results ======= */
+/* ======= Resultados ======= */
 function genResultId(r){
   const base=[r.quizId||'quiz', r.mode||'exam', r.total||0, r.correct||0, r.durationSec||0].join('|');
   const t=Math.floor(Date.now()/10000);
@@ -334,16 +357,16 @@ function genResultId(r){
 async function postForm(url, payload){
   const body=new URLSearchParams();
   Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
-  const resp=await fetch(url,{method:"POST",mode:"cors",headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body});
-  const text=await resp.text().catch(()=> "");
-  let data=null; try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
+  const resp=await fetch(url,{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body});
+  const text=await resp.text().catch(()=> ""); let data=null;
+  try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
   if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
   return data;
 }
 async function postJSON(url,payload){
-  const resp=await fetch(url,{method:"POST",mode:"cors",headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
-  const text=await resp.text().catch(()=> "");
-  let data=null; try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
+  const resp=await fetch(url,{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
+  const text=await resp.text().catch(()=> ""); let data=null;
+  try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
   if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
   return data;
 }
@@ -396,7 +419,7 @@ function localAz305Fallback(){
   ];
 }
 
-/* ===================== START público ===================== */
+/* ===================== START ===================== */
 async function start(quizId="aws-saa-c03", overrides={}){
   const seq=++__SEQ; stopTimer(); S.finished=false; S.finishLocked=false;
 
@@ -449,7 +472,9 @@ async function start(quizId="aws-saa-c03", overrides={}){
     S._afterRenderScroll = 'question';
     renderQuiz();
     startTimer();
-    saveProgress({full:true,reason:'start'});
+
+    // Upsert inicial completo
+    saveProgressNow({full:true,reason:'start'});
 
     window.dispatchEvent(new Event('quiz:started'));
     const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
@@ -468,40 +493,26 @@ async function start(quizId="aws-saa-c03", overrides={}){
 function showLoading(){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:'Cargando preguntas…'})); }
 function showError(msg){ const root=document.getElementById('view'); if(!root) return; root.innerHTML=''; root.appendChild(h('div',{class:'loading',html:`<b>Error:</b> ${msg}`})); }
 
-/* ===================== KPIs simples debajo (con estilo) ===================== */
+/* ===================== KPIs ===================== */
 function renderKpisBelow(container){
   if(!container || !container.parentNode) return;
-
-  // Cálculo actualizado
   const answered = Object.keys(S.answers).length;
-  let correct = 0;
-  for(const [i,v] of Object.entries(S.answers)){
-    const idx = +i;
-    if(S.qs[idx] && S.qs[idx]._correct === v) correct++;
-  }
+  let correct = 0; for(const [i,v] of Object.entries(S.answers)){ const idx = +i; if(S.qs[idx] && S.qs[idx]._correct === v) correct++; }
   const marked = Object.values(S.marked||{}).filter(Boolean).length;
   const pct = answered ? Math.round((correct/answered)*100) : 0;
 
-  // Quitar bloque previo si existe
-  const old = document.getElementById('kpis-under-quiz');
-  if(old && old.parentNode) old.parentNode.removeChild(old);
-
-  // Construir
+  const old = document.getElementById('kpis-under-quiz'); if(old && old.parentNode) old.parentNode.removeChild(old);
   const host = h('section',{id:'kpis-under-quiz',class:'kpis-under-quiz'});
   host.appendChild(h('div',{class:'kpi-card',html:`<h4>Respondidas</h4><div class="n" id="kA">${answered}</div>`}));
   host.appendChild(h('div',{class:'kpi-card',html:`<h4>Aciertos %</h4><div class="n" id="kP">${pct}%</div>`}));
   host.appendChild(h('div',{class:'kpi-card',html:`<h4>Marcadas</h4><div class="n" id="kM">${marked}</div>`}));
-
   container.insertAdjacentElement('afterend', host);
 }
 
 /* ===================== Render principal ===================== */
-
-/* --- Util: renderizar enlaces/recursos --- */
 function renderLinksBox(links){
   const list = Array.isArray(links) ? links.filter(Boolean) : [];
   if(!list.length) return null;
-
   const ul = h('ul', { class: 'link-list' });
   for(const it of list){
     let url='', label='';
@@ -510,33 +521,16 @@ function renderLinksBox(links){
     if(!url) continue;
     try{
       const u = new URL(url, location.origin);
-      const host = u.hostname.replace(/^www\./,'');
-      if(!label) label = host;
-
+      const host = u.hostname.replace(/^www\./,''); if(!label) label = host;
       const li = h('li', { class: 'link-item' });
-
-      const titleEl = document.createElement('div');
-      titleEl.className = 'link-title';
-      titleEl.textContent = `🔗 ${label}`;
-
-      const small = document.createElement('small');
-      const a = document.createElement('a');
-      a.href = u.href;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.textContent = u.href;
-      small.appendChild(a);
-
-      li.appendChild(titleEl);
-      li.appendChild(small);
-      ul.appendChild(li);
+      const titleEl = document.createElement('div'); titleEl.className = 'link-title'; titleEl.textContent = `🔗 ${label}`;
+      const small = document.createElement('small'); const a = document.createElement('a');
+      a.href = u.href; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = u.href;
+      small.appendChild(a); li.appendChild(titleEl); li.appendChild(small); ul.appendChild(li);
     }catch{}
   }
   if(!ul.children.length) return null;
-
-  const box = h('div', { class: 'refs' });
-  box.appendChild(h('h4', { html: 'Recursos y enlaces' }));
-  box.appendChild(ul);
+  const box = h('div', { class: 'refs' }); box.appendChild(h('h4', { html: 'Recursos y enlaces' })); box.appendChild(ul);
   return box;
 }
 
@@ -559,15 +553,12 @@ function renderQuiz(){
 
   const q=S.qs[S.idx];
   let expBox = null;
-
   if(!q){
     qCard.appendChild(h('div',{html:'No hay preguntas que mostrar.'}));
   }else{
     const pct=Math.round((S.idx/Math.max(1,S.qs.length))*100); fill.style.width=`${pct}%`;
-
     const domLabel = (q.category||'general') + (q.domain?` (${String(q.domain).toLowerCase()})`:'');
     qCard.appendChild(h('div',{class:'domain',html:`<i class="dot"></i><span>${domLabel}</span>`}));
-
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${S.idx+1}.</b> ${q.question}`}));
 
     (q._options||[]).forEach((txt,i)=>{
@@ -584,38 +575,32 @@ function renderQuiz(){
       expBox=h('div',{class:'expl'});
       const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
       expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
-
-      const linksBox = renderLinksBox(q.links);
-      if(linksBox) expBox.appendChild(linksBox);
-
+      const linksBox = renderLinksBox(q.links); if(linksBox) expBox.appendChild(linksBox);
       qCard.appendChild(expBox);
     }
   }
 
-  // Controles inferiores
+  // Controles
   const ctr=h('div',{class:'controls'});
-  const back=h('button',{class:'btn',html:`← Atrás <span class="keycap">B</span>`, title:'Atrás (B)'}); back.disabled=S.idx===0;
+  const back=h('button',{class:'btn',html:`← Atrás <span class="keycap">B</span>`}); back.disabled=S.idx===0;
   back.onclick=()=>{ S.idx=Math.max(0,S.idx-1); S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); };
 
-  const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} <span class="keycap">M</span>`, title:'Marcar (M)'});
+  const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} <span class="keycap">M</span>`});
   mark.onclick=()=>{ S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; saveProgress({reason:'mark'}); renderQuiz(); };
 
   const isLast = S.idx===S.qs.length-1;
   const nextLabel = isLast ? `Finalizar <span class="keycap">N</span>` : `Siguiente <span class="keycap">N</span>`;
-  const next=h('button',{class:'btn primary',html:nextLabel, title:'Siguiente (N) / Finalizar (N)'});
+  const next=h('button',{class:'btn primary',html:nextLabel});
 
   if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
 
   next.onclick=()=>{
     if(!isLast){
-      S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz();
-      return;
+      S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); return;
     }
     if(hasPendingMarked()){ toast('No puedes finalizar: hay preguntas marcadas sin responder.'); return; }
     if(S.finishLocked) return;
-    S.finishLocked = true;
-    next.disabled = true;
-    try { next.innerHTML = 'Finalizando…'; } catch {}
+    S.finishLocked = true; next.disabled = true; try { next.innerHTML = 'Finalizando…'; } catch {}
     finish();
   };
 
@@ -624,13 +609,10 @@ function renderQuiz(){
 
   // Sidebar
   const side=h('div',{class:'side'});
-
   const pBtns=h('div',{class:'panel'});
   const actions=h('div',{class:'controls centered'});
-  const btnQuit=h('button',{class:'btn lg',html:'🏠 Salir', title:'Ir al perfil'});
-  btnQuit.onclick=()=>{ saveProgress({reason:'quit'}); location.href='/user/profile.html'; };
-  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar <span class="keycap">P</span>`, title:'Pausar (P)'});
-  btnPause.onclick=()=>{ doPause(); };
+  const btnQuit=h('button',{class:'btn lg',html:'🏠 Salir'}); btnQuit.onclick=()=>{ saveProgress({reason:'quit'}); location.href='/user/profile.html'; };
+  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar <span class="keycap">P</span>`}); btnPause.onclick=()=>{ doPause(); };
   actions.appendChild(btnQuit); actions.appendChild(btnPause); pBtns.appendChild(actions); side.appendChild(pBtns);
 
   const pList=h('div',{class:'panel'});
@@ -650,17 +632,11 @@ function renderQuiz(){
   shell.appendChild(qCard); shell.appendChild(side);
   wrap.appendChild(shell); root.appendChild(wrap);
 
-  // KPIs con formato
   renderKpisBelow(wrap);
-
   enableHotkeys();
 
-  if (S._afterRenderScroll === 'explanation') {
-    const target = expBox || ctr;
-    smartScrollTo(target || qCard, 'start');
-  } else if (S._afterRenderScroll === 'question') {
-    smartScrollTo(qCard, 'start');
-  }
+  if (S._afterRenderScroll === 'explanation') smartScrollTo(expBox || ctr, 'start');
+  else if (S._afterRenderScroll === 'question') smartScrollTo(qCard, 'start');
   S._afterRenderScroll = null;
 
   window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
@@ -678,13 +654,141 @@ function onSelect(i){
   if(typeof S.answers[S.idx]!=='undefined') return;
   S.answers[S.idx]=i;
   S._afterRenderScroll='question';
-  saveProgress({reason:'answer'});
+  saveProgressNow({reason:'answer'}); // guardado inmediato
   renderQuiz();
 }
 function doPause(){
-  saveProgress({reason:'pause'});
+  saveProgressNow({reason:'pause'});
   try{ localStorage.setItem('quiz.resumeId', S.sessionId); }catch{}
   toast('Progreso guardado. Podrás reanudar (P).', 1800);
+}
+
+/* ===================== Modal de resultados (portal + inline styles) ===================== */
+function openResultsModal({correct,total,pct,byDomain}){
+  // Portal root con z-index gigante y bloqueo de scroll
+  const portal = document.createElement('div');
+  portal.setAttribute('aria-modal','true');
+  portal.setAttribute('role','dialog');
+  portal.style.position = 'fixed';
+  portal.style.left = '0'; portal.style.top = '0';
+  portal.style.right = '0'; portal.style.bottom = '0';
+  portal.style.background = 'rgba(10,12,24,.70)';
+  portal.style.display = 'flex';
+  portal.style.alignItems = 'center';
+  portal.style.justifyContent = 'center';
+  portal.style.zIndex = '2147483647';
+  portal.id = 'quizResultModal';
+
+  const body = document.body;
+  const prevOverflow = body.style.overflow;
+  body.style.overflow = 'hidden';
+
+  const card = document.createElement('div');
+  card.style.maxWidth = '760px';
+  card.style.width = 'calc(100% - 32px)';
+  card.style.background = 'linear-gradient(180deg,#10162d,#0d1330)';
+  card.style.border = '1px solid rgba(255,255,255,.12)';
+  card.style.borderRadius = '16px';
+  card.style.boxShadow = '0 24px 80px rgba(0,0,0,.65)';
+  card.style.padding = '18px';
+  card.style.color = '#eef1ff';
+  card.style.fontFamily = 'system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial';
+
+  const h3 = document.createElement('h3');
+  h3.textContent = 'Resultados del examen';
+  h3.style.margin = '0 0 12px 0';
+  h3.style.fontSize = '1.15rem';
+  h3.style.display = 'flex';
+  h3.style.alignItems = 'center';
+  const badge = document.createElement('span');
+  badge.textContent = '📘';
+  badge.style.marginRight = '8px';
+  h3.prepend(badge);
+
+  const score = document.createElement('div');
+  score.style.display = 'inline-flex';
+  score.style.alignItems = 'center';
+  score.style.gap = '10px';
+  score.style.background = '#151b3c';
+  score.style.border = '1px solid #2b3570';
+  score.style.borderRadius = '12px';
+  score.style.padding = '10px 14px';
+  score.style.fontWeight = '900';
+  score.style.margin = '4px 0 12px 0';
+  score.innerHTML = `<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
+
+  const stack = document.createElement('div');
+  // Tarjetas por dominio
+  const mkBar = (value, bg = '#0a0f27', fill = '#33e08c')=>{
+    const bar = document.createElement('div');
+    bar.style.width = '100%'; bar.style.height = '8px';
+    bar.style.background = bg; bar.style.borderRadius = '999px';
+    bar.style.position = 'relative'; bar.style.overflow = 'hidden';
+    const i = document.createElement('i');
+    i.style.position = 'absolute'; i.style.left = 0; i.style.top = 0; i.style.bottom = 0;
+    i.style.width = `${Math.max(0,Math.min(100,value))}%`;
+    i.style.background = fill;
+    bar.appendChild(i);
+    return bar;
+  };
+  const mkCard = (title, ok, tot) =>{
+    const pct = tot? Math.round((ok/tot)*100):0;
+    const box = document.createElement('div');
+    box.style.background = '#13193b';
+    box.style.border = '1px solid #2a356a';
+    box.style.borderRadius = '12px';
+    box.style.padding = '12px 14px';
+    box.style.marginTop = '10px';
+    const h = document.createElement('div');
+    h.style.fontWeight = '900'; h.style.marginBottom = '8px';
+    h.textContent = title;
+    const bar = mkBar(pct, '#0b1024', pct>=60 ? '#2bdc8c' : '#ffd24d');
+    const small = document.createElement('div');
+    small.style.marginTop = '6px'; small.style.opacity = '.9';
+    small.textContent = `${ok}/${tot} aciertos · ${pct}%`;
+    box.appendChild(h); box.appendChild(bar); box.appendChild(small);
+    return box;
+  };
+
+  // Grid responsivo
+  stack.style.display = 'grid';
+  stack.style.gridTemplateColumns = '1fr';
+  stack.style.gap = '10px';
+
+  Object.values(byDomain).forEach(d =>{
+    stack.appendChild(mkCard(d.name, d.correct, d.total));
+  });
+
+  const actions = document.createElement('div');
+  actions.style.display = 'flex';
+  actions.style.justifyContent = 'flex-end';
+  actions.style.gap = '10px';
+  actions.style.marginTop = '14px';
+
+  const bClose = document.createElement('button');
+  bClose.textContent = 'CERRAR';
+  bClose.style.border = '0';
+  bClose.style.borderRadius = '10px';
+  bClose.style.padding = '12px 18px';
+  bClose.style.fontWeight = '900';
+  bClose.style.background = 'linear-gradient(180deg,#6c8bff,#3e64ff)';
+  bClose.style.color = '#fff';
+  bClose.onclick = ()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow = prevOverflow; };
+
+  actions.appendChild(bClose);
+
+  card.appendChild(h3);
+  card.appendChild(score);
+  card.appendChild(stack);
+  card.appendChild(actions);
+
+  portal.appendChild(card);
+
+  // Cerrar al clickar fuera
+  portal.addEventListener('click', (e)=>{ if(e.target===portal) bClose.click(); });
+
+  // VERY IMPORTANT: montar en <html>, no en un contenedor transformado
+  document.documentElement.appendChild(portal);
 }
 
 /* ===================== Finalizar ===================== */
@@ -692,6 +796,7 @@ async function finish(){
   if(hasPendingMarked()){ toast('No puedes finalizar: hay marcadas sin responder.'); return; }
   if (S.finished) return;
   S.finished=true; stopTimer();
+
   const total=S.qs.length; let correct=0;
   for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
@@ -712,27 +817,12 @@ async function finish(){
     durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
   };
 
-  saveProgress({finished:true,reason:'finish'});
+  // Progreso final: status=finished e idx actual
+  saveProgressNow({finished:true,reason:'finish'});
   await saveResultRemoteOnce(result);
 
-  window.dispatchEvent(new Event('quiz:ended'));
-  window.dispatchEvent(new CustomEvent('quiz:results', {
-    detail: { score: correct, total, byDomain }
-  }));
-
-  setTimeout(()=>{
-    if (document.querySelector('#quizResultModal')) return;
-    const bd=h('div',{id:'quizResultModal',class:'qg-backdrop',style:'position:fixed;inset:0;background:rgba(10,12,24,.65);display:flex;align-items:center;justify-content:center;z-index:2147483000'});
-    const m=h('div',{class:'qg-modal',style:'max-width:680px;width:100%;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.55);padding:20px;color:var(--ink)'});
-    m.appendChild(h('h3',{html:'Resultados del examen'}));
-    m.appendChild(h('div',{html:`<div style="display:flex;gap:10px;justify-content:space-between;background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:10px 12px;margin-top:8px"><strong>Puntuación</strong><span>${correct}/${total} (${pct}%)</span></div>`}));
-    const acts=h('div',{class:'controls',style:'justify-content:flex-end'});
-    const btnP=h('button',{class:'btn',html:'👤 Perfil'}); btnP.onclick=()=>{ try{document.body.removeChild(bd);}catch{} location.href='/user/profile.html'; };
-    const btnR=h('button',{class:'btn primary',html:'🔁 Revisar'}); btnR.onclick=()=>{ try{document.body.removeChild(bd);}catch{} };
-    acts.appendChild(btnP); acts.appendChild(btnR); m.appendChild(acts); bd.appendChild(m);
-    bd.addEventListener('click',e=>{ if(e.target===bd){ try{document.body.removeChild(bd);}catch{} }});
-    document.body.appendChild(bd);
-  }, 50);
+  // Modal robusto (portal)
+  openResultsModal({correct,total,pct,byDomain});
 }
 
 /* ===================== Hotkeys ===================== */
@@ -764,6 +854,18 @@ function enableHotkeys(){
     if(Number.isInteger(n)&&n>=1&&n<=9){ const q=S.qs[S.idx]; if(q&&q._options&&q._options[n-1]!==undefined){ ev.preventDefault(); onSelect(n-1); } }
   });
 }
+
+/* ===================== Hooks ciclo de vida ===================== */
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden && S.sessionId){
+    saveProgressNow({reason:'visibility-hide', beacon:true});
+  }
+});
+window.addEventListener('beforeunload', ()=>{
+  if(S.sessionId){
+    saveProgressNow({reason:'beforeunload', beacon:true});
+  }
+});
 
 /* ===================== API PÚBLICA ===================== */
 window.start = start;
