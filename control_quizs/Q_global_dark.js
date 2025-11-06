@@ -53,7 +53,9 @@ const S = {
   savingResult: false,
   finishLocked: false,
 
-  _afterRenderScroll: null
+  _afterRenderScroll: null,
+
+  _firstProgressConfirmed: false
 };
 let __SEQ = 0;
 
@@ -65,7 +67,7 @@ const QUIZZES = {
   "az-305":      { track:"az-305-architect", certi:"Microsoft Azure Solutions Architect Expert (AZ-305)", domNames:{ D1:"Diseño de infraestructura", D2:"Datos/almacenamiento", D3:"Seguridad/identidad", D4:"BC/DR" } }
 };
 
-/* ===================== CSS del simulador ===================== */
+/* ===================== CSS base (quiz) ===================== */
 (function injectCSS(){
   const css = `
   :root{
@@ -245,12 +247,10 @@ function filterByDomains(all, tags){
 /* ===================== Usuario / progreso / resultados ===================== */
 function getUserAny(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
 
-/* ---------- Helpers de payload /progress ---------- */
+/* ---------- Helpers payload progreso ---------- */
 function buildMarkedItems(){
   const list=[]; const now=new Date().toISOString();
-  S.qs.forEach((q,i)=>{
-    if(S.marked[i]) list.push({index:i,questionId:q.questionId,domain:q.domain,markedAt:S.markTimes[i]||now});
-  });
+  S.qs.forEach((q,i)=>{ if(S.marked[i]) list.push({index:i,questionId:q.questionId,domain:q.domain,markedAt:S.markTimes[i]||now}); });
   return list;
 }
 function buildBank(){
@@ -274,7 +274,7 @@ function computePct(){ let c=0,t=S.qs.length; for(let i=0;i<t;i++){ if(S.answers
 
 function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
   const u=getUserAny()||{};
-  const status = finished ? "finished" : "in_progress"; // <-- tu lambda lo usa
+  const status = finished ? "finished" : "in_progress";
   const base={
     sessionId:S.sessionId,
     quizId:S.quizId,
@@ -287,11 +287,12 @@ function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
     updatedAt:new Date().toISOString(),
     elapsedSec:S.elapsedSec,
     timeLimit:S.timeLimit,
-    idx:S.idx,                 // <-- tu lambda espera idx
+    idx:S.idx,                 // <-- tu Lambda lo usa
     total:S.qs.length,
     pct:computePct(),
     finished:Boolean(finished),
-    status,                    // <-- y status opcional
+    status,                    // <-- y también usa este campo
+    // estado + analítica
     answers:S.answers,
     marked:S.marked,
     questionIds:S.qs.map(q=>q.questionId),
@@ -302,49 +303,84 @@ function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
   return base;
 }
 
-/* ---------- Envío a /progress con JSON + fallback form + keepalive ---------- */
-async function upsertProgress(payload, {beacon=false}={}){
+/* ---------- Cliente /progress con verificación ---------- */
+async function upsertProgressOnce(payload, {beacon=false}={}){
   try{
     if(beacon && navigator.sendBeacon){
       const blob=new Blob([JSON.stringify(payload)],{type:"application/json"});
-      if(navigator.sendBeacon(PROGRESS_URL, blob)) return;
+      if(navigator.sendBeacon(PROGRESS_URL, blob)) return {ok:true, via:'beacon'};
     }
+
+    // 1) JSON
     const r=await fetch(PROGRESS_URL,{
-      method:"POST",
-      mode:"cors",
-      keepalive:true,
+      method:"POST", mode:"cors", keepalive:true,
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify(payload)
     });
-    if(r.ok) return;
+    if(r.ok){
+      const j = await r.json().catch(()=> ({}));
+      return {ok:true, via:'json', res:j};
+    }
 
-    // Fallback form-encoded (tu parse_body lo soporta)
+    // 2) Fallback: form
     const params=new URLSearchParams();
     Object.entries(payload).forEach(([k,v])=>params.append(k, typeof v==="object" ? JSON.stringify(v) : String(v)));
     const r2=await fetch(PROGRESS_URL,{
-      method:"POST",
-      mode:"cors",
-      keepalive:true,
+      method:"POST", mode:"cors", keepalive:true,
       headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
       body:params.toString()
     });
-    if(!r2.ok){
-      const txt=await r2.text().catch(()=> "");
-      console.warn("progress upsert failed (form):", r2.status, txt);
+    if(r2.ok){
+      const j2 = await r2.json().catch(()=> ({}));
+      return {ok:true, via:'form', res:j2};
     }
+
+    const txt = await r.text().catch(()=> "");
+    console.error("[/progress] error:", r.status, txt);
+    return {ok:false, status:r.status, error:txt||'HTTP error'};
   }catch(e){
-    console.warn("progress upsert failed:", e?.message||e);
+    console.error("[/progress] exception:", e);
+    return {ok:false, error:String(e?.message||e)};
   }
 }
+
+/* Hace upsert (debounce) */
 function saveProgress({full=false,finished=false,reason='auto'}={}){
   if(S.saveDebounce) clearTimeout(S.saveDebounce);
-  S.saveDebounce=setTimeout(()=> {
-    upsertProgress(buildProgressSnapshot({full,finished,reason}));
+  S.saveDebounce=setTimeout(async ()=> {
+    const payload = buildProgressSnapshot({full,finished,reason});
+    const res = await upsertProgressOnce(payload);
+    if(res.ok && !S._firstProgressConfirmed){
+      // Verificación leyendo lo que guardamos
+      try{
+        const v = await fetch(`${PROGRESS_URL}?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
+        const j = await v.json();
+        if(j && j.item && j.item.sessionId===S.sessionId){
+          S._firstProgressConfirmed = true;
+          toast("✓ Progreso guardado");
+          console.log("[/progress] verificado:", j.item);
+        }
+      }catch{}
+    }
     S.hasInitialUpsert=true;
-  }, 200);
+  }, 220);
 }
-function saveProgressNow({full=false,finished=false,reason='immediate',beacon=false}={}){
-  upsertProgress(buildProgressSnapshot({full,finished,reason}), {beacon});
+
+/* Hace upsert inmediato (sin debounce) */
+async function saveProgressNow({full=false,finished=false,reason='immediate',beacon=false}={}){
+  const payload = buildProgressSnapshot({full,finished,reason});
+  const res = await upsertProgressOnce(payload, {beacon});
+  if(res.ok && !S._firstProgressConfirmed){
+    try{
+      const v = await fetch(`${PROGRESS_URL}?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
+      const j = await v.json();
+      if(j && j.item && j.item.sessionId===S.sessionId){
+        S._firstProgressConfirmed = true;
+        toast("✓ Progreso guardado");
+        console.log("[/progress] verificado:", j.item);
+      }
+    }catch{}
+  }
   S.hasInitialUpsert=true;
 }
 
@@ -473,8 +509,8 @@ async function start(quizId="aws-saa-c03", overrides={}){
     renderQuiz();
     startTimer();
 
-    // Upsert inicial completo
-    saveProgressNow({full:true,reason:'start'});
+    // Upsert inicial (completo)
+    await saveProgressNow({full:true,reason:'start'});
 
     window.dispatchEvent(new Event('quiz:started'));
     const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
@@ -663,131 +699,29 @@ function doPause(){
   toast('Progreso guardado. Podrás reanudar (P).', 1800);
 }
 
-/* ===================== Modal de resultados (portal + inline styles) ===================== */
+/* ===================== Modal (ya confirmado OK) ===================== */
 function openResultsModal({correct,total,pct,byDomain}){
-  // Portal root con z-index gigante y bloqueo de scroll
   const portal = document.createElement('div');
-  portal.setAttribute('aria-modal','true');
-  portal.setAttribute('role','dialog');
-  portal.style.position = 'fixed';
-  portal.style.left = '0'; portal.style.top = '0';
-  portal.style.right = '0'; portal.style.bottom = '0';
-  portal.style.background = 'rgba(10,12,24,.70)';
-  portal.style.display = 'flex';
-  portal.style.alignItems = 'center';
-  portal.style.justifyContent = 'center';
-  portal.style.zIndex = '2147483647';
-  portal.id = 'quizResultModal';
-
-  const body = document.body;
-  const prevOverflow = body.style.overflow;
-  body.style.overflow = 'hidden';
-
-  const card = document.createElement('div');
-  card.style.maxWidth = '760px';
-  card.style.width = 'calc(100% - 32px)';
-  card.style.background = 'linear-gradient(180deg,#10162d,#0d1330)';
-  card.style.border = '1px solid rgba(255,255,255,.12)';
-  card.style.borderRadius = '16px';
-  card.style.boxShadow = '0 24px 80px rgba(0,0,0,.65)';
-  card.style.padding = '18px';
-  card.style.color = '#eef1ff';
-  card.style.fontFamily = 'system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial';
-
-  const h3 = document.createElement('h3');
-  h3.textContent = 'Resultados del examen';
-  h3.style.margin = '0 0 12px 0';
-  h3.style.fontSize = '1.15rem';
-  h3.style.display = 'flex';
-  h3.style.alignItems = 'center';
-  const badge = document.createElement('span');
-  badge.textContent = '📘';
-  badge.style.marginRight = '8px';
-  h3.prepend(badge);
-
-  const score = document.createElement('div');
-  score.style.display = 'inline-flex';
-  score.style.alignItems = 'center';
-  score.style.gap = '10px';
-  score.style.background = '#151b3c';
-  score.style.border = '1px solid #2b3570';
-  score.style.borderRadius = '12px';
-  score.style.padding = '10px 14px';
-  score.style.fontWeight = '900';
-  score.style.margin = '4px 0 12px 0';
-  score.innerHTML = `<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
-
-  const stack = document.createElement('div');
-  // Tarjetas por dominio
-  const mkBar = (value, bg = '#0a0f27', fill = '#33e08c')=>{
-    const bar = document.createElement('div');
-    bar.style.width = '100%'; bar.style.height = '8px';
-    bar.style.background = bg; bar.style.borderRadius = '999px';
-    bar.style.position = 'relative'; bar.style.overflow = 'hidden';
-    const i = document.createElement('i');
-    i.style.position = 'absolute'; i.style.left = 0; i.style.top = 0; i.style.bottom = 0;
-    i.style.width = `${Math.max(0,Math.min(100,value))}%`;
-    i.style.background = fill;
-    bar.appendChild(i);
-    return bar;
-  };
-  const mkCard = (title, ok, tot) =>{
-    const pct = tot? Math.round((ok/tot)*100):0;
-    const box = document.createElement('div');
-    box.style.background = '#13193b';
-    box.style.border = '1px solid #2a356a';
-    box.style.borderRadius = '12px';
-    box.style.padding = '12px 14px';
-    box.style.marginTop = '10px';
-    const h = document.createElement('div');
-    h.style.fontWeight = '900'; h.style.marginBottom = '8px';
-    h.textContent = title;
-    const bar = mkBar(pct, '#0b1024', pct>=60 ? '#2bdc8c' : '#ffd24d');
-    const small = document.createElement('div');
-    small.style.marginTop = '6px'; small.style.opacity = '.9';
-    small.textContent = `${ok}/${tot} aciertos · ${pct}%`;
-    box.appendChild(h); box.appendChild(bar); box.appendChild(small);
-    return box;
-  };
-
-  // Grid responsivo
-  stack.style.display = 'grid';
-  stack.style.gridTemplateColumns = '1fr';
-  stack.style.gap = '10px';
-
-  Object.values(byDomain).forEach(d =>{
-    stack.appendChild(mkCard(d.name, d.correct, d.total));
-  });
-
-  const actions = document.createElement('div');
-  actions.style.display = 'flex';
-  actions.style.justifyContent = 'flex-end';
-  actions.style.gap = '10px';
-  actions.style.marginTop = '14px';
-
-  const bClose = document.createElement('button');
-  bClose.textContent = 'CERRAR';
-  bClose.style.border = '0';
-  bClose.style.borderRadius = '10px';
-  bClose.style.padding = '12px 18px';
-  bClose.style.fontWeight = '900';
-  bClose.style.background = 'linear-gradient(180deg,#6c8bff,#3e64ff)';
-  bClose.style.color = '#fff';
-  bClose.onclick = ()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow = prevOverflow; };
-
-  actions.appendChild(bClose);
-
-  card.appendChild(h3);
-  card.appendChild(score);
-  card.appendChild(stack);
-  card.appendChild(actions);
-
-  portal.appendChild(card);
-
-  // Cerrar al clickar fuera
+  portal.setAttribute('aria-modal','true'); portal.setAttribute('role','dialog');
+  portal.style.position='fixed'; portal.style.inset='0'; portal.style.background='rgba(10,12,24,.70)';
+  portal.style.display='flex'; portal.style.alignItems='center'; portal.style.justifyContent='center';
+  portal.style.zIndex='2147483647'; portal.id='quizResultModal';
+  const body=document.body; const prevOverflow=body.style.overflow; body.style.overflow='hidden';
+  const card=document.createElement('div');
+  card.style.maxWidth='760px'; card.style.width='calc(100% - 32px)'; card.style.background='linear-gradient(180deg,#10162d,#0d1330)';
+  card.style.border='1px solid rgba(255,255,255,.12)'; card.style.borderRadius='16px'; card.style.boxShadow='0 24px 80px rgba(0,0,0,.65)';
+  card.style.padding='18px'; card.style.color='#eef1ff'; card.style.fontFamily='system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial';
+  const h3=document.createElement('h3'); h3.textContent='Resultados del examen'; h3.style.margin='0 0 12px 0'; h3.style.fontSize='1.15rem';
+  const score=document.createElement('div'); score.style.display='inline-flex'; score.style.gap='10px'; score.style.background='#151b3c'; score.style.border='1px solid #2b3570'; score.style.borderRadius='12px'; score.style.padding='10px 14px'; score.style.fontWeight='900'; score.style.margin='4px 0 12px 0'; score.innerHTML=`<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
+  const stack=document.createElement('div'); stack.style.display='grid'; stack.style.gridTemplateColumns='1fr'; stack.style.gap='10px';
+  const mkBar=(value)=>{ const bar=document.createElement('div'); bar.style.width='100%'; bar.style.height='8px'; bar.style.background='#0b1024'; bar.style.borderRadius='999px'; bar.style.position='relative'; bar.style.overflow='hidden'; const i=document.createElement('i'); i.style.position='absolute'; i.style.left=0; i.style.top=0; i.style.bottom=0; i.style.width=`${Math.max(0,Math.min(100,value))}%`; i.style.background='#2bdc8c'; bar.appendChild(i); return bar; };
+  const mkCard=(title, ok, tot)=>{ const pct=tot? Math.round((ok/tot)*100):0; const box=document.createElement('div'); box.style.background='#13193b'; box.style.border='1px solid #2a356a'; box.style.borderRadius='12px'; box.style.padding='12px 14px'; box.style.marginTop='10px'; const h=document.createElement('div'); h.style.fontWeight='900'; h.style.marginBottom='8px'; h.textContent=title; const bar=mkBar(pct); const small=document.createElement('div'); small.style.marginTop='6px'; small.style.opacity='.9'; small.textContent=`${ok}/${tot} aciertos · ${pct}%`; box.appendChild(h); box.appendChild(bar); box.appendChild(small); return box; };
+  const cfg = QUIZZES[S.quizId] || {};
+  Object.entries((()=>{ const by={}; S.qs.forEach((q,i)=>{ const code=q.domain||'D?'; if(!by[code]) by[code]={ name:(cfg.domNames&&cfg.domNames[code])||code, correct:0, total:0 }; by[code].total++; if(S.answers[i]===q._correct) by[code].correct++; }); return by; })()).forEach(([,d])=> stack.appendChild(mkCard(d.name,d.correct,d.total)));
+  const actions=document.createElement('div'); actions.style.display='flex'; actions.style.justifyContent='flex-end'; actions.style.gap='10px'; actions.style.marginTop='14px';
+  const bClose=document.createElement('button'); bClose.textContent='CERRAR'; bClose.style.border='0'; bClose.style.borderRadius='10px'; bClose.style.padding='12px 18px'; bClose.style.fontWeight='900'; bClose.style.background='linear-gradient(180deg,#6c8bff,#3e64ff)'; bClose.style.color='#fff'; bClose.onclick=()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow=prevOverflow; };
+  actions.appendChild(bClose); card.appendChild(h3); card.appendChild(score); card.appendChild(stack); card.appendChild(actions); portal.appendChild(card);
   portal.addEventListener('click', (e)=>{ if(e.target===portal) bClose.click(); });
-
-  // VERY IMPORTANT: montar en <html>, no en un contenedor transformado
   document.documentElement.appendChild(portal);
 }
 
@@ -801,15 +735,6 @@ async function finish(){
   for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
 
-  const cfg = QUIZZES[S.quizId] || {};
-  const byDomain = {};
-  S.qs.forEach((q,idx)=>{
-    const code = q.domain || 'D?';
-    if(!byDomain[code]) byDomain[code] = { name: (cfg.domNames && cfg.domNames[code]) || code, correct:0, total:0 };
-    byDomain[code].total++;
-    if(S.answers[idx]===q._correct) byDomain[code].correct++;
-  });
-
   const result={
     ts:new Date().toISOString(),
     quizId:S.quizId, track:S.track||'architect', mode:S.mode||'exam',
@@ -817,12 +742,9 @@ async function finish(){
     durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
   };
 
-  // Progreso final: status=finished e idx actual
-  saveProgressNow({finished:true,reason:'finish'});
+  await saveProgressNow({finished:true,reason:'finish'});
   await saveResultRemoteOnce(result);
-
-  // Modal robusto (portal)
-  openResultsModal({correct,total,pct,byDomain});
+  openResultsModal({correct,total,pct});
 }
 
 /* ===================== Hotkeys ===================== */

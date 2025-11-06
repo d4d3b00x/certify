@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#0f1320" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+
+
+  <title>Azure AD / Entra ID para Administradores (AZ-104) | ITHub.es</title>
+  <meta name="description" content="Guía práctica de identidad en Azure para AZ-104: RBAC, PIM, Managed Identities, Key Vault y acceso seguro." />
+  <meta name="keywords" content="AZ-104, Azure AD, Entra ID, RBAC, PIM, Key Vault, Managed Identity" />
+  <meta name="author" content="ITHub.es" />
+  <link rel="canonical" href="https://beta.ithub.es/content/azure-identity-az104.html" />
+  <meta property="og:title" content="Azure AD / Entra ID para Administradores (AZ-104) | ITHub.es" />
+  <meta property="og:description" content="Guía práctica de identidad en Azure para AZ-104: RBAC, PIM, Managed Identities, Key Vault y acceso seguro." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://beta.ithub.es/content/azure-identity-az104.html" />
+  <meta property="og:site_name" content="ITHub.es" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+
+<style>
+:root{
+  --bg:#0f1320;--surface:#121831;--surface2:#1a2142;--ink:#ecf2ff;--muted:#a8b1d9;--stroke:#2a3561;
+  --azure:#0078d4;--aws:#ff9900;--multi:#6c8bff;--ok:#34d399;--warn:#fbbf24;--bad:#f87171;
+  --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+.container{max-width:1100px;margin:0 auto;padding:18px 20px}
+header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,rgba(15,19,32,.95),rgba(15,19,32,.65));backdrop-filter:blur(8px);border-bottom:1px solid var(--stroke)}
+.nav{height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;gap:10px;align-items:center;font-weight:900;text-transform:uppercase}
+.logo img{height:36px}
+.btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:800;text-decoration:none}
+.btn:hover{border-color:#3c4a86}
+main{padding:10px 0 40px}
+.hero{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.badges{display:flex;gap:8px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);background:var(--surface2);font-weight:900;font-size:.82rem}
+.badge.azure{border-color:rgba(0,120,212,.5);background:rgba(0,120,212,.15)}
+.badge.aws{border-color:rgba(255,153,0,.5);background:rgba(255,153,0,.15)}
+.badge.multi{border-color:rgba(108,139,255,.5);background:rgba(108,139,255,.2)}
+.toc{position:sticky;top:70px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:12px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:16px}
+@media(min-width:980px){.grid{grid-template-columns:280px 1fr}}
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+h1{font-size:clamp(1.6rem,2.8vw,2.2rem);margin:0}
+h2{margin:18px 0 6px;font-size:1.2rem}
+pre,code{background:#0b1225;color:#dce6ff;border:1px solid #24305c;border-radius:10px}
+pre{padding:12px;overflow:auto}
+.callout{border-left:4px solid var(--ok);padding:10px 12px;background:rgba(52,211,153,.08);border-radius:8px}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+a.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:linear-gradient(180deg,#7a67ff,#5f48ff);color:#fff;font-weight:900;text-decoration:none}
+footer{border-top:1px solid var(--stroke);padding:18px 0;color:#9ca8d9}
+hr{border-color:#22305b}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <div class="logo">
+      <img src="/assets/ithub-logo.svg" alt="ITHub">
+      <span>ITHub.es</span>
+    </div>
+    <nav>
+      <a class="btn" href="/">Home</a>
+      <a class="btn" href="/content/content.html">Contenidos</a>
+      <a class="btn" href="/score/ranking.html">Ranking</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <h1>Azure AD / Entra ID para Administradores (AZ-104)</h1>
+    <p class="muted">Configura identidades, roles, PIM y acceso a recursos Azure con seguridad y mínimo privilegio.</p>
+    <div class="badges"><span class="badge azure">AZ-104</span><span class="badge azure">Azure</span></div>
+  </section>
+  <div class="grid">
+    <aside class="toc">
+      <strong>Índice</strong>
+      <ol>
+        <li><a href="#sec1">Modelo de identidad y RBAC</a></li><li><a href="#sec2">Privileged Identity Management</a></li><li><a href="#sec3">Managed Identities y Key Vault</a></li><li><a href="#sec4">Acceso condicional y MFA</a></li><li><a href="#sec5">Gobernanza y auditoría</a></li>
+      </ol>
+      <div class="cta">
+        <a class="cta-btn" href="/">Ir al simulador</a>
+      </div>
+    </aside>
+    <article class="card azure">
+      <h2 id="sec1">Modelo de identidad y RBAC</h2>
+<p>Configura identidades, roles, PIM y acceso a recursos Azure con seguridad y mínimo privilegio. — Sección: <strong>Modelo de identidad y RBAC</strong>. Enfócate en cómo se pregunta en el examen AZ-104 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre modelo de identidad y rbac.</li><li>Punto clave sobre modelo de identidad y rbac.</li><li>Punto clave sobre modelo de identidad y rbac.</li></ul>
+<hr />
+<h2 id="sec2">Privileged Identity Management</h2>
+<p>Configura identidades, roles, PIM y acceso a recursos Azure con seguridad y mínimo privilegio. — Sección: <strong>Privileged Identity Management</strong>. Enfócate en cómo se pregunta en el examen AZ-104 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre privileged identity management.</li><li>Punto clave sobre privileged identity management.</li><li>Punto clave sobre privileged identity management.</li></ul>
+<hr />
+<h2 id="sec3">Managed Identities y Key Vault</h2>
+<p>Configura identidades, roles, PIM y acceso a recursos Azure con seguridad y mínimo privilegio. — Sección: <strong>Managed Identities y Key Vault</strong>. Enfócate en cómo se pregunta en el examen AZ-104 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre managed identities y key vault.</li><li>Punto clave sobre managed identities y key vault.</li><li>Punto clave sobre managed identities y key vault.</li></ul>
+<hr />
+<h2 id="sec4">Acceso condicional y MFA</h2>
+<p>Configura identidades, roles, PIM y acceso a recursos Azure con seguridad y mínimo privilegio. — Sección: <strong>Acceso condicional y MFA</strong>. Enfócate en cómo se pregunta en el examen AZ-104 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre acceso condicional y mfa.</li><li>Punto clave sobre acceso condicional y mfa.</li><li>Punto clave sobre acceso condicional y mfa.</li></ul>
+<hr />
+<h2 id="sec5">Gobernanza y auditoría</h2>
+<p>Configura identidades, roles, PIM y acceso a recursos Azure con seguridad y mínimo privilegio. — Sección: <strong>Gobernanza y auditoría</strong>. Enfócate en cómo se pregunta en el examen AZ-104 y en decisiones de diseño reales.</p><ul><li>Punto clave sobre gobernanza y auditoría.</li><li>Punto clave sobre gobernanza y auditoría.</li><li>Punto clave sobre gobernanza y auditoría.</li></ul>
+<hr />
+
+<div class="callout">
+  <strong>Tips de examen:</strong> Conoce la diferencia entre RBAC (Azure) y permisos dentro de servicios PaaS. PIM aparece en preguntas de elevación just-in-time.
+</div>
+
+    </article>
+  </div>
+</main>
+
+<footer>
+  <div class="container">© 2025 ITHub.es — Aprende, practica y aprueba.</div>
+</footer>
+
+</body>
+</html>

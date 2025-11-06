@@ -14,199 +14,265 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
 
-  <title>AWS · VPC Alta disponibilidad (SAA-C03) — Guía completa | ITHub.es</title>
-  <meta name="description" content="Diseño de VPC de alta disponibilidad para SAA-C03: subredes Multi-AZ, NAT por AZ, balanceadores (ALB/NLB), rutas resilientes y pruebas. Guía práctica con patrones de examen." />
-  <meta name="keywords" content="AWS, SAA-C03, VPC, alta disponibilidad, Multi-AZ, NAT Gateway, ALB, NLB, rutas, resiliencia, arquitectura AWS, examen AWS" />
-  <link rel="canonical" href="https://beta.ithub.es/content/aws-vpc-ha.html" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="AWS · VPC Alta disponibilidad (SAA-C03) — Guía completa | ITHub.es" />
-  <meta property="og:description" content="Todo lo que necesitas para diseñar VPC altamente disponible en AWS para el examen SAA-C03." />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://beta.ithub.es/content/aws-vpc-ha.html" />
-  <meta property="og:site_name" content="ITHub.es" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="AWS · VPC Alta disponibilidad (SAA-C03) — Guía completa" />
-  <meta name="twitter:description" content="Guía práctica de HA en VPC: subredes, NAT por AZ, balanceo y rutas resilientes." />
+  <title>Contenidos de Estudio — Certificaciones AZ-104, AZ-305 y SAA-C03 | ITHub.es</title>
+  <meta name="description" content="Explora guías prácticas para aprobar AZ-104, AZ-305 y SAA-C03. Filtra por examen y proveedor, estudia con contenido de calidad y domina Azure y AWS." />
+  <meta name="keywords" content="Azure, AWS, AZ-104, AZ-305, SAA-C03, contenidos, guías, preparación examen, simuladores, ITHub" />
+  <meta name="author" content="ITHub.es" />
+  <link rel="canonical" href="https://beta.ithub.es/content/content.html" />
 
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-      --aws:#ff9900;--aws-tint:rgba(255,153,0,.14);--aws-border:rgba(255,153,0,.55);
-      --brand:#6c8bff;--ok:#3ad97a;--warn:#ffd66b;--bad:#ff6b6b;
+      --azure:#0078d4; --azure-tint: rgba(0,120,212,.22); --azure-border: rgba(0,120,212,.75);
+      --aws:#ff9900;   --aws-tint:   rgba(255,153,0,.14); --aws-border:   rgba(255,153,0,.70);
+      --multi:#6c8bff; --multi-tint: rgba(108,139,255,.16); --multi-border: rgba(108,139,255,.70);
       --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45)
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-    a{color:#cfe1ff;text-decoration:none}
-    a:hover{text-decoration:underline;text-underline-offset:3px}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
-
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
-      background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));
-      border-bottom:1px solid var(--stroke)}
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-    .brand img{height:42px}
-
-    main{padding:22px 0 40px}
-    .grid{display:grid;gap:18px}
-    @media(min-width:980px){ .grid{ grid-template-columns: 320px 1fr; } }
-
-    /* === HERO / badges === */
-    .hero{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--aws-border);
-      border-radius:16px;padding:18px;box-shadow:var(--shadow)}
-    .title{margin:0 0 6px;font-size:clamp(1.4rem,3.4vw,2.1rem)}
-    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .badge{display:inline-flex;align-items:center;gap:6px;font-weight:800;
-      padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:var(--surface2);font-size:.82rem}
-    .badge.aws{border-color:var(--aws-border);background:var(--aws-tint);color:#ffe7c2}
-    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;border:1px solid var(--aws-border);background:var(--aws-tint);font-weight:900}
-
-    /* === MODERNO: Tarjeta de índice (ToC) === */
-    .toc-card{
-      position:sticky; top:88px;
-      background:linear-gradient(180deg,#121a37,#0f1633);
-      border:1px solid var(--aws-border);
-      border-radius:16px;padding:16px;box-shadow:var(--shadow)
-    }
-    .toc-title{margin:0 0 10px;font-size:1.02rem;color:#eaefff}
-    .toc-list{list-style:none; margin:0; padding:4px 0 0; counter-reset: toc;}
-    .toc-item{
-      position:relative; padding:10px 10px 10px 46px; margin:2px 0;
-      border-radius:12px; transition:background .15s ease, border-color .15s ease;
-      border:1px solid transparent;
-    }
-    .toc-item::before{
-      counter-increment: toc; content: counter(toc);
-      position:absolute; left:10px; top:50%; transform:translateY(-50%);
-      width:26px; height:26px; border-radius:999px;
-      display:grid; place-items:center; font-weight:900; font-size:.82rem;
-      color:#1a223d; background:#ffd188;
-    }
-    /* línea guía sutil */
-    .toc-item::after{
-      content:""; position:absolute; left:22px; top:32px; bottom:-8px; width:2px;
-      background:linear-gradient(180deg, rgba(255,209,136,.4), rgba(255,209,136,0));
-      pointer-events:none;
-    }
-    .toc-item:last-child::after{ display:none; }
-    .toc-item a{ display:block; color:#e8ecff; }
-    .toc-item:hover{ background:rgba(255,153,0,.08); border-color:rgba(255,153,0,.25); }
-    .toc-item a:hover{ text-decoration:none; }
-
-    /* === Contenido === */
-    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
-      border-radius:16px;padding:18px;box-shadow:var(--shadow)}
-    h2{margin:0 0 8px;font-size:1.25rem}
+    .brand img.site-logo{height:42px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
+    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c);border:1px solid #2a3150;border-radius:999px;padding:4px;box-shadow:0 6px 18px rgba(5,10,30,.35);max-height:44px}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7a67ff,#5f48ff);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s,background .12s;font-size:13px;text-transform:uppercase}
+    .pill-btn:hover{transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase}
+    .btn:hover{border-color:#3a4580}
+    main{padding:18px 0 10px}
+    .hero-page{padding:18px 0 6px}
+    .hero-page h1{margin:0 0 4px;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2}
     .muted{color:var(--muted)}
-    .note{border-left:4px solid var(--aws-border); background:rgba(255,153,0,.07); padding:10px 12px; border-radius:8px}
-    ul{padding-left:18px}
-    code{background:#0b1225; padding:2px 6px; border-radius:6px; border:1px solid #253059}
-    .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:10px 0}
-    .kpi .box{background:#0b1225;border:1px solid #27335a;border-radius:12px;padding:10px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+    .input{border:1px solid var(--stroke);border-radius:10px;background:#0b1225;color:var(--ink);padding:10px;min-width:280px;font-weight:700;appearance:none}
+    select.input{min-width:200px;background-image:linear-gradient(45deg,transparent 50%, #9ca8d9 50%),linear-gradient(135deg,#9ca8d9 50%, transparent 50%);background-position:calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:36px}
+
+    .grid{display:grid;gap:14px}
+    @media(min-width:860px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+
+    /* Tarjeta */
+    .card{
+      background:linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid var(--stroke);
+      border-radius:16px;
+      padding:14px;
+      box-shadow:var(--shadow);
+      display:flex;flex-direction:column;gap:10px
+    }
+    .card h3{margin:0;font-size:1.05rem}
+
+    /* Borde + fondo por proveedor */
+    .card.azure{ border-color:var(--azure-border); background: linear-gradient(180deg, rgba(13,21,40,1) 0%, var(--azure-tint) 100%); }
+    .card.aws  { border-color:var(--aws-border);   background: linear-gradient(180deg, rgba(13,21,40,1) 0%, var(--aws-tint)   100%); }
+    .card.multi{ border-color:var(--multi-border); background: linear-gradient(180deg, rgba(13,21,40,1) 0%, var(--multi-tint) 100%); }
+
+    /* Badges */
+    .badges{display:flex;gap:6px;flex-wrap:wrap}
+    .badge{display:inline-flex;gap:6px;align-items:center;font-weight:900;padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;background:var(--surface2);font-size:.8rem}
+    .badge.azure{ border-color:var(--azure-border); background:var(--azure-tint); color:#e8f4ff; }
+    .badge.aws  { border-color:var(--aws-border);   background:var(--aws-tint);   color:#ffe7c2; }
+    .badge.multi{ border-color:var(--multi-border); background:var(--multi-tint); color:#e9ebff; }
+
+    /* Botón pequeño en tarjetas */
+    .card .pill-btn{
+      min-width:76px; min-height:32px; height:32px; padding:0 12px;
+      font-size:12px; border-radius:10px;
+      background:linear-gradient(180deg,#7e73ff,#6b5cff);
+    }
+
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+    .f-grid{display:grid;gap:14px}
+    @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+    footer a{color:#cfe1ff}
+    footer a:hover{text-decoration:underline}
   </style>
 </head>
 <body>
 <header role="banner">
   <div class="container nav">
     <div class="brand">
-      <img src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-      <span>ITHub.es</span>
+      <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
     </div>
-    <nav class="menu" aria-label="Navegación principal" style="display:flex;gap:12px;color:#9ca8d9;font-weight:800;text-transform:uppercase">
-      <a class="badge" href="/" style="background:#0b1225;border:1px solid #27335a">HOME</a>
-      <a class="badge" href="/content/content.html" style="background:#0b1225;border:1px solid #27335a">CONTENIDOS</a>
-      <a class="badge" href="/score/ranking.html" style="background:#0b1225;border:1px solid #27335a">RANKING</a>
+    <nav class="menu" aria-label="Navegación principal">
+      <a class="link-btn" href="/">HOME</a>
+      <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
+      <a class="link-btn" href="/score/ranking.html">RANKING</a>
     </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
+    </div>
   </div>
 </header>
 
-<main>
-  <div class="container grid">
-    <!-- Índice (moderno) -->
-    <aside class="toc-card">
-      <div class="toc-title">Índice</div>
-      <nav aria-label="Índice de la guía">
-        <ol class="toc-list">
-          <li class="toc-item"><a href="#subredes">Diseño de subredes por AZ</a></li>
-          <li class="toc-item"><a href="#nat">NAT por AZ (anti-single point)</a></li>
-          <li class="toc-item"><a href="#balancers">Balanceadores y HA (ALB/NLB)</a></li>
-          <li class="toc-item"><a href="#rutas">Rutas, TGW y resiliencia</a></li>
-          <li class="toc-item"><a href="#monitor">Monitoreo, pruebas y costes</a></li>
-        </ol>
-      </nav>
-    </aside>
-
-    <!-- Contenido -->
-    <section>
-      <article class="hero">
-        <h1 class="title">AWS · VPC Alta disponibilidad (SAA-C03)</h1>
-        <p class="muted">Cómo diseñar VPC resilientes: subredes Multi-AZ, NAT por zona, ALB/NLB, rutas tolerantes a fallos y validaciones típicas del examen.</p>
-        <div class="badges">
-          <span class="badge aws">SAA-C03</span>
-          <span class="badge aws">AWS</span>
-          <span class="badge">Nivel: Intermedio</span>
-        </div>
-      </article>
-
-      <article id="subredes" class="card">
-        <h2>1) Diseño de subredes por AZ</h2>
-        <p>En una VPC de producción, crea subredes emparejadas por cada <b>Availability Zone</b> (&quot;privadas&quot; para workloads y &quot;públicas&quot; sólo si necesitas entrada directa). Recomendación:</p>
-        <ul>
-          <li>Al menos <b>2 AZ</b> (mejor 3 cuando el servicio lo soporte).</li>
-          <li>Subredes privadas para instancias/containers; públicas únicamente para <i>ingress</i> (ALB/NLB) o endpoints específicos.</li>
-          <li>Bloques CIDR no solapados y margen para crecimiento (usa /24 o /23 según el caso).</li>
-        </ul>
-        <div class="note"><b>Tip de examen:</b> “Alta disponibilidad” ≠ “Multi-Region” por defecto. En SAA-C03, <b>Multi-AZ</b> suele ser la respuesta base salvo requisitos de DR.</div>
-      </article>
-
-      <article id="nat" class="card">
-        <h2>2) NAT por AZ (evitar single point)</h2>
-        <p>Para acceso saliente a Internet desde subredes privadas, implementa <b>NAT Gateway por AZ</b> y asocia cada ruta privada con el NAT de su misma AZ.</p>
-        <div class="kpi">
-          <div class="box"><b>Disponibilidad:</b><br>Si un AZ falla, el otro NAT sigue operativo.</div>
-          <div class="box"><b>Coste:</b><br>Más caro que 1 NAT, pero es el patrón de <i>best practice</i> y el preferido en el examen.</div>
-          <div class="box"><b>Rutas:</b><br>Tabla por subred → <code>0.0.0.0/0 → nat-azX</code></div>
-        </div>
-        <div class="note"><b>Preguntas trampa:</b> “¿Una sola NAT para reducir costes?” — rompe HA. “¿Instance NAT antigua?” — <b>no</b>, usa <b>NAT Gateway</b>.</div>
-      </article>
-
-      <article id="balancers" class="card">
-        <h2>3) Balanceadores y HA (ALB/NLB)</h2>
-        <ul>
-          <li><b>ALB</b> (L7): rutas por host/path, sticky, WebSockets, WAF. Ideal web/app.</li>
-          <li><b>NLB</b> (L4): millones de RPS, TCP/UDP, soporte TLS passthrough. Ideal tráfico de red/IoT/servicios internos.</li>
-          <li>Despliega el LB en <b>múltiples AZ</b> con <b>target groups</b> por AZ y <b>health checks</b> estrictos.</li>
-          <li>Para servicios privados, considera <b>NLB + PrivateLink</b> para consumo cross-account.</li>
-        </ul>
-        <div class="note"><b>Tip:</b> Para ALB privado + EKS/ECS, usa <i>ingress controllers</i> administrados, evita exponer nodos directamente.</div>
-      </article>
-
-      <article id="rutas" class="card">
-        <h2>4) Rutas, TGW y resiliencia</h2>
-        <p>En entornos multi-VPC, usa <b>Transit Gateway</b> (TGW) y evita <i>spaghetti peering</i>. Reglas clave:</p>
-        <ul>
-          <li>Usa <b>route tables separadas</b> por zona/función; explícitas para tráfico a on-prem y servicios.</li>
-          <li>Para <b>egress centralizado</b>, enruta 0.0.0.0/0 de VPC spoke al TGW y de ahí al egress VPC con inspección.</li>
-          <li>Endpoints <b>Gateway</b> (S3/DynamoDB) reducen latencia y coste; los <b>Interface</b> + PrivateLink para PaaS y servicios propios.</li>
-        </ul>
-      </article>
-
-      <article id="monitor" class="card">
-        <h2>5) Monitoreo, pruebas y costes</h2>
-        <ul>
-          <li><b>CloudWatch</b>: métricas de NLB/ALB, NAT, ENI; alarmas por HC fallidos.</li>
-          <li><b>VPC Reachability Analyzer</b>: valida conectividad entre origen/destino.</li>
-          <li><b>VPC Flow Logs</b>: diagnostica denegaciones (útil en preguntas de examen).</li>
-          <li><b>Costes</b>: NAT por AZ + NLB suele ser más caro que ALB, pero es el patrón de HA. Usa <b>cost allocation tags</b>.</li>
-        </ul>
-        <div class="note"><b>Checklist examen:</b> Multi-AZ en subredes y LBs, NAT por AZ, TGW para mallas grandes, endpoints adecuados y monitoreo activo.</div>
-      </article>
-    </section>
+<main id="main" tabindex="-1">
+  <div class="container hero-page">
+    <h1>Contenidos de estudio</h1>
+    <p class="muted">
+      <strong>Convierte tu estudio en una misión de éxito.</strong>
+      Estas guías condensan lo esencial de cada examen: <b>teoría</b>, <b>práctica</b> y <b>tips reales</b> de profesionales certificados.
+      Avanza a tu ritmo, explora los temas clave y <b>prepárate para destacar</b> en <b>Azure</b> y <b>AWS</b>. Usa los filtros para encontrar lo que necesitas.
+    </p>
+    <div class="controls">
+      <input id="q" class="input" placeholder="Buscar por título o palabras clave…">
+      <select id="exam" class="input">
+        <option value="">Filtrar por examen</option>
+        <option value="AZ-104">AZ-104</option>
+        <option value="AZ-305">AZ-305</option>
+        <option value="SAA-C03">SAA-C03</option>
+      </select>
+      <select id="vendor" class="input">
+        <option value="">Proveedor</option>
+        <option value="Azure">Azure</option>
+        <option value="AWS">AWS</option>
+      </select>
+    </div>
   </div>
+  <div class="container grid cols-3" id="cards"></div>
 </main>
+
+<footer role="contentinfo">
+  <div class="container f-grid">
+    <div>
+      <div class="brand" style="text-transform:none">
+        <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+        <span>ITHub.es</span>
+      </div>
+      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
+    </div>
+    <div>
+      <div style="font-weight:800">Simuladores</div>
+      <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a></div>
+      <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a></div>
+      <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a></div>
+    </div>
+    <div>
+      <div style="font-weight:800">Contenidos</div>
+      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+      <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+      <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
+      <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
+      <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
+    </div>
+    <div>
+      <div style="font-weight:800">Colaborador</div>
+      💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
+      <div style="font-weight:800">Contacto</div>
+      <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;margin-top:6px;"> 💬 <span>Contáctanos</span> </button>
+    </div>
+  </div>
+  <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+</footer>
+
+<div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  function getCurrentUser(){
+    try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; }
+  }
+  function renderHeaderAuth(){
+    const u=getCurrentUser();
+    const login=document.getElementById('btnLogin');
+    const signup=document.getElementById('btnSignup');
+    const userArea=document.getElementById('userArea');
+    const nameTop=document.getElementById('userNameTop');
+    if(u){
+      login.style.display='none'; signup.style.display='none'; userArea.style.display='flex';
+      nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+      document.getElementById('btnLogout')?.addEventListener('click',()=>{
+        localStorage.removeItem('currentUser'); renderHeaderAuth();
+      },{once:true});
+    } else {
+      login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none';
+    }
+  }
+  renderHeaderAuth();
+
+  /* === ÍNDICE COMPLETO /content === */
+  const CONTENT = [
+    // Transversales / multi
+    { title:"Backup inmutable & Ciberrecuperación", href:"/content/immutable-backup-cyberrecovery.html", exam:["AZ-104","AZ-305","SAA-C03"], vendor:["Azure","AWS"], level:"avanzado", summary:"Estrategia 3-2-1-1-0, inmutabilidad (Blob/S3), bóvedas aisladas, redes cerradas y runbooks de respuesta." },
+    { title:"VNet Peering vs. VPN Gateway (AZ-104)", href:"/content/vnet-peering-vpn.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Comparativa y patrones: peering, tránsito en hub-spoke, cifrado, costes y laboratorio guiado." },
+
+    // Azure AZ-104
+    { title:"Identidad y Acceso (AZ-104)", href:"/content/azure-identity-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC, PIM, Access Reviews, Managed Identities, App Regs y mejores prácticas con Key Vault." },
+    { title:"Seguridad de red (AZ-104)", href:"/content/azure-network-security-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"NSG/ASG, UDR, Azure Firewall, WAF, Private Endpoints y DNS privado para PaaS." },
+    { title:"Azure Storage (AZ-104)", href:"/content/azure-storage-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC vs claves, SAS delegación de usuario, WORM, replicación (LRS/ZRS/GRS/GZRS) y Private Endpoints." },
+    { title:"Backup & Recovery (AZ-104)", href:"/content/azure-backup-recovery-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Recovery Services Vault, políticas, soft-delete, cross-region restore y protecciones de examen." },
+    { title:"Cómputo y disponibilidad (AZ-104)", href:"/content/azure-compute-availability-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"VM/VMSS, zonas/sets de disponibilidad, imágenes con SIG, orquestación y updates." },
+    { title:"Monitorización y alertas (AZ-104)", href:"/content/azure-monitoring-alerts-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Azure Monitor, Log Analytics, DCR, KQL, alertas métricas y de logs, Action Groups." },
+    { title:"Coste y gobernanza (AZ-104)", href:"/content/azure-cost-governance-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Budgets, Cost Management, etiquetado, Azure Advisor y Policy para control de gasto." },
+    { title:"Checklist de seguridad Azure (AZ-104)", href:"/content/azure-security-checklist.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Lista priorizada: identidad, red, datos, backup, postura y puntos típicos de examen." },
+
+    // Azure AZ-305
+    { title:"Azure Landing Zone (AZ-305)", href:"/content/azure-landing-zone.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura de red base." },
+    { title:"Conectividad híbrida (AZ-305)", href:"/content/azure-hybrid-connectivity-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"VPN/ExpressRoute, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones vWAN/Hub-Spoke." },
+    { title:"Arquitectura de red (AZ-305)", href:"/content/azure-network-architecture-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial." },
+    { title:"Alta disponibilidad y DR (AZ-305)", href:"/content/azure-ha-dr-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Pares regionales, zonas, ASR, geo-replicación y estrategias de failover multi-región." },
+    { title:"Elección de datos (AZ-305)", href:"/content/azure-data-choices-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"SQL MI vs Azure SQL, Cosmos DB, PostgreSQL Flexible, ADLS Gen2 y analítica con Synapse." },
+    { title:"Coste y fiabilidad (AZ-305)", href:"/content/azure-cost-reliability-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Savings Plans/RI, right-sizing, elástico vs reservado y decisiones de resiliencia con coste." },
+    { title:"Zero Trust en Azure (AZ-305)", href:"/content/azure-security-zero-trust-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"Identidad primero, microsegmentación, acceso privado a PaaS, Defender y verificación continua." },
+    { title:"Seguridad de red en Azure (AZ-305)", href:"/content/azure-network-security-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Diseño de control perimetral/L7, Firewall Premium, WAF, Private Endpoints y DNS seguro." },
+
+    // AWS SAA-C03
+    { title:"IAM y Organizations (SAA-C03)", href:"/content/aws-iam-organizations-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"Roles/políticas, MFA, mejores prácticas y guardrails multi-cuenta con Organizations y SCP." },
+    { title:"Elasticidad de cómputo (SAA-C03)", href:"/content/aws-compute-elasticity-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Auto Scaling, ALB/NLB, Spot/RI/Savings Plans, blue/green y diseño resiliente." },
+    { title:"Bases de datos y almacenamiento (SAA-C03)", href:"/content/aws-databases-storage-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"RDS/Aurora (Multi-AZ/replicas), DynamoDB (WCU/RCU), S3 con KMS y lifecycle." },
+    { title:"Observabilidad (SAA-C03)", href:"/content/aws-observability-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"CloudWatch métricas/logs, X-Ray, CloudTrail, AWS Config y alarmas." },
+    { title:"S3: diseño (SAA-C03)", href:"/content/aws-s3-design-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Bloqueo público, SSE-KMS, Object Lock WORM, clases de almacenamiento y rendimiento." },
+    { title:"SQS & SNS: patrones (SAA-C03)", href:"/content/aws-sqs-sns-patterns.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Fanout, FIFO, DLQ, backoff/redrive; integración con Lambda, EventBridge y Kinesis." },
+    { title:"VPC avanzado y Endpoints (SAA-C03)", href:"/content/aws-vpc-advanced-endpoints-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Transit Gateway, endpoints Gateway/Interface, PrivateLink, Route 53 y DNS." },
+    { title:"VPC Alta disponibilidad (SAA-C03)", href:"/content/aws-vpc-ha.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Multi-AZ, NAT por AZ, zonificación, HA de balanceadores y observabilidad de red." }
+  ];
+
+  function tag(el, t, cls=""){ const s=document.createElement("span"); s.className="badge "+cls; s.textContent=t; el.appendChild(s); }
+
+  function render(){
+    const q=(document.getElementById('q').value||"").toLowerCase().trim();
+    const exam=document.getElementById('exam').value;
+    const vendor=document.getElementById('vendor').value;
+    const root=document.getElementById('cards');
+    root.innerHTML="";
+    CONTENT.filter(c=>{
+      const hitsQ = !q || (c.title.toLowerCase().includes(q) || c.summary.toLowerCase().includes(q));
+      const hitsE = !exam || c.exam.includes(exam);
+      const hitsV = !vendor || c.vendor.includes(vendor);
+      return hitsQ && hitsE && hitsV;
+    }).forEach(c=>{
+      const vClass = (c.vendor && c.vendor.length>1) ? "multi" : (c.vendor[0]==="Azure" ? "azure" : "aws");
+      const card=document.createElement('article'); card.className=`card ${vClass}`;
+      card.innerHTML = `<h3><a href="${c.href}">${c.title}</a></h3>
+        <p class="muted">${c.summary}</p>
+        <div class="badges"></div>
+        <div><a class="pill-btn" href="${c.href}">LEER</a></div>`;
+      const b=card.querySelector(".badges");
+      tag(b, \`Nivel: \${c.level[0].toUpperCase()+c.level.slice(1)}\`);
+      // Exámenes (AZ=azul, SAA=aws)
+      c.exam.forEach(e=>{
+        const cls = e.startsWith("AZ") ? "azure" : (e.startsWith("SAA") ? "aws" : "");
+        tag(b, e, cls);
+      });
+      // Proveedores
+      c.vendor.forEach(v=>tag(b, v, v==="Azure" ? "azure" : "aws"));
+      if(c.vendor.length>1){ tag(b, "Multi", "multi"); }
+      root.appendChild(card);
+    });
+  }
+  ["q","exam","vendor"].forEach(id=>document.getElementById(id).addEventListener("input", render));
+  render();
+</script>
 </body>
 </html>
