@@ -113,10 +113,13 @@ const QUIZZES = {
     --mark:#ffd24d; --mark-bg:#3a2e12; --mark-ring:rgba(255,210,77,.35);
   }
   #view{ margin-top:16px; }
+
   .quiz-wrap{ display:grid; grid-template-columns:2fr 1fr; gap:18px; }
   @media(max-width:900px){ .quiz-wrap{ grid-template-columns:1fr } }
+
   .card{ margin-top:8px; background:linear-gradient(180deg,#111937,#0f1633);
          border:1px solid var(--stroke); border-radius:16px; padding:18px; color:var(--ink) }
+
   .header-quiz{ display:flex; align-items:center; justify-content:space-between;
                 border-bottom:1px solid var(--stroke); padding-bottom:10px; margin-bottom:10px; }
   .title{ font-weight:1000; font-size:1.18rem; letter-spacing:.3px; color:#f0f4ff; text-transform:uppercase; }
@@ -127,10 +130,12 @@ const QUIZZES = {
   .pbar{ position:relative; height:8px; border-radius:999px; background:#0b1024; overflow:hidden; flex:1; }
   .pbar>i{ position:absolute; inset:0; width:0; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
   .pcount{ font-weight:900; color:#cbd6ff; min-width:70px; text-align:right; }
+
   .domain{ display:inline-flex; align-items:center; gap:8px; font-weight:800; font-size:.94rem; color:#cfd8ff;
            background:rgba(108,139,255,.06); border:1px solid rgba(108,139,255,.16);
            border-radius:12px; padding:8px 12px; margin:.55rem 0 .7rem; text-transform:lowercase; }
   .domain .dot{ width:10px; height:10px; border-radius:999px; background:var(--accent); opacity:.9; }
+
   .quiz-question{ margin:.2rem 0 .6rem; font-size:1.06rem; line-height:1.55; }
   .option{ display:flex; gap:12px; align-items:flex-start; border:1px solid var(--stroke); background:var(--surface2);
            border-radius:12px; padding:14px 16px; margin:10px 0; cursor:pointer;
@@ -142,6 +147,7 @@ const QUIZZES = {
 
   .expl{ border:1px dashed var(--stroke); border-radius:12px; padding:12px; margin-top:12px; background:var(--surface); }
   .expl .ttl{ font-weight:900; margin-bottom:8px; }
+
   .refs{ margin-top:10px; background:var(--surface2); border:1px solid var(--stroke);
          border-radius:12px; padding:12px; }
   .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
@@ -163,7 +169,6 @@ const QUIZZES = {
   .dot.current{ outline:3px solid var(--accent-ring); }
   .dot.ok{ background:var(--ok-bg); border-color:#2e7a5a; }
   .dot.bad{ background:#2a1216; border-color:#7a2e38; }
-  .dot.marked{ background:var(--mark-bg)!important; border-color:#b49422!important; outline:3px solid var(--mark-ring); }
 
   .toast{ position:fixed; left:50%; bottom:18px; transform:translateX(-50%); background:#0e1530; color:#fff;
           padding:10px 14px; border-radius:10px; box-shadow:0 10px 24px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s; z-index:99999; }
@@ -290,12 +295,72 @@ function buildBank(){
     optOrder:Array.isArray(q._optOrder)?q._optOrder.slice():null
   }));
 }
+
+// NUEVO: mapa por questionId con info completa
+function buildAnswersByQid(){
+  const map = {};
+  for (const [i, chosen] of Object.entries(S.answers || {})){
+    const idx = +i;
+    const q = S.qs[idx];
+    if (!q) continue;
+
+    const chosenOriginalIndex =
+      (Array.isArray(q._optOrder) && typeof chosen === "number")
+        ? q._optOrder[chosen]
+        : (typeof chosen === "number" ? chosen : null);
+
+    const correctShownIndex =
+      (typeof q._correct === "number") ? q._correct : null;
+
+    const correctOriginalIndex =
+      (typeof q._correct === "number" && Array.isArray(q._optOrder))
+        ? q._optOrder[q._correct]
+        : (typeof q.correctAnswer === "number" ? q.correctAnswer : null);
+
+    const isCorrect =
+      (typeof correctShownIndex === "number" && typeof chosen === "number")
+        ? (chosen === correctShownIndex)
+        : null;
+
+    map[q.questionId] = {
+      index: idx,
+      domain: q.domain || null,
+      chosenIndex: chosen,
+      chosenOriginalIndex,
+      correctShownIndex,
+      correctOriginalIndex,
+      isCorrect
+    };
+  }
+  return map;
+}
+
+// NUEVO: marcadas por questionId
+function buildMarkedByQid(){
+  const m = {};
+  for (const [i, flag] of Object.entries(S.marked || {})){
+    if (!flag) continue;
+    const idx = +i;
+    const q = S.qs[idx];
+    if (q) m[q.questionId] = true;
+  }
+  return m;
+}
+
+// Actualizada: incluye questionId
 function buildAnswerItems(){
   const items=[];
   for(const [i,chosen] of Object.entries(S.answers||{})){
     const idx=+i; const q=S.qs[idx]; if(!q) continue;
     const isCorrect=(typeof q._correct==='number') ? (chosen===q._correct) : null;
-    items.push({ index:idx, questionId:q.questionId, domain:q.domain, chosenIndex:chosen, isCorrect, marked:!!S.marked[idx] });
+    items.push({
+      index:idx,
+      questionId:q.questionId,   // <- clave para join con ExamQuestions
+      domain:q.domain,
+      chosenIndex:chosen,
+      isCorrect,
+      marked:!!S.marked[idx]
+    });
   }
   return items;
 }
@@ -316,22 +381,26 @@ function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
     updatedAt:new Date().toISOString(),
     elapsedSec:S.elapsedSec,
     timeLimit:S.timeLimit,
-    idx:S.idx,                 // importante para tu Lambda
+    idx:S.idx,
     total:S.qs.length,
     pct:computePct(),
     finished:Boolean(finished),
-    status,                    // importante para tu Lambda
+    status,
+    // estado base
     answers:S.answers,
     marked:S.marked,
     questionIds:S.qs.map(q=>q.questionId),
     markedItems:buildMarkedItems(),
-    answerItems:buildAnswerItems()
+    answerItems:buildAnswerItems(),
+    // NUEVO: relación directa por questionId
+    answersByQid: buildAnswersByQid(),
+    markedByQid:  buildMarkedByQid()
   };
   if(full || !S.hasInitialUpsert) base.questionBank = buildBank();
   return base;
 }
 
-/* Cliente /progress: INTENTA PRIMERO form-urlencoded (sin preflight) y luego JSON */
+/* Cliente /progress: intenta primero form-urlencoded (sin preflight) y luego JSON */
 async function upsertProgressOnce(payload, {beacon=false} = {}) {
   try {
     const PROGRESS_URL = await discoverProgressUrl(payload);
@@ -355,7 +424,7 @@ async function upsertProgressOnce(payload, {beacon=false} = {}) {
       return { ok: true, via: "form", url: PROGRESS_URL, res: j };
     }
 
-    // 2) Si falla, probar JSON (esto sí puede requerir CORS preflight)
+    // 2) Si falla, probar JSON (requiere CORS preflight correcto en API)
     r = await fetch(PROGRESS_URL, {
       method: "POST",
       mode: "cors",
