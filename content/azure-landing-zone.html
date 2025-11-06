@@ -2,15 +2,15 @@
 <html lang="es"><head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Azure Landing Zone (AZ‑305) — Azure AZ-305 | ITHub</title>
-<meta name="description" content="Azure Landing Zone (AZ‑305) para el examen AZ-305. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a Azure."/>
+<title>Azure Landing Zone (AZ-305) — Azure AZ-305 | ITHub</title>
+<meta name="description" content="Azure Landing Zone (AZ-305) para el examen AZ-305. Guía completa con CAF, Management Groups, suscripciones, identidad, Policy-as-Code, red base, seguridad, costes, observabilidad, ALZ y operación DevOps."/>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
 <style>
 :root{
   --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --accent-aws:#ffb74d; --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
+  --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
   --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
   --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
 }
@@ -35,26 +35,14 @@ nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
 .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
 /* Hero */
 .hero{padding:26px 0 8px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--stroke); background:var(--badge); color:#fff;
-  padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.3px
-}
-.badge.aws{border-color:rgba(255,183,77,.55); background:rgba(255,183,77,.15); color:#ffe7c2}
-.badge.azure{border-color:rgba(106,169,255,.6); background:rgba(106,169,255,.15); color:#e6f0ff}
-.badge.multi{border-color:rgba(155,140,255,.6); background:rgba(155,140,255,.15); color:#f0eaff}
-/* Slim horizontal exam chip in one line */
-.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
-  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
-.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
-.exam-chip.aws{ border-color:rgba(255,183,77,.65); background:rgba(36,28,16,.55); color:#ffe2b3 }
-.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
-/* Title + meta pills */
-h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
+  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900; color:#e7f1ff }
+.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55) }
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
 .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
 /* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+.grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:16px}
 @media(max-width:980px){ .grid{grid-template-columns:1fr} }
 /* Sidebar index */
 .aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
@@ -63,8 +51,6 @@ h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
 .toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
 .toc a small{color:#9fb3e7;font-weight:700}
 .toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.aws a{ border-color:rgba(255,183,77,.25); background:rgba(255,183,77,.06); color:#ffe7c9}
-.toc.aws a:hover{ border-color:rgba(255,183,77,.65) }
 .toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
 .toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
 /* Content card */
@@ -94,7 +80,7 @@ footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#
     </nav>
     <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
       <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
       <div id="userArea" style="display:none;align-items:center;gap:6px">
         <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
         <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
@@ -112,36 +98,269 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
   const userArea=document.getElementById('userArea');
   const nameTop=document.getElementById('userNameTop');
   if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+  document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); location.reload(); });
 })();
 </script>
 
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span></div>
-  <h1 style="text-align:center">Azure Landing Zone (AZ‑305)</h1>
-  
-    <div class="meta">
-      <span class="pill">Dominio: Gobernanza y base de plataforma</span>
-      <span class="pill">Nivel: Avanzado</span>
-      <span class="pill">Tiempo de lectura: 25–35 min</span>
-      <span class="pill">Última revisión: Nov 2025</span>
-    </div>
-  <div class="grid" style="margin-top:16px">
+  <h1>Azure Landing Zone (AZ-305)</h1>
+  <div class="meta">
+    <span class="pill">Dominio: Gobernanza y base de plataforma</span>
+    <span class="pill">Nivel: Avanzado</span>
+    <span class="pill">Tiempo de lectura: 30–45 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
     <aside class="aside">
       <h3>ÍNDICE</h3>
-      <ul class="toc azure"><li><a href="#sec1"><small>1.</small> CAF y estructura</a></li><li><a href="#sec2"><small>2.</small> Policy como código</a></li><li><a href="#sec3"><small>3.</small> Red base</a></li></ul>
+      <ul class="toc azure">
+        <li><a href="#sec1"><small>1.</small> CAF y objetivos de la Landing Zone</a></li>
+        <li><a href="#sec2"><small>2.</small> Jerarquía de Management Groups</a></li>
+        <li><a href="#sec3"><small>3.</small> Segmentación por suscripciones</a></li>
+        <li><a href="#sec4"><small>4.</small> Identidad y control de acceso</a></li>
+        <li><a href="#sec5"><small>5.</small> Policy-as-Code y cumplimiento</a></li>
+        <li><a href="#sec6"><small>6.</small> Red base de plataforma (Hub)</a></li>
+        <li><a href="#sec7"><small>7.</small> Seguridad y Defender for Cloud</a></li>
+        <li><a href="#sec8"><small>8.</small> Costes, presupuestos y etiquetas</a></li>
+        <li><a href="#sec9"><small>9.</small> Observabilidad y registros</a></li>
+        <li><a href="#sec10"><small>10.</small> Azure Landing Zone Accelerator (ALZ)</a></li>
+        <li><a href="#sec11"><small>11.</small> Naming, tagging y taxonomía</a></li>
+        <li><a href="#sec12"><small>12.</small> Operación: DevOps y despliegues</a></li>
+        <li><a href="#sec13"><small>13.</small> Checklist de examen</a></li>
+      </ul>
     </aside>
-    <div><section id="sec1" class="card"><h2>1. CAF y estructura</h2><p>Alinea con Cloud Adoption Framework: Management Groups, suscripciones por dominio de carga y separación de responsabilidades.</p></section>
-<section id="sec2" class="card"><h2>2. Policy-as-Code</h2><p>Defender posture con Azure Policy, Initiative y asignaciones por MG. Usa Terraform/Bicep para despliegues repetibles.</p></section>
-<section id="sec3" class="card"><h2>3. Red base</h2><p>Arquitectura hub-spoke o vWAN, conectividad híbrida y salida inspeccionada.</p></section>
-</div>
+
+    <div>
+
+      <!-- 1 -->
+      <section id="sec1" class="card">
+        <h2>1. CAF y objetivos de la Landing Zone</h2>
+        <p>Una <b>Landing Zone</b> es la base estandarizada para desplegar cargas en Azure con <b>gobernanza, seguridad y conectividad</b> desde el día 0. Se alinea con el <b>Cloud Adoption Framework (CAF)</b> y habilita crecimiento controlado.</p>
+        <ul>
+          <li><b>Consistencia:</b> diseño repetible y auditable para todos los equipos.</li>
+          <li><b>Seguridad y cumplimiento:</b> controles preventivos y de detección desde el inicio.</li>
+          <li><b>Escalabilidad organizativa:</b> soporta múltiples unidades de negocio y entornos.</li>
+          <li><b>Automatización:</b> IaC (Bicep/Terraform) y pipelines como fuente de verdad.</li>
+        </ul>
+        <blockquote class="tip">La Landing Zone debe ser <b>opinada</b> (con decisiones técnicas explícitas), pero <b>modular</b> para adaptarse a nuevos requisitos.</blockquote>
+      </section>
+
+      <!-- 2 -->
+      <section id="sec2" class="card">
+        <h2>2. Jerarquía de Management Groups</h2>
+        <p>Los <b>Management Groups (MG)</b> organizan suscripciones y permiten aplicar políticas/roles a gran escala.</p>
+        <ul>
+          <li><b>Root</b> → <b>Platform</b> (red, identidad, seguridad) / <b>Landing Zones</b> (Workloads) / <b>Sandbox</b> / <b>Decommissioned</b>.</li>
+          <li><b>Separación por regulación</b>: por ejemplo, <i>Regulated</i> vs <i>Unregulated</i> bajo <b>Landing Zones</b>.</li>
+          <li><b>Bloqueos</b>: <i>deny assignments</i> para impedir cambios críticos en <b>Platform</b>.</li>
+        </ul>
+        <pre>
+Root (Tenant)
+ ├─ Platform
+ │   ├─ Identity
+ │   ├─ Management (Log/Monitor)
+ │   └─ Connectivity (Hub/vWAN)
+ ├─ Landing-Zones
+ │   ├─ Prod
+ │   └─ NonProd
+ └─ Sandbox
+        </pre>
+      </section>
+
+      <!-- 3 -->
+      <section id="sec3" class="card">
+        <h2>3. Segmentación por suscripciones</h2>
+        <p>Usa <b>suscripciones</b> como frontera de aislamiento: límites de facturación, RBAC, cuotas y blast radius.</p>
+        <ul>
+          <li><b>Por entorno:</b> <i>Prod</i>, <i>NonProd</i>, <i>Sandbox</i>.</li>
+          <li><b>Por línea de negocio</b> o dominio de datos.</li>
+          <li><b>Servicios compartidos</b> (Hub, identidad, monitorización) en <b>Platform</b>.</li>
+          <li><b>Límites de escalado</b>: reparte cargas para evitar throttling por región/cuota.</li>
+        </ul>
+        <blockquote class="warning">Evita megasuscripciones monolíticas; complican RBAC, límites y segregación de costes.</blockquote>
+      </section>
+
+      <!-- 4 -->
+      <section id="sec4" class="card">
+        <h2>4. Identidad y control de acceso</h2>
+        <p>La base de identidad en Azure se implementa con <b>Microsoft Entra ID</b> y RBAC en recursos.</p>
+        <ul>
+          <li><b>RBAC</b> en MG/Suscripción/Grupo de recursos/Recurso; privilegio mínimo.</li>
+          <li><b>Privileged Identity Management (PIM)</b>: acceso <i>just-in-time</i> para roles privilegiados.</li>
+          <li><b>Conditional Access</b>: MFA, ubicación, dispositivo conforme para acceso a portal/CLI.</li>
+          <li><b>Identidades administradas</b> para workloads (MSI) y <b>Key Vault</b> para secretos.</li>
+        </ul>
+        <pre>
+Ejemplo de roles:
+ - Reader (auditoría)
+ - Contributor (operación de servicios)
+ - Owner (limitado; usa PIM)
+ - Custom roles para tareas específicas (despliegue, tagging)
+        </pre>
+      </section>
+
+      <!-- 5 -->
+      <section id="sec5" class="card">
+        <h2>5. Policy-as-Code y cumplimiento</h2>
+        <p><b>Azure Policy</b> impone guardrails: <b>deny</b>, <b>deployIfNotExists</b>, <b>audit</b>. Agrupa definiciones en <b>Initiatives</b> y asigna a MG/suscripciones.</p>
+        <ul>
+          <li>Enforce de <b>naming/tagging</b>, <b>SKUs</b> permitidas, <b>regiones</b>, <b>cifrado</b>, <b>Private Link</b> obligatorio.</li>
+          <li><b>Remediación</b> automática con <i>deployIfNotExists</i> (por ejemplo, habilitar logging).</li>
+          <li>Integración con <b>Defender for Cloud</b> y <b>Regulatory Compliance</b>.</li>
+          <li>Gestiona políticas como código con <b>Terraform/Bicep</b> en pipelines.</li>
+        </ul>
+        <pre>// Bicep: iniciativa mínima
+module policy './modules/policyInitiative.bicep' = {
+  name: 'alz-policy'
+  params: {
+    targetMgId: '/providers/Microsoft.Management/managementGroups/landing-zones'
+  }
+}
+        </pre>
+      </section>
+
+      <!-- 6 -->
+      <section id="sec6" class="card">
+        <h2>6. Red base de plataforma (Hub)</h2>
+        <p>La <b>conectividad</b> y servicios compartidos residen en el Hub: <b>Azure Firewall</b> o NVA, <b>DNS</b> (Private DNS/Resolver), <b>VPN/ER</b>, <b>Bastion</b>, <b>Key Vault</b>, <b>Log Analytics</b>.</p>
+        <ul>
+          <li><b>Topologías:</b> Hub-Spoke o Virtual WAN (vWAN) según escala.</li>
+          <li><b>Egress inspeccionado</b>: UDR 0.0.0.0/0 hacia Firewall en el Hub.</li>
+          <li><b>Private Link</b> y <b>Private Endpoints</b> para PaaS sin salida pública.</li>
+          <li><b>DNS Private Resolver</b> con reglas <i>inbound/outbound</i> para on-prem ↔ Azure.</li>
+        </ul>
+        <pre>
+On-prem ── VPN/ExpressRoute ── HUB (FW + DNS + Bastion) ── Spokes (Workloads)
+        </pre>
+      </section>
+
+      <!-- 7 -->
+      <section id="sec7" class="card">
+        <h2>7. Seguridad y Defender for Cloud</h2>
+        <p>Aplica un <b>baseline</b> de seguridad uniforme y postura continua.</p>
+        <ul>
+          <li><b>Defender for Cloud</b>: planify, recomendaciones, hardening, protección de workloads (SQL, Storage, AKS, VM, PaaS).</li>
+          <li><b>Just-in-time VM Access</b>, evaluación de vulnerabilidades, baseline de NSG.</li>
+          <li><b>DDoS Protection Standard</b> en VNets públicas críticas.</li>
+          <li><b>WAF</b> (App Gateway/Front Door) para capa 7.</li>
+        </ul>
+        <blockquote class="tip">Consolida <b>políticas de seguridad</b> y <b>excepciones</b> a nivel de MG para evitar deriva entre suscripciones.</blockquote>
+      </section>
+
+      <!-- 8 -->
+      <section id="sec8" class="card">
+        <h2>8. Costes, presupuestos y etiquetas</h2>
+        <p>Gobernanza financiera centralizada con <b>Cost Management + Billing</b>.</p>
+        <ul>
+          <li><b>Budgets</b> y alertas por suscripción/rg/tag.</li>
+          <li><b>Etiquetas</b> (<code>costCenter</code>, <code>env</code>, <code>owner</code>, <code>app</code>) obligatorias vía Policy.</li>
+          <li><b>Reservas/AHUB</b> para ahorro en compute y licencias.</li>
+        </ul>
+        <pre>
+Ejemplo de etiquetas mínimas:
+ - env: prod|dev|qa
+ - costCenter: FIN-ES|MKT-PT
+ - owner: mail@dominio
+ - app: sap|ecommerce|iot
+        </pre>
+      </section>
+
+      <!-- 9 -->
+      <section id="sec9" class="card">
+        <h2>9. Observabilidad y registros</h2>
+        <p>Centraliza telemetría desde el día 0.</p>
+        <ul>
+          <li><b>Log Analytics workspace</b> único por región (o por dominio) + <b>Diagnostic Settings</b> globales.</li>
+          <li><b>Azure Monitor</b>: métricas, alertas, <b>Action Groups</b>, <b>Workbooks</b>.</li>
+          <li><b>SIEM</b>: Microsoft Sentinel opcional en el workspace central.</li>
+        </ul>
+        <pre>
+// Ejemplo KQL rápido
+AzureActivity
+| where ActivityStatusValue == "Failure"
+| summarize count() by Caller, bin(TimeGenerated, 1h)
+        </pre>
+      </section>
+
+      <!-- 10 -->
+      <section id="sec10" class="card">
+        <h2>10. Azure Landing Zone Accelerator (ALZ)</h2>
+        <p><b>ALZ</b> es el conjunto de referencias y módulos (Bicep/Terraform) para desplegar la base de plataforma.</p>
+        <ul>
+          <li><b>Módulos</b> listos: Management Groups, Policy, RBAC, Hub, Log/Monitor, Defender, Landing Zones.</li>
+          <li><b>Extensible</b>: añade iniciativas, conectividad avanzada, módulos propios.</li>
+          <li><b>Pipelines</b>: CI/CD para despliegues idempotentes por ambiente.</li>
+        </ul>
+        <pre>
+// Terraform (esqueleto conceptual)
+module "alz_platform" {
+  source = "github.com/org/alz//platform"
+  tenant_root_group_id = "0000-ROOT"
+  enable_defender = true
+}
+        </pre>
+      </section>
+
+      <!-- 11 -->
+      <section id="sec11" class="card">
+        <h2>11. Naming, tagging y taxonomía</h2>
+        <p>Define convenciones de nombres y etiquetas para trazabilidad y automatización.</p>
+        <ul>
+          <li><b>Naming</b>: <code>&lt;org&gt;-&lt;env&gt;-&lt;region&gt;-&lt;svc&gt;-&lt;idx&gt;</code> (p. ej. <code>acme-prod-weu-kv-01</code>).</li>
+          <li><b>RGs</b>: agrupa por ciclo de vida (<code>rg-appX-prod-core</code>).</li>
+          <li><b>Tags</b> obligatorias vía Policy y remediación.</li>
+        </ul>
+        <table>
+          <tr><th>Elemento</th><th>Ejemplo</th><th>Notas</th></tr>
+          <tr><td>VNet</td><td>acme-prod-weu-vnet-hub</td><td>HUB vs Spoke en el nombre</td></tr>
+          <tr><td>Subred</td><td>snet-egress-fw</td><td>Funcionalidad clara</td></tr>
+          <tr><td>KV</td><td>acme-prod-weu-kv-01</td><td>Índice si hay varios</td></tr>
+        </table>
+      </section>
+
+      <!-- 12 -->
+      <section id="sec12" class="card">
+        <h2>12. Operación: DevOps y despliegues</h2>
+        <p>Gestiona la Landing Zone como código.</p>
+        <ul>
+          <li><b>Repos</b> separados: <i>platform</i> (ALZ), <i>connectivity</i>, <i>security</i>, <i>landing-zones</i> por dominio.</li>
+          <li><b>Ramas</b>: <i>main</i> protegida; PR con validación y <b>what-if</b>.</li>
+          <li><b>Stages</b> en pipeline: <i>sandbox → dev → qa → prod</i> con aprobaciones.</li>
+          <li><b>Backups</b> de estado (en TF: remoto en Storage + Key Vault para secretos).</li>
+        </ul>
+        <pre>
+// Bicep (what-if)
+az deployment mg what-if -n alz -m /providers/Microsoft.Management/managementGroups/landing-zones -f main.bicep
+        </pre>
+      </section>
+
+      <!-- 13 -->
+      <section id="sec13" class="card">
+        <h2>13. Checklist de examen</h2>
+        <ul>
+          <li>MGs para aplicar <b>Policy/RBAC</b> a escala; suscripciones para <b>aislar</b> entornos y costes.</li>
+          <li>Identidad: <b>PIM</b> + <b>Conditional Access</b> + <b>MSI</b> + <b>Key Vault</b>.</li>
+          <li>Conectividad: <b>Hub-Spoke</b> o <b>vWAN</b>; egress inspeccionado; <b>Private Link</b> + DNS privado.</li>
+          <li>Policy-as-Code: iniciativas, <b>deny</b>/<b>deployIfNotExists</b>, remediación y cumplimiento.</li>
+          <li>Seguridad: <b>Defender for Cloud</b>, JIT, DDoS, WAF.</li>
+          <li>Costes: Budgets + etiquetas mínimas (<code>env</code>, <code>owner</code>, <code>costCenter</code>, <code>app</code>).</li>
+          <li>Observabilidad: Log Analytics + Azure Monitor + Sentinel.</li>
+          <li>ALZ: módulos listos + pipelines con <b>what-if</b> y aprobaciones.</li>
+        </ul>
+      </section>
+
+    </div>
   </div>
 </main>
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="badge multi">ITHub.es</span>
+    <div style="display:flex;align-items:center;gap:10px"><span class="exam-chip azure">ITHub.es</span>
       <span>© 2025 · Contenido educativo para certificaciones.</span></div>
-    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+     <div><a href="javascript:history.back()" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+
   </div>
 </footer>
 

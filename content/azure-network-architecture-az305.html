@@ -2,146 +2,201 @@
 <html lang="es"><head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Arquitectura de red en Azure (AZ‑305) — Azure AZ-305 | ITHub</title>
-<meta name="description" content="Arquitectura de red en Azure (AZ‑305) para el examen AZ-305. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a Azure."/>
-<!-- Google tag (gtag.js) -->
+<title>Arquitectura de red y conectividad híbrida en Azure (AZ-305) — ITHub</title>
+<meta name="description" content="Arquitectura de red y conectividad híbrida en Azure para el examen AZ-305. Incluye diseño Hub-Spoke, Virtual WAN, egress inspeccionado y DNS empresarial.">
+<!-- Google tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
 <style>
 :root{
-  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --accent-aws:#ffb74d; --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
-  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
-  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+  --bg:#0e111a;--surface:#121826;--surface2:#0f1523;--ink:#eaf0ff;--muted:#a9b6e5;--stroke:#24304d;
+  --accent-azure:#6aa9ff;--badge:#1a2135;--ok:#3ad97a;--warn:#ffd66b;
+  --radius:16px;--shadow:0 24px 48px rgba(8,12,30,.45);
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
 a{color:inherit;text-decoration:none}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
-/* Header */
 header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
-  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
-  border-bottom:1px solid var(--stroke)}
-.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-.brand img.site-logo{height:40px;width:auto;display:block}
-nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
-nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
-.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
-.pill-btn:hover{transform:translateY(-1px)}
-.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-/* Hero */
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+.brand img{height:38px}
+.menu{display:flex;gap:14px;text-transform:uppercase;font-weight:800;color:var(--muted)}
+.menu a{padding:8px 10px;border-radius:8px;border:1px solid transparent}
+.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 14px;border-radius:10px;
+  border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
 .hero{padding:26px 0 8px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--stroke); background:var(--badge); color:#fff;
-  padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.3px
-}
-.badge.aws{border-color:rgba(255,183,77,.55); background:rgba(255,183,77,.15); color:#ffe7c2}
-.badge.azure{border-color:rgba(106,169,255,.6); background:rgba(106,169,255,.15); color:#e6f0ff}
-.badge.multi{border-color:rgba(155,140,255,.6); background:rgba(155,140,255,.15); color:#f0eaff}
-/* Slim horizontal exam chip in one line */
-.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
-  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
-.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
-.exam-chip.aws{ border-color:rgba(255,183,77,.65); background:rgba(36,28,16,.55); color:#ffe2b3 }
-.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
-/* Title + meta pills */
-h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
+.exam-chip{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:20px;border:1px solid var(--stroke);
+ background:var(--badge);font-weight:900;color:#e6f0ff}
+.exam-chip.azure{border-color:rgba(106,169,255,.6);background:rgba(18,30,52,.55)}
+h1{text-align:center;font-size:clamp(1.6rem,3vw,2.6rem);margin:16px 0 10px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
-/* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
-/* Sidebar index */
-.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:18px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424);border:1px solid var(--stroke);border-radius:var(--radius);padding:14px}
 .aside h3{margin:8px 0 10px}
 .toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 .toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
 .toc a small{color:#9fb3e7;font-weight:700}
-.toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.aws a{ border-color:rgba(255,183,77,.25); background:rgba(255,183,77,.06); color:#ffe7c9}
-.toc.aws a:hover{ border-color:rgba(255,183,77,.65) }
-.toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
-.toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
-/* Content card */
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.toc a:hover{border-color:#31539a;transform:translateX(2px)}
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
+ border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
 .card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
+blockquote.tip{margin:14px 0;padding:12px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
 pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
-kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
-table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
-th,td{border:1px solid #22304f;padding:8px 10px}
-th{background:#16213a}
-/* Footer */
-footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+table th,table td{border:1px solid #2a355d;padding:8px 10px;text-align:left}
+table th{background:#182447;color:#cde3ff}
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;
+ background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
 </style></head>
 <body>
 
-<header role="banner">
+<header>
   <div class="container nav">
-    <div class="brand">
-      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
-    </div>
-    <nav class="menu" aria-label="Navegación principal">
-      <a href="/">HOME</a>
-      <a href="/content/content.html">CONTENIDOS</a>
-      <a href="/score/ranking.html">RANKING</a>
-    </nav>
-    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
-      <div id="userArea" style="display:none;align-items:center;gap:6px">
-        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-      </div>
-    </div>
+    <div class="brand"><a href="/"><img src="/assets/ithub-logo.svg" alt="ITHub.es logo"></a></div>
+    <nav class="menu"><a href="/">Home</a><a href="/content/content.html">Contenidos</a><a href="/score/ranking.html">Ranking</a></nav>
+    <a href="/login/login.html" class="pill-btn">Login</a>
   </div>
 </header>
-<script>
-function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-(function(){
-  const u=getCurrentUser();
-  const login=document.getElementById('btnLogin');
-  const signup=document.getElementById('btnSignup');
-  const userArea=document.getElementById('userArea');
-  const nameTop=document.getElementById('userNameTop');
-  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-})();
-</script>
 
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span></div>
-  <h1 style="text-align:center">Arquitectura de red en Azure (AZ‑305)</h1>
-  
-    <div class="meta">
-      <span class="pill">Dominio: Topologías y DNS</span>
-      <span class="pill">Nivel: Avanzado</span>
-      <span class="pill">Tiempo de lectura: 22–30 min</span>
-      <span class="pill">Última revisión: Nov 2025</span>
-    </div>
-  <div class="grid" style="margin-top:16px">
+  <h1>Arquitectura de red y conectividad híbrida en Azure (AZ-305)</h1>
+  <div class="meta">
+    <span class="pill">Dominio: Diseño de red</span>
+    <span class="pill">Nivel: Intermedio-Avanzado</span>
+    <span class="pill">Tiempo de lectura: 30-40 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
     <aside class="aside">
       <h3>ÍNDICE</h3>
-      <ul class="toc azure"><li><a href="#sec1"><small>1.</small> Hub‑Spoke vs vWAN</a></li><li><a href="#sec2"><small>2.</small> Salida inspeccionada</a></li><li><a href="#sec3"><small>3.</small> DNS</a></li></ul>
+      <ul class="toc azure">
+        <li><a href="#sec1"><small>1.</small> Hub-Spoke vs Virtual WAN</a></li>
+        <li><a href="#sec2"><small>2.</small> Salida inspeccionada (Egress)</a></li>
+        <li><a href="#sec3"><small>3.</small> DNS empresarial</a></li>
+      </ul>
     </aside>
-    <div><section id="sec1" class="card"><h2>1. Hub‑Spoke vs vWAN</h2><p>Criterios de elección, escalado y gestión de rutas.</p></section>
-<section id="sec2" class="card"><h2>2. Egress inspeccionada</h2><p>Firewall en hub con UDR + NVAs si aplica.</p></section>
-<section id="sec3" class="card"><h2>3. DNS empresarial</h2><p>Private DNS zones, resolvers y split‑horizon.</p></section>
-</div>
+
+    <div>
+
+      <section id="sec1" class="card">
+        <h2>1. Hub-Spoke vs Virtual WAN</h2>
+        <p><b>Objetivo:</b> diseñar una arquitectura de red escalable, segura y fácil de operar en Azure.</p>
+
+        <h3>Hub-Spoke clásico</h3>
+        <ul>
+          <li><b>Hub:</b> red central que aloja firewall, DNS, VPN Gateway, Bastion y servicios compartidos.</li>
+          <li><b>Spokes:</b> VNets para workloads o entornos (Dev, QA, Prod) emparejadas al Hub mediante <b>VNet Peering</b>.</li>
+          <li><b>Ventajas:</b> simplicidad, bajo coste, control granular, integración con Azure Firewall o NVAs.</li>
+          <li><b>Limitaciones:</b> gestión manual del peering y UDR, sin tránsito automático entre Spokes, escalabilidad limitada.</li>
+        </ul>
+
+        <h3>Virtual WAN (vWAN)</h3>
+        <ul>
+          <li><b>Servicio global administrado</b> para interconectar sitios, VNets y usuarios remotos.</li>
+          <li>Proporciona <b>Secure Hubs</b> con firewall gestionado, VPN, ExpressRoute y usuario remoto (P2S).</li>
+          <li><b>Enrutamiento dinámico</b> entre VNets conectadas al mismo hub sin peering manual.</li>
+          <li><b>Optimización global</b> mediante backbone de Microsoft y control centralizado de políticas.</li>
+          <li><b>Ideal</b> para entornos multinube o con más de 50 VNets distribuidas.</li>
+        </ul>
+
+        <h3>Comparativa rápida</h3>
+        <table>
+          <tr><th>Aspecto</th><th>Hub-Spoke</th><th>Virtual WAN</th></tr>
+          <tr><td>Gestión</td><td>Manual (peering, UDR)</td><td>Centralizada y automática</td></tr>
+          <tr><td>Escalabilidad</td><td>Media (hasta decenas de VNets)</td><td>Alta (centenares globales)</td></tr>
+          <tr><td>Firewall</td><td>Azure Firewall o NVA</td><td>Azure Firewall Manager / Secure Hub</td></tr>
+          <tr><td>Rutas</td><td>Configuradas manualmente</td><td>Propagación dinámica con BGP</td></tr>
+          <tr><td>Coste</td><td>Bajo</td><td>Mayor, con automatización</td></tr>
+        </table>
+
+        <blockquote class="tip">
+          Usa <b>Hub-Spoke</b> para entornos regionales o simples.<br>
+          Adopta <b>Virtual WAN</b> cuando necesites conectividad global o múltiples sedes.
+        </blockquote>
+      </section>
+
+      <section id="sec2" class="card">
+        <h2>2. Salida inspeccionada (Egress)</h2>
+        <p><b>Objetivo:</b> asegurar que todo tráfico saliente hacia Internet o entre VNets pase por un punto de inspección controlado.</p>
+
+        <h3>Modelos de salida</h3>
+        <ul>
+          <li><b>Azure Firewall en el Hub:</b> inspección L3-L7, SNAT centralizado, filtrado FQDN y TLS Inspection (Premium).</li>
+          <li><b>Network Virtual Appliance (NVA):</b> dispositivos Fortinet, Palo Alto, Check Point; control avanzado con suscripciones.</li>
+          <li><b>Forced Tunneling:</b> redirige el tráfico de salida de los Spokes al Hub mediante <b>UDR (User Defined Routes)</b>.</li>
+          <li><b>UDR:</b> define <code>0.0.0.0/0 → IP Firewall</code> como next-hop para forzar el tráfico saliente.</li>
+        </ul>
+
+        <h3>Diseño típico</h3>
+        <pre>
+Spoke (App)
+  │ 0.0.0.0/0
+  ▼
+UDR → Firewall (HUB) → Internet
+        </pre>
+
+        <h3>Buenas prácticas</h3>
+        <ul>
+          <li>Implementa <b>Azure Firewall Premium</b> para inspección TLS, categorías URL y filtrado por FQDN.</li>
+          <li>Usa <b>Firewall Policy Manager</b> para administrar múltiples firewalls.</li>
+          <li>Centraliza <b>logs</b> en Log Analytics y habilita diagnóstico hacia Sentinel.</li>
+          <li>Considera <b>hub activo/pasivo</b> o <b>geo-redundancia</b> si el tráfico es crítico.</li>
+        </ul>
+
+        <blockquote class="tip">El tráfico egress inspeccionado es obligatorio en arquitecturas Zero Trust o con requisitos ISO, SOC2, GDPR.</blockquote>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. DNS empresarial</h2>
+        <p><b>Objetivo:</b> proveer una resolución de nombres coherente entre Azure y entornos locales, incluyendo endpoints privados.</p>
+
+        <h3>Opciones de resolución</h3>
+        <ul>
+          <li><b>Azure-provided DNS:</b> (168.63.129.16) básico y sin personalización de registros.</li>
+          <li><b>Private DNS Zone:</b> administración interna de dominios y resolución automática de Private Endpoints.</li>
+          <li><b>Custom DNS (VM o AD DS):</b> servidor DNS propio en el Hub para dominios corporativos.</li>
+          <li><b>Azure DNS Private Resolver:</b> servicio gestionado que reemplaza VMs DNS y habilita forwarding bidireccional on-prem ↔ Azure.</li>
+        </ul>
+
+        <h3>Arquitectura típica</h3>
+        <pre>
+On-prem DNS ↔ Azure DNS Private Resolver ↔ Private DNS Zone
+       │                            │
+       └──────────── VPN/ER ────────┘
+        </pre>
+
+        <h3>Split-horizon DNS</h3>
+        <ul>
+          <li>Permite usar el mismo dominio (ej. contoso.local) con respuestas distintas según origen (on-prem o Azure).</li>
+          <li>Evita exposición de recursos internos en DNS públicos.</li>
+          <li>Requiere sincronización de registros mediante automatización (CLI, Terraform o ARM).</li>
+        </ul>
+
+        <blockquote class="tip">Centraliza la resolución en una <b>zona HUB</b> y gestiona reglas inbound/outbound en el DNS Private Resolver.</blockquote>
+
+        <h3>Checklist de examen</h3>
+        <ul>
+          <li>Private DNS Zone = integración automática con Private Endpoints.</li>
+          <li>DNS Resolver = alternativa moderna sin servidores dedicados.</li>
+          <li>Forced Tunneling = usa UDR + Firewall.</li>
+          <li>Hub-Spoke = tránsito controlado y DNS centralizado.</li>
+        </ul>
+      </section>
+
+    </div>
   </div>
 </main>
 
-<footer role="contentinfo">
-  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="badge multi">ITHub.es</span>
+<footer>
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px"><span class="exam-chip azure">ITHub.es</span>
       <span>© 2025 · Contenido educativo para certificaciones.</span></div>
-    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+     <div><a href="javascript:history.back()" class="pill-btn">< VOLVER</a></div>
   </div>
 </footer>
 

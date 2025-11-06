@@ -2,146 +2,142 @@
 <html lang="es"><head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Conectividad híbrida en Azure (AZ‑305) — Azure AZ-305 | ITHub</title>
-<meta name="description" content="Conectividad híbrida en Azure (AZ‑305) para el examen AZ-305. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a Azure."/>
-<!-- Google tag (gtag.js) -->
+<title>Conectividad híbrida en Azure (AZ-305) — Azure AZ-305 | ITHub</title>
+<meta name="description" content="Conectividad híbrida en Azure (AZ-305). Opciones de VPN, ExpressRoute, Private Link, DNS y patrones de seguridad recomendados para el examen AZ-305."/>
+<!-- Google tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
 <style>
 :root{
   --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --accent-aws:#ffb74d; --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
-  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --accent-azure:#6aa9ff; --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b;
   --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
 a{color:inherit;text-decoration:none}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
-/* Header */
 header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
-  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
-  border-bottom:1px solid var(--stroke)}
-.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-.brand img.site-logo{height:40px;width:auto;display:block}
-nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
-nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
-.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
-.pill-btn:hover{transform:translateY(-1px)}
-.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-/* Hero */
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+.brand img{height:38px}
+.menu{display:flex;gap:14px;text-transform:uppercase;font-weight:800;color:var(--muted)}
+.menu a{padding:8px 10px;border-radius:8px;border:1px solid transparent}
+.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 14px;border-radius:10px;
+  border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
 .hero{padding:26px 0 8px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--stroke); background:var(--badge); color:#fff;
-  padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.3px
-}
-.badge.aws{border-color:rgba(255,183,77,.55); background:rgba(255,183,77,.15); color:#ffe7c2}
-.badge.azure{border-color:rgba(106,169,255,.6); background:rgba(106,169,255,.15); color:#e6f0ff}
-.badge.multi{border-color:rgba(155,140,255,.6); background:rgba(155,140,255,.15); color:#f0eaff}
-/* Slim horizontal exam chip in one line */
-.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
-  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
-.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
-.exam-chip.aws{ border-color:rgba(255,183,77,.65); background:rgba(36,28,16,.55); color:#ffe2b3 }
-.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
-/* Title + meta pills */
-h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
+.exam-chip{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:20px;border:1px solid var(--stroke);
+ background:var(--badge);font-weight:900;color:#e6f0ff}
+.exam-chip.azure{border-color:rgba(106,169,255,.6);background:rgba(18,30,52,.55)}
+h1{text-align:center;font-size:clamp(1.6rem,3vw,2.6rem);margin:16px 0 10px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
-/* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
-/* Sidebar index */
-.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:18px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424);border:1px solid var(--stroke);border-radius:var(--radius);padding:14px}
 .aside h3{margin:8px 0 10px}
 .toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
 .toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
 .toc a small{color:#9fb3e7;font-weight:700}
-.toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.aws a{ border-color:rgba(255,183,77,.25); background:rgba(255,183,77,.06); color:#ffe7c9}
-.toc.aws a:hover{ border-color:rgba(255,183,77,.65) }
-.toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
-.toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
-/* Content card */
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.toc a:hover{border-color:#31539a;transform:translateX(2px)}
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
+ border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
 .card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
+blockquote.tip{margin:14px 0;padding:12px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
 pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
-kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
-table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
-th,td{border:1px solid #22304f;padding:8px 10px}
-th{background:#16213a}
-/* Footer */
-footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;
+ background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
 </style></head>
 <body>
 
-<header role="banner">
+<header>
   <div class="container nav">
-    <div class="brand">
-      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
-    </div>
-    <nav class="menu" aria-label="Navegación principal">
-      <a href="/">HOME</a>
-      <a href="/content/content.html">CONTENIDOS</a>
-      <a href="/score/ranking.html">RANKING</a>
-    </nav>
-    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
-      <div id="userArea" style="display:none;align-items:center;gap:6px">
-        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-      </div>
-    </div>
+    <div class="brand"><a href="/"><img src="/assets/ithub-logo.svg" alt="ITHub.es logo"></a></div>
+    <nav class="menu"><a href="/">Home</a><a href="/content/content.html">Contenidos</a><a href="/score/ranking.html">Ranking</a></nav>
+    <a href="/login/login.html" class="pill-btn">Login</a>
   </div>
 </header>
-<script>
-function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-(function(){
-  const u=getCurrentUser();
-  const login=document.getElementById('btnLogin');
-  const signup=document.getElementById('btnSignup');
-  const userArea=document.getElementById('userArea');
-  const nameTop=document.getElementById('userNameTop');
-  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-})();
-</script>
 
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span></div>
-  <h1 style="text-align:center">Conectividad híbrida en Azure (AZ‑305)</h1>
-  
-    <div class="meta">
-      <span class="pill">Dominio: Red y acceso privado a PaaS</span>
-      <span class="pill">Nivel: Intermedio</span>
-      <span class="pill">Tiempo de lectura: 20–30 min</span>
-      <span class="pill">Última revisión: Nov 2025</span>
-    </div>
-  <div class="grid" style="margin-top:16px">
+  <h1>Conectividad híbrida en Azure (AZ-305)</h1>
+  <div class="meta">
+    <span class="pill">Dominio: Red y acceso privado a PaaS</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 20-30 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
     <aside class="aside">
       <h3>ÍNDICE</h3>
-      <ul class="toc azure"><li><a href="#sec1"><small>1.</small> Opciones</a></li><li><a href="#sec2"><small>2.</small> Private Link y DNS</a></li><li><a href="#sec3"><small>3.</small> Seguridad</a></li></ul>
+      <ul class="toc azure">
+        <li><a href="#sec1"><small>1.</small> Opciones</a></li>
+        <li><a href="#sec2"><small>2.</small> Private Link y DNS</a></li>
+        <li><a href="#sec3"><small>3.</small> Seguridad y patrones</a></li>
+      </ul>
     </aside>
-    <div><section id="sec1" class="card"><h2>1. Opciones</h2><p>Site-to-Site VPN vs ExpressRoute. BGP para rutas dinámicas. Encryption y redundancia de pares.</p></section>
-<section id="sec2" class="card"><h2>2. Private Link y DNS</h2><p>Exponer PaaS de forma privada con Private Link; resuelve con Private DNS zones y split-horizon.</p></section>
-<section id="sec3" class="card"><h2>3. Seguridad y patrones</h2><p>Firewall perimetral, UDR, inspección L7 con WAF/AppGW, DDoS Standard.</p></section>
-</div>
+
+    <div>
+      <section id="sec1" class="card">
+        <h2>1. Opciones</h2>
+        <p><b>Objetivo:</b> conectar redes locales con Azure con resiliencia y rendimiento.</p>
+        <ul>
+          <li><b>VPN Site-to-Site:</b> túnel IPsec/IKEv2 entre gateway y firewall on-prem; ideal para entornos pequeños o dev/test.</li>
+          <li><b>ExpressRoute:</b> conexión privada (MPLS o Metro-Ethernet) con SLA superior, latencia mínima y opción de <b>Global Reach</b>.</li>
+          <li><b>BGP dinámico:</b> intercambia rutas entre on-prem y Azure; facilita failover automático Active-Active.</li>
+          <li><b>Redundancia:</b> gateways emparejados en Zonas de Disponibilidad y backups geográficos.</li>
+        </ul>
+        <blockquote class="tip">Usa <b>VPN Gateway SKU VpnGw2</b> o superior para producción y habilita <b>IKEv2 + BGP</b>.</blockquote>
+        <p><b>Patrón típico:</b></p>
+        <pre>On-prem ── VPN Gateway ── HUB VNet ── Spokes</pre>
+      </section>
+
+      <section id="sec2" class="card">
+        <h2>2. Private Link y DNS</h2>
+        <p><b>Objetivo:</b> exponer servicios PaaS de forma privada dentro de una VNet.</p>
+        <ul>
+          <li><b>Private Endpoint:</b> interfaz de red privada en tu VNet con IP interna; accede al servicio PaaS sin internet público.</li>
+          <li><b>Private Link Service:</b> publica tu propio servicio privado a otros tenants o VNets.</li>
+          <li><b>Private DNS Zones:</b> resuelve nombres de endpoints privados (<code>privatelink.*</code>).</li>
+          <li><b>Split-horizon DNS:</b> misma zona con respuestas distintas on-prem/Azure; evita bucles DNS.</li>
+          <li><b>DNS Resolver:</b> nuevo servicio para reenviar peticiones on-prem ↔ Azure sin VM DNS.</li>
+        </ul>
+        <blockquote class="tip">Centraliza las zonas DNS en la <b>VNet HUB</b> y usa <b>Azure DNS Private Resolver</b> con reglas in/out.</blockquote>
+        <p><b>Ejemplo:</b></p>
+        <pre>SQL → mydb.database.windows.net
+resuelve a → privatelink.database.windows.net (IP privada)</pre>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. Seguridad y patrones</h2>
+        <p><b>Objetivo:</b> proteger el perímetro y controlar tráfico entre VNets y on-prem.</p>
+        <ul>
+          <li><b>Firewall perimetral:</b> Azure Firewall o NVA; inspección L3-L4, DNAT/SNAT, políticas centralizadas.</li>
+          <li><b>UDR (User Defined Routes):</b> fuerza tráfico por NVAs o inspección.</li>
+          <li><b>Inspección L7:</b> WAF en App Gateway o Front Door (protección OWASP Top 10).</li>
+          <li><b>DDoS Protection Standard:</b> capa adicional de mitigación volumétrica.</li>
+          <li><b>NSG/ASG:</b> control granular por IP o aplicación.</li>
+          <li><b>Encriptación:</b> IPsec/IKEv2 para VPN, MACsec para ExpressRoute Direct.</li>
+        </ul>
+        <blockquote class="tip"><b>Patrón HUB-SPOKE:</b> centraliza firewall y DNS en el HUB, spokes aislados; simplifica seguridad y costes.</blockquote>
+        <p><b>Diseño típico:</b></p>
+        <pre>
+On-prem ── VPN Gateway ── HUB VNet ── FW ── SPOKE (App)
+       │             │
+       └── ExpressRoute (Private Peering)
+        </pre>
+      </section>
+    </div>
   </div>
 </main>
 
-<footer role="contentinfo">
-  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="badge multi">ITHub.es</span>
+<footer>
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px"><span class="exam-chip azure">ITHub.es</span>
       <span>© 2025 · Contenido educativo para certificaciones.</span></div>
-    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+        <div><a href="javascript:history.back()" class="pill-btn">< VOLVER</a></div>
+
   </div>
 </footer>
 
