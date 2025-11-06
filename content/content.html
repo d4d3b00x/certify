@@ -239,42 +239,32 @@
   }
   renderHeaderAuth();
 
-  /* === ÍNDICE COMPLETO /content === */
-  const CONTENT = [
-    /* Transversales */
-    { title:"Backup inmutable & Ciberrecuperación", href:"/content/immutable-backup-cyberrecovery.html", exam:["AZ-104","AZ-305","SAA-C03"], vendor:["Azure","AWS"], level:"avanzado", summary:"Estrategia 3-2-1-1-0, inmutabilidad (Blob/S3), bóvedas aisladas, redes cerradas y runbooks de respuesta." },
-    { title:"VNet Peering vs. VPN Gateway (AZ-104)", href:"/content/vnet-peering-vpn.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Comparativa y patrones: peering, tránsito en hub-spoke, cifrado, costes y laboratorio guiado." },
+/* === ÍNDICE /content (16 marcados) === */
+const CONTENT = [
+  /* Transversal */
+  { title:"Backup inmutable & Ciberrecuperación", href:"/content/immutable-backup-cyberrecovery.html", exam:["AZ-104","AZ-305","SAA-C03"], vendor:["Azure","AWS"], level:"avanzado", summary:"Estrategia 3-2-1-1-0, inmutabilidad (Blob/S3), bóvedas aisladas, redes cerradas y runbooks de respuesta." },
 
-    /* Azure AZ-104 */
-    { title:"Identidad y Acceso (AZ-104)", href:"/content/azure-identity-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC, PIM, Access Reviews, Managed Identities, App Regs y mejores prácticas con Key Vault." },
-    { title:"Seguridad de red (AZ-104)", href:"/content/azure-network-security-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"NSG/ASG, UDR, Azure Firewall, WAF, Private Endpoints y DNS privado para PaaS." },
-    { title:"Azure Storage (AZ-104)", href:"/content/azure-storage-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC vs claves, SAS delegación de usuario, WORM, replicación (LRS/ZRS/GRS/GZRS) y PE." },
-    { title:"Backup & Recovery (AZ-104)", href:"/content/azure-backup-recovery-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Recovery Services Vault, políticas, soft-delete, cross-region restore y protecciones de examen." },
-    { title:"Cómputo y disponibilidad (AZ-104)", href:"/content/azure-compute-availability-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"VM/VMSS, zonas/sets de disponibilidad, imágenes con SIG, orquestación y updates." },
-    { title:"Monitorización y alertas (AZ-104)", href:"/content/azure-monitoring-alerts-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Azure Monitor, Log Analytics, DCR, KQL, alertas métricas y de logs, Action Groups." },
-    { title:"Coste y gobernanza (AZ-104)", href:"/content/azure-cost-governance-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Budgets, Cost Management, etiquetado, Azure Advisor y Policy para control de gasto." },
-    { title:"Checklist de seguridad Azure (AZ-104)", href:"/content/azure-security-checklist.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Lista priorizada: identidad, red, datos, backup, posture y puntos típicos de examen." },
+  /* Azure AZ-104 */
+  { title:"Identidad y Acceso (AZ-104)", href:"/content/azure-identity-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC, PIM, Access Reviews, Managed Identities, App Regs y mejores prácticas con Key Vault." },
+  { title:"Seguridad de red (AZ-104)", href:"/content/azure-network-security-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"NSG/ASG, UDR, Azure Firewall, WAF, Private Endpoints y DNS privado para PaaS." },
+  { title:"Azure Storage (AZ-104)", href:"/content/azure-storage-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC vs claves, SAS delegación de usuario, WORM, replicación (LRS/ZRS/GRS/GZRS) y PE." },
+  { title:"Monitorización y alertas (AZ-104)", href:"/content/azure-monitoring-alerts-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Azure Monitor, Log Analytics, DCR, KQL, alertas métricas y de logs, Action Groups." },
+  { title:"Coste y gobernanza (AZ-104)", href:"/content/azure-cost-governance-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Budgets, Cost Management, etiquetado, Azure Advisor y Policy para control de gasto." },
 
-    /* Azure AZ-305 */
-    { title:"Azure Landing Zone (AZ-305)", href:"/content/azure-landing-zone.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura de red base." },
-    { title:"Conectividad híbrida (AZ-305)", href:"/content/azure-hybrid-connectivity-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"VPN/ER, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones HUB/SPOKE/vWAN." },
-    { title:"Arquitectura de red (AZ-305)", href:"/content/azure-network-architecture-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial." },
-    { title:"Alta disponibilidad y DR (AZ-305)", href:"/content/azure-ha-dr-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Pares regionales, zonas, ASR, geo-replicación y estrategias de failover multi-región." },
-    { title:"Elección de datos (AZ-305)", href:"/content/azure-data-choices-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"SQL MI vs Azure SQL, Cosmos DB, PostgreSQL Flexible, ADLS Gen2 y analítica con Synapse." },
-    { title:"Coste y fiabilidad (AZ-305)", href:"/content/azure-cost-reliability-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Savings Plans/RI, right-sizing, elástico vs reservado y decisiones de resiliencia con coste." },
-    { title:"Zero Trust en Azure (AZ-305)", href:"/content/azure-security-zero-trust-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"Identidad primero, microsegmentación, acceso privado a PaaS, Defender y verificación continua." },
-    { title:"Seguridad de red en Azure (AZ-305)", href:"/content/azure-network-security-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Diseño de control perimetral/L7, Azure Firewall Premium, WAF, Private Endpoints y DNS seguro." },
+  /* Azure AZ-305 */
+  { title:"Azure Landing Zone (AZ-305)", href:"/content/azure-landing-zone.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura de red base." },
+  { title:"Conectividad híbrida (AZ-305)", href:"/content/azure-hybrid-connectivity-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"VPN/ER, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones HUB/SPOKE/vWAN." },
+  { title:"Arquitectura de red (AZ-305)", href:"/content/azure-network-architecture-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial." },
+  { title:"Alta disponibilidad y DR (AZ-305)", href:"/content/azure-ha-dr-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Pares regionales, zonas, ASR, geo-replicación y estrategias de failover multi-región." },
 
-    /* AWS SAA-C03 */
-    { title:"IAM y Organizations (SAA-C03)", href:"/content/aws-iam-organizations-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"Principios de IAM, roles/políticas, MFA, multi-cuenta con Organizations y SCP." },
-    { title:"Elasticidad de cómputo (SAA-C03)", href:"/content/aws-compute-elasticity-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Auto Scaling, ALB/NLB, EC2 tipos de compra (On-Demand/RI/Savings/Spot) y blue/green." },
-    { title:"Bases de datos y almacenamiento (SAA-C03)", href:"/content/aws-databases-storage-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"RDS/Aurora (Multi-AZ/replicas), DynamoDB (WCU/RCU), S3 con KMS y lifecycle." },
-    { title:"Observabilidad (SAA-C03)", href:"/content/aws-observability-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"CloudWatch métricas/reglas, logs, X-Ray, CloudTrail y AWS Config." },
-    { title:"S3: diseño (SAA-C03)", href:"/content/aws-s3-design-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Bloqueo público, SSE-KMS, Object Lock WORM, clases de almacenamiento y rendimiento." },
-    { title:"SQS & SNS: patrones (SAA-C03)", href:"/content/aws-sqs-sns-patterns.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Fanout, FIFO, DLQ, backoff, redrive; integración con Lambda, EventBridge y Kinesis." },
-    { title:"VPC avanzado y Endpoints (SAA-C03)", href:"/content/aws-vpc-advanced-endpoints-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Transit Gateway, endpoints Gateway/Interface, PrivateLink, Route 53 y DNS." },
-    { title:"VPC Alta disponibilidad (SAA-C03)", href:"/content/aws-vpc-ha.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Multi-AZ, NAT por AZ, zonificación, HA de balanceadores y observabilidad de red." }
-  ];
+  /* AWS SAA-C03 */
+  { title:"IAM y Organizations (SAA-C03)", href:"/content/aws-iam-organizations-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"Principios de IAM, roles/políticas, MFA, multi-cuenta con Organizations y SCP." },
+  { title:"Elasticidad de cómputo (SAA-C03)", href:"/content/aws-compute-elasticity-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Auto Scaling, ALB/NLB, EC2 tipos de compra (On-Demand/RI/Savings/Spot) y blue/green." },
+  { title:"Bases de datos y almacenamiento (SAA-C03)", href:"/content/aws-databases-storage-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"RDS/Aurora (Multi-AZ/replicas), DynamoDB (WCU/RCU), S3 con KMS y lifecycle." },
+  { title:"Observabilidad (SAA-C03)", href:"/content/aws-observability-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"CloudWatch métricas/reglas, logs, X-Ray, CloudTrail y AWS Config." },
+  { title:"S3: diseño (SAA-C03)", href:"/content/aws-s3-design-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Bloqueo público, SSE-KMS, Object Lock WORM, clases de almacenamiento y rendimiento." },
+  { title:"VPC avanzado y Endpoints (SAA-C03)", href:"/content/aws-vpc-advanced-endpoints-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Transit Gateway, endpoints Gateway/Interface, PrivateLink, Route 53 y DNS." }
+];
 
   function badge(el, text, cls=""){ 
     const b=document.createElement("span"); b.className="badge "+cls; 
