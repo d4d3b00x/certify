@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Seguridad y Zero Trust en Azure (AZ-305) — ITHub</title>
+<meta name="description" content="Diseño de seguridad, segmentación y Zero Trust en Azure para el examen AZ-305. Incluye Defender, identidades, cifrado y acceso seguro."/>
+<link rel="icon" href="/assets/ithub.ico">
+<style>
+:root{--bg:#0e111a;--surface:#121826;--ink:#eaf0ff;--muted:#a9b6e5;--stroke:#24304d;--accent:#6aa9ff;--radius:16px;--shadow:0 24px 48px rgba(8,12,30,.45);}
+body{margin:0;font-family:Inter,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--stroke);background:#101628;position:sticky;top:0;z-index:50}
+header .nav{height:60px;display:flex;align-items:center;justify-content:space-between}
+.menu a{color:var(--muted);margin:0 8px;text-transform:uppercase;font-weight:800;text-decoration:none}
+.menu a:hover{color:var(--ink)}
+.pill-btn{background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;padding:6px 14px;border-radius:10px;font-size:12px;font-weight:900;text-transform:uppercase;text-decoration:none}
+.hero{padding:26px 0 8px}
+.exam-chip{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:20px;border:1px solid var(--stroke);background:#1a2135;font-weight:900;color:#eaf0ff}
+h1{text-align:center;margin:14px 0;font-size:2rem}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:20px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.aside{background:#101a33;border:1px solid var(--stroke);border-radius:var(--radius);padding:14px}
+.toc{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:block;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;color:#dbe7ff;font-weight:800;text-decoration:none}
+.toc a:hover{border-color:#31539a}
+.card{background:#111937;border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+blockquote.tip{margin:14px 0;padding:12px;border-left:4px solid #3ad97a;background:rgba(58,217,122,.08);border-radius:12px}
+pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+footer{border-top:1px solid var(--stroke);padding:22px 0;text-align:center;color:#9ca8d9;margin-top:18px}
+</style>
+</head>
+<body>
+<header>
+ <div class="container nav">
+  <div><a href="/"><img src="/assets/ithub-logo.svg" alt="ITHub" height="38"></a></div>
+  <nav class="menu"><a href="/">Home</a><a href="/content/content.html">Contenidos</a><a href="/score/ranking.html">Ranking</a></nav>
+  <a href="/login/login.html" class="pill-btn">Login</a>
+ </div>
+</header>
+
+<main class="container hero">
+ <div style="display:flex;justify-content:center"><span class="exam-chip">Azure · AZ-305</span></div>
+ <h1>Seguridad y Zero Trust en Azure (AZ-305)</h1>
+
+ <div class="grid">
+  <aside class="aside">
+   <h3>ÍNDICE</h3>
+   <ul class="toc">
+    <li><a href="#sec1">1. Principios Zero Trust</a></li>
+    <li><a href="#sec2">2. Identidad y control de acceso</a></li>
+    <li><a href="#sec3">3. Protección de red y endpoints</a></li>
+    <li><a href="#sec4">4. Cifrado y protección de datos</a></li>
+    <li><a href="#sec5">5. Monitoreo y respuesta</a></li>
+    <li><a href="#sec6">6. Checklist de examen</a></li>
+   </ul>
+  </aside>
+
+  <div>
+   <section id="sec1" class="card">
+    <h2>1. Principios Zero Trust</h2>
+    <p>Zero Trust asume que nada dentro o fuera del perímetro es confiable. Toda conexión se valida explícitamente.</p>
+    <ul>
+     <li><b>Verificar explícitamente:</b> autenticación fuerte y continua.</li>
+     <li><b>Usar acceso con privilegio mínimo:</b> roles temporales y segmentación.</li>
+     <li><b>Asumir brecha:</b> telemetría, detección y respuesta continua.</li>
+    </ul>
+    <blockquote class="tip">Zero Trust ≠ una herramienta, es una <b>estrategia arquitectónica</b>.</blockquote>
+   </section>
+
+   <section id="sec2" class="card">
+    <h2>2. Identidad y control de acceso</h2>
+    <ul>
+     <li><b>Microsoft Entra ID:</b> identidad central con autenticación multifactor (MFA) y Conditional Access.</li>
+     <li><b>Privileged Identity Management (PIM):</b> acceso just-in-time para roles administrativos.</li>
+     <li><b>Managed Identities:</b> evitan credenciales en código.</li>
+     <li><b>Access Reviews</b> y <b>Entitlement Management</b> para gobernanza de usuarios.</li>
+    </ul>
+    <pre>Ejemplo: PIM activa Owner 1h → MFA → registro de auditoría</pre>
+   </section>
+
+   <section id="sec3" class="card">
+    <h2>3. Protección de red y endpoints</h2>
+    <ul>
+     <li><b>Azure Firewall Premium:</b> inspección TLS, filtrado FQDN y categorías URL.</li>
+     <li><b>Network Security Groups (NSG):</b> reglas L4 por subred o NIC.</li>
+     <li><b>Azure DDoS Protection:</b> capa perimetral.</li>
+     <li><b>WAF:</b> protege apps web en App Gateway o Front Door.</li>
+     <li><b>Just-In-Time Access:</b> Defender habilita acceso temporal a VMs.</li>
+    </ul>
+   </section>
+
+   <section id="sec4" class="card">
+    <h2>4. Cifrado y protección de datos</h2>
+    <ul>
+     <li><b>Azure Key Vault:</b> almacena claves, secretos y certificados.</li>
+     <li><b>Encryption at rest:</b> Storage y SQL usan AES-256.</li>
+     <li><b>Encryption in transit:</b> TLS 1.2/1.3 obligatorio.</li>
+     <li><b>Confidential Compute:</b> protege datos en uso con enclaves SGX.</li>
+    </ul>
+   </section>
+
+   <section id="sec5" class="card">
+    <h2>5. Monitoreo y respuesta</h2>
+    <ul>
+     <li><b>Microsoft Defender for Cloud:</b> postura, recomendaciones y alertas.</li>
+     <li><b>Sentinel:</b> SIEM/SOAR nativo con correlación de eventos.</li>
+     <li><b>Secure Score:</b> medición global del cumplimiento de seguridad.</li>
+    </ul>
+   </section>
+
+   <section id="sec6" class="card">
+    <h2>6. Checklist de examen</h2>
+    <ul>
+     <li>Zero Trust = verificar, minimizar, asumir brecha.</li>
+     <li>MFA + PIM + Conditional Access = obligatorio.</li>
+     <li>Firewall Premium + NSG + DDoS + WAF.</li>
+     <li>Key Vault + cifrado AES-256 + Confidential Compute.</li>
+     <li>Defender + Sentinel + Secure Score.</li>
+    </ul>
+   </section>
+  </div>
+ </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px"><span class="exam-chip azure">ITHub.es</span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
+     <div><a href="javascript:history.back()" class="pill-btn">< VOLVER</a></div>
+
+  </div>
+</footer>
+
+
+</body>
+</html>

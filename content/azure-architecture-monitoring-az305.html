@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Supervisión y resiliencia en Azure (AZ-305) — ITHub</title>
+<meta name="description" content="Diseño de soluciones de monitorización, alertas y continuidad de negocio en Azure para el examen AZ-305. Incluye Azure Monitor, Log Analytics y resiliencia multi-región."/>
+<style>
+:root{--bg:#0e111a;--ink:#eaf0ff;--muted:#a9b6e5;--stroke:#24304d;--radius:16px;--shadow:0 24px 48px rgba(8,12,30,.45);}
+body{margin:0;font-family:Inter,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+header{border-bottom:1px solid var(--stroke);background:#101628;position:sticky;top:0;z-index:50}
+.nav{height:60px;display:flex;align-items:center;justify-content:space-between}
+.menu a{color:var(--muted);margin:0 8px;text-transform:uppercase;font-weight:800;text-decoration:none}
+.menu a:hover{color:var(--ink)}
+.pill-btn{background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;padding:6px 14px;border-radius:10px;font-size:12px;font-weight:900;text-transform:uppercase;text-decoration:none}
+.exam-chip{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:20px;border:1px solid var(--stroke);background:#1a2135;font-weight:900;color:#eaf0ff}
+h1{text-align:center;margin:16px 0}
+.grid{display:grid;grid-template-columns:300px 1fr;gap:18px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.aside{background:#101a33;border:1px solid var(--stroke);border-radius:var(--radius);padding:14px}
+.toc{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:block;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;color:#dbe7ff;font-weight:800;text-decoration:none}
+.card{background:#111937;border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
+blockquote.tip{margin:14px 0;padding:12px;border-left:4px solid #3ad97a;background:rgba(58,217,122,.08);border-radius:12px}
+pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+footer{border-top:1px solid var(--stroke);padding:22px 0;text-align:center;color:#9ca8d9;margin-top:18px}
+</style></head>
+<body>
+<header>
+ <div class="container nav">
+  <div><a href="/"><img src="/assets/ithub-logo.svg" alt="ITHub" height="38"></a></div>
+  <nav class="menu"><a href="/">Home</a><a href="/content/content.html">Contenidos</a></nav>
+  <a href="/login/login.html" class="pill-btn">Login</a>
+ </div>
+</header>
+
+<main class="container">
+ <div style="display:flex;justify-content:center"><span class="exam-chip">Azure · AZ-305</span></div>
+ <h1>Supervisión y resiliencia en Azure (AZ-305)</h1>
+
+ <div class="grid">
+  <aside class="aside">
+   <h3>ÍNDICE</h3>
+   <ul class="toc">
+    <li><a href="#sec1">1. Azure Monitor y métricas</a></li>
+    <li><a href="#sec2">2. Log Analytics y diagnóstico</a></li>
+    <li><a href="#sec3">3. Alertas y automatización</a></li>
+    <li><a href="#sec4">4. Continuidad y recuperación</a></li>
+    <li><a href="#sec5">5. Patrón de alta disponibilidad</a></li>
+    <li><a href="#sec6">6. Checklist de examen</a></li>
+   </ul>
+  </aside>
+
+  <div>
+   <section id="sec1" class="card">
+    <h2>1. Azure Monitor y métricas</h2>
+    <p>Azure Monitor recopila telemetría de recursos, apps y usuarios. Ofrece métricas (numéricas) y logs (detallados).</p>
+    <ul>
+     <li><b>Métricas:</b> disponibles en tiempo real; visualización con gráficos.</li>
+     <li><b>Workbooks:</b> paneles personalizables.</li>
+     <li><b>Action Groups:</b> SMS, correo, webhook, Logic App o función.</li>
+    </ul>
+    <blockquote class="tip">Todas las alertas y dashboards se basan en Azure Monitor, no en herramientas externas.</blockquote>
+   </section>
+
+   <section id="sec2" class="card">
+    <h2>2. Log Analytics y diagnóstico</h2>
+    <ul>
+     <li><b>Workspace central:</b> recopila logs de varias suscripciones.</li>
+     <li><b>Diagnostic Settings:</b> envían logs de actividad y recursos.</li>
+     <li><b>KQL (Kusto Query Language):</b> filtra y analiza eventos.</li>
+    </ul>
+    <pre>AzureActivity | where ActivityStatusValue=="Failure" | summarize count() by Caller</pre>
+   </section>
+
+   <section id="sec3" class="card">
+    <h2>3. Alertas y automatización</h2>
+    <ul>
+     <li><b>Alert Rules:</b> disparan acciones ante condiciones (CPU&gt;80%, error 500).</li>
+     <li><b>Autoscale:</b> ajusta instancias automáticamente.</li>
+     <li><b>Logic Apps / Automation Runbooks:</b> ejecutan respuesta automática.</li>
+    </ul>
+   </section>
+
+   <section id="sec4" class="card">
+    <h2>4. Continuidad y recuperación</h2>
+    <ul>
+     <li><b>Azure Backup:</b> copias con retención y encriptadas.</li>
+     <li><b>Site Recovery (ASR):</b> orquesta failover entre regiones o sitios.</li>
+     <li><b>Availability Zones:</b> 3 zonas independientes por región.</li>
+     <li><b>Geo-redundancia:</b> Storage GRS/RA-GRS replica entre regiones.</li>
+    </ul>
+   </section>
+
+   <section id="sec5" class="card">
+    <h2>5. Patrón de alta disponibilidad</h2>
+    <pre>
+App Tier: Load Balancer + VMSS / App Service
+DB Tier: SQL MI / Cosmos DB (multi-region)
+Storage: GRS + soft delete
+Networking: LB + zonas de disponibilidad
+    </pre>
+    <blockquote class="tip">El objetivo de diseño es ≥99.9% SLA con redundancia por capa.</blockquote>
+   </section>
+
+   <section id="sec6" class="card">
+    <h2>6. Checklist de examen</h2>
+    <ul>
+     <li>Azure Monitor + Log Analytics + Action Groups.</li>
+     <li>ASR para recuperación, Backup para protección.</li>
+     <li>Zonas de disponibilidad y GRS.</li>
+     <li>Autoscale + alertas = resiliencia operativa.</li>
+    </ul>
+   </section>
+  </div>
+ </div>
+</main>
+
+<footer>© 2025 ITHub · Supervisión y resiliencia en Azure (AZ-305)</footer>
+</body>
+</html>
