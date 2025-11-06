@@ -222,7 +222,7 @@
 
         <!-- Certificaciones destacadas -->
         <div id="certificaciones" class="card" style="margin-top:12px">
-          <h2>Certificaciones destacadas</h2>
+          <h2>CERTIFICACIONES ESTUDIABLES EN <span style="color:#f44bfad5">ITHUB</span></h2>
           <div class="muted">Accede a la página de cada certificación para guía, banco de preguntas y simulador.</div>
           <div class="grid cols-2" style="margin-top:12px">
             <article class="card">
@@ -245,49 +245,7 @@
           </div>
         </div>
 
-        <!-- Mapa de certificaciones -->
-        <div class="card" style="margin-top:12px">
-          <h2>Mapa de certificaciones de AWS</h2>
-          <p class="muted">El portfolio se organiza por <b>nivel</b>. Los códigos de versión cambian con el tiempo; aquí mostramos los nombres (el código actual lo verás en cada guía).</p>
-
-          <div class="grid cols-mapa" style="margin-top:14px">
-            <div class="card">
-              <h3 style="margin:0 0 6px">Fundamental</h3>
-              <ul style="margin:0;padding-left:18px">
-                <li>Cloud Practitioner (CLF)</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h3 style="margin:0 0 6px">Associate</h3>
-              <ul style="margin:0;padding-left:18px">
-                <li>Solutions Architect (SAA)</li>
-                <li>Developer (DVA)</li>
-                <li>SysOps Administrator (SOA)</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h3 style="margin:0 0 6px">Professional</h3>
-              <ul style="margin:0;padding-left:18px">
-                <li>Solutions Architect (SAP)</li>
-                <li>DevOps Engineer (DOP)</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h3 style="margin:0 0 6px">Especialty (especialidades)</h3>
-              <ul style="margin:0;padding-left:18px">
-                <li>Security (SCS)</li>
-                <li>Advanced Networking (ANS)</li>
-                <li>Data Analytics (DAS)</li>
-                <li>Machine Learning (MLS)</li>
-                <li>Databases (DBS)</li>
-                <li>SAP on AWS (PAS)</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <!-- (Mapa de certificaciones retirado de la columna izquierda) -->
 
         <!-- Rutas recomendadas por rol -->
         <div class="card" style="margin-top:12px">
@@ -352,21 +310,16 @@
                 <li>Patrones híbridos, PrivateLink, Transit Gateway</li>
                 <li>Alta disponibilidad multi-AZ/región y DR</li>
                 <li>Automatización (CDK/Terraform), seguridad avanzada</li>
+                <br><br><br><br>
               </ul>
             </div>
           </div>
         </div>
 
-        <!-- Consejos 
+        <!-- Consejos (opcional)
         <div class="card" style="margin-top:12px">
           <h2>Consejos rápidos para el examen</h2>
-          <div class="check">
-            <div>✅ Identifica <b>SLA/coste/seguridad/latencia</b> antes de elegir servicio.</div>
-            <div>✅ Prioriza <b>PaaS/Serverless</b> cuando sea posible (menor *operational overhead*).</div>
-            <div>✅ Usa siempre <b>múltiples AZ</b>; multirregión si hay RTO/RPO estrictos.</div>
-            <div>✅ Para acceso privado a PaaS, emplea <b>Interface/Gateway Endpoints</b> o <b>PrivateLink</b>.</div>
-            <div>✅ Automatiza con <b>CloudFormation/CDK/Terraform</b> y aplica *guardrails* con SCP/Config.</div>
-          </div>
+          ...
         </div>-->
       </div>
 
@@ -378,7 +331,6 @@
           <h3>Recursos oficiales</h3>
           <div style="display:grid;gap:8px">
             <a class="a-btn" href="https://aws.amazon.com/training/" target="_blank" rel="noopener">AWS Training & Certification</a>
-            <a class="a-btn" href="https://aws.amazon.com/certification/certification-prep/" target="_blank" rel="noopener">Learning Paths</a>
             <a class="a-btn" href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" target="_blank" rel="noopener">Exam Guide SAA-C03</a>
             <a class="a-btn" href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" rel="noopener">Well-Architected Framework</a>
             <a class="a-btn" href="https://aws.amazon.com/faqs/" target="_blank" rel="noopener">FAQs por servicio</a>
@@ -386,11 +338,52 @@
           </div>
         </div>
 
+        <!-- NUEVO: Mapa de certificaciones en la derecha -->
+        <div class="block">
+          <h3>Mapa de certificaciones de AWS</h3>
+          <div class="mini">Organizado por niveles.</div>
+          <div style="display:grid;gap:8px;margin-top:8px">
+            <div style="background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:10px">
+              <b>Fundamental</b>
+              <ul style="margin:6px 0 0 18px">
+                <li>Cloud Practitioner (CLF)</li>
+              </ul>
+            </div>
+            <div style="background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:10px">
+              <b>Associate</b>
+              <ul style="margin:6px 0 0 18px">
+                <li>Solutions Architect (SAA)</li>
+                <li>Developer (DVA)</li>
+                <li>SysOps Administrator (SOA)</li>
+              </ul>
+            </div>
+            <div style="background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:10px">
+              <b>Professional</b>
+              <ul style="margin:6px 0 0 18px">
+                <li>Solutions Architect (SAP)</li>
+                <li>DevOps Engineer (DOP)</li>
+              </ul>
+            </div>
+            <div style="background:var(--surface2);border:1px solid var(--stroke);border-radius:10px;padding:10px">
+              <b>Specialty</b>
+              <ul style="margin:6px 0 0 18px">
+                <li>Security (SCS)</li>
+                <li>Advanced Networking (ANS)</li>
+                <li>Data Analytics (DAS)</li>
+                <li>Machine Learning (MLS)</li>
+                <li>Databases (DBS)</li>
+                <li>SAP on AWS (PAS)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- /Mapa en derecha -->
+
         <div class="block">
           <h3>Próximos directos</h3>
           <div class="mini">
             <div style="display:flex;justify-content:space-between"><span>Arquitecturas resilientes en AWS</span><span>Mié 19:00</span></div>
-            <div style="display:flex;justify-content:space-between"><span>Preguntas tricky SAA-C03</span><span>Lun 18:30</span></div>
+            
           </div>
         </div>
 
@@ -398,7 +391,7 @@
           <h3>Comunidad</h3>
           <div style="display:grid;gap:8px">
             <a class="a-btn" href="#">Foro</a>
-            <a class="a-btn" href="#">Discord</a>
+         
             <a class="a-btn" href="#">Coaching 1:1</a>
           </div>
         </div>
@@ -406,30 +399,34 @@
     </section>
   </main><br>
 
-  <!-- Pie -->
+    <!-- Pie -->
   <footer role="contentinfo">
     <div class="container f-grid">
       <div>
         <div class="brand" style="text-transform:none">
-          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#ffd699 0%,#ff9900 100%);box-shadow:0 0 0 6px rgba(255,153,0,.18)"></span>
-          <span>ITHub.es</span>
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHUB.ES</span>
         </div>
-        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT  mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
-       <div>
-        <div style="font-weight:800">Simuladores</div>
-        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZURE AZ-104</a></div>
-        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">AWS SAA-C03</a></div>
-        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZURE AZ-305</a></div>
-      </div>
-      <div>
-        <div style="font-weight:800">Contenidos</div>
-        <div><a href="/content/aws-s3-design-saac03.html">AWS · S3 diseño</a></div>
-        <div><a href="/content/aws-sqs-sns-patterns.html">AWS · SQS & SNS</a></div>
-        <div><a href="/content/immutable-backup-cyberrecovery.html">Backup inmutable</a></div>
+        <div>
+        <div style="font-weight:800">SIMULADORES</div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFTAZURE AZ-305</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">AMAZON AWS SAA-C03</a></div>
       </div>
       <div>
-        <div style="font-weight:800">Contacto</div>
+        <div style="font-weight:800">DESTACADOS</div>
+        <div><a href="/content/azure-identity-az104.html">Azure · Identidad y Acceso</a></div>
+        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
+        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
+        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">COLABORADORES</div>
+        💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
+        <div style="font-weight:800">CONTACTO</div>
         <button id="footerContactBtn" type="button"
                 style="background:none;border:none;color:#cfe1ff;
                        font-weight:800;display:inline-flex;align-items:center;
@@ -450,7 +447,8 @@
       <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
       <p class="mini" style="margin:0 0 8px">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
 
-      <label class="visualmente-hidden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
+      <label class="visualmente-h
+      idden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
       <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)" />
       <label class="visualmente-hidden" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
       <textarea id="feedbackText" rows="5" placeholder="Escribe aquí tu sugerencia…"></textarea>
