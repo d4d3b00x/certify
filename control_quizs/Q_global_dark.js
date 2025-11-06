@@ -19,9 +19,45 @@
 
 (() => {
 /* ===================== CONFIG ===================== */
-const API_URL      = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-const PROGRESS_URL = `${API_URL}/progress`;
-const RESULTS_URL  = `${API_URL}/results`;
+const API_URL       = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // base sin stage
+const RESULTS_URL   = `${API_URL}/results`;
+
+// Descubrimiento automático de /progress (sin stage, /prod, /dev)
+let __PROGRESS_URL_CACHED = null;
+const __CANDIDATE_STAGES = ["", "prod", "dev"];
+
+async function discoverProgressUrl(samplePayload) {
+  if (__PROGRESS_URL_CACHED) return __PROGRESS_URL_CACHED;
+  for (const st of __CANDIDATE_STAGES) {
+    const url = st ? `${API_URL}/${st}/progress` : `${API_URL}/progress`;
+    try {
+      const r = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          sessionId: samplePayload.sessionId || "s-probe",
+          quizId: samplePayload.quizId || "probe",
+          idx: 0, total: 0, elapsedSec: 0,
+          userId: "probe", userName: "probe",
+          status: "in_progress"
+        })
+      });
+      if (r.status === 200 || r.status === 201) {
+        console.info("[progress] endpoint OK:", url);
+        __PROGRESS_URL_CACHED = url;
+        return url;
+      } else {
+        const txt = await r.text().catch(()=> "");
+        console.warn("[progress] fallback", url, "status:", r.status, txt);
+      }
+    } catch (e) {
+      console.warn("[progress] endpoint error", url, e);
+    }
+  }
+  __PROGRESS_URL_CACHED = `${API_URL}/progress`; // por si acaso
+  return __PROGRESS_URL_CACHED;
+}
 
 /* ===================== ESTADO ===================== */
 const S = {
@@ -54,7 +90,6 @@ const S = {
   finishLocked: false,
 
   _afterRenderScroll: null,
-
   _firstProgressConfirmed: false
 };
 let __SEQ = 0;
@@ -67,7 +102,7 @@ const QUIZZES = {
   "az-305":      { track:"az-305-architect", certi:"Microsoft Azure Solutions Architect Expert (AZ-305)", domNames:{ D1:"Diseño de infraestructura", D2:"Datos/almacenamiento", D3:"Seguridad/identidad", D4:"BC/DR" } }
 };
 
-/* ===================== CSS base (quiz) ===================== */
+/* ===================== CSS (quiz) ===================== */
 (function injectCSS(){
   const css = `
   :root{
@@ -111,8 +146,6 @@ const QUIZZES = {
          border-radius:12px; padding:12px; }
   .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
   .link-list{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
-  .link-item .link-title{ font-weight:800; }
-  .link-item small a{ color:var(--accent); text-decoration:underline; word-break:break-all; }
 
   .controls{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; justify-content:flex-end; }
   .controls.centered{ justify-content:center; }
@@ -128,15 +161,14 @@ const QUIZZES = {
   .dot{ display:flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:999px;
         border:2px solid var(--stroke); background:var(--surface2); cursor:pointer; font-weight:900; color:#e8ecff; }
   .dot.current{ outline:3px solid var(--accent-ring); }
-  .dot.ok{ background:var(--ok-bg); border-color:#2e7a5a; color:#ok-ink; }
-  .dot.bad{ background:#2a1216; border-color:#7a2e38; color:#ffc1c1; }
-  .dot.marked{ background:var(--mark-bg)!important; border-color:#b49422!important; color:#ffeaa3!important; outline:3px solid var(--mark-ring); }
+  .dot.ok{ background:var(--ok-bg); border-color:#2e7a5a; }
+  .dot.bad{ background:#2a1216; border-color:#7a2e38; }
+  .dot.marked{ background:var(--mark-bg)!important; border-color:#b49422!important; outline:3px solid var(--mark-ring); }
 
   .toast{ position:fixed; left:50%; bottom:18px; transform:translateX(-50%); background:#0e1530; color:#fff;
           padding:10px 14px; border-radius:10px; box-shadow:0 10px 24px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s; z-index:99999; }
   .toast.show{ opacity:1; }
 
-  /* KPIs */
   .kpis-under-quiz{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:16px; }
   @media (max-width:700px){ .kpis-under-quiz{ grid-template-columns:1fr; } }
   .kpi-card{ background:var(--surface); border:1px solid var(--stroke); border-radius:14px; padding:14px 16px; }
@@ -155,8 +187,6 @@ const fmtTime = (s) => { s = Math.max(0, Number(s) || 0); const m = Math.floor(s
 function toast(msg, ms = 1600) { let t = document.querySelector(".toast"); if (!t) { t = h("div", { class: "toast" }); document.body.appendChild(t); } t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), ms); }
 function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}
 const uuid = () => "s-" + Math.random().toString(16).slice(2) + Date.now().toString(36);
-
-/* scroll con offset por header sticky */
 function smartScrollTo(el, align='start'){
   if(!el) return;
   const rect = el.getBoundingClientRect();
@@ -176,7 +206,7 @@ function applyTheme(quizId){
   Object.entries(t).forEach(([k,v])=>r.style.setProperty(k,v));
 }
 
-/* ===================== /questions ===================== */
+/* ===================== Questions ===================== */
 function normalizeDomainTag(tag){
   if(!tag) return null;
   const s=String(tag).trim();
@@ -215,7 +245,7 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
   return all.slice(0,target);
 }
 
-/* ===================== Transformación y filtro ===================== */
+/* ===================== Transform y filtro ===================== */
 function transformQuestions(items){
   return items.map(it=>{
     const domain=extractDomainFromRecord(it);
@@ -244,10 +274,9 @@ function filterByDomains(all, tags){
   });
 }
 
-/* ===================== Usuario / progreso / resultados ===================== */
+/* ===================== Progreso / Resultados ===================== */
 function getUserAny(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
 
-/* ---------- Helpers payload progreso ---------- */
 function buildMarkedItems(){
   const list=[]; const now=new Date().toISOString();
   S.qs.forEach((q,i)=>{ if(S.marked[i]) list.push({index:i,questionId:q.questionId,domain:q.domain,markedAt:S.markTimes[i]||now}); });
@@ -287,12 +316,11 @@ function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
     updatedAt:new Date().toISOString(),
     elapsedSec:S.elapsedSec,
     timeLimit:S.timeLimit,
-    idx:S.idx,                 // <-- tu Lambda lo usa
+    idx:S.idx,                 // importante para tu Lambda
     total:S.qs.length,
     pct:computePct(),
     finished:Boolean(finished),
-    status,                    // <-- y también usa este campo
-    // estado + analítica
+    status,                    // importante para tu Lambda
     answers:S.answers,
     marked:S.marked,
     questionIds:S.qs.map(q=>q.questionId),
@@ -303,57 +331,61 @@ function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
   return base;
 }
 
-/* ---------- Cliente /progress con verificación ---------- */
-async function upsertProgressOnce(payload, {beacon=false}={}){
-  try{
-    if(beacon && navigator.sendBeacon){
-      const blob=new Blob([JSON.stringify(payload)],{type:"application/json"});
-      if(navigator.sendBeacon(PROGRESS_URL, blob)) return {ok:true, via:'beacon'};
-    }
+/* Cliente /progress: INTENTA PRIMERO form-urlencoded (sin preflight) y luego JSON */
+async function upsertProgressOnce(payload, {beacon=false} = {}) {
+  try {
+    const PROGRESS_URL = await discoverProgressUrl(payload);
 
-    // 1) JSON
-    const r=await fetch(PROGRESS_URL,{
-      method:"POST", mode:"cors", keepalive:true,
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(payload)
+    // 1) Simple request SIN preflight → form-urlencoded
+    const form = new URLSearchParams();
+    Object.entries(payload).forEach(([k,v]) => {
+      form.append(k, typeof v === "object" ? JSON.stringify(v) : String(v));
     });
-    if(r.ok){
-      const j = await r.json().catch(()=> ({}));
-      return {ok:true, via:'json', res:j};
-    }
 
-    // 2) Fallback: form
-    const params=new URLSearchParams();
-    Object.entries(payload).forEach(([k,v])=>params.append(k, typeof v==="object" ? JSON.stringify(v) : String(v)));
-    const r2=await fetch(PROGRESS_URL,{
-      method:"POST", mode:"cors", keepalive:true,
-      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-      body:params.toString()
+    let r = await fetch(PROGRESS_URL, {
+      method: "POST",
+      mode: "cors",
+      keepalive: true,
+      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+      body: form.toString()
     });
-    if(r2.ok){
-      const j2 = await r2.json().catch(()=> ({}));
-      return {ok:true, via:'form', res:j2};
+
+    if (r.ok) {
+      const j = await r.json().catch(() => ({}));
+      return { ok: true, via: "form", url: PROGRESS_URL, res: j };
     }
 
-    const txt = await r.text().catch(()=> "");
-    console.error("[/progress] error:", r.status, txt);
-    return {ok:false, status:r.status, error:txt||'HTTP error'};
-  }catch(e){
+    // 2) Si falla, probar JSON (esto sí puede requerir CORS preflight)
+    r = await fetch(PROGRESS_URL, {
+      method: "POST",
+      mode: "cors",
+      keepalive: true,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (r.ok) {
+      const j2 = await r.json().catch(() => ({}));
+      return { ok: true, via: "json", url: PROGRESS_URL, res: j2 };
+    } else {
+      const txt = await r.text().catch(() => "");
+      console.error("[/progress] non-2xx", r.status, "url:", PROGRESS_URL, "body:", txt);
+      return { ok: false, status: r.status, error: txt || "HTTP error", url: PROGRESS_URL };
+    }
+  } catch (e) {
     console.error("[/progress] exception:", e);
-    return {ok:false, error:String(e?.message||e)};
+    return { ok: false, error: String(e?.message || e) };
   }
 }
 
-/* Hace upsert (debounce) */
 function saveProgress({full=false,finished=false,reason='auto'}={}){
   if(S.saveDebounce) clearTimeout(S.saveDebounce);
   S.saveDebounce=setTimeout(async ()=> {
     const payload = buildProgressSnapshot({full,finished,reason});
     const res = await upsertProgressOnce(payload);
     if(res.ok && !S._firstProgressConfirmed){
-      // Verificación leyendo lo que guardamos
       try{
-        const v = await fetch(`${PROGRESS_URL}?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
+        const v = await fetch((__PROGRESS_URL_CACHED || `${API_URL}/progress`) + `?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
         const j = await v.json();
         if(j && j.item && j.item.sessionId===S.sessionId){
           S._firstProgressConfirmed = true;
@@ -365,14 +397,12 @@ function saveProgress({full=false,finished=false,reason='auto'}={}){
     S.hasInitialUpsert=true;
   }, 220);
 }
-
-/* Hace upsert inmediato (sin debounce) */
 async function saveProgressNow({full=false,finished=false,reason='immediate',beacon=false}={}){
   const payload = buildProgressSnapshot({full,finished,reason});
   const res = await upsertProgressOnce(payload, {beacon});
   if(res.ok && !S._firstProgressConfirmed){
     try{
-      const v = await fetch(`${PROGRESS_URL}?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
+      const v = await fetch((__PROGRESS_URL_CACHED || `${API_URL}/progress`) + `?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
       const j = await v.json();
       if(j && j.item && j.item.sessionId===S.sessionId){
         S._firstProgressConfirmed = true;
@@ -509,8 +539,7 @@ async function start(quizId="aws-saa-c03", overrides={}){
     renderQuiz();
     startTimer();
 
-    // Upsert inicial (completo)
-    await saveProgressNow({full:true,reason:'start'});
+    await saveProgressNow({full:true,reason:'start'}); // upsert inicial
 
     window.dispatchEvent(new Event('quiz:started'));
     const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
@@ -699,7 +728,7 @@ function doPause(){
   toast('Progreso guardado. Podrás reanudar (P).', 1800);
 }
 
-/* ===================== Modal (ya confirmado OK) ===================== */
+/* ===================== Modal resultados (portal inline) ===================== */
 function openResultsModal({correct,total,pct,byDomain}){
   const portal = document.createElement('div');
   portal.setAttribute('aria-modal','true'); portal.setAttribute('role','dialog');
@@ -707,19 +736,31 @@ function openResultsModal({correct,total,pct,byDomain}){
   portal.style.display='flex'; portal.style.alignItems='center'; portal.style.justifyContent='center';
   portal.style.zIndex='2147483647'; portal.id='quizResultModal';
   const body=document.body; const prevOverflow=body.style.overflow; body.style.overflow='hidden';
+
   const card=document.createElement('div');
   card.style.maxWidth='760px'; card.style.width='calc(100% - 32px)'; card.style.background='linear-gradient(180deg,#10162d,#0d1330)';
   card.style.border='1px solid rgba(255,255,255,.12)'; card.style.borderRadius='16px'; card.style.boxShadow='0 24px 80px rgba(0,0,0,.65)';
   card.style.padding='18px'; card.style.color='#eef1ff'; card.style.fontFamily='system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial';
+
   const h3=document.createElement('h3'); h3.textContent='Resultados del examen'; h3.style.margin='0 0 12px 0'; h3.style.fontSize='1.15rem';
-  const score=document.createElement('div'); score.style.display='inline-flex'; score.style.gap='10px'; score.style.background='#151b3c'; score.style.border='1px solid #2b3570'; score.style.borderRadius='12px'; score.style.padding='10px 14px'; score.style.fontWeight='900'; score.style.margin='4px 0 12px 0'; score.innerHTML=`<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
+
+  const score=document.createElement('div');
+  score.style.display='inline-flex'; score.style.gap='10px';
+  score.style.background='#151b3c'; score.style.border='1px solid #2b3570';
+  score.style.borderRadius='12px'; score.style.padding='10px 14px';
+  score.style.fontWeight='900'; score.style.margin='4px 0 12px 0';
+  score.innerHTML=`<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
+
   const stack=document.createElement('div'); stack.style.display='grid'; stack.style.gridTemplateColumns='1fr'; stack.style.gap='10px';
   const mkBar=(value)=>{ const bar=document.createElement('div'); bar.style.width='100%'; bar.style.height='8px'; bar.style.background='#0b1024'; bar.style.borderRadius='999px'; bar.style.position='relative'; bar.style.overflow='hidden'; const i=document.createElement('i'); i.style.position='absolute'; i.style.left=0; i.style.top=0; i.style.bottom=0; i.style.width=`${Math.max(0,Math.min(100,value))}%`; i.style.background='#2bdc8c'; bar.appendChild(i); return bar; };
-  const mkCard=(title, ok, tot)=>{ const pct=tot? Math.round((ok/tot)*100):0; const box=document.createElement('div'); box.style.background='#13193b'; box.style.border='1px solid #2a356a'; box.style.borderRadius='12px'; box.style.padding='12px 14px'; box.style.marginTop='10px'; const h=document.createElement('div'); h.style.fontWeight='900'; h.style.marginBottom='8px'; h.textContent=title; const bar=mkBar(pct); const small=document.createElement('div'); small.style.marginTop='6px'; small.style.opacity='.9'; small.textContent=`${ok}/${tot} aciertos · ${pct}%`; box.appendChild(h); box.appendChild(bar); box.appendChild(small); return box; };
-  const cfg = QUIZZES[S.quizId] || {};
-  Object.entries((()=>{ const by={}; S.qs.forEach((q,i)=>{ const code=q.domain||'D?'; if(!by[code]) by[code]={ name:(cfg.domNames&&cfg.domNames[code])||code, correct:0, total:0 }; by[code].total++; if(S.answers[i]===q._correct) by[code].correct++; }); return by; })()).forEach(([,d])=> stack.appendChild(mkCard(d.name,d.correct,d.total)));
+  const mkCard=(title, ok, tot)=>{ const p=tot? Math.round((ok/tot)*100):0; const box=document.createElement('div'); box.style.background='#13193b'; box.style.border='1px solid #2a356a'; box.style.borderRadius='12px'; box.style.padding='12px 14px'; box.style.marginTop='10px'; const h=document.createElement('div'); h.style.fontWeight='900'; h.style.marginBottom='8px'; h.textContent=title; const bar=mkBar(p); const small=document.createElement('div'); small.style.marginTop='6px'; small.style.opacity='.9'; small.textContent=`${ok}/${tot} aciertos · ${p}%`; box.appendChild(h); box.appendChild(bar); box.appendChild(small); return box; };
+
+  Object.values(byDomain||{}).forEach(d => stack.appendChild(mkCard(d.name, d.correct, d.total)));
+
   const actions=document.createElement('div'); actions.style.display='flex'; actions.style.justifyContent='flex-end'; actions.style.gap='10px'; actions.style.marginTop='14px';
-  const bClose=document.createElement('button'); bClose.textContent='CERRAR'; bClose.style.border='0'; bClose.style.borderRadius='10px'; bClose.style.padding='12px 18px'; bClose.style.fontWeight='900'; bClose.style.background='linear-gradient(180deg,#6c8bff,#3e64ff)'; bClose.style.color='#fff'; bClose.onclick=()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow=prevOverflow; };
+  const bClose=document.createElement('button'); bClose.textContent='CERRAR'; bClose.style.border='0'; bClose.style.borderRadius='10px'; bClose.style.padding='12px 18px'; bClose.style.fontWeight='900'; bClose.style.background='linear-gradient(180deg,#6c8bff,#3e64ff)'; bClose.style.color='#fff';
+  bClose.onclick=()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow=prevOverflow; };
+
   actions.appendChild(bClose); card.appendChild(h3); card.appendChild(score); card.appendChild(stack); card.appendChild(actions); portal.appendChild(card);
   portal.addEventListener('click', (e)=>{ if(e.target===portal) bClose.click(); });
   document.documentElement.appendChild(portal);
@@ -735,16 +776,24 @@ async function finish(){
   for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
 
-  const result={
+  const cfg = QUIZZES[S.quizId] || {};
+  const byDomain = {};
+  S.qs.forEach((q,idx)=>{
+    const code = q.domain || 'D?';
+    if(!byDomain[code]) byDomain[code] = { name: (cfg.domNames && cfg.domNames[code]) || code, correct:0, total:0 };
+    byDomain[code].total++;
+    if(S.answers[idx]===q._correct) byDomain[code].correct++;
+  });
+
+  await saveProgressNow({finished:true,reason:'finish'});
+  await saveResultRemoteOnce({
     ts:new Date().toISOString(),
     quizId:S.quizId, track:S.track||'architect', mode:S.mode||'exam',
     total, correct, pct,
     durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
-  };
+  });
 
-  await saveProgressNow({finished:true,reason:'finish'});
-  await saveResultRemoteOnce(result);
-  openResultsModal({correct,total,pct});
+  openResultsModal({correct,total,pct,byDomain});
 }
 
 /* ===================== Hotkeys ===================== */

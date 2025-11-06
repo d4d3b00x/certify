@@ -178,8 +178,10 @@
 <div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
 
 <script>
+  // Año footer
   document.getElementById('y').textContent = new Date().getFullYear();
 
+  // Header auth
   function getCurrentUser(){
     try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; }
   }
@@ -192,9 +194,11 @@
     if(u){
       login.style.display='none'; signup.style.display='none'; userArea.style.display='flex';
       nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
-      document.getElementById('btnLogout')?.addEventListener('click',()=>{
-        localStorage.removeItem('currentUser'); renderHeaderAuth();
-      },{once:true});
+      const btn = document.getElementById('btnLogout');
+      if(btn && !btn.dataset.bound){
+        btn.dataset.bound = "1";
+        btn.addEventListener('click',()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+      }
     } else {
       login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none';
     }
@@ -259,7 +263,7 @@
         <div class="badges"></div>
         <div><a class="pill-btn" href="${c.href}">LEER</a></div>`;
       const b=card.querySelector(".badges");
-      tag(b, \`Nivel: \${c.level[0].toUpperCase()+c.level.slice(1)}\`);
+      tag(b, `Nivel: ${c.level[0].toUpperCase()+c.level.slice(1)}`);
       // Exámenes (AZ=azul, SAA=aws)
       c.exam.forEach(e=>{
         const cls = e.startsWith("AZ") ? "azure" : (e.startsWith("SAA") ? "aws" : "");
