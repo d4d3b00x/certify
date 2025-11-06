@@ -194,60 +194,49 @@
           <button id="tabGuide" class="tab-btn" role="tab" aria-selected="false" aria-controls="studyGuide">📘 TIPS DE ESTUDIO</button>
         </div>
 
-        <!-- ===== GUÍA DE ESTUDIO (incrustada) ===== -->
-        <section id="studyGuide" aria-label="Guía de estudio AZ-305" role="tabpanel" aria-labelledby="tabGuide">
-          <div id="tips305" class="container" style="padding:0">
-            <div class="pill">TIPS DE ESTUDIO · AZ-305</div>
-            <h2 style="margin:6px 0 8px">Explora conceptos clave y abre los artículos al instante</h2>
-            <p class="lead">Pasa el ratón para ver el tip y usa el buscador para filtrar. Cada tarjeta abre un artículo de referencia del dominio AZ-305.</p>
+<!-- ===== GUÍA DE ESTUDIO (incrustada) ===== -->
+<section id="studyGuide" aria-label="Guía de estudio AZ-305" role="tabpanel" aria-labelledby="tabGuide">
+  <div id="tips305" class="container" style="padding:0">
+    <div class="pill">TIPS DE ESTUDIO · AZ-305</div>
+    <h2 style="margin:6px 0 8px">Explora conceptos clave y abre los artículos al instante</h2>
+    <p class="lead">Pasa el ratón para ver el tip y usa el buscador para filtrar. Cada tarjeta abre un artículo de referencia del dominio AZ-305.</p>
 
-            <label class="search" aria-label="Buscar conceptos">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M21 21l-4.2-4.2M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
-                      stroke="#9fb2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <input id="tipsSearch" type="search" placeholder="Buscar (ej: RBAC, Storage, VPN, DR, Zero Trust)">
-            </label>
+    <label class="search" aria-label="Buscar conceptos">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M21 21l-4.2-4.2M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+              stroke="#9fb2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <input id="tipsSearch" type="search" placeholder="Buscar (ej: RBAC, Storage, VPN, DR, Zero Trust)">
+    </label>
 
-            <section id="tipsGrid" class="grid" aria-label="Lista de tips">
-              <article class="tile" data-tags="zero trust security identidad governance policy defender identity rbac">
-                <h3><span class="dot" aria-hidden="true"></span> Zero Trust y gobierno</h3>
-                <p>Principios Zero Trust, segmentación, hardening de identidad, Policy vs RBAC y controles en capas.</p>
-                <a class="btn" href="/content/azure-security-zero-trust-az305.html">Leer →</a>
-              </article>
+    <section id="tipsGrid" class="grid" aria-label="Lista de tips">
+      <article class="tile" data-tags="landing zone governance policy mg caf identidad subscription">
+        <h3><span class="dot" aria-hidden="true"></span> Landing Zone</h3>
+        <p>CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura base de red.</p>
+        <a class="btn" href="/content/azure-landing-zone.html">Leer →</a>
+      </article>
 
-              <article class="tile" data-tags="cost reliability fiabilidad costos resiliencia zonas zrs gzs ha">
-                <h3><span class="dot" aria-hidden="true"></span> Cost & Reliability</h3>
-                <p>Patrones de resiliencia (ZRS/GZRS, zonas, colas), trade-offs de coste, pruebas de caos y SLOs.</p>
-                <a class="btn" href="/content/azure-cost-reliability-az305.html">Leer →</a>
-              </article>
+      <article class="tile" data-tags="hybrid connectivity vpn expressroute private link dns spoke hub bgp">
+        <h3><span class="dot" aria-hidden="true"></span> Conectividad híbrida</h3>
+        <p>VPN/ER, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones HUB/SPOKE/vWAN.</p>
+        <a class="btn" href="/content/azure-hybrid-connectivity-az305.html">Leer →</a>
+      </article>
 
-              <article class="tile" data-tags="data datos elecciones sql cosmos lakehouse particionado consistencia cap">
-                <h3><span class="dot" aria-hidden="true"></span> Data choices</h3>
-                <p>Elección entre SQL/Cosmos/Storage, partición y consistencia, costos, disponibilidad y seguridad.</p>
-                <a class="btn" href="/content/azure-data-choices-az305.html">Leer →</a>
-              </article>
+      <article class="tile" data-tags="network arquitectura vnet firewall waf frontdoor appgw dns segmentación">
+        <h3><span class="dot" aria-hidden="true"></span> Arquitectura de red</h3>
+        <p>vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial.</p>
+        <a class="btn" href="/content/azure-network-architecture-az305.html">Leer →</a>
+      </article>
 
-              <article class="tile" data-tags="ha dr continuidad negocio backup recovery rpo rto asr grs gzrs runbooks">
-                <h3><span class="dot" aria-hidden="true"></span> HA & DR</h3>
-                <p>Modelos Activo/Activo vs Activo/Pasivo, RPO/RTO, ASR, GRS/GZRS, pruebas y runbooks.</p>
-                <a class="btn" href="/content/azure-ha-dr-az305.html">Leer →</a>
-              </article>
+      <article class="tile" data-tags="ha dr continuidad negocio asr geo replicacion zonas failover multi region">
+        <h3><span class="dot" aria-hidden="true"></span> Alta disponibilidad y DR</h3>
+        <p>Pares regionales, zonas, ASR, geo-replicación y estrategias de failover multi-región.</p>
+        <a class="btn" href="/content/azure-ha-dr-az305.html">Leer →</a>
+      </article>
+    </section>
+  </div>
+</section>
 
-              <article class="tile" data-tags="red network hybrid connectivity vpn expressroute dns privado hub spoke bgp">
-                <h3><span class="dot" aria-hidden="true"></span> Conectividad híbrida</h3>
-                <p>VPN/ER, patrones hub-spoke, BGP, DNS privado, SNAT/UDR y límites de flujo.</p>
-                <a class="btn" href="/content/azure-hybrid-connectivity-az305.html">Leer →</a>
-              </article>
-
-              <article class="tile" data-tags="network arquitectura vnet nsg waf firewall balanceador appgw peering rutas">
-                <h3><span class="dot" aria-hidden="true"></span> Arquitectura de red</h3>
-                <p>Diseño de VNet, NSG/ASG, WAF/Firewall, balanceo L4/L7, peering y rutas.</p>
-                <a class="btn" href="/content/azure-network-architecture-az305.html">Leer →</a>
-              </article>
-            </section>
-          </div>
-        </section>
       </div>
     </section>
 
