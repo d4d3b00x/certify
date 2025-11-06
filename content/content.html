@@ -23,17 +23,17 @@
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-      --azure:#0078d4; --azure-tint: rgba(0,120,212,.22); --azure-border: rgba(0,120,212,.75);
+      --azure:#0078d4; --azure-tint: rgba(0,120,212,.18); --azure-border: rgba(0,120,212,.75);
       --aws:#ff9900;   --aws-tint:   rgba(255,153,0,.14); --aws-border:   rgba(255,153,0,.70);
       --multi:#6c8bff; --multi-tint: rgba(108,139,255,.16); --multi-border: rgba(108,139,255,.70);
-      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
-      --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);--ok:#3ad97a;--warn:#ffd66b;--bad:#ff6b6b
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.35);
+      --cta:linear-gradient(180deg,#7e73ff,#6b5cff)
     }
     *{box-sizing:border-box}
     body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;overflow-x:hidden}
     a{color:inherit;text-decoration:none}
-    .container{max-width:1100px;margin:0 auto;padding:0 20px}
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    .container{max-width:1120px;margin:0 auto;padding:0 20px}
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.92),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
@@ -42,27 +42,52 @@
     nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
     .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c);border:1px solid #2a3150;border-radius:999px;padding:4px;box-shadow:0 6px 18px rgba(5,10,30,.35);max-height:44px}
     .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7a67ff,#5f48ff);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s,background .12s;font-size:13px;text-transform:uppercase}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--cta);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s,background .12s;font-size:13px;text-transform:uppercase}
     .pill-btn:hover{transform:translateY(-1px)}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase}
     .btn:hover{border-color:#3a4580}
+
     main{padding:18px 0 10px}
     .hero-page{padding:18px 0 6px}
-    .hero-page h1{margin:0 0 4px;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:1.2}
+    .hero-page h1{margin:0 0 6px;font-size:clamp(1.7rem,3.6vw,2.3rem);line-height:1.2}
     .muted{color:var(--muted)}
+
+    /* Controles */
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+    .input{
+      border:1px solid var(--stroke);border-radius:12px;background:#0b1225;color:var(--ink);
+      padding:12px 14px;min-width:280px;font-weight:700;outline:none;
+      transition:box-shadow .2s,border-color .2s
+    }
+    .input:focus{box-shadow:0 0 0 3px rgba(108,139,255,.25);border-color:#3e64ff}
+    select.input{
+      min-width:200px;appearance:none;background-image:
+        linear-gradient(45deg,transparent 50%, #9ca8d9 50%),
+        linear-gradient(135deg,#9ca8d9 50%, transparent 50%),
+        linear-gradient(90deg,transparent 0, transparent 100%);
+      background-position:
+        calc(100% - 20px) calc(50% - 3px),
+        calc(100% - 14px) calc(50% - 3px),
+        100% 0;
+      background-size:6px 6px,6px 6px,2.5em 2.5em;
+      background-repeat:no-repeat;
+      padding-right:42px;
+    }
+
+    /* Grid */
     .grid{display:grid;gap:14px}
     @media(min-width:860px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
 
-    /* Tarjeta */
+    /* Tarjeta base */
     .card{
-      background:linear-gradient(180deg,#111937,#0f1633);
-      border:1px solid var(--stroke);
-      border-radius:16px;
-      padding:14px;
-      box-shadow:var(--shadow);
-      display:flex;flex-direction:column;gap:10px
+      position:relative; background:linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid var(--stroke); border-radius:16px; padding:16px;
+      box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px;
+      transition:transform .15s, box-shadow .15s, border-color .15s
     }
-    .card h3{margin:0;font-size:1.05rem}
+    .card:hover{transform:translateY(-2px)}
+    .card h3{margin:0 0 2px; font-size:1.08rem}
+    .card p{margin:0}
 
     /* Borde + fondo por proveedor */
     .card.azure{ border-color:var(--azure-border); background: linear-gradient(180deg, rgba(13,21,40,1) 0%, var(--azure-tint) 100%); }
@@ -74,22 +99,31 @@
     .badge{
       display:inline-flex;gap:6px;align-items:center;font-weight:900;
       padding:6px 10px;border:1px solid var(--stroke);border-radius:999px;
-      background:var(--surface2);font-size:.8rem
+      background:var(--surface2);font-size:.8rem; line-height:1
     }
+    .badge i{display:inline-block; width:12px; height:12px; border-radius:3px; opacity:.9}
     .badge.azure{ border-color:var(--azure-border); background:var(--azure-tint); color:#e8f4ff; }
+    .badge.azure i{ background:var(--azure); }
     .badge.aws  { border-color:var(--aws-border);   background:var(--aws-tint);   color:#ffe7c2; }
+    .badge.aws i{ background:var(--aws); }
     .badge.multi{ border-color:var(--multi-border); background:var(--multi-tint); color:#e9ebff; }
+    .badge.multi i{ background:var(--multi); }
 
-    /* Botón pequeño en tarjetas */
+    /* Botón dentro de tarjetas */
     .card .pill-btn{
-      min-width:84px; min-height:36px; height:34px; padding:0 12px;
-      font-size:12px; border-radius:10px;
-      background:linear-gradient(180deg,#7e73ff,#6b5cff);
+      min-width:84px; min-height:34px; height:34px; padding:0 12px;
+      font-size:12px; border-radius:10px; background:var(--cta);
     }
 
-    .controls{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-    .input{border:1px solid var(--stroke);border-radius:10px;background:#0b1225;color:var(--ink);padding:10px;min-width:280px;font-weight:700}
-    select.input{min-width:200px}
+    /* Micro-animación en hover para el enlace del título */
+    .card h3 a{position:relative}
+    .card h3 a::after{
+      content:""; position:absolute; left:0; bottom:-2px; height:2px; width:0; background:#7e73ff;
+      transition:width .18s ease;
+    }
+    .card:hover h3 a::after{width:100%}
+
+    /* Footer */
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
@@ -105,12 +139,12 @@
     </div>
     <nav class="menu" aria-label="Navegación principal">
       <a class="link-btn" href="/">HOME</a>
-      <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
+      <a class="link-btn" href="/content/content.html" aria-current="page">CONTENIDOS</a>
       <a class="link-btn" href="/score/ranking.html">RANKING</a>
     </nav>
     <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
       <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
       <div id="userArea" style="display:none;align-items:center;gap:6px">
         <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
         <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
@@ -125,25 +159,25 @@
     <h1>Contenidos de estudio</h1>
     <p class="muted">
       <strong>Convierte tu estudio en una misión de éxito.</strong>
-      Estas guías condensan lo esencial de cada examen: <b>teoría</b>, <b>práctica</b> y <b>tips reales</b> de profesionales certificados.
+      Estas guías condensan lo esencial de cada examen: <b>teoría</b>, <b>práctica</b>, <b>laboratorios</b> y <b>exam tips</b>.
       Avanza a tu ritmo, explora los temas clave y <b>prepárate para destacar</b> en <b>Azure</b> y <b>AWS</b>. Usa los filtros para encontrar justo lo que necesitas.
     </p>
-    <div class="controls">
-      <input id="q" class="input" placeholder="Buscar por título o palabras clave…">
-      <select id="exam" class="input">
+    <div class="controls" role="search">
+      <input id="q" class="input" placeholder="Buscar por título o palabras clave…" aria-label="Buscar por título o palabras clave">
+      <select id="exam" class="input" aria-label="Filtrar por examen">
         <option value="">Filtrar por examen</option>
         <option value="AZ-104">AZ-104</option>
         <option value="AZ-305">AZ-305</option>
         <option value="SAA-C03">SAA-C03</option>
       </select>
-      <select id="vendor" class="input">
+      <select id="vendor" class="input" aria-label="Filtrar por proveedor">
         <option value="">Proveedor</option>
         <option value="Azure">Azure</option>
         <option value="AWS">AWS</option>
       </select>
     </div>
   </div>
-  <div class="container grid cols-3" id="cards"></div>
+  <div class="container grid cols-3" id="cards" aria-live="polite"></div>
 </main>
 
 <footer role="contentinfo">
@@ -171,7 +205,7 @@
     </div>
     <div>
       <div style="font-weight:800">Colaborador</div>
-      💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
+      💬 <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
       <div style="font-weight:800">Contacto</div>
       <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;margin-top:6px;"> 💬 <span>Contáctanos</span> </button>
     </div>
@@ -242,7 +276,12 @@
     { title:"VPC Alta disponibilidad (SAA-C03)", href:"/content/aws-vpc-ha.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Multi-AZ, NAT por AZ, zonificación, HA de balanceadores y observabilidad de red." }
   ];
 
-  function tag(el, t, cls=""){ const s=document.createElement("span"); s.className="badge "+cls; s.textContent=t; el.appendChild(s); }
+  function badge(el, text, cls=""){ 
+    const b=document.createElement("span"); b.className="badge "+cls; 
+    const i=document.createElement("i"); b.appendChild(i);
+    b.appendChild(document.createTextNode(" "+text)); 
+    el.appendChild(b); 
+  }
 
   function render(){
     const q=(document.getElementById('q').value||"").toLowerCase().trim();
@@ -260,18 +299,15 @@
       const card=document.createElement('article'); card.className=`card ${vClass}`;
       card.innerHTML = `<h3><a href="${c.href}">${c.title}</a></h3>
         <p class="muted">${c.summary}</p>
-        <div class="badges"></div>
+        <div class="badges" aria-label="Etiquetas de la guía"></div>
         <div><a class="pill-btn" href="${c.href}">LEER</a></div>`;
       const b=card.querySelector(".badges");
-      tag(b, `Nivel: ${c.level[0].toUpperCase()+c.level.slice(1)}`);
-      // Exámenes (AZ=azul, SAA=aws)
-      c.exam.forEach(e=>{
-        const cls = e.startsWith("AZ") ? "azure" : (e.startsWith("SAA") ? "aws" : "");
-        tag(b, e, cls);
-      });
-      // Proveedores
-      c.vendor.forEach(v=>tag(b, v, v==="Azure" ? "azure" : "aws"));
-      if(c.vendor.length>1){ tag(b, "Multi", "multi"); }
+      badge(b, `Nivel: ${c.level[0].toUpperCase()+c.level.slice(1)}`);
+      // Exámenes
+      c.exam.forEach(e=>badge(b, e, e.startsWith("AZ")?"azure":"aws"));
+      // Proveedor/es
+      c.vendor.forEach(v=>badge(b, v, v==="Azure"?"azure":"aws"));
+      if(c.vendor.length>1) badge(b,"Multi","multi");
       root.appendChild(card);
     });
   }
