@@ -1,0 +1,170 @@
+<!doctype html><html lang="es"><head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Almacenamiento y Redes en Azure (AZ-104) | ITHub.es</title>
+  <meta name="description" content="Guía práctica de almacenamiento y redes para AZ-104: cuentas de almacenamiento, redundancia, Azure Files/Blob, endpoints privados, VNets, NSG, LB y App Gateway."/>
+  <meta name="keywords" content="Azure,AZ-104,Storage,Blob,Azure Files,Redundancia,LRS,ZRS,GRS,VNet,NSG,Azure Firewall,Load Balancer,App Gateway,Private Endpoint"/>
+  <link rel="canonical" href="https://beta.ithub.es/content/azure-az104-storage-network.html"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <style>
+    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;--p:#0078d4;--tint:rgba(0,120,212,.18);--chip:#cfe9ff;--bd:rgba(0,120,212,.65);--shadow:0 12px 28px rgba(6,12,40,.45)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+    .container{max-width:1100px;margin:0 auto;padding:0 18px}
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:900}
+    nav a{color:#cbd6ff;text-decoration:none;padding:10px 12px;border-radius:10px;border:1px solid transparent}
+    nav a:hover{border-color:#2a3150;color:#fff}
+    .hero{text-align:center;padding:28px 0 16px;border-bottom:1px solid var(--stroke);background:linear-gradient(180deg,#0f1320,#0f1320 70%,#141a33)}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);color:var(--chip);font-weight:900}
+    h1{margin:.6rem 0 .8rem;font-size:clamp(1.9rem,3.8vw,2.6rem)}
+    .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+    .meta .b{padding:8px 12px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);font-weight:800;color:#e8f1ff}
+    .layout{display:grid;grid-template-columns:300px 1fr;gap:18px;margin:18px auto;max-width:1200px;padding:0 10px}
+    @media(max-width:980px){.layout{grid-template-columns:1fr}}
+    .toc{position:sticky;top:86px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+    .toc h3{margin:0 0 10px;color:#dfe6ff;letter-spacing:.06em;text-transform:uppercase;font-size:14px}
+    .toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+    .toc a{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid transparent;border-radius:12px;color:#e9f2ff;text-decoration:none}
+    .toc a:hover{border-color:var(--bd);background:var(--tint)}
+    .dot{width:7px;height:7px;border-radius:999px;background:var(--p);box-shadow:0 0 0 4px rgba(255,255,255,.04)}
+    article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
+    article h2{margin:16px 0 8px;font-size:1.22rem;border-left:4px solid var(--p);padding-left:10px}
+    .callout{border:1px solid var(--bd);background:var(--tint);border-radius:12px;padding:12px;margin:10px 0}
+    .table{width:100%;border-collapse:collapse;margin:.6rem 0;border:1px solid #283056}
+    .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
+    .table th{background:#141a33;text-align:left}
+    .muted{color:var(--muted)}
+    ul{margin-top:0}
+    code,kbd{background:#0b1222;border:1px solid #22304f;border-radius:6px;padding:1px 6px}
+    pre{background:#0b1222;border:1px solid #22304f;border-radius:8px;padding:10px;overflow:auto}
+  </style>
+</head><body>
+<header><div class="container nav">
+  <div class="brand"><img src="/assets/ithub-logo.svg" alt="ITHub: inicio" style="height:42px"><span>ITHub.es</span></div>
+  <nav><a href="/">HOME</a><a href="/content/content.html">CONTENIDOS</a><a href="/score/ranking.html">RANKING</a></nav>
+</div></header>
+
+<section class="hero"><div class="container">
+  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor' width="16" height="16"><path d='M3 18h6l3-8 3 8h6l-9-14-9 14z'/></svg>&nbsp; Azure · AZ-104</span>
+  <h1>Almacenamiento y Redes en Azure (AZ-104)</h1>
+  <div class="meta"><span class='b'>Dominios: Storage & Networking</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 35–45 min</span><span class='b'>Última revisión: Nov 2025</span></div>
+</div></section>
+
+<div class="container layout">
+  <aside class="toc"><h3>Índice</h3>
+    <ol>
+      <li><a href="#storage-accounts"><span class="dot"></span><span>1. Storage Accounts y tipos</span></a></li>
+      <li><a href="#redundancia"><span class="dot"></span><span>2. Redundancia y niveles</span></a></li>
+      <li><a href="#blob-files"><span class="dot"></span><span>3. Blob & Azure Files (SMB/NFS)</span></a></li>
+      <li><a href="#seguridad-storage"><span class="dot"></span><span>4. Seguridad: SAS, RBAC y PE</span></a></li>
+      <li><a href="#networking-basics"><span class="dot"></span><span>5. VNets, NSG y rutas</span></a></li>
+      <li><a href="#balanceo"><span class="dot"></span><span>6. Load Balancer vs App Gateway</span></a></li>
+      <li><a href="#salida-privada"><span class="dot"></span><span>7. Endpoints privados y DNS</span></a></li>
+      <li><a href="#tips"><span class="dot"></span><span>8. Tips de examen</span></a></li>
+    </ol>
+  </aside>
+
+  <article>
+    <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
+
+    <h2 id="storage-accounts">1. Storage Accounts y tipos</h2>
+    <p>La cuenta de almacenamiento define capacidades, rendimiento, características de seguridad y redundancia.</p>
+    <ul>
+      <li><b>Tipos:</b> <code>StorageV2 (general-purpose v2)</code> es el recomendado; soporta Blob, Files, Queue y Table.</li>
+      <li><b>Rendimiento:</b> <code>Standard</code> (HDD/SSD estándar) vs <code>Premium</code> (latencia menor, escenarios IO intensivos).</li>
+      <li><b>Acceso:</b> público restringido o privado con <b>Private Endpoints</b>.</li>
+      <li><b>Control de versiones</b> y <b>soft delete</b> para blobs/archivos.</li>
+    </ul>
+    <div class="callout"><b>EXAM TIP:</b> Elige <b>StorageV2</b> salvo requisitos muy específicos. Activa <b>soft delete</b> siempre.</div>
+
+    <h2 id="redundancia">2. Redundancia y niveles</h2>
+    <p>La elección de redundancia impacta en SLA y coste:</p>
+    <table class="table">
+      <thead><tr><th>Redundancia</th><th>Ámbito</th><th>Uso típico</th></tr></thead>
+      <tbody>
+        <tr><td><b>LRS</b></td><td>3 copias en 1 zona/región</td><td>Desarrollo, bajo coste</td></tr>
+        <tr><td><b>ZRS</b></td><td>3 zonas en la misma región</td><td>Alta disponibilidad zonal</td></tr>
+        <tr><td><b>GRS</b></td><td>Región primaria → secundaria (geo)</td><td>DR con replicación asíncrona</td></tr>
+        <tr><td><b>RA-GRS</b></td><td>GRS + lectura en secundaria</td><td>Lectura global y DR</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><b>Niveles de acceso (Blob):</b> Hot, Cool y Archive.</li>
+      <li><b>Políticas de ciclo de vida:</b> mueven datos entre niveles automáticamente.</li>
+    </ul>
+
+    <h2 id="blob-files">3. Blob & Azure Files (SMB/NFS)</h2>
+    <ul>
+      <li><b>Blob:</b> objetos (Block/Page/Append). Tiers Hot/Cool/Archive. <b>Versioning</b> y <b>immutability policies</b> (WORM).</li>
+      <li><b>Azure Files:</b> compartidos SMB/NFS. Útil para lift&shift de file servers. Soporta <b>AD DS</b> o <b>Entra Domain Services</b> para ACLs.</li>
+      <li><b>Premium Files:</b> IOPS predecibles y latencia menor (FileStorage).</li>
+    </ul>
+    <pre># Montaje SMB en Windows
+net use Z: \\&lt;storageaccount&gt;.file.core.windows.net\\&lt;share&gt; /user:Azure\\&lt;storageaccount&gt; &lt;key&gt;</pre>
+
+    <h2 id="seguridad-storage">4. Seguridad: SAS, RBAC y Private Endpoints</h2>
+    <ul>
+      <li><b>RBAC:</b> controla acceso administrativo a la cuenta y contenedores (Data Reader, Data Contributor).</li>
+      <li><b>SAS (Shared Access Signature):</b> acceso granular y temporal a datos sin exponer la clave de cuenta.</li>
+      <li><b>Key Vault:</b> almacena claves y rota secretos usados por apps.</li>
+      <li><b>Private Endpoints (PE):</b> expone el servicio con IP privada en la VNet; evita salida pública.</li>
+      <li><b>Firewall y redes confiables:</b> restringe acceso a subredes y servicios de confianza.</li>
+    </ul>
+    <div class="callout"><b>EXAM TIP:</b> “Acceso a Storage sin Internet” → <b>Private Endpoint</b> + reglas de firewall + DNS privado.</div>
+
+    <h2 id="networking-basics">5. VNets, NSG y rutas</h2>
+    <ul>
+      <li><b>VNet/Subnets:</b> aislamiento L3. Segmenta por función (web/app/db) o por dominio.</li>
+      <li><b>NSG:</b> control L4 (puerto/protocolo) por subred o NIC; <b>stateful</b>.</li>
+      <li><b>UDR (rutas definidas por usuario):</b> envía tráfico a NVA/Firewall para inspección (0.0.0.0/0 → FW).</li>
+      <li><b>Azure Firewall:</b> capa perimetral L3-L7; filtra FQDN, URL (Premium) y TLS inspection.</li>
+    </ul>
+    <pre>// Ejemplo de UDR hacia firewall
+Destino: 0.0.0.0/0   Next hop: Virtual appliance (10.0.0.4)</pre>
+
+    <h2 id="balanceo">6. Load Balancer vs App Gateway</h2>
+    <table class="table">
+      <thead><tr><th>Servicio</th><th>Capa</th><th>Uso típico</th></tr></thead>
+      <tbody>
+        <tr><td><b>Azure Load Balancer</b></td><td>L4 (TCP/UDP)</td><td>Balanceo para VM/VMSS, puertos específicos</td></tr>
+        <tr><td><b>Application Gateway (WAF)</b></td><td>L7 (HTTP/HTTPS)</td><td>Ruteo por URL/host, offload TLS, WAF</td></tr>
+        <tr><td><b>Front Door</b></td><td>Global/L7</td><td>Anycast global, aceleración y WAF a nivel edge</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>EXAM TIP:</b> “Inspección HTTP con reglas OWASP” → <b>App Gateway WAF</b>. “Balanceo TCP simple” → <b>Load Balancer</b>.</div>
+
+    <h2 id="salida-privada">7. Endpoints privados y DNS</h2>
+    <ul>
+      <li><b>Private Endpoint</b> crea una NIC dentro de tu subred para el servicio PaaS.</li>
+      <li><b>DNS privado</b>: usa zonas como <code>privatelink.blob.core.windows.net</code> y vínculos a VNets.</li>
+      <li><b>Resolver</b>: con Private DNS Resolver puedes reenviar resoluciones on-prem ↔ Azure.</li>
+    </ul>
+    <pre>// Ejemplo: zona DNS privada
+Zona: privatelink.blob.core.windows.net
+Registro A: &lt;storageaccount&gt; → IP privada del PE</pre>
+
+    <h2 id="tips">8. Tips de examen AZ-104</h2>
+    <ul>
+      <li><b>Storage:</b> elige redundancia según RTO/RPO y coste (ZRS para zonas, GRS para DR geo).</li>
+      <li><b>Azure Files:</b> permisos NTFS con AD DS/Entra DS; Premium para IOPS constantes.</li>
+      <li><b>Seguridad:</b> preferir RBAC + SAS + Private Endpoints + DNS privado.</li>
+      <li><b>Red:</b> NSG para L4, UDR para enrutar por firewall, LB vs AppGW según capa.</li>
+      <li><b>Salida controlada:</b> UDR 0.0.0.0/0 → Firewall con reglas FQDN/URL.</li>
+    </ul>
+  </article>
+</div>
+
+<footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
+  <div class="container">© 2025 ITHub.es · Almacenamiento y Redes en Azure (AZ-104)</div>
+</footer>
+</body></html>

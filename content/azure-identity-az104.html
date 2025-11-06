@@ -1,14 +1,23 @@
 <!doctype html><html lang="es"><head>
   <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Identidad y acceso en Azure (AZ‑104) | ITHub.es</title>
-  <meta name="description" content="RBAC por ámbito, PIM, Managed Identities y Key Vault con enfoque práctico de examen."/>
-  <meta name="keywords" content="Azure,AZ-104,RBAC,PIM,Key Vault,Managed Identities"/>
-  <meta name="author" content="ITHub.es"/>
+  <title>Identidad y acceso en Azure (AZ-104) | ITHub.es</title>
+  <meta name="description" content="Guía completa de identidad y acceso para Azure (AZ-104): RBAC, PIM, MFA, Managed Identities, Key Vault, Conditional Access y Entra ID."/>
+  <meta name="keywords" content="Azure,AZ-104,Identidad,RBAC,PIM,Key Vault,Managed Identities,MFA,Conditional Access"/>
   <link rel="canonical" href="https://beta.ithub.es/content/azure-identity-az104.html"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
   <style>
-    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-          --p:#0078d4;--tint:rgba(0,120,212,.18);--chip:#cfe9ff;--bd:rgba(0,120,212,.65);--shadow:0 12px 28px rgba(6,12,40,.45)}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;--p:#0078d4;--tint:rgba(0,120,212,.18);--chip:#cfe9ff;--bd:rgba(0,120,212,.65);--shadow:0 12px 28px rgba(6,12,40,.45)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
     .container{max-width:1100px;margin:0 auto;padding:0 18px}
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
@@ -35,6 +44,7 @@
     .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
     .table th{background:#141a33;text-align:left}
     .muted{color:var(--muted)}
+    ul{margin-top:0}
   </style>
 </head><body>
 <header><div class="container nav">
@@ -43,23 +53,116 @@
 </div></header>
 
 <section class="hero"><div class="container">
-  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M3 18h6l3-8 3 8h6l-9-14-9 14z'/></svg>&nbsp; Azure · AZ-104</span>
-  <h1>Identidad y acceso en Azure (AZ‑104)</h1>
-  <div class="meta"><span class='b'>Dominio: Gestión de identidades</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 25–35 min</span><span class='b'>Última revisión: Nov 2025</span></div>
+  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor' width="16" height="16"><path d='M3 18h6l3-8 3 8h6l-9-14-9 14z'/></svg>&nbsp; Azure · AZ-104</span>
+  <h1>Identidad y acceso en Azure (AZ-104)</h1>
+  <div class="meta"><span class='b'>Dominio: Gestión de identidades</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 30–40 min</span><span class='b'>Última revisión: Nov 2025</span></div>
 </div></section>
 
 <div class="container layout">
-  <aside class="toc"><h3>Índice</h3><ol><li><a href='#rbac'><span class='dot'></span><span>1. RBAC por ámbito</span></a></li><li><a href='#pim'><span class='dot'></span><span>2. Privileged Identity Management</span></a></li><li><a href='#mi'><span class='dot'></span><span>3. Managed Identities</span></a></li><li><a href='#kv'><span class='dot'></span><span>4. Key Vault</span></a></li></ol></aside>
+  <aside class="toc"><h3>Índice</h3>
+    <ol>
+      <li><a href='#entra'><span class='dot'></span><span>1. Microsoft Entra ID</span></a></li>
+      <li><a href='#rbac'><span class='dot'></span><span>2. Roles RBAC y ámbitos</span></a></li>
+      <li><a href='#pim'><span class='dot'></span><span>3. Privileged Identity Management</span></a></li>
+      <li><a href='#mfa'><span class='dot'></span><span>4. MFA y Conditional Access</span></a></li>
+      <li><a href='#mi'><span class='dot'></span><span>5. Managed Identities</span></a></li>
+      <li><a href='#kv'><span class='dot'></span><span>6. Azure Key Vault</span></a></li>
+      <li><a href='#tips'><span class='dot'></span><span>7. Tips de examen</span></a></li>
+    </ol>
+  </aside>
+
   <article>
     <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
-    <h2 id='rbac'>1. RBAC por ámbito</h2><p>Asigna a **grupos** y no a usuarios. Evita **Owner**; usa **User Access Administrator** para delegar.</p><table class='table'><thead><tr><th>Ámbito</th><th>Uso típico</th></tr></thead><tbody><tr><td>Ámbito</td><td>Ejemplo</td></tr><tr><td>Management Group</td><td>Políticas globales</td></tr><tr><td>Suscripción</td><td>Roles de facturación</td></tr><tr><td>RG/Recurso</td><td>Acceso a un servicio puntual</td></tr></tbody></table>
-<h2 id='pim'>2. Privileged Identity Management</h2><p>Habilita acceso **JIT** con aprobación; registra auditoría y define duración mínima.</p><div class='callout'><b>EXAM TIP:</b> “Permisos temporales” → PIM + aprobación.</div>
-<h2 id='mi'>3. Managed Identities</h2><p>Identidad administrada asignada a recursos para solicitar tokens AAD sin secretos. Ideal para acceder a **Key Vault** o APIs.</p>
-<h2 id='kv'>4. Key Vault</h2><p>Activa **soft‑delete** y **purge protection**; separa bóvedas por entorno y aplica RBAC a nivel de datos.</p>
+
+    <h2 id="entra">1. Microsoft Entra ID (Azure AD)</h2>
+    <p>Servicio de identidad principal en Azure. Gestiona usuarios, grupos, apps y autenticación.</p>
+    <ul>
+      <li><b>Usuarios y grupos:</b> base de asignación de roles RBAC y acceso a recursos.</li>
+      <li><b>Licencias:</b> P1 y P2 habilitan PIM, Identity Protection y Conditional Access.</li>
+      <li><b>Sincronización híbrida:</b> Entra Connect / Cloud Sync desde Active Directory local.</li>
+      <li><b>Autenticación:</b> soporta MFA, FIDO2, pass-through y federation.</li>
+    </ul>
+    <div class="callout"><b>EXAM TIP:</b> Azure AD ahora se llama <b>Microsoft Entra ID</b> — usa este término en el examen.</div>
+
+    <h2 id="rbac">2. Roles RBAC y ámbitos</h2>
+    <p><b>Role-Based Access Control (RBAC)</b> otorga permisos según rol y ámbito.</p>
+    <table class="table">
+      <thead><tr><th>Ámbito</th><th>Ejemplo de uso</th></tr></thead>
+      <tbody>
+        <tr><td>Tenant / Management Group</td><td>Control global de políticas y compliance.</td></tr>
+        <tr><td>Suscripción</td><td>Gestión de facturación y recursos generales.</td></tr>
+        <tr><td>Grupo de recursos</td><td>Control sobre un conjunto de servicios relacionados.</td></tr>
+        <tr><td>Recurso</td><td>Permiso específico sobre un recurso concreto (VM, Storage, etc.).</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><b>Owner:</b> control total (evítalo salvo administración central).</li>
+      <li><b>Contributor:</b> puede gestionar, no asignar roles.</li>
+      <li><b>Reader:</b> solo lectura.</li>
+      <li><b>User Access Administrator:</b> delega permisos RBAC.</li>
+      <li><b>Custom roles:</b> define permisos personalizados JSON.</li>
+    </ul>
+
+    <h2 id="pim">3. Privileged Identity Management (PIM)</h2>
+    <p>Controla accesos privilegiados de manera temporal (“Just-In-Time”).</p>
+    <ul>
+      <li><b>Asignaciones elegibles:</b> requieren activación manual + MFA.</li>
+      <li><b>Duración:</b> configurable (ej. 1h) con registro de auditoría.</li>
+      <li><b>Aprobación previa:</b> se puede exigir autorización de otro administrador.</li>
+      <li><b>Alertas:</b> detectan roles permanentes o sin uso.</li>
+    </ul>
+    <div class="callout"><b>EXAM TIP:</b> Preguntas con “acceso temporal” o “just-in-time” → <b>PIM</b>.</div>
+
+    <h2 id="mfa">4. MFA y Conditional Access</h2>
+    <p><b>Multi-Factor Authentication (MFA)</b> añade una capa adicional de seguridad.</p>
+    <ul>
+      <li><b>Recomendado:</b> habilitar MFA para todos los usuarios.</li>
+      <li><b>Conditional Access:</b> aplica políticas basadas en condiciones (ubicación, dispositivo, app).</li>
+      <li><b>Identity Protection:</b> analiza riesgo de inicio de sesión y usuario.</li>
+      <li><b>Self-service password reset (SSPR):</b> permite restablecer la contraseña de forma segura.</li>
+    </ul>
+    <div class="callout"><b>EXAM TIP:</b> “Aplicar MFA solo fuera del país” → usa <b>Conditional Access</b> con filtros de ubicación.</div>
+
+    <h2 id="mi">5. Managed Identities</h2>
+    <p>Permiten que los servicios de Azure se autentiquen en Entra ID sin credenciales manuales.</p>
+    <ul>
+      <li><b>System-assigned:</b> ligada a una VM o App; se elimina con el recurso.</li>
+      <li><b>User-assigned:</b> independiente, reutilizable por varios recursos.</li>
+      <li>Se usa para acceder a <b>Key Vault</b>, <b>Storage</b> o APIs protegidas sin guardar secretos.</li>
+    </ul>
+    <pre>// Ejemplo: asignar acceso a KV
+az keyvault set-policy --name kvDemo --object-id &lt;MI_ID&gt; --secret-permissions get list</pre>
+
+    <h2 id="kv">6. Azure Key Vault</h2>
+    <p>Almacena secretos, claves y certificados con controles RBAC y auditoría.</p>
+    <ul>
+      <li><b>Soft-delete y purge protection:</b> evita eliminaciones accidentales.</li>
+      <li><b>Access Policies (modelo heredado)</b> o <b>Azure RBAC (recomendado)</b> para permisos.</li>
+      <li><b>Networking:</b> usa Private Endpoint + firewall para acceso interno.</li>
+      <li><b>Logging:</b> habilita diagnóstico hacia Log Analytics.</li>
+    </ul>
+    <table class="table">
+      <thead><tr><th>Permiso</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td>get / list</td><td>Leer secretos existentes</td></tr>
+        <tr><td>set</td><td>Crear o actualizar un secreto</td></tr>
+        <tr><td>delete / purge</td><td>Eliminar permanentemente</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="tips">7. Tips de examen AZ-104</h2>
+    <ul>
+      <li>Los roles se asignan en <b>Azure Resource Manager</b> (ARM), no en AD clásico.</li>
+      <li><b>PIM</b> = acceso temporal + MFA + aprobación opcional.</li>
+      <li><b>Managed Identities</b> eliminan la necesidad de credenciales en código.</li>
+      <li><b>Key Vault</b>: habilita <b>soft-delete</b> siempre.</li>
+      <li><b>MFA</b> y <b>Conditional Access</b> son esenciales para proteger identidades.</li>
+      <li>Las preguntas suelen combinar RBAC + PIM + Key Vault en un mismo escenario.</li>
+    </ul>
   </article>
 </div>
 
 <footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
-  <div class="container">© Nov 2025 ITHub.es</div>
+  <div class="container">© 2025 ITHub.es · Identidad y acceso en Azure (AZ-104)</div>
 </footer>
 </body></html>

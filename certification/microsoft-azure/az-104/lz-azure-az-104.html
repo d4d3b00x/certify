@@ -325,7 +325,8 @@
       </div>
       <div>
         <div style="font-weight:800">Contenidos</div>
-        <div><a href="/content/azure-storage-az104.html">Azure · Storage (AZ-104)</a></div>
+        <div><a href="/content/azure-identity-az104.html">Azure · Identidad (AZ-104)</a></div>
+        <div><a href="/content/azure-az104-storage-network.html">Azure · Storage & Networking (AZ-104)</a></div>
         <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
         <div><a href="/content/azure-hybrid-connectivity-az305.html">Azure · Conectividad híbrida</a></div>
       </div>
@@ -512,10 +513,8 @@
         startBtn.dataset.locked = "true";
         startBtn.innerHTML = '<span class="lock">🔒</span>Login to Start';
       }
-      // no dejamos el botón deshabilitado permanentemente; controlamos por dataset
       startBtn.disabled = false;
     }
-    // Llamada inicial
     renderStartButton();
 
     // Simulador
@@ -530,7 +529,6 @@
     }
     function setQuizActive(on){
       quizActive = !!on;
-      // Mantiene título correcto respetando estado bloqueado
       if (quizActive){
         startBtn.textContent = '⏳ En marcha…';
       }else{
@@ -550,7 +548,6 @@
     window.addEventListener('quiz:ended',   ()=>{ setQuizActive(false); });
 
     startBtn.addEventListener('click', async ()=>{
-      // Si no hay sesión => ir a login y no lanzar nada
       if (startBtn.dataset.locked === "true"){
         window.location.href = '/login/login.html';
         return;
@@ -558,7 +555,6 @@
       if (quizActive) return;
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
       const count = parseInt(qCount.value,10) || 65;
-      // Filtros de dominio desactivados a propósito:
       const tags = [];
       if(typeof window.start === 'function'){
         setQuizActive(true);
@@ -572,17 +568,17 @@
     });
 
     /* ===== Nube de conceptos (datos) ===== */
+    // Incluye los dos contenidos nuevos:
+    //  - /content/azure-identity-az104.html
+    //  - /content/azure-az104-storage-network.html
     const CONCEPTS = [
-      { key:'rbac',  title:'Identidad & RBAC',         tip:'Entra ID, PIM, MFA y mínimo privilegio.', href:'/content/azure-identity-az104.html' },
-      { key:'store', title:'Storage: seguridad',        tip:'SAS, redundancia LRS–GZRS e inmutabilidad.', href:'/content/azure-storage-az104.html' },
-      { key:'net',   title:'Seguridad de red',          tip:'NSG/ASG, UDR, Firewall y Private Endpoints.', href:'/content/azure-network-security-az104.html' },
-      { key:'mon',   title:'Monitorización',            tip:'Log Analytics, métricas/alertas y action groups.', href:'/content/azure-monitoring-alerts-az104.html' },
-      { key:'comp',  title:'Compute & HA',              tip:'VMSS, Availability Sets/Zones, imágenes, discos.', href:'/content/azure-compute-availability-az104.html' },
-      { key:'bcd',   title:'Backup & Recovery',         tip:'Vaults, políticas, snapshots y restauración.', href:'/content/azure-backup-recovery-az104.html' },
-      { key:'cost',  title:'Coste & Gobierno',          tip:'Budgets, tags, Azure Policy y locks.', href:'/content/azure-cost-governance-az104.html' },
-      { key:'lz',    title:'Landing Zone',              tip:'CAF: suscripciones, políticas base y RBAC.', href:'/content/azure-landing-zone.html' },
-      { key:'p2p',   title:'Peering vs VPN',            tip:'Cuándo peering y cuándo VPN Gateway.', href:'/content/vnet-peering-vpn.html' },
-      { key:'worm',  title:'Backup inmutable',          tip:'WORM, cuentas aisladas, drills y vault.', href:'/content/immutable-backup-cyberrecovery.html' }
+      { key:'rbac',  title:'Identidad & RBAC (AZ-104)',  tip:'Entra ID, PIM, MFA y mínimo privilegio.', href:'/content/azure-identity-az104.html' },
+      { key:'stnet', title:'Storage + Networking',        tip:'Redundancia, Azure Files/Blob, VNets, NSG y PE.', href:'/content/azure-az104-storage-network.html' },
+      { key:'net',   title:'Seguridad de red',            tip:'NSG/ASG, UDR, Firewall y Private Endpoints.', href:'/content/azure-network-security-az104.html' },
+      { key:'mon',   title:'Monitorización',              tip:'Log Analytics, métricas/alertas y action groups.', href:'/content/azure-monitoring-alerts-az104.html' },
+      { key:'cost',  title:'Coste & Gobierno',            tip:'Budgets, tags, Azure Policy y locks.', href:'/content/azure-cost-governance-az104.html' },
+      { key:'lz',    title:'Landing Zone',                tip:'CAF: suscripciones, políticas base y RBAC.', href:'/content/azure-landing-zone.html' },
+      { key:'worm',  title:'Backup inmutable',            tip:'WORM, cuentas aisladas, drills y vault.', href:'/content/immutable-backup-cyberrecovery.html' }
     ];
     function renderConceptCloud(){
       const cloud = document.getElementById('conceptCloud');

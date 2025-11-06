@@ -1,10 +1,15 @@
 <!doctype html><html lang="es"><head>
   <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Backup inmutable y ciberrecuperación (Azure + AWS) | ITHub.es</title>
-  <meta name="description" content="Estrategia 3‑2‑1‑1‑0, bóvedas aisladas y runbooks de recuperación probados."/>
-  <meta name="keywords" content="backup inmutable,ciberrecuperación,Object Lock,Blob immutability,runbooks"/>
+  <meta name="description" content="Diseño de copias inmutables, bóvedas aisladas y recuperación cibernética avanzada en Azure y AWS. Estrategia 3-2-1-1-0, Object Lock, Blob immutability, runbooks y Zero Trust."/>
+  <meta name="keywords" content="backup inmutable,ciberrecuperación,Object Lock,Blob immutability,runbooks,Zero Trust,Azure Backup,Vault,Air Gap"/>
   <meta name="author" content="ITHub.es"/>
   <link rel="canonical" href="https://beta.ithub.es/content/immutable-backup-cyberrecovery.html"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config','G-DYZ3GCXHEK');</script>
+
   <style>
     :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
           --p:#6c8bff;--tint:rgba(108,139,255,.16);--chip:#e3e7ff;--bd:rgba(108,139,255,.65);--shadow:0 12px 28px rgba(6,12,40,.45)}
@@ -43,22 +48,113 @@
 </div></header>
 
 <section class="hero"><div class="container">
-  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor'><circle cx='12' cy='12' r='10'/></svg>&nbsp; Multi · AZ-104 · AZ-305 · SAA-C03</span>
+  <span class="eyebrow">🛡️ Multi · AZ-104 · AZ-305 · SAA-C03</span>
   <h1>Backup inmutable y ciberrecuperación (Azure + AWS)</h1>
-  <div class="meta"><span class='b'>Dominio: Resiliencia</span><span class='b'>Nivel: Avanzado</span><span class='b'>Tiempo de lectura: 25–40 min</span><span class='b'>Última revisión: Nov 2025</span></div>
+  <div class="meta"><span class='b'>Dominio: Resiliencia</span><span class='b'>Nivel: Avanzado</span><span class='b'>Tiempo de lectura: 35–50 min</span><span class='b'>Última revisión: Nov 2025</span></div>
 </div></section>
 
 <div class="container layout">
-  <aside class="toc"><h3>Índice</h3><ol><li><a href='#32110'><span class='dot'></span><span>1. Estrategia 3‑2‑1‑1‑0</span></a></li><li><a href='#vault'><span class='dot'></span><span>2. Vault aislado</span></a></li><li><a href='#drills'><span class='dot'></span><span>3. Ejercicios y runbooks</span></a></li></ol></aside>
+  <aside class="toc"><h3>Índice</h3>
+    <ol>
+      <li><a href='#32110'><span class='dot'></span><span>1. Estrategia 3-2-1-1-0</span></a></li>
+      <li><a href='#immutability'><span class='dot'></span><span>2. Inmutabilidad: Azure Blob y S3 Object Lock</span></a></li>
+      <li><a href='#vault'><span class='dot'></span><span>3. Vault aislado y Zero Trust</span></a></li>
+      <li><a href='#automation'><span class='dot'></span><span>4. Automatización y orquestación</span></a></li>
+      <li><a href='#drills'><span class='dot'></span><span>5. Ejercicios, validación y runbooks</span></a></li>
+      <li><a href='#restore'><span class='dot'></span><span>6. Recuperación ante ransomware</span></a></li>
+      <li><a href='#recommendations'><span class='dot'></span><span>7. Buenas prácticas y checklist</span></a></li>
+    </ol>
+  </aside>
+
   <article>
     <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
-    <h2 id='32110'>1. Estrategia 3‑2‑1‑1‑0</h2><p>Mantén 3 copias, 2 medios, 1 fuera del sitio, 1 **inmutable** y 0 errores verificados con restauraciones periódicas.</p><p>Usa **Object Lock (S3)** o **políticas de inmutabilidad** en Azure Blob.</p>
-<h2 id='vault'>2. Vault aislado</h2><p>Separa cuentas/suscripciones, red cerrada, **acceso JIT**, credenciales rotadas y logs inmutables.</p>
-<h2 id='drills'>3. Ejercicios y runbooks</h2><p>Define **RTO/RPO** por servicio, automatiza orquestación y programa **simulacros** con evidencias.</p>
+
+    <h2 id='32110'>1. Estrategia 3-2-1-1-0</h2>
+    <p>Base universal de resiliencia: <b>3 copias</b> de los datos, en <b>2 medios distintos</b>, <b>1 fuera del sitio</b>, <b>1 inmutable</b> y <b>0 errores de validación</b>.</p>
+    <div class="callout">Ejemplo: producción en disco SAN, réplica en Azure Backup Vault, y copia inmutable offline (S3 o Blob Vault).</div>
+    <p>La “0” implica pruebas automáticas de recuperación y verificación de integridad (checksum o hash chain).</p>
+
+    <h2 id='immutability'>2. Inmutabilidad: Azure Blob y S3 Object Lock</h2>
+    <p>Ambos proveedores ofrecen mecanismos nativos de <b>retención WORM</b> (Write Once Read Many):</p>
+    <table class="table"><thead><tr><th>Plataforma</th><th>Mecanismo</th><th>Modo</th><th>Gestión</th></tr></thead>
+      <tbody>
+        <tr><td><b>Azure Blob</b></td><td><code>Immutability Policy</code></td><td>Time-based o Legal Hold</td><td>Set a nivel de contenedor</td></tr>
+        <tr><td><b>AWS S3</b></td><td><code>Object Lock</code></td><td>Governance / Compliance</td><td>Por bucket y versión de objeto</td></tr>
+      </tbody></table>
+    <div class="callout"><b>Compliance mode</b> impide incluso al root eliminar o modificar los objetos antes de vencer la retención.</div>
+    <p>En Azure: <code>Set-AzStorageContainerImmutabilityPolicy -ImmutabilityPeriod 30</code></p>
+    <p>En AWS: <code>aws s3api put-object-lock-configuration --object-lock-enabled-for-bucket</code></p>
+
+    <h2 id='vault'>3. Vault aislado y Zero Trust</h2>
+    <p>Diseña una <b>bóveda de recuperación aislada</b> (<i>air-gapped</i>) separada de la red de producción. Puede ser:</p>
+    <ul>
+      <li><b>Azure</b>: uso de <i>Recovery Services Vault</i> o <i>Backup Vault</i> con <b>Soft Delete + Immutability</b>.</li>
+      <li><b>AWS</b>: <i>Backup Vault Lock</i> con políticas IAM restrictivas y cifrado KMS separado.</li>
+    </ul>
+    <p>Principios Zero Trust aplicados:</p>
+    <ul>
+      <li>Credenciales rotadas y MFA obligatorio.</li>
+      <li>Acceso JIT (Just-In-Time) y roles de acceso temporal.</li>
+      <li>Logs inmutables exportados a una cuenta SIEM aparte.</li>
+      <li>Network isolation y subred sin rutas salientes directas.</li>
+    </ul>
+
+    <h2 id='automation'>4. Automatización y orquestación</h2>
+    <p>La ciberrecuperación efectiva depende de la <b>automatización del flujo de restauración</b>. Recomendado:</p>
+    <ul>
+      <li><b>Azure Automation / Logic Apps</b> para restaurar máquinas y validar integridad.</li>
+      <li><b>AWS Backup Plans</b> y <b>Step Functions</b> para ejecutar restauraciones coordinadas.</li>
+      <li>Scripts de <code>az backup recoverypoint list</code> y <code>Start-AzRecoveryServicesRestore</code>.</li>
+    </ul>
+    <div class="callout">Integrar la validación con <b>Azure Monitor</b> o <b>CloudWatch Events</b> para notificar automáticamente fallos o retrasos.</div>
+
+    <h2 id='drills'>5. Ejercicios, validación y runbooks</h2>
+    <p>Realiza <b>simulacros</b> trimestrales documentando evidencias: tiempo de recuperación (RTO), pérdida de datos (RPO) y pasos de aprobación.</p>
+    <ul>
+      <li>Restauración parcial y total desde el vault aislado.</li>
+      <li>Validación de integridad (hash o checksum post-restore).</li>
+      <li>Actualización de procedimientos (runbooks).</li>
+    </ul>
+    <p>Plantilla básica:</p>
+    <pre><code>Runbook: Recuperación ante ransomware
+1. Aislar red principal.
+2. Verificar integridad del vault (hashes).
+3. Restaurar copias limpias en entorno controlado.
+4. Validar servicios SAP/DB/HANA.
+5. Activar sitio de contingencia.
+6. Notificar al SOC y registrar evidencias.</code></pre>
+
+    <h2 id='restore'>6. Recuperación ante ransomware</h2>
+    <p>El vault aislado debe ser capaz de <b>montar entornos de recuperación temporal</b> sin depender del entorno comprometido.</p>
+    <ul>
+      <li>Infraestructura mínima (“clean room”) en región separada.</li>
+      <li>Acceso controlado y monitorizado con credenciales únicas.</li>
+      <li>Conectividad temporal (VPN privada o ExpressRoute cifrado).</li>
+      <li>Validación antivirus/antimalware post-restauración.</li>
+    </ul>
+    <div class="callout"><b>Azure</b>: integración con <b>Cyber Recovery Vault (Dell, Rubrik, Commvault)</b> y restauración selectiva de backups inmutables.</div>
+    <p>Objetivo: restaurar la producción en menos de 48 h sin reinfectar la infraestructura principal.</p>
+
+    <h2 id='recommendations'>7. Buenas prácticas y checklist</h2>
+    <ul>
+      <li>Aplica <b>retención inmutable ≥30 días</b> para entornos críticos.</li>
+      <li>Automatiza verificación diaria de políticas de retención y alertas expiradas.</li>
+      <li>Habilita <b>cifrado doble</b> (KMS+clave propia) en vaults aislados.</li>
+      <li>Documenta roles y responsabilidades FinOps, SecOps y BackupOps.</li>
+      <li>Prueba la <b>restauración completa</b> al menos dos veces al año.</li>
+    </ul>
+    <table class="table"><thead><tr><th>Aspecto</th><th>Azure</th><th>AWS</th></tr></thead>
+      <tbody>
+        <tr><td>Inmutabilidad</td><td>Blob Immutability Policy (Container)</td><td>Object Lock (Bucket/Object)</td></tr>
+        <tr><td>Vault aislado</td><td>Backup Vault con identidad separada</td><td>Backup Vault Lock + IAM restrictivo</td></tr>
+        <tr><td>Recuperación</td><td>Automation/Runbooks/ASR</td><td>Backup Plan + Step Functions</td></tr>
+      </tbody></table>
+
+    <div class="callout">Recuerda: la ciberrecuperación no es backup, es la capacidad de <b>restaurar con confianza</b> tras un ataque de ransomware.</div>
   </article>
 </div>
 
 <footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
-  <div class="container">© Nov 2025 ITHub.es</div>
+  <div class="container">© 2025 ITHub.es · Contenido formativo AZ-104/AZ-305/SAA-C03</div>
 </footer>
 </body></html>

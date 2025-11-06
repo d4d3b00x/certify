@@ -1,17 +1,20 @@
 <!doctype html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Coste y gobernanza en Azure (AZ‑104) — Azure AZ-104 | ITHub</title>
-<meta name="description" content="Coste y gobernanza en Azure (AZ‑104) para el examen AZ-104. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a Azure."/>
+<title>Coste y gobernanza en Azure (AZ-104) — Azure AZ-104 | ITHub</title>
+<meta name="description" content="Guía completa de coste y gobernanza para AZ-104: etiquetas, Azure Policy, Management Groups, Cost Management + Budgets, Advisor, reservas y Savings Plans, Hybrid Benefit, RBAC, locks, automatización con CLI/Bicep y laboratorios."/>
+<link rel="canonical" href="https://beta.ithub.es/content/azure-cost-governance-az104.html"/>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config','G-DYZ3GCXHEK');</script>
+
 <style>
 :root{
   --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --accent-aws:#ffb74d; --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
-  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b; --info:#6aa9ff;
   --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
 }
 *{box-sizing:border-box}
@@ -19,6 +22,7 @@ html,body{margin:0;padding:0}
 body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
 a{color:inherit;text-decoration:none}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
 /* Header */
 header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
   background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
@@ -33,29 +37,21 @@ nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
 .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
 .pill-btn:hover{transform:translateY(-1px)}
 .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
 /* Hero */
 .hero{padding:26px 0 8px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--stroke); background:var(--badge); color:#fff;
-  padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.3px
-}
-.badge.aws{border-color:rgba(255,183,77,.55); background:rgba(255,183,77,.15); color:#ffe7c2}
-.badge.azure{border-color:rgba(106,169,255,.6); background:rgba(106,169,255,.15); color:#e6f0ff}
-.badge.multi{border-color:rgba(155,140,255,.6); background:rgba(155,140,255,.15); color:#f0eaff}
-/* Slim horizontal exam chip in one line */
 .exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
   border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
 .exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
-.exam-chip.aws{ border-color:rgba(255,183,77,.65); background:rgba(36,28,16,.55); color:#ffe2b3 }
 .exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
-/* Title + meta pills */
-h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
 .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
 /* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+.grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:16px}
 @media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
 /* Sidebar index */
 .aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
 .aside h3{margin:8px 0 10px}
@@ -63,23 +59,22 @@ h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
 .toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
 .toc a small{color:#9fb3e7;font-weight:700}
 .toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.aws a{ border-color:rgba(255,183,77,.25); background:rgba(255,183,77,.06); color:#ffe7c9}
-.toc.aws a:hover{ border-color:rgba(255,183,77,.65) }
-.toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
-.toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
-/* Content card */
+
+/* Cards */
 .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
 .card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
 blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
+blockquote.warning{margin:14px 0;padding:12px 14px;border-left:4px solid var(--warn); background:rgba(255,214,107,.08);border-radius:12px}
 pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
 kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
 table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
 th,td{border:1px solid #22304f;padding:8px 10px}
 th{background:#16213a}
+
 /* Footer */
 footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
-</style></head>
+</style>
+</head>
 <body>
 
 <header role="banner">
@@ -94,7 +89,7 @@ footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#
     </nav>
     <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
       <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
       <div id="userArea" style="display:none;align-items:center;gap:6px">
         <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
         <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
@@ -117,32 +112,271 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
 
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span></div>
-  <h1 style="text-align:center">Coste y gobernanza en Azure (AZ‑104)</h1>
-  
-    <div class="meta">
-      <span class="pill">Dominio: Optimización y control</span>
-      <span class="pill">Nivel: Intermedio</span>
-      <span class="pill">Tiempo de lectura: 18–25 min</span>
-      <span class="pill">Última revisión: Nov 2025</span>
-    </div>
+  <h1>Coste y gobernanza en Azure (AZ-104)</h1>
+
+  <div class="meta">
+    <span class="pill">Dominios: D1 (Identidad/gobierno), D5 (Monitorizar/mantener)</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
   <div class="grid" style="margin-top:16px">
+    <!-- Sidebar -->
     <aside class="aside">
       <h3>ÍNDICE</h3>
-      <ul class="toc azure"><li><a href="#sec1"><small>1.</small> Etiquetas y Policy</a></li><li><a href="#sec2"><small>2.</small> Budgets</a></li><li><a href="#sec3"><small>3.</small> Advisor</a></li></ul>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> Principios de FinOps y gobierno</a></li>
+        <li><a href="#sec1"><small>1.</small> Estructura LZ: Management Groups y suscripciones</a></li>
+        <li><a href="#sec2"><small>2.</small> Etiquetas (naming) + Azure Policy (enforcement)</a></li>
+        <li><a href="#sec3"><small>3.</small> Cost Management: presupuestos, alertas y exports</a></li>
+        <li><a href="#sec4"><small>4.</small> Azure Advisor, rightsizing y apagados</a></li>
+        <li><a href="#sec5"><small>5.</small> Reservations y Savings Plans</a></li>
+        <li><a href="#sec6"><small>6.</small> Azure Hybrid Benefit y Spot</a></li>
+        <li><a href="#sec7"><small>7.</small> Optimización de Storage y redes</a></li>
+        <li><a href="#sec8"><small>8.</small> RBAC, Locks y separaciones de coste</a></li>
+        <li><a href="#sec9"><small>9.</small> Automatización (CLI/Bicep/Policy) y ejemplos</a></li>
+        <li><a href="#sec10"><small>10.</small> Cuadros de mando y reporting</a></li>
+        <li><a href="#sec11"><small>11.</small> Checklist para el examen</a></li>
+        <li><a href="#sec12"><small>12.</small> Laboratorios guiados</a></li>
+      </ul>
     </aside>
-    <div><section id="sec1" class="card"><h2>1. Etiquetas y scopes</h2><p>Estandariza etiquetas y aplica Policy para enforcement.</p></section>
-<section id="sec2" class="card"><h2>2. Budgets y alertas</h2><p>Crea budgets por sub y RG; integra con Action Groups.</p></section>
-<section id="sec3" class="card"><h2>3. Advisor y rightsizing</h2><p>Recomendaciones y reservas/Savings Plans.</p></section>
-</div>
+
+    <!-- Content -->
+    <div>
+
+      <section id="sec0" class="card">
+        <h2>0. Principios de FinOps y gobierno</h2>
+        <p>Para AZ-104 debes ser capaz de <b>controlar, optimizar y monitorizar</b> el gasto en Azure mediante una combinación de diseño (landing zones), <b>Azure Policy</b>, etiquetado coherente, <b>presupuestos</b> y automatizaciones de ahorro.</p>
+        <ul>
+          <li><b>Visibilidad</b>: estructura por MG/RG, etiquetas obligatorias (owner, env, costCenter).</li>
+          <li><b>Control</b>: políticas para tamaños/regiones/sku permitidos, locks, RBAC mínimo.</li>
+          <li><b>Optimización</b>: rightsizing, <b>reservas/Savings Plans</b>, <b>Hybrid Benefit</b>, autoapagado y <b>tiering</b> de datos.</li>
+        </ul>
+      </section>
+
+      <section id="sec1" class="card">
+        <h2>1. Estructura LZ: Management Groups y suscripciones</h2>
+        <p>Organiza por jerarquía de <b>Management Groups (MG)</b> y asigna políticas a alto nivel. Usa suscripciones separadas por <i>prod</i>, <i>nonprod</i>, <i>seguridad</i> o por dominio de negocio para aislar presupuestos y límites.</p>
+        <table>
+          <thead><tr><th>Estrategia</th><th>Pros</th><th>Contras</th></tr></thead>
+          <tbody>
+            <tr><td>MG por entorno (Corp/Prod/NonProd)</td><td>Políticas y costes por entorno</td><td>Puede duplicar artefactos</td></tr>
+            <tr><td>Sub por unidad de negocio</td><td>Propiedad clara, presupuestos por BU</td><td>Más suscripciones a gestionar</td></tr>
+          </tbody>
+        </table>
+        <blockquote class="tip"><b>Examen:</b> “aplicar una política de tagging a todos los recursos” → Asignar <b>Policy</b> al MG raíz o al de entorno.</blockquote>
+      </section>
+
+      <section id="sec2" class="card">
+        <h2>2. Etiquetas (naming) + Azure Policy (enforcement)</h2>
+        <p>Define un <b>estándar de etiquetas</b> mínimo:</p>
+        <ul>
+          <li><code>owner</code>, <code>env</code> (prod/nonprod/dev), <code>costCenter</code>, <code>app</code>, <code>criticality</code>.</li>
+        </ul>
+        <h3>2.1 Policy: exigir etiquetas</h3>
+<pre><code>// Asignación (resumen): append de etiqueta 'costCenter' si falta
+{
+  "properties": {
+    "displayName": "Enforce costCenter tag",
+    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/xxxx",
+    "parameters": { "tagName": { "value": "costCenter" }, "tagValue": { "value": "UNKNOWN" } }
+  }
+}
+</code></pre>
+        <h3>2.2 Policy: restringir SKUs/regiones</h3>
+        <p>Usa <b>Allowed resource types</b> y <b>Allowed locations</b> o definiciones personalizadas para limitar costes.</p>
+        <blockquote class="warning"><b>Nota:</b> Evita “deny” sin exclusiones planificadas; puedes empezar con “audit” + reporte.</blockquote>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. Cost Management: presupuestos, alertas y exports</h2>
+        <p><b>Budgets</b> permiten alertar por umbral mensual/trimestral/anual a nivel de <b>suscripción</b> o <b>grupo de recursos</b>. Crea <b>Exports</b> diarios hacia Storage para reporting externo.</p>
+
+        <h3>3.1 Presupuesto: CLI</h3>
+<pre><code class="language-bash"># Presupuesto mensual de 2,000 EUR con alertas al 80% y 100%
+az consumption budget create \
+  --amount 2000 --budget-name "budget-prod" --category cost \
+  --time-grain monthly --start-date 2025-01-01 --end-date 2025-12-31 \
+  --notifications actual_greater_than_80 enabled=true threshold=80 contact-emails="finops@contoso.com" \
+  --notifications actual_greater_than_100 enabled=true threshold=100 contact-emails="oncall@contoso.com"
+</code></pre>
+
+        <h3>3.2 Exportar coste diario a Storage</h3>
+<pre><code class="language-bash"># Crear export (CSV diario) a una cuenta de Storage
+az costmanagement export create \
+  --name exp-daily --type Usage \
+  --storage-account-id $(az storage account show -g rg-ops -n stfinops --query id -o tsv) \
+  --storage-container finops --recurrence Daily --recurrence-period from=2025-01-01 to=2025-12-31
+</code></pre>
+
+        <h3>3.3 Alertas + Action Groups</h3>
+        <p>Para escalar avisos, integra con <b>Action Groups</b> (correo, webhook, Teams/ITSM vía Logic Apps).</p>
+      </section>
+
+      <section id="sec4" class="card">
+        <h2>4. Azure Advisor, rightsizing y apagados</h2>
+        <ul>
+          <li><b>Advisor</b> sugiere bajar SKU, apagar VMs inactivas, cambiar tier de discos o bases de datos.</li>
+          <li><b>Apagado automático</b> en Dev/Test (Auto-shutdown en lab/VMs) y <b>Runbooks</b> por etiquetas (<code>env=dev</code>).</li>
+          <li><b>VMSS</b> con <b>Autoscale</b> por CPU/colas evita sobreaprovisionamiento.</li>
+        </ul>
+<pre><code class="language-bash"># Autoapagado simple con tags (ejemplo con Automation Account + Runbook)
+# (Pseudocódigo) Filtra por tag env=dev y apaga VMs a las 20:00
+</code></pre>
+      </section>
+
+      <section id="sec5" class="card">
+        <h2>5. Reservations y Savings Plans</h2>
+        <p>Compromisos 1/3 años a cambio de descuento.</p>
+        <table>
+          <thead><tr><th>Opción</th><th>Aplica a</th><th>Ventaja</th><th>Consideraciones</th></tr></thead>
+          <tbody>
+            <tr><td><b>Reservations</b></td><td>Recursos concretos (VM/SQL/Storage)</td><td>Máximo descuento si hay patrón estable</td><td>Planifica tamaño/región</td></tr>
+            <tr><td><b>Savings Plans</b></td><td>Consumo de compute (flexible)</td><td>Flexibilidad de familia/región</td><td>Menor descuento que reserva precisa</td></tr>
+          </tbody>
+        </table>
+        <blockquote class="tip"><b>Examen:</b> “carga estable 24/7 por 3 años” → <b>Reservation</b>. “variación pero constante gasto de compute” → <b>Savings Plan</b>.</blockquote>
+      </section>
+
+      <section id="sec6" class="card">
+        <h2>6. Azure Hybrid Benefit y Spot</h2>
+        <ul>
+          <li><b>Azure Hybrid Benefit (AHB)</b>: usa licencias on-prem de Windows Server/SQL para reducir coste en Azure.</li>
+          <li><b>Spot VMs</b>: compute desahuciable con gran descuento (no apto para cargas críticas; perfecto para batch/CI).</li>
+        </ul>
+<pre><code class="language-bash"># Habilitar AHB en una VM Windows
+az vm update -g rg-app -n vm-win --license-type Windows_Server
+</code></pre>
+      </section>
+
+      <section id="sec7" class="card">
+        <h2>7. Optimización de Storage y redes</h2>
+        <h3>7.1 Storage</h3>
+        <ul>
+          <li>Usa <b>tiering</b> en Blob: Hot/Cool/Archive según patrón de acceso.</li>
+          <li><b>Lifecycle policies</b> para mover a Cool/Archive tras N días.</li>
+          <li>Evita redundancias innecesarias (LRS vs ZRS/GRS) si no hay requisito.</li>
+          <li>Activa <b>compresión</b>/caché según servicio (por ejemplo, Azure Files Premium sólo cuando se necesite).</li>
+        </ul>
+<pre><code class="language-bash"># Política de ciclo de vida: mover a Cool tras 30 días, Archive tras 180
+az storage account management-policy create -g rg-ops -n stdata --policy '{
+  "rules":[{"name":"tiering","type":"Lifecycle","definition":{
+    "filters":{"blobTypes":["blockBlob"]},"actions":{
+      "baseBlob":{"tierToCool":{"daysAfterModificationGreaterThan":30},
+                  "tierToArchive":{"daysAfterModificationGreaterThan":180}}
+  }}}] }'
+</code></pre>
+
+        <h3>7.2 Redes</h3>
+        <ul>
+          <li>Reduce <b>egress</b> (salida a Internet) con <b>Private Link</b> / endpoints privados y cachés locales.</li>
+          <li>Centraliza inspección en un <b>hub</b> (firewall) para evitar appliances duplicadas.</li>
+        </ul>
+      </section>
+
+      <section id="sec8" class="card">
+        <h2>8. RBAC, Locks y separaciones de coste</h2>
+        <ul>
+          <li><b>RBAC</b> mínimo: <i>Cost Management Reader</i> para ver costes; evita permisos excesivos.</li>
+          <li><b>Locks</b> (ReadOnly/CanNotDelete) en RG/recursos sensibles para evitar borrados accidentales.</li>
+          <li>Separa por <b>RG</b>/<b>sub</b> para costeo independiente y delegación clara.</li>
+        </ul>
+<pre><code class="language-bash"># Lock de protección contra borrado
+az lock create -g rg-prod --name protect-rg --lock-type CanNotDelete
+</code></pre>
+      </section>
+
+      <section id="sec9" class="card">
+        <h2>9. Automatización (CLI/Bicep/Policy) y ejemplos</h2>
+
+        <h3>9.1 Bicep: etiquetas obligatorias en RG y recursos</h3>
+<pre><code class="language-bicep">param env string
+param costCenter string
+resource rgPolicy 'Microsoft.Authorization/policyAssignments@2021-06-01' = {
+  name: 'enforce-tags'
+  properties: {
+    displayName: 'Enforce required tags'
+    policyDefinitionId: '/providers/Microsoft.Authorization/policyDefinitions/TAG_INHERIT_ID'
+    parameters: {
+      tagName: { value: 'costCenter' }
+      tagValue: { value: costCenter }
+    }
+    scope: subscriptionResourceId('Microsoft.Resources/resourceGroups', resourceGroup().name)
+  }
+}
+</code></pre>
+
+        <h3>9.2 CLI: marcar recursos huérfanos sin tag</h3>
+<pre><code class="language-bash"># Listar recursos sin 'costCenter'
+az resource list --tag costCenter='' --query "[].{name:name,type:type,rg:resourceGroup}" -o table
+</code></pre>
+
+        <h3>9.3 Policy: denegar SKUs costosos en dev</h3>
+<pre><code>// Pseudopolítica: deny VM sizes &gt;= D8_v5 si env = dev
+</code></pre>
+        <blockquote class="tip">Usa <b>iniciativas</b> (policySet) para agrupar: tagging + SKUs + regiones + diagnóstico → cumplimiento por entorno.</blockquote>
+      </section>
+
+      <section id="sec10" class="card">
+        <h2>10. Cuadros de mando y reporting</h2>
+        <ul>
+          <li><b>Azure Portal</b>: vistas de Cost Analysis por <i>group by tag</i> (costCenter/app/env).</li>
+          <li><b>Exports</b> a Storage + <b>Power BI</b> para informes mensuales con tendencia y previsión.</li>
+          <li><b>Alertas</b>: desviaciones vs presupuesto o crecimiento inusual (comparativa rolling 7/30 días).</li>
+        </ul>
+      </section>
+
+      <section id="sec11" class="card">
+        <h2>11. Checklist para el examen</h2>
+        <ul>
+          <li>¿Puedes <b>aplicar tags</b> automáticamente con <b>Policy</b> y <b>deny</b> cuando falten?</li>
+          <li>¿Sabes crear <b>budgets</b> y alertas por porcentaje?</li>
+          <li>¿Cuándo usar <b>Reservations</b> vs <b>Savings Plans</b> vs <b>Spot</b>?</li>
+          <li>¿Cómo <b>apagar</b> Dev/Test fuera de horario y <b>rightsizing</b> con Advisor?</li>
+          <li>¿Cómo <b>reducir egress</b> y <b>tiering</b> de Blob para abaratar?</li>
+          <li>¿Dónde asignar <b>Policy</b> para cubrir toda la organización? → <b>Management Group</b>.</li>
+        </ul>
+      </section>
+
+      <section id="sec12" class="card">
+        <h2>12. Laboratorios guiados</h2>
+
+        <h3>Lab 1 — Gobierno base</h3>
+        <ol>
+          <li>Crear MG <code>/Contoso/Prod</code> y <code>/Contoso/NonProd</code>. Mover suscripciones.</li>
+          <li>Asignar iniciativa: <i>tagging obligatorio</i> + <i>diagnostic settings</i> + <i>allowed locations</i>.</li>
+          <li>Ver cumplimiento en <b>Policy Compliance</b>.</li>
+        </ol>
+
+        <h3>Lab 2 — Cost Management end-to-end</h3>
+        <ol>
+          <li>Crear presupuesto mensual 1.000€ en <i>rg-app-prod</i> con alertas al 80/100% (CLI).</li>
+          <li>Export diario a Storage y panel en Power BI.</li>
+          <li>Simular subida de gasto con una VM grande; validar alertas.</li>
+        </ol>
+
+        <h3>Lab 3 — Optimización compute + storage</h3>
+        <ol>
+          <li>Advisor: aplicar rightsizing a una VM sobredimensionada.</li>
+          <li>Configurar lifecycle policy (30→Cool, 180→Archive).</li>
+          <li>Habilitar AHB en VM Windows y comparar coste.</li>
+        </ol>
+
+        <blockquote class="tip"><b>Tip final:</b> para preguntas teóricas, piensa en <i>visibilidad → control → optimización</i> y contesta con herramientas propias de Azure (Policy, Budgets, Advisor, Reservations, AHB).</blockquote>
+      </section>
+
+    </div>
   </div>
 </main>
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="badge multi">ITHub.es</span>
+    <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">ITHub.es</span>
       <span>© 2025 · Contenido educativo para certificaciones.</span></div>
     <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
   </div>
 </footer>
 
-</body></html>
+</body>
+</html>

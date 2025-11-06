@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Seguridad de red en Azure (AZ‑104) — Azure AZ-104 | ITHub</title>
-<meta name="description" content="Seguridad de red en Azure (AZ‑104) para el examen AZ-104. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a Azure."/>
+<title>Seguridad de red en Azure (AZ-104) — Azure AZ-104 | ITHub</title>
+<meta name="description" content="Seguridad de red en Azure (AZ-104) para el examen AZ-104. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a Azure."/>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config','G-DYZ3GCXHEK');</script>
+
 <style>
 :root{
   --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
@@ -19,6 +22,7 @@ html,body{margin:0;padding:0}
 body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
 a{color:inherit;text-decoration:none}
 .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
 /* Header */
 header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
   background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
@@ -33,29 +37,21 @@ nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
 .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
 .pill-btn:hover{transform:translateY(-1px)}
 .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
 /* Hero */
 .hero{padding:26px 0 8px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--stroke); background:var(--badge); color:#fff;
-  padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.3px
-}
-.badge.aws{border-color:rgba(255,183,77,.55); background:rgba(255,183,77,.15); color:#ffe7c2}
-.badge.azure{border-color:rgba(106,169,255,.6); background:rgba(106,169,255,.15); color:#e6f0ff}
-.badge.multi{border-color:rgba(155,140,255,.6); background:rgba(155,140,255,.15); color:#f0eaff}
-/* Slim horizontal exam chip in one line */
 .exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
   border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
 .exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
-.exam-chip.aws{ border-color:rgba(255,183,77,.65); background:rgba(36,28,16,.55); color:#ffe2b3 }
 .exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
-/* Title + meta pills */
-h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
 .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
 /* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+.grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:16px}
 @media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
 /* Sidebar index */
 .aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
 .aside h3{margin:8px 0 10px}
@@ -63,23 +59,24 @@ h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
 .toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
 .toc a small{color:#9fb3e7;font-weight:700}
 .toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.aws a{ border-color:rgba(255,183,77,.25); background:rgba(255,183,77,.06); color:#ffe7c9}
-.toc.aws a:hover{ border-color:rgba(255,183,77,.65) }
-.toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
-.toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
+
 /* Content card */
 .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
 .card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
 blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
+blockquote.warning{margin:14px 0;padding:12px 14px;border-left:4px solid var(--warn); background:rgba(255,214,107,.08);border-radius:12px}
 pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
 kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+
+/* Tables */
 table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
 th,td{border:1px solid #22304f;padding:8px 10px}
 th{background:#16213a}
+
 /* Footer */
 footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
-</style></head>
+</style>
+</head>
 <body>
 
 <header role="banner">
@@ -94,7 +91,7 @@ footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#
     </nav>
     <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
       <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
       <div id="userArea" style="display:none;align-items:center;gap:6px">
         <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
         <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
@@ -116,33 +113,288 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
 </script>
 
 <main class="container hero">
-  <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span></div>
-  <h1 style="text-align:center">Seguridad de red en Azure (AZ‑104)</h1>
-  
-    <div class="meta">
-      <span class="pill">Dominio: Controles de red y salida inspeccionada</span>
-      <span class="pill">Nivel: Intermedio</span>
-      <span class="pill">Tiempo de lectura: 20–25 min</span>
-      <span class="pill">Última revisión: Nov 2025</span>
-    </div>
-  <div class="grid" style="margin-top:16px">
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+  </div>
+  <h1>Seguridad de red en Azure (AZ-104)</h1>
+  <div class="meta">
+    <span class="pill">Dominios: Redes (D4) y Monitorización (D5)</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
+    <!-- ===== SIDEBAR ===== -->
     <aside class="aside">
       <h3>ÍNDICE</h3>
-      <ul class="toc azure"><li><a href="#sec1"><small>1.</small> NSG/ASG/UDR</a></li><li><a href="#sec2"><small>2.</small> Firewall y WAF</a></li><li><a href="#sec3"><small>3.</small> Private Endpoints y DNS</a></li></ul>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> Mapa mental de controles</a></li>
+        <li><a href="#sec1"><small>1.</small> NSG, ASG y UDR en profundidad</a></li>
+        <li><a href="#sec1b"><small>1.1</small> Patrones de salida inspeccionada</a></li>
+        <li><a href="#sec2"><small>2.</small> Azure Firewall (Standard vs Premium)</a></li>
+        <li><a href="#sec2b"><small>2.1</small> WAF: App Gateway vs Front Door</a></li>
+        <li><a href="#sec3"><small>3.</small> Private Endpoints, DNS privado y Service Endpoints</a></li>
+        <li><a href="#sec4"><small>4.</small> DDoS, Bastion, vNet Peering seguro</a></li>
+        <li><a href="#sec5"><small>5.</small> Conectividad híbrida segura (VPN/ER/NVA)</a></li>
+        <li><a href="#sec6"><small>6.</small> Automatización (Bicep/CLI) y Policy</a></li>
+        <li><a href="#sec7"><small>7.</small> Troubleshooting rápido</a></li>
+        <li><a href="#sec8"><small>8.</small> Costes, SLA y decisiones</a></li>
+        <li><a href="#sec9"><small>9.</small> Tips de examen y Labs</a></li>
+      </ul>
     </aside>
-    <div><section id="sec1" class="card"><h2>1. NSG/ASG y UDR</h2><p>Aplica NSG por subred/NIC, agrupa por ASG y controla rutas con UDR para salida inspeccionada.</p></section>
-<section id="sec2" class="card"><h2>2. Firewall y WAF</h2><p>Azure Firewall Premium para inspección TLS/IDPS, WAF en AppGW para capa 7.</p></section>
-<section id="sec3" class="card"><h2>3. PE y DNS privado</h2><p>Habilita Private Endpoints con integración DNS para PaaS.</p></section>
-</div>
+
+    <!-- ===== CONTENT ===== -->
+    <div>
+
+      <section id="sec0" class="card">
+        <h2>0. Mapa mental de controles</h2>
+        <p><b>Capa 3/4</b>: NSG + UDR → segmentación Este/Oeste y control de salida. <b>Inspección L7</b>: Azure Firewall Premium (TLS/IDPS) y WAF. <b>Acceso a PaaS</b>: Private Endpoints + DNS Privado. <b>Perímetro</b>: DDoS Standard y Front Door. <b>Acceso Ops</b>: Bastion (RDP/SSH sin IP pública).</p>
+        <blockquote class="tip"><b>Regla de oro:</b> Por defecto, <i>deny-all</i> Este/Oeste y Egress; abre sólo lo mínimo necesario y registra todo.</blockquote>
+      </section>
+
+      <section id="sec1" class="card">
+        <h2>1. NSG, ASG y UDR en profundidad</h2>
+        <p>Los <b>Network Security Groups</b> (NSG) filtran tráfico en L3/L4 mediante ACLs con orden de prioridad. Se aplican a <b>subred</b> y/o <b>NIC</b>. Las <b>Application Security Groups</b> (ASG) permiten referenciar conjuntos lógicos de NICs por nombre en reglas. Las <b>User Defined Routes</b> (UDR) reescriben la siguiente-salto de tráfico saliente/este-oeste.</p>
+
+        <h3>Buenas prácticas</h3>
+        <ul>
+          <li>NSG en <b>subred</b> para políticas comunes; NSG en <b>NIC</b> sólo para excepciones muy controladas.</li>
+          <li>Usa <b>ASG</b> en reglas (origen/destino = ASG) para evitar listas de IPs cambiantes.</li>
+          <li>UDR: define <b>0.0.0.0/0 → Firewall</b> para egress inspeccionado. Añade rutas específicas a NVAs si segmentas por dominios.</li>
+          <li>Audita prioridades: deja <i>deny-all</i> al final con prioridad baja (número alto).</li>
+        </ul>
+
+        <h3>Ejemplo de regla NSG (CLI)</h3>
+<pre><code class="language-bash"># Permite HTTPS saliente sólo hacia un firewall (como proxy)
+az network nsg rule create \
+  -g rg-net -n allow-https-egress \
+  --nsg-name nsg-app \
+  --priority 200 --direction Outbound --access Allow --protocol Tcp \
+  --source-address-prefixes '*' --source-port-ranges '*' \
+  --destination-address-prefixes 10.10.10.4 \
+  --destination-port-ranges 443
+</code></pre>
+
+        <h3>ASG + NSG (Bicep)</h3>
+<pre><code>// ASG
+resource asgWeb 'Microsoft.Network/applicationSecurityGroups@2022-07-01' = {
+  name: 'asg-web'
+  location: resourceGroup().location
+}
+resource nsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+  name: 'nsg-web'
+  location: resourceGroup().location
+  properties:{
+    securityRules:[
+      {
+        name: 'allow-fw-egress-443'
+        properties:{
+          priority: 200
+          direction: 'Outbound'
+          access: 'Allow'
+          protocol: 'Tcp'
+          sourceApplicationSecurityGroups:[{ id: asgWeb.id }]
+          destinationAddressPrefix: '10.10.10.4'
+          destinationPortRange: '443'
+        }
+      }
+    ]
+  }
+}
+</code></pre>
+      </section>
+
+      <section id="sec1b" class="card">
+        <h2>1.1 Patrones de salida inspeccionada</h2>
+        <ul>
+          <li><b>Hub-Spoke</b>: UDR en cada spoke → next hop = <i>Azure Firewall</i> del hub.</li>
+          <li><b>vWAN Secure Hub</b>: Managed Firewall + rutas propagadas por hub.</li>
+          <li><b>Force Tunneling</b>: 0/0 hacia on-prem (por ER/VPN) si cumples con inspección centralizada; cuidado con latencia.</li>
+        </ul>
+        <blockquote class="warning"><b>Ojo:</b> Service Tags (p.ej., <code>AzureCloud</code>) son dinámicas; evita listas estáticas de IPs PaaS.</blockquote>
+      </section>
+
+      <section id="sec2" class="card">
+        <h2>2. Azure Firewall (Standard vs Premium)</h2>
+        <p><b>Standard</b>: FQDN Tags, SNAT/DNAT, reglas aplicación y red. <b>Premium</b> añade <b>TLS Inspection</b>, <b>IDPS</b>, filtrado URL categorías, y <b>ICAP</b> (malware scanning en Gateway Load Balancer con partners).</p>
+
+        <table>
+          <thead><tr><th>Característica</th><th>Standard</th><th>Premium</th></tr></thead>
+          <tbody>
+            <tr><td>Reglas L3/L4 y L7 (FQDN)</td><td>✓</td><td>✓</td></tr>
+            <tr><td>DNAT/SNAT</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Inspección TLS</td><td>—</td><td>✓</td></tr>
+            <tr><td>IDPS</td><td>—</td><td>✓</td></tr>
+            <tr><td>URL Filtering por categorías</td><td>—</td><td>✓</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Reglas típicas</h3>
+        <ul>
+          <li><b>Egress mínimo</b>: sólo a Windows Update, repos oficiales, ACR, etc. via FQDN/URL categories.</li>
+          <li><b>DNAT</b>: publica puntualmente un puerto a un jump host (mejor usa Bastion).</li>
+          <li><b>Threat Intel</b>: modo <i>Alert</i> en pre para tuning, <i>Deny</i> en prod.</li>
+        </ul>
+
+<pre><code class="language-bash"># Crear colección de regla de aplicación (CLI)
+az network firewall policy rule-collection-group collection add-filter-collection \
+  --name "rcg-egress" --policy-name "fp-sec" --resource-group rg-net \
+  --collection-name "app-egress" --rule-type ApplicationRule \
+  --action Allow --priority 200 \
+  --rule "name=windowsUpdate,protocols=Https=443,sourceAddresses=10.20.0.0/16,targetFqdns=*.windowsupdate.com"
+</code></pre>
+      </section>
+
+      <section id="sec2b" class="card">
+        <h2>2.1 WAF: Application Gateway vs Front Door</h2>
+        <p><b>App Gateway WAF v2</b>: regional, L7 para backends en tu VNet. <b>Azure Front Door (AFD) WAF</b>: global, anycast, caché/accel y WAF en el edge.</p>
+        <ul>
+          <li><b>App GW</b>: ideal para “north-south” regional, mTLS con backends privados, integración con Private Link.</li>
+          <li><b>AFD</b>: multi-región activo-activo, aceleración global y failover rápido.</li>
+        </ul>
+        <blockquote class="tip"><b>Examen:</b> “Global, performance y protección edge” → Front Door. “Regional + integración VNet/PE” → App Gateway.</blockquote>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. Private Endpoints, DNS privado y Service Endpoints</h2>
+        <p><b>Private Endpoint (PE)</b> expone una interfaz privada (NIC) en tu subred hacia un recurso PaaS. Requiere <b>Private DNS Zone</b> con enlaces a VNets correctas.</p>
+        <h3>Patrones DNS</h3>
+        <ul>
+          <li>Crear <code>privatelink.blob.core.windows.net</code>, <code>privatelink.database.windows.net</code>, etc. y <b>link</b> a VNets consumidoras.</li>
+          <li>Reenviar desde DNS on-prem a Azure Private DNS (resolver/forwarders).</li>
+        </ul>
+        <h3>Service Endpoints</h3>
+        <p>Extienden la identidad de VNet a servicios PaaS pero siguen saliendo por internet. Úsalos sólo si no puedes usar PE.</p>
+
+<pre><code class="language-bash"># Private Endpoint para una cuenta de Storage (blob)
+az network private-endpoint create -g rg-app -n pe-blob \
+  --vnet-name vnet-spoke --subnet snet-app \
+  --private-connection-resource-id $(az storage account show -g rg-app -n stapp --query id -o tsv) \
+  --group-id blob --connection-name pe-blob-conn
+
+# Vincular zona DNS privada
+az network private-dns zone create -g rg-net -n privatelink.blob.core.windows.net
+az network private-dns link vnet create -g rg-net -n link-spoke \
+  -z privatelink.blob.core.windows.net -v /subscriptions/xxx/resourceGroups/rg-app/providers/Microsoft.Network/virtualNetworks/vnet-spoke -e true
+</code></pre>
+      </section>
+
+      <section id="sec4" class="card">
+        <h2>4. DDoS, Bastion y vNet Peering seguro</h2>
+        <ul>
+          <li><b>DDoS Standard</b>: habilítalo en VNets con puntos de entrada públicos; incluye alertas y créditos de ataque.</li>
+          <li><b>Azure Bastion</b>: RDP/SSH desde portal sin IP pública en VMs; preferible a jumpbox expuestos.</li>
+          <li><b>vNet Peering</b>: por defecto transitable; controla con NSG/UDR y desactiva <i>gateway transit</i> si no procede.</li>
+        </ul>
+      </section>
+
+      <section id="sec5" class="card">
+        <h2>5. Conectividad híbrida segura (VPN/ExpressRoute/NVA)</h2>
+        <p>Para tráfico on-prem ⇄ Azure, cifra con <b>VPN</b> o usa <b>ExpressRoute</b> (privado). Para inspección centralizada, enruta al <b>hub</b> con Firewall/NVA.</p>
+        <ul>
+          <li><b>VPN GW</b> activo-activo + BGP para alta disponibilidad.</li>
+          <li><b>ER</b> con <i>Microsoft peering</i> para PaaS públicos (o usa Private Link).</li>
+          <li>Coloca NVAs detrás de <b>Gateway Load Balancer</b> para escala y mantenimiento sin IPs públicas directas.</li>
+        </ul>
+      </section>
+
+      <section id="sec6" class="card">
+        <h2>6. Automatización (Bicep/CLI) y Azure Policy</h2>
+        <h3>Policy útiles</h3>
+        <ul>
+          <li><b>Denegar</b> subred sin NSG asociado.</li>
+          <li><b>Exigir</b> DDoS Standard en VNets con LB públicos.</li>
+          <li><b>Auditar</b> cuentas Storage sin Private Endpoint.</li>
+        </ul>
+<pre><code>// Policy: deniega subredes sin NSG
+{
+  "properties":{
+    "displayName":"Deny subnet without NSG",
+    "policyType":"Custom",
+    "mode":"All",
+    "policyRule":{
+      "if":{
+        "allOf":[
+          {"field":"type","equals":"Microsoft.Network/virtualNetworks/subnets"},
+          {"field":"Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id","exists":"false"}
+        ]
+      },
+      "then":{"effect":"deny"}
+    }
+  }
+}
+</code></pre>
+      </section>
+
+      <section id="sec7" class="card">
+        <h2>7. Troubleshooting rápido</h2>
+        <ul>
+          <li><b>NSG Flow Logs</b>: habilita en NSG → Log Analytics. Usa <i>Traffic Analytics</i> para flujos bloqueados.</li>
+          <li><b>Connection troubleshoot</b> (Network Watcher): prueba de VM a FQDN/IP y ve el salto que falla.</li>
+          <li><b>Packet capture</b>: en VM o NIC con Network Watcher para confirmar handshake/puertos.</li>
+        </ul>
+<pre><code class="language-bash"># Probar conectividad (NW)
+az network watcher connection-monitor test-configuration add \
+  --connection-monitor MyMon --protocol Tcp --port 443 --name https \
+  --source-resource vm1-id --dest-address www.microsoft.com
+</code></pre>
+      </section>
+
+      <section id="sec8" class="card">
+        <h2>8. Costes, SLA y decisiones</h2>
+        <table>
+          <thead><tr><th>Componente</th><th>Coste aproximado</th><th>SLA</th><th>Cuándo elegir</th></tr></thead>
+          <tbody>
+            <tr><td>NSG/UDR/ASG</td><td>Incluido</td><td>—</td><td>Segmentación L3/L4 básica y control de rutas.</td></tr>
+            <tr><td>Azure Firewall Std</td><td>Fijo + GB procesados</td><td>99.95%*</td><td>Egress mínimo y DNAT simples.</td></tr>
+            <tr><td>Azure Firewall Premium</td><td>↑ sobre Std</td><td>99.95%*</td><td>TLS inspection, IDPS, URL categories.</td></tr>
+            <tr><td>WAF AppGW</td><td>Por hora + capacidad</td><td>99.95%*</td><td>Regional L7, mTLS, integración VNet.</td></tr>
+            <tr><td>WAF Front Door</td><td>Por request + reglas</td><td>99.99%</td><td>Edge global, aceleración y failover.</td></tr>
+            <tr><td>Private Endpoints</td><td>Por PE + tráfico</td><td>—</td><td>Acceso privado a PaaS (recomendado).</td></tr>
+            <tr><td>DDoS Standard</td><td>Por VNet/mes</td><td>—</td><td>Exposición pública significativa.</td></tr>
+          </tbody>
+        </table>
+        <p style="color:var(--muted)">*Con despliegue multi-zona cuando aplique.</p>
+      </section>
+
+      <section id="sec9" class="card">
+        <h2>9. Tips de examen y Laboratorios</h2>
+        <h3>Tips</h3>
+        <ul>
+          <li>“<b>Privado</b> y sin exposición” → Private Endpoint + DNS privado (no service endpoints).</li>
+          <li>“<b>Global</b>, CDN, WAF en edge” → Front Door; “Regional + VNet” → App Gateway.</li>
+          <li>“<b>Inspección TLS</b> y categorías URL” → Azure Firewall Premium.</li>
+          <li>“Acceso admin sin IP pública” → Bastion.</li>
+        </ul>
+
+        <h3>Lab 1 — Egress inspeccionado (Hub-Spoke)</h3>
+        <ol>
+          <li>Crear Hub con Azure Firewall Premium y dos spoke con workloads.</li>
+          <li>UDR en spokes: <code>0/0 → FW</code>. NSG outbound deny-all excepto 443 → FW.</li>
+          <li>Firewall: reglas app para Windows Update y GitHub; habilitar Threat Intel en Alert.</li>
+          <li>Probar actualizaciones y bloquear dominios no permitidos.</li>
+        </ol>
+
+        <h3>Lab 2 — Private Endpoint + DNS</h3>
+        <ol>
+          <li>Storage cuenta <code>stlab</code> + container.</li>
+          <li>Crear PE (blob) en spoke; Private DNS Zone + link a vNet.</li>
+          <li>Resolver FQDN desde VM del spoke y verificar IP privada.</li>
+        </ol>
+      </section>
+
+    </div>
   </div>
 </main>
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="badge multi">ITHub.es</span>
+    <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">ITHub.es</span>
       <span>© 2025 · Contenido educativo para certificaciones.</span></div>
     <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
   </div>
 </footer>
 
-</body></html>
+</body>
+</html>
