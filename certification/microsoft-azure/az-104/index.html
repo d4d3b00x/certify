@@ -110,7 +110,7 @@
     }
     .badge-diff.high{background:rgba(255,107,107,.2);border-color:rgba(255,107,107,.45)}
 
-    /* Rutas horizontales (dos columnas) con colores por rol */
+    /* Rutas horizontales */
     .routes-grid{display:grid;gap:14px;grid-template-columns:repeat(2, minmax(300px,1fr))}
     .route-card{
       display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--stroke);
@@ -128,7 +128,7 @@
     .route-path{color:#cfe1ff}
     @media(max-width:900px){ .routes-grid{grid-template-columns:1fr} }
 
-    /* Comparativa Associate vs Expert en cards con iconos */
+    /* Comparativa Associate vs Expert */
     .compare{display:grid;gap:16px;grid-template-columns:repeat(2, minmax(300px,1fr))}
     .compare .col{
       background:var(--surface2);border:1px solid var(--stroke);border-radius:16px;padding:16px;position:relative;
@@ -169,7 +169,7 @@
     details+details{margin-top:8px}
     details summary{cursor:pointer;font-weight:900}
 
-
+    /* Destacado: Certificaciones */
     #certificaciones{
       border:2px solid #0078d4;
       box-shadow:0 0 20px rgba(0,120,212,.25);
@@ -213,8 +213,8 @@
         <p class="lead">Guías prácticas, rutas de estudio, hojas de trucos y simuladores. Cobertura desde <b>Fundamentals</b> hasta <b>Expert</b> y especialidades.</p>
         <div class="tags" aria-label="Áreas de Azure">
           <span class="tag-azure">Fundamentals</span>
-          <span class="tag-azure">Administrator</span>
-          <span class="tag-azure">Architect</span>
+          <span class="tag-azure"><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">Administrator</a></span>
+          <span class="tag-azure"><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">Architect</a></span></span>
           <span class="tag-azure">Developer</span>
           <span class="tag-azure">Security</span>
           <span class="tag-azure">Data/AI</span>
@@ -229,7 +229,7 @@
 
         <!-- 1) Certificaciones destacadas -->
         <div id="certificaciones" class="card" style="margin-top:12px">
-          <h2>CERTIFICACION DISPONIBLES EN ITHUB</h2>
+          <h2>CERTIFICACIONES ESTUDIABLES EN <span style="color:#f44bfad5">ITHUB</span></h2>
           <div class="muted">Accede a la página de cada certificación para guía, banco de preguntas y simulador.</div>
           <div class="grid cols-2" style="margin-top:12px">
             <article class="card">
@@ -305,44 +305,7 @@
           </div>
         </div>
 
-        <!-- 3) Mapa de certificaciones -->
-        <div class="card" style="margin-top:12px">
-          <h2>Mapa de certificaciones de Azure</h2>
-          <p class="muted">El portfolio se organiza por <b>nivel</b>. Los códigos de versión cambian con el tiempo; aquí mostramos los nombres (el código actual lo verás en cada guía).</p>
-
-          <div class="grid cols-mapa" style="margin-top:14px">
-            <div class="card">
-              <h3 style="margin:0 0 6px">Fundamentals</h3>
-              <ul style="margin:0;padding-left:18px">
-                <li>AZ-900 · Azure Fundamentals</li>
-                <li>DP-900 · Data Fundamentals</li>
-                <li>AI-900 · AI Fundamentals</li>
-                <li>SC-900 · Security, Compliance & Identity</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h3 style="margin:0 0 6px">Associate</h3>
-              <ul style="margin:0;padding-left:18px">
-                <li>AZ-104 · Administrator</li>
-                <li>AZ-204 · Developer</li>
-                <li>DP-203 · Data Engineer</li>
-                <li>SC-200/300/400 · SecOps/Identity/Information</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <h3 style="margin:0 0 6px">Expert</h3>
-              <ul style="margin:0;padding-left:18px">
-                <li>AZ-305 · Solutions Architect</li>
-                <li>AZ-500 · Security Engineer</li>
-                <li>AI-102 · AI Engineer</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4) Associate vs Expert -->
+        <!-- 3) Associate vs Expert -->
         <div class="card" style="margin-top:12px">
           <h2>Associate vs Expert</h2>
           <div class="compare">
@@ -375,7 +338,7 @@
           </div>
         </div>
 
-        <!-- 5) Preguntas frecuentes -->
+        <!-- 4) Preguntas frecuentes -->
         <div class="card" style="margin-top:12px">
           <h2>Preguntas frecuentes</h2>
           <details open>
@@ -391,24 +354,11 @@
             <p class="muted">Microsoft usa puntuación escalada. Apunta a ≥ 75–80% en nuestros simuladores cronometrados.</p>
           </details>
         </div>
-
-        <!-- 6) Consejos 
-        <div class="card" style="margin-top:12px">
-          <h2>Consejos rápidos para el examen</h2>
-          <div class="check">
-            <div>✅ Identifica siempre <b>requisitos</b> (SLA, coste, seguridad, latencia) antes de elegir servicio.</div>
-            <div>✅ Prefiere soluciones <b>PaaS/Serverless</b> cuando el caso lo permita.</div>
-            <div>✅ Zonas de disponibilidad por defecto; multirregión si hay <b>RTO/RPO</b> estrictos.</div>
-            <div>✅ Para acceso privado a servicios PaaS, usa <b>Private Link</b> y DNS privado.</div>
-            <div>✅ Automatiza con <b>Bicep/Terraform</b> para reducir errores y repetir despliegues.</div>
-          </div>
-        </div>-->
       </div>
 
       <!-- DERECHA -->
       <aside class="sidebar">
-        
-         <div class="block">
+        <div class="block">
           <h3>Enlaces por certificación</h3>
           <div style="display:grid;gap:8px">
             <a class="a-btn" href="https://learn.microsoft.com/credentials/certifications/azure-administrator/" target="_blank" rel="noopener">AZ-104 · Exam Guide</a>
@@ -417,6 +367,44 @@
             <a class="a-btn" href="https://learn.microsoft.com/credentials/certifications/azure-security-engineer/" target="_blank" rel="noopener">AZ-500 · Exam Guide</a>
           </div>
         </div>
+
+        <!-- ⬇️ Mapa de certificaciones (movido a la derecha) -->
+        <div class="block">
+          <h3>Mapa de certificaciones de Azure</h3>
+          <p class="mini" style="margin:0 0 6px">Organizado por <b>nivel</b>. Los códigos pueden cambiar con el tiempo.</p>
+
+          <div style="display:grid;gap:10px">
+            <div class="block" style="margin:0;background:var(--surface2)">
+              <h3 style="margin:0 0 6px;font-size:.98rem">Fundamentals</h3>
+              <ul class="mini" style="margin:0 0 0 18px">
+                <li>AZ-900 · Azure Fundamentals</li>
+                <li>DP-900 · Data Fundamentals</li>
+                <li>AI-900 · AI Fundamentals</li>
+                <li>SC-900 · Security, Compliance & Identity</li>
+              </ul>
+            </div>
+
+            <div class="block" style="margin:0;background:var(--surface2)">
+              <h3 style="margin:0 0 6px;font-size:.98rem">Associate</h3>
+              <ul class="mini" style="margin:0 0 0 18px">
+                <li>AZ-104 · Administrator</li>
+                <li>AZ-204 · Developer</li>
+                <li>DP-203 · Data Engineer</li>
+                <li>SC-200/300/400 · SecOps/Identity/Information</li>
+              </ul>
+            </div>
+
+            <div class="block" style="margin:0;background:var(--surface2)">
+              <h3 style="margin:0 0 6px;font-size:.98rem">Expert</h3>
+              <ul class="mini" style="margin:0 0 0 18px">
+                <li>AZ-305 · Solutions Architect</li>
+                <li>AZ-500 · Security Engineer</li>
+                <li>AI-102 · AI Engineer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- ⬆️ Fin mapa movido -->
 
         <div class="block">
           <h3>Política de reintentos</h3>
@@ -442,8 +430,6 @@
             Posibles descuentos para estudiantes o eventos.
           </div>
         </div>
-
-       
 
         <div class="block">
           <h3>Próximos directos</h3>
