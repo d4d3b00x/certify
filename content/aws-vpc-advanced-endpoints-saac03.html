@@ -1,85 +1,92 @@
 <!doctype html>
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>VPC avanzado y Endpoints (SAA‑C03) — AWS SAA-C03 | ITHub</title>
-<meta name="description" content="VPC avanzado y Endpoints (SAA‑C03) para el examen SAA-C03. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a AWS."/>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
-<style>
-:root{
-  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --accent-aws:#ffb74d; --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
-  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
-  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 20px}
-/* Header */
-header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
-  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
-  border-bottom:1px solid var(--stroke)}
-.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-.brand img.site-logo{height:40px;width:auto;display:block}
-nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
-nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
-.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
-.pill-btn:hover{transform:translateY(-1px)}
-.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-/* Hero */
-.hero{padding:26px 0 8px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--stroke); background:var(--badge); color:#fff;
-  padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.3px
-}
-.badge.aws{border-color:rgba(255,183,77,.55); background:rgba(255,183,77,.15); color:#ffe7c2}
-.badge.azure{border-color:rgba(106,169,255,.6); background:rgba(106,169,255,.15); color:#e6f0ff}
-.badge.multi{border-color:rgba(155,140,255,.6); background:rgba(155,140,255,.15); color:#f0eaff}
-/* Slim horizontal exam chip in one line */
-.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
-  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
-.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
-.exam-chip.aws{ border-color:rgba(255,183,77,.65); background:rgba(36,28,16,.55); color:#ffe2b3 }
-.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
-/* Title + meta pills */
-h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
-.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
-/* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
-/* Sidebar index */
-.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
-.aside h3{margin:8px 0 10px}
-.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
-.toc a small{color:#9fb3e7;font-weight:700}
-.toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.aws a{ border-color:rgba(255,183,77,.25); background:rgba(255,183,77,.06); color:#ffe7c9}
-.toc.aws a:hover{ border-color:rgba(255,183,77,.65) }
-.toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
-.toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
-/* Content card */
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
-.card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
-pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
-kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
-table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
-th,td{border:1px solid #22304f;padding:8px 10px}
-th{background:#16213a}
-/* Footer */
-footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
-</style></head>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>VPC avanzado & Endpoints (SAA-C03) — AWS | ITHub</title>
+  <meta name="description" content="Guía completa de VPC avanzado y VPC Endpoints (Gateway e Interface), PrivateLink, DNS con Route 53 Resolver, seguridad, costes y tips de examen SAA-C03."/>
+  <meta name="keywords" content="AWS, VPC, Endpoints, PrivateLink, SAA-C03, Route 53 Resolver, seguridad, arquitectura, NAT Gateway, TGW, Interface Endpoint, Gateway Endpoint, endpoint policy"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <style>
+    :root{
+      /* Paleta base oscura + acento AWS naranja */
+      --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+      --aws-1:#ffb566; --aws-2:#ff9900; --aws-ink:#1a1207;
+      --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+      --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
+      border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .brand img.site-logo{height:40px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+    nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #ff990044;background:linear-gradient(180deg,#ffd699,#ff9900);color:var(--aws-ink);font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
+    .pill-btn:hover{transform:translateY(-1px)}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
+    /* Hero */
+    .hero{padding:26px 0 8px}
+    .exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
+      border-radius:20px; border:1px solid rgba(255,153,0,.45);
+      background:rgba(255,153,0,.14); color:#ffe7c9; font-weight:900 }
+    .exam-chip i{width:16px;height:2px;background:#ffe1bf;display:inline-block;box-shadow:0 6px 0 #ffe1bf, 0 -6px 0 #ffe1bf;border-radius:2px}
+
+    h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
+    .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
+    /* Layout */
+    .grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+    @media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
+    /* Sidebar index */
+    .aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+    .aside h3{margin:8px 0 10px}
+    .toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+    .toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,153,0,.25);background:rgba(255,153,0,.06);font-weight:800;color:#ffe7c9}
+    .toc a small{color:#ffd4a3;font-weight:700}
+    .toc a:hover{border-color:rgba(255,153,0,.65); transform:translateX(2px)}
+
+    /* Content card */
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+    .card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
+    blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
+    blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
+    pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+    kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+    table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
+    th,td{border:1px solid #22304f;padding:8px 10px;vertical-align:top}
+    th{background:#16213a}
+
+    /* Callouts AWS */
+    .aws-call{border:1px solid rgba(255,153,0,.45);background:linear-gradient(180deg,rgba(255,153,0,.10),rgba(255,153,0,.06));border-radius:12px;padding:12px}
+
+    /* Footer */
+    footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+  </style>
+</head>
 <body>
 
 <header role="banner">
@@ -94,55 +101,276 @@ footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#
     </nav>
     <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
       <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
       <div id="userArea" style="display:none;align-items:center;gap:6px">
         <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        <a class="pill-btn" href="/user/profile.html" role="button" style="background:linear-gradient(180deg,#ffd699,#ff9900)">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button" style="background:linear-gradient(180deg,#ffd699,#ff9900)">LOGOUT</button>
       </div>
     </div>
   </div>
 </header>
 <script>
-function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-(function(){
-  const u=getCurrentUser();
-  const login=document.getElementById('btnLogin');
-  const signup=document.getElementById('btnSignup');
-  const userArea=document.getElementById('userArea');
-  const nameTop=document.getElementById('userNameTop');
-  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-})();
+  function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+  (function(){
+    const u=getCurrentUser();
+    const login=document.getElementById('btnLogin');
+    const signup=document.getElementById('btnSignup');
+    const userArea=document.getElementById('userArea');
+    const nameTop=document.getElementById('userNameTop');
+    if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); location.reload(); });
+  })();
 </script>
 
 <main class="container hero">
-  <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip aws"><i></i><span>AWS · SAA-C03</span></span></div>
-  <h1 style="text-align:center">VPC avanzado y Endpoints (SAA‑C03)</h1>
-  
-    <div class="meta">
-      <span class="pill">Dominio: Red y conectividad privada</span>
-      <span class="pill">Nivel: Intermedio</span>
-      <span class="pill">Tiempo de lectura: 20–30 min</span>
-      <span class="pill">Última revisión: Nov 2025</span>
-    </div>
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip"><i></i><span>AWS · SAA-C03</span></span>
+  </div>
+  <h1 style="text-align:center">VPC avanzado & Endpoints (Gateway, Interface & PrivateLink)</h1>
+  <div class="meta">
+    <span class="pill">Dominio: Red y conectividad privada</span>
+    <span class="pill">Nivel: Intermedio-Avanzado</span>
+    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
   <div class="grid" style="margin-top:16px">
+    <!-- Sidebar -->
     <aside class="aside">
       <h3>ÍNDICE</h3>
-      <ul class="toc aws"><li><a href="#sec1"><small>1.</small> Arquitecturas</a></li><li><a href="#sec2"><small>2.</small> Endpoints y PrivateLink</a></li><li><a href="#sec3"><small>3.</small> DNS y resolución</a></li></ul>
+      <ul class="toc">
+        <li><a href="#arc"><small>1.</small> Arquitecturas VPC avanzadas</a></li>
+        <li><a href="#endp"><small>2.</small> VPC Endpoints (Gateway vs Interface)</a></li>
+        <li><a href="#plink"><small>3.</small> AWS PrivateLink (producer/consumer)</a></li>
+        <li><a href="#dns"><small>4.</small> DNS & Route 53 Resolver (in/outbound)</a></li>
+        <li><a href="#sec"><small>5.</small> Seguridad: SG, NACL, Endpoint Policy</a></li>
+        <li><a href="#cost"><small>6.</small> Costes & rendimiento</a></li>
+        <li><a href="#exam"><small>7.</small> Tips de examen SAA-C03</a></li>
+        <li><a href="#labs"><small>8.</small> Mini-labs prácticos</a></li>
+        <li><a href="#faq"><small>9.</small> Preguntas frecuentes</a></li>
+      </ul>
     </aside>
-    <div><section id="sec1" class="card"><h2>1. Arquitecturas</h2><p>Hub‑and‑spoke con TGW, subredes por AZ, NACL minimalistas, NSG (SG) por rol.</p></section>
-<section id="sec2" class="card"><h2>2. Endpoints y PrivateLink</h2><p>Gateway endpoints para S3/DynamoDB; Interface endpoints para servicios priv. PrivateLink para publicar servicios.</p></section>
-<section id="sec3" class="card"><h2>3. DNS y resolución</h2><p>Route 53 Resolver in/outbound para on‑prem, split‑horizon y reglas por VPC.</p></section>
-</div>
+
+    <!-- Content -->
+    <div>
+
+      <section id="arc" class="card">
+        <h2>1) Arquitecturas VPC avanzadas</h2>
+        <p>Patrones típicos para SAA-C03:</p>
+        <ul>
+          <li><b>Hub-and-Spoke</b>: una VPC central (hub) con servicios compartidos (AD, proxy, inspección) conectada a <i>spokes</i> por <b>Transit Gateway (TGW)</b> o <b>peering</b> según escala.</li>
+          <li><b>Subredes por AZ</b> (mín. 2 AZ) con <b>rutas específicas</b> y <b>NAT Gateway</b> sólo donde se necesite tráfico saliente público.</li>
+          <li><b>Flujos este-oeste privados</b>: preferir <b>Interface Endpoints</b> y <b>PrivateLink</b> frente a NAT/Internet para reducir superficie de ataque.</li>
+          <li><b>Inspección</b> (egress): patrones con <b>Gateway Load Balancer</b> y appliances de seguridad.</li>
+        </ul>
+        <blockquote class="tip"><b>Tip:</b> para multi-cuenta, centraliza la salida a Internet y el acceso a servicios gestionados con endpoints compartidos + TGW + RAM (Resource Access Manager).</blockquote>
+      </section>
+
+      <section id="endp" class="card">
+        <h2>2) VPC Endpoints (Gateway vs Interface)</h2>
+        <p>Los <b>VPC Endpoints</b> permiten acceder a servicios de AWS sin salir a Internet ni usar NAT. Hay dos tipos:</p>
+
+        <table>
+          <thead>
+            <tr><th>Tipo</th><th>Servicios</th><th>Cómo funciona</th><th>Rutas/DNS</th><th>Coste</th><th>Casos</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Gateway Endpoint</b></td>
+              <td>S3, DynamoDB</td>
+              <td>Target de <b>route table</b> (destino para prefijos del servicio)</td>
+              <td>Se añaden rutas; DNS opcional para buckets</td>
+              <td>Sin coste por hora (sí tráfico)</td>
+              <td>Acceso masivo a S3/DDB sin NAT</td>
+            </tr>
+            <tr>
+              <td><b>Interface Endpoint</b> (ENI)</td>
+              <td>Resto de servicios (STS, KMS, SSM, ECR, etc.)</td>
+              <td><b>ENI</b> privados en subredes seleccionadas + <b>DNS privado</b></td>
+              <td>Resuelve al ENI vía <b>Private DNS</b></td>
+              <td><b>$ por hora</b> + datos</td>
+              <td>Acceso privado y granular a APIs</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="aws-call">
+          <p><b>Endpoint Policy:</b> aplica <i>IAM-like</i> a nivel del endpoint para <b>permitir/denegar</b> operaciones hacia el servicio. Se combina con IAM/SG.</p>
+        </div>
+
+        <h3>Creación rápida (CLI)</h3>
+        <pre><code># Gateway Endpoint para S3
+aws ec2 create-vpc-endpoint \
+  --vpc-id vpc-1234567890abcdef0 \
+  --service-name com.amazonaws.eu-west-1.s3 \
+  --route-table-ids rtb-111aaa rtb-222bbb \
+  --vpc-endpoint-type Gateway
+
+# Interface Endpoint para STS con DNS privado
+aws ec2 create-vpc-endpoint \
+  --vpc-id vpc-1234567890abcdef0 \
+  --service-name com.amazonaws.eu-west-1.sts \
+  --subnet-ids subnet-a1 subnet-b2 \
+  --security-group-ids sg-0abc123 \
+  --private-dns-enabled \
+  --vpc-endpoint-type Interface
+</code></pre>
+
+        <h3>Ejemplo de Endpoint Policy (S3)</h3>
+        <pre><code>{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "AllowOnlySpecificBucket",
+    "Effect": "Allow",
+    "Principal": "*",
+    "Action": "s3:*",
+    "Resource": [
+      "arn:aws:s3:::mi-bucket-autorizado",
+      "arn:aws:s3:::mi-bucket-autorizado/*"
+    ]
+  }]
+}
+</code></pre>
+
+        <blockquote class="warning"><b>Ojo:</b> con Interface Endpoints, <b>habilita Private DNS</b> para que <code>*.amazonaws.com</code> resuelva al ENI; si usas DNS propio, propaga las zonas o crea <i>forwarding</i> a Resolver.</blockquote>
+      </section>
+
+      <section id="plink" class="card">
+        <h2>3) AWS PrivateLink (producer/consumer)</h2>
+        <p><b>PrivateLink</b> expone un <b>servicio privado</b> a través de NLB del productor y un <b>Endpoint Service</b> que los consumidores conectan como <b>Interface Endpoint</b> en sus VPCs (misma u otras cuentas/organizaciones).</p>
+
+        <ul>
+          <li><b>Productor</b>: NLB (puertos TCP), registra instancias/ALB/targets → crea <i>Endpoint Service</i>.</li>
+          <li><b>Consumidor</b>: crea <b>Interface Endpoint</b> apuntando al servicio; tráfico privado dentro de la red de AWS.</li>
+          <li><b>Control de acceso</b>: <i>acceptance required</i>, allow-lists por cuenta/Org/Principal ARN.</li>
+        </ul>
+
+        <div class="aws-call">
+          <p><b>Ventaja frente a peering/TGW:</b> aislamiento L3 (no hay enrutamiento plano), seguridad granular y publicación tipo “API privada”. Perfecto para <b>patrones multi-tenant</b>.</p>
+        </div>
+
+        <h3>Flujo simplificado</h3>
+        <ol>
+          <li>Productor: NLB en subredes privadas, crea <i>Endpoint Service</i>.</li>
+          <li>Comparte el nombre del servicio (com.amazonaws.vpce.<i>svc-id</i> o <i>com.amazonaws.vpce-svc-xxxxx</i>).</li>
+          <li>Consumidor: crea <b>Interface Endpoint</b>, <i>request</i> → Productor <i>accept</i>.</li>
+        </ol>
+      </section>
+
+      <section id="dns" class="card">
+        <h2>4) DNS & Route 53 Resolver</h2>
+        <ul>
+          <li><b>Private Hosted Zones</b>: para dominios internos por VPC.</li>
+          <li><b>Resolver inbound/outbound</b>: <i>endpoints</i> para resolver <b>desde on-prem a VPC</b> (inbound) y <b>desde VPC a on-prem</b> (outbound) con <b>reglas de encaminamiento</b>.</li>
+          <li><b>Split-horizon</b>: misma zona con diferentes respuestas en privado vs público.</li>
+          <li><b>Private DNS de endpoints</b>: hace que el <i>FQDN</i> del servicio resuelva al ENI del endpoint.</li>
+        </ul>
+
+        <pre><code># Ejemplo de regla outbound que reenvía *.corp.local a on-prem
+aws route53resolver create-resolver-rule \
+  --creator-request-id demo1 \
+  --rule-type FORWARD \
+  --name corp-local \
+  --domain-name corp.local \
+  --target-ips Ip="10.0.10.10",Port="53" \
+  --resolver-endpoint-id rslvr-out-xyz
+</code></pre>
+      </section>
+
+      <section id="sec" class="card">
+        <h2>5) Seguridad: SG, NACL y Endpoint Policy</h2>
+        <ul>
+          <li><b>Security Groups</b>: estado-pleno y por ENI; para Interface Endpoints, <b>limita puertos</b> (HTTPS/443).</li>
+          <li><b>NACL</b>: stateless; deja <b>ephemeral</b> si controlas regreso.</li>
+          <li><b>Endpoint Policy</b>: filtra <b>qué recursos/acciones</b> del servicio pueden usarse desde el endpoint.</li>
+          <li><b>KMS</b> + <b>S3 bucket policies</b>: combínalos con condiciones de <code>aws:SourceVpce</code> para obligar tráfico vía endpoint.</li>
+        </ul>
+
+        <pre><code>{
+  "Version":"2012-10-17",
+  "Statement":[{
+    "Sid":"DenyIfNotViaVPCe",
+    "Effect":"Deny",
+    "Principal":"*",
+    "Action":"s3:*",
+    "Resource":["arn:aws:s3:::datos-privados","arn:aws:s3:::datos-privados/*"],
+    "Condition":{"StringNotEquals":{"aws:SourceVpce":"vpce-0abc123"}}
+  }]
+}
+</code></pre>
+      </section>
+
+      <section id="cost" class="card">
+        <h2>6) Costes & rendimiento</h2>
+        <ul>
+          <li><b>Gateway Endpoint</b>: sin coste por hora; <b>ahorra NAT</b> para S3/DynamoDB.</li>
+          <li><b>Interface Endpoint</b>: coste por hora + <i>data processing</i>; consolida por cuenta/VPC y reusa en múltiples subredes si es viable.</li>
+          <li><b>NAT Gateway</b>: coste por hora + por GB; minimiza su uso si puedes migrar llamadas a endpoints privados.</li>
+          <li><b>PrivateLink</b>: productor paga NLB + datos; consumidores pagan Interface Endpoints.</li>
+        </ul>
+        <blockquote class="tip"><b>Estrategia de ahorro:</b> pon <b>Gateway Endpoint</b> para S3/DDB y migra APIs clave a <b>Interface Endpoints</b>. Revisa métricas de uso (VPC Flow Logs + CloudWatch). </blockquote>
+      </section>
+
+      <section id="exam" class="card">
+        <h2>7) Tips de examen SAA-C03</h2>
+        <ul>
+          <li>Si la pregunta menciona <b>acceso a S3 privado sin Internet/NAT</b> → <b>Gateway Endpoint</b>.</li>
+          <li>Si es <b>otro servicio</b> (STS, KMS, SSM, ECR, Secrets Manager…) → <b>Interface Endpoint</b> con Private DNS.</li>
+          <li>Si debes <b>publicar un servicio interno a otras cuentas</b> sin routing plano → <b>PrivateLink</b> (NLB + Endpoint Service).</li>
+          <li>Controla acceso a bucket sólo si el tráfico viene de un endpoint concreto → condición <code>aws:SourceVpce</code> en <b>bucket policy</b>.</li>
+          <li>Resolución de nombres entre on-prem y VPC → <b>Route 53 Resolver</b> inbound/outbound + reglas.</li>
+        </ul>
+      </section>
+
+      <section id="labs" class="card">
+        <h2>8) Mini-labs prácticos</h2>
+
+        <h3>Lab A — S3 sin NAT con Gateway Endpoint</h3>
+        <ol>
+          <li>Quita ruta <code>0.0.0.0/0 → NAT</code> de la subred privada de prueba.</li>
+          <li>Crea <b>Gateway Endpoint S3</b> y asócialo a la <b>route table</b> de la subred.</li>
+          <li>Verifica que <code>aws s3 ls s3://&lt;bucket&gt;</code> funciona desde una instancia privada.</li>
+        </ol>
+
+        <h3>Lab B — Interface Endpoint para STS</h3>
+        <ol>
+          <li>Crea <b>Interface Endpoint</b> para <code>com.amazonaws.&lt;region&gt;.sts</code> con <b>Private DNS</b>.</li>
+          <li>Resuelve <code>sts.&lt;region&gt;.amazonaws.com</code> desde la instancia (debe apuntar al ENI privado).</li>
+          <li>Ejecuta <code>aws sts get-caller-identity</code> y comprueba latencia y rutas.</li>
+        </ol>
+
+        <h3>Lab C — PrivateLink entre dos cuentas</h3>
+        <ol>
+          <li><b>Productor</b>: crea NLB y Endpoint Service (requiere aceptación).</li>
+          <li><b>Consumidor</b>: crea <b>Interface Endpoint</b> al servicio y espera a que el productor lo acepte.</li>
+          <li>Prueba conectividad (curl/HTTPS) sin peering ni TGW.</li>
+        </ol>
+      </section>
+
+      <section id="faq" class="card">
+        <h2>9) Preguntas frecuentes</h2>
+        <p><b>¿Puedo forzar todo el acceso a S3 vía endpoint?</b> Sí, con <b>bucket policy</b> usando <code>aws:SourceVpce</code> y denegando el resto.</p>
+        <p><b>¿Necesito SG para Gateway Endpoints?</b> No aplican SG; para Interface Endpoints sí (tráfico hacia el ENI).</p>
+        <p><b>¿PrivateLink soporta UDP?</b> No, <b>TCP</b> sólo (a través de NLB).</p>
+      </section>
+
+    </div>
   </div>
 </main>
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="badge multi">ITHub.es</span>
-      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
-    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
-  </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="pill" style="background:rgba(255,153,0,.12);border:1px solid rgba(255,153,0,.45);border-radius:999px;padding:6px 10px;color:#ffdcb3;font-weight:900">ITHub.es</span>
+      <span>© <span id="y"></span> · Contenido educativo para certificaciones.</span>
+    </div>
+     <div><a href="javascript:void(0);" onclick="history.back();" class="pill-btn">< VOLVER</a></div>  </div>
 </footer>
 
-</body></html>
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
