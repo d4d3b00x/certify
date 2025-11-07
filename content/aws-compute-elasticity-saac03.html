@@ -1,14 +1,31 @@
-<!doctype html><html lang="es"><head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Elasticidad de Cómputo en AWS (SAA‑C03) | ITHub.es</title>
-  <meta name="description" content="Auto Scaling, ALB/NLB, modelos de compra y despliegues blue/green para ajustar capacidad con la demanda."/>
-  <meta name="keywords" content="AWS,SAA-C03,Auto Scaling,ALB,NLB,Spot,Savings Plans,Blue Green,examen"/>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Elasticidad de Cómputo en AWS (SAA-C03) — Guía completa | ITHub</title>
+  <meta name="description" content="Guía de elasticidad de cómputo en AWS para SAA-C03: Auto Scaling, Load Balancing, modelos de compra, políticas de escalado y despliegues Blue/Green."/>
+  <meta name="keywords" content="AWS,SAA-C03,Auto Scaling,Elastic Load Balancing,Spot,Savings Plans,Blue Green,Elasticidad,Examen"/>
   <meta name="author" content="ITHub.es"/>
   <link rel="canonical" href="https://beta.ithub.es/content/aws-compute-elasticity-saac03.html"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
   <style>
-    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-          --p:#ff9900;--tint:rgba(255,153,0,.13);--chip:#ffdcb3;--bd:rgba(255,153,0,.55);--shadow:0 12px 28px rgba(6,12,40,.45)}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
+      --p:#ff9900;--tint:rgba(255,153,0,.13);--chip:#ffdcb3;--bd:rgba(255,153,0,.55);
+      --shadow:0 12px 28px rgba(6,12,40,.45);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
     .container{max-width:1100px;margin:0 auto;padding:0 18px}
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
@@ -31,37 +48,139 @@
     article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
     article h2{margin:16px 0 8px;font-size:1.22rem;border-left:4px solid var(--p);padding-left:10px}
     .callout{border:1px solid var(--bd);background:var(--tint);border-radius:12px;padding:12px;margin:10px 0}
+    pre{background:#0b1222;color:#e8f1ff;border:1px solid #283056;border-radius:10px;padding:10px;overflow:auto}
     .table{width:100%;border-collapse:collapse;margin:.6rem 0;border:1px solid #283056}
     .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
     .table th{background:#141a33;text-align:left}
     .muted{color:var(--muted)}
   </style>
-</head><body>
-<header><div class="container nav">
-  <div class="brand"><img src="/assets/ithub-logo.svg" alt="ITHub: inicio" style="height:42px"><span>ITHub.es</span></div>
-  <nav><a href="/">HOME</a><a href="/content/content.html">CONTENIDOS</a><a href="/score/ranking.html">RANKING</a></nav>
-</div></header>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand"><img src="/assets/ithub-logo.svg" alt="ITHub" style="height:42px"><span>ITHub.es</span></div>
+    <nav><a href="/">HOME</a><a href="/content/content.html">CONTENIDOS</a><a href="/score/ranking.html">RANKING</a></nav>
+  </div>
+</header>
 
-<section class="hero"><div class="container">
-  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h10v4H4v-4z'/></svg>&nbsp; AWS · SAA-C03</span>
-  <h1>Elasticidad de Cómputo en AWS (SAA‑C03)</h1>
-  <div class="meta"><span class='b'>Dominio: Diseño de cargas resilientes</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 25–35 min</span><span class='b'>Última revisión: Nov 2025</span></div>
-</div></section>
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">⚙️ AWS · SAA-C03</span>
+    <h1>Elasticidad de Cómputo en AWS (SAA-C03)</h1>
+    <div class="meta">
+      <span class='b'>Dominio: Diseño de cargas resilientes</span>
+      <span class='b'>Nivel: Intermedio-Avanzado</span>
+      <span class='b'>Tiempo de lectura: 30–45 min</span>
+      <span class='b'>Última revisión: Nov 2025</span>
+    </div>
+  </div>
+</section>
 
 <div class="container layout">
-  <aside class="toc"><h3>Índice</h3><ol><li><a href='#elasticidad'><span class='dot'></span><span>1. ¿Qué es la elasticidad?</span></a></li><li><a href='#asg-elb'><span class='dot'></span><span>2. ASG + Load Balancing</span></a></li><li><a href='#compras'><span class='dot'></span><span>3. Modelos de compra</span></a></li><li><a href='#escalado'><span class='dot'></span><span>4. Políticas de escalado</span></a></li><li><a href='#bluegreen'><span class='dot'></span><span>5. Blue/Green & canary</span></a></li><li><a href='#exam'><span class='dot'></span><span>6. Preguntas tipo examen</span></a></li></ol></aside>
+  <aside class="toc">
+    <h3>Índice</h3>
+    <ol>
+      <li><a href='#elasticidad'><span class='dot'></span><span>1. Concepto de elasticidad</span></a></li>
+      <li><a href='#asg-elb'><span class='dot'></span><span>2. Auto Scaling & Load Balancing</span></a></li>
+      <li><a href='#compras'><span class='dot'></span><span>3. Modelos de compra</span></a></li>
+      <li><a href='#escalado'><span class='dot'></span><span>4. Políticas y estrategias de escalado</span></a></li>
+      <li><a href='#bluegreen'><span class='dot'></span><span>5. Blue/Green y despliegues canary</span></a></li>
+      <li><a href='#analytics'><span class='dot'></span><span>6. Métricas y analítica de rendimiento</span></a></li>
+      <li><a href='#exam'><span class='dot'></span><span>7. Patrones de examen</span></a></li>
+    </ol>
+  </aside>
+
   <article>
-    <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
-    <h2 id='elasticidad'>1. ¿Qué es la elasticidad?</h2><p>La elasticidad es la capacidad de una arquitectura para **ajustar automáticamente** sus recursos en función de la demanda, manteniendo el SLA y optimizando el coste.</p><p>En AWS se logra combinando **Auto Scaling**, **Elastic Load Balancing (ALB/NLB/GWLB)** y **modelos de compra** (On‑Demand/RI/Savings/Spot).</p><div class='callout'><b>EXAM TIP:</b> Tráfico impredecible → <b>ASG target tracking</b> + <b>ALB</b> + mezcla <i>On‑Demand/Spot</i>.</div>
-<h2 id='asg-elb'>2. ASG + Load Balancing</h2><p>Usa **Launch Templates**, **Mixed Instances Policy** y **health checks** de ELB. Activa **cross‑zone** en ALB; considera **NLB** para L4 crítico.</p><p>Los **warm pools** reducen la latencia de arranque en picos.</p><table class='table'><thead><tr><th>Caso</th><th>Balanceador recomendado</th></tr></thead><tbody><tr><td>HTTP con reglas L7</td><td>ALB</td></tr><tr><td>TCP crítico o IPs fijas</td><td>NLB</td></tr><tr><td>Firewall/IDS partners</td><td>GWLB</td></tr></tbody></table>
-<h2 id='compras'>3. Modelos de compra</h2><p>**Savings Plans** para base estable con flexibilidad; **Spot** para trabajo tolerante a interrupciones con checkpoints; **RI estándar** solo cuando la carga es fija y a largo plazo.</p><table class='table'><thead><tr><th>Requisito</th><th>Opción</th></tr></thead><tbody><tr><td>Máximo descuento con flexibilidad</td><td>Savings Plans Compute</td></tr><tr><td>Trabajo batch tolerante a fallos</td><td>Spot con capacidad diversificada</td></tr><tr><td>Base estable 24x7</td><td>RI/Savings plano 1 o 3 años</td></tr></tbody></table>
-<h2 id='escalado'>4. Políticas de escalado</h2><p>Target Tracking mantiene una métrica (p.ej., 50% de CPU). Step/Programmatic para escenarios específicos. Programa ventanas con **scheduled scaling**.</p><p>Combina **ASG cooldown** + **ALB request count** para picos por tráfico HTTP.</p>
-<h2 id='bluegreen'>5. Blue/Green & canary</h2><p>Con **CodeDeploy** + ALB puedes hacer canary/linear y rollback instantáneo via cambio de target group.</p><div class='callout'><b>EXAM TIP:</b> Piden <i>rollback inmediato</i> → <b>Blue/Green</b> con shift de tráfico.</div>
-<h2 id='exam'>6. Preguntas tipo examen</h2><p>Una app web con picos impredecibles necesita costo óptimo y alta disponibilidad. → ALB + ASG target tracking + mezcla On‑Demand/Spot.</p><p>Tráfico TCP de baja latencia con IPs fijas. → NLB con cross‑zone y health checks.</p>
+    <p class="muted"><a href="/content/content.html">← Volver a contenidos</a></p>
+
+    <h2 id='elasticidad'>1. Concepto de elasticidad</h2>
+    <p>La <b>elasticidad</b> permite que una arquitectura ajuste automáticamente su capacidad en función de la demanda real. En AWS se logra combinando <b>Auto Scaling</b>, <b>Elastic Load Balancing</b> y modelos de compra flexibles (On-Demand, Savings Plans, Spot).</p>
+    <div class='callout'><b>EXAM TIP:</b> Tráfico variable e impredecible → usa <b>Auto Scaling Groups</b> con <b>target tracking</b> + <b>ALB</b> y mezcla de instancias On-Demand/Spot.</div>
+
+    <h2 id='asg-elb'>2. Auto Scaling & Load Balancing</h2>
+    <p>Un <b>Auto Scaling Group (ASG)</b> gestiona automáticamente la creación y terminación de instancias para mantener la capacidad deseada.</p>
+    <ul>
+      <li><b>Launch Templates</b> con <i>versioning</i> para control granular.</li>
+      <li><b>Mixed Instances Policy</b> para combinar tipos y zonas con descuentos Spot.</li>
+      <li><b>Health checks</b> de ELB y EC2.</li>
+      <li><b>Warm pools</b> reducen el tiempo de arranque durante picos.</li>
+    </ul>
+    <table class='table'>
+      <thead><tr><th>Tipo de carga</th><th>Balanceador recomendado</th></tr></thead>
+      <tbody>
+        <tr><td>HTTP / HTTPS</td><td>Application Load Balancer (L7)</td></tr>
+        <tr><td>TCP/UDP / IP fija</td><td>Network Load Balancer (L4)</td></tr>
+        <tr><td>Firewall/partners de red</td><td>Gateway Load Balancer (GWLB)</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='compras'>3. Modelos de compra</h2>
+    <p>Los modelos de compra permiten optimizar costes según la previsibilidad de la carga:</p>
+    <table class='table'>
+      <thead><tr><th>Escenario</th><th>Modelo</th><th>Ventaja</th></tr></thead>
+      <tbody>
+        <tr><td>Carga estable 24/7</td><td>Savings Plans / RI</td><td>Hasta 72% de ahorro</td></tr>
+        <tr><td>Picos impredecibles</td><td>On-Demand</td><td>Sin compromiso, pago por uso</td></tr>
+        <tr><td>Batch / tolerancia a fallos</td><td>Spot</td><td>Hasta 90% de ahorro, pero con interrupciones</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id='escalado'>4. Políticas y estrategias de escalado</h2>
+    <ul>
+      <li><b>Target Tracking</b>: ajusta instancias para mantener una métrica (ej. CPU a 50%).</li>
+      <li><b>Step Scaling</b>: incrementa o reduce por niveles según el umbral.</li>
+      <li><b>Scheduled Scaling</b>: programa ventanas previsibles (ej. horario laboral).</li>
+      <li><b>Predictive Scaling</b>: usa IA para prever demanda (CloudWatch + histórico).</li>
+    </ul>
+    <pre><code># Ejemplo: Escalado basado en CPU promedio
+aws autoscaling put-scaling-policy \
+  --auto-scaling-group-name web-tier \
+  --policy-name cpu50 \
+  --policy-type TargetTrackingScaling \
+  --target-tracking-configuration '{
+    "PredefinedMetricSpecification": {"PredefinedMetricType": "ASGAverageCPUUtilization"},
+    "TargetValue": 50.0
+  }'</code></pre>
+
+    <h2 id='bluegreen'>5. Blue/Green y despliegues canary</h2>
+    <p><b>Blue/Green</b> implica mantener dos entornos paralelos (actual y nuevo). AWS <b>CodeDeploy</b> y <b>ALB</b> permiten mover tráfico gradualmente o revertir instantáneamente.</p>
+    <ul>
+      <li><b>Canary</b>: despliegue parcial (5-10%) → monitoreo → promoción total.</li>
+      <li><b>Linear</b>: incremento progresivo hasta 100%.</li>
+      <li><b>All-at-once</b>: cambio total, más rápido pero con riesgo.</li>
+    </ul>
+    <div class='callout'><b>EXAM TIP:</b> Piden <i>rollback inmediato</i> → Blue/Green con cambio de target group.</div>
+
+    <h2 id='analytics'>6. Métricas y analítica de rendimiento</h2>
+    <p>Integra <b>CloudWatch</b> con <b>Application Insights</b> o <b>X-Ray</b> para correlacionar métricas de cómputo y rendimiento de aplicación.</p>
+    <ul>
+      <li>Analiza métricas de <b>CPUUtilization</b>, <b>NetworkIn/Out</b> y <b>RequestCount</b>.</li>
+      <li>Usa <b>Composite Alarms</b> para reducir ruido (ej. CPU + Latencia ALB).</li>
+      <li>Guarda métricas históricas en S3 o CloudWatch Logs para predicción.</li>
+      <li>Integra dashboards con <b>Cost Explorer</b> o <b>CloudWatch Explorer</b> para visibilidad FinOps.</li>
+    </ul>
+
+    <h2 id='exam'>7. Patrones de examen</h2>
+    <ul>
+      <li>Tráfico impredecible → ALB + ASG target tracking + Spot/On-Demand mix.</li>
+      <li>Requisitos TCP/IP fijo → NLB con cross-zone y health checks.</li>
+      <li>Escalado predecible → Scheduled scaling.</li>
+      <li>Rollback rápido → Blue/Green con CodeDeploy.</li>
+      <li>Optimización de costes → Savings Plans o Spot para cargas no críticas.</li>
+    </ul>
+    <div class='callout'><b>Regla mental:</b> “<i>Escalado = ASG</i>”, “<i>Tráfico = ELB</i>”, “<i>Coste = modelo de compra</i>”, “<i>Seguridad de despliegue = Blue/Green</i>”.</div>
   </article>
 </div>
 
 <footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
-  <div class="container">© Nov 2025 ITHub.es</div>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="eyebrow">ITHub.es</span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span>
+    </div>
+    <a ref="javascript:void(0);" onclick="history.back();" class="eyebrow" style="font-weight:800;color:#111;background:#ffb74d;border:none;">< VOLVER</a>
+  </div>
 </footer>
-</body></html>
+
+</body>
+</html>
