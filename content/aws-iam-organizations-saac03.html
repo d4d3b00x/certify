@@ -1,65 +1,198 @@
-<!doctype html><html lang="es"><head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>IAM y Organizations para arquitectos (SAA‑C03) | ITHub.es</title>
-  <meta name="description" content="Diseño multi‑cuenta con OU, SCP y buenas prácticas de IAM."/>
-  <meta name="keywords" content="AWS,Organizations,SCP,SSO,MFA,Control Tower"/>
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>IAM y Organizations para arquitectos (SAA-C03) | ITHub.es</title>
+  <meta name="description" content="Diseño multi-cuenta con OU, SCP y buenas prácticas de IAM para SAA-C03."/>
+  <meta name="keywords" content="AWS, Organizations, SCP, IAM, SSO, MFA, Control Tower, SAA-C03"/>
   <meta name="author" content="ITHub.es"/>
   <link rel="canonical" href="https://beta.ithub.es/content/aws-iam-organizations-saac03.html"/>
-  <style>
-    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-          --p:#ff9900;--tint:rgba(255,153,0,.13);--chip:#ffdcb3;--bd:rgba(255,153,0,.55);--shadow:0 12px 28px rgba(6,12,40,.45)}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-    .container{max-width:1100px;margin:0 auto;padding:0 18px}
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:10px;align-items:center;font-weight:900}
-    nav a{color:#cbd6ff;text-decoration:none;padding:10px 12px;border-radius:10px;border:1px solid transparent}
-    nav a:hover{border-color:#2a3150;color:#fff}
-    .hero{text-align:center;padding:28px 0 16px;border-bottom:1px solid var(--stroke);background:linear-gradient(180deg,#0f1320,#0f1320 70%,#141a33)}
-    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);color:var(--chip);font-weight:900}
-    h1{margin:.6rem 0 .8rem;font-size:clamp(1.9rem,3.8vw,2.6rem)}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-    .meta .b{padding:8px 12px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);font-weight:800;color:#e8f1ff}
-    .layout{display:grid;grid-template-columns:300px 1fr;gap:18px;margin:18px auto;max-width:1200px;padding:0 10px}
-    @media(max-width:980px){.layout{grid-template-columns:1fr}}
-    .toc{position:sticky;top:86px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
-    .toc h3{margin:0 0 10px;color:#dfe6ff;letter-spacing:.06em;text-transform:uppercase;font-size:14px}
-    .toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-    .toc a{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid transparent;border-radius:12px;color:#e9f2ff;text-decoration:none}
-    .toc a:hover{border-color:var(--bd);background:var(--tint)}
-    .dot{width:7px;height:7px;border-radius:999px;background:var(--p);box-shadow:0 0 0 4px rgba(255,255,255,.04)}
-    article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
-    article h2{margin:16px 0 8px;font-size:1.22rem;border-left:4px solid var(--p);padding-left:10px}
-    .callout{border:1px solid var(--bd);background:var(--tint);border-radius:12px;padding:12px;margin:10px 0}
-    .table{width:100%;border-collapse:collapse;margin:.6rem 0;border:1px solid #283056}
-    .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
-    .table th{background:#141a33;text-align:left}
-    .muted{color:var(--muted)}
-  </style>
-</head><body>
-<header><div class="container nav">
-  <div class="brand"><img src="/assets/ithub-logo.svg" alt="ITHub: inicio" style="height:42px"><span>ITHub.es</span></div>
-  <nav><a href="/">HOME</a><a href="/content/content.html">CONTENIDOS</a><a href="/score/ranking.html">RANKING</a></nav>
-</div></header>
 
-<section class="hero"><div class="container">
-  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h10v4H4v-4z'/></svg>&nbsp; AWS · SAA-C03</span>
-  <h1>IAM y Organizations para arquitectos (SAA‑C03)</h1>
-  <div class="meta"><span class='b'>Dominio: Seguridad y gobierno</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 20–30 min</span><span class='b'>Última revisión: Nov 2025</span></div>
-</div></section>
+  <style>
+    :root{
+      /* Base (modo dark) */
+      --bg:#0f1320; --surface:#161b2d; --surface2:#0f1633; --ink:#e8ecff; --muted:#9ca8d9; --stroke:#283056;
+      /* AWS naranja */
+      --p:#ff9900; --p-ink:#0f1320; --tint:rgba(255,153,0,.12); --bd:rgba(255,153,0,.55); --chip:#ffdcb3;
+      --shadow:0 12px 28px rgba(6,12,40,.45);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink); background:var(--bg); line-height:1.65;
+      background-image:
+        radial-gradient(900px 420px at 90% -10%, rgba(255,153,0,.10), transparent 60%),
+        radial-gradient(800px 400px at 10% 0%, rgba(255,153,0,.06), transparent 60%);
+      background-attachment: fixed;
+    }
+    a{ color:#cfe1ff; text-decoration:none }
+    a:hover{ text-decoration:underline }
+
+    .container{ max-width:1100px; margin:0 auto; padding:0 18px }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+      background:linear-gradient(180deg, rgba(15,19,32,.92), rgba(15,19,32,.65));
+      border-bottom:1px solid var(--stroke);
+    }
+    .nav{ height:64px; display:flex; align-items:center; justify-content:space-between; gap:10px }
+    .brand{ display:flex; gap:10px; align-items:center; font-weight:900 }
+    .brand img{ height:42px }
+    nav a{ color:#cbd6ff; text-decoration:none; padding:10px 12px; border-radius:10px; border:1px solid transparent; font-weight:800; text-transform:uppercase; letter-spacing:.02em }
+    nav a:hover{ border-color:#2a3150; color:#fff }
+
+    /* Hero */
+    .hero{
+      text-align:center; padding:28px 0 16px; border-bottom:1px solid var(--stroke);
+      background:linear-gradient(180deg,#0f1320,#0f1320 70%,#141a33);
+    }
+    .eyebrow{
+      display:inline-flex; gap:8px; align-items:center; padding:8px 14px; border-radius:999px;
+      border:1px solid var(--bd); background:var(--tint); color:var(--chip); font-weight:900;
+      box-shadow:0 8px 20px rgba(255,153,0,.08) inset;
+    }
+    .eyebrow svg{ width:18px; height:18px }
+    h1{ margin:.6rem 0 .8rem; font-size:clamp(1.9rem,3.8vw,2.6rem) }
+    .meta{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center }
+    .meta .b{
+      padding:8px 12px; border-radius:999px; border:1px solid var(--bd);
+      background:var(--tint); font-weight:800; color:#e8f1ff
+    }
+
+    /* Layout */
+    .layout{
+      display:grid; grid-template-columns:300px 1fr; gap:18px; margin:18px auto; max-width:1200px; padding:0 10px
+    }
+    @media(max-width:980px){ .layout{ grid-template-columns:1fr } }
+
+    /* TOC */
+    .toc{
+      position:sticky; top:86px; background:linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)
+    }
+    .toc h3{ margin:0 0 10px; color:#dfe6ff; letter-spacing:.06em; text-transform:uppercase; font-size:14px }
+    .toc ol{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px }
+    .toc a{
+      display:flex; gap:10px; align-items:center; padding:10px 12px; border:1px solid transparent;
+      border-radius:12px; color:#e9f2ff; text-decoration:none
+    }
+    .toc a:hover{ border-color:var(--bd); background:var(--tint) }
+    .dot{ width:7px; height:7px; border-radius:999px; background:var(--p); box-shadow:0 0 0 4px rgba(255,255,255,.04) }
+
+    /* Article */
+    article{
+      background:linear-gradient(180deg,#111937,#0f1633); border:1px solid var(--stroke);
+      border-radius:var(--radius); padding:22px; box-shadow:var(--shadow)
+    }
+    article h2{
+      margin:16px 0 8px; font-size:1.22rem; border-left:4px solid var(--p); padding-left:10px
+    }
+    .callout{
+      border:1px solid var(--bd); background:var(--tint); border-radius:12px; padding:12px; margin:10px 0
+    }
+    .muted{ color:var(--muted) }
+
+    /* Tables */
+    .table{ width:100%; border-collapse:collapse; margin:.6rem 0; border:1px solid #283056 }
+    .table th,.table td{ border-bottom:1px solid #283056; padding:10px; vertical-align:top }
+    .table th{ background:#141a33; text-align:left }
+
+    /* Footer */
+    footer{
+      border-top:1px solid var(--stroke); padding:24px 0; color:#9ca8d9;
+      background:linear-gradient(180deg, rgba(22,27,45,.6), rgba(22,27,45,.2)); margin-top:26px
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <img src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+    </div>
+    <nav>
+      <a href="/">HOME</a>
+      <a href="/content/content.html">CONTENIDOS</a>
+      <a href="/score/ranking.html">RANKING</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow" aria-label="Ruta SAA-C03">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h10v4H4v-4z"/></svg>
+      AWS · SAA-C03
+    </span>
+    <h1>IAM y Organizations para arquitectos (SAA-C03)</h1>
+    <div class="meta" role="list">
+      <span class="b" role="listitem">Dominio: Seguridad y gobierno</span>
+      <span class="b" role="listitem">Nivel: Intermedio</span>
+      <span class="b" role="listitem">Tiempo de lectura: 20–30 min</span>
+      <span class="b" role="listitem">Última revisión: Nov 2025</span>
+    </div>
+  </div>
+</section>
 
 <div class="container layout">
-  <aside class="toc"><h3>Índice</h3><ol><li><a href='#org'><span class='dot'></span><span>1. Organizations & OU</span></a></li><li><a href='#scp'><span class='dot'></span><span>2. SCP como guardrails</span></a></li><li><a href='#iam'><span class='dot'></span><span>3. Buenas prácticas IAM</span></a></li><li><a href='#audit'><span class='dot'></span><span>4. Auditoría</span></a></li></ol></aside>
+  <aside class="toc" aria-label="Índice de contenidos">
+    <h3>Índice</h3>
+    <ol>
+      <li><a href="#org"><span class="dot" aria-hidden="true"></span><span>1. Organizations & OU</span></a></li>
+      <li><a href="#scp"><span class="dot" aria-hidden="true"></span><span>2. SCP como guardrails</span></a></li>
+      <li><a href="#iam"><span class="dot" aria-hidden="true"></span><span>3. Buenas prácticas IAM</span></a></li>
+      <li><a href="#audit"><span class="dot" aria-hidden="true"></span><span>4. Auditoría</span></a></li>
+    </ol>
+  </aside>
+
   <article>
-    <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
-    <h2 id='org'>1. Organizations & OU</h2><p>Separa cuentas por entorno/linea de producto; usa **facturación consolidada** y **delegación**.</p><table class='table'><thead><tr><th>Objetivo</th><th>Acción</th></tr></thead><tbody><tr><td>Aislar riesgos</td><td>Cuentas por entorno</td></tr><tr><td>Estándar inicial</td><td>Control Tower</td></tr><tr><td>Gobierno central</td><td>OU + políticas</td></tr></tbody></table>
-<h2 id='scp'>2. SCP como guardrails</h2><p>Las **SCP** limitan lo que se puede hacer en una cuenta (no conceden permisos). Úsalas para bloquear recursos públicos o regiones no permitidas.</p><div class='callout'><b>EXAM TIP:</b> “Evitar que creen recursos públicos” → SCP + S3 Block Public Access.</div>
-<h2 id='iam'>3. Buenas prácticas IAM</h2><p>Principio de **least privilege**, **roles** entre cuentas, **MFA** para humanos y **STS** para credenciales temporales.</p>
-<h2 id='audit'>4. Auditoría</h2><p>**CloudTrail** a nivel organización, **AWS Config** y **Security Hub** para postura continua.</p>
+    <p class="muted"><a href="/content/content.html">← Volver a contenidos</a></p>
+
+    <h2 id="org">1. Organizations & OU</h2>
+    <p>Separa cuentas por entorno y línea de producto; habilita <b>facturación consolidada</b>, <b>delegación</b> de administración y <b>aislamiento de blast radius</b>. Para un aterrizaje guiado, usa <b>AWS Control Tower</b> para crear OUs, cuentas y guardrails iniciales.</p>
+
+    <table class="table" aria-label="Objetivos y acciones recomendadas">
+      <thead>
+        <tr><th>Objetivo</th><th>Acción</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Aislar riesgos</td><td>Cuentas separadas por entorno (prod, pre, dev) y por dominio de negocio.</td></tr>
+        <tr><td>Estándar inicial</td><td>Despliegue con Control Tower (landing zone, OUs, cuentas y guardrails).</td></tr>
+        <tr><td>Gobierno central</td><td>OU jerárquicas, delegación y políticas a nivel organización.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="scp">2. SCP como guardrails</h2>
+    <p>Las <b>SCP</b> (Service Control Policies) <i>no conceden permisos</i>; definen el máximo permiso efectivo que una principal puede tener dentro de una cuenta. Úsalas para bloquear regiones no permitidas, exigir encriptación o evitar configuraciones públicas.</p>
+    <div class="callout"><b>EXAM TIP:</b> “Evitar que creen recursos públicos” → SCP de denegación + <b>S3 Block Public Access</b> + políticas adecuadas.</div>
+
+    <h2 id="iam">3. Buenas prácticas IAM</h2>
+    <ul>
+      <li><b>Least privilege</b> con políticas administradas por uso y revisión periódica.</li>
+      <li><b>Roles entre cuentas</b> para workloads; evita credenciales largas. Usa <b>STS</b> (credenciales temporales).</li>
+      <li><b>MFA</b> obligatoria para humanos; password policy y rotación de claves para integraciones heredadas.</li>
+      <li>Para identidades humanas, considera <b>IAM Identity Center (SSO)</b> con grupos y asignaciones a cuentas/roles.</li>
+    </ul>
+
+    <h2 id="audit">4. Auditoría</h2>
+    <p>Habilita <b>CloudTrail</b> a nivel organización con envío a una cuenta de seguridad. Complementa con <b>AWS Config</b> (reglas y drifts) y <b>Security Hub</b> para postura continua.</p>
   </article>
 </div>
 
-<footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
+<footer>
   <div class="container">© Nov 2025 ITHub.es</div>
 </footer>
-</body></html>
+</body>
+</html>
