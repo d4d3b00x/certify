@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ITTHub.es | En construcción</title>
+  <style>
+    :root{
+      /* Morados principales */
+      --morado-1:#b57ee6;
+      --morado-2:#9b59b6;
+      --morado-3:#6d3fb2;
+      --morado-4:#4a2a8e;
+      /* Azules para luces/gradiente */
+      --azul-1:#3aa1ff;
+      --azul-2:#2b6df5;
+      /* Fondo */
+      --bg-0:#0a0f1a;   /* muy oscuro */
+      --bg-1:#0f1a2b;   /* card base */
+      --bg-2:#0b1422;   /* para degradado sutil */
+      --text:#e9e9f1;
+      --muted:#cdb5ee;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(90,55,160,.25), transparent 60%),
+                  radial-gradient(900px 500px at 80% 120%, rgba(40,120,255,.18), transparent 55%),
+                  var(--bg-0);
+      color:var(--text);
+    }
+
+    /* Layout centrado */
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    /* Card principal estilo captura */
+    .card{
+      width:min(720px, 92vw);
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)) ,
+                  linear-gradient(160deg, var(--bg-1), var(--bg-2));
+      border:1px solid rgba(181,126,230,.55); /* borde fino morado */
+      border-radius:18px;
+      padding:28px 28px 32px;
+      position:relative;
+      box-shadow:
+        0 0 0 1px rgba(58,161,255,.06) inset,
+        0 12px 40px rgba(58,161,255,.12),
+        0 6px 22px rgba(109,63,178,.18);
+      text-align: center; /* ✅ centra el botón y el texto */
+    }
+
+    /* “Píldora” superior */
+    .pill{
+      display:inline-block;
+      background: rgba(181,126,230,.14);
+      color:var(--morado-1);
+      border:1px solid rgba(181,126,230,.45);
+      border-radius:999px;
+      padding:6px 14px;
+      font-weight:600;
+      font-size:.9rem;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      position:absolute;
+      top:-14px;
+      left:24px;
+      backdrop-filter: blur(2px);
+    }
+
+    /* Título + texto */
+    h1{
+      margin:8px 0 6px;
+      font-size: clamp(1.6rem, 2.6vw + 1rem, 2.2rem);
+      font-weight:800;
+      color:#efe8ff; /* claro para destacar como en la captura */
+      text-shadow: 0 1px 0 rgba(0,0,0,.25);
+    }
+    .sub{
+      margin:0 0 22px;
+      color:var(--muted);
+      font-size:1.05rem;
+      line-height:1.6;
+    }
+
+    /* Botón con gradiente (morados con toque azul) */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center; /* ✅ centra el contenido del botón */
+      gap:.55rem;
+      padding:12px 18px;
+      border-radius:12px;
+      border:1px solid rgba(181,126,230,.65);
+      color:white;
+      font-weight:800;
+      letter-spacing:.2px;
+      text-decoration:none;
+      background: linear-gradient(180deg, var(--morado-1), var(--morado-3));
+      box-shadow:
+        0 8px 22px rgba(109,63,178,.35),
+        0 2px 8px rgba(42,110,245,.20) inset;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.07);
+      box-shadow:
+        0 10px 28px rgba(109,63,178,.45),
+        0 3px 10px rgba(42,110,245,.28) inset;
+    }
+    .btn .ico{
+      font-size:1.1rem;
+      line-height:1;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.25));
+    }
+
+    /* Pequeño brillo en el borde, estilo "neon" sutil */
+    .card:after{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:18px;
+      pointer-events:none;
+      background:
+        radial-gradient(600px 120px at 20% 0%, rgba(58,161,255,.25), transparent 65%),
+        radial-gradient(420px 100px at 95% 20%, rgba(181,126,230,.35), transparent 60%);
+      mask: linear-gradient(#000, transparent 30%);
+      opacity:.9;
+    }
+
+    /* Footer pequeño opcional */
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:#9f8cc7;
+      font-size:.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <span class="pill">ITHub</span>
+
+      <h1>Explora pronto ITHub.es</h1>
+      <p class="sub">
+        Estamos preparando la nueva experiencia de ITHub. <br/>
+        Contenido, rutas y herramientas técnicas todo en un solo lugar.
+      </p>
+
+      <!-- ✅ Botón centrado -->
+      <a class="btn" href="https://beta.ithub.es" aria-label="Ir a la versión beta de ITTHub">
+        <span class="ico">🔎</span> IR A LA VERSIÓN BETA
+      </a>
+
+      <footer>© 2025 ITHub · Sitio en construcción</footer>
+    </section>
+  </main>
+</body>
+</html>
