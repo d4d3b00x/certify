@@ -1,148 +1,327 @@
 <!doctype html>
-<html lang="es"><head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Alta disponibilidad en RDS y Aurora (SAA‑C03) — AWS SAA-C03 | ITHub</title>
-<meta name="description" content="Alta disponibilidad en RDS y Aurora (SAA‑C03) para el examen SAA-C03. Guía completa con conceptos clave, patrones de diseño, tips de examen y laboratorios orientados a AWS."/>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);};gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
-<style>
-:root{
-  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --accent-aws:#ffb74d; --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
-  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
-  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 20px}
-/* Header */
-header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
-  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
-  border-bottom:1px solid var(--stroke)}
-.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-.brand img.site-logo{height:40px;width:auto;display:block}
-nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
-nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
-.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
-.pill-btn:hover{transform:translateY(-1px)}
-.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-/* Hero */
-.hero{padding:26px 0 8px}
-.badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--stroke); background:var(--badge); color:#fff;
-  padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.3px
-}
-.badge.aws{border-color:rgba(255,183,77,.55); background:rgba(255,183,77,.15); color:#ffe7c2}
-.badge.azure{border-color:rgba(106,169,255,.6); background:rgba(106,169,255,.15); color:#e6f0ff}
-.badge.multi{border-color:rgba(155,140,255,.6); background:rgba(155,140,255,.15); color:#f0eaff}
-/* Slim horizontal exam chip in one line */
-.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
-  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
-.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
-.exam-chip.aws{ border-color:rgba(255,183,77,.65); background:rgba(36,28,16,.55); color:#ffe2b3 }
-.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
-/* Title + meta pills */
-h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px}
-.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
-.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
-/* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
-/* Sidebar index */
-.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
-.aside h3{margin:8px 0 10px}
-.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
-.toc a small{color:#9fb3e7;font-weight:700}
-.toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.aws a{ border-color:rgba(255,183,77,.25); background:rgba(255,183,77,.06); color:#ffe7c9}
-.toc.aws a:hover{ border-color:rgba(255,183,77,.65) }
-.toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
-.toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
-/* Content card */
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
-.card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
-pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
-kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
-table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
-th,td{border:1px solid #22304f;padding:8px 10px}
-th{background:#16213a}
-/* Footer */
-footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
-</style></head>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Alta disponibilidad y diseño de datos en AWS (RDS, Aurora, S3, DynamoDB) — SAA-C03 | ITHub</title>
+  <meta name="description" content="Guía ampliada para SAA-C03 sobre RDS Multi-AZ, Read Replicas, backups y PITR, Aurora (Global Database, Serverless v2), RDS Proxy, seguridad (KMS, IAM Auth), tuning y patrones de examen. Incluye tabla de decisiones y escenarios clave."/>
+  <meta name="theme-color" content="#0f1320"/>
+
+  <!-- Canonical (ajusta si cambia la ruta) -->
+  <link rel="canonical" href="https://beta.ithub.es/content/aws-databases-storage-saac03.html"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <style>
+    :root{
+      --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+      --aws:#ff9900; --aws-soft:#ffb066; --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+      --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
+      border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .brand img.site-logo{height:40px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+    nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:90px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #ff990044;
+      background:linear-gradient(180deg,#ffd699,#ff9900); color:#0b1930; font-weight:900; cursor:pointer; font-size:12px; text-transform:uppercase}
+    .pill-btn:hover{transform:translateY(-1px)}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
+    /* Hero */
+    .hero{padding:26px 0 8px}
+    .exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
+      border-radius:20px; border:1px solid rgba(255,153,0,.45);
+      background:rgba(255,153,0,.12); color:#ffe7c2; font-weight:900 }
+    .exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
+
+    h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
+    .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
+    /* Layout */
+    .grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+    @media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
+    /* Sidebar index */
+    .aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+    .aside h3{margin:8px 0 10px}
+    .toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+    .toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,153,0,.25);background:rgba(255,153,0,.06);font-weight:800;color:#ffe7c9}
+    .toc a small{color:#ffcfa2;font-weight:700}
+    .toc a:hover{border-color:rgba(255,153,0,.65); transform:translateX(2px)}
+
+    /* Content card */
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+    .card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
+    .card h3{margin:12px 0 8px}
+    blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
+    blockquote.warning{margin:14px 0;padding:12px 14px;border-left:4px solid var(--warn); background:rgba(255,214,107,.08); border-radius:12px}
+    pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+    kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+    table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
+    th,td{border:1px solid #22304f;padding:8px 10px;vertical-align:top}
+    th{background:#16213a}
+
+    /* Footer */
+    footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+  </style>
+</head>
 <body>
 
-<header role="banner">
-  <div class="container nav">
-    <div class="brand">
-      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
-    </div>
-    <nav class="menu" aria-label="Navegación principal">
-      <a href="/">HOME</a>
-      <a href="/content/content.html">CONTENIDOS</a>
-      <a href="/score/ranking.html">RANKING</a>
-    </nav>
-    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
-      <div id="userArea" style="display:none;align-items:center;gap:6px">
-        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
+      </div>
+      <nav class="menu" aria-label="Navegación principal">
+        <a href="/">HOME</a>
+        <a href="/content/content.html">CONTENIDOS</a>
+        <a href="/score/ranking.html">RANKING</a>
+      </nav>
+      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+        <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+        <div id="userArea" style="display:none;align-items:center;gap:6px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        </div>
       </div>
     </div>
-  </div>
-</header>
-<script>
-function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-(function(){
-  const u=getCurrentUser();
-  const login=document.getElementById('btnLogin');
-  const signup=document.getElementById('btnSignup');
-  const userArea=document.getElementById('userArea');
-  const nameTop=document.getElementById('userNameTop');
-  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-})();
-</script>
+  </header>
+  <script>
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    (function(){
+      const u=getCurrentUser();
+      const login=document.getElementById('btnLogin');
+      const signup=document.getElementById('btnSignup');
+      const userArea=document.getElementById('userArea');
+      const nameTop=document.getElementById('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); location.reload(); });
+    })();
+  </script>
 
-<main class="container hero">
-  <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip aws"><i></i><span>AWS · SAA-C03</span></span></div>
-  <h1 style="text-align:center">Alta disponibilidad en RDS y Aurora (SAA‑C03)</h1>
-  
+  <main class="container hero">
+    <div style="display:flex;justify-content:center;margin:10px 0">
+      <span class="exam-chip"><i></i><span>AWS · SAA-C03</span></span>
+    </div>
+    <h1>Alta disponibilidad y diseño de datos en AWS (RDS, Aurora, S3, DynamoDB)</h1>
+
     <div class="meta">
-      <span class="pill">Dominio: Datos y resiliencia</span>
-      <span class="pill">Nivel: Intermedio</span>
-      <span class="pill">Tiempo de lectura: 22–30 min</span>
+      <span class="pill">Dominios: D2 Resiliencia · D3 Alto rendimiento · D4 Coste</span>
+      <span class="pill">Nivel: Intermedio-Avanzado</span>
+      <span class="pill">Tiempo de lectura: 30–45 min</span>
       <span class="pill">Última revisión: Nov 2025</span>
     </div>
-  <div class="grid" style="margin-top:16px">
-    <aside class="aside">
-      <h3>ÍNDICE</h3>
-      <ul class="toc aws"><li><a href="#sec1"><small>1.</small> Multi‑AZ vs Replicas</a></li><li><a href="#sec2"><small>2.</small> Backups/PITR</a></li><li><a href="#sec3"><small>3.</small> Aurora</a></li></ul>
-    </aside>
-    <div><section id="sec1" class="card"><h2>1. Multi‑AZ y Read Replicas</h2><p>Diferencia entre Multi‑AZ para HA y Read Replicas para lectura/DR.</p></section>
-<section id="sec2" class="card"><h2>2. Backups y PITR</h2><p>Automáticos y manuales, ventanas y retención. PITR para recuperación.</p></section>
-<section id="sec3" class="card"><h2>3. Aurora</h2><p>Cluster con almacenamiento distribuido, replicas en segundos, Global Database.</p></section>
-</div>
-  </div>
-</main>
 
-<footer role="contentinfo">
-  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="badge multi">ITHub.es</span>
-      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
-    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
-  </div>
-</footer>
+    <div class="grid" style="margin-top:16px">
+      <aside class="aside">
+        <h3>ÍNDICE</h3>
+        <ul class="toc">
+          <li><a href="#sec1"><small>1.</small> RDS: Multi-AZ vs Read Replicas</a></li>
+          <li><a href="#sec2"><small>2.</small> Almacenamiento y clases de instancia</a></li>
+          <li><a href="#sec3"><small>3.</small> Backups, snapshots y PITR</a></li>
+          <li><a href="#sec4"><small>4.</small> Cross-Region y DR</a></li>
+          <li><a href="#sec5"><small>5.</small> Aurora a fondo</a></li>
+          <li><a href="#sec6"><small>6.</small> Aurora Global & Serverless v2</a></li>
+          <li><a href="#sec7"><small>7.</small> Conexión eficiente: RDS Proxy</a></li>
+          <li><a href="#sec8"><small>8.</small> Seguridad: KMS, IAM Auth, SG/NACL</a></li>
+          <li><a href="#sec9"><small>9.</small> Rendimiento y tuning</a></li>
+          <li><a href="#sec10"><small>10.</small> Tabla de decisión & tips de examen</a></li>
+          <li><a href="#sec11"><small>11.</small> Escenarios de práctica</a></li>
+          <li><a href="#sec12"><small>12.</small> Labs sugeridos</a></li>
+        </ul>
+      </aside>
 
-</body></html>
+      <div>
+        <!-- 1 -->
+        <section id="sec1" class="card">
+          <h2>1. RDS: Multi-AZ vs Read Replicas</h2>
+          <p><b>Multi-AZ</b> = Alta disponibilidad (HA) con <em>standby</em> síncrono en otra AZ. Ante fallo de primario, <em>failover</em> automático (corte breve). No escala lecturas.</p>
+          <p><b>Read Replicas</b> = Réplicas asíncronas que escalan lectura y pueden promoverse para DR/manual failover. No proporcionan HA automática del writer.</p>
+          <ul>
+            <li><b>Usa Multi-AZ</b> para RTO bajo ante fallos de AZ/host (producción transaccional).</li>
+            <li><b>Usa Read Replicas</b> para <i>reporting</i>, cargas analíticas o offload de lectura.</li>
+            <li>Puedes combinar: writer Multi-AZ + varias réplicas de lectura (misma región o cross-region).</li>
+          </ul>
+          <blockquote class="tip"><b>TIP:</b> En el examen, si te piden “<i>minimiza la interrupción automática ante fallo</i>”: elige <b>Multi-AZ</b>. Si piden “<i>escala lectura</i>”: elige <b>Read Replicas</b>.</blockquote>
+        </section>
+
+        <!-- 2 -->
+        <section id="sec2" class="card">
+          <h2>2. Almacenamiento y clases de instancia</h2>
+          <h3>Tipos de almacenamiento para RDS</h3>
+          <ul>
+            <li><b>gp3</b> (general purpose): buen equilibrio coste/rendimiento; IOPS y throughput configurables.</li>
+            <li><b>io1/io2</b> (provisioned IOPS): cuando necesitas latencia consistente e IOPS altos.</li>
+          </ul>
+          <h3>Clases de instancia</h3>
+          <ul>
+            <li><b>db.t3/t4g</b>: <i>burstable</i>, entornos dev/test o cargas ligeras.</li>
+            <li><b>db.m</b>: equilibrio memoria/CPU para la mayoría de cargas.</li>
+            <li><b>db.r</b>: memoria optimizada (bases de datos con grandes cachés/búferes).</li>
+          </ul>
+          <blockquote class="warning"><b>OJO:</b> Si la pregunta menciona “<i>latencias impredecibles bajo picos</i>” con gp2/gp3, considera <b>io1/io2</b> o caché (ElastiCache).</blockquote>
+        </section>
+
+        <!-- 3 -->
+        <section id="sec3" class="card">
+          <h2>3. Backups, snapshots y Point-in-Time Recovery (PITR)</h2>
+          <ul>
+            <li><b>Backups automáticos</b> con retención (1–35 días) y ventana configurables.</li>
+            <li><b>Snapshots manuales</b> (persisten hasta borrarlos) — ideales antes de cambios arriesgados.</li>
+            <li><b>PITR</b>: restaura una instancia al segundo dentro de la ventana de backups.</li>
+          </ul>
+          <p>Para auditoría/DR, exporta snapshots a S3 cifrado y comparte entre cuentas cuando aplique.</p>
+        </section>
+
+        <!-- 4 -->
+        <section id="sec4" class="card">
+          <h2>4. Cross-Region y DR</h2>
+          <ul>
+            <li><b>Read Replicas Cross-Region</b>: reducen latencia de lectura geográfica y sirven como base para DR regional.</li>
+            <li><b>Backups cross-region</b>: copia de snapshots/automáticos a otra región para recuperación.</li>
+          </ul>
+          <blockquote class="tip"><b>TIP:</b> Si la exigencia es <i>recovery</i> ante desastre regional con <b>RPO</b> bajo y lectura global, elige <b>read replicas cross-region</b>. Si solo piden recuperación económica, <b>copias de snapshot</b> puede bastar.</blockquote>
+        </section>
+
+        <!-- 5 -->
+        <section id="sec5" class="card">
+          <h2>5. Aurora a fondo</h2>
+          <p><b>Aurora</b> desacopla cómputo y almacenamiento distribuido (6 copias en 3 AZ). Failover rápido, <b>replicas</b> con lag de milisegundos y mantenimiento sin ventanas largas.</p>
+          <ul>
+            <li><b>Aurora Replicas</b>: hasta 15; se pueden escalar lecturas y promover.</li>
+            <li><b>Cluster endpoints</b>: <b>writer</b>, <b>reader</b> (balancea lecturas), y <b>endpoints personalizados</b>.</li>
+            <li><b>Backtrack</b> (MySQL): retrocede el estado sin restaurar snapshot completo (útil para errores lógicos).</li>
+          </ul>
+          <blockquote class="warning"><b>Examen:</b> “<i>millones de lecturas/seg. con latencia muy baja y failover rápido</i>” → <b>Aurora</b> frente a RDS clásico.</blockquote>
+        </section>
+
+        <!-- 6 -->
+        <section id="sec6" class="card">
+          <h2>6. Aurora Global Database & Serverless v2</h2>
+          <h3>Global Database</h3>
+          <p>Replica entre regiones con latencias muy bajas y <i>lag</i> mínimo; <b>DR regional</b> y lecturas locales globales.</p>
+          <h3>Serverless v2</h3>
+          <ul>
+            <li>Escalado fino (ACUs) sin interrupciones; ideal para cargas variables.</li>
+            <li><b>Multi-AZ</b> + <b>reader endpoint</b> siguen disponibles.</li>
+          </ul>
+        </section>
+
+        <!-- 7 -->
+        <section id="sec7" class="card">
+          <h2>7. Conexión eficiente: RDS Proxy</h2>
+          <p><b>RDS Proxy</b> mantiene pools de conexiones a RDS/Aurora y gestiona <i>failovers</i>/reintentos, reduciendo el <i>overhead</i> en apps con conexiones efímeras (Lambda, Fargate).</p>
+          <ul>
+            <li>Compatible con IAM Auth y credenciales en Secrets Manager.</li>
+            <li>Mitiga <i>connection storms</i> y mejora la supervivencia a picos.</li>
+          </ul>
+        </section>
+
+        <!-- 8 -->
+        <section id="sec8" class="card">
+          <h2>8. Seguridad: KMS, IAM Auth, SG/NACL</h2>
+          <ul>
+            <li><b>Cifrado en reposo</b> (KMS) y <b>en tránsito</b> (TLS).</li>
+            <li><b>IAM Database Authentication</b> (MySQL/Aurora MySQL) elimina contraseñas estáticas.</li>
+            <li><b>Security Groups</b> para limitar orígenes de conexión; NACLs como defensa adicional.</li>
+            <li>Rotación de <b>Secrets Manager</b> para credenciales tradicionales.</li>
+          </ul>
+        </section>
+
+        <!-- 9 -->
+        <section id="sec9" class="card">
+          <h2>9. Rendimiento y tuning</h2>
+          <ul>
+            <li>Activa <b>Performance Insights</b> y observa waits/consultas pesadas.</li>
+            <li>Ajusta <b>gp3</b> IOPS/throughput o migra a <b>io1/io2</b> si hay latencia bajo pico.</li>
+            <li>Escala <b>read replicas</b> y enruta lecturas al <b>reader endpoint</b>.</li>
+            <li>Considera <b>ElastiCache</b> para <i>caching</i> de lecturas calientes.</li>
+          </ul>
+        </section>
+
+        <!-- 10 -->
+        <section id="sec10" class="card">
+          <h2>10. Tabla de decisión & tips de examen</h2>
+          <table>
+            <thead>
+              <tr><th>Necesidad</th><th>Servicio/patrón</th><th>Notas para el examen</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>HA automática con mínimo downtime</td><td><b>RDS Multi-AZ</b></td><td>No escala lecturas; failover automático.</td></tr>
+              <tr><td>Escalar lecturas/reporting</td><td><b>Read Replicas</b></td><td>Asíncronas; promoción manual para DR.</td></tr>
+              <tr><td>Latencia muy baja y failover rápido</td><td><b>Aurora</b></td><td>6 copias en 3 AZ; replicas en ms.</td></tr>
+              <tr><td>Global read/locales + DR regional</td><td><b>Aurora Global Database</b></td><td>Lag muy bajo entre regiones.</td></tr>
+              <tr><td>Conexiones efímeras/picos</td><td><b>RDS Proxy</b></td><td>Pool de conexiones; integra IAM/Secrets.</td></tr>
+              <tr><td>Errores lógicos rápidos de revertir</td><td><b>Backtrack (Aurora MySQL)</b></td><td>No sustituye a backups; útil en pruebas.</td></tr>
+              <tr><td>Restaurar a un punto exacto</td><td><b>PITR</b></td><td>Dentro de la ventana de backups.</td></tr>
+            </tbody>
+          </table>
+          <blockquote class="tip"><b>Regla de oro:</b> “<i>HA automática</i>” → Multi-AZ. “<i>Leer más</i>” → Réplicas. “<i>latencia bajísima/failover veloz</i>” → Aurora.</blockquote>
+        </section>
+
+        <!-- 11 -->
+        <section id="sec11" class="card">
+          <h2>11. Escenarios de práctica (estilo examen)</h2>
+          <ol>
+            <li><b>Tu app necesita cero cambios y mínima interrupción ante fallo de AZ.</b><br/>→ RDS <b>Multi-AZ</b>.</li>
+            <li><b>Explosión de lecturas de analytics a mediodía.</b><br/>→ Añade <b>Read Replicas</b> y enruta queries de lectura.</li>
+            <li><b>Usuarios en UE y USA; latencia de lectura debe ser local.</b><br/>→ <b>Aurora Global Database</b> o <b>Read Replicas cross-region</b>.</li>
+            <li><b>Lambdas abren miles de conexiones a picos.</b><br/>→ Coloca <b>RDS Proxy</b>.</li>
+            <li><b>Error lógico: borrado accidental a las 09:15.</b><br/>→ <b>PITR</b> a 09:14:59 o <b>Backtrack</b> (si Aurora MySQL).</li>
+          </ol>
+        </section>
+
+        <!-- 12 -->
+        <section id="sec12" class="card">
+          <h2>12. Labs sugeridos</h2>
+          <ul>
+            <li>Crear RDS Multi-AZ, provocar failover y medir el tiempo de recuperación.</li>
+            <li>Configurar 2 Read Replicas, enrutar lecturas y promover una réplica.</li>
+            <li>Snapshot + export a S3 cifrado con KMS y compartición entre cuentas.</li>
+            <li>Desplegar Aurora con 1 writer + 2 readers, probar <b>reader endpoint</b>.</li>
+            <li>Activar RDS Proxy delante de Aurora y lanzar pruebas de conexión concurrente.</li>
+          </ul>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+            <a class="pill-btn" href="/content/aws-s3-design-saac03.html">DISEÑO CON S3</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,153,0,.45);background:rgba(255,153,0,.12);color:#ffe7c2;padding:6px 10px;border-radius:999px;font-weight:900">ITHub.es</span>
+        <span>© <span id="y"></span> · Contenido educativo para certificaciones.</span>
+      </div>
+      <div><a href="javascript:void(0);" onclick="history.back();" class="pill-btn">< VOLVER</a></div>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>
