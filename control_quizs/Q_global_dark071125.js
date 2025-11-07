@@ -146,7 +146,6 @@ const QUIZZES = {
          border-radius:12px; padding:12px; }
   .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
   .link-list{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
-  .why-list{ margin:10px 0 0; padding-left:18px; }
 
   .controls{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; justify-content:flex-end; }
   .controls.centered{ justify-content:center; }
@@ -196,8 +195,6 @@ function smartScrollTo(el, align='start'){
   const top = rect.top + window.scrollY - (align==='center' ? window.innerHeight/2 - rect.height/2 : offset);
   window.scrollTo({ top, behavior: 'smooth' });
 }
-// quita prefijos "A. ", "B. ", etc. si vinieran incrustados en el texto
-function stripLetterPrefix(s){ return String(s||'').replace(/^\s*[A-Z]\.\s*/i,'').trim(); }
 
 /* ===================== Tema ===================== */
 function applyTheme(quizId){
@@ -252,13 +249,6 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
 function transformQuestions(items){
   return items.map(it=>{
     const domain=extractDomainFromRecord(it);
-    // NUEVO: soporta motivos por opción si vienen del backend con cualquiera de estos nombres
-    const perOpt =
-      (Array.isArray(it.explanationsByOption) && it.explanationsByOption) ||
-      (Array.isArray(it.reasonsByOption) && it.reasonsByOption) ||
-      (Array.isArray(it.optionExplanations) && it.optionExplanations) ||
-      null;
-
     return {
       questionId: it.questionId || `${it.exam||''}:${it.question||''}`,
       question: it.question || '',
@@ -268,8 +258,7 @@ function transformQuestions(items){
       explanationRich: it.explanationRich || '',
       links: Array.isArray(it.links) ? it.links.slice() : [],
       category: it.category || 'General',
-      domain,
-      perOption: perOpt ? perOpt.map(stripLetterPrefix) : null // limpio posibles prefijos
+      domain
     };
   });
 }
@@ -536,11 +525,7 @@ async function start(quizId="aws-saa-c03", overrides={}){
       const order = shuffle([...Array(opts.length).keys()]);
       const optionsShuffled = order.map(i=>opts[i]);
       const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? order.indexOf(q.correctAnswer) : null;
-
-      // NUEVO: reordena también las explicaciones por opción para que coincidan con el orden visual
-      const perOptionShuffled = Array.isArray(q.perOption) ? order.map(i => stripLetterPrefix(q.perOption[i])) : null;
-
-      return { ...q, _optOrder: order, _options: optionsShuffled, _correct: correctIndex, _perOption: perOptionShuffled };
+      return { ...q, _optOrder: order, _options: optionsShuffled, _correct: correctIndex };
     });
 
     if(__SEQ!==seq) return;
@@ -637,7 +622,7 @@ function renderQuiz(){
     qCard.appendChild(h('div',{html:'No hay preguntas que mostrar.'}));
   }else{
     const pct=Math.round((S.idx/Math.max(1,S.qs.length))*100); fill.style.width=`${pct}%`;
-    const domLabel = (q.category||'general') + (q.domain?` (${String(q.domain).toLowerCase()})`:``);
+    const domLabel = (q.category||'general') + (q.domain?` (${String(q.domain).toLowerCase()})`:'');
     qCard.appendChild(h('div',{class:'domain',html:`<i class="dot"></i><span>${domLabel}</span>`}));
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${S.idx+1}.</b> ${q.question}`}));
 
@@ -654,25 +639,7 @@ function renderQuiz(){
     if(typeof chosen!=='undefined' && S.prefs.explanations==='after'){
       expBox=h('div',{class:'expl'});
       const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
-      // explicación base (global)
       expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
-
-      // NUEVO: motivos por opción (mostrados en el mismo orden visual y con letras actuales)
-      if (Array.isArray(q._perOption) && q._perOption.length === (q._options||[]).length) {
-        const others = q._perOption.map((txt,i)=>({i,txt:stripLetterPrefix(txt)})).filter(x=>x.i!==q._correct);
-        if (others.length){
-          const ul = h('ul',{class:'why-list'});
-          expBox.appendChild(h('div',{class:'ttl',html:'Por qué las otras son incorrectas:'}));
-          others.forEach(({i,txt})=>{
-            const li = document.createElement('li');
-            const letter = String.fromCharCode(65+i);
-            li.innerHTML = `<b>${letter}.</b> ${txt}`;
-            ul.appendChild(li);
-          });
-          expBox.appendChild(ul);
-        }
-      }
-
       const linksBox = renderLinksBox(q.links); if(linksBox) expBox.appendChild(linksBox);
       qCard.appendChild(expBox);
     }

@@ -1,65 +1,217 @@
-<!doctype html><html lang="es"><head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Diseño seguro y eficiente con Amazon S3 (SAA‑C03) | ITHub.es</title>
-  <meta name="description" content="Buenas prácticas de seguridad, rendimiento y DR en Amazon S3."/>
-  <meta name="keywords" content="AWS,S3,Object Lock,KMS,CRR,examen"/>
-  <meta name="author" content="ITHub.es"/>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Diseño seguro y eficiente con Amazon S3 (SAA-C03) | ITHub.es</title>
+  <meta name="description" content="Guía práctica para SAA-C03: seguridad, clases de almacenamiento, Object Lock, KMS, VPC Endpoints, replicación (SRR/CRR), rendimiento y tips de examen para Amazon S3."/>
+  <meta name="keywords" content="AWS,S3,SAA-C03,Object Lock,KMS,CRR,SRR,Private Endpoint,VPC Endpoint,replicación,clases de almacenamiento,Intelligent-Tiering"/>
   <link rel="canonical" href="https://beta.ithub.es/content/aws-s3-design-saac03.html"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
   <style>
-    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-          --p:#ff9900;--tint:rgba(255,153,0,.13);--chip:#ffdcb3;--bd:rgba(255,153,0,.55);--shadow:0 12px 28px rgba(6,12,40,.45)}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+    :root{
+      --bg:#0f1320;--surface:#111937;--surface2:#0f1633;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
+      /* Paleta AWS (naranja) */
+      --p:#ff9900;                /* primario */
+      --tint:rgba(255,153,0,.16); /* fondo suave para chips/callouts */
+      --chip:#ffe6bf;             /* texto chip */
+      --bd:rgba(255,153,0,.66);   /* borde acento */
+      --shadow:0 12px 28px rgba(6,12,40,.45);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
     .container{max-width:1100px;margin:0 auto;padding:0 18px}
+
+    /* Header / nav */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
     .brand{display:flex;gap:10px;align-items:center;font-weight:900}
     nav a{color:#cbd6ff;text-decoration:none;padding:10px 12px;border-radius:10px;border:1px solid transparent}
     nav a:hover{border-color:#2a3150;color:#fff}
+
+    /* Hero */
     .hero{text-align:center;padding:28px 0 16px;border-bottom:1px solid var(--stroke);background:linear-gradient(180deg,#0f1320,#0f1320 70%,#141a33)}
     .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);color:var(--chip);font-weight:900}
     h1{margin:.6rem 0 .8rem;font-size:clamp(1.9rem,3.8vw,2.6rem)}
     .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-    .meta .b{padding:8px 12px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);font-weight:800;color:#e8f1ff}
+    .meta .b{padding:8px 12px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);font-weight:800;color:#fff3e0}
+
+    /* Layout con TOC */
     .layout{display:grid;grid-template-columns:300px 1fr;gap:18px;margin:18px auto;max-width:1200px;padding:0 10px}
     @media(max-width:980px){.layout{grid-template-columns:1fr}}
-    .toc{position:sticky;top:86px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+    .toc{position:sticky;top:86px;background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
     .toc h3{margin:0 0 10px;color:#dfe6ff;letter-spacing:.06em;text-transform:uppercase;font-size:14px}
     .toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
     .toc a{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid transparent;border-radius:12px;color:#e9f2ff;text-decoration:none}
     .toc a:hover{border-color:var(--bd);background:var(--tint)}
     .dot{width:7px;height:7px;border-radius:999px;background:var(--p);box-shadow:0 0 0 4px rgba(255,255,255,.04)}
-    article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
+
+    /* Artículo */
+    article{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
     article h2{margin:16px 0 8px;font-size:1.22rem;border-left:4px solid var(--p);padding-left:10px}
     .callout{border:1px solid var(--bd);background:var(--tint);border-radius:12px;padding:12px;margin:10px 0}
     .table{width:100%;border-collapse:collapse;margin:.6rem 0;border:1px solid #283056}
     .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
     .table th{background:#141a33;text-align:left}
     .muted{color:var(--muted)}
-  </style>
-</head><body>
-<header><div class="container nav">
-  <div class="brand"><img src="/assets/ithub-logo.svg" alt="ITHub: inicio" style="height:42px"><span>ITHub.es</span></div>
-  <nav><a href="/">HOME</a><a href="/content/content.html">CONTENIDOS</a><a href="/score/ranking.html">RANKING</a></nav>
-</div></header>
+    ul{margin-top:0}
+    code,kbd{background:#0b1222;border:1px solid #22304f;border-radius:6px;padding:1px 6px}
+    pre{background:#0b1222;border:1px solid #22304f;border-radius:8px;padding:10px;overflow:auto}
 
-<section class="hero"><div class="container">
-  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M4 4h16v4H4V4zm0 6h16v4H4v-4zm0 6h10v4H4v-4z'/></svg>&nbsp; AWS · SAA-C03</span>
-  <h1>Diseño seguro y eficiente con Amazon S3 (SAA‑C03)</h1>
-  <div class="meta"><span class='b'>Dominio: Seguridad y resiliencia</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 20–30 min</span><span class='b'>Última revisión: Nov 2025</span></div>
-</div></section>
+    /* Footer */
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+  </style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <img src="/assets/ithub-logo.svg" alt="ITHub: inicio" style="height:42px">
+      <span>ITHub.es</span>
+    </div>
+    <nav>
+      <a href="/">HOME</a>
+      <a href="/content/content.html">CONTENIDOS</a>
+      <a href="/score/ranking.html">RANKING</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true"><path d="M3 18h6l3-8 3 8h6l-9-14-9 14z"/></svg>&nbsp; AWS · SAA-C03
+    </span>
+    <h1>Diseño seguro y eficiente con Amazon S3 (SAA-C03)</h1>
+    <div class="meta">
+      <span class="b">Dominios: Seguridad, Resiliencia & Coste</span>
+      <span class="b">Nivel: Intermedio</span>
+      <span class="b">Tiempo de lectura: 30–40 min</span>
+      <span class="b">Última revisión: Nov 2025</span>
+    </div>
+  </div>
+</section>
 
 <div class="container layout">
-  <aside class="toc"><h3>Índice</h3><ol><li><a href='#seguridad'><span class='dot'></span><span>1. Seguridad</span></a></li><li><a href='#rendimiento'><span class='dot'></span><span>2. Rendimiento</span></a></li><li><a href='#replicacion'><span class='dot'></span><span>3. Replicación & DR</span></a></li><li><a href='#preguntas'><span class='dot'></span><span>4. Preguntas tipo examen</span></a></li></ol></aside>
+  <aside class="toc" aria-label="Índice de contenidos">
+    <h3>Índice</h3>
+    <ol>
+      <li><a href="#fundamentos"><span class="dot"></span><span>1. Fundamentos de S3</span></a></li>
+      <li><a href="#seguridad-acceso"><span class="dot"></span><span>2. Seguridad y control de acceso</span></a></li>
+      <li><a href="#cifrado-immutabilidad"><span class="dot"></span><span>3. Cifrado & WORM (Object Lock)</span></a></li>
+      <li><a href="#clases-lifecycle"><span class="dot"></span><span>4. Clases & Lifecycle</span></a></li>
+      <li><a href="#rendimiento"><span class="dot"></span><span>5. Rendimiento y transferencia</span></a></li>
+      <li><a href="#replicacion-dr"><span class="dot"></span><span>6. Replicación (SRR/CRR) & DR</span></a></li>
+      <li><a href="#costes-tips"><span class="dot"></span><span>7. Costes y buenas prácticas</span></a></li>
+      <li><a href="#exam-tips"><span class="dot"></span><span>8. Tips de examen SAA-C03</span></a></li>
+    </ol>
+  </aside>
+
   <article>
     <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
-    <h2 id='seguridad'>1. Seguridad</h2><p>Habilita **Block Public Access**, usa **SSE‑KMS** y rota claves. Limita por **aws:PrincipalOrgID** y **aws:SourceVpce**.</p><p>Para cumplimiento WORM usa **Object Lock (Compliance)** con retención y <i>legal hold</i>.</p><table class='table'><thead><tr><th>Control</th><th>Recomendación</th></tr></thead><tbody><tr><td>Bloqueo público</td><td>Siempre habilitado</td></tr><tr><td>Cifrado</td><td>SSE‑KMS con rotation</td></tr><tr><td>Acceso privado</td><td>VPC Endpoint + bucket policy</td></tr></tbody></table>
-<h2 id='rendimiento'>2. Rendimiento</h2><p>Subidas grandes con **multipart upload**; paraleliza descargas. Usa **S3 Transfer Acceleration** para clientes globales.</p><p>Elige la **clase** adecuada: Standard, IA, Intelligent‑Tiering, Glacier Instant/Deep. </p>
-<h2 id='replicacion'>3. Replicación & DR</h2><p>**CRR/SRR** replican versiones, etiquetas y (opcionalmente) borrados. Emite eventos a **EventBridge/Lambda** para pipelines.</p>
-<h2 id='preguntas'>4. Preguntas tipo examen</h2><p>WORM regulatorio → <b>Object Lock Compliance</b>.</p><p>Acceso privado desde VPC → <b>Gateway/Interface Endpoint</b> + bucket policy. </p>
+
+    <h2 id="fundamentos">1. Fundamentos de S3</h2>
+    <ul>
+      <li><b>Modelo:</b> almacenamiento de objetos en <b>buckets</b> (namespace global). Durabilidad de <b>11 nueves</b> a nivel de objeto.</li>
+      <li><b>Versioning:</b> habilítalo para protegerte frente a borrados/overwrites accidentales.</li>
+      <li><b>Bloqueo de acceso público:</b> activa <i>Block Public Access</i> a nivel cuenta y bucket por defecto.</li>
+      <li><b>Políticas:</b> bucket policy (recurso), IAM (identidad), ACLs solo si es imprescindible (retrocompatibilidad).</li>
+    </ul>
+    <div class="callout"><b>EXAM TIP:</b> “Impedir exposición accidental” → <b>Block Public Access</b> + <b>bucket policy</b> restrictiva.</div>
+
+    <h2 id="seguridad-acceso">2. Seguridad y control de acceso</h2>
+    <ul>
+      <li><b>Privado por VPC:</b> usa <b>VPC Endpoint</b> (Gateway para S3) + condición <code>aws:SourceVpce</code> o <code>aws:PrincipalOrgID</code>.</li>
+      <li><b>Acceso temporal:</b> asume roles (STS) y/o usa <b>pre-signed URLs</b> para clientes externos.</li>
+      <li><b>Logs:</b> habilita <b>CloudTrail Data Events</b> para S3 y <b>Server Access Logging</b> donde aplique.</li>
+    </ul>
+    <table class="table">
+      <thead><tr><th>Requisito</th><th>Solución S3</th><th>Notas</th></tr></thead>
+      <tbody>
+        <tr><td>Acceso privado desde on-prem/VPC</td><td>VPC Endpoint + bucket policy</td><td>Evita salida a Internet, combina con DNS interno</td></tr>
+        <tr><td>Multi-cuenta controlada</td><td>Condición <code>aws:PrincipalOrgID</code></td><td>Restringe a tu AWS Organizations</td></tr>
+        <tr><td>Acceso puntual a objeto</td><td>URL firmada (pre-signed)</td><td>Expira en minutos/horas, mínimo privilegio</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>EXAM TIP:</b> “Acceso solo desde la red privada” → <b>VPC Endpoint</b> + política que niegue <i>aws:sourceIp</i> externo.</div>
+
+    <h2 id="cifrado-immutabilidad">3. Cifrado & WORM (Object Lock)</h2>
+    <ul>
+      <li><b>Cifrado en reposo:</b> <b>SSE-KMS</b> recomendado (claves gestionadas en KMS, rotación y control granular).</li>
+      <li><b>Cifrado en tránsito:</b> fuerza <code>aws:SecureTransport=true</code> en bucket policy.</li>
+      <li><b>WORM regulatorio:</b> <b>Object Lock</b> (modo <i>Compliance</i>) con periodos de retención y <i>legal hold</i>.</li>
+    </ul>
+    <pre>
+// Ejemplo de condición para HTTPS obligatorio (bucket policy)
+"Condition": { "Bool": { "aws:SecureTransport": "true" } }
+    </pre>
+    <div class="callout"><b>EXAM TIP:</b> “Evitar borrado incluso por admins” → <b>Object Lock (Compliance)</b> + versión habilitada.</div>
+
+    <h2 id="clases-lifecycle">4. Clases & Lifecycle</h2>
+    <p>Elige la clase según patrón de acceso y latencia:</p>
+    <table class="table">
+      <thead><tr><th>Clase</th><th>Uso típico</th><th>Observaciones</th></tr></thead>
+      <tbody>
+        <tr><td><b>Standard</b></td><td>Acceso frecuente/latencia baja</td><td>Multi-AZ</td></tr>
+        <tr><td><b>Intelligent-Tiering</b></td><td>Acceso impredecible</td><td>Mueve automáticamente entre tiers; ideal optimización sin esfuerzo</td></tr>
+        <tr><td><b>Standard-IA / One Zone-IA</b></td><td>Poco frecuente</td><td>IA: multi-AZ; One Zone-IA: 1 AZ (más barato, menos resiliente)</td></tr>
+        <tr><td><b>Glacier Instant / Flexible / Deep</b></td><td>Archivo</td><td>Recuperación ms/minutos/horas; coste muy bajo por GB</td></tr>
+      </tbody>
+    </table>
+    <ul>
+      <li><b>Lifecycle</b>: transiciones automáticas (p.ej., 30→IA, 90→Glacier) y expiración de versiones y <i>multipart uploads</i> incompletos.</li>
+      <li><b>Etiquetas</b>: puedes condicionar reglas por <code>tags</code> para separar datos críticos/no críticos.</li>
+    </ul>
+
+    <h2 id="rendimiento">5. Rendimiento y transferencia</h2>
+    <ul>
+      <li><b>Multipart Upload</b> para objetos grandes; paraleliza partes para mejorar throughput.</li>
+      <li><b>Transfer Acceleration</b> acelera cargas globales vía edge (útil si clientes están lejos de la región).</li>
+      <li><b>Request Parallelism</b> y clientes con <b>conexiones persistentes</b> para descargas masivas.</li>
+    </ul>
+    <pre>
+// CLI: subida multipart (automática a partir de cierto tamaño)
+aws s3 cp ./bigfile.zip s3://mi-bucket/
+    </pre>
+
+    <h2 id="replicacion-dr">6. Replicación (SRR/CRR) & DR</h2>
+    <ul>
+      <li><b>SRR</b> (Same-Region) para copias en la misma región; <b>CRR</b> (Cross-Region) para <b>DR</b> geográfico.</li>
+      <li>Replica <b>versiones</b>, <b>ACL/tags</b> y opcionalmente <b>delete markers</b>. Compatible con <b>Object Lock</b> en destino.</li>
+      <li>Integra con <b>EventBridge/Lambda</b> para flujos ETL posteriores a la replicación.</li>
+    </ul>
+    <div class="callout"><b>EXAM TIP:</b> “Lectura global con latencia y DR” → <b>CRR</b> hacia región cercana a consumidores + <b>CloudFront</b> si es contenido estático.</div>
+
+    <h2 id="costes-tips">7. Costes y buenas prácticas</h2>
+    <ul>
+      <li>Activa <b>Intelligent-Tiering</b> en conjuntos con patrón variable; reduce coste sin perder disponibilidad.</li>
+      <li>Usa <b>lifecycle</b> y <b>expiración de versiones</b> para controlar crecimiento.</li>
+      <li>Consolida <b>accesos privados</b> (VPC Endpoint) para evitar transfer out a Internet.</li>
+      <li>Mide con <b>Storage Lens</b> y <b>Cost & Usage Reports</b> para detectar “datos zombis”.</li>
+    </ul>
+
+    <h2 id="exam-tips">8. Tips de examen SAA-C03</h2>
+    <ul>
+      <li><b>WORM regulatorio</b> → <b>Object Lock (Compliance)</b> + Versioning.</li>
+      <li><b>Acceso solo privado</b> → <b>VPC Endpoint</b> + bucket policy con <code>aws:SourceVpce</code> / <code>aws:PrincipalOrgID</code>.</li>
+      <li><b>Clientes globales</b> → <b>Transfer Acceleration</b> o <b>CloudFront</b> según patrón.</li>
+      <li><b>Coste impredecible</b> → <b>Intelligent-Tiering</b> + lifecycle de antiguas versiones.</li>
+      <li><b>Eventos</b> → notificaciones S3 → <b>EventBridge</b>/<b>Lambda</b> para procesar cambios.</li>
+    </ul>
   </article>
 </div>
 
-<footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
-  <div class="container">© Nov 2025 ITHub.es</div>
+<footer>
+  <div class="container">© 2025 ITHub.es · Amazon S3 (SAA-C03)</div>
 </footer>
-</body></html>
+</body>
+</html>
