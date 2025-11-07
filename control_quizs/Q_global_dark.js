@@ -19,30 +19,30 @@
 
 (() => {
 /* ===================== CONFIG ===================== */
-const API_URL       = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // base sin stage
+const API_URL       = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
 const RESULTS_URL   = `${API_URL}/results`;
+let   __PROGRESS_URL_CACHED = null;
+const __CANDIDATE_STAGES = [""];
 
-// Descubrimiento automático de /progress (sin stage, /prod, /dev)
-let __PROGRESS_URL_CACHED = null;
-const __CANDIDATE_STAGES = ["", "prod", "dev"];
+/* ===== Utils de red ===== */
+function withTimeout(promise, ms, tag="op"){
+  let t;
+  const timeout = new Promise((_,rej)=> t=setTimeout(()=>rej(new Error(`[${tag}] timeout ${ms}ms`)), ms));
+  return Promise.race([promise.finally(()=>clearTimeout(t)), timeout]);
+}
 
+/* ===== Descubrimiento /progress ===== */
 async function discoverProgressUrl(samplePayload) {
   if (__PROGRESS_URL_CACHED) return __PROGRESS_URL_CACHED;
   for (const st of __CANDIDATE_STAGES) {
     const url = st ? `${API_URL}/${st}/progress` : `${API_URL}/progress`;
     try {
-      const r = await fetch(url, {
+      const r = await withTimeout(fetch(url, {
         method: "POST",
         mode: "cors",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          sessionId: samplePayload.sessionId || "s-probe",
-          quizId: samplePayload.quizId || "probe",
-          idx: 0, total: 0, elapsedSec: 0,
-          userId: "probe", userName: "probe",
-          status: "in_progress"
-        })
-      });
+        headers: {"Content-Type":"application/json","Accept":"application/json"},
+        body: JSON.stringify(samplePayload || {probe:true})
+      }), 4500, "probe-progress");
       if (r.status === 200 || r.status === 201) {
         console.info("[progress] endpoint OK:", url);
         __PROGRESS_URL_CACHED = url;
@@ -52,10 +52,10 @@ async function discoverProgressUrl(samplePayload) {
         console.warn("[progress] fallback", url, "status:", r.status, txt);
       }
     } catch (e) {
-      console.warn("[progress] endpoint error", url, e);
+      console.warn("[progress] endpoint error", url, e?.message||e);
     }
   }
-  __PROGRESS_URL_CACHED = `${API_URL}/progress`; // por si acaso
+  __PROGRESS_URL_CACHED = `${API_URL}/progress`;
   return __PROGRESS_URL_CACHED;
 }
 
@@ -80,17 +80,13 @@ const S = {
   prefs: { count: 65, explanations: "after", tags: [] },
 
   sessionId: null,
-  saveDebounce: null,
-  saveEveryNsec: 15,
-  hasInitialUpsert: false,
   loading: false,
   finished: false,
-
-  savingResult: false,
   finishLocked: false,
 
   _afterRenderScroll: null,
-  _firstProgressConfirmed: false
+
+  savingResult: false
 };
 let __SEQ = 0;
 
@@ -157,7 +153,6 @@ const QUIZZES = {
 
   .side .panel{ background:var(--surface); border:1px solid var(--stroke); border-radius:16px; padding:16px; margin-bottom:14px; }
   .side h3{ margin:.2rem 0 .6rem; }
-
   .list-dots{ display:grid; grid-template-columns:repeat(auto-fill,minmax(46px,1fr)); gap:10px; }
   .dot{ display:flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:999px;
         border:2px solid var(--stroke); background:var(--surface2); cursor:pointer; font-weight:900; color:#e8ecff; }
@@ -188,15 +183,7 @@ const fmtTime = (s) => { s = Math.max(0, Number(s) || 0); const m = Math.floor(s
 function toast(msg, ms = 1600) { let t = document.querySelector(".toast"); if (!t) { t = h("div", { class: "toast" }); document.body.appendChild(t); } t.textContent = msg; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), ms); }
 function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}
 const uuid = () => "s-" + Math.random().toString(16).slice(2) + Date.now().toString(36);
-function smartScrollTo(el, align='start'){
-  if(!el) return;
-  const rect = el.getBoundingClientRect();
-  const header = document.querySelector('header');
-  const offset = (header ? header.offsetHeight : 0) + 10;
-  const top = rect.top + window.scrollY - (align==='center' ? window.innerHeight/2 - rect.height/2 : offset);
-  window.scrollTo({ top, behavior: 'smooth' });
-}
-// quita prefijos "A. ", "B. ", etc. si vinieran incrustados en el texto
+function smartScrollTo(el, align='start'){ if(!el) return; const rect = el.getBoundingClientRect(); const header = document.querySelector('header'); const offset = (header ? header.offsetHeight : 0) + 10; const top = rect.top + window.scrollY - (align==='center' ? window.innerHeight/2 - rect.height/2 : offset); window.scrollTo({ top, behavior: 'smooth' }); }
 function stripLetterPrefix(s){ return String(s||'').replace(/^\s*[A-Z]\.\s*/i,'').trim(); }
 
 /* ===================== Tema ===================== */
@@ -284,171 +271,21 @@ function filterByDomains(all, tags){
   });
 }
 
-/* ===================== Progreso / Resultados ===================== */
+/* ===================== Usuario ===================== */
 function getUserAny(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
 
-function buildMarkedItems(){
-  const list=[]; const now=new Date().toISOString();
-  S.qs.forEach((q,i)=>{ if(S.marked[i]) list.push({index:i,questionId:q.questionId,domain:q.domain,markedAt:S.markTimes[i]||now}); });
-  return list;
-}
-function buildBank(){
-  return S.qs.map((q,i)=>({
-    index:i, questionId:q.questionId, domain:q.domain,
-    optionsShown:(q._options||[]).slice(),
-    correctShownIndex:(typeof q._correct==='number'?q._correct:null),
-    optOrder:Array.isArray(q._optOrder)?q._optOrder.slice():null
-  }));
-}
-function buildAnswerItems(){
-  const items=[];
-  for(const [i,chosen] of Object.entries(S.answers||{})){
-    const idx=+i; const q=S.qs[idx]; if(!q) continue;
-    const isCorrect=(typeof q._correct==='number') ? (chosen===q._correct) : null;
-    items.push({ index:idx, questionId:q.questionId, domain:q.domain, chosenIndex:chosen, isCorrect, marked:!!S.marked[idx] });
-  }
-  return items;
-}
-function computePct(){ let c=0,t=S.qs.length; for(let i=0;i<t;i++){ if(S.answers[i]===S.qs[i]._correct) c++; } return t?Math.round((c/t)*100):0; }
-
-function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
-  const u=getUserAny()||{};
-  const status = finished ? "finished" : "in_progress";
-  const base={
-    sessionId:S.sessionId,
-    quizId:S.quizId,
-    mode:S.mode,
-    track:S.track,
-    userId:u?.userId||u?.id||"anon",
-    userName:u?.name||"anonymous",
-    email:u?.email||"",
-    startedAt:(S.startedAt? new Date(S.startedAt).toISOString(): new Date().toISOString()),
-    updatedAt:new Date().toISOString(),
-    elapsedSec:S.elapsedSec,
-    timeLimit:S.timeLimit,
-    idx:S.idx,
-    total:S.qs.length,
-    pct:computePct(),
-    finished:Boolean(finished),
-    status,
-    answers:S.answers,
-    marked:S.marked,
-    questionIds:S.qs.map(q=>q.questionId),
-    markedItems:buildMarkedItems(),
-    answerItems:buildAnswerItems()
-  };
-  if(full || !S.hasInitialUpsert) base.questionBank = buildBank();
-  return base;
-}
-
-/* Cliente /progress: INTENTA PRIMERO form-urlencoded (sin preflight) y luego JSON */
-async function upsertProgressOnce(payload, {beacon=false} = {}) {
-  try {
-    const PROGRESS_URL = await discoverProgressUrl(payload);
-
-    // 1) Simple request SIN preflight → form-urlencoded
-    const form = new URLSearchParams();
-    Object.entries(payload).forEach(([k,v]) => {
-      form.append(k, typeof v === "object" ? JSON.stringify(v) : String(v));
-    });
-
-    let r = await fetch(PROGRESS_URL, {
-      method: "POST",
-      mode: "cors",
-      keepalive: true,
-      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-      body: form.toString()
-    });
-
-    if (r.ok) {
-      const j = await r.json().catch(() => ({}));
-      return { ok: true, via: "form", url: PROGRESS_URL, res: j };
-    }
-
-    // 2) Si falla, probar JSON (esto sí puede requerir CORS preflight)
-    r = await fetch(PROGRESS_URL, {
-      method: "POST",
-      mode: "cors",
-      keepalive: true,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    if (r.ok) {
-      const j2 = await r.json().catch(() => ({}));
-      return { ok: true, via: "json", url: PROGRESS_URL, res: j2 };
-    } else {
-      const txt = await r.text().catch(() => "");
-      console.error("[/progress] non-2xx", r.status, "url:", PROGRESS_URL, "body:", txt);
-      return { ok: false, status: r.status, error: txt || "HTTP error", url: PROGRESS_URL };
-    }
-  } catch (e) {
-    console.error("[/progress] exception:", e);
-    return { ok: false, error: String(e?.message || e) };
-  }
-}
-
-function saveProgress({full=false,finished=false,reason='auto'}={}){
-  if(S.saveDebounce) clearTimeout(S.saveDebounce);
-  S.saveDebounce=setTimeout(async ()=> {
-    const payload = buildProgressSnapshot({full,finished,reason});
-    const res = await upsertProgressOnce(payload);
-    if(res.ok && !S._firstProgressConfirmed){
-      try{
-        const v = await fetch((__PROGRESS_URL_CACHED || `${API_URL}/progress`) + `?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
-        const j = await v.json();
-        if(j && j.item && j.item.sessionId===S.sessionId){
-          S._firstProgressConfirmed = true;
-          toast("✓ Progreso guardado");
-          console.log("[/progress] verificado:", j.item);
-        }
-      }catch{}
-    }
-    S.hasInitialUpsert=true;
-  }, 220);
-}
-async function saveProgressNow({full=false,finished=false,reason='immediate',beacon=false}={}){
-  const payload = buildProgressSnapshot({full,finished,reason});
-  const res = await upsertProgressOnce(payload, {beacon});
-  if(res.ok && !S._firstProgressConfirmed){
-    try{
-      const v = await fetch((__PROGRESS_URL_CACHED || `${API_URL}/progress`) + `?sessionId=${encodeURIComponent(S.sessionId)}`, {mode:"cors"});
-      const j = await v.json();
-      if(j && j.item && j.item.sessionId===S.sessionId){
-        S._firstProgressConfirmed = true;
-        toast("✓ Progreso guardado");
-        console.log("[/progress] verificado:", j.item);
-      }
-    }catch{}
-  }
-  S.hasInitialUpsert=true;
-}
-
-/* ======= Resultados ======= */
+/* ===================== RESULTADOS ===================== */
 function genResultId(r){
   const base=[r.quizId||'quiz', r.mode||'exam', r.total||0, r.correct||0, r.durationSec||0].join('|');
   const t=Math.floor(Date.now()/10000);
   return `${base}|${t}`;
 }
-async function postForm(url, payload){
-  const body=new URLSearchParams();
-  Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
-  const resp=await fetch(url,{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},body});
-  const text=await resp.text().catch(()=> ""); let data=null;
-  try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
-  if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
-  return data;
-}
-async function postJSON(url,payload){
-  const resp=await fetch(url,{method:"POST",mode:"cors",keepalive:true,headers:{"Content-Type":"application/json"},body: JSON.stringify(payload)});
-  const text=await resp.text().catch(()=> ""); let data=null;
-  try{ data=JSON.parse(text); }catch{ data={ raw:text }; }
-  if(!resp.ok) throw new Error(data.error||data.message||text||`HTTP ${resp.status}`);
-  return data;
-}
+
+/* ----- Guardar en results con fallbacks y timeout ----- */
 async function saveResultRemoteOnce(result){
-  if(S.savingResult) return null;
+  if (S.savingResult) return { ok:false, skipped:true };
   S.savingResult = true;
+
   const u=getUserAny()||{};
   const payload={
     resultId: genResultId(result),
@@ -463,14 +300,49 @@ async function saveResultRemoteOnce(result){
     pct: Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
     durationSec: Number(result.durationSec||0),
     ts: result.ts || new Date().toISOString(),
-    sessionId: S.sessionId || "",
+    sessionId: S.sessionId || "" // ← incluimos sessionId sin romper nada
   };
-  try { return await postForm(RESULTS_URL, payload);
-  } catch(e1){
-    console.warn("Form submit failed, trying JSON:", e1?.message||e1);
-    try { return await postJSON(RESULTS_URL, payload); }
-    catch(e2){ console.error("Result save failed:", e2); return null; }
-  } finally { S.savingResult=false; }
+
+  try {
+    // 1) form-urlencoded (evita preflight)
+    const body = new URLSearchParams();
+    Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
+
+    let r = await withTimeout(fetch(RESULTS_URL, {
+      method:"POST", mode:"cors", keepalive:true,
+      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8","Accept":"application/json"},
+      body
+    }), 7000, "results-form");
+
+    if (r.ok){
+      const j = await r.json().catch(()=> ({}));
+      console.log("[/results] form ok", j);
+      return { ok:true, via:"form", res:j };
+    }
+
+    // 2) JSON fallback
+    r = await withTimeout(fetch(RESULTS_URL, {
+      method:"POST", mode:"cors", keepalive:true,
+      headers:{"Content-Type":"application/json","Accept":"application/json"},
+      body: JSON.stringify(payload)
+    }), 7000, "results-json");
+
+    if (r.ok){
+      const j = await r.json().catch(()=> ({}));
+      console.log("[/results] json ok", j);
+      return { ok:true, via:"json", res:j };
+    }
+
+    const txt = await r.text().catch(()=> "");
+    console.warn("[/results] non-2xx", r.status, txt);
+    return { ok:false, status:r.status, error:txt || "HTTP error" };
+
+  } catch(e){
+    console.error("[/results] exception:", e);
+    return { ok:false, error:String(e?.message || e) };
+  } finally {
+    S.savingResult = false;
+  }
 }
 
 /* ===================== Timer ===================== */
@@ -479,7 +351,6 @@ function startTimer(){
   S.timerId=setInterval(()=> {
     S.elapsedSec++;
     const t=document.querySelector('.timer'); if(t) t.textContent=fmtTime(S.elapsedSec);
-    if (S.sessionId && S.elapsedSec>0 && (S.elapsedSec % S.saveEveryNsec === 0)) saveProgress({reason:'tick'});
   }, 1000);
 }
 function stopTimer(){ if(S.timerId){ clearInterval(S.timerId); S.timerId=null; } }
@@ -530,15 +401,12 @@ async function start(quizId="aws-saa-c03", overrides={}){
     }
     if (filtered.length===0) throw new Error("No se encontraron preguntas para este quiz.");
 
-    // *** AQUI EL CAMBIO: barajamos SOLO las preguntas, no las opciones ***
+    // Barajar SOLO preguntas; no opciones
     filtered = shuffle(filtered).slice(0, desiredCount).map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice(): [];
-      // NO barajamos las opciones: mantenemos su orden original de la BD
-      const order = [...Array(opts.length).keys()];      // identidad (por compatibilidad)
-      const optionsNoShuffle = opts;                     // tal cual vienen
+      const order = [...Array(opts.length).keys()];
+      const optionsNoShuffle = opts;
       const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? q.correctAnswer : null;
-
-      // Tampoco reordenamos perOption; se mantiene como viene de BD
       const perOptionSameOrder = Array.isArray(q.perOption) ? q.perOption.map(stripLetterPrefix) : null;
 
       return { ...q, _optOrder: order, _options: optionsNoShuffle, _correct: correctIndex, _perOption: perOptionSameOrder };
@@ -555,7 +423,8 @@ async function start(quizId="aws-saa-c03", overrides={}){
     renderQuiz();
     startTimer();
 
-    await saveProgressNow({full:true,reason:'start'}); // upsert inicial
+    // Warmup descubrimiento /progress (no bloquea)
+    discoverProgressUrl({sessionId:S.sessionId, quizId:S.quizId, probe:true}).catch(()=>{});
 
     window.dispatchEvent(new Event('quiz:started'));
     const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
@@ -655,10 +524,8 @@ function renderQuiz(){
     if(typeof chosen!=='undefined' && S.prefs.explanations==='after'){
       expBox=h('div',{class:'expl'});
       const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
-      // explicación base (global)
       expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
 
-      // motivos por opción (mismo orden que BD y que se muestra)
       if (Array.isArray(q._perOption) && q._perOption.length === (q._options||[]).length) {
         const others = q._perOption.map((txt,i)=>({i,txt:stripLetterPrefix(txt)})).filter(x=>x.i!==q._correct);
         if (others.length){
@@ -682,10 +549,10 @@ function renderQuiz(){
   // Controles
   const ctr=h('div',{class:'controls'});
   const back=h('button',{class:'btn',html:`← Atrás <span class="keycap">B</span>`}); back.disabled=S.idx===0;
-  back.onclick=()=>{ S.idx=Math.max(0,S.idx-1); S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); };
+  back.onclick=()=>{ S.idx=Math.max(0,S.idx-1); S._afterRenderScroll='question'; renderQuiz(); };
 
   const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} <span class="keycap">M</span>`});
-  mark.onclick=()=>{ S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; saveProgress({reason:'mark'}); renderQuiz(); };
+  mark.onclick=()=>{ S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; renderQuiz(); };
 
   const isLast = S.idx===S.qs.length-1;
   const nextLabel = isLast ? `Finalizar <span class="keycap">N</span>` : `Siguiente <span class="keycap">N</span>`;
@@ -695,7 +562,7 @@ function renderQuiz(){
 
   next.onclick=()=>{
     if(!isLast){
-      S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav'}); renderQuiz(); return;
+      S.idx++; S._afterRenderScroll='question'; renderQuiz(); return;
     }
     if(hasPendingMarked()){ toast('No puedes finalizar: hay preguntas marcadas sin responder.'); return; }
     if(S.finishLocked) return;
@@ -710,8 +577,12 @@ function renderQuiz(){
   const side=h('div',{class:'side'});
   const pBtns=h('div',{class:'panel'});
   const actions=h('div',{class:'controls centered'});
-  const btnQuit=h('button',{class:'btn lg',html:'🏠 Salir'}); btnQuit.onclick=()=>{ saveProgress({reason:'quit'}); location.href='/user/profile.html'; };
-  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar <span class="keycap">P</span>`}); btnPause.onclick=()=>{ doPause(); };
+
+  const btnQuit=h('button',{class:'btn lg',html:'🏠 Salir'}); btnQuit.onclick=()=>{ location.href='/user/profile.html'; };
+
+  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar/Reanudar <span class="keycap">P</span>`});
+  btnPause.onclick=()=>{ doPause(); };
+
   actions.appendChild(btnQuit); actions.appendChild(btnPause); pBtns.appendChild(actions); side.appendChild(pBtns);
 
   const pList=h('div',{class:'panel'});
@@ -723,7 +594,7 @@ function renderQuiz(){
     const ans=S.answers[i];
     if(typeof ans!=='undefined'){ if(ans===qq._correct) d.classList.add('ok'); else d.classList.add('bad'); }
     if(S.marked[i]){ d.classList.add('marked'); if(typeof ans==='undefined') d.classList.add('unanswered'); }
-    d.onclick=()=>{ S.idx=i; S._afterRenderScroll='question'; saveProgress({reason:'jump'}); renderQuiz(); };
+    d.onclick=()=>{ S.idx=i; S._afterRenderScroll='question'; renderQuiz(); };
     dots.appendChild(d);
   });
   pList.appendChild(dots); side.appendChild(pList);
@@ -753,51 +624,125 @@ function onSelect(i){
   if(typeof S.answers[S.idx]!=='undefined') return;
   S.answers[S.idx]=i;
   S._afterRenderScroll='question';
-  saveProgressNow({reason:'answer'}); // guardado inmediato
   renderQuiz();
 }
 function doPause(){
-  saveProgressNow({reason:'pause'});
-  try{ localStorage.setItem('quiz.resumeId', S.sessionId); }catch{}
-  toast('Progreso guardado. Podrás reanudar (P).', 1800);
+  if (S.timerId) { stopTimer(); toast('⏸️ Pausado', 1200); }
+  else { startTimer(); toast('▶️ Reanudado', 1200); }
 }
 
-/* ===================== Modal resultados (portal inline) ===================== */
-function openResultsModal({correct,total,pct,byDomain}){
-  const portal = document.createElement('div');
-  portal.setAttribute('aria-modal','true'); portal.setAttribute('role','dialog');
-  portal.style.position='fixed'; portal.style.inset='0'; portal.style.background='rgba(10,12,24,.70)';
-  portal.style.display='flex'; portal.style.alignItems='center'; portal.style.justifyContent='center';
-  portal.style.zIndex='2147483647'; portal.id='quizResultModal';
-  const body=document.body; const prevOverflow=body.style.overflow; body.style.overflow='hidden';
+/* ===================== Sesión completa → /progress ===================== */
+function buildFullSessionPayload({finished=false} = {}){
+  const u=getUserAny()||{};
+  const nowIso = new Date().toISOString();
+  const startedIso = S.startedAt ? new Date(S.startedAt).toISOString() : nowIso;
 
-  const card=document.createElement('div');
-  card.style.maxWidth='760px'; card.style.width='calc(100% - 32px)'; card.style.background='linear-gradient(180deg,#10162d,#0d1330)';
-  card.style.border='1px solid rgba(255,255,255,.12)'; card.style.borderRadius='16px'; card.style.boxShadow='0 24px 80px rgba(0,0,0,.65)';
-  card.style.padding='18px'; card.style.color='#eef1ff'; card.style.fontFamily='system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial';
+  const questions = S.qs.map((q, index) => {
+    const chosenIndex = typeof S.answers[index] !== 'undefined' ? S.answers[index] : null;
+    const isCorrect   = (typeof q._correct==='number' && chosenIndex!==null) ? (chosenIndex === q._correct) : null;
+    return {
+      index,
+      questionId: q.questionId,
+      questionText: q.question,
+      domain: q.domain || null,
+      category: q.category || 'General',
+      optionsShown: (q._options||[]).slice(),
+      correctShownIndex: (typeof q._correct==='number'? q._correct : null),
+      chosenIndex,
+      isCorrect,
+      perOption: Array.isArray(q._perOption) ? q._perOption.slice() : null,
+      links: Array.isArray(q.links) ? q.links.slice() : [],
+      optOrder: Array.isArray(q._optOrder) ? q._optOrder.slice() : null
+    };
+  });
 
-  const h3=document.createElement('h3'); h3.textContent='Resultados del examen'; h3.style.margin='0 0 12px 0'; h3.style.fontSize='1.15rem';
+  const total = S.qs.length;
+  const correct = questions.reduce((a, it)=> a + (it.isCorrect?1:0), 0);
+  const pct = total ? Math.round((correct/total)*100) : 0;
 
-  const score=document.createElement('div');
-  score.style.display='inline-flex'; score.style.gap='10px';
-  score.style.background='#151b3c'; score.style.border='1px solid #2b3570';
-  score.style.borderRadius='12px'; score.style.padding='10px 14px';
-  score.style.fontWeight='900'; score.style.margin='4px 0 12px 0';
-  score.innerHTML=`<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
+  return {
+    sessionId: S.sessionId,
+    quizId: S.quizId,
+    mode: S.mode,
+    track: S.track,
 
-  const stack=document.createElement('div'); stack.style.display='grid'; stack.style.gridTemplateColumns='1fr'; stack.style.gap='10px';
-  const mkBar=(value)=>{ const bar=document.createElement('div'); bar.style.width='100%'; bar.style.height='8px'; bar.style.background='#0b1024'; bar.style.borderRadius='999px'; bar.style.position='relative'; bar.style.overflow='hidden'; const i=document.createElement('i'); i.style.position='absolute'; i.style.left=0; i.style.top=0; i.style.bottom=0; i.style.width=`${Math.max(0,Math.min(100,value))}%`; i.style.background='#2bdc8c'; bar.appendChild(i); return bar; };
-  const mkCard=(title, ok, tot)=>{ const p=tot? Math.round((ok/tot)*100):0; const box=document.createElement('div'); box.style.background='#13193b'; box.style.border='1px solid #2a356a'; box.style.borderRadius='12px'; box.style.padding='12px 14px'; box.style.marginTop='10px'; const h=document.createElement('div'); h.style.fontWeight='900'; h.style.marginBottom='8px'; h.textContent=title; const bar=mkBar(p); const small=document.createElement('div'); small.style.marginTop='6px'; small.style.opacity='.9'; small.textContent=`${ok}/${tot} aciertos · ${p}%`; box.appendChild(h); box.appendChild(bar); box.appendChild(small); return box; };
+    userId: u?.userId || u?.id || "anon",
+    userName: u?.name || "anonymous",
+    email: u?.email || "",
 
-  Object.values(byDomain||{}).forEach(d => stack.appendChild(mkCard(d.name, d.correct, d.total)));
+    startedAt: startedIso,
+    finishedAt: finished ? nowIso : null,
+    elapsedSec: S.elapsedSec,
+    timeLimit: S.timeLimit,
 
-  const actions=document.createElement('div'); actions.style.display='flex'; actions.style.justifyContent='flex-end'; actions.style.gap='10px'; actions.style.marginTop='14px';
-  const bClose=document.createElement('button'); bClose.textContent='CERRAR'; bClose.style.border='0'; bClose.style.borderRadius='10px'; bClose.style.padding='12px 18px'; bClose.style.fontWeight='900'; bClose.style.background='linear-gradient(180deg,#6c8bff,#3e64ff)'; bClose.style.color='#fff';
-  bClose.onclick=()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow=prevOverflow; };
+    idx: S.idx,
+    total,
+    pct,
+    finished: Boolean(finished),
+    status: finished ? "finished" : "in_progress",
 
-  actions.appendChild(bClose); card.appendChild(h3); card.appendChild(score); card.appendChild(stack); card.appendChild(actions); portal.appendChild(card);
-  portal.addEventListener('click', (e)=>{ if(e.target===portal) bClose.click(); });
-  document.documentElement.appendChild(portal);
+    questions,
+
+    marked: S.marked,
+    markedItems: Object.entries(S.marked||{}).filter(([,v])=>v).map(([i])=>({index:+i,questionId:S.qs[+i]?.questionId||null,markedAt:S.markTimes[+i]||null}))
+  };
+}
+
+/* ----- Guardar /progress con beacon → form → json ----- */
+async function postSessionToProgress(payload){
+  const PROGRESS_URL = await discoverProgressUrl(payload);
+
+  // 1) Beacon (no preflight, fire-and-forget)
+  try {
+    if (navigator.sendBeacon) {
+      // usar tipo "text/plain" para ser ultra-simple
+      const blob = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=UTF-8" });
+      const ok = navigator.sendBeacon(PROGRESS_URL, blob);
+      console.log("[/progress] sendBeacon:", ok);
+      if (ok) return { ok:true, via:"beacon" };
+    }
+  } catch (e) {
+    console.warn("[/progress] beacon err:", e);
+  }
+
+  // 2) POST simple SIN CORS (no-cors) -> evita totalmente la validación CORS/preflight
+  try {
+    const form = new URLSearchParams();
+    Object.entries(payload).forEach(([k,v]) => {
+      form.append(k, typeof v === "object" ? JSON.stringify(v) : String(v));
+    });
+
+    await fetch(PROGRESS_URL, {
+      method: "POST",
+      mode: "no-cors",                               // ← clave: no se hace preflight
+      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }, // header simple
+      body: form.toString(),
+      keepalive: true
+    });
+    console.log("[/progress] no-cors form sent");
+    // La respuesta es "opaque", pero no la necesitamos para guardar en DynamoDB
+    return { ok:true, via:"no-cors-form" };
+  } catch (e) {
+    console.warn("[/progress] no-cors form err:", e);
+  }
+
+  // 3) (opcional) intentos con CORS por si ya configuras CORS en API Gateway
+  try {
+    const r = await fetch(PROGRESS_URL, {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type":"application/json" },
+      body: JSON.stringify(payload),
+      keepalive: true
+    });
+    if (r.ok) return { ok:true, via:"json" };
+    const txt = await r.text().catch(()=> "");
+    console.warn("[/progress] CORS json non-2xx", r.status, txt);
+  } catch (e) {
+    console.warn("[/progress] CORS json err:", e);
+  }
+
+  return { ok:false, error:"All progress send modes failed" };
 }
 
 /* ===================== Finalizar ===================== */
@@ -806,8 +751,8 @@ async function finish(){
   if (S.finished) return;
   S.finished=true; stopTimer();
 
-  const total=S.qs.length; let correct=0;
-  for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
+  const total=S.qs.length;
+  let correct=0; for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
 
   const cfg = QUIZZES[S.quizId] || {};
@@ -819,15 +764,65 @@ async function finish(){
     if(S.answers[idx]===q._correct) byDomain[code].correct++;
   });
 
-  await saveProgressNow({finished:true,reason:'finish'});
-  await saveResultRemoteOnce({
+  // Payloads
+  const sessionPayload = buildFullSessionPayload({ finished:true });
+  const resultPayload = {
     ts:new Date().toISOString(),
     quizId:S.quizId, track:S.track||'architect', mode:S.mode||'exam',
     total, correct, pct,
     durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
-  });
+  };
 
-  openResultsModal({correct,total,pct,byDomain});
+  // Guardar en paralelo, sin bloquear UI
+  const [p1, p2] = await Promise.allSettled([
+    postSessionToProgress(sessionPayload),
+    saveResultRemoteOnce(resultPayload)
+  ]);
+
+  const ok1 = p1.status==="fulfilled" && p1.value?.ok;
+  const ok2 = p2.status==="fulfilled" && p2.value?.ok;
+  if (!ok1 || !ok2) {
+    console.warn("finish -> progress:", p1, "results:", p2);
+    toast("⚠️ No se pudo guardar todo. Se intentará más tarde.", 2500);
+  } else {
+    toast("✓ Resultado guardado", 1500);
+  }
+
+ function openResultsModal({correct,total,pct,byDomain}){
+  const portal = document.createElement('div');
+  portal.setAttribute('aria-modal','true'); portal.setAttribute('role','dialog');
+  portal.style.position='fixed'; portal.style.inset='0'; portal.style.background='rgba(10,12,24,.70)';
+  portal.style.display='flex'; portal.style.alignItems='center'; portal.style.justifyContent='center';
+  portal.style.zIndex='2147483647'; portal.id='quizResultModal';
+  const body=document.body; const prevOverflow=body.style.overflow; body.style.overflow='hidden';
+
+  const card=document.createElement('div');
+  card.style.maxWidth='760px'; card.style.width='calc(100% - 32px)';
+  card.style.background='linear-gradient(180deg,#10162d,#0d1330)';
+  card.style.border='1px solid rgba(255,255,255,.12)';
+  card.style.borderRadius='16px'; card.style.boxShadow='0 24px 80px rgba(0,0,0,.65)';
+  card.style.padding='18px'; card.style.color='#eef1ff';
+
+  const h3=document.createElement('h3'); h3.textContent='Resultados del examen'; h3.style.margin='0 0 12px 0';
+  const score=document.createElement('div');
+  score.style.display='inline-flex'; score.style.gap='10px';
+  score.style.background='#151b3c'; score.style.border='1px solid #2b3570';
+  score.style.borderRadius='12px'; score.style.padding='10px 14px'; score.style.fontWeight='900';
+  score.innerHTML=`<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
+
+  const stack=document.createElement('div'); stack.style.display='grid'; stack.style.gridTemplateColumns='1fr'; stack.style.gap='10px';
+  const mkBar=(value)=>{ const bar=document.createElement('div'); bar.style.width='100%'; bar.style.height='8px'; bar.style.background='#0b1024'; bar.style.borderRadius='999px'; bar.style.position='relative'; bar.style.overflow='hidden'; const i=document.createElement('i'); i.style.position='absolute'; i.style.left=0; i.style.top=0; i.style.bottom=0; i.style.width=`${Math.max(0,Math.min(100,value))}%`; i.style.background='#2bdc8c'; bar.appendChild(i); return bar; };
+  const mkCard=(title, ok, tot)=>{ const p=tot? Math.round((ok/tot)*100):0; const box=document.createElement('div'); box.style.background='#13193b'; box.style.border='1px solid #2a356a'; box.style.borderRadius='12px'; box.style.padding='12px 14px'; const h=document.createElement('div'); h.style.fontWeight='900'; h.style.marginBottom='8px'; h.textContent=title; const bar=mkBar(p); const small=document.createElement('div'); small.style.marginTop='6px'; small.style.opacity='.9'; small.textContent=`${ok}/${tot} · ${p}%`; box.appendChild(h); box.appendChild(bar); box.appendChild(small); return box; };
+  Object.values(byDomain||{}).forEach(d => stack.appendChild(mkCard(d.name, d.correct, d.total)));
+
+  const actions=document.createElement('div'); actions.style.display='flex'; actions.style.justifyContent='flex-end'; actions.style.gap='10px'; actions.style.marginTop='14px';
+  const bClose=document.createElement('button'); bClose.textContent='CERRAR'; bClose.style.border='0'; bClose.style.borderRadius='10px'; bClose.style.padding='12px 18px'; bClose.style.fontWeight='900'; bClose.style.background='linear-gradient(180deg,#6c8bff,#3e64ff)'; bClose.style.color='#fff';
+  bClose.onclick=()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow=prevOverflow; };
+
+  actions.appendChild(bClose); card.appendChild(h3); card.appendChild(score); card.appendChild(stack); card.appendChild(actions);
+  portal.appendChild(card); portal.addEventListener('click', (e)=>{ if(e.target===portal) bClose.click(); });
+  document.documentElement.appendChild(portal);
+}
 }
 
 /* ===================== Hotkeys ===================== */
@@ -850,27 +845,18 @@ function enableHotkeys(){
         if(btn) btn.disabled = true;
         finish();
       } else {
-        S.idx++; S._afterRenderScroll='question'; saveProgress({reason:'nav-key'}); renderQuiz();
+        S.idx++; S._afterRenderScroll='question'; renderQuiz();
       }
     }
-    if(ev.key==='b'||ev.key==='B'){ ev.preventDefault(); if(S.idx>0){ S.idx--; S._afterRenderScroll='question'; saveProgress({reason:'nav-key'}); renderQuiz(); } }
-    if(ev.key==='m'||ev.key==='M'){ ev.preventDefault(); S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; saveProgress({reason:'mark-key'}); renderQuiz(); }
+    if(ev.key==='b'||ev.key==='B'){ ev.preventDefault(); if(S.idx>0){ S.idx--; S._afterRenderScroll='question'; renderQuiz(); } }
+    if(ev.key==='m'||ev.key==='M'){ ev.preventDefault(); S.marked[S.idx]=!S.marked[S.idx]; if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString(); else delete S.markTimes[S.idx]; renderQuiz(); }
     const n=parseInt(ev.key,10);
     if(Number.isInteger(n)&&n>=1&&n<=9){ const q=S.qs[S.idx]; if(q&&q._options&&q._options[n-1]!==undefined){ ev.preventDefault(); onSelect(n-1); } }
   });
 }
 
 /* ===================== Hooks ciclo de vida ===================== */
-document.addEventListener('visibilitychange', ()=>{
-  if(document.hidden && S.sessionId){
-    saveProgressNow({reason:'visibility-hide', beacon:true});
-  }
-});
-window.addEventListener('beforeunload', ()=>{
-  if(S.sessionId){
-    saveProgressNow({reason:'beforeunload', beacon:true});
-  }
-});
+/* Sin autoguardados por visibilidad/unload */
 
 /* ===================== API PÚBLICA ===================== */
 window.start = start;

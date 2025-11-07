@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Visor de Resultados – QuizSessions</title>
+<style>
+:root{
+  --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9; --stroke:#283056;
+  --accent:#6c8bff; --accent-2:#3e64ff;
+  --ok:#2bdc8c; --bad:#ff6b6b; --warn:#ffd24d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#0f1320,#0b1026); color:var(--ink); font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+.container{max-width:1100px;margin:24px auto;padding:0 16px}
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:16px}
+h1{font-size:1.35rem;margin:.1rem 0 1rem 0;font-weight:1000;letter-spacing:.2px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+input,button,select{border:1px solid var(--stroke);background:#0f1730;color:var(--ink);border-radius:10px;padding:10px 12px;font-weight:700}
+button.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));border:0;color:#fff}
+button:disabled{opacity:.6;cursor:not-allowed}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:800px){ .meta{grid-template-columns:1fr} }
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:900px){ .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.kpi{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px}
+.kpi h4{margin:0 0 6px 0;color:var(--muted);font-size:.85rem;text-transform:uppercase;letter-spacing:.3px}
+.kpi .n{font-size:1.4rem;font-weight:1000}
+.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--stroke);background:#131a37;border-radius:999px;padding:6px 10px;font-weight:900}
+.badge.ok{border-color:#2e7a5a;background:#0f2d1f;color:#c9ffe6}
+.badge.bad{border-color:#7a2e38;background:#3a1518;color:#ffd4d4}
+.badge.warn{border-color:#b49422;background:#3a2e12;color:#ffe9b0}
+.row{display:flex;gap:10px;align-items:center}
+.list{margin-top:16px}
+.question{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:12px;margin:12px 0}
+.qhead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.qtitle{font-weight:900}
+.domain{font-weight:900;opacity:.9}
+.opt{border:1px solid var(--stroke);background:#0f1730;border-radius:12px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start}
+.opt.correct{border-color:#2e7a5a;background:#0f2d1f}
+.opt.chosen{outline:2px solid rgba(255,255,255,.10)}
+.opt.bad-chosen{border-color:#7a2e38;background:#3a1518}
+.small{color:#b7c3ff;font-size:.9rem}
+.right{display:flex;gap:8px;align-items:center}
+hr.sep{border:0;border-top:1px solid var(--stroke);margin:14px 0}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.tag{background:#10183a;border:1px solid var(--stroke);padding:4px 8px;border-radius:8px;color:#cbd6ff;font-weight:800;cursor:pointer}
+.tag:hover{filter:brightness(1.1)}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid var(--stroke);padding:8px;text-align:left}
+th{background:#121a39}
+.empty{opacity:.8;padding:16px;text-align:center}
+a.link{color:#9cc0ff;text-decoration:none}
+a.link:hover{text-decoration:underline}
+footer{opacity:.7;margin:24px 0 10px 0;font-size:.9rem}
+.warnmsg{margin-top:6px;color:#ffe9b0}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>REPORT DEL QUIZ</h1>
+      <div class="controls">
+        <input id="sessionId" placeholder="sessionId" style="min-width:260px" />
+        <button class="primary" id="btnLoad"></button>
+        <button id="btnPrint" title="Imprimir / PDF">🖨️ Imprimir</button>
+        <button id="btnDownload" title="Descargar JSON">⬇️ Descargar JSON</button>
+        <span id="status" class="tag">Listo</span>
+      </div>
+
+      <div id="meta" class="meta" hidden>
+        <div class="kpi">
+          <h4>Usuario</h4>
+          <div class="n" id="mUser">—</div>
+          <div class="small" id="mEmail">—</div>
+        </div>
+        <div class="kpi">
+          <h4>Quiz</h4>
+          <div class="n" id="mQuiz">—</div>
+          <div class="small" id="mMode">—</div>
+        </div>
+        <div class="kpi">
+          <h4>Tiempo</h4>
+          <div class="n" id="mTime">—</div>
+          <div class="small" id="mDates">—</div>
+        </div>
+        <div class="kpi">
+          <h4>Score</h4>
+          <div class="n" id="mScore">—</div>
+          <div class="small" id="mState">—</div>
+        </div>
+      </div>
+
+      <div class="toolbar" id="filters" hidden>
+        <span class="tag" id="tAll">Todas</span>
+        <span class="tag" id="tOk">Correctas</span>
+        <span class="tag" id="tBad">Incorrectas</span>
+        <span class="tag" id="tMarked">Marcadas</span>
+      </div>
+
+      <div id="domains" class="list" hidden></div>
+
+      <hr class="sep"/>
+
+      <div id="questions" class="list"></div>
+      <div id="empty" class="empty" hidden>No hay datos para mostrar.</div>
+      <div id="fallbackMsg" class="warnmsg" hidden>⚠️ Esta sesión no contiene el campo <code>questions</code>. Se ha reconstruido usando <code>questionBank</code> y <code>answerItems</code> (los textos de opciones podrían no estar disponibles).</div>
+    </div>
+    <footer>ITHub.es 2025</footer>
+  </div>
+
+<script>
+const BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+
+function qs(name){ return new URLSearchParams(location.search).get(name) || ""; }
+function fmt(s){ return String(s||"").trim() }
+function pad(n){ return String(n).padStart(2,"0") }
+function fmtDur(sec){ sec=+sec||0; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}` }
+function el(id){ return document.getElementById(id) }
+function setStatus(msg){ el("status").textContent = msg }
+function letter(i){ return String.fromCharCode(65 + (i||0)) }
+
+async function fetchSession(sessionId){
+  const paths = ["/progress","/prod/progress","/dev/progress"];
+  for (const p of paths){
+    const url = `${BASE}${p}?sessionId=${encodeURIComponent(sessionId)}`;
+    try{
+      const r = await fetch(url, {mode:"cors"});
+      if(r.ok){
+        const j = await r.json();
+        if (j && j.item) return j.item;
+      }
+    }catch(e){/* siguiente */ }
+  }
+  throw new Error("No se pudo obtener la sesión en /, /prod o /dev.");
+}
+
+/* ========= Fallbacks para reconstruir preguntas ========= */
+function normalizeQuestions(item){
+  // 1) Caso ideal: item.questions ya viene completo
+  if (Array.isArray(item.questions) && item.questions.length){
+    return { questions: item.questions.slice(), rebuilt: false };
+  }
+
+  // 2) Intentar con questionBank + answerItems
+  const bank = Array.isArray(item.questionBank) ? item.questionBank : [];
+  const answers = Array.isArray(item.answerItems) ? item.answerItems : [];
+
+  const byIdxBank = new Map();
+  for (const b of bank){
+    const ix = typeof b.index === "number" ? b.index : null;
+    if (ix === null) continue;
+    byIdxBank.set(ix, b);
+  }
+  const byIdxAns = new Map();
+  for (const a of answers){
+    const ix = typeof a.index === "number" ? a.index : null;
+    if (ix === null) continue;
+    byIdxAns.set(ix, a);
+  }
+
+  const idxs = new Set([...byIdxBank.keys(), ...byIdxAns.keys()]);
+  if (idxs.size === 0){
+    // 3) Último recurso: solo questionIds + answers (sin textos)
+    const ids = Array.isArray(item.questionIds) ? item.questionIds : [];
+    if (!ids.length) return { questions: [], rebuilt: false };
+    const qs = ids.map((qid, i) => {
+      const a = byIdxAns.get(i) || {};
+      const chosen = (typeof a.chosenIndex === "number") ? a.chosenIndex : null;
+      const correctShownIndex = (typeof a.isCorrect === "boolean" && typeof chosen === "number")
+        ? (a.isCorrect ? chosen : null) : null;
+      return {
+        index: i,
+        questionId: qid,
+        questionText: "(texto no disponible)",
+        domain: a.domain || null,
+        category: a.category || "General",
+        optionsShown: [],
+        correctShownIndex,
+        chosenIndex: chosen,
+        isCorrect: (typeof a.isCorrect === "boolean") ? a.isCorrect : null,
+        perOption: null,
+        links: [],
+        optOrder: null
+      };
+    });
+    return { questions: qs, rebuilt: true };
+  }
+
+  const out = [];
+  for (const i of Array.from(idxs).sort((a,b)=>a-b)){
+    const b = byIdxBank.get(i) || {};
+    const a = byIdxAns.get(i) || {};
+
+    // campos del banco
+    const optionsShown =
+      Array.isArray(b.optionsShown) ? b.optionsShown.slice() :
+      Array.isArray(b.options) ? b.options.slice() : []; // por si el campo se llama options
+
+    const correctShownIndex = (typeof b.correctShownIndex === "number") ? b.correctShownIndex : null;
+
+    // campos de answers
+    const chosenIndex = (typeof a.chosenIndex === "number") ? a.chosenIndex : null;
+    let isCorrect = null;
+    if (typeof a.isCorrect === "boolean") {
+      isCorrect = a.isCorrect;
+    } else if (chosenIndex !== null && typeof correctShownIndex === "number") {
+      isCorrect = (chosenIndex === correctShownIndex);
+    }
+
+    out.push({
+      index: i,
+      questionId: b.questionId || a.questionId || (Array.isArray(item.questionIds) ? item.questionIds[i] : null) || null,
+      questionText: b.questionText || a.questionText || "(texto no disponible)",
+      domain: b.domain || a.domain || null,
+      category: b.category || a.category || "General",
+      optionsShown,
+      correctShownIndex,
+      chosenIndex,
+      isCorrect,
+      perOption: b.perOption || null,
+      links: b.links || [],
+      optOrder: Array.isArray(b.optOrder) ? b.optOrder.slice() : null
+    });
+  }
+  return { questions: out, rebuilt: true };
+}
+
+/* ================== Render ================== */
+function renderMeta(item, questionsForScore){
+  el("meta").hidden = false;
+  el("mUser").textContent = fmt(item.userName || item.userId || "—");
+  el("mEmail").textContent = fmt(item.email || "—");
+  el("mQuiz").textContent = `${fmt(item.quizId)} · ${fmt(item.track)}`;
+  el("mMode").textContent = `${fmt(item.mode)} · ${fmt(item.status)}`;
+  const dur = fmtDur(item.elapsedSec||0);
+  el("mTime").textContent = `${dur}`;
+  const s = item.startedAt ? new Date(item.startedAt).toLocaleString() : "—";
+  const f = item.updatedAt ? new Date(item.updatedAt).toLocaleString() : (item.finishedAt?new Date(item.finishedAt).toLocaleString():"—");
+  el("mDates").textContent = `${s} → ${f}`;
+
+  let total = 0, correct = 0;
+  if (Array.isArray(questionsForScore) && questionsForScore.length){
+    total = questionsForScore.length;
+    correct = questionsForScore.reduce((a,q)=> a + (q.isCorrect?1:0), 0);
+  } else {
+    total = +item.total || 0;
+    correct = Math.round((+item.pct||0) * total / 100);
+  }
+  const pct = total ? Math.round((correct/total)*100) : (+item.pct||0);
+  el("mScore").textContent = `${correct}/${total} (${pct}%)`;
+  el("mState").textContent = item.finished ? "Finalizado" : (item.status||"in_progress");
+}
+
+function groupByDomain(questions){
+  const m = {};
+  for (const q of questions){
+    const d = (q.domain || "D?").toString();
+    if(!m[d]) m[d] = { domain: d, total:0, correct:0 };
+    m[d].total++;
+    if (q.isCorrect) m[d].correct++;
+  }
+  return m;
+}
+
+function makeDomainsTable(questions){
+  const host = el("domains");
+  host.innerHTML = "";
+  if(!questions.length){ host.hidden = true; return; }
+  const g = groupByDomain(questions);
+  const tbl = document.createElement("table");
+  tbl.innerHTML = `
+    <thead><tr><th>Dominio</th><th>Aciertos</th><th>Total</th><th>%</th></tr></thead>
+    <tbody>
+      ${Object.values(g).map(d=>{
+        const pct = d.total ? Math.round(d.correct*100/d.total) : 0;
+        return `<tr><td>${d.domain}</td><td>${d.correct}</td><td>${d.total}</td><td>${pct}%</td></tr>`;
+      }).join("")}
+    </tbody>`;
+  host.appendChild(tbl);
+  host.hidden = false;
+}
+
+function renderQuestions(questions, item, filter="all"){
+  const root = el("questions");
+  const empty = el("empty");
+  const fallbackMsg = el("fallbackMsg");
+  root.innerHTML = "";
+
+  let list = questions;
+  if (filter==="ok") list = questions.filter(q=> q.isCorrect === true);
+  if (filter==="bad") list = questions.filter(q=> q.isCorrect === false);
+  if (filter==="marked"){
+    const markedIdx = new Set(
+      Array.isArray(item.markedItems) ? item.markedItems.map(x=>x.index) :
+      Object.entries(item.marked||{}).filter(([i,v])=>v).map(([i])=>+i)
+    );
+    list = questions.filter(q=> markedIdx.has(q.index));
+  }
+
+  if (!list.length){
+    empty.hidden = false;
+    return;
+  }
+  empty.hidden = true;
+
+  for (const q of list){
+    const box = document.createElement("section");
+    box.className = "question";
+
+    const head = document.createElement("div");
+    head.className = "qhead";
+    const left = document.createElement("div");
+    left.className = "row";
+    const title = document.createElement("div");
+    title.className = "qtitle";
+    title.textContent = `${(q.index!=null?q.index+1:"—")}. ${q.questionText || "(texto no disponible)"}`;
+    const domain = document.createElement("div");
+    domain.className = "domain";
+    domain.textContent = (q.category || "General") + (q.domain ? ` (${q.domain})` : "");
+    left.appendChild(title);
+    left.appendChild(document.createTextNode(" "));
+    left.appendChild(domain);
+
+    const right = document.createElement("div");
+    right.className = "right";
+    const badge = document.createElement("span");
+    let badgeCls = "badge ";
+    let badgeText = "• Sin datos";
+    if (q.isCorrect === true) { badgeCls += "ok"; badgeText = "✓ Correcta"; }
+    else if (q.isCorrect === false && q.chosenIndex != null) { badgeCls += "bad"; badgeText = "✗ Incorrecta"; }
+    else if (q.chosenIndex == null) { badgeCls += "warn"; badgeText = "• Sin responder"; }
+    badge.className = badgeCls; badge.textContent = badgeText;
+    right.appendChild(badge);
+
+    head.appendChild(left); head.appendChild(right);
+    box.appendChild(head);
+
+    const opts = Array.isArray(q.optionsShown) ? q.optionsShown : [];
+    if (!opts.length){
+      const warn = document.createElement("div");
+      warn.className = "small";
+      warn.textContent = "Opciones no disponibles en esta sesión.";
+      box.appendChild(warn);
+    }
+    for (let i=0;i<opts.length;i++){
+      const line = document.createElement("div");
+      const chosen = (q.chosenIndex===i);
+      const isCorrect = (q.correctShownIndex===i);
+      line.className = "opt";
+      if (isCorrect) line.classList.add("correct");
+      if (chosen) line.classList.add("chosen");
+      if (chosen && !isCorrect) line.classList.add("bad-chosen");
+      line.innerHTML = `<b>${letter(i)}.</b> <span>${opts[i]}</span>`;
+      box.appendChild(line);
+    }
+
+    root.appendChild(box);
+  }
+}
+
+function wireFilters(item, questions){
+  el("filters").hidden = false;
+  el("tAll").onclick = ()=> renderQuestions(questions, item, "all");
+  el("tOk").onclick = ()=> renderQuestions(questions, item, "ok");
+  el("tBad").onclick = ()=> renderQuestions(questions, item, "bad");
+  el("tMarked").onclick = ()=> renderQuestions(questions, item, "marked");
+}
+
+function downloadJSON(obj, filename="quizSession.json"){
+  const blob = new Blob([JSON.stringify(obj,null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  setTimeout(()=> URL.revokeObjectURL(a.href), 500);
+}
+
+async function load(){
+  const id = fmt(el("sessionId").value);
+  if(!id){ setStatus("Falta sessionId"); return; }
+  setStatus("Cargando…");
+  try{
+    const item = await fetchSession(id);
+    const {questions, rebuilt} = normalizeQuestions(item);
+
+    setStatus(rebuilt ? "OK (reconstruido)" : "OK");
+    el("fallbackMsg").hidden = !rebuilt;
+
+    renderMeta(item, questions);
+    makeDomainsTable(questions);
+    renderQuestions(questions, item, "all");
+    wireFilters(item, questions);
+
+    el("btnDownload").onclick = ()=> downloadJSON(item, `quizSession-${id}.json`);
+    el("btnPrint").onclick = ()=> window.print();
+    window.__quizSession = item;
+  }catch(e){
+    setStatus("Error");
+    el("questions").innerHTML = "";
+    el("domains").hidden = true;
+    el("meta").hidden = true;
+    el("filters").hidden = true;
+    el("empty").hidden = false;
+    console.error(e);
+  }
+}
+
+document.getElementById("btnLoad").onclick = load;
+document.getElementById("btnPrint").onclick = ()=> window.print();
+document.getElementById("btnDownload").onclick = ()=> { if (window.__quizSession) downloadJSON(window.__quizSession) };
+
+window.addEventListener("DOMContentLoaded", ()=>{
+  const pre = qs("sessionId");
+  if (pre){
+    el("sessionId").value = pre;
+    load();
+  }
+});
+</script>
+</body>
+</html>

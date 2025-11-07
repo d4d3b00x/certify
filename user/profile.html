@@ -262,6 +262,22 @@
     .modal-card{width:min(560px,92vw);background:linear-gradient(180deg,var(--surface),#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:16px}
     .modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
     .modal-head h3{margin:0;font-weight:900}
+
+    /* ===== Review link ===== */
+    .review-link{
+      text-decoration:none;
+      font-size:1.2rem;
+      cursor:pointer;
+      display:inline-block;
+      transition:opacity .2s;
+    }
+    .review-link:hover{ opacity:.8; }
+    .review-link.disabled{
+      opacity:.35;
+      pointer-events:none;
+      filter:grayscale(1);
+      cursor:default;
+    }
   </style>
 </head>
 <body>
@@ -287,7 +303,7 @@
       <!-- Cápsula derecha (dinámica) -->
       <div class="usercapsule">
         <span id="hdrUser" class="chip-user hidden"><span class="flame">🔥</span><span id="hdrUserName">USER</span></span>
-        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/user/profile.html">PERFIL</a> <!-- TODO: ajusta ruta -->
+        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/user/profile.html">PERFIL</a>
         <button id="btnHdrLogout" class="btn pill primary hidden">LOGOUT</button>
 
         <button id="btnHdrLogin" class="btn pill primary">LOGIN</button>
@@ -769,6 +785,7 @@
       const pick = v => (typeof v === "string" ? v.trim() : "");
       const getName2 = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
 
+      // ⬇️ incluye sessionId para poder vincular la lupa
       return mine.map(x => ({
         userId: x.userId || x.id || "(unknown)",
         userName: getName2(x),
@@ -777,7 +794,8 @@
         total: (x.total|0),
         pct: (x.pct|0),
         durationSec: (x.durationSec|0),
-        ts: x.ts || null
+        ts: x.ts || null,
+        sessionId: x.sessionId || x.session_id || ""   // <-- aquí
       }));
     }
 
@@ -859,6 +877,10 @@
         </tr></thead><tbody>`;
       list.slice(0,10).forEach((r,i)=>{
         const pct = Math.min(100, Math.max(0, (r.pct|0)));
+        const sid = r.sessionId || "";
+        const reviewCell = sid
+          ? `<a class="review-link" href="/user/report_quiz.html?sessionId=${encodeURIComponent(sid)}" title="Ver sesión">🔍</a>`
+          : `<span class="review-link disabled" title="Sin sessionId">🔍</span>`;
         html += `<tr>
           <td>${i+1}</td>
           <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
@@ -872,7 +894,7 @@
           </td>
           <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
           <td>${fmtDateTime(r.ts)}</td>
-          <td><span class="review-icon" title="Review coming soon">🔍</span></td>
+          <td>${reviewCell}</td>
         </tr>`;
       });
       html += `</tbody></table>`;
