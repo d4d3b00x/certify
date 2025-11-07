@@ -252,7 +252,6 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
 function transformQuestions(items){
   return items.map(it=>{
     const domain=extractDomainFromRecord(it);
-    // NUEVO: soporta motivos por opción si vienen del backend con cualquiera de estos nombres
     const perOpt =
       (Array.isArray(it.explanationsByOption) && it.explanationsByOption) ||
       (Array.isArray(it.reasonsByOption) && it.reasonsByOption) ||
@@ -269,7 +268,7 @@ function transformQuestions(items){
       links: Array.isArray(it.links) ? it.links.slice() : [],
       category: it.category || 'General',
       domain,
-      perOption: perOpt ? perOpt.map(stripLetterPrefix) : null // limpio posibles prefijos
+      perOption: perOpt ? perOpt.map(stripLetterPrefix) : null
     };
   });
 }
@@ -327,11 +326,11 @@ function buildProgressSnapshot({full=false,finished=false,reason='auto'}={}){
     updatedAt:new Date().toISOString(),
     elapsedSec:S.elapsedSec,
     timeLimit:S.timeLimit,
-    idx:S.idx,                 // importante para tu Lambda
+    idx:S.idx,
     total:S.qs.length,
     pct:computePct(),
     finished:Boolean(finished),
-    status,                    // importante para tu Lambda
+    status,
     answers:S.answers,
     marked:S.marked,
     questionIds:S.qs.map(q=>q.questionId),
@@ -531,16 +530,18 @@ async function start(quizId="aws-saa-c03", overrides={}){
     }
     if (filtered.length===0) throw new Error("No se encontraron preguntas para este quiz.");
 
+    // *** AQUI EL CAMBIO: barajamos SOLO las preguntas, no las opciones ***
     filtered = shuffle(filtered).slice(0, desiredCount).map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice(): [];
-      const order = shuffle([...Array(opts.length).keys()]);
-      const optionsShuffled = order.map(i=>opts[i]);
-      const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? order.indexOf(q.correctAnswer) : null;
+      // NO barajamos las opciones: mantenemos su orden original de la BD
+      const order = [...Array(opts.length).keys()];      // identidad (por compatibilidad)
+      const optionsNoShuffle = opts;                     // tal cual vienen
+      const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? q.correctAnswer : null;
 
-      // NUEVO: reordena también las explicaciones por opción para que coincidan con el orden visual
-      const perOptionShuffled = Array.isArray(q.perOption) ? order.map(i => stripLetterPrefix(q.perOption[i])) : null;
+      // Tampoco reordenamos perOption; se mantiene como viene de BD
+      const perOptionSameOrder = Array.isArray(q.perOption) ? q.perOption.map(stripLetterPrefix) : null;
 
-      return { ...q, _optOrder: order, _options: optionsShuffled, _correct: correctIndex, _perOption: perOptionShuffled };
+      return { ...q, _optOrder: order, _options: optionsNoShuffle, _correct: correctIndex, _perOption: perOptionSameOrder };
     });
 
     if(__SEQ!==seq) return;
@@ -657,7 +658,7 @@ function renderQuiz(){
       // explicación base (global)
       expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
 
-      // NUEVO: motivos por opción (mostrados en el mismo orden visual y con letras actuales)
+      // motivos por opción (mismo orden que BD y que se muestra)
       if (Array.isArray(q._perOption) && q._perOption.length === (q._options||[]).length) {
         const others = q._perOption.map((txt,i)=>({i,txt:stripLetterPrefix(txt)})).filter(x=>x.i!==q._correct);
         if (others.length){
