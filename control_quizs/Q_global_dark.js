@@ -44,16 +44,10 @@ async function discoverProgressUrl(samplePayload) {
         body: JSON.stringify(samplePayload || {probe:true})
       }), 4500, "probe-progress");
       if (r.status === 200 || r.status === 201) {
-        console.info("[progress] endpoint OK:", url);
         __PROGRESS_URL_CACHED = url;
         return url;
-      } else {
-        const txt = await r.text().catch(()=> "");
-        console.warn("[progress] fallback", url, "status:", r.status, txt);
       }
-    } catch (e) {
-      console.warn("[progress] endpoint error", url, e?.message||e);
-    }
+    } catch {}
   }
   __PROGRESS_URL_CACHED = `${API_URL}/progress`;
   return __PROGRESS_URL_CACHED;
@@ -186,6 +180,22 @@ const uuid = () => "s-" + Math.random().toString(16).slice(2) + Date.now().toStr
 function smartScrollTo(el, align='start'){ if(!el) return; const rect = el.getBoundingClientRect(); const header = document.querySelector('header'); const offset = (header ? header.offsetHeight : 0) + 10; const top = rect.top + window.scrollY - (align==='center' ? window.innerHeight/2 - rect.height/2 : offset); window.scrollTo({ top, behavior: 'smooth' }); }
 function stripLetterPrefix(s){ return String(s||'').replace(/^\s*[A-Z]\.\s*/i,'').trim(); }
 
+/* normaliza texto para firma */
+function normTxt(s){
+  return String(s||"")
+    .toLowerCase()
+    .replace(/\s+/g," ")
+    .replace(/[‘’ʼ´`]/g,"'")
+    .replace(/[“”]/g,'"')
+    .trim();
+}
+/* firma por contenido: pregunta + opciones (sin letras A./B.) */
+function qSignature(q){
+  const qn = normTxt(q.question||"");
+  const opts = Array.isArray(q.options)? q.options.map(stripLetterPrefix).map(normTxt).join(" | "):"";
+  return `${qn} :: ${opts}`;
+}
+
 /* ===================== Tema ===================== */
 function applyTheme(quizId){
   const r=document.documentElement;
@@ -235,9 +245,9 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
   return all.slice(0,target);
 }
 
-/* ===================== Transform y filtro ===================== */
+/* ===================== Transform + Dedupe ===================== */
 function transformQuestions(items){
-  return items.map(it=>{
+  return (Array.isArray(items)?items:[]).map(it=>{
     const domain=extractDomainFromRecord(it);
     const perOpt =
       (Array.isArray(it.explanationsByOption) && it.explanationsByOption) ||
@@ -259,6 +269,24 @@ function transformQuestions(items){
     };
   });
 }
+
+/* elimina duplicados por id y por firma de contenido */
+function uniqQuestions(arr){
+  const byId = new Set();
+  const bySig = new Set();
+  const out = [];
+  for(const q of arr){
+    if(!q) continue;
+    const id = q.questionId || "";
+    const sig = qSignature(q);
+    if((id && byId.has(id)) || bySig.has(sig)) continue;
+    if(id) byId.add(id);
+    bySig.add(sig);
+    out.push(q);
+  }
+  return out;
+}
+
 function filterByDomains(all, tags){
   const want = (tags||[]).map(normalizeDomainTag).filter(Boolean);
   if(want.length===0) return all;
@@ -280,8 +308,6 @@ function genResultId(r){
   const t=Math.floor(Date.now()/10000);
   return `${base}|${t}`;
 }
-
-/* ----- Guardar en results con fallbacks y timeout ----- */
 async function saveResultRemoteOnce(result){
   if (S.savingResult) return { ok:false, skipped:true };
   S.savingResult = true;
@@ -300,49 +326,30 @@ async function saveResultRemoteOnce(result){
     pct: Number(result.pct||(result.total?Math.round((result.correct/result.total)*100):0)),
     durationSec: Number(result.durationSec||0),
     ts: result.ts || new Date().toISOString(),
-    sessionId: S.sessionId || "" // ← incluimos sessionId sin romper nada
+    sessionId: S.sessionId || ""
   };
 
   try {
-    // 1) form-urlencoded (evita preflight)
     const body = new URLSearchParams();
     Object.entries(payload).forEach(([k,v])=>body.append(k,String(v)));
-
     let r = await withTimeout(fetch(RESULTS_URL, {
       method:"POST", mode:"cors", keepalive:true,
       headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8","Accept":"application/json"},
       body
     }), 7000, "results-form");
+    if (r.ok) return { ok:true, via:"form" };
 
-    if (r.ok){
-      const j = await r.json().catch(()=> ({}));
-      console.log("[/results] form ok", j);
-      return { ok:true, via:"form", res:j };
-    }
-
-    // 2) JSON fallback
     r = await withTimeout(fetch(RESULTS_URL, {
       method:"POST", mode:"cors", keepalive:true,
       headers:{"Content-Type":"application/json","Accept":"application/json"},
       body: JSON.stringify(payload)
     }), 7000, "results-json");
+    if (r.ok) return { ok:true, via:"json" };
 
-    if (r.ok){
-      const j = await r.json().catch(()=> ({}));
-      console.log("[/results] json ok", j);
-      return { ok:true, via:"json", res:j };
-    }
-
-    const txt = await r.text().catch(()=> "");
-    console.warn("[/results] non-2xx", r.status, txt);
-    return { ok:false, status:r.status, error:txt || "HTTP error" };
-
+    return { ok:false };
   } catch(e){
-    console.error("[/results] exception:", e);
-    return { ok:false, error:String(e?.message || e) };
-  } finally {
-    S.savingResult = false;
-  }
+    return { ok:false, error:String(e?.message||e) };
+  } finally { S.savingResult=false; }
 }
 
 /* ===================== Timer ===================== */
@@ -382,18 +389,17 @@ async function start(quizId="aws-saa-c03", overrides={}){
   try{
     const exam=QUIZ_TO_EXAM[quizId] || "SAA-C03";
 
-    let raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 3, domainTags: tags });
-
+    let raw = await fetchQuestionsFromApi({ exam, count: desiredCount, overfetch: 4, domainTags: tags });
     if ((!raw || raw.length === 0) && quizId === "az-305") {
       raw = localAz305Fallback().map((q,i)=>({
         exam:"AZ-305", questionId:`AZ-305-local-${i}`, question:q.question, options:q.options,
         answerIndex:q.correctAnswer, explanation:q.explanation, category:"General"
       }));
     }
-
     if(__SEQ!==seq) return;
 
     let all = transformQuestions(raw);
+    all = uniqQuestions(all);                       // <-- dedupe fuerte
     let filtered = filterByDomains(all, tags);
     if (tags.length && filtered.length===0){
       filtered = all;
@@ -401,15 +407,14 @@ async function start(quizId="aws-saa-c03", overrides={}){
     }
     if (filtered.length===0) throw new Error("No se encontraron preguntas para este quiz.");
 
-    // Barajar SOLO preguntas; no opciones
-    filtered = shuffle(filtered).slice(0, desiredCount).map(q=>{
+    filtered = uniqQuestions(filtered);             // <-- por si tras filtrar reaparece algún igual
+    filtered = shuffle(filtered).slice(0, Math.min(desiredCount, filtered.length)).map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice(): [];
       const order = [...Array(opts.length).keys()];
-      const optionsNoShuffle = opts;
       const correctIndex = (typeof q.correctAnswer==='number' && q.correctAnswer>=0) ? q.correctAnswer : null;
       const perOptionSameOrder = Array.isArray(q.perOption) ? q.perOption.map(stripLetterPrefix) : null;
 
-      return { ...q, _optOrder: order, _options: optionsNoShuffle, _correct: correctIndex, _perOption: perOptionSameOrder };
+      return { ...q, _optOrder: order, _options: opts, _correct: correctIndex, _perOption: perOptionSameOrder };
     });
 
     if(__SEQ!==seq) return;
@@ -426,7 +431,6 @@ async function start(quizId="aws-saa-c03", overrides={}){
     // Warmup descubrimiento /progress (no bloquea)
     discoverProgressUrl({sessionId:S.sessionId, quizId:S.quizId, probe:true}).catch(()=>{});
 
-    window.dispatchEvent(new Event('quiz:started'));
     const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
     smartScrollTo(qCard,'start');
 
@@ -577,12 +581,8 @@ function renderQuiz(){
   const side=h('div',{class:'side'});
   const pBtns=h('div',{class:'panel'});
   const actions=h('div',{class:'controls centered'});
-
   const btnQuit=h('button',{class:'btn lg',html:'🏠 Salir'}); btnQuit.onclick=()=>{ location.href='/user/profile.html'; };
-
-  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar/Reanudar <span class="keycap">P</span>`});
-  btnPause.onclick=()=>{ doPause(); };
-
+  const btnPause=h('button',{class:'btn lg',html:`⏸️ Pausar/Reanudar <span class="keycap">P</span>`}); btnPause.onclick=()=>{ doPause(); };
   actions.appendChild(btnQuit); actions.appendChild(btnPause); pBtns.appendChild(actions); side.appendChild(pBtns);
 
   const pList=h('div',{class:'panel'});
@@ -682,7 +682,6 @@ function buildFullSessionPayload({finished=false} = {}){
     status: finished ? "finished" : "in_progress",
 
     questions,
-
     marked: S.marked,
     markedItems: Object.entries(S.marked||{}).filter(([,v])=>v).map(([i])=>({index:+i,questionId:S.qs[+i]?.questionId||null,markedAt:S.markTimes[+i]||null}))
   };
@@ -691,42 +690,29 @@ function buildFullSessionPayload({finished=false} = {}){
 /* ----- Guardar /progress con beacon → form → json ----- */
 async function postSessionToProgress(payload){
   const PROGRESS_URL = await discoverProgressUrl(payload);
-
-  // 1) Beacon (no preflight, fire-and-forget)
   try {
     if (navigator.sendBeacon) {
-      // usar tipo "text/plain" para ser ultra-simple
       const blob = new Blob([JSON.stringify(payload)], { type: "text/plain;charset=UTF-8" });
       const ok = navigator.sendBeacon(PROGRESS_URL, blob);
-      console.log("[/progress] sendBeacon:", ok);
       if (ok) return { ok:true, via:"beacon" };
     }
-  } catch (e) {
-    console.warn("[/progress] beacon err:", e);
-  }
+  } catch {}
 
-  // 2) POST simple SIN CORS (no-cors) -> evita totalmente la validación CORS/preflight
   try {
     const form = new URLSearchParams();
     Object.entries(payload).forEach(([k,v]) => {
       form.append(k, typeof v === "object" ? JSON.stringify(v) : String(v));
     });
-
     await fetch(PROGRESS_URL, {
       method: "POST",
-      mode: "no-cors",                               // ← clave: no se hace preflight
-      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }, // header simple
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
       body: form.toString(),
       keepalive: true
     });
-    console.log("[/progress] no-cors form sent");
-    // La respuesta es "opaque", pero no la necesitamos para guardar en DynamoDB
     return { ok:true, via:"no-cors-form" };
-  } catch (e) {
-    console.warn("[/progress] no-cors form err:", e);
-  }
+  } catch {}
 
-  // 3) (opcional) intentos con CORS por si ya configuras CORS en API Gateway
   try {
     const r = await fetch(PROGRESS_URL, {
       method: "POST",
@@ -736,11 +722,7 @@ async function postSessionToProgress(payload){
       keepalive: true
     });
     if (r.ok) return { ok:true, via:"json" };
-    const txt = await r.text().catch(()=> "");
-    console.warn("[/progress] CORS json non-2xx", r.status, txt);
-  } catch (e) {
-    console.warn("[/progress] CORS json err:", e);
-  }
+  } catch {}
 
   return { ok:false, error:"All progress send modes failed" };
 }
@@ -755,16 +737,6 @@ async function finish(){
   let correct=0; for(let i=0;i<total;i++){ if(S.answers[i]===S.qs[i]._correct) correct++; }
   const pct = total? Math.round((correct/total)*100) : 0;
 
-  const cfg = QUIZZES[S.quizId] || {};
-  const byDomain = {};
-  S.qs.forEach((q,idx)=>{
-    const code = q.domain || 'D?';
-    if(!byDomain[code]) byDomain[code] = { name: (cfg.domNames && cfg.domNames[code]) || code, correct:0, total:0 };
-    byDomain[code].total++;
-    if(S.answers[idx]===q._correct) byDomain[code].correct++;
-  });
-
-  // Payloads
   const sessionPayload = buildFullSessionPayload({ finished:true });
   const resultPayload = {
     ts:new Date().toISOString(),
@@ -773,56 +745,17 @@ async function finish(){
     durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
   };
 
-  // Guardar en paralelo, sin bloquear UI
-  const [p1, p2] = await Promise.allSettled([
-    postSessionToProgress(sessionPayload),
-    saveResultRemoteOnce(resultPayload)
+  // Guardar (esperamos un corto máximo y luego redirigimos sí o sí)
+  await Promise.race([
+    (async()=>{
+      await postSessionToProgress(sessionPayload);
+      await saveResultRemoteOnce(resultPayload);
+    })(),
+    new Promise(res=>setTimeout(res, 1500))
   ]);
 
-  const ok1 = p1.status==="fulfilled" && p1.value?.ok;
-  const ok2 = p2.status==="fulfilled" && p2.value?.ok;
-  if (!ok1 || !ok2) {
-    console.warn("finish -> progress:", p1, "results:", p2);
-    toast("⚠️ No se pudo guardar todo. Se intentará más tarde.", 2500);
-  } else {
-    toast("✓ Resultado guardado", 1500);
-  }
-
- function openResultsModal({correct,total,pct,byDomain}){
-  const portal = document.createElement('div');
-  portal.setAttribute('aria-modal','true'); portal.setAttribute('role','dialog');
-  portal.style.position='fixed'; portal.style.inset='0'; portal.style.background='rgba(10,12,24,.70)';
-  portal.style.display='flex'; portal.style.alignItems='center'; portal.style.justifyContent='center';
-  portal.style.zIndex='2147483647'; portal.id='quizResultModal';
-  const body=document.body; const prevOverflow=body.style.overflow; body.style.overflow='hidden';
-
-  const card=document.createElement('div');
-  card.style.maxWidth='760px'; card.style.width='calc(100% - 32px)';
-  card.style.background='linear-gradient(180deg,#10162d,#0d1330)';
-  card.style.border='1px solid rgba(255,255,255,.12)';
-  card.style.borderRadius='16px'; card.style.boxShadow='0 24px 80px rgba(0,0,0,.65)';
-  card.style.padding='18px'; card.style.color='#eef1ff';
-
-  const h3=document.createElement('h3'); h3.textContent='Resultados del examen'; h3.style.margin='0 0 12px 0';
-  const score=document.createElement('div');
-  score.style.display='inline-flex'; score.style.gap='10px';
-  score.style.background='#151b3c'; score.style.border='1px solid #2b3570';
-  score.style.borderRadius='12px'; score.style.padding='10px 14px'; score.style.fontWeight='900';
-  score.innerHTML=`<span>Puntuación:</span> <span>${correct}/${total} (${pct}%)</span>`;
-
-  const stack=document.createElement('div'); stack.style.display='grid'; stack.style.gridTemplateColumns='1fr'; stack.style.gap='10px';
-  const mkBar=(value)=>{ const bar=document.createElement('div'); bar.style.width='100%'; bar.style.height='8px'; bar.style.background='#0b1024'; bar.style.borderRadius='999px'; bar.style.position='relative'; bar.style.overflow='hidden'; const i=document.createElement('i'); i.style.position='absolute'; i.style.left=0; i.style.top=0; i.style.bottom=0; i.style.width=`${Math.max(0,Math.min(100,value))}%`; i.style.background='#2bdc8c'; bar.appendChild(i); return bar; };
-  const mkCard=(title, ok, tot)=>{ const p=tot? Math.round((ok/tot)*100):0; const box=document.createElement('div'); box.style.background='#13193b'; box.style.border='1px solid #2a356a'; box.style.borderRadius='12px'; box.style.padding='12px 14px'; const h=document.createElement('div'); h.style.fontWeight='900'; h.style.marginBottom='8px'; h.textContent=title; const bar=mkBar(p); const small=document.createElement('div'); small.style.marginTop='6px'; small.style.opacity='.9'; small.textContent=`${ok}/${tot} · ${p}%`; box.appendChild(h); box.appendChild(bar); box.appendChild(small); return box; };
-  Object.values(byDomain||{}).forEach(d => stack.appendChild(mkCard(d.name, d.correct, d.total)));
-
-  const actions=document.createElement('div'); actions.style.display='flex'; actions.style.justifyContent='flex-end'; actions.style.gap='10px'; actions.style.marginTop='14px';
-  const bClose=document.createElement('button'); bClose.textContent='CERRAR'; bClose.style.border='0'; bClose.style.borderRadius='10px'; bClose.style.padding='12px 18px'; bClose.style.fontWeight='900'; bClose.style.background='linear-gradient(180deg,#6c8bff,#3e64ff)'; bClose.style.color='#fff';
-  bClose.onclick=()=>{ try{ document.documentElement.removeChild(portal); }catch{} body.style.overflow=prevOverflow; };
-
-  actions.appendChild(bClose); card.appendChild(h3); card.appendChild(score); card.appendChild(stack); card.appendChild(actions);
-  portal.appendChild(card); portal.addEventListener('click', (e)=>{ if(e.target===portal) bClose.click(); });
-  document.documentElement.appendChild(portal);
-}
+  // Redirección inmediata tras intentar guardar
+  location.href = '/user/profile.html';
 }
 
 /* ===================== Hotkeys ===================== */
@@ -854,9 +787,6 @@ function enableHotkeys(){
     if(Number.isInteger(n)&&n>=1&&n<=9){ const q=S.qs[S.idx]; if(q&&q._options&&q._options[n-1]!==undefined){ ev.preventDefault(); onSelect(n-1); } }
   });
 }
-
-/* ===================== Hooks ciclo de vida ===================== */
-/* Sin autoguardados por visibilidad/unload */
 
 /* ===================== API PÚBLICA ===================== */
 window.start = start;
