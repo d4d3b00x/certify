@@ -12,25 +12,17 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ITHub.es. Perfil de Quizzer. Estadísticas, avances y resultados.</title>
+  <title>CertiFY — Perfil del Estudiante</title>
 
   <style>
     :root{
-      /* Paleta oscura compartida */
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --card:#111937;
       --ink:#e8ecff; --muted:#9ca8d9; --stroke:#283056; --shadow:0 12px 28px rgba(6,12,40,.45);
       --radius:16px;
-
-      /* Acentos */
-      --accent:#7b5cff; --accent-2:#8166ff; /* morado suave para header buttons */
-      --accent-warn:#ffb84d;
-
+      --accent:#7b5cff; --accent-2:#8166ff; --accent-warn:#ffb84d;
       --ok:#25b873; --danger:#ff6b6b; --gap:12px;
-
-      /* Ranking extras */
       --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
     }
-
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
     body{
@@ -43,12 +35,11 @@
       line-height:1.6; min-height:100vh; overflow-x:hidden;
       display:flex; flex-direction:column;
     }
-
     a{color:inherit}
 
     .wrap{max-width:1200px;margin:0 auto;padding:20px;width:100%}
 
-    /* ====== HEADER estilo IT Hub ====== */
+    /* ===== HEADER (como la captura) ===== */
     header.site{
       position:sticky; top:0; z-index:20;
       background:linear-gradient(180deg,#0e1222 0%, #0b0f1c 100%);
@@ -59,180 +50,85 @@
       max-width:1200px; margin:0 auto; padding:10px 20px;
       display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
     }
-    /* Marca */
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px}
-    .brand .badge{
-      width:30px;height:30px;border-radius:10px;
-      background:linear-gradient(180deg,#7693ff,#6a7cff);
-      display:grid;place-items:center; color:white; font-weight:900;
-      box-shadow:inset 0 -4px 8px rgba(0,0,0,.25);
-    }
-    .brand .name{
-      display:flex;align-items:baseline;gap:6px;
-    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px;text-decoration:none}
+    .brand .badge{width:30px;height:30px;border-radius:10px;background:linear-gradient(180deg,#7693ff,#6a7cff);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:inset 0 -4px 8px rgba(0,0,0,.25)}
+    .brand .name{display:flex;align-items:baseline;gap:6px}
     .brand .name b{font-size:1.05rem}
     .brand .name .dot{opacity:.9}
     .brand .name .es{opacity:.7;font-weight:800}
 
-    /* Nav centrado */
-    .navlinks{
-      display:flex; align-items:center; justify-content:center; gap:28px;
-      font-weight:900;
-    }
-    .navlinks a{
-      text-decoration:none; color:#bac4ff; letter-spacing:.5px;
-    }
-    .navlinks a:hover{ color:#ffffff; text-shadow:0 0 12px rgba(123,92,255,.35); }
+    .navlinks{display:flex;align-items:center;justify-content:center;gap:28px;font-weight:900}
+    .navlinks a{text-decoration:none;color:#bac4ff;letter-spacing:.5px}
+    .navlinks a:hover{color:#fff;text-shadow:0 0 12px rgba(123,92,255,.35)}
 
-    /* Grupo derecho: cápsula */
-    .usercapsule{
-      display:flex; align-items:center; gap:10px; padding:6px;
-      background:linear-gradient(180deg, rgba(16,22,43,.9), rgba(10,14,30,.9));
-      border:1px solid var(--stroke); border-radius:999px;
-      box-shadow:var(--shadow);
-    }
-    .chip-user{
-      display:inline-flex; align-items:center; gap:8px; padding:8px 12px;
-      border-radius:999px; font-weight:900; color:#e8ecff;
-      background:linear-gradient(180deg, rgba(124,146,255,.18), rgba(90,110,220,.14));
-      border:1px solid rgba(70,80,150,.7);
-      white-space:nowrap;
-    }
-    .chip-user .flame{ color:var(--accent-warn); }
-
-    .btn{appearance:none;border:1px solid var(--stroke);cursor:pointer;background:var(--surface2);color:var(--ink);
-      font-weight:900;letter-spacing:.2px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);
-      transition:transform .08s, box-shadow .12s, filter .12s, border-color .12s; text-decoration:none;}
-    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.35); }
-    .btn.pill{ border-radius:999px; padding:10px 16px; }
-    .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border-color:transparent; }
-    .btn.ghost{ background:transparent; border-color:rgba(80,92,160,.6); }
-    .btn.small{ padding:6px 10px; font-size:.9rem; }
+    .usercapsule{display:flex;align-items:center;gap:10px;padding:6px;background:linear-gradient(180deg, rgba(16,22,43,.9), rgba(10,14,30,.9));border:1px solid var(--stroke);border-radius:999px;box-shadow:var(--shadow)}
+    .chip-user{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-weight:900;color:#e8ecff;background:linear-gradient(180deg, rgba(124,146,255,.18), rgba(90,110,220,.14));border:1px solid rgba(70,80,150,.7);white-space:nowrap}
+    .chip-user .flame{color:var(--accent-warn)}
+    .btn{appearance:none;border:1px solid var(--stroke);cursor:pointer;background:var(--surface2);color:var(--ink);font-weight:900;letter-spacing:.2px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);transition:transform .08s, box-shadow .12s, filter .12s, border-color .12s; text-decoration:none}
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.35) }
+    .btn.pill{ border-radius:999px; padding:10px 16px }
+    .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border-color:transparent }
+    .btn.ghost{ background:transparent; border-color:rgba(80,92,160,.6) }
+    .btn.small{ padding:6px 10px; font-size:.9rem }
     .hidden{display:none !important}
 
-    /* ====== Tarjetas y resto del perfil ====== */
-    .card{
-      background:linear-gradient(180deg, var(--card), #0f1633);
-      border:1px solid var(--stroke);
-      border-radius:var(--radius);
-      padding:18px;
-      box-shadow:var(--shadow);
-      color:var(--ink);
-      margin-bottom:12px;
-    }
+    /* Tarjetas / Hero */
+    .card{background:linear-gradient(180deg, var(--card), #0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);color:var(--ink);margin-bottom:12px}
+    .hero{padding:16px 18px;background:linear-gradient(180deg, #111937 0, #0f1633 100%);border:1px solid var(--stroke);border-radius:var(--radius);margin:12px 0 var(--gap)}
+    .hero h1{margin:4px 0 6px;font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem);font-weight:900}
+    .hero .desc{color:var(--muted);margin:0}
 
-    /* Hero (texto sintetizado) */
-    .hero{
-      padding:16px 18px;
-      background:linear-gradient(180deg, #111937 0, #0f1633 100%);
-      border:1px solid var(--stroke);
-      border-radius:var(--radius);
-      margin:12px 0 var(--gap);
-    }
-    .hero h1{ margin:4px 0 6px; font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem); font-weight:900; color:var(--ink); }
-    .hero .desc{ color:var(--muted); margin:0; }
+    /* Authbar (estado) */
+    .authbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--stroke);border-radius:999px;font-weight:800;box-shadow:var(--shadow);margin:0 0 var(--gap)}
+    .authbar .actions{display:flex;gap:8px}
 
-    /* Barra de autenticación (estado) */
-    .authbar{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:10px 14px; background:var(--surface);
-      border:1px solid var(--stroke); border-radius:999px;
-      color:var(--ink); font-weight:800; box-shadow:var(--shadow);
-      margin:0 0 var(--gap);
-    }
-    .authbar .actions{ display:flex; gap:8px; }
+    /* Grid */
+    .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:var(--gap);align-items:start}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}.nav{grid-template-columns:auto auto;grid-template-rows:auto auto}.navlinks{order:3;grid-column:1/-1;padding-top:6px}}
+    .col-right{display:flex;flex-direction:column;gap:var(--gap)}
+    .col-right>.card{width:100%}
 
-    /* Grid principal */
-    .grid{ display:grid; grid-template-columns: 320px minmax(0,1fr); gap:var(--gap); align-items:start; }
-    @media (max-width:900px){
-      .grid{ grid-template-columns:1fr; }
-      .nav{ grid-template-columns:auto auto; grid-template-rows:auto auto; }
-      .navlinks{ order:3; grid-column:1/-1; padding-top:6px; }
-    }
-    .col-right{ display:flex; flex-direction:column; gap:var(--gap); }
-    .col-right > .card{ width:100%; }
+    /* Perfil */
+    .profile{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+    .avatar{width:86px;height:86px;border-radius:14px;overflow:hidden;border:1px solid var(--stroke);background:var(--surface);display:flex;align-items:center;justify-content:center;font-weight:900;color:#cbd6ff;font-size:1.4rem}
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .muted{color:var(--muted)} .divider{border:0;border-top:1px solid var(--stroke);margin:12px 0}
+    .field{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+    .field label{font-weight:900;color:#cbd6ff}
+    .control{display:flex;align-items:center;gap:8px;border:1px solid var(--stroke);border-radius:12px;padding:10px 12px;background:var(--surface2)}
+    .control input{border:none;outline:none;background:transparent;width:100%;font-weight:800;color:var(--ink);padding:4px 0}
+    .control input::placeholder{color:#7f8ac2}
+    .hint{font-size:.92rem;color:var(--muted)}
 
-    /* Perfil (columna izquierda) */
-    .profile{ display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:center; }
-    .avatar{
-      width:86px; height:86px; border-radius:14px; overflow:hidden;
-      border:1px solid var(--stroke); background:var(--surface);
-      display:flex; align-items:center; justify-content:center; font-weight:900; color:#cbd6ff; font-size:1.4rem;
-    }
-    .avatar img{ width:100%; height:100%; object-fit:cover; }
-    .muted{ color:var(--muted) }
-    .divider{ border:0; border-top:1px solid var(--stroke); margin:12px 0; }
+    /* Tabs / tablas / kpis */
+    .tabs{display:flex;gap:8px;background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:6px;width:fit-content}
+    .tab-btn{border:1px solid transparent;background:transparent;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:900;color:#e2e7ff}
+    .tab-btn.active{background:var(--surface2);border-color:var(--stroke)}
+    .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:12px;overflow:auto}
+    table{width:100%;min-width:680px;border-collapse:separate;border-spacing:0}
+    thead th{position:sticky;top:0;z-index:1;background:var(--surface2);color:#dbe3ff;font-weight:900;letter-spacing:.01em;text-align:center;padding:10px;border-bottom:1px solid var(--stroke)}
+    tbody td{padding:10px;text-align:center;border-bottom:1px solid #1f2446;background:var(--surface);color:var(--ink)}
+    tbody tr:nth-child(even) td{background:#171d36}
+    tbody tr:hover td{background:#1b2240}
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:900;font-size:.8rem;background:rgba(108,139,255,.12);color:#cbd6ff;border:1px solid var(--stroke)}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(108,139,255,.10);color:#d8e2ff;border:1px solid var(--stroke);font-weight:800}
+    .pct{display:flex;align-items:center;justify-content:center;gap:8px;font-variant-numeric:tabular-nums;font-weight:900}
+    .pbar{position:relative;flex:1 1 120px;height:8px;background:#0b1024;border-radius:999px;overflow:hidden;max-width:160px;margin:0 auto}
+    .pbar>i{position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .kpi{text-align:center;border:1px solid var(--stroke);border-radius:12px;padding:12px;background:linear-gradient(180deg, var(--surface2), var(--surface))}
+    .kpi h4{margin:0;font-size:1rem;color:#cbd6ff;font-weight:900}
+    .kpi .n{font-size:1.4rem;font-weight:900}
 
-    /* Campos / inputs */
-    .field{ display:flex; flex-direction:column; gap:6px; margin:8px 0; }
-    .field label{ font-weight:900; color:#cbd6ff; }
-    .control{
-      display:flex; align-items:center; gap:8px;
-      border:1px solid var(--stroke); border-radius:12px; padding:10px 12px; background:var(--surface2);
-    }
-    .control input{
-      border:none; outline:none; background:transparent; width:100%;
-      font-weight:800; color:var(--ink); padding:4px 0;
-    }
-    .control input::placeholder{ color:#7f8ac2; }
-    .hint{ font-size:.92rem; color:var(--muted) }
-
-    /* Tabs */
-    .tabs{ display:flex; gap:8px; background:var(--surface); border:1px solid var(--stroke); border-radius:12px; padding:6px; width:fit-content; }
-    .tab-btn{ border:1px solid transparent; background:transparent; padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:900; color:#e2e7ff; }
-    .tab-btn.active{ background:var(--surface2); border-color:var(--stroke); }
-
-    /* Tabla resultados & marcadas */
-    .table-wrap{
-      background:var(--surface); border:1px solid var(--stroke); border-radius:16px; box-shadow:var(--shadow); padding:12px; overflow:auto;
-    }
-    table{ width:100%; min-width:680px; border-collapse:separate; border-spacing:0; }
-    thead th{
-      position:sticky; top:0; z-index:1;
-      background:var(--surface2); color:#dbe3ff; font-weight:900; letter-spacing:.01em; text-align:center; padding:10px; border-bottom:1px solid var(--stroke)
-    }
-    tbody td{ padding:10px; text-align:center; border-bottom:1px solid #1f2446; background:var(--surface); color:var(--ink) }
-    tbody tr:nth-child(even) td{ background:#171d36 }
-    tbody tr:hover td{ background:#1b2240 }
-
-    .badge{
-      display:inline-block; padding:4px 10px; border-radius:999px; font-weight:900; font-size:.8rem;
-      background:rgba(108,139,255,.12); color:#cbd6ff; border:1px solid var(--stroke);
-    }
-    .chip{
-      display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px;
-      background:rgba(108,139,255,.10); color:#d8e2ff; border:1px solid var(--stroke); font-weight:800;
-    }
-    .pct{ display:flex; align-items:center; justify-content:center; gap:8px; font-variant-numeric:tabular-nums; font-weight:900; }
-    .pbar{ position:relative; flex:1 1 120px; height:8px; background:#0b1024; border-radius:999px; overflow:hidden; max-width:160px; margin:0 auto; }
-    .pbar>i{ position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent-2)); }
-
-    /* KPIs */
-    .kpis{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
-    .kpi{
-      text-align:center; border:1px solid var(--stroke); border-radius:12px; padding:12px;
-      background:linear-gradient(180deg, var(--surface2), var(--surface));
-    }
-    .kpi h4{ margin:0; font-size:1rem; color:#cbd6ff; font-weight:900; }
-    .kpi .n{ font-size:1.4rem; font-weight:900; }
-
-    /* Heatmap & badges (perfil izquierda) */
     .heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
     .heat i{display:block;height:14px;border-radius:4px;background:#0b1024;border:1px solid var(--stroke)}
-    .heat i.lv1{background:#15224a}
-    .heat i.lv2{background:#1c2b5d}
-    .heat i.lv3{background:#213471}
+    .heat i.lv1{background:#15224a}.heat i.lv2{background:#1c2b5d}.heat i.lv3{background:#213471}
     .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
     .badge-chip{border:1px solid var(--stroke);background:var(--surface2);color:#dbe3ff;border-radius:999px;padding:6px 10px;font-weight:900}
 
-    .tool{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0}
-    .tool select, .tool input[type="range"]{
-      border:1px solid var(--stroke);border-radius:10px;padding:6px 8px;font-weight:800;background:var(--surface2);color:var(--ink)
-    }
-
-    /* ====== Estilos Ranking Global (mini) ====== */
+    /* Ranking mini */
     .rank-mini .table-wrap{overflow-x:hidden}
-    .rank-mini table{min-width:0;width:100%;border-collapse:separate;border-spacing:0;table-layout:auto}
+    .rank-mini table{min-width:0;width:100%;table-layout:auto}
     .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
     .medal.gold{background:linear-gradient(135deg,#ffd662,#ffb300)}
     .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf)}
@@ -250,34 +146,14 @@
     .ibadge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--surface2)}
     .ibadge.fast{color:#ffb84d}.ibadge.perfect{color:#bb86fc}.ibadge.ok{color:#4ee69a}.ibadge.streak{color:#ff6b6b}.ibadge.grinder{color:#64b5f6}.ibadge.sharp{color:#00c8aa}.ibadge.veteran{color:#ffd662}
 
-    /* ===== Footer ===== */
-    footer.site{margin-top:auto;border-top:1px solid var(--stroke);background:linear-gradient(180deg,#0f1633,#0b1024);}
+    /* Footer */
+    footer.site{margin-top:auto;border-top:1px solid var(--stroke);background:linear-gradient(180deg,#0f1633,#0b1024)}
     .foot{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
     .foot a{color:#cbd6ff;text-decoration:none}
     .foot .muted{color:#9ca8d9}
 
-    /* ===== Modal Login ===== */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,8,20,.6);backdrop-filter:blur(6px);z-index:50}
-    .modal.show{display:flex}
-    .modal-card{width:min(560px,92vw);background:linear-gradient(180deg,var(--surface),#0f1633);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:16px}
-    .modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
-    .modal-head h3{margin:0;font-weight:900}
-
-    /* ===== Review link ===== */
-    .review-link{
-      text-decoration:none;
-      font-size:1.2rem;
-      cursor:pointer;
-      display:inline-block;
-      transition:opacity .2s;
-    }
-    .review-link:hover{ opacity:.8; }
-    .review-link.disabled{
-      opacity:.35;
-      pointer-events:none;
-      filter:grayscale(1);
-      cursor:default;
-    }
+    /* CTA Leaderboard pequeño bajo ranking */
+    .rank-footer{display:flex;justify-content:flex-end;margin-top:10px}
   </style>
 </head>
 <body>
@@ -285,27 +161,19 @@
   <!-- ===== HEADER ===== -->
   <header class="site">
     <nav class="nav">
-      <!-- Marca -->
       <a class="brand" href="/" aria-label="IT Hub">
         <div class="badge">□</div>
-        <div class="name">
-          <b>IT&nbsp;&nbsp;Hub</b><span class="dot">.</span><span class="es">es</span>
-        </div>
+        <div class="name"><b>IT&nbsp;&nbsp;Hub</b><span class="dot">.</span><span class="es">es</span></div>
       </a>
-
-      <!-- Nav centrado -->
       <div class="navlinks" aria-label="Navegación principal">
-        <a href="/">HOME</a>
-        <a href="/content/content.html">CONTENIDOS</a>
+        <a href="/simuladores">SIMULADORES</a>
+        <a href="/contenidos">CONTENIDOS</a>
         <a href="/score/ranking.html">RANKING</a>
       </div>
-
-      <!-- Cápsula derecha (dinámica) -->
       <div class="usercapsule">
         <span id="hdrUser" class="chip-user hidden"><span class="flame">🔥</span><span id="hdrUserName">USER</span></span>
-        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/user/profile.html">PERFIL</a>
+        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/profile">PERFIL</a>
         <button id="btnHdrLogout" class="btn pill primary hidden">LOGOUT</button>
-
         <button id="btnHdrLogin" class="btn pill primary">LOGIN</button>
         <button id="btnHdrSignup" class="btn pill ghost">CREAR CUENTA</button>
       </div>
@@ -313,7 +181,6 @@
   </header>
 
   <div class="wrap">
-    <!-- Hero sintetizado -->
     <section class="card hero">
       <h1>Bienvenido a tu perfil.</h1>
       <p class="desc">Gestiona tu cuenta, consulta tu ranking y revisa tus últimos exámenes y logros.</p>
@@ -398,6 +265,7 @@
         <article class="card rank-mini">
           <h3 style="margin:0 0 10px;font-weight:900;">🏆 Ranking Global</h3>
           <div id="rankMiniWrap" class="table-wrap">Cargando…</div>
+          <div id="rankMiniCta" class="rank-footer"></div>
         </article>
 
         <!-- ÚLTIMOS EXÁMENES -->
@@ -427,18 +295,12 @@
                 <option value="90">Last 90 days</option>
               </select>
             </label>
-            <label>Min %:
-              <input id="minPct" type="range" min="0" max="100" value="0">
-              <span id="minPctVal" style="font-weight:900">0</span>
-            </label>
-            <span class="muted" id="filterCount"></span>
           </div>
 
           <div id="resultsWrap" class="table-wrap">Loading…</div>
 
           <div style="display:flex;gap:8px;justify-content:space-between;margin-top:10px;align-items:center;">
             <div id="trendHint" class="muted">—</div>
-            <a class="btn" href="/score/ranking.html">🏆 LEADERBOARD</a>
           </div>
         </article>
 
@@ -462,7 +324,7 @@
     </section>
   </div>
 
-  <!-- ===== Footer ===== -->
+  <!-- Footer -->
   <footer class="site">
     <div class="foot">
       <div style="display:flex;align-items:center;gap:10px">
@@ -473,40 +335,22 @@
         <span class="muted">© <span id="yearNow"></span></span>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-       
-        <span class="muted">v0.9.2</span>
+        <a href="/privacy">Privacidad</a>
+        <a href="/terms">Términos</a>
+        <a href="mailto:soporte@certify.app">Soporte</a>
+        <span class="muted">v1.3.2</span>
       </div>
     </div>
   </footer>
 
-  <!-- ===== Modal Login/Signup ===== -->
-  <div id="authModal" class="modal" aria-hidden="true" role="dialog" aria-label="Autenticación">
-    <div class="modal-card">
-      <div class="modal-head">
-        <h3 id="authTitle">Iniciar sesión</h3>
-        <button id="authClose" class="btn small">✕</button>
-      </div>
-      <div class="field">
-        <label for="authName">Nombre</label>
-        <div class="control"><input id="authName" placeholder="Tu nombre"></div>
-      </div>
-      <div class="field">
-        <label for="authEmail">Email</label>
-        <div class="control"><input id="authEmail" type="email" placeholder="tú@correo.com"></div>
-      </div>
-      <div class="hint">Guardaremos estos datos en tu navegador (localStorage). Si tienes backend, podrás emitir token y hacer <code>/me</code>.</div>
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
-        <button id="authCancel" class="btn">Cancelar</button>
-        <button id="authSubmit" class="btn primary">Continuar</button>
-      </div>
-      <div id="authMsg" class="hint" style="margin-top:6px"></div>
-    </div>
-  </div>
+  <!-- Modal (opcional para otras páginas) -->
+  <div id="authModal" class="modal" aria-hidden="true" role="dialog" aria-label="Autenticación" style="display:none"></div>
 
   <script>
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const AUTH_KEY = "currentUser";
     const GOAL_KEY = "weeklyGoal";
+    const LOGIN_URL = "/login"; // <-- cambia si tu ruta es distinta
 
     const byId = id => document.getElementById(id);
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
@@ -527,7 +371,7 @@
     const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
     function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
 
-    /* ===== Header dinámico según sesión ===== */
+    /* Header dinámico */
     function renderHeaderAuth(){
       const u = getUserAny();
       const pillName = byId('hdrUser');
@@ -553,7 +397,6 @@
       }
     }
 
-    /* ===== Barra de estado (authbar) ===== */
     function renderAuth(){
       const u = getUserAny();
       const authText = byId("authText");
@@ -603,31 +446,7 @@
       }catch{}
     }
 
-    // ==== Modal helpers ====
-    const showModal = (id)=> byId(id).classList.add('show');
-    const hideModal = (id)=> byId(id).classList.remove('show');
-
-    function openAuthModal(mode){
-      byId('authTitle').textContent = mode==='signup'? 'Crear cuenta' : 'Iniciar sesión';
-      byId('authMsg').textContent = '';
-      const u = getUserAny();
-      byId('authName').value = (u && u.name) || '';
-      byId('authEmail').value = (u && u.email) || '';
-      showModal('authModal');
-      setTimeout(()=> byId('authEmail').focus(), 50);
-    }
-
-    function doLocalAuth(){
-      const name = (byId('authName').value||'').trim();
-      const email = (byId('authEmail').value||'').trim();
-      if(!email){ byId('authMsg').textContent = 'Introduce un email válido'; return; }
-      const user = { name: name||email.split('@')[0], email };
-      setUser(user);
-      byId('authMsg').textContent = 'Hecho. Sesión iniciada en este navegador.';
-      hideModal('authModal');
-    }
-
-    /* ===================== RANKING MINI (global) ===================== */
+    /* ====== Ranking Global ====== */
     const QUIZZES = ["az-104","az-305","aws-saa-c03"];
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
@@ -710,13 +529,22 @@
     }
     async function renderMyGlobalRank(){
       const host=byId('rankMiniWrap'); host.textContent='Cargando…';
-      const me=getUserAny(); if(!me){ host.innerHTML='<p class="muted" style="text-align:center">Inicia sesión para ver tu ranking.</p>'; return; }
+      const cta = byId('rankMiniCta'); cta.innerHTML='';
+      const me=getUserAny(); if(!me){
+        host.innerHTML='<p class="muted" style="text-align:center">Inicia sesión para ver tu ranking.</p>';
+        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+        return;
+      }
       try{
         const all=await fetchAllResults(3000);
         const agg=aggregateGlobal(all);
         const uid=(me.userId||me.id||'').toString();
         const foundIndex=agg.findIndex(x=> (x.userId||'').toString()===uid || (x.userName||'').trim()===(me.name||me.displayName||me.userName||'').trim());
-        if(foundIndex<0){ host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>'; return; }
+        if(foundIndex<0){
+          host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>';
+          cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+          return;
+        }
         const row=agg[foundIndex], rank=foundIndex+1;
         const pointsCls = rank<=3 ? 'points-chip top' : 'points-chip';
         const nameCls = nameClassByRank(rank);
@@ -752,13 +580,16 @@
               </tr>
             </tbody>
           </table>`;
+        // CTA derecha bajo la tabla (pequeño)
+        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
       }catch(e){
         host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking.</p>`;
+        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
         console.warn(e);
       }
     }
-    /* ================================================================ */
 
+    /* ===== Resultados propios ===== */
     async function fetchMyResults(limit=500){
       const u = getUserAny(); if (!u) return [];
       const uid = (u.userId || u.id || "").toString();
@@ -773,19 +604,15 @@
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
       const items = Array.isArray(data.items) ? data.items : [];
-
       const isMine = (x) => {
         const xid = (x.userId || x.id || x?.user?.id || "").toString();
         const xemail = norm(x.email || x.userEmail || x?.user?.email || x?.profile?.email);
         return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
       };
-
       const mine = items.filter(isMine);
-
       const pick = v => (typeof v === "string" ? v.trim() : "");
       const getName2 = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
 
-      // ⬇️ incluye sessionId para poder vincular la lupa
       return mine.map(x => ({
         userId: x.userId || x.id || "(unknown)",
         userName: getName2(x),
@@ -794,8 +621,7 @@
         total: (x.total|0),
         pct: (x.pct|0),
         durationSec: (x.durationSec|0),
-        ts: x.ts || null,
-        sessionId: x.sessionId || x.session_id || ""   // <-- aquí
+        ts: x.ts || null
       }));
     }
 
@@ -832,7 +658,7 @@
       byId("goalFill").style.width = `0%`;
     }
 
-    window.__filters = {days:'all', minPct:0, fromDate:null};
+    window.__filters = {days:'all', fromDate:null}; // sin minPct
     const activeFilterKey = ()=> {
       const t = (document.querySelector('.tab-btn.active')?.textContent || 'All').toLowerCase();
       if(t.includes('aws')) return 'aws-saa-c03';
@@ -847,16 +673,13 @@
       const f = filter.toLowerCase();
       if (f==="az-104" || f==="aws-saa-c03" || f==="az-305") list = list.filter(x=>x.quizId===f);
 
-      const { days, minPct } = window.__filters || {};
+      const { days } = window.__filters || {};
       if (days && days!=="all"){
         const cutoff = Date.now() - Number(days)*86400000;
         list = list.filter(x=> x.ts && new Date(x.ts).getTime() >= cutoff);
       }
-      if (typeof minPct === "number"){
-        list = list.filter(x=> (x.pct|0) >= minPct);
-      }
 
-      byId("filterCount").textContent = list.length ? `${list.length} shown` : '0 shown';
+      // (Se elimina el texto "x shown")
 
       const rowsForKpi = (f==="all" ? rows : rows.filter(x=>x.quizId===f));
       calcKPIs(rowsForKpi);
@@ -877,10 +700,6 @@
         </tr></thead><tbody>`;
       list.slice(0,10).forEach((r,i)=>{
         const pct = Math.min(100, Math.max(0, (r.pct|0)));
-        const sid = r.sessionId || "";
-        const reviewCell = sid
-          ? `<a class="review-link" href="/user/report_quiz.html?sessionId=${encodeURIComponent(sid)}" title="Ver sesión">🔍</a>`
-          : `<span class="review-link disabled" title="Sin sessionId">🔍</span>`;
         html += `<tr>
           <td>${i+1}</td>
           <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
@@ -894,14 +713,14 @@
           </td>
           <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
           <td>${fmtDateTime(r.ts)}</td>
-          <td>${reviewCell}</td>
+          <td><span class="review-icon" title="Review coming soon">🔍</span></td>
         </tr>`;
       });
       html += `</tbody></table>`;
       root.innerHTML = html;
     }
 
-    /* ======== MARCADAS ======== */
+    /* ===== Marcadas ===== */
     function getLastSessionId() {
       const keys = Object.keys(localStorage).filter(k => k.startsWith("quiz.session."));
       keys.sort().reverse();
@@ -918,7 +737,7 @@
         const u = getUserAny();
         if (u && (u.userId || u.id || u.email)) {
           const uid = (u.userId || u.id || "").toString();
-          const uemail = norm(u.email);
+          const uemail = (u.email||'').toLowerCase();
           const qs = new URLSearchParams({ limit: String(limit) });
           if (uid) qs.set("userId", uid);
           if (uemail) qs.set("email", uemail);
@@ -933,13 +752,9 @@
               if (items.length){
                 for (const m of items) {
                   out.push({
-                    quizId: quiz,
-                    questionId: m.questionId || null,
-                    question: m.question || '(no text)',
-                    domain: m.domain || null,
-                    category: m.category || null,
-                    sessionId: m.sessionId || it.sessionId || '',
-                    idx: (typeof m.index==='number'? m.index : null),
+                    quizId: quiz, questionId: m.questionId || null, question: m.question || '(no text)',
+                    domain: m.domain || null, category: m.category || null,
+                    sessionId: m.sessionId || it.sessionId || '', idx: (typeof m.index==='number'? m.index : null),
                     markedAt: m.markedAt || it.updatedAt || it.startedAt || null
                   });
                 }
@@ -952,11 +767,8 @@
                 const idx = parseInt(idxStr,10);
                 const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
                 out.push({
-                  quizId: quiz,
-                  questionId: qid,
-                  question: '(marked question — open session to review)',
-                  domain: null, category: null, sessionId: it.sessionId || '',
-                  idx, markedAt: it.updatedAt || it.startedAt || null
+                  quizId: quiz, questionId: qid, question: '(marked question — open session to review)',
+                  domain: null, category: null, sessionId: it.sessionId || '', idx, markedAt: it.updatedAt || it.startedAt || null
                 });
               });
             }
@@ -975,13 +787,9 @@
               if (items.length){
                 for (const m of items) {
                   out.push({
-                    quizId: quiz,
-                    questionId: m.questionId || null,
-                    question: m.question || '(no text)',
-                    domain: m.domain || null,
-                    category: m.category || null,
-                    sessionId: m.sessionId || it.sessionId || '',
-                    idx: (typeof m.index==='number'? m.index : null),
+                    quizId: quiz, questionId: m.questionId || null, question: m.question || '(no text)',
+                    domain: m.domain || null, category: m.category || null,
+                    sessionId: m.sessionId || it.sessionId || '', idx: (typeof m.index==='number'? m.index : null),
                     markedAt: m.markedAt || it.updatedAt || it.startedAt || null
                   });
                 }
@@ -993,11 +801,8 @@
                   const idx = parseInt(idxStr,10);
                   const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
                   out.push({
-                    quizId: quiz,
-                    questionId: qid,
-                    question: '(marked question — open session to review)',
-                    domain: null, category: null, sessionId: it.sessionId || '',
-                    idx, markedAt: it.updatedAt || it.startedAt || null
+                    quizId: quiz, questionId: qid, question: '(marked question — open session to review)',
+                    domain: null, category: null, sessionId: it.sessionId || '', idx, markedAt: it.updatedAt || it.startedAt || null
                   });
                 });
               }
@@ -1029,67 +834,14 @@
       `).join('');
     }
 
-    function computeTrend(rows){
-      const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
-      if (ordered.length<6) return {delta:0, dir:'='};
-      const mid = Math.floor(ordered.length/2);
-      const prev = ordered.slice(0, mid);
-      const last = ordered.slice(mid);
-      const avg = a => Math.round(a.reduce((s,x)=>s+(x.pct||0),0)/Math.max(1,a.length));
-      const p1=avg(prev), p2=avg(last), d=p2-p1;
-      return {delta:d, dir: d>0?'up':(d<0?'down':'=')};
-    }
-
-    function renderHeat14(rows){
-      const root = byId('heat14'); if(!root) return;
-      root.innerHTML = '';
-      const now = toDateOnly(new Date());
-      const perDay = {};
-      rows.forEach(r=>{
-        if(!r.ts) return;
-        const key = toDateOnly(new Date(r.ts)).toISOString().slice(0,10);
-        perDay[key] = (perDay[key]||0)+1;
-      });
-      for(let i=13;i>=0;i--){
-        const d = new Date(now.getTime()-i*86400000);
-        const k = d.toISOString().slice(0,10);
-        const n = perDay[k]||0;
-        const cell = document.createElement('i');
-        if(n>=3) cell.className='lv3'; else if(n===2) cell.className='lv2'; else if(n===1) cell.className='lv1';
-        root.appendChild(cell);
-      }
-    }
-
-    function computeBadges(rows){
-      const n=rows.length;
-      const streak = computeStreak(rows);
-      const hasFast = rows.some(r=> (r.durationSec||0) <= 600);
-      const avg = n? Math.round(rows.reduce((a,b)=>a+(b.pct||0),0)/n) : 0;
-      const badges=[];
-      if(n>=5) badges.push('🏁 Warm-up (5 attempts)');
-      if(streak>=3) badges.push('🔥 Consistent (3-day streak)');
-      if(hasFast) badges.push('⚡ Fast Thinker (<10m)');
-      if(avg>=70) badges.push('🛡️ Solid (avg ≥70%)');
-      if(avg>=85) badges.push('🌟 Elite (avg ≥85%)');
-      return badges;
-    }
-    function renderBadges(rows){
-      const b = computeBadges(rows);
-      const host = byId('badgesBox');
-      host.innerHTML = b.map(x=>`<span class="badge-chip">${escapeHtml(x)}</span>`).join('') || '<span class="muted">No badges yet.</span>';
-    }
-
     // ===== Eventos header/auth =====
-    byId('btnHdrLogin').onclick  = ()=> openAuthModal('login');
-    byId('btnHdrSignup').onclick = ()=> openAuthModal('signup');
-    byId('btnHdrLogout').onclick = ()=> { localStorage.removeItem(AUTH_KEY); renderAuth(); };
-    byId('authClose').onclick = ()=> hideModal('authModal');
-    byId('authCancel').onclick = ()=> hideModal('authModal');
-    byId('authSubmit').onclick = doLocalAuth;
+    byId('btnHdrLogin').onclick  = ()=> location.href = LOGIN_URL;
+    byId('btnHdrSignup').onclick = ()=> location.href = LOGIN_URL; // o /signup si lo separas
+    byId('btnHdrLogout').onclick = ()=> { localStorage.removeItem(AUTH_KEY); renderAuth(); location.href = LOGIN_URL; };
 
     // ===== Eventos existentes =====
     byId("btnHome").onclick = ()=>{ location.href = "/"; };
-    byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = "/"; };
+    byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = LOGIN_URL; };
     byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
     byId("btnSaveGoal").onclick = ()=>{
       const val = Math.max(1, Number(byId("weeklyGoal").value)||1);
@@ -1111,7 +863,6 @@
     byId("tabAZ305").onclick= ()=>{ activateTab("az-305"); renderResults(window.__myRows||[], "az-305"); };
     byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
 
-    // ===== Init =====
     function renderProfile(){
       const u=getUserAny()||{};
       byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
@@ -1129,6 +880,15 @@
 
     document.addEventListener("DOMContentLoaded", async ()=>{
       byId('yearNow').textContent = new Date().getFullYear();
+
+      // === Redirección si no hay sesión ===
+      if(!getUserAny()){
+        if (window.location.pathname !== LOGIN_URL) {
+          window.location.replace(LOGIN_URL);
+        }
+        return;
+      }
+
       renderAuth();
       loadRemoteMe();
       renderProfile();
@@ -1137,9 +897,8 @@
         const rows = await fetchMyResults(500);
         window.__myRows = rows;
         renderResults(rows, "all");
-        renderHeat14(rows);
-        renderBadges(rows);
 
+        // mini trend
         const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
         let delta = 0; let dir = '=';
         if(ordered.length>=6){
@@ -1161,7 +920,7 @@
         console.warn('Results fetch failed:', e);
       }
 
-      // Ranking Global mini
+      // Ranking Global mini + CTA
       renderMyGlobalRank();
 
       // Marcadas
@@ -1172,9 +931,6 @@
         console.warn('Marked render failed:', e);
       }
     });
-
-    // Accesibilidad: cerrar modal con Escape
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hideModal('authModal'); });
   </script>
 </body>
 </html>

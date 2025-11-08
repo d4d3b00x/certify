@@ -1,65 +1,221 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" class="aws">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Billing · Costes</title>
-  <meta name="description" content="Billing · Costes · Billing"/>
-  <link rel="stylesheet" href="../assets/styles.css"/>
+  <title>Billing · Costes | ITHub</title>
+  <meta name="description" content="Guía práctica y completa sobre Billing · Costes: arquitectura, seguridad, costes, troubleshooting, labs y preguntas frecuentes para SAA-C03."/>
+  <meta name="keywords" content="AWS, arquitectura, billing, costes, labs, seguridad, troubleshooting"/>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <style>
+
+:root{
+  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+  --pill:#5b6bdc; --pill-ink:#0b0f1f;
+}
+:root.aws{ --pill:#ff9900; --pill-ink:#1a1207; }
+:root.azure{ --pill:#5b6bdc; --pill-ink:#0b0f1f; }
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+header{position:sticky;top:0;z-index:60;backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
+  border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:40px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid color-mix(in oklab,var(--pill),transparent 70%);
+  background:linear-gradient(180deg,color-mix(in oklab,white 25%, var(--pill)),var(--pill));
+  color:var(--pill-ink);font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
+.pill-btn:hover{transform:translateY(-1px)}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
+.hero{padding:26px 0 8px}
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
+  border-radius:20px; border:1px solid color-mix(in oklab,var(--pill),transparent 55%);
+  background:color-mix(in oklab,var(--pill),transparent 86%); color:#ffe7c9; font-weight:900 }
+.exam-chip i{width:16px;height:2px;background:#ffe1bf;display:inline-block;box-shadow:0 6px 0 #ffe1bf, 0 -6px 0 #ffe1bf;border-radius:2px}
+
+h1{font-size:clamp(1.6rem,3.6vw,2.4rem);margin:16px 0 10px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0}
+.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
+.grid{display:grid;grid-template-columns:320px 1fr;gap:18px}
+@media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.aside h3{margin:8px 0 10px}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid color-mix(in oklab,var(--pill),transparent 55%);
+  background:color-mix(in oklab,var(--pill),transparent 90%);font-weight:800;color:#eaf0ff}
+.toc a small{color:#ffd4a3;font-weight:700}
+.toc a:hover{border-color:color-mix(in oklab,var(--pill),transparent 25%); transform:translateX(2px)}
+
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
+blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
+blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
+pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
+th,td{border:1px solid #22304f;padding:8px 10px;vertical-align:top}
+th{background:#16213a}
+
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+
+  </style>
 </head>
-<body data-slug="aws-billing.html">
+<body>
 
-<div class="navbar">
-  <div class="container navline">
-    <a class="brand" href="../index.html">
-      <div class="logo"></div>
-      <div class="name"><span class="it">IT</span><span class="hub">Hub</span><span class="es">.es</span></div>
-    </a>
-    <nav class="mainmenu">
-      <a href="../index.html#contenidos">SIMULADORES</a>
-      <a href="../index.html#contenidos">CONTENIDOS</a>
-      <a href="../index.html#contenidos">RANKING</a>
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
+    </div>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="/">HOME</a>
+      <a href="/score/ranking.html">RANKING</a>
     </nav>
-    <div class="userbar">
-      <span class="userpill">👋 @JUANDB</span>
-      <a class="btn purple" href="#">PERFIL</a>
-      <a class="btn" href="#">LOGOUT</a>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
     </div>
   </div>
-</div>
+</header>
+<script>
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+(function(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.handle||u.name||u.email||'USER').toUpperCase(); }
+  const logout=document.getElementById('btnLogout');
+  if(logout){
+    logout.addEventListener('click', function(){
+      localStorage.removeItem('currentUser');
+      location.href='/';
+    });
+  }
+})();
+</script>
 
-<section class="hero">
-  <div class="container">
-    <h1 class="title">Billing · Costes</h1>
-    <p class="tagline">Billing</p>
+<main class="container hero">
+
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip"><i></i><span>AWS · SAA-C03</span></span>
   </div>
-</section>
-
-<main class="container">
-  <div class='breadcrumbs'><a href='../index.html'>Inicio</a> / <a href='../index.html#contenidos'>Contenidos</a> / <span>Billing · Costes</span></div>
-  <article>
-    <div style="display:grid;grid-template-columns:1fr;gap:12px">
-      <div>
-        <h2 id="indice">Índice</h2>
-        <ol style="list-style:none;padding:0"><li><a href='#decisiones'><span>•</span><span>Tabla de decisión</span></a></li><li><a href='#definicion'><span>•</span><span>Definición</span></a></li><li><a href='#casos'><span>•</span><span>Casos de uso</span></a></li><li><a href='#examen'><span>•</span><span>Cuándo elegirlo</span></a></li><li><a href='#escenario'><span>•</span><span>Escenario real</span></a></li><li><a href='#extra'><span>•</span><span>Detalles</span></a></li><li><a href='#recursos'><span>•</span><span>Recursos</span></a></li></ol>
-      </div>
-      <div><h2 id='decisiones'>Tabla de decisión</h2><table class='table'><thead><tr><th>Necesidad</th><th>Opción</th><th>Notas</th></tr></thead><tbody><tr><td>Caso A</td><td>Opción recomendada</td><td>Motivo</td></tr><tr><td>Caso B</td><td>Alternativa</td><td>Consideraciones</td></tr></tbody></table><h2 id='definicion'>Definición</h2><p>Billing · Costes en Billing — resumen funcional y objetivos principales.</p><h2 id='casos'>Casos de uso</h2><ul><li>Caso de uso 1 bien concretado</li><li>Caso de uso 2 común en proyectos</li><li>Caso de uso 3 para examen</li></ul><h2 id='examen'>Cuándo elegirlo en el examen</h2><ul><li>Palabra clave del enunciado → elegir esta opción</li><li>Limitación típica que descarta alternativas</li><li>Señal de coste o seguridad que apunta al servicio</li></ul><h2 id='escenario'>Escenario real de ejemplo</h2><div class='callout'>Implementación realista de Billing · Costes en una arquitectura multi‑AZ con mejores prácticas de seguridad y coste.</div><h2 id='extra'>Detalles</h2><p>Puntos importantes, límites y patrones.</p><h2 id='recursos'>Recursos</h2><ul><li><a href='https://docs.aws.amazon.com/' target='_blank' rel='noopener'>Documentación oficial</a></li></ul></div>
-      <div>
-        <h2 id="quiz">Quiz</h2>
-        <div id="quiz" data-questions='[{"q": "¿Billing · Costes: concepto clave?", "a": "Correcto", "opts": ["Correcto", "Incorrecto"]}]'></div>
-      </div>
-      <div class="breadcrumbs"><a href="../index.html">← Volver</a></div>
+  <h1 style="text-align:center">Billing · Costes</h1>
+  <div class="meta">
+    <span class="pill">Dominio: Arquitectura y prácticas</span>
+    <span class="pill">Nivel: Intermedio-Avanzado</span>
+    <span class="pill">Tiempo de lectura: 25–40 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <aside class="aside">
+      <h3>ÍNDICE</h3>
+      <ul class='toc'><li><a href="#intro"><small>1.</small> Resumen y objetivos</a></li>
+<li><a href="#arc"><small>2.</small> Arquitecturas recomendadas</a></li>
+<li><a href="#deep"><small>3.</small> Profundizando en el servicio</a></li>
+<li><a href="#security"><small>4.</small> Seguridad y cumplimiento</a></li>
+<li><a href="#operations"><small>5.</small> Operación y monitorización</a></li>
+<li><a href="#cost"><small>6.</small> Costes y optimización</a></li>
+<li><a href="#troubleshoot"><small>7.</small> Troubleshooting</a></li>
+<li><a href="#labs"><small>8.</small> Labs guiados</a></li>
+<li><a href="#faq"><small>9.</small> Preguntas frecuentes</a></li></ul>
+    </aside>
+    <div>
+      <section id="intro" class="card"><h2>Resumen y objetivos</h2>
+      <p>Esta guía para <b>SAA-C03</b> cubre <b>Billing · Costes</b> con enfoque práctico, arquitectura, seguridad, costes, troubleshooting y labs.</p>
+      <blockquote class="tip"><b>Objetivo:</b> poder diseñar, construir y defender decisiones en el examen y en producción.</blockquote>
+    </section>
+<section id="arc" class="card"><h2>Arquitecturas recomendadas</h2>
+      <ul>
+        <li>Patrones de referencia por tamaño de carga y aislamiento.</li>
+        <li>Separación de dominios y zonas de confianza para limitar el radio de ataque.</li>
+        <li>Servicios gestionados cuando aportan seguridad y agilidad.</li>
+      </ul>
+    </section>
+<section id="deep" class="card"><h2>Profundizando en el servicio</h2>
+      <p>Componentes, límites/cuotas y consideraciones de escalado.</p>
+      <table><thead><tr><th>Componente</th><th>Función</th><th>Escala</th><th>Notas</th></tr></thead>
+      <tbody><tr><td>Plano de datos</td><td>Tráfico/I-O</td><td>AZ/región</td><td>Escala horizontal</td></tr>
+      <tr><td>Plano de control</td><td>APIs</td><td>Región/global</td><td>Gestiona <code>retry</code> y límites</td></tr></tbody></table>
+    </section>
+<section id="security" class="card"><h2>Seguridad y cumplimiento</h2>
+      <ul>
+        <li>Mínimo privilegio, segmentación, cifrado en tránsito/reposo.</li>
+        <li>Registros y detección: logs, métricas, alertas y retención.</li>
+      </ul>
+    </section>
+<section id="operations" class="card"><h2>Operación y monitorización</h2>
+      <p>Dashboards, SLO/SLI y alarmas de latencia/errores.</p>
+      <pre><code># Métrica ejemplo
+errors_5xx / requests_total &gt; 1% por 5m → alerta</code></pre>
+    </section>
+<section id="cost" class="card"><h2>Costes y optimización</h2>
+      <ul>
+        <li>Modelo de precios del servicio y multiplicadores.</li>
+        <li>Buenas prácticas: right-sizing, endpoints privados, clases de almacenamiento.</li>
+      </ul>
+    </section>
+<section id="troubleshoot" class="card"><h2>Troubleshooting</h2>
+      <ul>
+        <li>Checklist de conectividad y permisos.</li>
+        <li>Errores comunes y validaciones con logs/monitor.</li>
+      </ul>
+    </section>
+<section id="labs" class="card"><h2>Labs guiados</h2>
+      <ol>
+        <li>Despliegue mínimo y prueba end-to-end.</li>
+        <li>Seguridad y auditoría.</li>
+        <li>Resiliencia y recuperación.</li>
+      </ol>
+    </section>
+<section id="faq" class="card"><h2>Preguntas frecuentes</h2>
+      <p><b>¿Qué límites debo vigilar?</b> Los que bloquean escala horizontal o recuperación.</p>
+      <p><b>¿Cómo justifico una opción del examen?</b> prioriza resiliencia, seguridad y coste.</p>
+    </section>
     </div>
-  </article>
+  </div>
+    
 </main>
 
-<footer>
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
-    <span>© 2025 IT HUB · Guía SAA-C03</span>
-    <a class="btn" href="../index.html#contenidos">Ver contenidos</a>
+<footer role="contentinfo">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">ITHub.es</span>
+      <span>© <span id="y"></span> · Contenido educativo para certificaciones.</span></div>
+    <div><a href="/score/ranking.html" class="pill-btn">VER RANKING</a></div>
   </div>
 </footer>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 
-<script src="../assets/app.js"></script>
 </body>
 </html>
