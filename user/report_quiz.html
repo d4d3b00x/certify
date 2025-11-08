@@ -35,7 +35,12 @@ button:disabled{opacity:.6;cursor:not-allowed}
 .question{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:12px;margin:12px 0}
 .qhead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .qtitle{font-weight:900}
-.domain{font-weight:900;opacity:.9}
+.domain{
+  font-weight:900;
+  text-transform:uppercase;     /* <- mayúsculas */
+  color:#9cc0ff;                /* <- tono para destacar */
+  margin-bottom:6px;            /* <- separación respecto a la pregunta */
+}
 .opt{border:1px solid var(--stroke);background:#0f1730;border-radius:12px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start}
 .opt.correct{border-color:#2e7a5a;background:#0f2d1f}
 .opt.chosen{outline:2px solid rgba(255,255,255,.10)}
@@ -62,7 +67,7 @@ footer{opacity:.7;margin:24px 0 10px 0;font-size:.9rem}
       <h1>REPORT DEL QUIZ</h1>
       <div class="controls">
         <input id="sessionId" placeholder="sessionId" style="min-width:260px" />
-        <button class="primary" id="btnLoad"></button>
+        <button class="primary" id="btnLoad">Cargar</button>
         <button id="btnPrint" title="Imprimir / PDF">🖨️ Imprimir</button>
         <button id="btnDownload" title="Descargar JSON">⬇️ Descargar JSON</button>
         <span id="status" class="tag">Listo</span>
@@ -106,7 +111,7 @@ footer{opacity:.7;margin:24px 0 10px 0;font-size:.9rem}
       <div id="empty" class="empty" hidden>No hay datos para mostrar.</div>
       <div id="fallbackMsg" class="warnmsg" hidden>⚠️ Esta sesión no contiene el campo <code>questions</code>. Se ha reconstruido usando <code>questionBank</code> y <code>answerItems</code> (los textos de opciones podrían no estar disponibles).</div>
     </div>
-    <footer>ITHub.es 2025</footer>
+   
   </div>
 
 <script>
@@ -312,15 +317,20 @@ function renderQuestions(questions, item, filter="all"){
     head.className = "qhead";
     const left = document.createElement("div");
     left.className = "row";
+    left.style.flexDirection = "column";
+    left.style.alignItems = "flex-start";
+
+    // === NUEVO: dominio arriba en mayúsculas y pregunta debajo ===
+    const domain = document.createElement("div");
+    domain.className = "domain";
+    domain.textContent = (q.category || "GENERAL") + (q.domain ? ` (${q.domain})` : "");
+
     const title = document.createElement("div");
     title.className = "qtitle";
     title.textContent = `${(q.index!=null?q.index+1:"—")}. ${q.questionText || "(texto no disponible)"}`;
-    const domain = document.createElement("div");
-    domain.className = "domain";
-    domain.textContent = (q.category || "General") + (q.domain ? ` (${q.domain})` : "");
-    left.appendChild(title);
-    left.appendChild(document.createTextNode(" "));
+
     left.appendChild(domain);
+    left.appendChild(title);
 
     const right = document.createElement("div");
     right.className = "right";
@@ -417,6 +427,61 @@ window.addEventListener("DOMContentLoaded", ()=>{
     load();
   }
 });
+</script>
+
+
+<div id="site-footer"></div>
+<script>
+(async () => {
+  const host = document.getElementById('site-footer');
+
+  // 1) Cargar el fragmento
+  const res  = await fetch('/includes/footer.html', { cache: 'no-cache' });
+  const html = await res.text();
+  host.innerHTML = html;
+
+  // 2) Re-ejecutar los <script> del fragmento (innerHTML NO los ejecuta)
+  const scripts = host.querySelectorAll('script');
+  for (const old of scripts) {
+    const s = document.createElement('script');
+    if (old.src) {
+      s.src   = old.src;
+      s.async = old.async;
+      s.defer = old.defer;
+      if (old.type) s.type = old.type;
+    } else {
+      s.textContent = old.textContent;
+    }
+    document.body.appendChild(s);
+    old.remove();
+  }
+
+  // 3) Forzar que el botón abra el modal y anule fallbacks (alert, etc.)
+  //    - addEventListener con 'capture: true' para ejecutar antes que otros
+  //    - stopImmediatePropagation para bloquear otros handlers del botón
+  const btn = host.querySelector('#footerContactBtn');
+  if (btn) {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation(); // bloquea otros listeners atados al botón
+      if (typeof window.openFeedbackModal === 'function') {
+        window.openFeedbackModal(); // definido por footer.html tras re-ejecutar scripts
+      } else {
+        // como último recurso, intenta abrir el modal por ID si el script no corrió
+        const modal = document.getElementById('ithub-feedback-modal');
+        if (modal) {
+          modal.style.display = 'flex';
+          modal.classList.add('show');
+          modal.setAttribute('aria-hidden','false');
+          (modal.querySelector('.card') || modal).focus?.();
+        }
+      }
+    }, true); // <- fase de captura
+  }
+
+  // (opcional) Si aún tienes por ahí un listener que hace alert en el evento global,
+  // NO lo disparemos: este handler evita que se emita nada extra en el click.
+})();
 </script>
 </body>
 </html>
