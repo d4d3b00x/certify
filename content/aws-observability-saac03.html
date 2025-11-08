@@ -72,22 +72,39 @@
 </head>
 <body>
 
-<header>
+<header role="banner">
   <div class="container nav">
     <div class="brand">
-      <a href="/"><img src="/assets/ithub-logo.svg" alt="ITHub"></a>
+      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
     </div>
-    <nav class="menu">
+    <nav class="menu" aria-label="Navegación principal">
       <a href="/">HOME</a>
       <a href="/content/content.html">CONTENIDOS</a>
       <a href="/score/ranking.html">RANKING</a>
     </nav>
-    <div>
-      <a class="pill-btn" href="/login/login.html">LOGIN</a>
-      <a class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
     </div>
   </div>
 </header>
+
+<script>
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+(function(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+})();
+</script>
 
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0">
@@ -171,13 +188,11 @@
   </div>
 </main>
 
-<footer>
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span class="exam-chip"><i></i><span>ITHub.es</span></span>
-      <span>© 2025 · Contenido educativo para certificaciones.</span>
-    </div>
-     <div><a href="javascript:void(0);" onclick="history.back();" class="pill-btn">< VOLVER</a></div>  </div>
+<footer role="contentinfo">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">ITHub.es</span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
+    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
   </div>
 </footer>
 
