@@ -34,6 +34,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
       --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+      --glow-azure: 0 0 0 1px rgba(0,120,212,.35), 0 8px 22px rgba(0,120,212,.18);
+      --glow-aws:   0 0 0 1px rgba(255,153,0,.28), 0 8px 22px rgba(255,153,0,.16);
+      --glow-gcp:   0 0 0 1px rgba(66,133,244,.32), 0 8px 22px rgba(66,133,244,.18);
     }
 
     *{box-sizing:border-box}
@@ -85,7 +88,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .lead{color:var(--muted);max-width:820px;margin:4px auto 0;font-size:.95rem}
     .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
-    section{padding:26px 0}
+    section{padding:24px 0} /* un pelín más compacto */
     .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
     .muted{color:var(--muted);font-size:.95rem}
 
@@ -117,7 +120,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .vendor-aws .accent{background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))}
 
     /* ===== Journey (4 hitos) ===== */
-    .journey{padding:18px 0 8px;} /* más compacto abajo */
+    .journey{padding:16px 0 8px;}
     .journey h2{margin:0 0 10px;font-size:1.6rem;font-weight:900;text-transform:uppercase}
     .timeline{display:grid;gap:12px;margin-top:10px}
     @media(min-width:820px){.timeline{grid-template-columns:repeat(4,1fr)}}
@@ -129,14 +132,14 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .journey-cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
 
     /* ===== CTA dos columnas (captura) ===== */
-    .cta-section{padding-top:8px;} /* menos espacio arriba */
+    .cta-section{padding-top:8px;}
     .cta{display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1px solid var(--stroke);border-radius:14px;overflow:hidden;background:var(--surface);margin-top:10px}
     @media(max-width:820px){.cta{grid-template-columns:1fr}}
     .cta .left{padding:18px}
     .cta .right{padding:18px;background:var(--surface2)}
     .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,153,0,.12);border:1px solid rgba(255,153,0,.3);color:#ffd7a0;font-weight:800}
 
-    /* Modales, quiz, etc. (igual que antes) */
+    /* Modales, quiz, etc. */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
     .modal.show{display:flex}
     .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
@@ -165,7 +168,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
 
-/* Botón principal destacado (hero) */
+    /* Botón principal destacado (hero) */
     .hero .btn {
       background: linear-gradient(180deg, #e423b3, #d8abda);
       border: 1px solid rgba(108, 139, 255, .5);
@@ -184,6 +187,64 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
+
+    /* ===== Glosario → carrusel (2 filas, 20 ítems, efecto pop) ===== */
+    .glossary{padding-top:12px;}
+    .g-wrap{position:relative}
+    .g-track{
+      display:grid;
+      grid-auto-flow:column;              /* columnas infinitas */
+      grid-template-rows:repeat(2,1fr);   /* 2 filas visibles */
+      gap:12px;
+      overflow-x:auto; scroll-behavior:smooth;
+      padding:6px 6px 4px;
+      scrollbar-width:thin; scrollbar-color:#3a4580 transparent;
+    }
+    .g-track::-webkit-scrollbar{height:8px}
+    .g-track::-webkit-scrollbar-thumb{background:#3a4580;border-radius:999px}
+
+    .g-card{
+      min-width: 280px; max-width: 320px; /* ancho de “columna” */
+      background:linear-gradient(180deg,#12183a,#0f1531);
+      border-radius:16px; padding:14px; border:1px solid rgba(255,255,255,.08);
+      position:relative; box-shadow: var(--shadow);
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, filter .14s ease;
+      outline:0;
+    }
+    .g-card:hover, .g-card:focus-visible{ transform:translateY(-3px) scale(1.01); }
+    .g-card.azure{ box-shadow: var(--glow-azure); }
+    .g-card.aws{ box-shadow: var(--glow-aws); }
+    .g-card.gcp{ box-shadow: var(--glow-gcp); }
+    .g-card .accent{position:absolute;inset:0;border-radius:16px;
+      padding:1px; background:linear-gradient(135deg,rgba(108,139,255,.7),rgba(255,153,0,.35));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; opacity:.55;
+      transition:opacity .14s ease, filter .14s ease;
+    }
+    .g-card:hover .accent,.g-card:focus-visible .accent{opacity:.9; filter:saturate(1.1)}
+
+    .g-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .g-ico{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:linear-gradient(180deg,#8aa0ff,#425dff); box-shadow:0 6px 14px rgba(80,90,240,.25)}
+    .g-title{font-weight:900;font-size:1.02rem}
+    .g-desc{margin:6px 0 0;color:var(--muted);font-size:.95rem;line-height:1.35}
+    .g-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .g-tag{padding:4px 8px;border-radius:999px;font-weight:900;font-size:.72rem;letter-spacing:.2px;border:1px solid rgba(255,255,255,.14)}
+    .tag-az{background:rgba(0,120,212,.14);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
+    .tag-aws{background:rgba(255,153,0,.14);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
+    .tag-gcp{background:rgba(66,133,244,.14);color:#d7e5ff;border-color:rgba(66,133,244,.35)}
+
+    .g-arrows{display:flex;gap:8px;justify-content:flex-end;margin:8px 2px 0}
+    .g-arrow{
+      appearance:none;border:1px solid var(--stroke);background:linear-gradient(180deg,#1b2142,#161b34);
+      color:#cbd3ff;border-radius:12px;min-width:44px;min-height:38px;cursor:pointer;font-weight:900;
+      display:inline-grid;place-items:center;box-shadow:0 6px 14px rgba(5,10,30,.25);
+      transition:transform .08s ease,border-color .12s ease, background .12s ease;
+    }
+    .g-arrow:hover{transform:translateY(-1px);border-color:#3a4580}
+    .g-arrow[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+    .g-arrow svg{width:20px;height:20px}
+    @media(max-width:720px){ .g-card{min-width:78%} }
   </style>
 </head>
 <body>
@@ -328,15 +389,163 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-    <!-- Glosario rápido (nuevo) -->
+    <!-- Glosario rápido → CARRUSEL 2 filas (20 ítems, efecto pop) -->
     <section class="glossary" aria-labelledby="g-title">
       <div class="container">
         <h2 id="g-title" class="sec-title">Glosario rápido</h2>
-        <div class="grid cols-3">
-          <article class="q-block"><div class="accent"></div><div class="sim-title">Azure Front Door</div><p class="muted">CDN+WAF global capa 7 con enrutamiento al endpoint más cercano.</p></article>
-          <article class="q-block"><div class="accent"></div><div class="sim-title">GZRS</div><p class="muted">Redundancia geozonal: durabilidad y HA regional.</p></article>
-          <article class="q-block"><div class="accent"></div><div class="sim-title">SNS Fanout</div><p class="muted">Publica un evento a múltiples colas/consumidores.</p></article>
-        
+
+        <div class="g-arrows" role="group" aria-label="Navegación del glosario">
+          <button class="g-arrow" id="gPrev" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <button class="g-arrow" id="gNext" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
+          </button>
+        </div>
+
+        <div class="g-wrap">
+          <div class="g-track" id="gTrack" tabindex="0" role="list" aria-label="Carrusel de términos del glosario (dos filas)">
+            <!-- 1 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌐</div><div class="g-title">Azure Front Door</div></div>
+              <p class="g-desc">CDN + WAF global (L7) con terminación TLS y enrutamiento al punto más cercano para apps multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 2 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">GZRS</div></div>
+              <p class="g-desc">Geo-Zone-Redundant Storage: resiliencia a nivel de zona y réplica geográfica para máxima durabilidad.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 3 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📣</div><div class="g-title">SNS Fanout</div></div>
+              <p class="g-desc">Patrón pub/sub para distribuir eventos a múltiples consumidores (SQS, Lambda, HTTPS) de forma desacoplada.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 4 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🛡️</div><div class="g-title">Azure Bastion</div></div>
+              <p class="g-desc">Accede por RDP/SSH desde el navegador sin exponer IP pública ni abrir 22/3389. Menor superficie de ataque.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 5 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌀</div><div class="g-title">VM Scale Sets</div></div>
+              <p class="g-desc">Escala grupos de VMs con zonas, actualizaciones orquestadas y autoescalado por métricas para mantener SLA.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 6 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📏</div><div class="g-title">Azure Policy</div></div>
+              <p class="g-desc">Gobernanza declarativa con efectos audit/deny; aplica estándares a nivel de Management Group y suscripciones.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 7 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌍</div><div class="g-title">Cosmos DB</div></div>
+              <p class="g-desc">Base NoSQL distribuida globalmente con latencia de un dígito, APIs múltiples y replicación multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 8 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🔁</div><div class="g-title">Azure Site Recovery</div></div>
+              <p class="g-desc">Orquesta DR para VMs con RPO de minutos y pruebas no disruptivas. Failover y failback guiados.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 9 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧭</div><div class="g-title">Gateway VPC Endpoint</div></div>
+              <p class="g-desc">Acceso a S3/DynamoDB desde la VPC sin Internet Gateway ni NAT. Más seguro y económico.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 10 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🚀</div><div class="g-title">CloudFront</div></div>
+              <p class="g-desc">CDN global con TLS, caché y protección integrada (Shield/WAF). Orígenes S3/ALB/EC2.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 11 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">⚡</div><div class="g-title">DynamoDB</div></div>
+              <p class="g-desc">NoSQL serverless con On-Demand/Provisioned, Streams y Global Tables para replicación multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 12 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🏛️</div><div class="g-title">RDS Multi-AZ</div></div>
+              <p class="g-desc">Replica sincrónica a standby en otra zona y failover automático para mejorar disponibilidad de bases de datos.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 13 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">S3 Glacier</div></div>
+              <p class="g-desc">Archivado de bajo coste con políticas de ciclo de vida y tiempos de recuperación configurables.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 14 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📶</div><div class="g-title">Kinesis Data Streams</div></div>
+              <p class="g-desc">Ingesta en tiempo real con orden por shard, múltiples consumidores y retención configurable.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 15 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">💸</div><div class="g-title">Savings Plans</div></div>
+              <p class="g-desc">Compromiso de gasto que reduce costes de compute manteniendo flexibilidad de familia, tamaño y región.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 16 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧱</div><div class="g-title">Application Gateway (WAF)</div></div>
+              <p class="g-desc">Balanceo L7 con WAF administrado, rutas por host/path y TLS end-to-end. Integrable con AKS.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 17 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🔐</div><div class="g-title">Key Vault (HSM)</div></div>
+              <p class="g-desc">Gestión de claves, secretos y certificados con protección HSM, soft-delete y purge protection.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 18 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🗂️</div><div class="g-title">Azure Files</div></div>
+              <p class="g-desc">SMB gestionado con AD/ACLs y snapshots. Ideal para lift &amp; shift y perfiles de usuario.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 19 -->
+            <article class="g-card gcp" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧮</div><div class="g-title">BigQuery</div></div>
+              <p class="g-desc">Data warehouse serverless; consulta petabytes con SQL estándar y separación compute/almacenamiento.</p>
+              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
+            </article>
+            <!-- 20 -->
+            <article class="g-card gcp" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🐳</div><div class="g-title">Cloud Run</div></div>
+              <p class="g-desc">Contenedores serverless con escalado a cero y facturación por solicitud. Integración con Pub/Sub y VPC.</p>
+              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -903,6 +1112,44 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
 
     document.addEventListener('DOMContentLoaded', maybeAddViewLastBtn);
+
+    /* ===== Glosario → lógica del carrusel (2 filas) ===== */
+    (function(){
+      const track = document.getElementById('gTrack');
+      const prev  = document.getElementById('gPrev');
+      const next  = document.getElementById('gNext');
+
+      function columnStride(){
+        // Avanza 1 “columna” del grid: ancho de tarjeta + gap
+        const first = track.querySelector('.g-card');
+        if(!first) return 320;
+        const w = first.getBoundingClientRect().width;
+        const gap = parseFloat(getComputedStyle(track).gap||'12');
+        return Math.ceil(w + gap);
+      }
+
+      function updateArrows(){
+        const max = track.scrollWidth - track.clientWidth - 2; // tolerancia
+        prev.disabled = track.scrollLeft <= 0;
+        next.disabled = track.scrollLeft >= max;
+      }
+
+      function scrollCols(dir){
+        track.scrollBy({ left: dir * columnStride(), behavior:'smooth' });
+      }
+
+      prev.addEventListener('click', ()=> scrollCols(-1));
+      next.addEventListener('click', ()=> scrollCols(1));
+      track.addEventListener('scroll', updateArrows);
+      window.addEventListener('resize', updateArrows);
+      updateArrows();
+
+      // Teclado cuando el carrusel tiene foco
+      track.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight'){ e.preventDefault(); scrollCols(1); }
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
+      });
+    })();
 
     /* Abrir modal de feedback desde el footer */
     // (ya está gestionado arriba con footerBtn -> openFeedbackModal)
