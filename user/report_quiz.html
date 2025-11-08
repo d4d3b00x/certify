@@ -3,485 +3,357 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Visor de Resultados – QuizSessions</title>
+<title>Quiz Report · IT Hub</title>
 <style>
 :root{
-  --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9; --stroke:#283056;
-  --accent:#6c8bff; --accent-2:#3e64ff;
-  --ok:#2bdc8c; --bad:#ff6b6b; --warn:#ffd24d;
+  --bg:#0b1022; --surface:#121833; --surface2:#151c3e; --ink:#e9edff; --muted:#9ca8d9; --stroke:#2a325b;
+  --accent:#78a0ff; --accent-2:#6a7cff; --ok:#2bdc8c; --bad:#ff6b6b; --warn:#ffd24d;
+  --chip:#0f1734; --shadow:0 14px 38px rgba(5,8,30,.45); --radius:16px;
 }
 *{box-sizing:border-box}
-body{margin:0;background:linear-gradient(180deg,#0f1320,#0b1026); color:var(--ink); font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-.container{max-width:1100px;margin:24px auto;padding:0 16px}
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:16px}
-h1{font-size:1.35rem;margin:.1rem 0 1rem 0;font-weight:1000;letter-spacing:.2px}
-.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-input,button,select{border:1px solid var(--stroke);background:#0f1730;color:var(--ink);border-radius:10px;padding:10px 12px;font-weight:700}
-button.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));border:0;color:#fff}
-button:disabled{opacity:.6;cursor:not-allowed}
-.meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-@media (max-width:800px){ .meta{grid-template-columns:1fr} }
-.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
-@media (max-width:900px){ .kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
-.kpi{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px}
-.kpi h4{margin:0 0 6px 0;color:var(--muted);font-size:.85rem;text-transform:uppercase;letter-spacing:.3px}
-.kpi .n{font-size:1.4rem;font-weight:1000}
-.badge{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--stroke);background:#131a37;border-radius:999px;padding:6px 10px;font-weight:900}
+html{font-size:15px}
+body{
+  margin:0;
+  background:
+    radial-gradient(900px 420px at 15% -10%, #121a42 0, transparent 60%),
+    radial-gradient(900px 420px at 85% -10%, #1a1434 0, transparent 60%),
+    linear-gradient(180deg,#0c122a,#0b0f22) fixed;
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+}
+.container{max-width:1200px;margin:28px auto;padding:0 16px}
+.card{background:linear-gradient(180deg,var(--surface),#0f1633);
+  border:1px solid var(--stroke);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+h1,h2,h3{margin:0 0 8px 0}
+h1{font-size:1.35rem;font-weight:1000;letter-spacing:.2px}
+h2{font-size:1.05rem;font-weight:1000;color:#d6dcff}
+h3{font-size:.95rem;font-weight:1000;color:#cbd6ff}
+
+.header{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin-bottom:12px}
+.header .meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--stroke);background:var(--chip);
+  border-radius:999px;padding:8px 12px;font-weight:900;line-height:1;
+}
 .badge.ok{border-color:#2e7a5a;background:#0f2d1f;color:#c9ffe6}
 .badge.bad{border-color:#7a2e38;background:#3a1518;color:#ffd4d4}
 .badge.warn{border-color:#b49422;background:#3a2e12;color:#ffe9b0}
-.row{display:flex;gap:10px;align-items:center}
-.list{margin-top:16px}
-.question{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:12px;margin:12px 0}
-.qhead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
-.qtitle{font-weight:900}
-.domain{
-  font-weight:900;
-  text-transform:uppercase;     /* <- mayúsculas */
-  color:#9cc0ff;                /* <- tono para destacar */
-  margin-bottom:6px;            /* <- separación respecto a la pregunta */
+.badge.ok::before{content:"✓"; font-weight:900}
+.badge.bad::before{content:"✗"; font-weight:900}
+.badge.warn::before{content:"•"; font-weight:900}
+
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{appearance:none;border:1px solid var(--stroke);background:var(--surface2);color:var(--ink);
+  border-radius:12px;padding:9px 12px;font-weight:900;cursor:pointer;text-decoration:none}
+.btn.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));border:0;color:#0c0f24}
+
+/* ====== NUEVO LAYOUT: izquierda estrecha ====== */
+.grid{
+  display:grid;
+  grid-template-columns: 380px minmax(0,1fr); /* izquierda más estrecha */
+  gap:12px;
 }
+@media (max-width:1020px){
+  .grid{ grid-template-columns:1fr; }
+}
+
+/* KPIs: siempre 2x2 en escritorio */
+.kpi-wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:520px){ .kpi-wrap{grid-template-columns:1fr} }
+.kpi{border:1px solid var(--stroke);border-radius:12px;background:linear-gradient(180deg,var(--surface2),#0f1430);padding:12px}
+.kpi h4{margin:0 0 4px 0;color:#9fb0ff;font-weight:900}
+.kpi .n{font-size:1.2rem;font-weight:1000}
+.small{font-size:.88rem;color:#aeb8ee}
+
+/* Tabla dominios */
+.domains table{width:100%;border-collapse:separate;border-spacing:0}
+.domains thead th{position:sticky;top:0;background:#151b3d;border:1px solid var(--stroke);padding:8px}
+.domains td{border:1px solid var(--stroke);padding:8px}
+.pbar{position:relative;height:8px;background:#0b1024;border-radius:999px;overflow:hidden}
+.pbar>i{position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+.insights li{margin:4px 0}
+.empty{opacity:.8;padding:16px;text-align:center}
+
+/* Filtros + preguntas */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.tag{background:#10183a;border:1px solid var(--stroke);padding:6px 10px;border-radius:999px;color:#cbd6ff;font-weight:900;cursor:pointer}
+.tag.active{outline:2px solid rgba(124,146,255,.25)}
+
+.question{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:12px;margin:12px 0}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.qleft{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.domain{font-weight:900;text-transform:uppercase;color:#9cc0ff}
+/* ↓ MÁS FINA y algo más pequeña que antes */
+.qtitle{font-weight:700;font-size:0.96rem}
 .opt{border:1px solid var(--stroke);background:#0f1730;border-radius:12px;padding:10px 12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start}
 .opt.correct{border-color:#2e7a5a;background:#0f2d1f}
-.opt.chosen{outline:2px solid rgba(255,255,255,.10)}
+.opt.chosen{outline:2px solid rgba(255,255,255,.08)}
 .opt.bad-chosen{border-color:#7a2e38;background:#3a1518}
-.small{color:#b7c3ff;font-size:.9rem}
-.right{display:flex;gap:8px;align-items:center}
-hr.sep{border:0;border-top:1px solid var(--stroke);margin:14px 0}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.tag{background:#10183a;border:1px solid var(--stroke);padding:4px 8px;border-radius:8px;color:#cbd6ff;font-weight:800;cursor:pointer}
-.tag:hover{filter:brightness(1.1)}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid var(--stroke);padding:8px;text-align:left}
-th{background:#121a39}
-.empty{opacity:.8;padding:16px;text-align:center}
-a.link{color:#9cc0ff;text-decoration:none}
-a.link:hover{text-decoration:underline}
-footer{opacity:.7;margin:24px 0 10px 0;font-size:.9rem}
-.warnmsg{margin-top:6px;color:#ffe9b0}
+
+.note{max-width:1200px;margin:20px auto;padding:0 16px}
+.note .msg{border:1px dashed var(--stroke);background:rgba(20,26,56,.5);padding:12px;border-radius:12px;color:#cbd6ff}
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>REPORT DEL QUIZ</h1>
-      <div class="controls">
-        <input id="sessionId" placeholder="sessionId" style="min-width:260px" />
-        <button class="primary" id="btnLoad">Cargar</button>
-        <button id="btnPrint" title="Imprimir / PDF">🖨️ Imprimir</button>
-        <button id="btnDownload" title="Descargar JSON">⬇️ Descargar JSON</button>
-        <span id="status" class="tag">Listo</span>
-      </div>
 
-      <div id="meta" class="meta" hidden>
-        <div class="kpi">
-          <h4>Usuario</h4>
-          <div class="n" id="mUser">—</div>
-          <div class="small" id="mEmail">—</div>
-        </div>
-        <div class="kpi">
-          <h4>Quiz</h4>
-          <div class="n" id="mQuiz">—</div>
-          <div class="small" id="mMode">—</div>
-        </div>
-        <div class="kpi">
-          <h4>Tiempo</h4>
-          <div class="n" id="mTime">—</div>
-          <div class="small" id="mDates">—</div>
-        </div>
-        <div class="kpi">
-          <h4>Score</h4>
-          <div class="n" id="mScore">—</div>
-          <div class="small" id="mState">—</div>
+<div id="noSid" class="note" hidden>
+  <div class="msg">ℹ️ Añade <code>?sessionId=...</code> a la URL para ver el informe.</div>
+</div>
+
+<div id="app" class="container" hidden>
+  <div class="card">
+    <div class="header">
+      <div>
+        <h1 id="hTitle">Quiz Report</h1>
+        <div class="meta">
+          <span class="badge" id="hUser">—</span>
+          <span class="badge" id="hQuiz">—</span>
+          <span class="badge" id="hTime">—</span>
+          <span class="badge" id="hState">—</span>
         </div>
       </div>
-
-      <div class="toolbar" id="filters" hidden>
-        <span class="tag" id="tAll">Todas</span>
-        <span class="tag" id="tOk">Correctas</span>
-        <span class="tag" id="tBad">Incorrectas</span>
-        <span class="tag" id="tMarked">Marcadas</span>
+      <div class="actions">
+        <button id="btnPrint" class="btn">🖨️ Imprimir</button>
+        <button id="btnDownload" class="btn primary">⬇️ Descargar JSON</button>
       </div>
-
-      <div id="domains" class="list" hidden></div>
-
-      <hr class="sep"/>
-
-      <div id="questions" class="list"></div>
-      <div id="empty" class="empty" hidden>No hay datos para mostrar.</div>
-      <div id="fallbackMsg" class="warnmsg" hidden>⚠️ Esta sesión no contiene el campo <code>questions</code>. Se ha reconstruido usando <code>questionBank</code> y <code>answerItems</code> (los textos de opciones podrían no estar disponibles).</div>
     </div>
-   
+
+    <div class="grid">
+      <!-- ===== Izquierda (estrecha) ===== -->
+      <div class="card" style="padding:14px">
+        <h2>Resumen</h2>
+        <div class="kpi-wrap" style="margin-top:8px">
+          <div class="kpi"><h4>Correctas / Total</h4><div class="n" id="kCorrect">—</div></div>
+          <div class="kpi"><h4>Tiempo</h4><div class="n" id="kTime">—</div><div class="small">segundos</div></div>
+          <div class="kpi"><h4>Aprobado</h4><div class="n" id="kPass">—</div><div class="small">Umbral 70%</div></div>
+          <div class="kpi"><h4>Velocidad Media</h4><div class="n" id="kPq">—</div><div class="small">seg/preg.</div></div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Insights</h3>
+          <ul id="insights" class="insights" style="padding-left:18px;margin:6px 0 0 0"></ul>
+        </div>
+      </div>
+
+      <!-- ===== Derecha (ancha) ===== -->
+      <div class="card" style="padding:14px">
+        <h2>Desglose por dominio</h2>
+        <div id="domains" class="domains" style="margin-top:8px"></div>
+
+        <div class="toolbar" id="filters" hidden>
+          <span class="tag active" data-f="all">Todas</span>
+          <span class="tag" data-f="ok">Correctas</span>
+          <span class="tag" data-f="bad">Incorrectas</span>
+          <span class="tag" data-f="marked">Marcadas</span>
+        </div>
+
+        <div id="questions"></div>
+        <div id="empty" class="empty" hidden>No hay preguntas para este filtro.</div>
+      </div>
+    </div>
+
+    <div id="fallbackMsg" class="small" hidden style="margin-top:10px;opacity:.8">
+      ⚠️ Esta sesión no contiene <code>questions</code>. El informe se reconstruyó con <code>questionBank</code> y <code>answerItems</code>.
+    </div>
   </div>
+</div>
 
 <script>
 const BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
 
-function qs(name){ return new URLSearchParams(location.search).get(name) || ""; }
-function fmt(s){ return String(s||"").trim() }
-function pad(n){ return String(n).padStart(2,"0") }
-function fmtDur(sec){ sec=+sec||0; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}` }
-function el(id){ return document.getElementById(id) }
-function setStatus(msg){ el("status").textContent = msg }
-function letter(i){ return String.fromCharCode(65 + (i||0)) }
+/* ==== utils ==== */
+const qs = (n)=> new URLSearchParams(location.search).get(n)||"";
+const el = (id)=> document.getElementById(id);
+const letter = (i)=> String.fromCharCode(65 + (i||0));
 
+/* ==== fetch ==== */
 async function fetchSession(sessionId){
   const paths = ["/progress","/prod/progress","/dev/progress"];
   for (const p of paths){
     const url = `${BASE}${p}?sessionId=${encodeURIComponent(sessionId)}`;
     try{
-      const r = await fetch(url, {mode:"cors"});
+      const r = await fetch(url, {mode:"cors",cache:"no-store"});
       if(r.ok){
         const j = await r.json();
         if (j && j.item) return j.item;
       }
-    }catch(e){/* siguiente */ }
+    }catch(e){}
   }
-  throw new Error("No se pudo obtener la sesión en /, /prod o /dev.");
+  throw new Error("No se pudo obtener la sesión.");
 }
 
-/* ========= Fallbacks para reconstruir preguntas ========= */
+/* ==== normalize ==== */
 function normalizeQuestions(item){
-  // 1) Caso ideal: item.questions ya viene completo
   if (Array.isArray(item.questions) && item.questions.length){
-    return { questions: item.questions.slice(), rebuilt: false };
+    return {questions:item.questions.slice(), rebuilt:false};
   }
-
-  // 2) Intentar con questionBank + answerItems
-  const bank = Array.isArray(item.questionBank) ? item.questionBank : [];
-  const answers = Array.isArray(item.answerItems) ? item.answerItems : [];
-
-  const byIdxBank = new Map();
-  for (const b of bank){
-    const ix = typeof b.index === "number" ? b.index : null;
-    if (ix === null) continue;
-    byIdxBank.set(ix, b);
-  }
-  const byIdxAns = new Map();
-  for (const a of answers){
-    const ix = typeof a.index === "number" ? a.index : null;
-    if (ix === null) continue;
-    byIdxAns.set(ix, a);
-  }
-
-  const idxs = new Set([...byIdxBank.keys(), ...byIdxAns.keys()]);
-  if (idxs.size === 0){
-    // 3) Último recurso: solo questionIds + answers (sin textos)
-    const ids = Array.isArray(item.questionIds) ? item.questionIds : [];
-    if (!ids.length) return { questions: [], rebuilt: false };
-    const qs = ids.map((qid, i) => {
-      const a = byIdxAns.get(i) || {};
-      const chosen = (typeof a.chosenIndex === "number") ? a.chosenIndex : null;
-      const correctShownIndex = (typeof a.isCorrect === "boolean" && typeof chosen === "number")
-        ? (a.isCorrect ? chosen : null) : null;
-      return {
-        index: i,
-        questionId: qid,
-        questionText: "(texto no disponible)",
-        domain: a.domain || null,
-        category: a.category || "General",
-        optionsShown: [],
-        correctShownIndex,
-        chosenIndex: chosen,
-        isCorrect: (typeof a.isCorrect === "boolean") ? a.isCorrect : null,
-        perOption: null,
-        links: [],
-        optOrder: null
-      };
+  const bank = Array.isArray(item.questionBank)? item.questionBank: [];
+  const answers = Array.isArray(item.answerItems)? item.answerItems: [];
+  const byBank=new Map(), byAns=new Map();
+  bank.forEach(b=>{ if(typeof b.index==='number') byBank.set(b.index,b); });
+  answers.forEach(a=>{ if(typeof a.index==='number') byAns.set(a.index,a); });
+  const idxs = new Set([...byBank.keys(), ...byAns.keys()]);
+  if(!idxs.size){
+    const ids = Array.isArray(item.questionIds)? item.questionIds: [];
+    const qs = ids.map((qid,i)=>{
+      const a=byAns.get(i)||{}, chosen=(typeof a.chosenIndex==='number')?a.chosenIndex:null;
+      const correctShownIndex=(typeof a.isCorrect==='boolean'&&typeof chosen==='number')?(a.isCorrect?chosen:null):null;
+      return { index:i, questionId:qid, questionText:"(texto no disponible)", domain:a.domain||null, category:a.category||"General",
+               optionsShown:[], correctShownIndex, chosenIndex:chosen, isCorrect:(typeof a.isCorrect==='boolean')?a.isCorrect:null };
     });
-    return { questions: qs, rebuilt: true };
+    return {questions:qs, rebuilt:true};
   }
-
-  const out = [];
-  for (const i of Array.from(idxs).sort((a,b)=>a-b)){
-    const b = byIdxBank.get(i) || {};
-    const a = byIdxAns.get(i) || {};
-
-    // campos del banco
-    const optionsShown =
-      Array.isArray(b.optionsShown) ? b.optionsShown.slice() :
-      Array.isArray(b.options) ? b.options.slice() : []; // por si el campo se llama options
-
-    const correctShownIndex = (typeof b.correctShownIndex === "number") ? b.correctShownIndex : null;
-
-    // campos de answers
-    const chosenIndex = (typeof a.chosenIndex === "number") ? a.chosenIndex : null;
-    let isCorrect = null;
-    if (typeof a.isCorrect === "boolean") {
-      isCorrect = a.isCorrect;
-    } else if (chosenIndex !== null && typeof correctShownIndex === "number") {
-      isCorrect = (chosenIndex === correctShownIndex);
-    }
-
-    out.push({
-      index: i,
-      questionId: b.questionId || a.questionId || (Array.isArray(item.questionIds) ? item.questionIds[i] : null) || null,
-      questionText: b.questionText || a.questionText || "(texto no disponible)",
-      domain: b.domain || a.domain || null,
-      category: b.category || a.category || "General",
-      optionsShown,
-      correctShownIndex,
-      chosenIndex,
-      isCorrect,
-      perOption: b.perOption || null,
-      links: b.links || [],
-      optOrder: Array.isArray(b.optOrder) ? b.optOrder.slice() : null
-    });
-  }
-  return { questions: out, rebuilt: true };
+  const out=[];
+  [...idxs].sort((a,b)=>a-b).forEach(i=>{
+    const b=byBank.get(i)||{}, a=byAns.get(i)||{};
+    const opts=Array.isArray(b.optionsShown)?b.optionsShown.slice():Array.isArray(b.options)?b.options.slice():[];
+    const cor=(typeof b.correctShownIndex==='number')?b.correctShownIndex:null;
+    const chosen=(typeof a.chosenIndex==='number')?a.chosenIndex:null;
+    let ok=null; if(typeof a.isCorrect==='boolean') ok=a.isCorrect; else if(chosen!=null&&cor!=null) ok=(chosen===cor);
+    out.push({ index:i, questionId:b.questionId||a.questionId||null, questionText:b.questionText||a.questionText||"(texto no disponible)",
+               domain:b.domain||a.domain||null, category:b.category||a.category||"General", optionsShown:opts,
+               correctShownIndex:cor, chosenIndex:chosen, isCorrect:ok });
+  });
+  return {questions:out, rebuilt:true};
 }
 
-/* ================== Render ================== */
-function renderMeta(item, questionsForScore){
-  el("meta").hidden = false;
-  el("mUser").textContent = fmt(item.userName || item.userId || "—");
-  el("mEmail").textContent = fmt(item.email || "—");
-  el("mQuiz").textContent = `${fmt(item.quizId)} · ${fmt(item.track)}`;
-  el("mMode").textContent = `${fmt(item.mode)} · ${fmt(item.status)}`;
-  const dur = fmtDur(item.elapsedSec||0);
-  el("mTime").textContent = `${dur}`;
-  const s = item.startedAt ? new Date(item.startedAt).toLocaleString() : "—";
-  const f = item.updatedAt ? new Date(item.updatedAt).toLocaleString() : (item.finishedAt?new Date(item.finishedAt).toLocaleString():"—");
-  el("mDates").textContent = `${s} → ${f}`;
-
-  let total = 0, correct = 0;
-  if (Array.isArray(questionsForScore) && questionsForScore.length){
-    total = questionsForScore.length;
-    correct = questionsForScore.reduce((a,q)=> a + (q.isCorrect?1:0), 0);
-  } else {
-    total = +item.total || 0;
-    correct = Math.round((+item.pct||0) * total / 100);
+/* ==== UI helpers ==== */
+function buildDomainsTable(questions){
+  const host = el("domains"); host.innerHTML="";
+  if(!questions.length){ host.innerHTML='<div class="empty">Sin datos</div>'; return {}; }
+  const m={};
+  for(const q of questions){
+    const key=(q.domain||"D?").toString();
+    if(!m[key]) m[key]={domain:key,total:0,correct:0,name:q.category||"GENERAL"};
+    m[key].total++; if(q.isCorrect) m[key].correct++;
   }
-  const pct = total ? Math.round((correct/total)*100) : (+item.pct||0);
-  el("mScore").textContent = `${correct}/${total} (${pct}%)`;
-  el("mState").textContent = item.finished ? "Finalizado" : (item.status||"in_progress");
+  const rows=Object.values(m).sort((a,b)=> a.domain.localeCompare(b.domain));
+  const tbl=document.createElement('table');
+  tbl.innerHTML=`<thead><tr><th>Dominio</th><th>Nombre</th><th>Aciertos</th><th>Total</th><th>%</th></tr></thead>`;
+  const tb=document.createElement('tbody');
+  rows.forEach(r=>{
+    const pct=r.total?Math.round(r.correct*100/r.total):0;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><b>${r.domain}</b></td><td>${(r.name||'').toUpperCase()}</td><td>${r.correct}</td><td>${r.total}</td>
+                  <td>${pct}% <div class="pbar"><i style="width:${pct}%"></i></div></td>`;
+    tb.appendChild(tr);
+  });
+  tbl.appendChild(tb); host.appendChild(tbl); return m;
 }
 
-function groupByDomain(questions){
-  const m = {};
-  for (const q of questions){
-    const d = (q.domain || "D?").toString();
-    if(!m[d]) m[d] = { domain: d, total:0, correct:0 };
-    m[d].total++;
-    if (q.isCorrect) m[d].correct++;
-  }
-  return m;
-}
-
-function makeDomainsTable(questions){
-  const host = el("domains");
-  host.innerHTML = "";
-  if(!questions.length){ host.hidden = true; return; }
-  const g = groupByDomain(questions);
-  const tbl = document.createElement("table");
-  tbl.innerHTML = `
-    <thead><tr><th>Dominio</th><th>Aciertos</th><th>Total</th><th>%</th></tr></thead>
-    <tbody>
-      ${Object.values(g).map(d=>{
-        const pct = d.total ? Math.round(d.correct*100/d.total) : 0;
-        return `<tr><td>${d.domain}</td><td>${d.correct}</td><td>${d.total}</td><td>${pct}%</td></tr>`;
-      }).join("")}
-    </tbody>`;
-  host.appendChild(tbl);
-  host.hidden = false;
-}
-
-function renderQuestions(questions, item, filter="all"){
-  const root = el("questions");
-  const empty = el("empty");
-  const fallbackMsg = el("fallbackMsg");
-  root.innerHTML = "";
-
-  let list = questions;
-  if (filter==="ok") list = questions.filter(q=> q.isCorrect === true);
-  if (filter==="bad") list = questions.filter(q=> q.isCorrect === false);
-  if (filter==="marked"){
-    const markedIdx = new Set(
-      Array.isArray(item.markedItems) ? item.markedItems.map(x=>x.index) :
+function renderQuestions(questions,item,filter="all"){
+  const root=el("questions"); root.innerHTML=""; const empty=el("empty");
+  let list=questions.slice();
+  if(filter==="ok") list=list.filter(q=>q.isCorrect===true);
+  if(filter==="bad") list=list.filter(q=>q.isCorrect===false);
+  if(filter==="marked"){
+    const marked=new Set(
+      Array.isArray(item.markedItems)?item.markedItems.map(x=>x.index):
       Object.entries(item.marked||{}).filter(([i,v])=>v).map(([i])=>+i)
     );
-    list = questions.filter(q=> markedIdx.has(q.index));
+    list=list.filter(q=>marked.has(q.index));
   }
+  if(!list.length){ empty.hidden=false; return; } empty.hidden=true;
 
-  if (!list.length){
-    empty.hidden = false;
-    return;
-  }
-  empty.hidden = true;
+  list.forEach(q=>{
+    const box=document.createElement('section'); box.className='question';
+    const head=document.createElement('div'); head.className='qhead';
+    const left=document.createElement('div'); left.className='qleft';
+    const d=document.createElement('div'); d.className='domain';
+    d.textContent=(q.category||"GENERAL")+(q.domain?` (${q.domain})`:"");
+    const t=document.createElement('div'); t.className='qtitle';
+    t.textContent=`${(q.index!=null?q.index+1:"—")}. ${q.questionText||"(texto no disponible)"}`;
+    left.appendChild(d); left.appendChild(t);
 
-  for (const q of list){
-    const box = document.createElement("section");
-    box.className = "question";
+    const badge=document.createElement('span');
+    let cls="badge ",txt="• Sin responder";
+    if(q.isCorrect===true){cls+="ok";txt="Correcta";}
+    else if(q.isCorrect===false&&q.chosenIndex!=null){cls+="bad";txt="Incorrecta";}
+    else {cls+="warn";txt="Sin responder";}
+    badge.className=cls; badge.textContent=txt;
 
-    const head = document.createElement("div");
-    head.className = "qhead";
-    const left = document.createElement("div");
-    left.className = "row";
-    left.style.flexDirection = "column";
-    left.style.alignItems = "flex-start";
+    head.appendChild(left); head.appendChild(badge); box.appendChild(head);
 
-    // === NUEVO: dominio arriba en mayúsculas y pregunta debajo ===
-    const domain = document.createElement("div");
-    domain.className = "domain";
-    domain.textContent = (q.category || "GENERAL") + (q.domain ? ` (${q.domain})` : "");
-
-    const title = document.createElement("div");
-    title.className = "qtitle";
-    title.textContent = `${(q.index!=null?q.index+1:"—")}. ${q.questionText || "(texto no disponible)"}`;
-
-    left.appendChild(domain);
-    left.appendChild(title);
-
-    const right = document.createElement("div");
-    right.className = "right";
-    const badge = document.createElement("span");
-    let badgeCls = "badge ";
-    let badgeText = "• Sin datos";
-    if (q.isCorrect === true) { badgeCls += "ok"; badgeText = "✓ Correcta"; }
-    else if (q.isCorrect === false && q.chosenIndex != null) { badgeCls += "bad"; badgeText = "✗ Incorrecta"; }
-    else if (q.chosenIndex == null) { badgeCls += "warn"; badgeText = "• Sin responder"; }
-    badge.className = badgeCls; badge.textContent = badgeText;
-    right.appendChild(badge);
-
-    head.appendChild(left); head.appendChild(right);
-    box.appendChild(head);
-
-    const opts = Array.isArray(q.optionsShown) ? q.optionsShown : [];
-    if (!opts.length){
-      const warn = document.createElement("div");
-      warn.className = "small";
-      warn.textContent = "Opciones no disponibles en esta sesión.";
-      box.appendChild(warn);
+    const opts=Array.isArray(q.optionsShown)?q.optionsShown:[];
+    if(!opts.length){
+      const warn=document.createElement('div'); warn.className='small'; warn.textContent="Opciones no disponibles en esta sesión."; box.appendChild(warn);
     }
-    for (let i=0;i<opts.length;i++){
-      const line = document.createElement("div");
-      const chosen = (q.chosenIndex===i);
-      const isCorrect = (q.correctShownIndex===i);
-      line.className = "opt";
-      if (isCorrect) line.classList.add("correct");
-      if (chosen) line.classList.add("chosen");
-      if (chosen && !isCorrect) line.classList.add("bad-chosen");
-      line.innerHTML = `<b>${letter(i)}.</b> <span>${opts[i]}</span>`;
-      box.appendChild(line);
-    }
+    opts.forEach((txt,i)=>{
+      const line=document.createElement('div'); line.className='opt';
+      const chosen=(q.chosenIndex===i), cor=(q.correctShownIndex===i);
+      if(cor) line.classList.add('correct'); if(chosen) line.classList.add('chosen'); if(chosen&&!cor) line.classList.add('bad-chosen');
+      line.innerHTML=`<b>${letter(i)}.</b> <span>${txt}</span>`; box.appendChild(line);
+    });
 
     root.appendChild(box);
-  }
+  });
 }
 
-function wireFilters(item, questions){
-  el("filters").hidden = false;
-  el("tAll").onclick = ()=> renderQuestions(questions, item, "all");
-  el("tOk").onclick = ()=> renderQuestions(questions, item, "ok");
-  el("tBad").onclick = ()=> renderQuestions(questions, item, "bad");
-  el("tMarked").onclick = ()=> renderQuestions(questions, item, "marked");
+function buildInsights(item,questions,domainMap){
+  const total=questions.length, correct=questions.reduce((a,q)=>a+(q.isCorrect?1:0),0);
+  const pct= total? Math.round(correct*100/total): (+item.pct||0);
+  const secs=+item.elapsedSec||0, spq= total? Math.round(secs/total):0;
+  const rows=Object.values(domainMap); let best=null,worst=null;
+  rows.forEach(r=>{const p=r.total?Math.round(r.correct*100/r.total):0; const rec={...r,pct:p}; if(!best||p>best.pct) best=rec; if(!worst||p<worst.pct) worst=rec;});
+  const list=[];
+  if(pct>=70) list.push(`<span>✅ Buen trabajo: resultado global ${pct}%.</span>`);
+  else list.push(`<span>🎯 Objetivo: alcanza ≥70% (actual ${pct}%).</span>`);
+  if(worst) list.push(`<span>🛠️ Mejora: <b>${(worst.name||'').toUpperCase()}</b> (${worst.domain}) · ${worst.pct}% (${worst.correct}/${worst.total}).</span>`);
+  if(best&&best!==worst) list.push(`<span>🏅 Fortaleza: <b>${(best.name||'').toUpperCase()}</b> (${best.domain}) · ${best.pct}% (${best.correct}/${best.total}).</span>`);
+  if(spq){ const tip = spq>45?"Ve con calma y usa eliminación de opciones.": spq<15?"Buen ritmo; evita errores por prisa.":"Ritmo equilibrado."; list.push(`<span>⏱️ ${spq} seg/preg. ${tip}</span>`); }
+  const wrong=questions.filter(q=>q.isCorrect===false).length;
+  const marked=Array.isArray(item.markedItems)?item.markedItems.length:Object.values(item.marked||{}).filter(Boolean).length;
+  if(wrong||marked) list.push(`<span>📘 Revisión: ${wrong} incorrectas${marked?`, ${marked} marcadas`:''}.</span>`);
+  el("insights").innerHTML=list.map(x=>`<li>${x}</li>`).join("");
 }
 
-function downloadJSON(obj, filename="quizSession.json"){
-  const blob = new Blob([JSON.stringify(obj,null,2)], {type:"application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = filename;
-  a.click();
-  setTimeout(()=> URL.revokeObjectURL(a.href), 500);
-}
-
-async function load(){
-  const id = fmt(el("sessionId").value);
-  if(!id){ setStatus("Falta sessionId"); return; }
-  setStatus("Cargando…");
+/* ==== main ==== */
+async function loadReport(sessionId){
+  const app=el("app"); const noSid=el("noSid");
   try{
-    const item = await fetchSession(id);
-    const {questions, rebuilt} = normalizeQuestions(item);
+    const item=await fetchSession(sessionId);
+    const {questions,rebuilt}=normalizeQuestions(item);
 
-    setStatus(rebuilt ? "OK (reconstruido)" : "OK");
-    el("fallbackMsg").hidden = !rebuilt;
+    el("hTitle").textContent=`Resultado · ${String(item.quizId||'').toUpperCase()}`;
+    el("hUser").textContent=`${item.userName||item.userId||'Usuario'} (${item.email||'—'})`;
+    el("hQuiz").textContent=`${item.track||'-'} · ${item.mode||'-'}`;
+    el("hTime").textContent=`${(+item.elapsedSec||0)} seg`;   /* sólo segundos */
+    el("hState").textContent=item.finished?"Finalizado":(item.status||"in_progress");
 
-    renderMeta(item, questions);
-    makeDomainsTable(questions);
-    renderQuestions(questions, item, "all");
-    wireFilters(item, questions);
+    const total=questions.length, correct=questions.reduce((a,q)=>a+(q.isCorrect?1:0),0);
+    const pct= total? Math.round(correct*100/total): (+item.pct||0);
+    el("kCorrect").textContent=`${correct}/${total}`;
+    el("kTime").textContent= String(+item.elapsedSec || 0);
+    el("kPass").textContent=pct>=70?"Sí":"No";
+    el("kPq").textContent= total? Math.round((+item.elapsedSec||0)/total):0;
 
-    el("btnDownload").onclick = ()=> downloadJSON(item, `quizSession-${id}.json`);
-    el("btnPrint").onclick = ()=> window.print();
-    window.__quizSession = item;
+    const domains=buildDomainsTable(questions);
+    buildInsights(item,questions,domains);
+
+    el("filters").hidden=false;
+    document.querySelectorAll('#filters .tag').forEach(t=>{
+      t.onclick=()=>{ document.querySelectorAll('#filters .tag').forEach(x=>x.classList.remove('active')); t.classList.add('active'); renderQuestions(questions,item,t.dataset.f); };
+    });
+    renderQuestions(questions,item,"all");
+
+    el("btnPrint").onclick=()=>window.print();
+    el("btnDownload").onclick=()=>{ const blob=new Blob([JSON.stringify(item,null,2)],{type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`quizSession-${sessionId}.json`; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500); };
+    if(rebuilt) el("fallbackMsg").hidden=false;
+
+    noSid.hidden=true; app.hidden=false;
   }catch(e){
-    setStatus("Error");
-    el("questions").innerHTML = "";
-    el("domains").hidden = true;
-    el("meta").hidden = true;
-    el("filters").hidden = true;
-    el("empty").hidden = false;
     console.error(e);
+    noSid.hidden=false; app.hidden=true;
   }
 }
 
-document.getElementById("btnLoad").onclick = load;
-document.getElementById("btnPrint").onclick = ()=> window.print();
-document.getElementById("btnDownload").onclick = ()=> { if (window.__quizSession) downloadJSON(window.__quizSession) };
-
-window.addEventListener("DOMContentLoaded", ()=>{
-  const pre = qs("sessionId");
-  if (pre){
-    el("sessionId").value = pre;
-    load();
-  }
+window.addEventListener('DOMContentLoaded', ()=>{
+  const sid = qs('sessionId');
+  if (!sid){ el('noSid').hidden = false; return; }
+  loadReport(sid);
 });
-</script>
-
-
-<div id="site-footer"></div>
-<script>
-(async () => {
-  const host = document.getElementById('site-footer');
-
-  // 1) Cargar el fragmento
-  const res  = await fetch('/includes/footer.html', { cache: 'no-cache' });
-  const html = await res.text();
-  host.innerHTML = html;
-
-  // 2) Re-ejecutar los <script> del fragmento (innerHTML NO los ejecuta)
-  const scripts = host.querySelectorAll('script');
-  for (const old of scripts) {
-    const s = document.createElement('script');
-    if (old.src) {
-      s.src   = old.src;
-      s.async = old.async;
-      s.defer = old.defer;
-      if (old.type) s.type = old.type;
-    } else {
-      s.textContent = old.textContent;
-    }
-    document.body.appendChild(s);
-    old.remove();
-  }
-
-  // 3) Forzar que el botón abra el modal y anule fallbacks (alert, etc.)
-  //    - addEventListener con 'capture: true' para ejecutar antes que otros
-  //    - stopImmediatePropagation para bloquear otros handlers del botón
-  const btn = host.querySelector('#footerContactBtn');
-  if (btn) {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopImmediatePropagation(); // bloquea otros listeners atados al botón
-      if (typeof window.openFeedbackModal === 'function') {
-        window.openFeedbackModal(); // definido por footer.html tras re-ejecutar scripts
-      } else {
-        // como último recurso, intenta abrir el modal por ID si el script no corrió
-        const modal = document.getElementById('ithub-feedback-modal');
-        if (modal) {
-          modal.style.display = 'flex';
-          modal.classList.add('show');
-          modal.setAttribute('aria-hidden','false');
-          (modal.querySelector('.card') || modal).focus?.();
-        }
-      }
-    }, true); // <- fase de captura
-  }
-
-  // (opcional) Si aún tienes por ahí un listener que hace alert en el evento global,
-  // NO lo disparemos: este handler evita que se emita nada extra en el click.
-})();
 </script>
 </body>
 </html>
