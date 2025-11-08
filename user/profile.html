@@ -18,8 +18,7 @@
     :root{
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --card:#111937;
       --ink:#e8ecff; --muted:#9ca8d9; --stroke:#283056; --shadow:0 12px 28px rgba(6,12,40,.45);
-      --radius:16px;
-      --accent:#7b5cff; --accent-2:#8166ff; --accent-warn:#ffb84d;
+      --radius:16px; --accent:#7b5cff; --accent-2:#8166ff; --accent-warn:#ffb84d;
       --ok:#25b873; --danger:#ff6b6b; --gap:12px;
       --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
     }
@@ -39,7 +38,7 @@
 
     .wrap{max-width:1200px;margin:0 auto;padding:20px;width:100%}
 
-    /* ===== HEADER (como la captura) ===== */
+    /* ===== HEADER ===== */
     header.site{
       position:sticky; top:0; z-index:20;
       background:linear-gradient(180deg,#0e1222 0%, #0b0f1c 100%);
@@ -151,6 +150,19 @@
     .foot{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
     .foot a{color:#cbd6ff;text-decoration:none}
     .foot .muted{color:#9ca8d9}
+
+    /* Quitar subrayado de la lupa (en todas sus pseudo-clases) */
+a.review-icon,
+a.review-icon:link,
+a.review-icon:visited,
+a.review-icon:hover,
+a.review-icon:active{
+  text-decoration: none !important;
+  border: 0 !important;
+  outline: none;
+  display: inline-block; /* opcional, para evitar artefactos de línea base */
+  line-height: 1;
+}
 
     /* CTA Leaderboard pequeño bajo ranking */
     .rank-footer{display:flex;justify-content:flex-end;margin-top:10px}
@@ -286,16 +298,7 @@
             <div class="kpi"><h4>Mejor %</h4><div id="kpiBest" class="n">0%</div></div>
           </div>
 
-          <div class="tool">
-            <label>Range:
-              <select id="rangeSel">
-                <option value="all">Todos</option>
-                <option value="7">Last 7 days</option>
-                <option value="30">Last 30 days</option>
-                <option value="90">Last 90 days</option>
-              </select>
-            </label>
-          </div>
+          <!-- (Eliminado bloque Range) -->
 
           <div id="resultsWrap" class="table-wrap">Loading…</div>
 
@@ -335,22 +338,17 @@
         <span class="muted">© <span id="yearNow"></span></span>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="/privacy">Privacidad</a>
-        <a href="/terms">Términos</a>
-        <a href="mailto:soporte@certify.app">Soporte</a>
+        <!-- Enlaces eliminados a petición -->
         <span class="muted">v1.3.2</span>
       </div>
     </div>
   </footer>
 
-  <!-- Modal (opcional para otras páginas) -->
-  <div id="authModal" class="modal" aria-hidden="true" role="dialog" aria-label="Autenticación" style="display:none"></div>
-
   <script>
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const AUTH_KEY = "currentUser";
     const GOAL_KEY = "weeklyGoal";
-    const LOGIN_URL = "/login"; // <-- cambia si tu ruta es distinta
+    const LOGIN_URL = "/login"; // ajusta si tu ruta es diferente
 
     const byId = id => document.getElementById(id);
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
@@ -580,7 +578,6 @@
               </tr>
             </tbody>
           </table>`;
-        // CTA derecha bajo la tabla (pequeño)
         cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
       }catch(e){
         host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking.</p>`;
@@ -613,6 +610,7 @@
       const pick = v => (typeof v === "string" ? v.trim() : "");
       const getName2 = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
 
+      // 👇 incluye sessionId para usarlo en la lupa
       return mine.map(x => ({
         userId: x.userId || x.id || "(unknown)",
         userName: getName2(x),
@@ -621,7 +619,8 @@
         total: (x.total|0),
         pct: (x.pct|0),
         durationSec: (x.durationSec|0),
-        ts: x.ts || null
+        ts: x.ts || null,
+        sessionId: x.sessionId || x.session || x.resultId || x.id || ""
       }));
     }
 
@@ -658,7 +657,7 @@
       byId("goalFill").style.width = `0%`;
     }
 
-    window.__filters = {days:'all', fromDate:null}; // sin minPct
+    window.__filters = {days:'all', fromDate:null}; // sin Range UI
     const activeFilterKey = ()=> {
       const t = (document.querySelector('.tab-btn.active')?.textContent || 'All').toLowerCase();
       if(t.includes('aws')) return 'aws-saa-c03';
@@ -678,8 +677,6 @@
         const cutoff = Date.now() - Number(days)*86400000;
         list = list.filter(x=> x.ts && new Date(x.ts).getTime() >= cutoff);
       }
-
-      // (Se elimina el texto "x shown")
 
       const rowsForKpi = (f==="all" ? rows : rows.filter(x=>x.quizId===f));
       calcKPIs(rowsForKpi);
@@ -713,7 +710,11 @@
           </td>
           <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
           <td>${fmtDateTime(r.ts)}</td>
-          <td><span class="review-icon" title="Review coming soon">🔍</span></td>
+          <td>${
+            r.sessionId
+              ? `<a class="review-icon" href="/user/report_quiz.html?sessionId=${encodeURIComponent(r.sessionId)}" title="Ver reporte">🔍</a>`
+              : `<span class="review-icon" title="Sin sessionId">—</span>`
+          }</td>
         </tr>`;
       });
       html += `</tbody></table>`;
@@ -818,22 +819,6 @@
       }
     }
 
-    function renderMarked(rows){
-      const body = byId('markedBody');
-      if(!rows.length){
-        body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>`;
-        return;
-      }
-      body.innerHTML = rows.map((r,i)=>`
-        <tr>
-          <td>${i+1}</td>
-          <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
-          <td style="text-align:left">${escapeHtml(r.question)}</td>
-          <td>${escapeHtml(r.domain || r.category || '')}</td>
-        </tr>
-      `).join('');
-    }
-
     // ===== Eventos header/auth =====
     byId('btnHdrLogin').onclick  = ()=> location.href = LOGIN_URL;
     byId('btnHdrSignup').onclick = ()=> location.href = LOGIN_URL; // o /signup si lo separas
@@ -881,7 +866,7 @@
     document.addEventListener("DOMContentLoaded", async ()=>{
       byId('yearNow').textContent = new Date().getFullYear();
 
-      // === Redirección si no hay sesión ===
+      // Redirección si no hay sesión
       if(!getUserAny()){
         if (window.location.pathname !== LOGIN_URL) {
           window.location.replace(LOGIN_URL);
@@ -898,7 +883,7 @@
         window.__myRows = rows;
         renderResults(rows, "all");
 
-        // mini trend
+        // Trend
         const ordered = rows.filter(r=>r.ts).slice().sort((a,b)=> new Date(a.ts)-new Date(b.ts));
         let delta = 0; let dir = '=';
         if(ordered.length>=6){
@@ -926,7 +911,19 @@
       // Marcadas
       try{
         const marked = await fetchMyMarked(200);
-        renderMarked(marked);
+        const body = byId('markedBody');
+        if(!marked.length){
+          body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>`;
+        }else{
+          body.innerHTML = marked.map((r,i)=>`
+            <tr>
+              <td>${i+1}</td>
+              <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
+              <td style="text-align:left">${escapeHtml(r.question)}</td>
+              <td>${escapeHtml(r.domain || r.category || '')}</td>
+            </tr>
+          `).join('');
+        }
       }catch(e){
         console.warn('Marked render failed:', e);
       }
