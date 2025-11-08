@@ -14,7 +14,6 @@
       --chip:#0f1430; --chip2:#101738;
       --tab-bg:#1b2140; --tab-on:rgba(108,139,255,.3);
       --grad1:rgba(255,153,0,.12); --grad2:rgba(0,120,212,.12);
-      /* Azulite activo */
       --azulite1:#6c8bff; --azulite2:#3e64ff; --azuliteDot:#a9bbff;
     }
 
@@ -22,11 +21,12 @@
     body{
       font-family:"Roboto Condensed","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue",sans-serif;
       font-weight:400;color:var(--ink);
+      font-size:17px;            /* ↑ tamaño base */
+      line-height:1.45;          /* un poco más de aire */
       background:
         radial-gradient(900px 420px at 90% -10%,var(--grad1),transparent 60%),
         radial-gradient(800px 400px at 10% 0%,var(--grad2),transparent 60%),
         var(--bg);
-      line-height:1.4;
     }
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
@@ -75,15 +75,14 @@
     .card{background:linear-gradient(180deg,var(--surface),var(--surface2));border:1px solid var(--stroke);
       border-radius:14px;padding:16px 16px;box-shadow:var(--shadow)}
     .header-row{display:flex;align-items:center;justify-content:space-between;margin:6px 0 12px}
-    .header-row h2{margin:0;color:var(--ink);font-size:1.25rem;font-weight:600}
+    .header-row h2{margin:0;color:var(--ink);font-size:1.35rem;font-weight:700}
 
     .tabs{display:flex;gap:6px;flex-wrap:wrap}
     .tab{
       border:1px solid var(--stroke);background:var(--tab-bg);color:var(--ink);
-      padding:6px 10px;border-radius:999px;cursor:pointer;font-weight:500;font-size:.85rem;
+      padding:6px 10px;border-radius:999px;cursor:pointer;font-weight:600;font-size:.95rem;
       position:relative;transition:.15s ease
     }
-    /* ACTIVO en "azulite": fondo, texto y puntito indicador */
     .tab[aria-pressed="true"]{
       background:linear-gradient(180deg,var(--azulite1),var(--azulite2));
       color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(95,125,255,.35);
@@ -97,8 +96,8 @@
     /* ===== Tabla ===== */
     .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow);padding:10px;overflow-x:auto}
     table{width:100%;min-width:820px;border-collapse:collapse}
-    thead th{background:var(--surface2);color:var(--ink);font-weight:600;text-align:center;padding:8px 6px;border-bottom:1px solid var(--stroke);font-size:.9rem}
-    tbody td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--stroke);background:var(--surface);color:var(--ink);font-size:.9rem}
+    thead th{background:var(--surface2);color:var(--ink);font-weight:700;text-align:center;padding:10px 8px;border-bottom:1px solid var(--stroke);font-size:1rem}  /* ↑ */
+    tbody td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--stroke);background:var(--surface);color:var(--ink);font-size:1rem}  /* ↑ */
     tbody tr:nth-child(even) td{background:var(--chip2)}
     tbody tr:hover td{background:var(--chip)}
 
@@ -109,40 +108,45 @@
     .col-num{width:90px}
 
     /* Medallas y nombres */
-    .medal{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-weight:600;font-size:.85rem;color:#1b1830}
+    .medal{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-weight:700;font-size:.9rem;color:#1b1830}
     .gold{background:linear-gradient(135deg,#ffd662,#ffb300)}
     .silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf)}
     .bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a)}
 
     .namebox{display:inline-flex;align-items:center;gap:6px}
-    .avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);font-weight:500;font-size:.75rem;color:#fff;display:flex;align-items:center;justify-content:center}
-    .name-strong{font-weight:600;font-size:.95rem}
+    .avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);font-weight:600;font-size:.8rem;color:#fff;display:flex;align-items:center;justify-content:center}
+    .name-strong{
+      font-weight:700;
+      font-size:1.05rem;       /* ↑ un poco */
+      text-transform:uppercase;/* ← nombres en MAYÚSCULAS */
+      letter-spacing:.02em;
+    }
     .name-gold{color:var(--gold)} .name-silver{color:var(--silver)} .name-bronze{color:var(--bronze)}
 
     /* Puntos chip */
-    .points-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;font-weight:500;font-size:.85rem;border:1px solid var(--stroke);background:var(--surface2);color:var(--ink)}
+    .points-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;font-weight:600;font-size:.95rem;border:1px solid var(--stroke);background:var(--surface2);color:var(--ink)}
     .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff;border:none}
 
     /* Nivel */
-    .level{display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:.85rem;padding:2px 6px;border-radius:999px;border:1px solid var(--stroke);background:rgba(0,0,0,.04)}
-    .level .bar{height:6px;width:90px;background:#0a0f25;border-radius:999px;overflow:hidden;position:relative}
+    .level{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.95rem;padding:3px 8px;border-radius:999px;border:1px solid var(--stroke);background:rgba(0,0,0,.04)}
+    .level .bar{height:6px;width:100px;background:#0a0f25;border-radius:999px;overflow:hidden;position:relative}
     .level .bar i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#6c8bff,#3e64ff);width:0%}
 
     /* Reglas + Leyenda (dos columnas) */
     .below-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
     @media (max-width:980px){.below-grid{grid-template-columns:1fr}}
-    h3{font-weight:600;font-size:1rem;margin-bottom:6px;color:var(--ink)}
+    h3{font-weight:700;font-size:1.05rem;margin-bottom:6px;color:var(--ink)}
     .rule-list{margin:0 0 4px 18px;color:var(--ink)}
     .legend-item{display:flex;align-items:center;gap:10px;margin:6px 0;color:var(--ink)}
-    .legend-name{font-weight:600}
+    .legend-name{font-weight:700}
 
     /* Footer */
     footer{margin-top:24px;border-top:1px solid var(--stroke);background:linear-gradient(180deg,var(--bg),var(--surface))}
-    .footwrap{max-width:1100px;margin:0 auto;padding:18px 20px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:16px;font-size:.85rem}
+    .footwrap{max-width:1100px;margin:0 auto;padding:18px 20px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:16px;font-size:.95rem}
     @media(max-width:920px){.footwrap{grid-template-columns:1fr}}
     .footbrand{display:flex;gap:12px;align-items:flex-start}
     .footlogo{width:28px;height:28px;border-radius:8px;background:linear-gradient(180deg,#7b8cff,#4c66ff)}
-    .footcol h4{font-weight:600;font-size:.95rem;margin-bottom:6px;color:var(--ink)}
+    .footcol h4{font-weight:700;font-size:1rem;margin-bottom:6px;color:var(--ink)}
     .footcol li{margin:4px 0;color:var(--ink)}
     .footsmall{color:var(--muted);margin-top:8px}
   </style>
@@ -467,7 +471,7 @@
           <td class="col-name">
             <span class="namebox">
               <span class="avatar">${initials}</span>
-              <span class="${nameClass(i)}">${u.userName||'(no name)'}</span>
+              <span class="${nameClass(i)}">${(u.userName||'(no name)')}</span>
             </span>
           </td>
           <td class="col-level"><span class="level">Lv ${u.lvl}<span class="bar"><i style="width:${u.prog}%"></i></span></span></td>
