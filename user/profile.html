@@ -259,15 +259,7 @@ a.review-icon:active{
             streak actual: <b id="streakDays">0</b> día(s)
           </div>
 
-          <div style="margin-top:10px;">
-            <div class="muted" style="margin-bottom:6px;">Últmos 14 días de actividad</div>
-            <div id="heat14" class="heat"></div>
-          </div>
-
-          <div style="margin-top:10px;">
-            <div class="muted" style="margin-bottom:6px;">Badges</div>
-            <div id="badgesBox" class="badges"></div>
-          </div>
+         
         </article>
       </div>
 
@@ -275,7 +267,7 @@ a.review-icon:active{
       <div class="col-right">
         <!-- RANKING GLOBAL mini -->
         <article class="card rank-mini">
-          <h3 style="margin:0 0 10px;font-weight:900;">🏆 Ranking Global</h3>
+          <h3 style="margin:0 0 10px;font-weight:900;">🏆 RANKING GLOBAL</h3>
           <div id="rankMiniWrap" class="table-wrap">Cargando…</div>
           <div id="rankMiniCta" class="rank-footer"></div>
         </article>
@@ -283,7 +275,7 @@ a.review-icon:active{
         <!-- ÚLTIMOS EXÁMENES -->
         <article class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
-            <h3 style="margin:0;font-weight:900">📘 Últimos Exámenes</h3>
+            <h3 style="margin:0;font-weight:900">📘 TUS ÚLTIMOS QUIZS</h3>
             <div class="tabs">
               <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
               <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
@@ -309,7 +301,7 @@ a.review-icon:active{
 
         <!-- PREGUNTAS MARCADAS -->
         <article class="card">
-          <h3 style="margin:0 0 10px;font-weight:900;">Tus pregunta marcadas</h3>
+          <h3 style="margin:0 0 10px;font-weight:900;">TUS PREGUNTAS MARCADAS</h3>
           <div id="markedWrap" class="table-wrap">
             <table>
               <thead>
@@ -893,12 +885,12 @@ a.review-icon:active{
           dir = delta>0?'up':(delta<0?'down':'=');
         }
         const arrow = dir==='up'?'⬆️':(dir==='down'?'⬇️':'➡️');
-        byId('trendHint').textContent = `${arrow} Trend vs. previous period: ${delta>0?'+':''}${delta}%`;
+        byId('trendHint').textContent = ``;
 
         const plan = weeklyProgress(rows);
         if(plan.attempts < plan.goal){
           const remain = Math.max(0, plan.goal - plan.attempts);
-          byId('trendHint').textContent += ` • ${remain} to reach weekly goal`;
+          byId('trendHint').textContent += ``;
         }
       }catch(e){
         document.getElementById("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#ff8f8f;">Error loading results or not signed in.</p></div>`;
