@@ -76,19 +76,6 @@
     .muted{color:var(--muted)}
     .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
 
-    /* Carrusel (no usado en nube) */
-    .carousel{position:relative;margin-top:12px}
-    .track{display:grid;grid-template-columns:repeat(3, 1fr);gap:12px}
-    @media(max-width:900px){ .track{grid-template-columns:repeat(2, 1fr)} }
-    @media(max-width:560px){ .track{grid-template-columns:1fr} }
-    .car-btn{position:absolute;top:45%;transform:translateY(-50%);width:44px;height:44px;border-radius:999px;border:1px solid rgba(0,0,0,.08);background:rgba(255,255,255,.95);color:#0f1320;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.35);z-index:2}
-    .car-btn[disabled]{opacity:.5;cursor:not-allowed}
-    .car-prev{left:-10px}.car-next{right:-10px}
-    .tiny-btn{display:inline-flex;align-items:center;justify-content:center;height:28px; padding:0 10px; border-radius:8px;border:1px solid #ff990044; background:linear-gradient(180deg,#ffd699,#ff9900);color:#111; font-weight:900; cursor:pointer;white-space:nowrap;}
-    .cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-    .cc-meta{display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.9rem;}
-    .cc-meta .grow{ display:inline-flex; align-items:center; gap:8px; margin-right:auto; }
-
     /* ====== DOMINIOS & SIMULADOR ====== */
     .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
     .grid-sim{display:grid;grid-template-columns:1.35fr .85fr;gap:16px;margin-top:16px}
@@ -120,12 +107,12 @@
     .meter>span{position:absolute;left:0;top:0;height:100%;width:0;transition:width .35s}
     .m-ok{background:#3ad97a} .m-warn{background:#ffd66b} .m-bad{background:#ff6b6b}
 
-    /* ===== Concept Cloud (chips-bubble) ===== */
-    .concept-toolbar{}
+    /* ===== Concept Cloud ===== */
     .concept-cloud{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
     @media(max-width:1180px){.concept-cloud{grid-template-columns:repeat(4,1fr)}}
     @media(max-width:860px){.concept-cloud{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:560px){.concept-cloud{grid-template-columns:repeat(2,1fr)}}
+
     .chip-bubble{position:relative;display:flex;flex-direction:column;justify-content:center;gap:6px;min-height:96px;padding:14px;border-radius:18px;border:1px solid #5f4627;background:linear-gradient(180deg,#1b1426,#151022);box-shadow:0 12px 24px rgba(0,0,0,.25);transform:translateZ(0);transition:transform .12s ease, box-shadow .12s ease;overflow:hidden}
     .chip-bubble:hover{transform:scale(1.05);box-shadow:0 18px 38px rgba(0,0,0,.36)}
     .chip-bubble .cb-title{font-weight:900}
@@ -174,6 +161,8 @@
         <div class="tabbar" role="tablist" aria-label="Vistas de SAA-C03">
           <button id="tabSim" class="tab-btn active" role="tab" aria-selected="true" aria-controls="domsim">🧭 DOMINIOS & SIMULADOR</button>
           <button id="tabGuide" class="tab-btn" role="tab" aria-selected="false" aria-controls="studyGuide">📘 CONCEPTOS A EXAMEN</button>
+          <!-- NUEVO BOTÓN -->
+          <a class="tab-btn" id="tabStudyExternal" href="/content/guides/aws/caa/index.html" role="tab" aria-selected="false">📖 GUÍA DE ESTUDIO</a>
         </div>
 
         <!-- ===== GUÍA DE ESTUDIO (NUBE DE CONCEPTOS) ===== -->
@@ -403,7 +392,7 @@
          <span class="dom-title">${txt}</span>
        </li>`).join('');
 
-    // Chips filtro de dominios dentro del simulador
+    // Chips filtro
     const chipsWrap = document.createElement('div');
     chipsWrap.id = 'domainChips';
     chipsWrap.style.display = 'flex';

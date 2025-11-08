@@ -164,6 +164,24 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
+
+/* Botón principal destacado (hero) */
+    .hero .btn {
+      background: linear-gradient(180deg, #e423b3, #d8abda);
+      border: 1px solid rgba(108, 139, 255, .5);
+      color: #fff;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(108, 139, 255, .4), 0 4px 14px rgba(80, 90, 240, .25);
+      transition: all .15s ease-in-out;
+    }
+    .hero .btn:hover {
+      background: linear-gradient(180deg, #8a78ff, #6b54ff);
+      border-color: rgba(108, 139, 255, .8);
+      box-shadow: 0 0 22px rgba(108, 139, 255, .6), 0 6px 18px rgba(80, 90, 240, .35);
+      transform: translateY(-2px);
+    }
+
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
   </style>
