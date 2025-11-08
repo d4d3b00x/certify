@@ -53,40 +53,72 @@
     .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
     .table th{background:#141a33;text-align:left}
     .muted{color:var(--muted)}
-  </style>
+  
+
+/* --- Header alignment (screenshot-like) --- */
+header{position:sticky;top:0;z-index:60;backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));
+  border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;gap:10px;align-items:center;font-weight:900}
+.brand img{height:42px}
+.brand span{letter-spacing:.5px}
+.mainbar{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%}
+nav.menu{display:flex;gap:28px;margin:0 auto}
+nav.menu a{font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+/* pill group (right side) */
+.session{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:999px;
+  border:1px solid var(--stroke);
+  background:radial-gradient(80% 180% at 100% 0%, rgba(255,255,255,.04), rgba(0,0,0,.06) 60%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.session .hello{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06)}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:#fff;font-weight:900}
+.pill-btn:hover{filter:brightness(1.06)}
+/* AWS / Azure accent for pills */
+:root{--pill:#5b6bdc} /* default */
+.pill-btn.primary{background:var(--pill)}
+
+/* Username handle look */
+.handle{opacity:.95}
+
+/* AWS oranges */
+:root{--pill:#ff9900}
+.session{border-color:rgba(255,153,0,.35)}
+nav.menu a:hover{border-color:var(--bd);background:var(--tint)}
+</style>
 </head>
 <body>
 <header role="banner">
+ 
   <div class="container nav">
     <div class="brand">
       <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
+    
     </div>
-    <nav class="menu" aria-label="Navegación principal">
-      <a href="/">HOME</a>
-      <a href="/content/content.html">CONTENIDOS</a>
-      <a href="/score/ranking.html">RANKING</a>
-    </nav>
-    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
-      <div id="userArea" style="display:none;align-items:center;gap:6px">
-        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+    <div class="mainbar">
+      <nav class="menu" aria-label="Navegación principal">
+        <a href="/">HOME</a>
+        <a href="/content/content.html">CONTENIDOS</a>
+        <a href="/score/ranking.html">RANKING</a>
+      </nav>
+      <div class="session" id="authWrap" aria-label="Acciones de sesión">
+        <div class="hello">👋 <span class="handle" id="userNameTop" style="font-weight:900">@USER</span></div>
         <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        <button id="btnLogout" class="pill-btn primary" type="button">LOGOUT</button>
       </div>
     </div>
   </div>
 </header>
-
 <script>
 function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
 (function(){
   const u=getCurrentUser();
-  const login=document.getElementById('btnLogin');
-  const signup=document.getElementById('btnSignup');
-  const userArea=document.getElementById('userArea');
   const nameTop=document.getElementById('userNameTop');
-  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+  const wrap=document.getElementById('authWrap');
+  if(u && nameTop){ nameTop.textContent='@'+(u.handle||u.name||u.email||'user').toUpperCase(); }
+  if(!u && wrap){ /* if not logged, show generic */ nameTop && (nameTop.textContent='@INVITADO'); }
+  const btnLogout=document.getElementById('btnLogout');
+  if(btnLogout){ btnLogout.addEventListener('click', function(){ localStorage.removeItem('currentUser'); location.href='/'; }); }
 })();
 </script>
 
