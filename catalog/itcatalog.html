@@ -32,10 +32,6 @@
       /* acentos por proveedor */
       --aws:#ff9900; --aws-glow:rgba(255,153,0,.24);
       --azure:#76c7ff; --azure-glow:rgba(118,199,255,.22);
-
-      /* roles (para chips/bordes) */
-      --arch:#c7b3ff;    --arch-ring:#7e5add;
-      --ops:#ffd699;     --ops-ring:#b98124;
     }
     *{box-sizing:border-box}
     body{
@@ -109,11 +105,34 @@
     @media(max-width:980px){.layout{grid-template-columns:1fr}}
     .sidebar .block{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px}
 
+    /* ===== Extras ===== */
+    .notice{display:none; align-items:center;gap:10px;padding:10px 12px;margin:10px 0;border:1px solid #4a386d;border-radius:12px;background:var(--surface2);box-shadow:0 6px 18px rgba(10,6,30,.25)}
+    .notice.show{display:flex}
+
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+    .kpi{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px;text-align:center}
+    .kpi .num{font-size:1.6rem;font-weight:900}
+    .kpi .lab{color:var(--muted)}
+
+    .road{display:grid;gap:10px}
+    .bar{height:10px;border-radius:999px;background:rgba(138,77,255,.15);border:1px solid #4a386d;overflow:hidden}
+    .bar>span{display:block;height:100%;background:var(--cta)}
+
+    details+details{margin-top:8px}
+    details summary{cursor:pointer;font-weight:900}
+    .bullets{margin:6px 0 0 18px}
+
     /* ===== Footer ===== */
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#cbb8ff;background:linear-gradient(180deg,rgba(27,20,48,.6),rgba(27,20,48,.2))}
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
-    footer a{color:#e9dbff} footer a:hover{text-decoration:underline}
+    footer a{color:#e9dbff;text-decoration:none}
+    footer a:hover{text-decoration:underline}
+    footer ul{list-style:none;margin:0;padding:0}
+    footer li{margin:6px 0}
+    footer .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    footer .logo-pill{display:inline-block}
+    footer .container:last-child{margin-top:12px;font-size:12px}
   </style>
 </head>
 <body>
@@ -147,14 +166,31 @@
       <div class="container">
         <h1>Catálogo de certificaciones <span style="color:#d6a3ff">ITHUB</span></h1>
         <p class="lead">Aquí verás los <b>fabricantes activos</b> en la web y el acceso directo a sus guías y simuladores. Hoy: <b>Microsoft Azure</b> y <b>Amazon AWS</b>.</p>
+
+        <!-- Aviso/Anuncio (descartable) -->
+        <div id="notice" class="notice" role="status" aria-live="polite">
+          <span>📌 <strong>Novedad:</strong> añadimos <b>rutas de estudio</b> por semanas y un <b>roadmap trimestral</b> del catálogo.</span>
+          <button class="btn" id="closeNotice" type="button" aria-label="Ocultar aviso">OK</button>
+        </div>
       </div>
     </section>
 
     <!-- Layout principal -->
     <section class="container layout">
       <div>
+        <!-- Estado del catálogo -->
+        <div class="card">
+          <h2>Estado del catálogo</h2>
+          <div class="kpis" aria-label="Indicadores del catálogo">
+            <div class="kpi"><div class="num">3</div><div class="lab">Disponibles</div></div>
+            <div class="kpi"><div class="num">2</div><div class="lab">En curso</div></div>
+            <div class="kpi"><div class="num">2</div><div class="lab">Planificadas</div></div>
+          </div>
+          <p class="muted" style="margin:10px 0 0">Disponibles: AZ-104, AZ-305, SAA-C03 · En curso: AZ-900, AZ-500 · Planificadas: DP-900, AI-900.</p>
+        </div>
+
         <!-- Proveedores -->
-        <div class="grid cols-2">
+        <div class="grid cols-2" style="margin-top:12px">
           <!-- Azure -->
           <article id="azure" class="card vendor azure">
             <div class="head">MICROSOFT AZURE</div>
@@ -164,7 +200,8 @@
               <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
             </div>
             <div class="links" style="margin-top:8px">
-              
+              <a class="mini-link" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104 · Administrator</a>
+              <a class="mini-link" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305 · Architect</a>
             </div>
           </article>
 
@@ -177,20 +214,53 @@
               <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
             </div>
             <div class="links" style="margin-top:8px">
-              
+              <a class="mini-link" href="/certification/amazon%20aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03 · Architect Associate</a>
             </div>
           </article>
         </div>
 
-        <!-- Bloque destacado: Accesos directos -->
+
+<!-- Rutas de estudio sugeridas -->
         <div class="card" style="margin-top:12px">
-          <h2>Accesos rápidos</h2>
-          <div class="cta-row">
-            <a class="cta-btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">▶ AZURE AZ-104</a>
-            <a class="cta-btn" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">▶ AZURE AZ-305</a>
-            <a class="cta-btn" href="/certification/amazon%20aws/aws-saa-c03/lz-aws-saa-c03.html">▶ AWS SAA‑C03</a>
-          </div>
+          <h2>Rutas de estudio sugeridas</h2>
+
+          <details>
+            <summary>AZ-104 · Plan 6 semanas (1–2 h/día)</summary>
+            <ul class="bullets">
+              <li><b>Semana 1:</b> Identidad (RBAC, Entra ID), Governance básica (tags, cost).</li>
+              <li><b>Semana 2:</b> Redes (VNets, subredes, NSG, LB).</li>
+              <li><b>Semana 3:</b> Compute (VM/VMSS), imágenes, autoscaling.</li>
+              <li><b>Semana 4:</b> Storage (Blob, Files, Disk) + Backup/ASR.</li>
+              <li><b>Semana 5:</b> Monitor, Alertas, Update Mgmt, Defender.</li>
+              <li><b>Semana 6:</b> Repaso + 2 simulacros ≥ 80%.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>AZ-305 · Plan 6 semanas (1–2 h/día)</summary>
+            <ul class="bullets">
+              <li><b>Semana 1:</b> CAF, landing zones, políticas.</li>
+              <li><b>Semana 2:</b> Red avanzada (Hub&Spoke, Private Link/DNS).</li>
+              <li><b>Semana 3:</b> Seguridad (Zero Trust, Key Vault, Defender).</li>
+              <li><b>Semana 4:</b> Alta disponibilidad y DR multi-región.</li>
+              <li><b>Semana 5:</b> Coste y optimización (RI/SV, autoscaling, storage tiers).</li>
+              <li><b>Semana 6:</b> Infra as Code (Bicep/Terraform) + simulacros.</li>
+            </ul>
+          </details>
+
+          <details>
+            <summary>AWS SAA-C03 · Plan 5 semanas</summary>
+            <ul class="bullets">
+              <li><b>Semana 1:</b> VPC (subnets, IGW, NAT, NACL/SG), Route 53 básicos.</li>
+              <li><b>Semana 2:</b> Compute (EC2, ASG, ELB), Savings Plans.</li>
+              <li><b>Semana 3:</b> Storage (S3, EBS, EFS, Glacier) + IAM.</li>
+              <li><b>Semana 4:</b> Alta disponibilidad, resiliencia, patrones serverless.</li>
+              <li><b>Semana 5:</b> Observabilidad (CloudWatch), Well-Architected + simulacros.</li>
+            </ul>
+          </details>
         </div>
+
+
 
         <!-- Próximas certificaciones -->
         <div class="card" style="margin-top:12px">
@@ -204,15 +274,45 @@
           </div>
         </div>
 
-        <!-- Política / Info útil -->
+
+        <!-- Roadmap trimestral -->
         <div class="card" style="margin-top:12px">
-          <h2>Información rápida</h2>
+          <h2>Roadmap trimestral</h2>
+          <div class="road">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-weight:900">
+                <span>AZ-900 · Azure Fundamentals</span><span class="muted">Objetivo: Q2</span>
+              </div>
+              <div class="bar" aria-label="Progreso AZ-900"><span style="width:70%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-weight:900">
+                <span>AZ-500 · Security Engineer</span><span class="muted">Objetivo: Q3</span>
+              </div>
+              <div class="bar" aria-label="Progreso AZ-500"><span style="width:40%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-weight:900">
+                <span>DP-900 · Data Fundamentals</span><span class="muted">Objetivo: Q3</span>
+              </div>
+              <div class="bar" aria-label="Progreso DP-900"><span style="width:20%"></span></div>
+            </div>
+          </div>
+          <p class="muted" style="margin:10px 0 0">El porcentaje representa avance de contenido (guía + banco de preguntas + simulador).</p>
+        </div>
+
+        
+
+
+        <!-- Cambios recientes -->
+        <div class="card" style="margin-top:12px">
+          <h2>📢 Cambios recientes</h2>
           <ul style="margin:8px 0 0 18px">
-            <li>Exámenes típicos ≈ <b>165 USD</b> (varía por país). Reserva en <b>Pearson VUE</b>.</li>
-            <li>Microsoft: renovación anual <b>gratis</b> con assessment online en Learn.</li>
-            <li>Máx. <b>5 intentos</b> por examen al año. 1º reintento 24h, siguientes cada 14 días.</li>
+            <li>Se añade <b>Roadmap trimestral</b> con progreso por certificación.</li>
+            <li>Nuevas <b>rutas de estudio</b> por semanas (Azure/AWS).</li>
           </ul>
-        </div><br>
+        </div>
+        <br>
       </div>
 
       <!-- Sidebar -->
@@ -253,31 +353,40 @@
         </div>
         <p style="margin:8px 0 0">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un solo lugar.</p>
       </div>
+
       <div>
         <div style="font-weight:800">SIMULADORES</div>
-        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
-        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFT AZURE AZ-305</a></div>
-        <div><a href="/certification/amazon%20aws/aws-saa-c03/lz-aws-saa-c03.html">AMAZON AWS SAA-C03</a></div>
+        <ul>
+          <li><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></li>
+          <li><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFT AZURE AZ-305</a></li>
+          <li><a href="/certification/amazon%20aws/aws-saa-c03/lz-aws-saa-c03.html">AMAZON AWS SAA-C03</a></li>
+        </ul>
       </div>
+
       <div>
         <div style="font-weight:800">DESTACADOS</div>
-        <div><a href="/content/azure-identity-az104.html">Azure · Identidad y Acceso</a></div>
-        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
-        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
-        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+        <ul>
+          <li><a href="/content/azure-identity-az104.html">Azure · Identidad y Acceso</a></li>
+          <li><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></li>
+          <li><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></li>
+          <li><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></li>
+          <li><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></li>
+        </ul>
       </div>
+
       <div>
         <div style="font-weight:800">COLABORADORES</div>
-        💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
-        <div style="font-weight:800">CONTACTO</div>
+        <ul>
+          <li>💬 <a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></li>
+        </ul>
+        <div style="font-weight:800;margin-top:8px">CONTACTO</div>
         <button id="footerContactBtn" type="button" style="background:none;border:none;color:#e9dbff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;margin-top:6px">💬 <span>Contáctanos</span></button>
       </div>
     </div>
     <div class="container" style="margin-top:12px;font-size:12px">© <span id="y"></span> ITHub.es</div>
   </footer>
 
-  <!-- ===== Modal Feedback (reutilizado) ===== -->
+  <!-- ===== Modal Feedback ===== -->
   <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle" style="position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px">
     <div class="modal-card" role="document" tabindex="-1" style="width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)">
       <h3 id="fbTitle" style="margin:0 0 12px;font-size:1.2rem">💬 ENVIAR FEEDBACK</h3>
@@ -297,7 +406,7 @@
     // Año
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    /* ===== AUTH mínima (reutilizada) ===== */
+    /* ===== AUTH mínima ===== */
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
     function renderHeaderAuth(){
       const u=getCurrentUser();
@@ -311,7 +420,7 @@
     document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
     renderHeaderAuth();
 
-    /* ===== Modal helpers (reutilizados) ===== */
+    /* ===== Modal helpers ===== */
     const fbModal = document.getElementById('feedbackModal');
     let lastFocus = null;
     function trapFocus(container){
@@ -368,6 +477,14 @@
         btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display=''; btnFbOk.focus();
       }catch(err){ console.error('Error feedback:', err); fbStatus.textContent = 'No se pudo enviar la info.'; fbStatus.className = 'fb-status err'; fbStatus.style.color='var(--bad)'; btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display=''; btnFbOk.focus(); }
     });
+
+    /* ===== Aviso descartable ===== */
+    const notice = document.getElementById('notice');
+    const closeNotice = document.getElementById('closeNotice');
+    try{
+      if(localStorage.getItem('catalog_notice_dismissed')!=='1'){ notice?.classList.add('show'); }
+      closeNotice?.addEventListener('click', ()=>{ localStorage.setItem('catalog_notice_dismissed','1'); notice.classList.remove('show'); });
+    }catch{}
   </script>
 </body>
 </html>

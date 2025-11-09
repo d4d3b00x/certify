@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Arena Battle – Quizzes Relámpago (AZ-104, AZ-305, SAA-C03)</title>
-<meta name="description" content="Arena Battle: Quizzes relámpago 3×3. Elige certificación, responde misiones de 1, 2 o 3 preguntas, gana XP y diamantes, completa tu objetivo semanal y escala en el ranking." />
+<meta name="description" content="Arena Battle: Quizzes relámpago 3×3. Elige certificación, responde misiones de 1, 2 o 3 preguntas, gana XP y sube de nivel. Ranking en tiempo real por XP." />
 <meta name="theme-color" content="#0b0f1e" />
 <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
@@ -12,7 +12,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 <style>
 :root{
   --bg:#0b0f1e;--panel:#0f1530;--panel2:#121a3b;--line:#26305e;--ink:#e8edff;--muted:#9fb2ff;
-  --accent:#7e6bff;--ok:#38d97a;--bad:#ff7272;--dia:#7dd3ff;
+  --accent:#7e6bff;--ok:#38d97a;--bad:#ff7272;
   --radius:14px;--shadow:0 16px 40px rgba(6,12,40,.45);
   --chip:#0f1736;--chipLine:#324081;
 }
@@ -30,7 +30,7 @@ html,body{
 
 /* Header */
 header{background:#0e1328;border-bottom:1px solid var(--line);}
-.nav{max-width:1200px;margin:0 auto;display:flex;gap:14px;align-items:center;justify-content:space-between;padding:12px 18px}
+.nav{max-width:1280px;margin:0 auto;display:flex;gap:14px;align-items:center;justify-content:space-between;padding:12px 18px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:900}
 .brand .logo{width:30px;height:30px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 0 0 8px rgba(130,150,255,.14)}
 .nav-right{display:flex;gap:10px;align-items:center;}
@@ -38,21 +38,21 @@ header{background:#0e1328;border-bottom:1px solid var(--line);}
 .user{padding:8px 12px;border-radius:12px;border:1px solid #2b356a;background:#10183a;font-weight:900}
 
 /* Contenedor */
-.container{max-width:1200px;margin:0 auto;padding:18px}
+.container{max-width:1280px;margin:0 auto;padding:18px}
 
 /* Título */
 h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 .lead{color:var(--muted);margin:0 0 14px}
 
 /* Layout */
-.layout{display:grid;grid-template-columns:1fr 320px;gap:16px}
-@media(max-width:980px){.layout{grid-template-columns:1fr}}
+.layout{display:grid;grid-template-columns:1.3fr 360px;gap:16px}
+@media(max-width:1080px){.layout{grid-template-columns:1fr}}
 
 /* Panel común */
 .panel{background:linear-gradient(180deg,var(--panel),#0e1533);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
 
-/* Head del tablero */
-.panel-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)}
+/* Head del tablero (una sola línea) */
+.panel-head{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)}
 .title-chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900}
 
 /* Filtros claros */
@@ -62,34 +62,37 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 .filter.active{background:linear-gradient(180deg,#7a8cff,#5b6dff);color:#fff;border-color:#6f82ff;box-shadow:0 10px 22px rgba(80,95,255,.25)}
 
 /* Objetivo semanal */
-.goal{display:flex;align-items:center;gap:10px;margin-left:auto;flex:1;justify-content:flex-end;flex-wrap:wrap}
+.goal{display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap}
 .goal-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--chipLine);background:var(--chip);border-radius:999px;padding:8px 12px;font-weight:900}
-.prog{position:relative;width:clamp(260px, 48vw, 560px);height:16px;border-radius:999px;background:#0b1028;border:1px solid var(--line);overflow:hidden;box-shadow:0 0 0 6px rgba(80,95,255,.08) inset}
+.prog{position:relative;width:clamp(260px, 48vw, 620px);height:16px;border-radius:999px;background:#0b1028;border:1px solid var(--line);overflow:hidden;box-shadow:0 0 0 6px rgba(80,95,255,.08) inset}
 .prog>span{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#3be180,#76f4bc);transition:width .35s ease}
 .prog em{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:900;font-style:normal;color:#eafff6;text-shadow:0 1px 0 #0a0f28}
+.reset{padding:8px 14px;border-radius:999px;border:1px solid #2b356a;background:#10183a;font-weight:900;color:#cfe4ff;cursor:pointer}
+.reset:hover{border-color:#5a72ff}
 
-/* GRID 3×3 */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:10px}
+/* GRID 3×3 más ancho */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:12px}
 @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}}
 
 /* Tarjeta */
 .card{
   position:relative;background:linear-gradient(180deg,#10183a,#0f1736);border:1px solid var(--line);
-  border-radius:12px;padding:10px;min-height:140px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;
+  border-radius:12px;padding:12px;min-height:160px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;
   transition:transform .18s ease, box-shadow .18s ease
 }
 .card:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(20,30,70,.32)}
 .card .meta-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap;font-size:.85rem}
 .cert{color:#cfe4ff}
-.qs{color:#ffe7ad}
 .xp::before{content:"⚡"}
-.dia::before{content:"💎"}
-.tit{font-weight:900;font-size:.98rem}
+.tit{font-weight:900;font-size:1rem}
 .desc{color:var(--muted);font-size:.9rem}
-.play{margin-top:0;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;height:36px;border-radius:10px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer;font-size:.92rem}
+.actions{display:flex;gap:8px;align-items:center}
+.play{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;height:36px;border-radius:10px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer;font-size:.92rem}
 .play[disabled]{opacity:.55;cursor:not-allowed;filter:grayscale(.6)}
+.del{height:36px;aspect-ratio:1/1;border-radius:10px;border:1px solid #4655a8;background:#121e4b;color:#cfe4ff;font-weight:900;cursor:pointer}
+.del:hover{background:#172560}
 
 /* Cintas de estado */
 .ribbon{position:absolute;right:-28px;bottom:14px;transform:rotate(-12deg);font-weight:900;padding:6px 30px;border-radius:10px;border:2px solid rgba(0,0,0,.15);box-shadow:0 8px 18px rgba(0,0,0,.25);display:none;font-size:.9rem}
@@ -104,7 +107,7 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 /* Modal misión multi-pregunta */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:50}
 .modal.show{display:flex}
-.modal-card{width:min(820px,92vw);max-height:86vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
+.modal-card{width:min(860px,92vw);max-height:86vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
 .mhead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:10px}
 .mprogress{font-weight:900;color:#cfe4ff}
 .close{border:1px solid var(--line);background:#182152;color:#cfe1ff;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer}
@@ -115,23 +118,28 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 .opt.correct{background:rgba(59,225,128,.10);border-color:rgba(59,225,128,.7)}
 .opt.wrong{background:rgba(255,114,114,.10);border-color:rgba(255,114,114,.7)}
 
-/* Ranking lateral */
+/* Ranking lateral (Lv y XP) más ancho */
 .ranking{padding:12px}
 .rtitle{display:flex;align-items:center;gap:10px;font-weight:900;margin-bottom:8px}
 .rlist{display:grid;gap:8px}
-.rrow{display:grid;grid-template-columns:28px 1fr auto auto;gap:8px;align-items:center;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.rrow{display:grid;grid-template-columns:28px 1fr auto auto;gap:10px;align-items:center;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:10px}
 .rname{font-weight:800}
-.rlvl{display:inline-flex;align-items:center;gap:6px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 10px;font-weight:900}
-.rpts{display:inline-flex;align-items:center;gap:8px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 10px;font-weight:900}
+.pill{display:inline-flex;align-items:center;gap:6px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 10px;font-weight:900}
+.pill .bolt{font-size:14px}
 
-/* Reglas (plegable) */
+/* Reglas (plegable, botón discreto) */
 .rules{margin-top:16px;border-top:1px solid var(--line)}
 .rule-toggle{margin-top:8px}
-.rule-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer}
+.rule-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #2b356a;background:#10183a;color:#e8edff;font-weight:900;cursor:pointer}
 .rule-body{display:none;margin-top:10px;padding:16px;background:linear-gradient(180deg,#0e1533,#0d1431);border:1px solid var(--line);border-radius:16px}
 .rule-body.show{display:block}
 .rule-body h3{margin:0 0 8px}
 .rule-body ul{margin:0;padding-left:18px;color:#cbd6ff}
+
+/* Toast + trayectoria al ranking */
+.toast{position:fixed;left:50%;top:16%;transform:translateX(-50%);background:#0f1736;border:1px solid #3a4998;color:#eafff6;padding:10px 14px;border-radius:12px;font-weight:900;z-index:60;opacity:0;transition:opacity .2s}
+.toast.show{opacity:1}
+.fly{position:fixed;pointer-events:none;z-index:60;font-weight:900;color:#eafff6;background:#182152;border:1px solid #3a4998;border-radius:999px;padding:6px 10px}
 </style>
 </head>
 <body>
@@ -144,8 +152,8 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
     </div>
     <div class="nav-right">
       <span class="badge">Arena Battle</span>
-      <span class="badge">Lv. 3</span>
-      <span class="badge">💎 32</span>
+      <span class="badge">Lv. 5</span>
+      <span class="badge">⚡ 2450 XP</span>
       <span class="badge">🔥 2d</span>
       <span class="user">BALLESTER21</span>
     </div>
@@ -154,7 +162,7 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 
 <main class="container">
   <h1>Arena Battle – Quizzes Relámpago</h1>
-  <p class="lead">Elige certificación, resuelve misiones de <b>1</b>, <b>2</b> o <b>3</b> preguntas y gana <b>XP</b> y <b>💎</b>. Acierta todas para puntuar.</p>
+  <p class="lead">Elige certificación, resuelve misiones de <b>1</b>, <b>2</b> o <b>3</b> preguntas y gana <b>XP</b>. Debes acertar todas para puntuar.</p>
 
   <div class="layout">
     <!-- TABLERO -->
@@ -162,6 +170,7 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
       <div class="panel-head">
         <div class="title-chip">🎯 Elige certificación</div>
 
+        <!-- filtros -->
         <div class="filters" id="filters">
           <button class="filter active" data-cert="ALL">Todas</button>
           <button class="filter" data-cert="AZ-104">AZ-104</button>
@@ -169,13 +178,14 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
           <button class="filter" data-cert="SAA-C03">SAA-C03</button>
         </div>
 
+        <!-- objetivo + reset -->
         <div class="goal">
           <div class="goal-pill">🎯 <span id="goalTxt">25 / 70</span></div>
           <div class="prog" aria-label="Objetivo semanal">
             <span id="goalBar" style="width:36%"></span>
             <em id="goalPct">36%</em>
           </div>
-          <button id="btnReset" class="filter">RESET</button>
+          <button id="btnReset" class="reset">RESET</button>
         </div>
       </div>
 
@@ -185,7 +195,7 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
     <!-- RANKING -->
     <aside class="panel">
       <div class="ranking">
-        <div class="rtitle">🏆 Ranking tiempo real (Lv & 💎)</div>
+        <div class="rtitle">🏆 Ranking tiempo real (Lv / XP)</div>
         <div class="rlist" id="rlist"><!-- filas --></div>
       </div>
     </aside>
@@ -200,16 +210,16 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
       <h3>Reglas</h3>
       <ul>
         <li>Tablero <b>3×3</b> = 9 casillas. Cada casilla es una misión.</li>
-        <li>Tipos de misión: <b>1</b>, <b>2</b> o <b>3</b> preguntas. <b>Debes acertarlas todas</b> para ganar los puntos.</li>
-        <li>Recompensas: 1P = <b>+10 XP</b>, <b>+2 💎</b> · 2P = <b>+22 XP</b>, <b>+5 💎</b> · 3P = <b>+36 XP</b>, <b>+9 💎</b>.</li>
-        <li>Al acertar: la tarjeta muestra <b>ACERTADA</b> (verde) y es reemplazada por otra misión.</li>
-        <li>Al fallar: aparece <b>FALLO</b> (rojo) por 2s y la misión queda disponible para reintentar.</li>
-        <li>Cumple el <b>objetivo semanal</b> (70 preguntas) para bonus de diamantes.</li>
+        <li>Tipos de misión: <b>1</b>, <b>2</b> o <b>3</b> preguntas. <b>Debes acertarlas todas</b> para ganar XP.</li>
+        <li>Recompensas: 1P = <b>+10 XP</b> · 2P = <b>+22 XP</b> · 3P = <b>+36 XP</b>.</li>
+        <li>Al acertar: la tarjeta muestra <b>ACERTADA</b> (verde) y se reemplaza por otra misión tras la animación.</li>
+        <li>Al fallar: aparece <b>FALLO</b> (rojo) por 2s y la misión queda lista para reintentar.</li>
+        <li>Cumple el <b>objetivo semanal</b> (70 preguntas) para tu progreso personal.</li>
       </ul>
-      <h3>XP, diamantes y niveles</h3>
+      <h3>XP y Niveles</h3>
       <ul>
-        <li><b>XP</b> → sube tu <b>nivel</b> (desbloquea retos/insignias).</li>
-        <li><b>Diamantes 💎</b> → competitivos para ranking y canjes. No se consumen.</li>
+        <li><b>XP</b> → medida de progreso total obtenido por misiones.</li>
+        <li><b>Niveles</b> → cada <b>1000 XP = +1 nivel</b>. Ej.: 0–999 XP ⇒ Lv1, 1000–1999 ⇒ Lv2, etc.</li>
       </ul>
     </div>
   </section>
@@ -222,9 +232,7 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
       <div class="mprogress" id="mProg">Pregunta 1/1</div>
       <div class="meta-row-inline">
         <span class="chip cert" id="mCert">AZ-104</span>
-        <span class="chip qs" id="mQs">1P</span>
         <span class="chip xp" id="mXp">+10 XP</span>
-        <span class="chip dia" id="mDia">+2</span>
       </div>
       <button class="close" id="mClose">CERRAR</button>
     </div>
@@ -235,34 +243,38 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
   </div>
 </div>
 
+<!-- Toast y vuelo -->
+<div id="toast" class="toast"></div>
+<div id="fly" class="fly" style="display:none">+10 XP</div>
+
 <script>
-/* ===== PREGUNTAS (se añadieron más por certificación) ===== */
+/* ===== BANCO DE PREGUNTAS (con dominio) ===== */
 const BANK = {
   "AZ-104":[
-    {q:"¿Qué servicio centraliza reglas de acceso a nivel de suscripción / grupo de recursos?", opts:["Azure Policy","Azure Blueprints","RBAC (roles)","PIM"], ok:2},
-    {q:"Para exponer web multizona con TLS y WAF gestionado:", opts:["Traffic Manager","Application Gateway","Front Door","Load Balancer"], ok:2},
-    {q:"¿Qué opción asegura WORM legalmente inmutable?", opts:["Soft delete","Versioning","Immutable Blob (Time-based)","GRS"], ok:2},
-    {q:"Conectividad estable on-prem con SLA y BGP:", opts:["P2S","ER","VNet Peering","S2S"], ok:1},
-    {q:"Dar acceso temporal SSH sin abrir 22:", opts:["Bastion","JIT Defender for Cloud","NSG allow","IP pública temporal"], ok:1}
+    {domain:"Identidades", q:"¿Qué servicio centraliza reglas de acceso a nivel de suscripción / grupo de recursos?", opts:["Azure Policy","Azure Blueprints","RBAC (roles)","PIM"], ok:2},
+    {domain:"Red", q:"Para exponer web multizona con TLS y WAF gestionado:", opts:["Traffic Manager","Application Gateway","Front Door","Load Balancer"], ok:2},
+    {domain:"Almacenamiento", q:"¿Qué opción asegura WORM legalmente inmutable?", opts:["Soft delete","Versioning","Immutable Blob (Time-based)","GRS"], ok:2},
+    {domain:"Conectividad", q:"Conectividad estable on-prem con SLA y BGP:", opts:["P2S","ExpressRoute","VNet Peering","S2S"], ok:1},
+    {domain:"Seguridad", q:"Dar acceso temporal SSH sin abrir 22:", opts:["Bastion","JIT Defender for Cloud","NSG allow","IP pública temporal"], ok:1}
   ],
   "AZ-305":[
-    {q:"Imponer etiquetado obligatorio y restringir regiones desde un MG:", opts:["RBAC","Azure Policy (iniciativa)","Defender for Cloud","Log Analytics"], ok:1},
-    {q:"Hub global con inspección centralizada + sedes:", opts:["VNet mesh","Virtual WAN + Hub seguro","AppGW en cada spoke","NVAs por spoke"], ok:1},
-    {q:"DB global con latencia ms y multi-master:", opts:["SQL MI","Cosmos DB","PostgreSQL Flex","SQL en VM"], ok:1},
-    {q:"Procesar eventos de blobs sin servidores:", opts:["WebJobs","Functions + Event Grid","Service Fabric","Timer"], ok:1},
-    {q:"WAF+TLS global y enrutamiento al edge:", opts:["Traffic Manager","Azure Front Door","Load Balancer","AppGW Básico"], ok:1}
+    {domain:"Gobernanza", q:"Imponer etiquetado obligatorio y restringir regiones desde un MG:", opts:["RBAC","Azure Policy (iniciativa)","Defender for Cloud","Log Analytics"], ok:1},
+    {domain:"Red", q:"Hub global con inspección centralizada + sedes:", opts:["VNet mesh","Virtual WAN + Hub seguro","AppGW en cada spoke","NVAs por spoke"], ok:1},
+    {domain:"Datos", q:"DB global con latencia ms y multi-master:", opts:["SQL MI","Cosmos DB","PostgreSQL Flex","SQL en VM"], ok:1},
+    {domain:"Serverless", q:"Procesar eventos de blobs sin servidores:", opts:["WebJobs","Functions + Event Grid","Service Fabric","Timer"], ok:1},
+    {domain:"Edge/WAF", q:"WAF+TLS global y enrutamiento al edge:", opts:["Traffic Manager","Azure Front Door","Load Balancer","AppGW Básico"], ok:1}
   ],
   "SAA-C03":[
-    {q:"Secretos con rotación y KMS integrado:", opts:["Secrets Manager","Parameter Store","S3 SSE-S3","CloudHSM"], ok:0},
-    {q:"Acceso a S3 sin Internet desde VPC:", opts:["Gateway VPC Endpoint","Interface Endpoint","NAT GW","IGW"], ok:0},
-    {q:"Publicar eventos a muchos consumidores:", opts:["SQS FIFO","SNS fanout","S3 events","Kinesis FH"], ok:1},
-    {q:"DB multi-AZ con failover automático:", opts:["RDS Multi-AZ","Aurora Serverless v2","DynamoDB Global","Read Replica"], ok:0},
-    {q:"CDN global con TLS y protección básica:", opts:["ALB","CloudFront","NLB","Global Accelerator"], ok:1}
+    {domain:"Seguridad", q:"Secretos con rotación y KMS integrado:", opts:["Secrets Manager","Parameter Store","S3 SSE-S3","CloudHSM"], ok:0},
+    {domain:"S3 privado", q:"Acceso a S3 sin Internet desde VPC:", opts:["Gateway VPC Endpoint","Interface Endpoint","NAT GW","IGW"], ok:0},
+    {domain:"Eventos", q:"Publicar eventos a muchos consumidores:", opts:["SQS FIFO","SNS fanout","S3 events","Kinesis FH"], ok:1},
+    {domain:"BBDD", q:"DB multi-AZ con failover automático:", opts:["RDS Multi-AZ","Aurora Serverless v2","DynamoDB Global","Read Replica"], ok:0},
+    {domain:"CDN", q:"CDN global con TLS y protección básica:", opts:["ALB","CloudFront","NLB","Global Accelerator"], ok:1}
   ]
 };
 
 /* ===== CONFIG ===== */
-const REWARDS = { 1:{xp:10, dia:2, label:"1P"}, 2:{xp:22, dia:5, label:"2P"}, 3:{xp:36, dia:9, label:"3P"} };
+const REWARDS = { 1:{xp:10}, 2:{xp:22}, 3:{xp:36} };
 let filterCert = "ALL";
 let weekly = JSON.parse(localStorage.getItem("weeklyProgress")||"25"); // demo
 const GRID_SIZE = 9; // 3×3
@@ -282,6 +294,8 @@ const goalBar = document.getElementById('goalBar');
 const goalPct = document.getElementById('goalPct');
 const rulesBtn = document.getElementById('toggleRules');
 const rulesBody = document.getElementById('rulesBody');
+const toast = document.getElementById('toast');
+const fly = document.getElementById('fly');
 
 /* ===== GOAL ===== */
 function updateGoal(v){
@@ -295,14 +309,19 @@ function updateGoal(v){
 
 /* ===== MISSIONS ===== */
 function sampleMission(cert){
-  // decide certification
   const certPool = cert==="ALL" ? Object.keys(BANK) : [cert];
   const c = certPool[rand(0, certPool.length-1)];
-  // difficulty (#preguntas)
-  const qcount = [1,1,2,3][rand(0,3)]; // más prob 1/2 que 3
+  const qcount = [1,1,2,3][rand(0,3)];
   const qs = pickN(BANK[c], qcount);
   const rew = REWARDS[qcount];
-  return {cert:c, qcount, qs, reward:rew};
+  const domains = qs.map(q=>q.domain);
+  return {cert:c, qcount, qs, reward:rew, domains};
+}
+
+function domainsLabel(domains){
+  if(domains.length===1) return domains[0];
+  if(domains.length===2) return `${domains[0]} + ${domains[1]}`;
+  return `${domains[0]} + ${domains.length-1} más`;
 }
 
 function createCard(m){
@@ -312,16 +331,26 @@ function createCard(m){
   card.innerHTML = `
     <div class="meta-row">
       <span class="chip cert">${m.cert}</span>
-      <span class="chip qs">${REWARDS[m.qcount].label}</span>
       <span class="chip xp">+${m.reward.xp} XP</span>
-      <span class="chip dia">+${m.reward.dia}</span>
     </div>
-    <div class="tit">${m.cert} · Misión relámpago</div>
+    <div class="tit">${m.cert} · ${domainsLabel(m.domains)}</div>
     <div class="desc">${m.qcount} ${m.qcount===1?'pregunta':'preguntas'} · acierta todas para puntuar</div>
-    <button class="play">JUGAR</button>
+    <div class="actions">
+      <button class="play">JUGAR</button>
+      <button class="del" title="Eliminar">🗑️</button>
+    </div>
     <div class="ribbon">ACERTADA</div>
   `;
   card.querySelector('.play').addEventListener('click',()=>openMission(card,m));
+  // eliminar/reemplazar
+  card.querySelector('.del').addEventListener('click', ()=>{
+    card.classList.add('out');
+    setTimeout(()=>{
+      const certHere = filterCert==="ALL" ? "ALL" : card.dataset.cert;
+      const repl = createCard(sampleMission(certHere));
+      card.replaceWith(repl);
+    }, 350);
+  });
   return card;
 }
 
@@ -337,9 +366,7 @@ const modal = document.getElementById('modal');
 const mClose = document.getElementById('mClose');
 const mTitle = document.getElementById('mTitle');
 const mCert  = document.getElementById('mCert');
-const mQs    = document.getElementById('mQs');
 const mXp    = document.getElementById('mXp');
-const mDia   = document.getElementById('mDia');
 const mProg  = document.getElementById('mProg');
 const mOpts  = document.getElementById('mOpts');
 
@@ -348,16 +375,14 @@ let activeCard=null, activeMission=null, idxQ=0;
 function openMission(card,m){
   activeCard = card; activeMission = m; idxQ = 0;
   mCert.textContent = m.cert;
-  mQs.textContent   = REWARDS[m.qcount].label;
   mXp.textContent   = `+${m.reward.xp} XP`;
-  mDia.textContent  = `+${m.reward.dia}`;
   renderCurrentQuestion();
   modal.classList.add('show');
 }
 
 function renderCurrentQuestion(){
   const qObj = activeMission.qs[idxQ];
-  mProg.textContent = `Pregunta ${idxQ+1}/${activeMission.qcount}`;
+  mProg.textContent = `Pregunta ${idxQ+1}/${activeMission.qcount} · ${qObj.domain}`;
   mTitle.textContent = qObj.q;
   mOpts.innerHTML = "";
   qObj.opts.forEach((t,idx)=>{
@@ -382,24 +407,59 @@ function renderCurrentQuestion(){
   });
 }
 
+/* ===== FEEDBACK / RANK ANIM ===== */
+function showToast(text){
+  toast.textContent = text;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'), 1000);
+}
+
+function flyToRanking(text){
+  // centro pantalla → hacia cabecera del ranking
+  const startX = window.innerWidth/2, startY = window.innerHeight*0.18;
+  const target = document.querySelector('.rlist'); // contenedor ranking
+  const rect = target.getBoundingClientRect();
+  const endX = rect.left + rect.width - 40;
+  const endY = rect.top + 20;
+
+  fly.textContent = text;
+  fly.style.left = `${startX}px`;
+  fly.style.top  = `${startY}px`;
+  fly.style.display = 'block';
+
+  fly.animate([
+    { transform:`translate(-50%,-50%) scale(1)`, opacity:1, left:`${startX}px`, top:`${startY}px`},
+    { transform:`translate(0,0) scale(.9)`, opacity:0.05, left:`${endX}px`, top:`${endY}px` }
+  ], { duration: 1400, easing: 'ease-in' }).onfinish = ()=>{ fly.style.display='none'; };
+}
+
+/* ===== RESULTADOS ===== */
 function onWin(){
   modal.classList.remove('show');
+
   const btn = activeCard.querySelector('.play');
   btn.setAttribute('disabled','true');
   activeCard.classList.remove('fail');
   activeCard.classList.add('win');
   activeCard.querySelector('.ribbon').textContent = 'ACERTADA';
-  updateGoal(weekly + activeMission.qcount); // sumamos preguntas acertadas
 
+  // progreso semanal (por nº de preguntas)
+  updateGoal(weekly + activeMission.qcount);
+
+  // XP hacia ranking
+  showToast(`+${activeMission.reward.xp} XP`);
+  flyToRanking(`+${activeMission.reward.xp} XP`);
+  awardXPToMe(activeMission.reward.xp);
+
+  // reemplazo tras la animación
   setTimeout(()=>{
     activeCard.classList.add('out');
     setTimeout(()=>{
-      const parent = activeCard.parentElement;
       const certHere = filterCert==="ALL" ? "ALL" : activeCard.dataset.cert;
-      activeCard.remove();
-      parent.appendChild(createCard(sampleMission(certHere)));
+      const replacement = createCard(sampleMission(certHere));
+      activeCard.replaceWith(replacement);
     }, 350);
-  }, 1200);
+  }, 1400); // más lento para que se vea el vuelo
 }
 
 function onFail(){
@@ -416,37 +476,48 @@ function onFail(){
   }, 2000);
 }
 
-/* ===== RANKING (Lv & 💎 en “tiempo real”) ===== */
+/* ===== RANKING (Lv & XP en “tiempo real”) ===== */
 const players = [
-  {name:"CloudNinja", level:7, dia:44},
-  {name:"Ballester21", level:5, dia:32, me:true},
-  {name:"AKS_Master", level:6, dia:27},
-  {name:"S3Wizard", level:5, dia:21},
-  {name:"NetSecX", level:4, dia:18}
+  {name:"CloudNinja", xp:7200},
+  {name:"Ballester21", xp:5220, me:true},
+  {name:"AKS_Master", xp:6970},
+  {name:"S3Wizard", xp:6480},
+  {name:"NetSecX", xp:4650}
 ];
 const rlist = document.getElementById('rlist');
 
+function levelFromXP(xp){ return Math.floor(xp/1000)+1; }
+
 function renderRanking(){
   rlist.innerHTML = "";
-  players.sort((a,b)=> b.dia - a.dia || b.level-a.level);
+  players.sort((a,b)=> b.xp - a.xp);
   players.forEach((p,i)=>{
     const row = document.createElement('div');
     row.className = 'rrow' + (p.me ? ' me':'');
+
     row.innerHTML = `
       <div>${i+1}</div>
       <div class="rname">${p.name}</div>
-      <div class="rlvl">Lv ${p.level}</div>
-      <div class="rpts">💎 ${p.dia}</div>
+      <div class="pill">Lv ${levelFromXP(p.xp)}</div>
+      <div class="pill"><span class="bolt">⚡</span> ${p.xp}</div>
     `;
     rlist.appendChild(row);
   });
 }
+
+// Tick: algunos ganan XP aleatoriamente
 setInterval(()=>{
   const idx = rand(0, players.length-1);
-  players[idx].dia += rand(0,2);
-  if(Math.random()<0.15) players[idx].level += 1; // de vez en cuando sube nivel
+  players[idx].xp += rand(0,60);
   renderRanking();
-}, 1600);
+}, 2000);
+
+function awardXPToMe(xp){
+  const me = players.find(p=>p.me);
+  if(!me) return;
+  me.xp += xp;
+  renderRanking();
+}
 
 /* ===== UI wiring ===== */
 document.getElementById('filters').addEventListener('click', (e)=>{
@@ -461,7 +532,7 @@ document.getElementById('btnReset').addEventListener('click', ()=>{
   buildGrid();
 });
 
-mClose.addEventListener('click',()=>modal.classList.remove('show'));
+document.getElementById('mClose').addEventListener('click',()=>modal.classList.remove('show'));
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show'); });
 
 rulesBtn.addEventListener('click', ()=>{
