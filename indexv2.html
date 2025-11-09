@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ITHub Arena — Misiones relámpago 3×2 (AZ-104, AZ-305, SAA-C03)</title>
-<meta name="description" content="Arena 3x2 de misiones relámpago. Responde, gana XP y diamantes, completa tu objetivo semanal y escala en el ranking. Simuladores AZ-104, AZ-305 y SAA-C03." />
+<title>Arena Battle – Quizzes Relámpago (AZ-104, AZ-305, SAA-C03)</title>
+<meta name="description" content="Arena Battle: Quizzes relámpago 3×3. Elige certificación, responde misiones de 1, 2 o 3 preguntas, gana XP y diamantes, completa tu objetivo semanal y escala en el ranking." />
 <meta name="theme-color" content="#0b0f1e" />
 <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
@@ -12,7 +12,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 <style>
 :root{
   --bg:#0b0f1e;--panel:#0f1530;--panel2:#121a3b;--line:#26305e;--ink:#e8edff;--muted:#9fb2ff;
-  --accent:#7e6bff;--ok:#38d97a;--warn:#ffd86a;--bad:#ff7272;--dia:#7dd3ff;
+  --accent:#7e6bff;--ok:#38d97a;--bad:#ff7272;--dia:#7dd3ff;
   --radius:14px;--shadow:0 16px 40px rgba(6,12,40,.45);
   --chip:#0f1736;--chipLine:#324081;
 }
@@ -28,14 +28,13 @@ html,body{
   font-family:Inter, ui-sans-serif, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* Header (no flotante) */
+/* Header */
 header{background:#0e1328;border-bottom:1px solid var(--line);}
 .nav{max-width:1200px;margin:0 auto;display:flex;gap:14px;align-items:center;justify-content:space-between;padding:12px 18px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:900}
 .brand .logo{width:30px;height:30px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 0 0 8px rgba(130,150,255,.14)}
 .nav-right{display:flex;gap:10px;align-items:center;}
 .badge{padding:8px 12px;border-radius:999px;border:1px solid #2b356a;background:#10183a;font-weight:900;display:inline-flex;align-items:center;gap:8px;}
-.badge .dot{width:8px;height:8px;border-radius:999px;background:#7de1ff}
 .user{padding:8px 12px;border-radius:12px;border:1px solid #2b356a;background:#10183a;font-weight:900}
 
 /* Contenedor */
@@ -45,46 +44,46 @@ header{background:#0e1328;border-bottom:1px solid var(--line);}
 h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 .lead{color:var(--muted);margin:0 0 14px}
 
-/* Tablero + ranking */
+/* Layout */
 .layout{display:grid;grid-template-columns:1fr 320px;gap:16px}
 @media(max-width:980px){.layout{grid-template-columns:1fr}}
 
-/* Paneles */
+/* Panel común */
 .panel{background:linear-gradient(180deg,var(--panel),#0e1533);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
 
-/* Encabezado panel arena */
+/* Head del tablero */
 .panel-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)}
 .title-chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900}
-.title-chip .sword{filter:drop-shadow(0 6px 10px rgba(130,150,255,.2));font-size:18px}
 
-/* Filtros en una línea (claros) */
+/* Filtros claros */
 .filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .filter{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--chipLine);background:linear-gradient(180deg,#0f1736,#121d48);border-radius:999px;font-weight:900;cursor:pointer;user-select:none;color:#dfe7ff;font-size:.92rem}
 .filter:hover{border-color:#5a72ff}
 .filter.active{background:linear-gradient(180deg,#7a8cff,#5b6dff);color:#fff;border-color:#6f82ff;box-shadow:0 10px 22px rgba(80,95,255,.25)}
 
-/* Objetivo semanal (más protagonista) */
+/* Objetivo semanal */
 .goal{display:flex;align-items:center;gap:10px;margin-left:auto;flex:1;justify-content:flex-end;flex-wrap:wrap}
 .goal-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--chipLine);background:var(--chip);border-radius:999px;padding:8px 12px;font-weight:900}
 .prog{position:relative;width:clamp(260px, 48vw, 560px);height:16px;border-radius:999px;background:#0b1028;border:1px solid var(--line);overflow:hidden;box-shadow:0 0 0 6px rgba(80,95,255,.08) inset}
-.prog>span{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#49e08d,#76f4bc);transition:width .35s ease}
+.prog>span{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#3be180,#76f4bc);transition:width .35s ease}
 .prog em{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:900;font-style:normal;color:#eafff6;text-shadow:0 1px 0 #0a0f28}
 
-/* ====== TARJETA COMPACTA ====== */
-/* Grid 3x2 – más compacto */
+/* GRID 3×3 */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:10px}
 @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}}
 
+/* Tarjeta */
 .card{
   position:relative;background:linear-gradient(180deg,#10183a,#0f1736);border:1px solid var(--line);
-  border-radius:12px;padding:10px;min-height:130px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;
+  border-radius:12px;padding:10px;min-height:140px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;
   transition:transform .18s ease, box-shadow .18s ease
 }
 .card:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(20,30,70,.32)}
 .card .meta-row{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap;font-size:.85rem}
 .cert{color:#cfe4ff}
+.qs{color:#ffe7ad}
 .xp::before{content:"⚡"}
 .dia::before{content:"💎"}
 .tit{font-weight:900;font-size:.98rem}
@@ -92,46 +91,47 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 .play{margin-top:0;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;height:36px;border-radius:10px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer;font-size:.92rem}
 .play[disabled]{opacity:.55;cursor:not-allowed;filter:grayscale(.6)}
 
-/* Estado ganado + cinta */
-.card.won{outline:2px solid rgba(56,217,122,.7);box-shadow:0 0 0 6px rgba(56,217,122,.15) inset}
-.ribbon{position:absolute;right:-32px;bottom:14px;transform:rotate(-12deg);background:#3be180;color:#05361c;font-weight:900;padding:6px 30px;border-radius:10px;border:2px solid rgba(0,0,0,.15);box-shadow:0 8px 18px rgba(0,0,0,.25);display:none;font-size:.9rem}
-.card.won .ribbon{display:block}
+/* Cintas de estado */
+.ribbon{position:absolute;right:-28px;bottom:14px;transform:rotate(-12deg);font-weight:900;padding:6px 30px;border-radius:10px;border:2px solid rgba(0,0,0,.15);box-shadow:0 8px 18px rgba(0,0,0,.25);display:none;font-size:.9rem}
+.card.win .ribbon{display:block;background:#3be180;color:#05361c}
+.card.fail .ribbon{display:block;background:#ff8a8a;color:#3b0a0a}
 
-/* Salida de tarjeta y entrada */
+/* Animaciones de entrada/salida */
 .card.out{opacity:0;transform:scale(.92) translateY(8px);transition:opacity .35s ease, transform .35s ease}
 .card.new{animation:pop .35s ease}
 @keyframes pop{0%{opacity:0;transform:scale(.9)} 100%{opacity:1;transform:scale(1)}}
 
-/* Modal misión */
+/* Modal misión multi-pregunta */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:50}
 .modal.show{display:flex}
-.modal-card{width:min(800px,92vw);max-height:86vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
+.modal-card{width:min(820px,92vw);max-height:86vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
 .mhead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:10px}
+.mprogress{font-weight:900;color:#cfe4ff}
 .close{border:1px solid var(--line);background:#182152;color:#cfe1ff;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer}
 .qbox{background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:14px}
 .qtitle{font-weight:900;margin:0 0 10px}
 .opt{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:start;margin:8px 0;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0e1633;cursor:pointer}
 .opt:hover{border-color:#3a4998}
-.opt.correct{background:rgba(56,217,122,.10);border-color:rgba(56,217,122,.7)}
+.opt.correct{background:rgba(59,225,128,.10);border-color:rgba(59,225,128,.7)}
 .opt.wrong{background:rgba(255,114,114,.10);border-color:rgba(255,114,114,.7)}
-.meta-row-inline{display:flex;gap:8px;align-items:center;margin-bottom:10px}
 
 /* Ranking lateral */
 .ranking{padding:12px}
 .rtitle{display:flex;align-items:center;gap:10px;font-weight:900;margin-bottom:8px}
 .rlist{display:grid;gap:8px}
-.rrow{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
-.rrow.me{outline:2px solid rgba(124,212,255,.5)}
+.rrow{display:grid;grid-template-columns:28px 1fr auto auto;gap:8px;align-items:center;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
 .rname{font-weight:800}
+.rlvl{display:inline-flex;align-items:center;gap:6px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 10px;font-weight:900}
 .rpts{display:inline-flex;align-items:center;gap:8px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 10px;font-weight:900}
 
-/* Pie explicación */
-.rules{margin-top:16px;padding:16px;background:linear-gradient(180deg,#0e1533,#0d1431);border:1px solid var(--line);border-radius:16px}
-.rules h3{margin:0 0 8px}
-.rules ul{margin:0;padding-left:18px;color:#cbd6ff}
-
-/* util */
-.hide{display:none !important}
+/* Reglas (plegable) */
+.rules{margin-top:16px;border-top:1px solid var(--line)}
+.rule-toggle{margin-top:8px}
+.rule-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer}
+.rule-body{display:none;margin-top:10px;padding:16px;background:linear-gradient(180deg,#0e1533,#0d1431);border:1px solid var(--line);border-radius:16px}
+.rule-body.show{display:block}
+.rule-body h3{margin:0 0 8px}
+.rule-body ul{margin:0;padding-left:18px;color:#cbd6ff}
 </style>
 </head>
 <body>
@@ -143,7 +143,7 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
       <span>IT <strong>Hub</strong> .es</span>
     </div>
     <div class="nav-right">
-      <span class="badge"><span class="dot"></span> Arena</span>
+      <span class="badge">Arena Battle</span>
       <span class="badge">Lv. 3</span>
       <span class="badge">💎 32</span>
       <span class="badge">🔥 2d</span>
@@ -153,17 +153,17 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 </header>
 
 <main class="container">
-  <h1>Arena 3×2 — Misiones relámpago</h1>
-  <p class="lead">Acierta para ganar <b>XP</b> y <b>diamantes</b>. Cada casilla superada <i>se sustituye</i> por una nueva misión.</p>
+  <h1>Arena Battle – Quizzes Relámpago</h1>
+  <p class="lead">Elige certificación, resuelve misiones de <b>1</b>, <b>2</b> o <b>3</b> preguntas y gana <b>XP</b> y <b>💎</b>. Acierta todas para puntuar.</p>
 
   <div class="layout">
-    <!-- ARENA -->
+    <!-- TABLERO -->
     <section class="panel" id="arena">
       <div class="panel-head">
-        <div class="title-chip"><span class="sword">⚔️</span> Arena — Tablero 3×2</div>
+        <div class="title-chip">🎯 Elige certificación</div>
 
         <div class="filters" id="filters">
-          <button class="filter active" data-cert="ALL">Todos</button>
+          <button class="filter active" data-cert="ALL">Todas</button>
           <button class="filter" data-cert="AZ-104">AZ-104</button>
           <button class="filter" data-cert="AZ-305">AZ-305</button>
           <button class="filter" data-cert="SAA-C03">SAA-C03</button>
@@ -185,26 +185,31 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
     <!-- RANKING -->
     <aside class="panel">
       <div class="ranking">
-        <div class="rtitle">🏆 Ranking tiempo real (💎)</div>
+        <div class="rtitle">🏆 Ranking tiempo real (Lv & 💎)</div>
         <div class="rlist" id="rlist"><!-- filas --></div>
       </div>
     </aside>
   </div>
 
-  <section class="rules panel">
-    <div style="padding:12px">
-      <h3>¿Cómo se juega?</h3>
+  <!-- Reglas plegables -->
+  <section class="rules">
+    <div class="rule-toggle">
+      <button class="rule-btn" id="toggleRules">📖 Ver Reglas del juego</button>
+    </div>
+    <div class="rule-body" id="rulesBody">
+      <h3>Reglas</h3>
       <ul>
-        <li>El tablero tiene <b>6 casillas</b> (3×2). Cada casilla es una <b>misión</b> de 1 pregunta.</li>
-        <li>Si aciertas: <b>+10 XP</b> y <b>+2 💎</b>. La tarjeta se marca como <b>SUPERADA</b>, hace una animación y <b>se reemplaza</b> por una nueva.</li>
-        <li>Si fallas: puedes reintentarlo más tarde (rotación de misiones).</li>
-        <li>Cumple el <b>objetivo semanal</b> (70 preguntas) para obtener un <b>bonus</b> de diamantes.</li>
+        <li>Tablero <b>3×3</b> = 9 casillas. Cada casilla es una misión.</li>
+        <li>Tipos de misión: <b>1</b>, <b>2</b> o <b>3</b> preguntas. <b>Debes acertarlas todas</b> para ganar los puntos.</li>
+        <li>Recompensas: 1P = <b>+10 XP</b>, <b>+2 💎</b> · 2P = <b>+22 XP</b>, <b>+5 💎</b> · 3P = <b>+36 XP</b>, <b>+9 💎</b>.</li>
+        <li>Al acertar: la tarjeta muestra <b>ACERTADA</b> (verde) y es reemplazada por otra misión.</li>
+        <li>Al fallar: aparece <b>FALLO</b> (rojo) por 2s y la misión queda disponible para reintentar.</li>
+        <li>Cumple el <b>objetivo semanal</b> (70 preguntas) para bonus de diamantes.</li>
       </ul>
-      <h3 style="margin-top:12px">XP, diamantes y niveles</h3>
+      <h3>XP, diamantes y niveles</h3>
       <ul>
-        <li><b>XP</b>: sube tu <b>nivel</b> y desbloquea retos/insignias.</li>
-        <li><b>Diamantes 💎</b>: moneda competitiva para ranking y canjes.</li>
-        <li><b>Niveles</b>: subes automáticamente al alcanzar el XP objetivo; los diamantes no se consumen.</li>
+        <li><b>XP</b> → sube tu <b>nivel</b> (desbloquea retos/insignias).</li>
+        <li><b>Diamantes 💎</b> → competitivos para ranking y canjes. No se consumen.</li>
       </ul>
     </div>
   </section>
@@ -214,10 +219,12 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 <div class="modal" id="modal">
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <div class="mhead">
+      <div class="mprogress" id="mProg">Pregunta 1/1</div>
       <div class="meta-row-inline">
         <span class="chip cert" id="mCert">AZ-104</span>
-        <span class="chip xp">+10 XP</span>
-        <span class="chip dia">+2</span>
+        <span class="chip qs" id="mQs">1P</span>
+        <span class="chip xp" id="mXp">+10 XP</span>
+        <span class="chip dia" id="mDia">+2</span>
       </div>
       <button class="close" id="mClose">CERRAR</button>
     </div>
@@ -229,38 +236,54 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 </div>
 
 <script>
-/* ===== DATA ===== */
-const MISSIONS = [
-  {cert:"AZ-104", domain:"Identidades", q:"¿Qué servicio centraliza reglas de acceso a nivel de suscripción / grupo de recursos?", opts:["Azure Policy","Azure Blueprints","RBAC (roles)","PIM"], ok:2},
-  {cert:"AZ-104", domain:"Red", q:"Para exponer web multizona con TLS y WAF gestionado:", opts:["Traffic Manager","Application Gateway","Front Door","Load Balancer"], ok:2},
-  {cert:"AZ-104", domain:"Almacenamiento", q:"¿Qué opción asegura WORM legalmente inmutable?", opts:["Soft delete","Versioning","Immutable Blob (Time-based)","GRS"], ok:2},
+/* ===== PREGUNTAS (se añadieron más por certificación) ===== */
+const BANK = {
+  "AZ-104":[
+    {q:"¿Qué servicio centraliza reglas de acceso a nivel de suscripción / grupo de recursos?", opts:["Azure Policy","Azure Blueprints","RBAC (roles)","PIM"], ok:2},
+    {q:"Para exponer web multizona con TLS y WAF gestionado:", opts:["Traffic Manager","Application Gateway","Front Door","Load Balancer"], ok:2},
+    {q:"¿Qué opción asegura WORM legalmente inmutable?", opts:["Soft delete","Versioning","Immutable Blob (Time-based)","GRS"], ok:2},
+    {q:"Conectividad estable on-prem con SLA y BGP:", opts:["P2S","ER","VNet Peering","S2S"], ok:1},
+    {q:"Dar acceso temporal SSH sin abrir 22:", opts:["Bastion","JIT Defender for Cloud","NSG allow","IP pública temporal"], ok:1}
+  ],
+  "AZ-305":[
+    {q:"Imponer etiquetado obligatorio y restringir regiones desde un MG:", opts:["RBAC","Azure Policy (iniciativa)","Defender for Cloud","Log Analytics"], ok:1},
+    {q:"Hub global con inspección centralizada + sedes:", opts:["VNet mesh","Virtual WAN + Hub seguro","AppGW en cada spoke","NVAs por spoke"], ok:1},
+    {q:"DB global con latencia ms y multi-master:", opts:["SQL MI","Cosmos DB","PostgreSQL Flex","SQL en VM"], ok:1},
+    {q:"Procesar eventos de blobs sin servidores:", opts:["WebJobs","Functions + Event Grid","Service Fabric","Timer"], ok:1},
+    {q:"WAF+TLS global y enrutamiento al edge:", opts:["Traffic Manager","Azure Front Door","Load Balancer","AppGW Básico"], ok:1}
+  ],
+  "SAA-C03":[
+    {q:"Secretos con rotación y KMS integrado:", opts:["Secrets Manager","Parameter Store","S3 SSE-S3","CloudHSM"], ok:0},
+    {q:"Acceso a S3 sin Internet desde VPC:", opts:["Gateway VPC Endpoint","Interface Endpoint","NAT GW","IGW"], ok:0},
+    {q:"Publicar eventos a muchos consumidores:", opts:["SQS FIFO","SNS fanout","S3 events","Kinesis FH"], ok:1},
+    {q:"DB multi-AZ con failover automático:", opts:["RDS Multi-AZ","Aurora Serverless v2","DynamoDB Global","Read Replica"], ok:0},
+    {q:"CDN global con TLS y protección básica:", opts:["ALB","CloudFront","NLB","Global Accelerator"], ok:1}
+  ]
+};
 
-  {cert:"AZ-305", domain:"Gobernanza", q:"Imponer etiquetado obligatorio y restringir regiones desde un MG:", opts:["RBAC","Azure Policy (iniciativa)","Defender for Cloud","Log Analytics"], ok:1},
-  {cert:"AZ-305", domain:"Red", q:"Hub global con inspección centralizada + sedes:", opts:["VNet mesh","Virtual WAN + Hub seguro","App Gateway en cada spoke","NVAs por spoke"], ok:1},
-  {cert:"AZ-305", domain:"Datos", q:"DB global con latencia ms y multi-master:", opts:["SQL MI","Cosmos DB","PostgreSQL Flex","SQL en VM"], ok:1},
-
-  {cert:"SAA-C03", domain:"Seguro", q:"Secretos con rotación y KMS integrado:", opts:["Secrets Manager","Parameter Store","S3 SSE-S3","CloudHSM"], ok:0},
-  {cert:"SAA-C03", domain:"Red", q:"Acceso a S3 sin Internet desde VPC:", opts:["Gateway VPC Endpoint","Interface Endpoint","NAT GW","IGW"], ok:0},
-  {cert:"SAA-C03", domain:"HA", q:"Publicar eventos a muchos consumidores:", opts:["SQS FIFO","SNS fanout","S3 events","Kinesis FH"], ok:1}
-];
-
-/* ===== STATE ===== */
+/* ===== CONFIG ===== */
+const REWARDS = { 1:{xp:10, dia:2, label:"1P"}, 2:{xp:22, dia:5, label:"2P"}, 3:{xp:36, dia:9, label:"3P"} };
 let filterCert = "ALL";
 let weekly = JSON.parse(localStorage.getItem("weeklyProgress")||"25"); // demo
-const GRID_SIZE = 6;                 // 3 x 2
-const REWARD_XP = 10, REWARD_DIA = 2;
+const GRID_SIZE = 9; // 3×3
 
+/* ===== UTILS ===== */
+const rand = (min,max)=> Math.floor(Math.random()*(max-min+1))+min;
+const pickN = (arr,n)=> {
+  const a=[...arr]; const out=[];
+  while(out.length<n && a.length){ out.push(a.splice(rand(0,a.length-1),1)[0]); }
+  return out;
+};
+
+/* ===== DOM refs ===== */
 const grid = document.getElementById('grid');
 const goalTxt = document.getElementById('goalTxt');
 const goalBar = document.getElementById('goalBar');
 const goalPct = document.getElementById('goalPct');
+const rulesBtn = document.getElementById('toggleRules');
+const rulesBody = document.getElementById('rulesBody');
 
-/* ===== HELPERS ===== */
-const rand = (min,max)=> Math.floor(Math.random()*(max-min+1))+min;
-function sampleMission(cert){
-  const pool = MISSIONS.filter(m => cert==="ALL" ? true : m.cert===cert);
-  return structuredClone(pool[rand(0, pool.length-1)]);
-}
+/* ===== GOAL ===== */
 function updateGoal(v){
   weekly = Math.min(70, Math.max(0, v));
   localStorage.setItem("weeklyProgress", weekly);
@@ -270,14 +293,18 @@ function updateGoal(v){
   goalPct.textContent = `${pct}%`;
 }
 
-/* ===== BUILD GRID (3×2) ===== */
-function buildGrid(){
-  grid.innerHTML = "";
-  for(let i=0;i<GRID_SIZE;i++){
-    const m = sampleMission(filterCert);
-    grid.appendChild(createCard(m));
-  }
+/* ===== MISSIONS ===== */
+function sampleMission(cert){
+  // decide certification
+  const certPool = cert==="ALL" ? Object.keys(BANK) : [cert];
+  const c = certPool[rand(0, certPool.length-1)];
+  // difficulty (#preguntas)
+  const qcount = [1,1,2,3][rand(0,3)]; // más prob 1/2 que 3
+  const qs = pickN(BANK[c], qcount);
+  const rew = REWARDS[qcount];
+  return {cert:c, qcount, qs, reward:rew};
 }
+
 function createCard(m){
   const card = document.createElement('article');
   card.className = 'card new';
@@ -285,55 +312,84 @@ function createCard(m){
   card.innerHTML = `
     <div class="meta-row">
       <span class="chip cert">${m.cert}</span>
-      <span class="chip xp">+${REWARD_XP} XP</span>
-      <span class="chip dia">+${REWARD_DIA}</span>
+      <span class="chip qs">${REWARDS[m.qcount].label}</span>
+      <span class="chip xp">+${m.reward.xp} XP</span>
+      <span class="chip dia">+${m.reward.dia}</span>
     </div>
-    <div class="tit">${m.cert} · ${m.domain}</div>
-    <div class="desc">Reto relámpago: 1 pregunta</div>
+    <div class="tit">${m.cert} · Misión relámpago</div>
+    <div class="desc">${m.qcount} ${m.qcount===1?'pregunta':'preguntas'} · acierta todas para puntuar</div>
     <button class="play">JUGAR</button>
-    <div class="ribbon">SUPERADA</div>
+    <div class="ribbon">ACERTADA</div>
   `;
   card.querySelector('.play').addEventListener('click',()=>openMission(card,m));
   return card;
 }
 
-/* ===== MODAL FLOW ===== */
+function buildGrid(){
+  grid.innerHTML = "";
+  for(let i=0;i<GRID_SIZE;i++){
+    grid.appendChild(createCard(sampleMission(filterCert)));
+  }
+}
+
+/* ===== MODAL (multi-pregunta) ===== */
 const modal = document.getElementById('modal');
 const mClose = document.getElementById('mClose');
 const mTitle = document.getElementById('mTitle');
 const mCert  = document.getElementById('mCert');
+const mQs    = document.getElementById('mQs');
+const mXp    = document.getElementById('mXp');
+const mDia   = document.getElementById('mDia');
+const mProg  = document.getElementById('mProg');
 const mOpts  = document.getElementById('mOpts');
 
-let activeCard = null, activeMission = null;
+let activeCard=null, activeMission=null, idxQ=0;
 
 function openMission(card,m){
-  activeCard = card; activeMission = m;
-  mTitle.textContent = m.q;
-  mCert.textContent  = m.cert;
-  mOpts.innerHTML = '';
-  m.opts.forEach((t,idx)=>{
+  activeCard = card; activeMission = m; idxQ = 0;
+  mCert.textContent = m.cert;
+  mQs.textContent   = REWARDS[m.qcount].label;
+  mXp.textContent   = `+${m.reward.xp} XP`;
+  mDia.textContent  = `+${m.reward.dia}`;
+  renderCurrentQuestion();
+  modal.classList.add('show');
+}
+
+function renderCurrentQuestion(){
+  const qObj = activeMission.qs[idxQ];
+  mProg.textContent = `Pregunta ${idxQ+1}/${activeMission.qcount}`;
+  mTitle.textContent = qObj.q;
+  mOpts.innerHTML = "";
+  qObj.opts.forEach((t,idx)=>{
     const el = document.createElement('label');
     el.className = 'opt';
     el.innerHTML = `<input type="radio" name="opt" value="${idx}"> <span>${t}</span>`;
     el.addEventListener('click',()=>{
-      const correct = (idx === m.ok);
+      const correct = (idx === qObj.ok);
       Array.from(mOpts.children).forEach((o,i)=>{
-        o.classList.toggle('correct', i===m.ok);
+        o.classList.toggle('correct', i===qObj.ok);
         if(i===idx && !correct) o.classList.add('wrong');
       });
-      if(correct){ onWin(); } 
+      setTimeout(()=>{
+        if(!correct){ onFail(); }
+        else{
+          if(idxQ < activeMission.qs.length-1){ idxQ++; renderCurrentQuestion(); }
+          else{ onWin(); }
+        }
+      }, 350);
     });
     mOpts.appendChild(el);
   });
-  modal.classList.add('show');
 }
+
 function onWin(){
   modal.classList.remove('show');
-  if(!activeCard) return;
   const btn = activeCard.querySelector('.play');
   btn.setAttribute('disabled','true');
-  activeCard.classList.add('won');
-  updateGoal(weekly+1);
+  activeCard.classList.remove('fail');
+  activeCard.classList.add('win');
+  activeCard.querySelector('.ribbon').textContent = 'ACERTADA';
+  updateGoal(weekly + activeMission.qcount); // sumamos preguntas acertadas
 
   setTimeout(()=>{
     activeCard.classList.add('out');
@@ -341,30 +397,45 @@ function onWin(){
       const parent = activeCard.parentElement;
       const certHere = filterCert==="ALL" ? "ALL" : activeCard.dataset.cert;
       activeCard.remove();
-      const replacement = createCard(sampleMission(certHere));
-      parent.appendChild(replacement);
+      parent.appendChild(createCard(sampleMission(certHere)));
     }, 350);
   }, 1200);
 }
 
-/* ===== RANKING FAKE REAL-TIME ===== */
+function onFail(){
+  modal.classList.remove('show');
+  activeCard.classList.remove('win');
+  activeCard.classList.add('fail');
+  const rib = activeCard.querySelector('.ribbon');
+  rib.textContent = 'FALLO';
+  const btn = activeCard.querySelector('.play');
+  btn.setAttribute('disabled','true');
+  setTimeout(()=>{
+    activeCard.classList.remove('fail');
+    btn.removeAttribute('disabled');
+  }, 2000);
+}
+
+/* ===== RANKING (Lv & 💎 en “tiempo real”) ===== */
 const players = [
-  {name:"CloudNinja", dia:44},
-  {name:"Ballester21", dia:32, me:true},
-  {name:"AKS_Master", dia:27},
-  {name:"S3Wizard", dia:21},
-  {name:"NetSecX", dia:18}
+  {name:"CloudNinja", level:7, dia:44},
+  {name:"Ballester21", level:5, dia:32, me:true},
+  {name:"AKS_Master", level:6, dia:27},
+  {name:"S3Wizard", level:5, dia:21},
+  {name:"NetSecX", level:4, dia:18}
 ];
 const rlist = document.getElementById('rlist');
+
 function renderRanking(){
   rlist.innerHTML = "";
-  players.sort((a,b)=> b.dia - a.dia);
+  players.sort((a,b)=> b.dia - a.dia || b.level-a.level);
   players.forEach((p,i)=>{
     const row = document.createElement('div');
     row.className = 'rrow' + (p.me ? ' me':'');
     row.innerHTML = `
       <div>${i+1}</div>
       <div class="rname">${p.name}</div>
+      <div class="rlvl">Lv ${p.level}</div>
       <div class="rpts">💎 ${p.dia}</div>
     `;
     rlist.appendChild(row);
@@ -373,10 +444,11 @@ function renderRanking(){
 setInterval(()=>{
   const idx = rand(0, players.length-1);
   players[idx].dia += rand(0,2);
+  if(Math.random()<0.15) players[idx].level += 1; // de vez en cuando sube nivel
   renderRanking();
 }, 1600);
 
-/* ===== FILTERS & RESET ===== */
+/* ===== UI wiring ===== */
 document.getElementById('filters').addEventListener('click', (e)=>{
   const b = e.target.closest('.filter'); if(!b) return;
   document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));
@@ -389,9 +461,13 @@ document.getElementById('btnReset').addEventListener('click', ()=>{
   buildGrid();
 });
 
-/* ===== MODAL CLOSE ===== */
 mClose.addEventListener('click',()=>modal.classList.remove('show'));
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show'); });
+
+rulesBtn.addEventListener('click', ()=>{
+  rulesBody.classList.toggle('show');
+  rulesBtn.textContent = rulesBody.classList.contains('show') ? "📖 Ocultar Reglas" : "📖 Ver Reglas del juego";
+});
 
 /* ===== INIT ===== */
 updateGoal(weekly);
