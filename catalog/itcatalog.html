@@ -10,38 +10,41 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#140c1c" />
+  <meta name="theme-color" content="#0f1320" />
   <title>Catálogo · ITHub — Certificaciones AWS & Azure</title>
   <meta name="description" content="Catálogo de certificaciones disponibles en ITHub (AWS y Microsoft Azure). Guías, rutas de estudio y simuladores." />
   <meta name="robots" content="index,follow">
   <meta name="author" content="ITHub">
 
   <style>
-    /* ===== Tema ITHub (versión morada) ===== */
+    /* ===== Tema ITHub (paleta azul del index) ===== */
     :root{
-      --bg:#0d0713;
-      --surface:#151024;
-      --surface2:#1b1430;
-      --ink:#f0eaff;
-      --muted:#b8a7e6;
-      --stroke:#2b1f44;
-      --cta:linear-gradient(180deg,#d6a3ff,#8a4dff);
-      --ok:#44e58a; --warn:#ffd66b; --bad:#ff6b6b;
-      --radius:14px; --shadow:0 12px 28px rgba(10,6,30,.45);
+      --bg:#0f1320;            /* fondo base (azul oscuro) */
+      --surface:#161b2d;       /* paneles */
+      --surface2:#1b2140;      /* tarjetas */
+      --ink:#e8ecff;           /* texto principal */
+      --muted:#9ca8d9;         /* texto tenue */
+      --stroke:#283056;        /* bordes */
 
-      /* acentos */
-      --aws:#ff9900; --aws-glow:rgba(255,153,0,.24);
-      --azure:#76c7ff; --azure-glow:rgba(118,199,255,.22);
+      /* CTA y detalles en azul */
+      --cta:linear-gradient(180deg,#6c8bff,#3e64ff);
+      --accent:#cfe1ff;        /* títulos destacados */
+      --accent-glow:rgba(108,139,255,.55);
 
-      /* color de títulos destacados */
-      --accent:#efb8ff;
+      /* acentos por proveedor */
+      --aws:#ff9900; --aws-glow:rgba(255,153,0,.22);
+      --azure:#0078d4; --azure-glow:rgba(0,120,212,.22);
+
+      --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+      --radius:14px; --shadow:0 12px 28px rgba(6,12,40,.45);
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;font-family:Inter,ui-sans-serif,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;color:var(--ink);
       background:
-        radial-gradient(720px 360px at 15% -10%,rgba(138,77,255,.18),transparent 60%),
-        radial-gradient(900px 420px at 85% 0,rgba(214,163,255,.12),transparent 60%),
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.10),transparent 60%),
+        radial-gradient(800px 400px at 10% 0,rgba(0,120,212,.12),transparent 60%),
         var(--bg);
       line-height:1.6;overflow-x:hidden;
     }
@@ -52,24 +55,25 @@
     /* ===== Accesibilidad ===== */
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999}
-    :focus-visible{outline:3px solid #e8d9ff;outline-offset:3px;border-radius:10px}
+    :focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px}
     @media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important} }
 
     /* ===== Header ===== */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
-      background:linear-gradient(180deg,rgba(13,7,19,.85),rgba(13,7,19,.55));border-bottom:1px solid var(--stroke)}
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
-    nav.menu a.link-btn:hover{border-color:#3a2b5d;color:var(--ink)}
+    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
 
-    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#1a1231,#130c25); border:1px solid #3a2b5d;
-      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(10,6,30,.35); max-height:44px}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #8a4dff55;background:var(--cta); color:#0e051e; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase}
+    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150;
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--cta); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase}
     .pill-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase}
+    .btn:hover{border-color:#3a4580}
     @media (max-width:720px){nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px} .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}}
 
     /* ===== Hero ===== */
@@ -83,17 +87,17 @@
     @media(max-width:900px){.cols-2{grid-template-columns:1fr}}
 
     /* ===== Cards ===== */
-    .card{background:linear-gradient(180deg,#130f23,#100a1d);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    .card{background:linear-gradient(180deg,#12183a,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
     .card h2{margin:0 0 6px;font-size:1.2rem}
     .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta);color:#0e051e;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(138,77,255,.26);min-height:44px}
-    .chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;border:1px solid #4a386d;color:#e9dbff;font-weight:800}
+    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);min-height:44px}
+    .chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;border:1px solid #35427a;color:#e8ecff;font-weight:800}
 
     /* ===== Vendor tiles ===== */
     .vendor{position:relative;overflow:hidden}
     .vendor .head{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;font-weight:900;border:1px solid currentColor}
-    .vendor.aws .head{color:var(--aws); background:rgba(0,0,0,.1); box-shadow:0 0 0 8px var(--aws-glow)}
-    .vendor.azure .head{color:var(--azure); background:rgba(0,0,0,.1); box-shadow:0 0 0 8px var(--azure-glow)}
+    .vendor.aws .head{color:var(--aws); background:rgba(255,153,0,.08); box-shadow:0 0 0 6px var(--aws-glow)}
+    .vendor.azure .head{color:var(--azure); background:rgba(0,120,212,.10); box-shadow:0 0 0 6px var(--azure-glow)}
     .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .mini-link{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid var(--stroke);background:var(--surface2);font-weight:800}
 
@@ -104,14 +108,14 @@
       background:var(--surface);
       border:1px solid var(--stroke);
       border-radius:12px;
-      padding:10px 12px;     /* más compacto */
+      padding:10px 12px;
       margin-bottom:8px;
     }
     .sidebar .block h3{ margin:0 0 6px; letter-spacing:.2px; }
     .tight-list, .sidebar .block ul{ margin:6px 0 0 12px; }
 
     /* ===== Extras ===== */
-    .notice{display:none; align-items:center;gap:10px;padding:10px 12px;margin:10px 0;border:1px solid #4a386d;border-radius:12px;background:var(--surface2);box-shadow:0 6px 18px rgba(10,6,30,.25)}
+    .notice{display:none; align-items:center;gap:10px;padding:10px 12px;margin:10px 0;border:1px solid #35427a;border-radius:12px;background:var(--surface2);box-shadow:0 6px 18px rgba(5,10,30,.25)}
     .notice.show{display:flex}
 
     .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
@@ -120,39 +124,38 @@
     .kpi .lab{color:var(--muted)}
 
     .road{display:grid;gap:10px}
-    .bar{height:10px;border-radius:999px;background:rgba(138,77,255,.15);border:1px solid #4a386d;overflow:hidden}
+    .bar{height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
     .bar>span{display:block;height:100%;background:var(--cta)}
 
     details+details{margin-top:8px}
     details summary{cursor:pointer;font-weight:900}
     .bullets{margin:6px 0 0 18px}
 
-    /* ===== Títulos destacados (izquierda) + glow FINO/CORTO ===== */
+    /* ===== Títulos destacados (glow fino/corto azul) ===== */
     .accent-title{
       position:relative;
       text-transform:uppercase;
       color:var(--accent);
       padding-bottom:6px;
-      text-shadow:0 0 4px rgba(239,184,255,.28);
+      text-shadow:0 0 4px rgba(143,169,255,.28);
     }
     .accent-title::after{
       content:"";
       position:absolute;left:0;bottom:-3px;
-      height:2px;                 /* más fino */
-      width:84px;                 /* más corto */
-      background:linear-gradient(90deg,#f1c8ff 0%, #b388ff 70%, rgba(179,136,255,0) 100%);
+      height:2px;              /* fino */
+      width:84px;              /* corto */
+      background:linear-gradient(90deg,#cfe1ff 0%, #6c8bff 70%, rgba(108,139,255,0) 100%);
       border-radius:999px;
       box-shadow:
-        0 0 6px rgba(241,200,255,.6),
-        0 0 10px rgba(179,136,255,.35);
+        0 0 6px var(--accent-glow),
+        0 0 10px rgba(108,139,255,.35);
     }
 
     /* ===== Footer ===== */
-    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#cbb8ff;background:linear-gradient(180deg,rgba(27,20,48,.6),rgba(27,20,48,.2))}
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
-    footer a{color:#e9dbff;text-decoration:none}
-    footer a:hover{text-decoration:underline}
+    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
     footer ul{list-style:none;margin:0;padding:0}
     footer li{margin:6px 0}
     footer .brand{display:flex;align-items:center;gap:10px;font-weight:900}
@@ -176,7 +179,7 @@
         <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
         <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
         <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello" style="color:#e9dbff;font-weight:800">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <div class="hello" style="color:#cbd3ff;font-weight:800">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
           <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
           <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
         </div>
@@ -189,7 +192,7 @@
     <!-- Hero -->
     <section class="hero">
       <div class="container">
-        <h1>Catálogo de certificaciones <span style="color:#d6a3ff">ITHUB</span></h1>
+        <h1>Catálogo de certificaciones <span style="color:#8aa0ff">ITHUB</span></h1>
         <p class="lead">Aquí verás los <b>fabricantes activos</b> en la web y el acceso directo a sus guías y simuladores. Hoy: <b>Microsoft Azure</b> y <b>Amazon AWS</b>.</p>
 
         <!-- Aviso/Anuncio (descartable) -->
@@ -326,7 +329,7 @@
     <div class="container f-grid">
       <div>
         <div class="brand" style="text-transform:none">
-          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#c7b3ff 0%,#8a4dff 100%);box-shadow:0 0 0 6px rgba(186,149,255,.18)"></span>
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
           <span>ITHUB.ES</span>
         </div>
         <p style="margin:8px 0 0">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un solo lugar.</p>
@@ -354,11 +357,9 @@
 
       <div>
         <div style="font-weight:800">COLABORADORES</div>
-        <ul>
-          <li>💬 <a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></li>
-        </ul>
+        <ul><li>💬 <a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></li></ul>
         <div style="font-weight:800;margin-top:8px">CONTACTO</div>
-        <button id="footerContactBtn" type="button" style="background:none;border:none;color:#e9dbff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;margin-top:6px">💬 <span>Contáctanos</span></button>
+        <button id="footerContactBtn" type="button" style="background:none;border:none;color:#cfe1ff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;margin-top:6px">💬 <span>Contáctanos</span></button>
       </div>
     </div>
     <div class="container" style="margin-top:12px;font-size:12px">© <span id="y"></span> ITHub.es</div>
@@ -369,8 +370,8 @@
     <div class="modal-card" role="document" tabindex="-1" style="width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)">
       <h3 id="fbTitle" style="margin:0 0 12px;font-size:1.2rem">💬 ENVIAR FEEDBACK</h3>
       <p class="muted" style="margin:0 0 8px">Cuéntanos qué certificación priorizar.</p>
-      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:#var(--ink);padding:10px;font-weight:700" />
-      <textarea id="feedbackText" rows="5" placeholder="Escribe aquí tu sugerencia…" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:#var(--ink);padding:10px;font-weight:700;margin-top:8px"></textarea>
+      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700" />
+      <textarea id="feedbackText" rows="5" placeholder="Escribe aquí tu sugerencia…" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700;margin-top:8px"></textarea>
       <div id="fbStatus" class="fb-status" aria-live="polite" style="margin-top:8px;font-weight:800"></div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
         <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
