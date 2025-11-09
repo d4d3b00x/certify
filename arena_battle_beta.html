@@ -51,23 +51,28 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 /* Panel común */
 .panel{background:linear-gradient(180deg,var(--panel),#0e1533);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
 
-/* Head del tablero (una sola línea) */
-.panel-head{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)}
+/* ---------- CABECERA DEL TABLERO (alineada) ---------- */
+.panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)
+}
+.head-left{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
+.head-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
 .title-chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900}
 
-/* Filtros claros */
-.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.filter{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--chipLine);background:linear-gradient(180deg,#0f1736,#121d48);border-radius:999px;font-weight:900;cursor:pointer;user-select:none;color:#dfe7ff;font-size:.92rem}
+/* Filtros en línea con scroll si falta espacio */
+.filters{display:flex;gap:10px;align-items:center;flex-wrap:nowrap;overflow:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filter{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--chipLine);background:linear-gradient(180deg,#0f1736,#121d48);border-radius:999px;font-weight:900;cursor:pointer;user-select:none;color:#dfe7ff;font-size:.92rem;white-space:nowrap}
 .filter:hover{border-color:#5a72ff}
 .filter.active{background:linear-gradient(180deg,#7a8cff,#5b6dff);color:#fff;border-color:#6f82ff;box-shadow:0 10px 22px rgba(80,95,255,.25)}
 
-/* Objetivo semanal */
-.goal{display:flex;align-items:center;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+/* Objetivo semanal + reset */
 .goal-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--chipLine);background:var(--chip);border-radius:999px;padding:8px 12px;font-weight:900}
-.prog{position:relative;width:clamp(260px, 48vw, 620px);height:16px;border-radius:999px;background:#0b1028;border:1px solid var(--line);overflow:hidden;box-shadow:0 0 0 6px rgba(80,95,255,.08) inset}
+.prog{position:relative;width:clamp(260px, 44vw, 520px);height:16px;border-radius:999px;background:#0b1028;border:1px solid var(--line);overflow:hidden;box-shadow:0 0 0 6px rgba(80,95,255,.08) inset}
 .prog>span{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#3be180,#76f4bc);transition:width .35s ease}
 .prog em{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:900;font-style:normal;color:#eafff6;text-shadow:0 1px 0 #0a0f28}
-.reset{padding:8px 14px;border-radius:999px;border:1px solid #2b356a;background:#10183a;font-weight:900;color:#cfe4ff;cursor:pointer}
+.reset{padding:9px 16px;border-radius:999px;border:1px solid #2b356a;background:#10183a;font-weight:900;color:#cfe4ff;cursor:pointer;white-space:nowrap}
 .reset:hover{border-color:#5a72ff}
 
 /* GRID 3×3 más ancho */
@@ -78,7 +83,7 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 /* Tarjeta */
 .card{
   position:relative;background:linear-gradient(180deg,#10183a,#0f1736);border:1px solid var(--line);
-  border-radius:12px;padding:12px;min-height:160px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;
+  border-radius:12px;padding:12px;min-height:170px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;
   transition:transform .18s ease, box-shadow .18s ease
 }
 .card:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(20,30,70,.32)}
@@ -89,10 +94,16 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 .tit{font-weight:900;font-size:1rem}
 .desc{color:var(--muted);font-size:.9rem}
 .actions{display:flex;gap:8px;align-items:center}
-.play{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;height:36px;border-radius:10px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer;font-size:.92rem}
+.play{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;height:44px;border-radius:12px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer;font-size:.98rem}
 .play[disabled]{opacity:.55;cursor:not-allowed;filter:grayscale(.6)}
-.del{height:36px;aspect-ratio:1/1;border-radius:10px;border:1px solid #4655a8;background:#121e4b;color:#cfe4ff;font-weight:900;cursor:pointer}
+.del{height:44px;aspect-ratio:1/1;border-radius:12px;border:1px solid #4655a8;background:#121e4b;color:#cfe4ff;font-weight:900;cursor:pointer}
 .del:hover{background:#172560}
+
+/* Dificultad */
+.diff{font-weight:900}
+.diff-1{border-color:#2e8f62;color:#caffea}
+.diff-2{border-color:#d6ad3a;color:#ffeec0}
+.diff-3{border-color:#d46b6b;color:#ffd0d0}
 
 /* Cintas de estado */
 .ribbon{position:absolute;right:-28px;bottom:14px;transform:rotate(-12deg);font-weight:900;padding:6px 30px;border-radius:10px;border:2px solid rgba(0,0,0,.15);box-shadow:0 8px 18px rgba(0,0,0,.25);display:none;font-size:.9rem}
@@ -118,11 +129,12 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 .opt.correct{background:rgba(59,225,128,.10);border-color:rgba(59,225,128,.7)}
 .opt.wrong{background:rgba(255,114,114,.10);border-color:rgba(255,114,114,.7)}
 
-/* Ranking lateral (Lv y XP) más ancho */
+/* Ranking lateral (Lv y XP) más ancho + MI USUARIO sombreado */
 .ranking{padding:12px}
 .rtitle{display:flex;align-items:center;gap:10px;font-weight:900;margin-bottom:8px}
 .rlist{display:grid;gap:8px}
-.rrow{display:grid;grid-template-columns:28px 1fr auto auto;gap:10px;align-items:center;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:10px}
+.rrow{display:grid;grid-template-columns:28px 1fr auto auto;gap:10px;align-items:center;background:#0f1736;border:1px solid #2c3a76;border-radius:12px;padding:10px}
+.rrow.me{background:linear-gradient(180deg,#0f1e55,#112262);border-color:#6f82ff;box-shadow:0 0 0 3px rgba(111,130,255,.18) inset}
 .rname{font-weight:800}
 .pill{display:inline-flex;align-items:center;gap:6px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 10px;font-weight:900}
 .pill .bolt{font-size:14px}
@@ -162,24 +174,22 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
 
 <main class="container">
   <h1>Arena Battle – Quizzes Relámpago</h1>
-  <p class="lead">Elige certificación, resuelve misiones de <b>1</b>, <b>2</b> o <b>3</b> preguntas y gana <b>XP</b>. Debes acertar todas para puntuar.</p>
+  <p class="lead">Elige certificación, resuelve misiones de <b>1</b>, <b>2</b> o <b>3</b> preguntas y gana <b>XP</b>. Debes acertarlas todas para puntuar.</p>
 
   <div class="layout">
     <!-- TABLERO -->
     <section class="panel" id="arena">
       <div class="panel-head">
-        <div class="title-chip">🎯 Elige certificación</div>
-
-        <!-- filtros -->
-        <div class="filters" id="filters">
-          <button class="filter active" data-cert="ALL">Todas</button>
-          <button class="filter" data-cert="AZ-104">AZ-104</button>
-          <button class="filter" data-cert="AZ-305">AZ-305</button>
-          <button class="filter" data-cert="SAA-C03">SAA-C03</button>
+        <div class="head-left">
+          <div class="title-chip">🎯 Elige certificación</div>
+          <div class="filters" id="filters">
+            <button class="filter active" data-cert="ALL">Todas</button>
+            <button class="filter" data-cert="AZ-104">AZ-104</button>
+            <button class="filter" data-cert="AZ-305">AZ-305</button>
+            <button class="filter" data-cert="SAA-C03">SAA-C03</button>
+          </div>
         </div>
-
-        <!-- objetivo + reset -->
-        <div class="goal">
+        <div class="head-right">
           <div class="goal-pill">🎯 <span id="goalTxt">25 / 70</span></div>
           <div class="prog" aria-label="Objetivo semanal">
             <span id="goalBar" style="width:36%"></span>
@@ -210,16 +220,20 @@ h1{margin:8px 0 6px;font-size:clamp(1.6rem,3.2vw,2.4rem);line-height:1.2}
       <h3>Reglas</h3>
       <ul>
         <li>Tablero <b>3×3</b> = 9 casillas. Cada casilla es una misión.</li>
-        <li>Tipos de misión: <b>1</b>, <b>2</b> o <b>3</b> preguntas. <b>Debes acertarlas todas</b> para ganar XP.</li>
-        <li>Recompensas: 1P = <b>+10 XP</b> · 2P = <b>+22 XP</b> · 3P = <b>+36 XP</b>.</li>
-        <li>Al acertar: la tarjeta muestra <b>ACERTADA</b> (verde) y se reemplaza por otra misión tras la animación.</li>
-        <li>Al fallar: aparece <b>FALLO</b> (rojo) por 2s y la misión queda lista para reintentar.</li>
+        <li>Tipos de misión (debes acertar todas):</li>
+        <ul>
+          <li><span class="chip diff diff-1">🔹 Fácil</span> · 1 pregunta → <b>+10 XP</b></li>
+          <li><span class="chip diff diff-2">🔸 Medio</span> · 2 preguntas → <b>+22 XP</b></li>
+          <li><span class="chip diff diff-3">🔺 Difícil</span> · 3 preguntas → <b>+36 XP</b></li>
+        </ul>
+        <li>Al acertar: aparece <b>ACERTADA</b> y se reemplaza por otra misión (verás el +XP volar al ranking).</li>
+        <li>Al fallar: <b>FALLO</b> durante 2s y la misión queda lista para reintentar.</li>
         <li>Cumple el <b>objetivo semanal</b> (70 preguntas) para tu progreso personal.</li>
       </ul>
       <h3>XP y Niveles</h3>
       <ul>
-        <li><b>XP</b> → medida de progreso total obtenido por misiones.</li>
-        <li><b>Niveles</b> → cada <b>1000 XP = +1 nivel</b>. Ej.: 0–999 XP ⇒ Lv1, 1000–1999 ⇒ Lv2, etc.</li>
+        <li><b>XP</b> → suma total de tu actividad.</li>
+        <li><b>Niveles</b> → <b>cada 1000 XP = +1 nivel</b>. Ej.: 0–999 ⇒ Lv1, 1000–1999 ⇒ Lv2, etc.</li>
       </ul>
     </div>
   </section>
@@ -274,7 +288,7 @@ const BANK = {
 };
 
 /* ===== CONFIG ===== */
-const REWARDS = { 1:{xp:10}, 2:{xp:22}, 3:{xp:36} };
+const REWARDS = { 1:{xp:10,icon:"🔹",cls:"diff-1"}, 2:{xp:22,icon:"🔸",cls:"diff-2"}, 3:{xp:36,icon:"🔺",cls:"diff-3"} };
 let filterCert = "ALL";
 let weekly = JSON.parse(localStorage.getItem("weeklyProgress")||"25"); // demo
 const GRID_SIZE = 9; // 3×3
@@ -331,6 +345,7 @@ function createCard(m){
   card.innerHTML = `
     <div class="meta-row">
       <span class="chip cert">${m.cert}</span>
+      <span class="chip diff ${m.reward.cls}">${m.reward.icon}</span>
       <span class="chip xp">+${m.reward.xp} XP</span>
     </div>
     <div class="tit">${m.cert} · ${domainsLabel(m.domains)}</div>
@@ -415,9 +430,8 @@ function showToast(text){
 }
 
 function flyToRanking(text){
-  // centro pantalla → hacia cabecera del ranking
   const startX = window.innerWidth/2, startY = window.innerHeight*0.18;
-  const target = document.querySelector('.rlist'); // contenedor ranking
+  const target = document.querySelector('.rlist');
   const rect = target.getBoundingClientRect();
   const endX = rect.left + rect.width - 40;
   const endY = rect.top + 20;
@@ -443,15 +457,12 @@ function onWin(){
   activeCard.classList.add('win');
   activeCard.querySelector('.ribbon').textContent = 'ACERTADA';
 
-  // progreso semanal (por nº de preguntas)
   updateGoal(weekly + activeMission.qcount);
 
-  // XP hacia ranking
   showToast(`+${activeMission.reward.xp} XP`);
   flyToRanking(`+${activeMission.reward.xp} XP`);
   awardXPToMe(activeMission.reward.xp);
 
-  // reemplazo tras la animación
   setTimeout(()=>{
     activeCard.classList.add('out');
     setTimeout(()=>{
@@ -459,7 +470,7 @@ function onWin(){
       const replacement = createCard(sampleMission(certHere));
       activeCard.replaceWith(replacement);
     }, 350);
-  }, 1400); // más lento para que se vea el vuelo
+  }, 1400);
 }
 
 function onFail(){
@@ -505,7 +516,6 @@ function renderRanking(){
   });
 }
 
-// Tick: algunos ganan XP aleatoriamente
 setInterval(()=>{
   const idx = rand(0, players.length-1);
   players[idx].xp += rand(0,60);
