@@ -97,10 +97,6 @@
     .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
     .mini-link{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:10px;border:1px solid var(--stroke);background:var(--surface2);font-weight:800}
 
-    /* ===== Próximas ===== */
-    .soon{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-    .soon .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px dashed #7656b8;color:#e9dbff;font-weight:800;background:rgba(118,86,184,.12)}
-
     /* ===== Sidebar ===== */
     .layout{display:grid;grid-template-columns:1fr 330px;gap:16px;margin-top:12px}
     @media(max-width:980px){.layout{grid-template-columns:1fr}}
@@ -108,14 +104,10 @@
       background:var(--surface);
       border:1px solid var(--stroke);
       border-radius:12px;
-      padding:10px 12px;     /* menos padding */
-      margin-bottom:8px;     /* menos separación entre bloques */
+      padding:10px 12px;     /* más compacto */
+      margin-bottom:8px;
     }
-    .sidebar .block h3{
-      margin:0 0 6px;
-      letter-spacing:.2px;
-    }
-    /* Menos sangría en listas del sidebar y listas compactas */
+    .sidebar .block h3{ margin:0 0 6px; letter-spacing:.2px; }
     .tight-list, .sidebar .block ul{ margin:6px 0 0 12px; }
 
     /* ===== Extras ===== */
@@ -135,24 +127,24 @@
     details summary{cursor:pointer;font-weight:900}
     .bullets{margin:6px 0 0 18px}
 
-    /* ===== Títulos destacados (izquierda) + glow ===== */
+    /* ===== Títulos destacados (izquierda) + glow FINO/CORTO ===== */
     .accent-title{
       position:relative;
       text-transform:uppercase;
       color:var(--accent);
       padding-bottom:6px;
-      text-shadow:0 0 8px rgba(239,184,255,.35);
+      text-shadow:0 0 4px rgba(239,184,255,.28);
     }
     .accent-title::after{
       content:"";
-      position:absolute;left:0;bottom:-2px;
-      height:3px;width:120px;
-      background:linear-gradient(90deg,#f1c8ff 0%, #b388ff 60%, rgba(179,136,255,0) 100%);
+      position:absolute;left:0;bottom:-3px;
+      height:2px;                 /* más fino */
+      width:84px;                 /* más corto */
+      background:linear-gradient(90deg,#f1c8ff 0%, #b388ff 70%, rgba(179,136,255,0) 100%);
       border-radius:999px;
       box-shadow:
-        0 0 10px rgba(241,200,255,.7),
-        0 0 18px rgba(179,136,255,.45),
-        0 0 28px rgba(179,136,255,.25);
+        0 0 6px rgba(241,200,255,.6),
+        0 0 10px rgba(179,136,255,.35);
     }
 
     /* ===== Footer ===== */
@@ -202,7 +194,7 @@
 
         <!-- Aviso/Anuncio (descartable) -->
         <div id="notice" class="notice" role="status" aria-live="polite">
-          <span>📌 <strong>Novedad:</strong> añadimos <b>rutas de estudio</b> por semanas y un <b>roadmap trimestral</b> del catálogo.</span>
+          <span>📌 <strong>Novedad:</strong> añadimos <b>progreso del catálogo</b> y un <b>roadmap trimestral</b>.</span>
           <button class="btn" id="closeNotice" type="button" aria-label="Ocultar aviso">OK</button>
         </div>
       </div>
@@ -252,61 +244,9 @@
           </article>
         </div>
 
-        <!-- Rutas de estudio sugeridas -->
-        <div class="card" style="margin-top:12px">
-          <h2 class="accent-title">Rutas de estudio sugeridas</h2>
-
-          <details>
-            <summary>AZ-104 · Plan 6 semanas (1–2 h/día)</summary>
-            <ul class="bullets">
-              <li><b>Semana 1:</b> Identidad (RBAC, Entra ID), Governance básica (tags, cost).</li>
-              <li><b>Semana 2:</b> Redes (VNets, subredes, NSG, LB).</li>
-              <li><b>Semana 3:</b> Compute (VM/VMSS), imágenes, autoscaling.</li>
-              <li><b>Semana 4:</b> Storage (Blob, Files, Disk) + Backup/ASR.</li>
-              <li><b>Semana 5:</b> Monitor, Alertas, Update Mgmt, Defender.</li>
-              <li><b>Semana 6:</b> Repaso + 2 simulacros ≥ 80%.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>AZ-305 · Plan 6 semanas (1–2 h/día)</summary>
-            <ul class="bullets">
-              <li><b>Semana 1:</b> CAF, landing zones, políticas.</li>
-              <li><b>Semana 2:</b> Red avanzada (Hub&Spoke, Private Link/DNS).</li>
-              <li><b>Semana 3:</b> Seguridad (Zero Trust, Key Vault, Defender).</li>
-              <li><b>Semana 4:</b> Alta disponibilidad y DR multi-región.</li>
-              <li><b>Semana 5:</b> Coste y optimización (RI/SV, autoscaling, storage tiers).</li>
-              <li><b>Semana 6:</b> Infra as Code (Bicep/Terraform) + simulacros.</li>
-            </ul>
-          </details>
-
-          <details>
-            <summary>AWS SAA-C03 · Plan 5 semanas</summary>
-            <ul class="bullets">
-              <li><b>Semana 1:</b> VPC (subnets, IGW, NAT, NACL/SG), Route 53 básicos.</li>
-              <li><b>Semana 2:</b> Compute (EC2, ASG, ELB), Savings Plans.</li>
-              <li><b>Semana 3:</b> Storage (S3, EBS, EFS, Glacier) + IAM.</li>
-              <li><b>Semana 4:</b> Alta disponibilidad, resiliencia, patrones serverless.</li>
-              <li><b>Semana 5:</b> Observabilidad (CloudWatch), Well-Architected + simulacros.</li>
-            </ul>
-          </details>
-        </div>
-
-        <!-- Próximas certificaciones -->
-        <div class="card" style="margin-top:12px">
-          <h2 class="accent-title">Próximas certificaciones</h2>
-          <p class="muted" style="margin:0 0 6px">En preparación. ¿Quieres priorizar alguna? Déjanos feedback abajo 👇.</p>
-          <div class="soon">
-            <span class="tag">AZ-900 · Azure Fundamentals</span>
-            <span class="tag">AZ-500 · Security Engineer</span>
-            <span class="tag">DP-900 · Data Fundamentals</span>
-            <span class="tag">AI-900 · AI Fundamentals</span>
-          </div>
-        </div>
-
         <!-- Roadmap trimestral -->
         <div class="card" style="margin-top:12px">
-          <h2 class="accent-title">Roadmap trimestral</h2>
+          <h2 class="accent-title">Próximas certificaciones. Roadmap trimestral</h2>
           <div class="road">
             <div>
               <div style="display:flex;justify-content:space-between;font-weight:900">
@@ -335,7 +275,7 @@
           <h2 class="accent-title">Cambios recientes</h2>
           <ul style="margin:8px 0 0 18px">
             <li>Se añade <b>Roadmap trimestral</b> con progreso por certificación.</li>
-            <li>Nuevas <b>rutas de estudio</b> por semanas (Azure/AWS).</li>
+            <li>KPIs de estado del catálogo (disponibles, en curso, planificadas).</li>
           </ul>
         </div>
         <br>
@@ -361,22 +301,7 @@
           </div>
         </div>
 
-        <div class="block">
-          <h3>FAQ rápidas</h3>
-          <details>
-            <summary>¿Con qué certificación empiezo?</summary>
-            <p class="muted">Si partes de cero: <b>AZ-900</b>. Si ya operas Azure: <b>AZ-104</b>. En arquitectura: <b>AZ-305</b>. En AWS: <b>SAA-C03</b>.</p>
-          </details>
-          <details>
-            <summary>¿Cuánto tiempo necesito?</summary>
-            <p class="muted">Entre <b>6–8 semanas</b> a 1–2 h/día. Si dominas la plataforma, <b>10–14 días</b> con simulacros.</p>
-          </details>
-          <details>
-            <summary>¿Qué puntuación buscar?</summary>
-            <p class="muted">Apunta a <b>≥ 80%</b> de forma consistente en los últimos simulacros.</p>
-          </details>
-        </div>
-
+        <!-- Checklist exprés (se mantiene) -->
         <div class="block">
           <h3>Checklist pre-examen (exprés)</h3>
           <ul class="tight-list">
@@ -385,15 +310,6 @@
             <li>Repasar <b>áreas flojas</b> (3–5 topics) y notas rápidas.</li>
             <li>Verificar <b>documentación</b> válida para el registro.</li>
             <li>Plan de tiempo: marca dudas y sigue avanzando.</li>
-          </ul>
-        </div>
-
-        <div class="block">
-          <h3>Associate vs Expert (resumen)</h3>
-          <ul class="tight-list">
-            <li><b>Associate</b>: operación y diseño a nivel suscripción/servicios.</li>
-            <li><b>Expert</b>: gobierno y arquitectura a escala multi-suscripción/región.</li>
-            <li><b>Ruta típica</b>: AZ-900 → AZ-104 → AZ-305 (Azure) · Cloud Practitioner → SAA-C03 (AWS).</li>
           </ul>
         </div>
 
