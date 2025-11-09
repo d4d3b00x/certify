@@ -33,7 +33,7 @@
       --aws:#ff9900; --aws-glow:rgba(255,153,0,.24);
       --azure:#76c7ff; --azure-glow:rgba(118,199,255,.22);
 
-      /* NUEVO: color de títulos destacados */
+      /* color de títulos destacados */
       --accent:#efb8ff;
     }
     *{box-sizing:border-box}
@@ -108,14 +108,14 @@
       background:var(--surface);
       border:1px solid var(--stroke);
       border-radius:12px;
-      padding:10px 12px;            /* <-- menos padding vertical y lateral */
-      margin-bottom:8px;            /* <-- menos separación entre bloques */
+      padding:10px 12px;     /* menos padding */
+      margin-bottom:8px;     /* menos separación entre bloques */
     }
     .sidebar .block h3{
-      margin:0 0 6px;               /* <-- título más pegado */
+      margin:0 0 6px;
       letter-spacing:.2px;
     }
-    /* Menos sangría a la izquierda en listas del sidebar y listas compactas */
+    /* Menos sangría en listas del sidebar y listas compactas */
     .tight-list, .sidebar .block ul{ margin:6px 0 0 12px; }
 
     /* ===== Extras ===== */
@@ -135,10 +135,24 @@
     details summary{cursor:pointer;font-weight:900}
     .bullets{margin:6px 0 0 18px}
 
-    /* ===== Títulos destacados (izquierda) ===== */
+    /* ===== Títulos destacados (izquierda) + glow ===== */
     .accent-title{
+      position:relative;
       text-transform:uppercase;
       color:var(--accent);
+      padding-bottom:6px;
+      text-shadow:0 0 8px rgba(239,184,255,.35);
+    }
+    .accent-title::after{
+      content:"";
+      position:absolute;left:0;bottom:-2px;
+      height:3px;width:120px;
+      background:linear-gradient(90deg,#f1c8ff 0%, #b388ff 60%, rgba(179,136,255,0) 100%);
+      border-radius:999px;
+      box-shadow:
+        0 0 10px rgba(241,200,255,.7),
+        0 0 18px rgba(179,136,255,.45),
+        0 0 28px rgba(179,136,255,.25);
     }
 
     /* ===== Footer ===== */
@@ -351,7 +365,7 @@
           <h3>FAQ rápidas</h3>
           <details>
             <summary>¿Con qué certificación empiezo?</summary>
-            <p class="muted">Si partes de cero: <b>AZ-900</b>. Si ya operas Azure: <b>AZ-104</b>. En arquitectura: <b>AZ-305</b>. En AWS de entrada: <b>SAA-C03</b>.</p>
+            <p class="muted">Si partes de cero: <b>AZ-900</b>. Si ya operas Azure: <b>AZ-104</b>. En arquitectura: <b>AZ-305</b>. En AWS: <b>SAA-C03</b>.</p>
           </details>
           <details>
             <summary>¿Cuánto tiempo necesito?</summary>
@@ -439,8 +453,8 @@
     <div class="modal-card" role="document" tabindex="-1" style="width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)">
       <h3 id="fbTitle" style="margin:0 0 12px;font-size:1.2rem">💬 ENVIAR FEEDBACK</h3>
       <p class="muted" style="margin:0 0 8px">Cuéntanos qué certificación priorizar.</p>
-      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700" />
-      <textarea id="feedbackText" rows="5" placeholder="Escribe aquí tu sugerencia…" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700;margin-top:8px"></textarea>
+      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:#var(--ink);padding:10px;font-weight:700" />
+      <textarea id="feedbackText" rows="5" placeholder="Escribe aquí tu sugerencia…" style="width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:#var(--ink);padding:10px;font-weight:700;margin-top:8px"></textarea>
       <div id="fbStatus" class="fb-status" aria-live="polite" style="margin-top:8px;font-weight:800"></div>
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
         <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
