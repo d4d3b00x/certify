@@ -19,19 +19,22 @@
   <style>
     /* ===== Tema ITHub (versión morada) ===== */
     :root{
-      --bg:#0d0713;            /* fondo base */
-      --surface:#151024;       /* paneles */
-      --surface2:#1b1430;      /* tarjetas */
-      --ink:#f0eaff;           /* texto principal */
-      --muted:#b8a7e6;         /* texto tenue */
-      --stroke:#2b1f44;        /* bordes */
-      --cta:linear-gradient(180deg,#d6a3ff,#8a4dff); /* botones */
+      --bg:#0d0713;
+      --surface:#151024;
+      --surface2:#1b1430;
+      --ink:#f0eaff;
+      --muted:#b8a7e6;
+      --stroke:#2b1f44;
+      --cta:linear-gradient(180deg,#d6a3ff,#8a4dff);
       --ok:#44e58a; --warn:#ffd66b; --bad:#ff6b6b;
       --radius:14px; --shadow:0 12px 28px rgba(10,6,30,.45);
 
-      /* acentos por proveedor */
+      /* acentos */
       --aws:#ff9900; --aws-glow:rgba(255,153,0,.24);
       --azure:#76c7ff; --azure-glow:rgba(118,199,255,.22);
+
+      /* NUEVO: color de títulos destacados */
+      --accent:#efb8ff;
     }
     *{box-sizing:border-box}
     body{
@@ -50,7 +53,6 @@
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
     .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999}
     :focus-visible{outline:3px solid #e8d9ff;outline-offset:3px;border-radius:10px}
-
     @media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important} }
 
     /* ===== Header ===== */
@@ -68,7 +70,6 @@
     .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #8a4dff55;background:var(--cta); color:#0e051e; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase}
     .pill-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase}
-
     @media (max-width:720px){nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px} .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}}
 
     /* ===== Hero ===== */
@@ -100,10 +101,22 @@
     .soon{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
     .soon .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;border:1px dashed #7656b8;color:#e9dbff;font-weight:800;background:rgba(118,86,184,.12)}
 
-    /* ===== Sidebar simple ===== */
+    /* ===== Sidebar ===== */
     .layout{display:grid;grid-template-columns:1fr 330px;gap:16px;margin-top:12px}
     @media(max-width:980px){.layout{grid-template-columns:1fr}}
-    .sidebar .block{background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px}
+    .sidebar .block{
+      background:var(--surface);
+      border:1px solid var(--stroke);
+      border-radius:12px;
+      padding:10px 12px;            /* <-- menos padding vertical y lateral */
+      margin-bottom:8px;            /* <-- menos separación entre bloques */
+    }
+    .sidebar .block h3{
+      margin:0 0 6px;               /* <-- título más pegado */
+      letter-spacing:.2px;
+    }
+    /* Menos sangría a la izquierda en listas del sidebar y listas compactas */
+    .tight-list, .sidebar .block ul{ margin:6px 0 0 12px; }
 
     /* ===== Extras ===== */
     .notice{display:none; align-items:center;gap:10px;padding:10px 12px;margin:10px 0;border:1px solid #4a386d;border-radius:12px;background:var(--surface2);box-shadow:0 6px 18px rgba(10,6,30,.25)}
@@ -121,6 +134,12 @@
     details+details{margin-top:8px}
     details summary{cursor:pointer;font-weight:900}
     .bullets{margin:6px 0 0 18px}
+
+    /* ===== Títulos destacados (izquierda) ===== */
+    .accent-title{
+      text-transform:uppercase;
+      color:var(--accent);
+    }
 
     /* ===== Footer ===== */
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#cbb8ff;background:linear-gradient(180deg,rgba(27,20,48,.6),rgba(27,20,48,.2))}
@@ -180,7 +199,7 @@
       <div>
         <!-- Estado del catálogo -->
         <div class="card">
-          <h2>Estado del catálogo</h2>
+          <h2 class="accent-title">Estado del catálogo</h2>
           <div class="kpis" aria-label="Indicadores del catálogo">
             <div class="kpi"><div class="num">3</div><div class="lab">Disponibles</div></div>
             <div class="kpi"><div class="num">2</div><div class="lab">En curso</div></div>
@@ -200,8 +219,8 @@
               <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
             </div>
             <div class="links" style="margin-top:8px">
-              <a class="mini-link" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">· AZ-104</a>
-              <a class="mini-link" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">· AZ-305</a>
+              <a class="mini-link" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104 · Administrator</a>
+              <a class="mini-link" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305 · Architect</a>
             </div>
           </article>
 
@@ -214,14 +233,14 @@
               <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
             </div>
             <div class="links" style="margin-top:8px">
-              <a class="mini-link" href="/certification/amazon%20aws/aws-saa-c03/lz-aws-saa-c03.html">· SAA-C03</a>
+              <a class="mini-link" href="/certification/amazon%20aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03 · Architect Associate</a>
             </div>
           </article>
         </div>
 
         <!-- Rutas de estudio sugeridas -->
         <div class="card" style="margin-top:12px">
-          <h2>Rutas de estudio sugeridas</h2>
+          <h2 class="accent-title">Rutas de estudio sugeridas</h2>
 
           <details>
             <summary>AZ-104 · Plan 6 semanas (1–2 h/día)</summary>
@@ -261,7 +280,7 @@
 
         <!-- Próximas certificaciones -->
         <div class="card" style="margin-top:12px">
-          <h2>Próximas certificaciones</h2>
+          <h2 class="accent-title">Próximas certificaciones</h2>
           <p class="muted" style="margin:0 0 6px">En preparación. ¿Quieres priorizar alguna? Déjanos feedback abajo 👇.</p>
           <div class="soon">
             <span class="tag">AZ-900 · Azure Fundamentals</span>
@@ -273,7 +292,7 @@
 
         <!-- Roadmap trimestral -->
         <div class="card" style="margin-top:12px">
-          <h2>Roadmap trimestral</h2>
+          <h2 class="accent-title">Roadmap trimestral</h2>
           <div class="road">
             <div>
               <div style="display:flex;justify-content:space-between;font-weight:900">
@@ -299,7 +318,7 @@
 
         <!-- Cambios recientes -->
         <div class="card" style="margin-top:12px">
-          <h2>📢 Cambios recientes</h2>
+          <h2 class="accent-title">Cambios recientes</h2>
           <ul style="margin:8px 0 0 18px">
             <li>Se añade <b>Roadmap trimestral</b> con progreso por certificación.</li>
             <li>Nuevas <b>rutas de estudio</b> por semanas (Azure/AWS).</li>
@@ -328,10 +347,25 @@
           </div>
         </div>
 
+        <div class="block">
+          <h3>FAQ rápidas</h3>
+          <details>
+            <summary>¿Con qué certificación empiezo?</summary>
+            <p class="muted">Si partes de cero: <b>AZ-900</b>. Si ya operas Azure: <b>AZ-104</b>. En arquitectura: <b>AZ-305</b>. En AWS de entrada: <b>SAA-C03</b>.</p>
+          </details>
+          <details>
+            <summary>¿Cuánto tiempo necesito?</summary>
+            <p class="muted">Entre <b>6–8 semanas</b> a 1–2 h/día. Si dominas la plataforma, <b>10–14 días</b> con simulacros.</p>
+          </details>
+          <details>
+            <summary>¿Qué puntuación buscar?</summary>
+            <p class="muted">Apunta a <b>≥ 80%</b> de forma consistente en los últimos simulacros.</p>
+          </details>
+        </div>
 
         <div class="block">
           <h3>Checklist pre-examen (exprés)</h3>
-          <ul class="muted" style="margin:8px 0 0 18px">
+          <ul class="tight-list">
             <li>Revisar <b>objetivos oficiales</b> del examen.</li>
             <li>Hacer un <b>simulacro completo</b> el día anterior (timed).</li>
             <li>Repasar <b>áreas flojas</b> (3–5 topics) y notas rápidas.</li>
@@ -342,7 +376,7 @@
 
         <div class="block">
           <h3>Associate vs Expert (resumen)</h3>
-          <ul class="muted" style="margin:8px 0 0 18px">
+          <ul class="tight-list">
             <li><b>Associate</b>: operación y diseño a nivel suscripción/servicios.</li>
             <li><b>Expert</b>: gobierno y arquitectura a escala multi-suscripción/región.</li>
             <li><b>Ruta típica</b>: AZ-900 → AZ-104 → AZ-305 (Azure) · Cloud Practitioner → SAA-C03 (AWS).</li>
