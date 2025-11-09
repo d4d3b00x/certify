@@ -57,7 +57,7 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .desc{color:var(--muted)}
 .controls{display:flex;gap:10px;align-items:center}
 .play{flex:1;display:inline-flex;align-items:center;justify-content:center;height:42px;border-radius:12px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer}
-.kill{width:42px;height:42px;border-radius:12px;border:1px solid #3a4270;background:#111a33;color:#cfe1ff;cursor:pointer}
+.kill{width:42px;height:42px;border-radius:12px;border:1px solid #3a4270;background:#111a33;color:#cfe6ff;cursor:pointer}
 
 .ribbon{position:absolute;right:-30px;bottom:14px;transform:rotate(-12deg);font-weight:900;padding:6px 30px;border-radius:10px;border:2px solid rgba(0,0,0,.15);box-shadow:0 8px 18px rgba(0,0,0,.25);display:none}
 .card.win .ribbon{display:block;background:var(--ok);color:#05361c}
@@ -155,7 +155,7 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 
     <aside class="panel">
       <div class="sidebar">
-        <div class="rtitle">🏆 Ranking (tú)</div>
+        <div class="rtitle">🏆 Ranking</div>
         <div class="rlist" id="rlist"></div>
         <div class="reco"><h4>🔗 Recomendado</h4></div>
       </div>
@@ -194,14 +194,37 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 /* ================= API ================= */
 const API_BASE = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena";
 
-/* ===== Bootstrap identidad desde URL (una sola vez) ===== */
-(function bootstrapIdentityFromURL(){
+/* ===== Identidad =====
+   - 1ª vez: lee ?userId=&name= si vienen en la URL
+   - Si no vienen, genera un userId local (uuid-like) y name Guest####
+*/
+(function bootstrapIdentity(){
   const p = new URLSearchParams(location.search);
-  const uid = p.get('userId');
-  const name = p.get('name');
-  if (uid)  localStorage.setItem('arenaUserId', uid);
-  if (name) localStorage.setItem('arenaUserName', name);
-  if (uid || name) history.replaceState({}, '', location.pathname);
+  const gotUid  = p.get('userId');
+  const gotName = p.get('name');
+
+  let uid  = localStorage.getItem('arenaUserId');
+  let name = localStorage.getItem('arenaUserName');
+
+  if (gotUid)  { uid = gotUid; }
+  if (gotName) { name = gotName; }
+
+  if (!uid) {
+    // uuid sencillo (sin dependencias)
+    const rnd = crypto.getRandomValues(new Uint8Array(16));
+    rnd[6] = (rnd[6] & 0x0f) | 0x40;
+    rnd[8] = (rnd[8] & 0x3f) | 0x80;
+    uid = [...rnd].map((b,i)=> (i===4||i===6||i===8||i===10?'-':'')+b.toString(16).padStart(2,'0')).join('');
+  }
+  if (!name) {
+    name = "Guest" + Math.floor(1000 + Math.random()*9000);
+  }
+
+  localStorage.setItem('arenaUserId', uid);
+  localStorage.setItem('arenaUserName', name);
+
+  // Limpia la URL si traía params
+  if (gotUid || gotName) history.replaceState({}, '', location.pathname);
 })();
 
 /* ================= BANK ================= */
@@ -390,17 +413,45 @@ function onFail(){
   setTimeout(()=> card.classList.remove('fail'), 2000);
 }
 
-/* ============== Ranking (solo tú) ============== */
+/* ============== Ranking ============== */
 const rlist = document.getElementById('rlist');
-function renderRanking(){
-  rlist.innerHTML='';
+
+function renderMyRow() {
   const row = document.createElement('div');
   row.className = 'rrow me';
   row.innerHTML = `<div>1</div>
     <div class="rname" id="rankName">${userNameSpan.textContent}</div>
     <div class="rlvl" id="rankLv">Lv ${userLv}</div>
-    <div class="rxp" id="rankXP">${userXP}</div>`;
-  rlist.appendChild(row);
+    <div class="rxp"  id="rankXP">${userXP}</div>`;
+  return row;
+}
+function renderLeaderboard(items) {
+  rlist.innerHTML = '';
+  if (!Array.isArray(items) || items.length === 0) { rlist.appendChild(renderMyRow()); return; }
+  let pos = 1;
+  for (const u of items) {
+    const me = (u.userId && u.userId === localStorage.getItem('arenaUserId'));
+    const xp = Number(u.xp_total ?? u.xp ?? 0);
+    const lvl = (u.lvl != null) ? Number(u.lvl) : Math.floor(xp/1000);
+
+    const row = document.createElement('div');
+    row.className = 'rrow' + (me ? ' me' : '');
+    row.innerHTML = `<div>${pos++}</div>
+      <div class="rname">${u.name ?? 'Anon'}</div>
+      <div class="rlvl">Lv ${lvl}</div>
+      <div class="rxp">${xp}</div>`;
+    rlist.appendChild(row);
+  }
+}
+async function fetchLeaderboardAndRender() {
+  try {
+    const res = await fetch(`${API_BASE}/leaderboard?limit=20`);
+    if (!res.ok) throw new Error('no leaderboard');
+    const data = await res.json();
+    renderLeaderboard(data.items || data);
+  } catch {
+    rlist.innerHTML = ''; rlist.appendChild(renderMyRow());
+  }
 }
 
 /* ============== UI utils ============== */
@@ -416,59 +467,48 @@ function flyToMe(text, fromCard){
   fly.style.left = (start.left+start.width/2)+'px'; fly.style.top  = (start.top)+'px';
   fly.animate([{transform:'translate(-50%,0)', opacity:1},
     {transform:`translate(${end.left - (start.left+start.width/2)}px, ${end.top - start.top}px)`, opacity:0.6}],
-    {duration:1200, easing:'cubic-bezier(.2,.9,.2,1)'}).onfinish=()=>{ fly.style.display='none'; renderRanking(); };
+    {duration:1200, easing:'cubic-bezier(.2,.9,.2,1)'}).onfinish=()=>{ fly.style.display='none'; fetchLeaderboardAndRender(); };
 }
 
-/* ====== Helpers API usuario ====== */
+/* ====== API usuario (simple requests, sin preflight) ====== */
 async function apiGetMe(userId, userName){
   const url = `${API_BASE}/user/me?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName||"guest")}`;
-  const r = await fetch(url);           // sin headers personalizados ⇒ sin preflight
-  if(!r.ok) throw new Error(`HTTP ${r.status}`);
+  const r = await fetch(url);
+  if(!r.ok) throw new Error("GET /user/me "+r.status);
   return await r.json();
 }
-
 async function apiPostXP(delta){
   const userId = localStorage.getItem('arenaUserId');
-  const userName = localStorage.getItem('arenaUserName') || "guest";
-  // Simple request: sin headers custom y text/plain ⇒ NO preflight
-  const r = await fetch(`${API_BASE}/user/xp?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName)}`, {
-    method:"POST",
-    headers:{ "Content-Type":"text/plain" },
-    body: JSON.stringify({delta})
-  });
-  if (!r.ok && r.status !== 204) throw new Error(`HTTP ${r.status}`);
-  // Esta Lambda devuelve 204; refrescamos después con GET
+  const userName = localStorage.getItem('arenaUserName');
+  const url = `${API_BASE}/user/xp?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName||"guest")}`;
+  const r = await fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body:`delta=${encodeURIComponent(delta)}` });
+  if(!r.ok){
+    const t = await r.text().catch(()=> ""); console.warn("[/user/xp] HTTP", r.status, t);
+  }
 }
 
 async function syncBadgesFromBackend(){
   const uid = localStorage.getItem('arenaUserId');
   const storedName = localStorage.getItem('arenaUserName');
-  if(!uid || !storedName){
-    alert("Inicia sesión para jugar a Arena Battle (añade ?userId=&name= la primera vez).");
-    return;
-  }
   const me = await apiGetMe(uid, storedName);
   userNameSpan.textContent = me.name || storedName;
   document.getElementById('greeter').textContent = `👋 Hola, ${me.name || storedName}!`;
-
   userXP = Number(me.xp || 0);
   userLv = Number(me.level != null ? me.level : Math.floor(userXP/1000));
   badgeXP.textContent = `⚡ ${userXP}`;
   badgeLv.textContent = `Lv. ${userLv}`;
   if (typeof me.weekly === 'number') updateGoal(me.weekly);
-  renderRanking();
 }
 
 async function addXPAndSync(delta){
   await apiPostXP(delta);
   await syncBadgesFromBackend();
+  await fetchLeaderboardAndRender();
 }
 
-/* ====== CARGA DINÁMICA DE PREGUNTAS ====== */
+/* ====== Carga preguntas ====== */
 function mapDiff(d){ const s=String(d||"").toLowerCase(); if(s.startsWith("easy")||s==="facil")return"facil"; if(s.startsWith("med")||s==="medio")return"medio"; return"dificil"; }
 function xpFromDiff(diff){ return diff==="facil"?10: diff==="medio"?22:36; }
-
-/* Puede recibir un string o una lista; usa la primera con resultados */
 async function loadFromAPI(certValues, bucketKey, limit=50){
   const certList = Array.isArray(certValues) ? certValues : [certValues];
   let bank = []; let usedCert = certList[0];
@@ -507,15 +547,23 @@ async function loadFromAPI(certValues, bucketKey, limit=50){
   completed[bucketKey] = new Set();
   updateFilterCounts();
   if (filterCert === "ALL" || filterCert === bucketKey) buildGrid();
-  showToast(`${bucketKey} cargado (${bank.length})${bank.length===0?' – sin resultados':''}`);
-  if (bank.length===0){
-    console.warn(`[LOAD ${bucketKey}] sin preguntas para`, certList, '— revisa el atributo "cert" en DynamoDB.');
-  }else{
-    console.log(`[LOAD ${bucketKey}] usando cert=${usedCert} → ${bank.length} items.`);
-  }
+  showToast(`${bucketKey} cargado (${bank.length})${bank.length===0 ? ' – sin resultados' : ''}`);
 }
 
-/* ====== INIT ====== */
+/* ===== Auto-Refresh ===== */
+const LIVE_MS = 1500;
+let liveTimer = null;
+async function liveTick() {
+  try { await syncBadgesFromBackend(); await fetchLeaderboardAndRender(); } catch {}
+}
+function startLiveRefresh() {
+  if (liveTimer) clearInterval(liveTimer);
+  liveTick();
+  liveTimer = setInterval(liveTick, LIVE_MS);
+}
+window.addEventListener('focus', liveTick);
+
+/* ===== INIT ===== */
 const rulesBtn = document.getElementById('toggleRules');
 const rulesBody = document.getElementById('rulesBody');
 rulesBtn.onclick=()=>{
@@ -535,10 +583,10 @@ function init(){
   updateGoal(weekly);
   updateFilterCounts();
   buildGrid();
-  renderRanking();
+  fetchLeaderboardAndRender();
 }
 
-/* ====== ARRANQUE ====== */
+/* ARRANQUE */
 (async () => {
   await syncBadgesFromBackend();
   await Promise.all([
@@ -547,6 +595,7 @@ function init(){
     loadFromAPI(["SAA-C03","AWS-SAA"], "SAA-C03", 60)
   ]);
   init();
+  startLiveRefresh();
 })();
 </script>
 </body>
