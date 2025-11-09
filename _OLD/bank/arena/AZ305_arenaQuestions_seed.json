@@ -1,0 +1,693 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305201A" },
+          "question": { "S": "Necesitas diseñar autenticación híbrida para apps on-prem que consumirán APIs en Azure con SSO y control centralizado. ¿Qué combinación recomiendas?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design identity, governance, and monitoring solutions" },
+          "title": { "S": "Identidad híbrida con SSO" },
+          "concept": { "S": "Azure AD (Entra ID), App Registrations, Conditional Access, sincronización con Entra Connect" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "ADFS standalone sin Azure AD" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure AD + App Registration + Conditional Access; Entra Connect para identidades" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Usuarios locales en cada API con claves estáticas" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "LDAP directo a internet" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Identity","SSO","EntraID","ConditionalAccess"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design identity, governance, and monitoring solutions#medium#01K0AZ305201A" },
+          "diff_qid": { "S": "medium#01K0AZ305201A" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305202B" },
+          "question": { "S": "Tu organización multi-suscripción quiere aplicar políticas de seguridad obligatorias y evitar creación de recursos públicos por defecto. ¿Qué diseño usar?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design identity, governance, and monitoring solutions" },
+          "title": { "S": "Gobierno con Azure Policy" },
+          "concept": { "S": "Management Groups + Azure Policy + RBAC + Blueprints/Assignments; Deny/Modify effects; iniciativa a escala" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "RBAC únicamente a nivel de grupo de recursos" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Management Groups + Azure Policy en modo Deny/Modify a nivel raíz" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Nombres de convención por wiki interno" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Solo Defender for Cloud sin políticas" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Governance","Policy","RBAC","ManagementGroups"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design identity, governance, and monitoring solutions#easy#01K0AZ305202B" },
+          "diff_qid": { "S": "easy#01K0AZ305202B" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305203C" },
+          "question": { "S": "Necesitas recopilar logs, métricas y trazas distribuidas de microservicios AKS y App Service centralmente. ¿Qué stack recomiendas?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design identity, governance, and monitoring solutions" },
+          "title": { "S": "Observabilidad unificada" },
+          "concept": { "S": "Azure Monitor + Log Analytics + Application Insights + Container insights + DCRs/Workspace-based routing" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Syslog a una VM con disco local" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Monitor con Log Analytics y Application Insights centralizados" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Solo métricas de plataforma sin logs" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Almacenar JSON en Blob sin indexación" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Monitoring","Logs","AppInsights","AKS"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design identity, governance, and monitoring solutions#medium#01K0AZ305203C" },
+          "diff_qid": { "S": "medium#01K0AZ305203C" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305204D" },
+          "question": { "S": "Diseñas BCDR para SQL Server en Azure con RTO bajo y RPO≈0 entre zonas. ¿Qué opción alinea mejor?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design business continuity solutions" },
+          "title": { "S": "HADR para SQL en Azure" },
+          "concept": { "S": "SQL MI Business Critical con réplicas sincronas en Zonas o Always On en VMs/ZRS + Azure Front Door/Traffic Manager según caso" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Backups diarios a GRS y restaurar ante fallo" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "SQL MI Business Critical/AG síncrono entre zonas con failover automático" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Geo-restore asíncrono entre regiones para RPO≈0" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "ASR a otra región con apagados programados" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "hard" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["BCDR","SQL","HADR","Zones"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design business continuity solutions#hard#01K0AZ305204D" },
+          "diff_qid": { "S": "hard#01K0AZ305204D" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305205E" },
+          "question": { "S": "Una carga IaaS requiere recuperación ante desastres orquestada entre regiones y pruebas sin impacto en producción. ¿Qué servicio usarías principalmente?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design business continuity solutions" },
+          "title": { "S": "DR orquestado para IaaS" },
+          "concept": { "S": "Azure Site Recovery (ASR) entre regiones, planes de recuperación, test failover aislado, runbooks de post-failover" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Backup Center con restauraciones manuales VM a VM" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Site Recovery con planes de recuperación y pruebas" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Azure Migrate en modo discovery continuo" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Traffic Manager solo con prioridad" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["ASR","DR","BCDR","IaaS"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design business continuity solutions#easy#01K0AZ305205E" },
+          "diff_qid": { "S": "easy#01K0AZ305205E" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305206F" },
+          "question": { "S": "Una app global precisa minimizar latencia de lectura y protegerse de DDoS, manteniendo origen en App Service. ¿Qué front-end recomiendas?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design infrastructure solutions" },
+          "title": { "S": "Entrega global web" },
+          "concept": { "S": "Azure Front Door (Standard/Premium) con WAF, caching y TLS; orígenes App Service multi-región/zonas" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Traffic Manager + NSG" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Front Door con WAF y orígenes App Service" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Load Balancer público L4" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Application Gateway en una sola región" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["FrontDoor","WAF","AppService","Global"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design infrastructure solutions#medium#01K0AZ305206F" },
+          "diff_qid": { "S": "medium#01K0AZ305206F" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305207G" },
+          "question": { "S": "Para un patrón hub-spoke con inspección L7 central y publicación interna de apps, ¿qué componentes clave diseñarías en el hub?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design infrastructure solutions" },
+          "title": { "S": "Red hub-spoke segura" },
+          "concept": { "S": "Azure Firewall/Azure Firewall Premium, Azure Firewall Policy, Private DNS, rutas UDR, Gateway/ER/Peering, AppGW/WAF si L7 en spoke/hub según caso" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "NSG en cada VM sin UDR" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Hub con Azure Firewall, UDR, emparejamientos y DNS privado compartido" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Un único Application Gateway por spoke sin hub" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Bastion expuesto a Internet en cada spoke" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Networking","HubSpoke","Firewall","PrivateDNS"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design infrastructure solutions#medium#01K0AZ305207G" },
+          "diff_qid": { "S": "medium#01K0AZ305207G" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305208H" },
+          "question": { "S": "Necesitas exponer APIs a terceros con control de cuotas, productos, claves y políticas de transformación. ¿Qué servicio gestiona esto de forma nativa?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design application solutions" },
+          "title": { "S": "Gestión de APIs" },
+          "concept": { "S": "API Management (APIM): productos, suscripciones, políticas, developer portal, self-hosted gateway opcional" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Application Gateway con reglas WAF" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "API Management (APIM)" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Traffic Manager con endpoints por API" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Azure Functions Proxies (deprecated) como gateway principal" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["APIM","API","Security","Governance"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design application solutions#easy#01K0AZ305208H" },
+          "diff_qid": { "S": "easy#01K0AZ305208H" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305209J" },
+          "question": { "S": "Para colas con orden y deduplicación por flujo, integradas con Functions y Logic Apps, ¿qué servicio de mensajería elegirías?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design application solutions" },
+          "title": { "S": "Mensajería con orden" },
+          "concept": { "S": "Azure Service Bus (colas y topics), sesiones para orden, deduplicación, DLQ, reintentos; mejor que Storage Queues para enterprise features" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Storage Queues con lease manual" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Service Bus con sesiones y deduplicación" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Event Grid con push a WebHooks" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Event Hubs con un único partition" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["ServiceBus","Queues","Messaging","Order"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design application solutions#medium#01K0AZ305209J" },
+          "diff_qid": { "S": "medium#01K0AZ305209J" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305210K" },
+          "question": { "S": "Datos de compliance requieren cifrado con claves administradas por el cliente y rotación controlada. ¿Qué servicios de Azure Storage y KMS usarías?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design data storage solutions" },
+          "title": { "S": "Cifrado con CMK" },
+          "concept": { "S": "Storage (Blob/Data Lake) con SSE usando CMK en Key Vault; RBAC + Key Vault firewall + Managed Identities para acceso a la clave" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Storage con SSE-Microsoft (PMK) sin KV" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Blob/Data Lake con CMK en Key Vault + MI y rotación gestionada" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Claves en appsettings.json" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Cifrado a nivel de aplicación únicamente" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Storage","KeyVault","CMK","Encryption"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design data storage solutions#easy#01K0AZ305210K" },
+          "diff_qid": { "S": "easy#01K0AZ305210K" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305211L" },
+          "question": { "S": "Una analítica lakehouse necesita ingestión por streaming y batch, control de esquemas y seguridad a nivel de columnas. ¿Qué servicios propones?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design data storage solutions" },
+          "title": { "S": "Lakehouse seguro" },
+          "concept": { "S": "Azure Data Lake Storage Gen2 + Azure Databricks/Synapse, Event Hubs/ADF, ACLs/RBAC, Purview, Entra ID; Delta Lake para ACID/esquema" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "SQL VM con archivos adjuntos" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "ADLS Gen2 + Delta Lake con Databricks/Synapse y Event Hubs/ADF" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Blob clásico sin jerarquía ni ACLs" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Cosmos DB con API Table para todo" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "hard" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["ADLS","Delta","Databricks","Synapse"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design data storage solutions#hard#01K0AZ305211L" },
+          "diff_qid": { "S": "hard#01K0AZ305211L" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305212M" },
+          "question": { "S": "Necesitas base de datos distribuida global con latencia de milisegundos, multi-región activa-activa y SLAs elevados. ¿Qué servicio encaja mejor?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design data storage solutions" },
+          "title": { "S": "Base de datos global" },
+          "concept": { "S": "Azure Cosmos DB multi-región multi-master, niveles de consistencia, RU/s autoscale, particionado por clave adecuada" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "SQL Database con Geo-Secondary solo lectura" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Cosmos DB con escritura multi-región y consistencia adecuada" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "MySQL flexible con réplica asíncrona global" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Tablas de Storage con replication LRS" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["CosmosDB","Global","Consistency","RU"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design data storage solutions#medium#01K0AZ305212M" },
+          "diff_qid": { "S": "medium#01K0AZ305212M" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305213N" },
+          "question": { "S": "Un backend de alta seguridad en AKS debe acceder a secretos con rotación y control de acceso granular sin copiarlos en pods. ¿Qué patrón recomiendas?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design application solutions" },
+          "title": { "S": "Secretos para AKS" },
+          "concept": { "S": "Azure Key Vault + Managed Identity (pod identity/ workload identity) + CSI Secrets Store; RBAC y políticas KV; no vars en claro" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "ConfigMaps en texto plano" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Key Vault con Workload Identity y CSI driver para inyección de secretos" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Volcar secretos en imagen Docker" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Guardar secretos en variables de entorno en YAML" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "hard" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["AKS","KeyVault","Secrets","MI"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design application solutions#hard#01K0AZ305213N" },
+          "diff_qid": { "S": "hard#01K0AZ305213N" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305214P" },
+          "question": { "S": "Una integración híbrida requiere conectividad site-to-site redundante y throughput alto hacia Azure. ¿Qué elegirías a nivel de red?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design infrastructure solutions" },
+          "title": { "S": "Conectividad híbrida" },
+          "concept": { "S": "ExpressRoute para throughput/latencia + VPN como failover; ER FastPath/Global Reach según caso; emparejamientos privados" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Solo VPN site-to-site activa" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "ExpressRoute para primario + VPN S2S como respaldo" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Publicar VMs a Internet con NSG" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "VPN P2S para toda la empresa" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["ExpressRoute","VPN","Hybrid","Network"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design infrastructure solutions#easy#01K0AZ305214P" },
+          "diff_qid": { "S": "easy#01K0AZ305214P" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305215Q" },
+          "question": { "S": "Para un entorno multi-inquilino en App Service con aislamiento fuerte y SLAs, ¿qué plan de hosting elegirías?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design application solutions" },
+          "title": { "S": "Aislamiento en App Service" },
+          "concept": { "S": "App Service Environment v3 (ASE) o App Service Isolated plan para aislamiento de red y compute dedicado; Private Endpoints/ILB ASE" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Plan Basic compartido" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "App Service Isolated/ASE v3 con red dedicada" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Contenedores en ACI sin red privada" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Functions Consumption para aplicaciones críticas stateful" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["AppService","ASE","Isolation","Networking"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design application solutions#medium#01K0AZ305215Q" },
+          "diff_qid": { "S": "medium#01K0AZ305215Q" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305216R" },
+          "question": { "S": "Necesitas cifrado de disco para VMs Linux/Windows, con claves en HSM y arranque seguro. ¿Qué arquitectura aplicas?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design security solutions" },
+          "title": { "S": "Cifrado de discos en IaaS" },
+          "concept": { "S": "Azure Disk Encryption (o cifrado del lado de servidor) con KEK en Key Vault Managed HSM, Managed Identity, políticas de acceso limitadas; Secure Boot/TPM vTPM" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Desactivar UEFI y cifrar manualmente con LUKS/BitLocker sin KV" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Cifrado de discos administrado + KEK en Key Vault/Managed HSM y vTPM/Secure Boot" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Usar claves en archivos en la VM" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Solo NSG sin cifrado" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Encryption","Disks","KeyVault","HSM","Security"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design security solutions#medium#01K0AZ305216R" },
+          "diff_qid": { "S": "medium#01K0AZ305216R" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305217S" },
+          "question": { "S": "Para automatizar cumplimiento continuo (drift) en recursos Azure, con correcciones automáticas declarativas, ¿qué usarías principalmente?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design identity, governance, and monitoring solutions" },
+          "title": { "S": "Remediación de configuración" },
+          "concept": { "S": "Azure Policy con efectos Modify/DeployIfNotExists + iniciativas; Guest Configuration para OS; integración con Defender/Arc cuando aplica" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Scripts manuales periódicos en runbooks" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Policy con remediación automática (DeployIfNotExists/Modify)" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Etiquetas de recursos (tags) informativas" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Azure Boards con tareas manuales" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Policy","Compliance","Remediation","Governance"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design identity, governance, and monitoring solutions#easy#01K0AZ305217S" },
+          "diff_qid": { "S": "easy#01K0AZ305217S" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305218T" },
+          "question": { "S": "Una app de eventos necesita enrutamiento basado en reglas, filtros por payload y destinos múltiples (Functions, Service Bus, WebHooks). ¿Qué servicio?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design application solutions" },
+          "title": { "S": "Event-driven en Azure" },
+          "concept": { "S": "Azure Event Grid con topics, suscripciones con filtros avanzados, dead-lettering a Storage/Service Bus, reintentos exponenciales" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Event Hubs exclusivamente (streaming)" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Event Grid con suscripciones y filtros a múltiples handlers" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Storage Queues para routing por contenido" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Logic Apps con pooling periódico" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["EventGrid","Events","Serverless","Integration"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design application solutions#medium#01K0AZ305218T" },
+          "diff_qid": { "S": "medium#01K0AZ305218T" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305219U" },
+          "question": { "S": "Para workloads con tráfico saliente a Internet desde subredes privadas con alta disponibilidad y mantenimiento mínimo, ¿qué componente de red usarías por zona?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design infrastructure solutions" },
+          "title": { "S": "Salida desde privadas" },
+          "concept": { "S": "NAT Gateway por zona (zonal), UDR hacia NAT, evitar instancias NAT personalizadas; combinar con Firewall si inspección L7 requerida" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "VM con iptables como NAT" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "NAT Gateway zonal y rutas UDR adecuadas" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Publicar NICs con PIP en privadas" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Bastion como proxy HTTP" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Networking","NATGW","PrivateSubnets","HA"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design infrastructure solutions#easy#01K0AZ305219U" },
+          "diff_qid": { "S": "easy#01K0AZ305219U" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305220V" },
+          "question": { "S": "Quieres proteger repositorios de secretos y rotación automática para apps en AKS y App Service, integrando RBAC y auditoría. ¿Qué eliges?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design security solutions" },
+          "title": { "S": "Gestión de secretos" },
+          "concept": { "S": "Azure Key Vault/Managed HSM, RBAC/Access Policies, Private Endpoints, logging a Log Analytics, integración con MI; rotation policies/Events para renovación" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Variables en App Settings sin Key Vault" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Key Vault con Managed Identity y Private Endpoint + logging/auditoría" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Secrets en Git con git-crypt" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Almacenar secretos en Cosmos DB" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["KeyVault","Secrets","RBAC","PrivateEndpoint"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design security solutions#medium#01K0AZ305220V" },
+          "diff_qid": { "S": "medium#01K0AZ305220V" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305221W" },
+          "question": { "S": "Para workloads Windows que requieren SMB con ACLs, AD y performance consistente en Azure, ¿qué servicio de ficheros elegirías?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design data storage solutions" },
+          "title": { "S": "Ficheros para Windows" },
+          "concept": { "S": "Azure Files con AD DS/Entra ID, Premium (FileStorage) para IOPS/latencia, Private Endpoint; o Azure NetApp Files si necesidad extrema de rendimiento/NFS/SMB avanzado" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Blob Storage con montaje NFS 3.0" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Files Premium con AD y Private Endpoint" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Disco local en una VM compartido por RDP" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Cosmos DB para almacenar archivos binarios" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["AzureFiles","SMB","Windows","PrivateEndpoint"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design data storage solutions#easy#01K0AZ305221W" },
+          "diff_qid": { "S": "easy#01K0AZ305221W" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305222X" },
+          "question": { "S": "Diseñas coste óptimo para VMSS con cargas variables y tolerancia a interrupciones. ¿Qué estrategia de capacidad recomiendas?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design infrastructure solutions" },
+          "title": { "S": "Ahorro en VMSS" },
+          "concept": { "S": "VM Scale Sets con mezcla Spot + On-demand (balanced), autoscale por métricas, Zonas, Health probes, priorización de instancias; reservadas si base estable" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Solo On-Demand sin autoescalado" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Mezcla Spot + On-Demand con autoscaling y zonas" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "100% Spot sin límites de interrupción" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Reservadas a 3 años para picos impredecibles" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["VMSS","Spot","Autoscale","Cost"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design infrastructure solutions#medium#01K0AZ305222X" },
+          "diff_qid": { "S": "medium#01K0AZ305222X" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0AZ305223Y" },
+          "question": { "S": "Requieres exponer un API interno solo a redes privadas de tu empresa (on-prem y Azure) sin IPs públicas. ¿Qué patrón aplicarías?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design security solutions" },
+          "title": { "S": "Publicación privada de APIs" },
+          "concept": { "S": "Private Endpoints en el servicio (App Service/API Management), DNS privado, conectividad híbrida (ER/VPN), bloqueo de acceso público en origenes (Storage/KeyVault/etc.)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Publicar con IP pública y allowlist de IPs" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Private Endpoint + Private DNS + conectividad híbrida" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Application Gateway público con WAF únicamente" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Bastion como proxy inverso" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["PrivateEndpoint","APIM","Networking","Security"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T13:00:00Z" },
+          "updated_at": { "S": "2025-11-09T13:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design security solutions#easy#01K0AZ305223Y" },
+          "diff_qid": { "S": "easy#01K0AZ305223Y" }
+        }
+      }
+    }
+  ]
+}

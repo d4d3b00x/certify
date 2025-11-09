@@ -1,0 +1,483 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1010A" },
+          "question": { "S": "Tu app web debe tolerar la caída completa de una AZ y mantener sesiones. ¿Arquitectura adecuada?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design resilient architectures" },
+          "title": { "S": "Web resiliente multi-AZ" },
+          "concept": { "S": "ALB, ASG, stateless, sesiones externas" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Instancia única con EIP y backups" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "ALB + ASG en múltiples AZ y sesiones en ElastiCache/DynamoDB" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "NLB con EC2 en una sola AZ" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Sticky sessions en ALB sin almacenamiento compartido" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["ALB","ASG","Multi-AZ"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design resilient architectures#medium#01K0SAA1010A" },
+          "diff_qid": { "S": "medium#01K0SAA1010A" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1011B" },
+          "question": { "S": "Necesitas exponer microservicios con mTLS, WAF y sin exponer la VPC. ¿Qué eliges?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design secure architectures" },
+          "title": { "S": "Entrada segura a microservicios" },
+          "concept": { "S": "API Gateway mTLS + WAF + VPC Link a NLB privado" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "ALB público y SG restrictivo" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "API Gateway con mTLS + AWS WAF + VPC Link a NLB privado" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "NLB público y listas de IP en NACLs" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "CloudFront directo a NLB sin WAF" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "hard" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["APIGW","WAF","mTLS","VPCLink"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design secure architectures#hard#01K0SAA1011B" },
+          "diff_qid": { "S": "hard#01K0SAA1011B" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1012C" },
+          "question": { "S": "Lecturas globales de baja latencia y DR para MySQL administrado. ¿Mejor opción?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design high-performing architectures" },
+          "title": { "S": "Aurora Global Database" },
+          "concept": { "S": "Aurora MySQL Global Database, réplicas globales y failover regional" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "RDS MySQL Multi-AZ + snapshots cross-region" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Aurora MySQL Global Database con réplicas en regiones secundarias" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "EC2 con MySQL y rsync entre regiones" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "RDS MySQL con read replicas en la misma región" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Aurora","Global","DR","MySQL"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design high-performing architectures#medium#01K0SAA1012C" },
+          "diff_qid": { "S": "medium#01K0SAA1012C" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1013D" },
+          "question": { "S": "Ingesta a 2 GB/s con orden por clave y reintentos. ¿Qué servicio eliges?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design high-performing architectures" },
+          "title": { "S": "Ingesta de alto volumen" },
+          "concept": { "S": "Kinesis Data Streams, shards, partition key, consumidores escalables" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "SQS estándar con muchos consumidores" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Kinesis Data Streams con particionado por userId y múltiples shards" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "SNS con HTTP endpoints" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "SQS FIFO para throughput ilimitado" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Kinesis","Throughput","Ordering"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design high-performing architectures#medium#01K0SAA1013D" },
+          "diff_qid": { "S": "medium#01K0SAA1013D" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1014E" },
+          "question": { "S": "Instancias en subredes privadas requieren salir a Internet con HA y mínimo mantenimiento. ¿Qué opción?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design cost-optimized architectures" },
+          "title": { "S": "Salida a Internet desde privadas" },
+          "concept": { "S": "NAT Gateway por AZ, rutas por AZ; evitar NAT Instance salvo casos concretos" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "NAT Instance en una AZ con scripts de failover" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "NAT Gateway por AZ en subred pública y tablas de ruta por AZ" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "IGW directo a subred privada con SG restrictivos" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "VPN al hogar de desarrolladores" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["VPC","NATGW","HA","Cost"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design cost-optimized architectures#easy#01K0SAA1014E" },
+          "diff_qid": { "S": "easy#01K0SAA1014E" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1015F" },
+          "question": { "S": "Servir contenido de S3 bloqueando acceso directo al bucket. ¿Combinación correcta?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design secure architectures" },
+          "title": { "S": "S3 + CloudFront seguro" },
+          "concept": { "S": "CloudFront con OAC; bucket privado; opcional WAF/Shield Standard" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "S3 público con bloqueo por Referer" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "CloudFront con OAC y bucket S3 sin acceso público" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "ALB delante de S3 con VPC Link" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "URLs prefirmadas para todo el tráfico" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["CloudFront","S3","OAC","Security"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design secure architectures#easy#01K0SAA1015F" },
+          "diff_qid": { "S": "easy#01K0SAA1015F" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1016G" },
+          "question": { "S": "Workload Linux multi-instancia requiere filesystem POSIX compartido y elástico. ¿Servicio recomendado?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design high-performing architectures" },
+          "title": { "S": "Filesystem compartido elástico" },
+          "concept": { "S": "Amazon EFS multi-AZ; modos de rendimiento/throughput; vs EBS/FSx" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "EBS io2 Block Express multi-attach para muchas instancias" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Amazon EFS montado en varias AZ con modo adecuado" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "RAID0 local exportado por NFS casero" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "FSx for Windows File Server" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["EFS","POSIX","SharedFS"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design high-performing architectures#medium#01K0SAA1016G" },
+          "diff_qid": { "S": "medium#01K0SAA1016G" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1017H" },
+          "question": { "S": "Disparar Lambdas desde múltiples productores y aislar consumidores lentos. ¿Patrón recomendado?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design resilient architectures" },
+          "title": { "S": "Fanout con colas" },
+          "concept": { "S": "SNS → SQS por consumidor; cada SQS invoca su Lambda; DLQ por cola" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Llamadas HTTP directas a Lambda" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "SNS fanout a múltiples SQS; cada SQS dispara su Lambda con DLQ" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Un único shard de Kinesis compartido" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "EventBridge a una única cola para todos" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["SNS","SQS","Lambda","DLQ"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design resilient architectures#easy#01K0SAA1017H" },
+          "diff_qid": { "S": "easy#01K0SAA1017H" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1018J" },
+          "question": { "S": "Hotspots de lectura en DynamoDB por mala key. Sin reescribir datos, ¿qué ayuda para lecturas actuales?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design high-performing architectures" },
+          "title": { "S": "Hot partitions en DynamoDB" },
+          "concept": { "S": "Crear GSI con partition key distribuida y mover lecturas al GSI; DAX no arregla hotspots de escritura" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Activar DAX para escrituras en caliente" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Crear GSI con mejor distribución y usarlo para las consultas" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Aumentar RCU/WCU sin límite" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Activar TTL" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "hard" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["DynamoDB","GSI","Performance"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design high-performing architectures#hard#01K0SAA1018J" },
+          "diff_qid": { "S": "hard#01K0SAA1018J" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1019K" },
+          "question": { "S": "Acceso privado desde subredes privadas a S3 sin NAT y dentro de la red de AWS. ¿Qué configuras?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design cost-optimized architectures" },
+          "title": { "S": "Acceso privado a S3" },
+          "concept": { "S": "Gateway VPC Endpoint para S3 y rutas a prefix list de S3; ahorro vs NATGW" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "NAT Gateway en cada AZ para S3" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Gateway VPC Endpoint para S3 y actualizar tablas de ruta" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Interface Endpoint para S3" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "IGW directo en privadas" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["VPC","S3","Endpoint","Cost"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design cost-optimized architectures#medium#01K0SAA1019K" },
+          "diff_qid": { "S": "medium#01K0SAA1019K" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1020L" },
+          "question": { "S": "Minimizar downtime en RDS PostgreSQL ante mantenimiento y fallo de AZ. ¿Configuración?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design resilient architectures" },
+          "title": { "S": "Alta disponibilidad en RDS" },
+          "concept": { "S": "RDS Multi-AZ con standby y failover automático; read replicas no son HA primaria" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Single-AZ con read replicas en la misma AZ" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "RDS Multi-AZ con standby en otra AZ" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "EC2 con PostgreSQL en RAID10" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Aurora Serverless sin Multi-AZ" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["RDS","Multi-AZ","HA","PostgreSQL"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design resilient architectures#easy#01K0SAA1020L" },
+          "diff_qid": { "S": "easy#01K0SAA1020L" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1021M" },
+          "question": { "S": "Proteger una API pública con reglas administradas y rate limiting. ¿Qué pones delante del ALB?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design secure architectures" },
+          "title": { "S": "Protección de API" },
+          "concept": { "S": "AWS WAF con managed rules + rate-based; integración con ALB/CloudFront; Shield Standard" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Security Groups con reglas por user-agent" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "AWS WAF asociado al ALB con managed rules y rate limiting" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "NACLs con miles de IPs" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "GuardDuty bloqueando en tiempo real" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["WAF","ALB","Security","Shield"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design secure architectures#medium#01K0SAA1021M" },
+          "diff_qid": { "S": "medium#01K0SAA1021M" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1022N" },
+          "question": { "S": "Publicar un NLB privado para consumidores de otras VPC sin peering ni ruteo amplio. ¿Qué mecanismo?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design secure architectures" },
+          "title": { "S": "Publicación privada (PrivateLink)" },
+          "concept": { "S": "Endpoint Service (proveedor) + Interface Endpoints (clientes) mediante AWS PrivateLink" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Compartir subredes con RAM" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "PrivateLink publicando el NLB como Endpoint Service y consumidores con Interface Endpoints" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Peering entre todas las VPC y rutas transitivas" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "ALB público con allowlist de IPs" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["PrivateLink","NLB","VPC","Security"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design secure architectures#medium#01K0SAA1022N" },
+          "diff_qid": { "S": "medium#01K0SAA1022N" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1023P" },
+          "question": { "S": "SQL ad hoc económico sobre datos en S3 sin servidores. ¿Qué servicio usas y con qué buenas prácticas?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design cost-optimized architectures" },
+          "title": { "S": "Athena sobre S3" },
+          "concept": { "S": "Amazon Athena + Glue Data Catalog; Parquet/compresión; particiones por prefijo (fecha, etc.)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "RDS importando todos los archivos a tablas" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Amazon Athena con Glue y formatos columnar/particionado" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "EMR permanente con Hive" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Redshift para 3 consultas/mes" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Athena","S3","Glue","Cost"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design cost-optimized architectures#easy#01K0SAA1023P" },
+          "diff_qid": { "S": "easy#01K0SAA1023P" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1024Q" },
+          "question": { "S": "Migrar una base de datos on-prem a RDS con near-zero downtime. ¿Herramienta recomendada?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design operationally excellent architectures" },
+          "title": { "S": "Migración con mínima parada" },
+          "concept": { "S": "AWS DMS con CDC; SCT si cambia el motor; validación y cutover breve" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Export/Import manual con parada larga" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "AWS Database Migration Service (DMS) con replicación continua" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Snapshots de EBS restaurados en RDS" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "DataSync para copiar ficheros" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["DMS","Migration","RDS","Ops"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design operationally excellent architectures#easy#01K0SAA1024Q" },
+          "diff_qid": { "S": "easy#01K0SAA1024Q" }
+        }
+      }
+    },
+
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01K0SAA1025R" },
+          "question": { "S": "Aislamiento y guardrails para impedir recursos públicos a nivel organización multi-cuenta. ¿Mecanismo clave?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design secure architectures" },
+          "title": { "S": "Guardrails con SCP" },
+          "concept": { "S": "AWS Organizations + Service Control Policies; deny > allow; heredables por OU/cuentas" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Sólo IAM customer managed policies por cuenta" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Service Control Policies (SCP) en Organizations" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "AWS Config sin remediación" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Budgets con alarmas de costo" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["Organizations","SCP","Security","Governance"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T12:30:00Z" },
+          "updated_at": { "S": "2025-11-09T12:30:00Z" },
+          "cert_domain_diff_qid": { "S": "Design secure architectures#medium#01K0SAA1025R" },
+          "diff_qid": { "S": "medium#01K0SAA1025R" }
+        }
+      }
+    }
+  ]
+}

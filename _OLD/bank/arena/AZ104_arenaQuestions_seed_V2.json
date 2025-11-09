@@ -1,0 +1,497 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6B5T6Y7U8I9O0P1A2S3D4F" },
+          "question": { "S": "Necesitas exponer RDP/SSH a una VM sin asignar IP pública ni abrir puertos en NSG. ¿Qué servicio usas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage virtual networking" },
+          "title": { "S": "Acceso seguro a VM sin IP pública" },
+          "concept": { "S": "Azure Bastion" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Jumpbox con IP pública" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Bastion" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "VPN Point-to-Site" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Just-In-Time VM Access sin más" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["bastion", "security", "network"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage virtual networking#easy#01JBN6B5T6Y7U8I9O0P1A2S3D4F" },
+          "diff_qid": { "S": "easy#01JBN6B5T6Y7U8I9O0P1A2S3D4F" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6B6Y7U8I9O0P1A2S3D4F5G" },
+          "question": { "S": "Quieres resiliencia ante caída de una zona de disponibilidad para datos en una cuenta de almacenamiento. ¿Qué redundancia eliges?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Implement and manage storage" },
+          "title": { "S": "Redundancia por zona" },
+          "concept": { "S": "ZRS vs LRS/GRS" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "LRS" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "ZRS" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "GRS" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "GZRS sin lectura" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["storage", "redundancy", "zrs"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Implement and manage storage#medium#01JBN6B6Y7U8I9O0P1A2S3D4F5G" },
+          "diff_qid": { "S": "medium#01JBN6B6Y7U8I9O0P1A2S3D4F5G" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6B7U8I9O0P1A2S3D4F5G6H" },
+          "question": { "S": "Deseas proteger contenedores y blobs frente a eliminaciones accidentales. ¿Qué característica habilitas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Implement and manage storage" },
+          "title": { "S": "Protección de borrado" },
+          "concept": { "S": "Soft delete para blobs/containers" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Versionado deshabilitado" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Soft delete y versioning" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Access tiers en Cool" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "SAS con expiración larga" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["blob", "softdelete", "versioning"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Implement and manage storage#easy#01JBN6B7U8I9O0P1A2S3D4F5G6H" },
+          "diff_qid": { "S": "easy#01JBN6B7U8I9O0P1A2S3D4F5G6H" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6B8I9O0P1A2S3D4F5G6H7J" },
+          "question": { "S": "Una app en una VM debe leer blobs sin almacenar claves ni SAS. ¿Qué usarías?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage identities and governance" },
+          "title": { "S": "Acceso a Storage sin secretos" },
+          "concept": { "S": "Managed Identity + RBAC Storage Blob Data Reader" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Clave de cuenta de almacenamiento" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "SAS de usuario" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Managed Identity y rol 'Storage Blob Data Reader'" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Firewall abierto a Internet" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["identity", "storage", "rbac"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage identities and governance#medium#01JBN6B8I9O0P1A2S3D4F5G6H7J" },
+          "diff_qid": { "S": "medium#01JBN6B8I9O0P1A2S3D4F5G6H7J" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6B9O0P1A2S3D4F5G6H7J8K" },
+          "question": { "S": "Necesitas reutilizar la misma identidad administrada en varias VMs. ¿Qué tipo eliges?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage identities and governance" },
+          "title": { "S": "Tipo de Managed Identity" },
+          "concept": { "S": "User-assigned vs System-assigned MI" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "System-assigned Managed Identity" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "User-assigned Managed Identity" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Service Principal con secreto" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Service Endpoint" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["managed-identity", "rbac"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage identities and governance#easy#01JBN6B9O0P1A2S3D4F5G6H7J8K" },
+          "diff_qid": { "S": "easy#01JBN6B9O0P1A2S3D4F5G6H7J8K" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C0P1A2S3D4F5G6H7J8K9L" },
+          "question": { "S": "Una VM debe leer secretos de Key Vault de forma segura. ¿Qué configuración recomiendas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage identities and governance" },
+          "title": { "S": "Acceso seguro a Key Vault" },
+          "concept": { "S": "MI + RBAC Key Vault Secrets User + (opcional) Private Endpoint" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Access policy a 'Everyone'" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Managed Identity y rol 'Key Vault Secrets User'" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Clave embebida en appsettings.json" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "SAS de Key Vault" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["key-vault", "rbac", "managed-identity"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage identities and governance#medium#01JBN6C0P1A2S3D4F5G6H7J8K9L" },
+          "diff_qid": { "S": "medium#01JBN6C0P1A2S3D4F5G6H7J8K9L" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C1A2S3D4F5G6H7J8K9L0M" },
+          "question": { "S": "Requieres balancear tráfico TCP/UDP a nivel de capa 4 entre VMs backend. ¿Qué eliges?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage virtual networking" },
+          "title": { "S": "Balanceo L4" },
+          "concept": { "S": "Azure Load Balancer Standard (L4)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Application Gateway (WAF)" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Traffic Manager" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Azure Load Balancer Standard" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Front Door" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["load-balancer", "networking", "l4"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage virtual networking#easy#01JBN6C1A2S3D4F5G6H7J8K9L0M" },
+          "diff_qid": { "S": "easy#01JBN6C1A2S3D4F5G6H7J8K9L0M" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C2S3D4F5G6H7J8K9L0M1N" },
+          "question": { "S": "Necesitas terminación TLS y enrutamiento por ruta de URL a microservicios. ¿Qué servicio elegir?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage virtual networking" },
+          "title": { "S": "Balanceo L7 con TLS" },
+          "concept": { "S": "Application Gateway (L7, TLS, path-based)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Azure Load Balancer" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Application Gateway" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Traffic Manager (DNS)" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Front Door sin WAF" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["app-gateway", "tls", "l7"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage virtual networking#medium#01JBN6C2S3D4F5G6H7J8K9L0M1N" },
+          "diff_qid": { "S": "medium#01JBN6C2S3D4F5G6H7J8K9L0M1N" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C3D4F5G6H7J8K9L0M1N2B" },
+          "question": { "S": "Debes forzar que todo el tráfico saliente de una subred pase por un firewall NVA. ¿Qué configuras?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage virtual networking" },
+          "title": { "S": "Ruteo forzado a NVA" },
+          "concept": { "S": "UDR/Route Table con next hop Virtual appliance" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "NSG con regla Deny" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Route Table con next hop Virtual appliance" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Service Endpoint" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "VNet Peering" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["routing", "nva", "udr"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage virtual networking#medium#01JBN6C3D4F5G6H7J8K9L0M1N2B" },
+          "diff_qid": { "S": "medium#01JBN6C3D4F5G6H7J8K9L0M1N2B" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C4F5G6H7J8K9L0M1N2B3V" },
+          "question": { "S": "Quieres comprobar latencia y disponibilidad entre dos puntos (subredes/VMs) en Azure de forma continua. ¿Qué usas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Monitor and maintain Azure resources" },
+          "title": { "S": "Supervisión de conectividad" },
+          "concept": { "S": "Network Watcher Connection Monitor" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Service Health" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Connection Monitor (Network Watcher)" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Activity Log" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Traffic Analytics" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["network-watcher", "monitoring", "latency"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Monitor and maintain Azure resources#easy#01JBN6C4F5G6H7J8K9L0M1N2B3V" },
+          "diff_qid": { "S": "easy#01JBN6C4F5G6H7J8K9L0M1N2B3V" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C5G6H7J8K9L0M1N2B3V4C" },
+          "question": { "S": "Quieres escalar automáticamente un VM Scale Set cuando la CPU media supere 70% por 10 minutos. ¿Qué configuras?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage compute" },
+          "title": { "S": "Autoscale por métrica" },
+          "concept": { "S": "Autoscale rule en VMSS basada en métricas" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Scheduled scale a horas fijas" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Autoscale por métrica de CPU > 70% durante 10 min" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Aumentar tamaño de VM manualmente" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Alertas sin acción" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["vmss", "autoscale", "metrics"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage compute#medium#01JBN6C5G6H7J8K9L0M1N2B3V4C" },
+          "diff_qid": { "S": "medium#01JBN6C5G6H7J8K9L0M1N2B3V4C" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C6H7J8K9L0M1N2B3V4C5X" },
+          "question": { "S": "Tu organización exige cifrar discos con tus propias claves. ¿Qué opción usas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage compute" },
+          "title": { "S": "Cifrado de discos con CMK" },
+          "concept": { "S": "Disk encryption con Customer-Managed Keys (Key Vault)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Cifrado con claves de plataforma (PMK) por defecto" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Customer-Managed Keys en Key Vault" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Solo BitLocker dentro del SO" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "TLS 1.2 en la app" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["encryption", "cmk", "disks"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage compute#medium#01JBN6C6H7J8K9L0M1N2B3V4C5X" },
+          "diff_qid": { "S": "medium#01JBN6C6H7J8K9L0M1N2B3V4C5X" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C7J8K9L0M1N2B3V4C5X6Z" },
+          "question": { "S": "Debes mover automáticamente blobs a Cool a los 30 días y a Archive a los 90 días. ¿Qué habilitas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Implement and manage storage" },
+          "title": { "S": "Ciclo de vida de blobs" },
+          "concept": { "S": "Lifecycle Management rules (tiering)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Azure Policy de costos" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Lifecycle Management en la cuenta de almacenamiento" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Blob immutability policy" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Event Grid + Function" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["storage", "lifecycle", "tiers"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Implement and manage storage#easy#01JBN6C7J8K9L0M1N2B3V4C5X6Z" },
+          "diff_qid": { "S": "easy#01JBN6C7J8K9L0M1N2B3V4C5X6Z" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C8K9L0M1N2B3V4C5X6Z7Q" },
+          "question": { "S": "Quieres permitir acceso a Storage desde una subred manteniendo el endpoint público del servicio. ¿Qué habilitas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage virtual networking" },
+          "title": { "S": "Service Endpoints" },
+          "concept": { "S": "Service Endpoint vs Private Endpoint (tráfico por backbone a endpoint público)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Private Endpoint" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Service Endpoint para Microsoft.Storage" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Public IP estática" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "NAT Gateway" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["service-endpoint", "storage", "network"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage virtual networking#medium#01JBN6C8K9L0M1N2B3V4C5X6Z7Q" },
+          "diff_qid": { "S": "medium#01JBN6C8K9L0M1N2B3V4C5X6Z7Q" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6C9L0M1N2B3V4C5X6Z7Q8W" },
+          "question": { "S": "Necesitas recibir avisos cuando un servicio de Azure tenga incidencias que afecten a tu suscripción. ¿Qué configuras?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Monitor and maintain Azure resources" },
+          "title": { "S": "Alertas de estado del servicio" },
+          "concept": { "S": "Service Health alerts (Health alerts)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Metric alert sobre CPU" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Service Health alert con Action Group" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Activity Log para Resource Group" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Azure Advisor digest" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["service-health", "alerts", "monitor"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Monitor and maintain Azure resources#easy#01JBN6C9L0M1N2B3V4C5X6Z7Q8W" },
+          "diff_qid": { "S": "easy#01JBN6C9L0M1N2B3V4C5X6Z7Q8W" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6D0M1N2B3V4C5X6Z7Q8W9E" },
+          "question": { "S": "Necesitas aplicar parches del SO de forma centralizada a VMs Windows y Linux. ¿Qué usas?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Monitor and maintain Azure resources" },
+          "title": { "S": "Gestión de actualizaciones" },
+          "concept": { "S": "Azure Update Manager (antes Update Management)" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Azure Policy Assignments" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Update Manager" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "DSC Pull Server" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Runbook manual por VM" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["patching", "update-manager", "automation"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Monitor and maintain Azure resources#medium#01JBN6D0M1N2B3V4C5X6Z7Q8W9E" },
+          "diff_qid": { "S": "medium#01JBN6D0M1N2B3V4C5X6Z7Q8W9E" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6D1N2B3V4C5X6Z7Q8W9E0R" },
+          "question": { "S": "Tu política exige que todos los recursos tengan la etiqueta 'costCenter'. ¿Qué herramienta aplicas para asegurar cumplimiento?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage identities and governance" },
+          "title": { "S": "Gobernanza con etiquetas" },
+          "concept": { "S": "Azure Policy: require tag, append policy" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "RBAC Owner en la suscripción" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Policy para requerir/añadir etiqueta" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Blueprints únicamente" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Lock de recurso" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["governance", "policy", "tags"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage identities and governance#easy#01JBN6D1N2B3V4C5X6Z7Q8W9E0R" },
+          "diff_qid": { "S": "easy#01JBN6D1N2B3V4C5X6Z7Q8W9E0R" }
+        }
+      }
+    }
+  ]
+}

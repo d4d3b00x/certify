@@ -1,0 +1,163 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6A1Q1Z2X3C4V5B6N7M8A9A" },
+          "question": { "S": "Debes permitir que un grupo administre máquinas virtuales, pero sin modificar la red ni el almacenamiento. ¿Qué rol RBAC aplicarías?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage identities and governance" },
+          "title": { "S": "Delegación RBAC mínima" },
+          "concept": { "S": "RBAC, least privilege" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Contributor" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Virtual Machine Contributor" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Owner" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "User Access Administrator" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["RBAC", "IAM"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage identities and governance#easy#01JBN6A1Q1Z2X3C4V5B6N7M8A9A" },
+          "diff_qid": { "S": "easy#01JBN6A1Q1Z2X3C4V5B6N7M8A9A" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6A2Z3X4C5V6B7N8M9A0B1C" },
+          "question": { "S": "Un usuario necesita conectarse a una VM de Azure con Azure AD credentials, sin usar claves locales. ¿Qué configuración debes habilitar?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage identities and governance" },
+          "title": { "S": "Login con Azure AD a VM" },
+          "concept": { "S": "Azure AD login, VM access" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Extensión Azure AD Login for Windows/Linux" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Managed Identity habilitada" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Azure Bastion" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "RBAC 'Owner'" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "tags": { "SS": ["VM", "AzureAD", "login"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage identities and governance#medium#01JBN6A2Z3X4C5V6B7N8M9A0B1C" },
+          "diff_qid": { "S": "medium#01JBN6A2Z3X4C5V6B7N8M9A0B1C" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6A3Z3X4C5V6B7N8M9A0B2D" },
+          "question": { "S": "¿Qué tipo de almacenamiento de Azure ofrece latencia más baja y está pensado para cargas transaccionales?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage storage" },
+          "title": { "S": "Tipo de disco óptimo" },
+          "concept": { "S": "Premium SSD, rendimiento" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Azure Blob Storage" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Premium SSD (P30, P40...)" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Standard HDD" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Cold Blob" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "tags": { "SS": ["storage", "performance"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage storage#easy#01JBN6A3Z3X4C5V6B7N8M9A0B2D" },
+          "diff_qid": { "S": "easy#01JBN6A3Z3X4C5V6B7N8M9A0B2D" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6A4B5N6M7Q8W9E0R1T2Y3U" },
+          "question": { "S": "Tu empresa necesita compartir archivos entre varias VMs Windows en la misma VNet. ¿Qué solución nativa de Azure usarías?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage storage" },
+          "title": { "S": "Compartir archivos entre VMs" },
+          "concept": { "S": "Azure Files, SMB" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Azure Disks compartidos" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Files con SMB" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Blob Storage" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Azure NetApp Files" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "tags": { "SS": ["storage", "fileshare"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage storage#medium#01JBN6A4B5N6M7Q8W9E0R1T2Y3U" },
+          "diff_qid": { "S": "medium#01JBN6A4B5N6M7Q8W9E0R1T2Y3U" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6A5Z6X7C8V9B0N1M2A3S4D" },
+          "question": { "S": "Quieres restringir el acceso de una cuenta de almacenamiento a una subred específica. ¿Qué usarías?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage storage" },
+          "title": { "S": "Restringir acceso por red" },
+          "concept": { "S": "Storage firewall, VNet rules" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "SAS token" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Private Endpoint" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Shared Key" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Access key rotation" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "tags": { "SS": ["network", "storage", "security"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage storage#medium#01JBN6A5Z6X7C8V9B0N1M2A3S4D" },
+          "diff_qid": { "S": "medium#01JBN6A5Z6X7C8V9B0N1M2A3S4D" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN6A6R7T8Y9U0I1O2P3Q4W5E" },
+          "question": { "S": "¿Qué componente de Azure Monitor permite establecer alertas automáticas cuando una métrica supera un umbral?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Monitor and maintain Azure resources" },
+          "title": { "S": "Alertas en Azure Monitor" },
+          "concept": { "S": "Metrics, Alerts" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Log Analytics" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Metrics Alert Rule" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Application Insights" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Azure Policy" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "tags": { "SS": ["monitoring", "alerts"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Monitor and maintain Azure resources#easy#01JBN6A6R7T8Y9U0I1O2P3Q4W5E" },
+          "diff_qid": { "S": "easy#01JBN6A6R7T8Y9U0I1O2P3Q4W5E" }
+        }
+      }
+    }
+  ]
+}

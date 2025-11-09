@@ -1,0 +1,120 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN5G4Q3V6K2Y5XK0VQ7Q9ZP" },
+          "question": { "S": "Estás diseñando una solución en Azure que requiere RTO muy bajo y RPO cercano a cero para una base de datos crítica. ¿Qué combinación es más adecuada?" },
+          "cert": { "S": "AZ-305" },
+          "domain": { "S": "Design business continuity solutions" },
+          "title": { "S": "BCDR para base de datos crítica" },
+          "concept": { "S": "RTO/RPO, HADR" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Backup diario + GRS" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Azure Site Recovery a otra región" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Always On / HANA System Replication síncrona entre zonas" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Geo-replicación asíncrona" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["BCDR", "database"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design business continuity solutions#medium#01JBN5G4Q3V6K2Y5XK0VQ7Q9ZP" },
+          "diff_qid": { "S": "medium#01JBN5G4Q3V6K2Y5XK0VQ7Q9ZP" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN5G8E1C5J8M6N4TW7Y2S8D" },
+          "question": { "S": "Necesitas delegar RBAC en Azure para permitir a un equipo administrar VMs sin acceso a VNet. ¿Qué rol integrado usarías?" },
+          "cert": { "S": "AZ-104" },
+          "domain": { "S": "Manage identities and governance" },
+          "title": { "S": "RBAC VM sin red" },
+          "concept": { "S": "RBAC, least privilege" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Owner" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "Virtual Machine Contributor" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Contributor" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "Network Contributor" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["RBAC", "Azure"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Manage identities and governance#easy#01JBN5G8E1C5J8M6N4TW7Y2S8D" },
+          "diff_qid": { "S": "easy#01JBN5G8E1C5J8M6N4TW7Y2S8D" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN5GC6R1V9P2Q3Z8A7B6C5D" },
+          "question": { "S": "En un diseño serverless en AWS, ¿qué patrón minimiza acoplamiento entre productores y consumidores?" },
+          "cert": { "S": "AWS-SAA" },
+          "domain": { "S": "Design resilient architectures" },
+          "title": { "S": "Desacoplamiento" },
+          "concept": { "S": "event-driven, SQS/SNS" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "Llamadas directas Lambda→Lambda" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "SQS entre productor y consumidor" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Batch en EC2" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "EBS multi-attach" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "medium" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["serverless", "SQS"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Design resilient architectures#medium#01JBN5GC6R1V9P2Q3Z8A7B6C5D" },
+          "diff_qid": { "S": "medium#01JBN5GC6R1V9P2Q3Z8A7B6C5D" }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": { "S": "01JBN5GH9Q2W3E4R5T6Y7U8I9O" },
+          "question": { "S": "¿Qué servicio de AWS proporciona facturación y precios a alto nivel para alguien que empieza?" },
+          "cert": { "S": "AWS-CCP" },
+          "domain": { "S": "Cloud economics" },
+          "title": { "S": "Cost Explorer vs Pricing" },
+          "concept": { "S": "Billing overview" },
+          "options": { "L": [
+            { "M": { "id": { "S": "A" }, "text": { "S": "AWS Cost Explorer" }, "is_correct": { "BOOL": true } } },
+            { "M": { "id": { "S": "B" }, "text": { "S": "AWS Snowball" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "C" }, "text": { "S": "Amazon Lex" }, "is_correct": { "BOOL": false } } },
+            { "M": { "id": { "S": "D" }, "text": { "S": "OpsWorks" }, "is_correct": { "BOOL": false } } }
+          ] },
+          "difficulty": { "S": "easy" },
+          "correct_count": { "N": "0" },
+          "wrong_count": { "N": "0" },
+          "saved_count": { "N": "0" },
+          "tags": { "SS": ["billing", "beginner"] },
+          "active": { "BOOL": true },
+          "version": { "N": "1" },
+          "created_at": { "S": "2025-11-09T10:00:00Z" },
+          "updated_at": { "S": "2025-11-09T10:00:00Z" },
+          "cert_domain_diff_qid": { "S": "Cloud economics#easy#01JBN5GH9Q2W3E4R5T6Y7U8I9O" },
+          "diff_qid": { "S": "easy#01JBN5GH9Q2W3E4R5T6Y7U8I9O" }
+        }
+      }
+    }
+  ]
+}
