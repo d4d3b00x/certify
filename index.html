@@ -14,11 +14,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
-  <title>ITHub: simuladores, consejos, tips y recursos gratuitos para aprobar tus certificaciones IT (Azure, AWS, GCP, CISCO..)</title>
-  <meta name="description" content="Practica con simuladores de exámenes AZ-104 y SAA-C03, resúmenes y hojas de trucos. Aprende, practica y compite para aprobar tus certificaciones IT.">
+  <title>ITHub: simuladores y recursos de la comunidad para aprobar certificaciones IT (Azure, AWS, GCP, CISCO..)</title>
+  <meta name="description" content="Practica simuladores de exámenes AZ-104, AZ-305 y SAA-C03 con explicaciones claras y resúmenes por dominio. Aprende, practica y compite para aprobar y mejorar tu carrera y salario.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="author" content="ITHub">
-  <meta name="keywords" content="simulador AZ-104, simulador SAA-C03, exámenes certificación IT, preguntas AZ-104, preguntas AWS SAA-C03, práctica certificaciones, recursos gratis IT">
+  <meta name="keywords" content="simulador AZ-104, simulador SAA-C03, exámenes certificación IT, AZ-305, preguntas AWS SAA-C03, práctica certificaciones, mejorar carrera IT, subir salario IT">
 
   <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
@@ -52,7 +52,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     a{color:inherit;text-decoration:none}
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    /* Accesibilidad base */
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
     .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
     :focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px;}
@@ -60,7 +59,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
 
-    /* HEADER */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -82,17 +80,31 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
     }
 
-    /* Secciones */
-    .hero{padding:24px 0 8px;text-align:center}
-    .hero h1{margin:0 0 2px;font-size:clamp(1.6rem,3.8vw,2.6rem);line-height:1.2}
-    .lead{color:var(--muted);max-width:820px;margin:4px auto 0;font-size:.95rem}
+    .hero{padding:16px 0 4px;text-align:center}
+    .hero-head{
+      display:inline-block;width:100%;
+      background:linear-gradient(180deg,#12183a,#0f1531);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:14px 16px;
+      box-shadow:0 10px 24px rgba(80,90,240,.18), 0 0 0 1px rgba(108,139,255,.22) inset;
+      position:relative;
+    }
+    .hero-head::after{
+      content:"";
+      position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
+      background:linear-gradient(135deg,rgba(108,139,255,.55),rgba(255,153,0,.25));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude; padding:1px; opacity:.55;
+    }
+    .hero h1{margin:0 0 6px;font-size:clamp(1.8rem,4.4vw,3rem);line-height:1.15;font-weight:900;letter-spacing:.2px}
+    .lead{color:var(--muted);max-width:860px;margin:0 auto;font-size:1rem}
     .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
     section{padding:24px 0}
     .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
     .muted{color:var(--muted);font-size:.95rem}
 
-    /* Tarjetas (estilo base) */
     .grid{display:grid;gap:14px;margin-top:12px}
     @media(min-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1140px){.grid{grid-template-columns:repeat(3,1fr)}}
@@ -107,11 +119,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .btns-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
     .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);min-height:44px;}
     .cta-btn[aria-disabled="true"]{opacity:.65;cursor:not-allowed;filter:grayscale(.35)}
-
     .grid{ gap:10px; } .sim-card{ padding:14px; border-radius:16px; gap:10px; }
     .prov-pill{ padding:6px 12px; font-size:12px; } .sim-title{ font-size:.98rem; }
 
-    /* ===== Catálogo de fabricantes (dos tarjetas) ===== */
     .vendor-grid{display:grid;gap:14px;margin-top:12px}
     @media(min-width:820px){.vendor-grid{grid-template-columns:repeat(2,1fr)}}
     .vendor-card .v-title{font-size:1.2rem;font-weight:900}
@@ -119,19 +129,26 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .vendor-azure .accent{background:linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))}
     .vendor-aws .accent{background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))}
 
-    /* ===== Journey (4 hitos) ===== */
-    .journey{padding:16px 0 8px;}
-    .journey h2{margin:0 0 10px;font-size:1.6rem;font-weight:900;text-transform:uppercase}
-    .timeline{display:grid;gap:12px;margin-top:10px}
-    @media(min-width:820px){.timeline{grid-template-columns:repeat(4,1fr)}}
-    .step{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:14px}
-    .step-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-    .step .icon{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 8px 18px rgba(80,90,240,.25);font-size:20px;flex:0 0 36px}
-    .step h3{margin:0;font-size:1.02rem}
-    .step p{margin:6px 0 0;color:var(--muted)}
-    .journey-cta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+    .hook { padding: 12px 0 8px; }
+    .hook .sec-title { font-size: clamp(1.45rem, 3.1vw, 2rem); }
+    .hook-sub { color: var(--muted); margin: 4px 0 8px; font-size: .98rem; max-width: 860px; }
+    .hook-badges{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 10px; }
+    .hook-badges span{
+      padding:6px 10px; border-radius:999px; background:rgba(108,139,255,.12);
+      border:1px solid rgba(108,139,255,.35); color:#cfe1ff; font-weight:800; font-size:.82rem;
+    }
+    .pitch-grid{ display:grid; gap:12px; margin-top:8px; }
+    @media(min-width:820px){ .pitch-grid{ grid-template-columns:repeat(4,1fr); } }
+    .pitch-card{ background:var(--surface); border:1px solid var(--stroke); border-radius:14px; padding:14px; min-height:140px; }
+    .p-head{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+    .p-ico{ width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 6px 14px rgba(80,90,240,.25); font-size:20px; flex:0 0 36px; }
+    .pitch-card h3{ margin:0; font-size:1.02rem; }
+    .pitch-card p{ margin:6px 0 0; color:var(--muted); }
+    .hook-ctas{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .hook-ctas .big{ min-height:48px; padding:0 18px; font-size:.98rem; }
+    .pill-btn.big{ background:linear-gradient(180deg,#7a67ff,#5f48ff); border:1px solid #3b2fff44; }
+    .pill-btn.big:hover{ background:linear-gradient(180deg,#8a78ff,#6b54ff); transform:translateY(-1px); }
 
-    /* ===== CTA dos columnas (captura) ===== */
     .cta-section{padding-top:8px;}
     .cta{display:grid;grid-template-columns:1.1fr .9fr;gap:0;border:1px solid var(--stroke);border-radius:14px;overflow:hidden;background:var(--surface);margin-top:10px}
     @media(max-width:820px){.cta{grid-template-columns:1fr}}
@@ -139,36 +156,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .cta .right{padding:18px;background:var(--surface2)}
     .tag{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,153,0,.12);border:1px solid rgba(255,153,0,.3);color:#ffd7a0;font-weight:800}
 
-    /* Modales, quiz, etc. */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
-    .modal.show{display:flex}
-    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
-    .modal-card h3{margin:0 0 12px;font-size:1.2rem}
-    .modal-card textarea, .modal-card input, .modal-card select{width:100%;border:1px solid var(--stroke);border-radius:10px;background:var(--surface2);color:var(--ink);padding:10px;font-weight:700}
-
-    .fb-status{margin-top:8px;font-weight:800}
-    .fb-status.ok{color:var(--ok)}
-    .fb-status.err{color:var(--bad)}
-    .fb-status.info{color:var(--muted)}
-
-    .q-meta{display:flex;justify-content:space-between;align-items:center;color:#cbd3ff;font-weight:800;margin:0 0 8px}
-    .q-block{background:var(--surface2);border:1px solid var(--stroke);border-radius:12px;padding:12px;overflow:hidden}
-    .q-title{font-weight:900;margin:0 0 10px;font-size:1.05rem}
-    .opt{display:grid; grid-template-columns:auto 1fr; column-gap:12px;align-items:start; margin:8px 0; padding:12px; border:1px solid var(--stroke);border-radius:12px; background:var(--surface); transition:background .12s, border-color .12s;width:100%; text-align:left;}
-    .opt:hover{border-color:#3a4580}
-    .opt input{margin-top:2px}
-    .opt span{ line-height:1.45; white-space:normal; word-break:break-word; overflow-wrap:anywhere; }
-    .opt.correct{border-color:rgba(58,217,122,.7);background:rgba(58,217,122,.07)}
-    .opt.wrong{border-color:rgba(255,107,107,.7);background:rgba(255,107,107,.06)}
-
-    .meter{position:relative;height:10px;border-radius:999px;background:#0b1225;border:1px solid var(--stroke);overflow:hidden}
-    .meter > span{position:absolute;left:0;top:0;height:100%;width:0;transition:width .4s ease;display:block;}
-    .meter > .m-ok{background:var(--ok)} .meter > .m-warn{background:var(--warn)} .meter > .m-bad{background:var(--bad)}
-
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
+    @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
 
-    /* Botón principal destacado (hero) */
     .hero .btn {
       background: linear-gradient(180deg, #e423b3, #d8abda);
       border: 1px solid rgba(108, 139, 255, .5);
@@ -185,10 +177,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       transform: translateY(-2px);
     }
 
-    @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
-    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
-
-    /* ===== Glosario → carrusel (ESCRITORIO: grid 2 filas) ===== */
+    /* Glosario (escritorio: grid 2 filas) */
     .glossary{padding-top:12px;}
     .g-wrap{position:relative}
     .g-track{
@@ -219,10 +208,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       padding:1px; background:linear-gradient(135deg,rgba(108,139,255,.7),rgba(255,153,0,.35));
       -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; opacity:.55;
-      transition:opacity .14s ease, filter .14s ease;
     }
-    .g-card:hover .accent,.g-card:focus-visible .accent{opacity:.9; filter:saturate(1.1)}
-
     .g-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
     .g-ico{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
       background:linear-gradient(180deg,#8aa0ff,#425dff); box-shadow:0 6px 14px rgba(80,90,240,.25)}
@@ -245,7 +231,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .g-arrow[disabled]{opacity:.45;cursor:not-allowed;transform:none}
     .g-arrow svg{width:20px;height:20px}
 
-    /* ===== Carrusel MÓVIL: FLEX + scroll-snap (evita columnas min-content) ===== */
+    /* Móvil: flex + scroll-snap */
     @media (max-width: 720px){
       .g-arrows{
         position: sticky; top: 8px; z-index: 5;
@@ -263,9 +249,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         scrollbar-width: thin;
       }
       .g-card{
-        flex: 0 0 88% !important;      /* una slide ocupa ~88% */
+        flex: 0 0 88% !important;
         max-width: 88%;
-        min-width: 0 !important;       /* evita min-content */
+        min-width: 0 !important;
         width: auto;
         scroll-snap-align: start;
         border-radius: 14px;
@@ -273,12 +259,28 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       .g-title{ font-size: 1rem; }
       .g-desc{ font-size: .95rem; }
     }
+
+    /* MODALES (feedback) */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);z-index:120}
+    .modal.show{display:flex}
+    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .modal-card h3{margin:0 0 10px;font-size:1.2rem}
+    .modal-card p{margin:0 0 8px}
+    .modal-card input,.modal-card textarea,.modal-card select{
+      width:100%;display:block;margin-top:8px;border:1px solid var(--stroke);border-radius:10px;
+      background:var(--surface2);color:var(--ink);padding:10px;font-weight:700
+    }
+    .modal-card textarea{min-height:120px;resize:vertical}
+    .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .fb-status{margin-top:8px;font-weight:800}
+    .fb-status.ok{color:var(--ok)}
+    .fb-status.err{color:var(--bad)}
+    .fb-status.info{color:var(--muted)}
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
-
-  <!-- CABECERA -->
   <header role="banner">
     <div class="container nav">
       <div class="brand">
@@ -293,7 +295,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
       <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
         <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGISTRATE</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
 
         <div id="userArea" style="display:none;align-items:center;gap:6px">
           <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
@@ -305,95 +307,73 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   </header>
 
   <main id="main" tabindex="-1">
-    <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
-        <h1 id="hero-title"><span class="hero-emoji" aria-hidden="true">🎮</span>Certificate mientras aprendes y te diviertes compitiendo con los IT Quizzers de la comunidad.</h1>
-        <p class="lead">Practica  <strong>exámenes de tus certificaciones IT</strong> con preguntas enfocadas a aprobar. <strong>Sube tu nivel y mide tu progreso.</strong></p>
+        <div class="hero-head">
+          <h1 id="hero-title"><span aria-hidden="true">🎮</span>Aprende y practica para <b>aprobar tus certificaciones IT</b> y avanzar en tu carrera.</h1>
+          <p class="lead">Simuladores realistas, explicaciones claras y resúmenes por dominio. Pensado para <b>trabajadores</b> y <b>estudiantes</b> que quieren <b>mejorar conocimientos, oportunidades y salario</b>.</p>
+        </div>
         <div class="hero-actions" role="group" aria-label="Acciones principales">
-          <!--<a class="btn" href="/score/ranking.html" role="button">🏆 VER RANKING GLOBAL</a>-->
+         <!-- <a class="btn" href="/score/ranking.html" role="button">🏆 VER RANKING GLOBAL</a>-->
         </div>
       </div>
     </section>
 
-    <!-- 4 hitos -->
-    <section class="journey" aria-labelledby="journey-title">
+    <section class="hook" aria-labelledby="hook-title">
       <div class="container">
-        <h2 id="journey-title">EL VIAJE HACIA TU CERTIFICACIÓN IT</h2>
-        <div class="timeline">
-          <div class="step">
-            <div class="step-head">
-              <div class="icon">🧭</div>
-              <h3>1) Diagnóstico inicial</h3>
-            </div>
-            <p>Mini-test por dominios para priorizar dónde estudiar. Obtén tu plan.</p>
-            <div class="journey-cta">
-              <button class="pill-btn" id="btnOpenDiag" type="button">INICIAR DIAGNÓSTICO</button>
-              <div id="diagBtns" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-head">
-              <div class="icon">📚</div>
-              <h3>2) Domina lo esencial</h3>
-            </div>
-            <p>Dispones de resúmenes y hojas de trucos por dominio y certificación. Enfoque en lo importante.</p>
-          </div>
-          <div class="step">
-            <div class="step-head">
-              <div class="icon">🎯</div>
-              <h3>3) Practica con propósito</h3>
-            </div>
-            <p>Dispones de simuladores con explicaciones claras y enlaces oficiales. Mejora continua.</p>
-          </div>
-          <div class="step">
-            <div class="step-head">
-              <div class="icon">⏱️</div>
-              <h3>4) Ensayo final</h3>
-            </div>
-            <p>Modo examen cronometrado (en desarrollo). Repite hasta alcanzar el objetivo mínmimo para presentarte.</p>
-          </div>
+        <h2 id="hook-title" class="sec-title">Aprueba y gana competitividad en el trabajo</h2>
+        <p class="hook-sub">Diseñado para tu realidad: poco tiempo, mucho por aprender y necesidad de resultados. En ITHub practicas lo que más preguntan, entiendes el porqué y ves tu progreso.</p>
+        <div class="hook-badges" aria-hidden="true">
+          <span>+3.000 preguntas</span><span>Resúmenes por dominio</span><span>Enlaces oficiales</span><span>Ranking e insignias</span>
+        </div>
+        <div class="pitch-grid" role="list">
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🎯</div><h3>Preguntas enfocadas</h3></div><p>Simuladores para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b>.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🧠</div><h3>Aprendizaje útil</h3></div><p>Hojas de trucos y resúmenes aplicables al trabajo.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🔗</div><h3>Explicaciones con fuentes</h3></div><p>Rationale + documentación oficial en cada respuesta.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">💼</div><h3>Impulsa tu carrera</h3></div><p>Certifícate, suma puntos en ranking y demuestra progreso.</p></article>
+        </div>
+        <div class="hook-ctas" role="group" aria-label="Acciones destacadas">
+          <a class="pill-btn big" href="/catalog/itcatalog.html" role="button">EMPEZAR A PRACTICAR</a>
+          <a class="btn big" href="/content/content.html" role="button">VER RESÚMENES</a>
+          <a class="btn big" href="/score/ranking.html" role="button">VER RANKING</a>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
     <section class="cta-section" aria-labelledby="cta-title">
       <div class="container">
         <div class="cta" role="region" aria-labelledby="cta-title">
           <div class="left">
-            <span class="tag" id="cta-title">ÚNETE A NUESTRA COMUNIDAD DE QUIZZERS.</span>
-            <h2 style="margin:10px 0 8px;font-size:clamp(1.4rem,3.6vw,2.2rem)">Aprueba con ITHub tu certificación IT !!</h2>
-            <p class="muted">Guardamos tu progreso, lo analizamos y te proponemos consejos de aprendizaje por dominios para reforzar lo importante.</p>
+            <span class="tag" id="cta-title">ÚNETE A NUESTRA COMUNIDAD</span>
+            <h2 style="margin:10px 0 8px;font-size:clamp(1.4rem,3.6vw,2.2rem)">Aprueba tu certificación IT y da el siguiente paso</h2>
+            <p class="muted">Guardamos tu progreso y te guiamos por dominios con más peso en el examen.</p>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
               <a class="pill-btn" href="/login/login.html?view=signup" role="button">CREAR CUENTA</a>
             </div>
           </div>
           <div class="right" aria-label="Beneficios">
-            <div>✅ <b>Rutas de estudio</b> de 7/14/30 días</div>
-            <div>✅ <b>Consejos y Tips</b> específicos de cada certificación</div>
-            <div>✅ <b>Simulador adaptativo</b> por dominio</div>
-            <div>✅ <b>Análisis por dominio</b> tras cada intento</div>
-            <div>✅ <b>Explicación + enlaces oficiales</b> en cada respuesta</div>
-            <div>✅ <b>Preguntas marcadas</b> y repaso dirigido</div>
-            <div>✅ <b>Objetivo semanal</b> de preguntas, racha e insignias</div>
-            <div>✅ <b>Estadísticas</b> de acierto, tiempo y evolución</div>
+            <div>✅ <b>Rutas</b> de 7/14/30 días</div>
+            <div>✅ <b>Consejos</b> por certificación</div>
+            <div>✅ <b>Simulador</b> por dominio</div>
+            <div>✅ <b>Análisis</b> tras cada intento</div>
+            <div>✅ <b>Explicaciones</b> + enlaces oficiales</div>
+            <div>✅ <b>Preguntas marcadas</b> y repaso</div>
+            <div>✅ <b>Objetivos</b> semanales y rachas</div>
+            <div>✅ <b>Estadísticas</b> de acierto y evolución</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Catálogo -->
     <section aria-labelledby="fab-title">
       <div class="container">
         <div id="fab-title" class="sec-title">CATÁLOGO DE CERTIFICACIONES</div>
         <div class="vendor-grid">
-          <!-- Azure -->
           <article class="sim-card sim-azure vendor-card vendor-azure">
             <span class="accent" aria-hidden="true"></span>
             <div class="prov-pill prov-azure">MICROSOFT AZURE</div>
             <div class="v-title">Explora las certificaciones de Azure</div>
-            <p>Rutas y guías de estudio para certificaciones CLOUD de Microsoft</p>
+            <p>Rutas y guías de estudio CLOUD de Microsoft</p>
             <div class="btns-row" role="group" aria-label="Acciones Microsoft Azure">
               <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html" role="button">🔎 CATÁLOGO AZURE</a>
               <a class="btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a>
@@ -401,12 +381,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             </div>
           </article>
 
-          <!-- AWS -->
           <article class="sim-card sim-aws vendor-card vendor-aws">
             <span class="accent" aria-hidden="true"></span>
             <div class="prov-pill prov-aws">AMAZON AWS</div>
             <div class="v-title">Explora las certificaciones de AWS</div>
-            <p>Rutas y guías de estudio para certificaciones CLOUD de Amazon</p>
+            <p>Rutas y guías de estudio CLOUD de Amazon</p>
             <div class="btns-row" role="group" aria-label="Acciones Amazon AWS">
               <a class="cta-btn" href="/certification/amazon aws/index.html" role="button">🔎 CATÁLOGO AWS</a>
               <a class="btn" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a>
@@ -416,7 +395,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-    <!-- Glosario → CARRUSEL -->
+    <!-- Glosario → CARRUSEL (20 tarjetas completas) -->
     <section class="glossary" aria-labelledby="g-title">
       <div class="container">
         <h2 id="g-title" class="sec-title">Carrusel de Conceptos a Examen</h2>
@@ -513,14 +492,14 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <article class="g-card aws" role="listitem" tabindex="0">
               <span class="accent" aria-hidden="true"></span>
               <div class="g-head"><div class="g-ico">🏛️</div><div class="g-title">RDS Multi-AZ</div></div>
-              <p class="g-desc">Replica sincrónica a standby en otra zona y failover automático para mejorar disponibilidad de bases de datos.</p>
+              <p class="g-desc">Replica sincrónica a standby en otra zona y failover automático para mejorar disponibilidad.</p>
               <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
             </article>
             <!-- 13 -->
             <article class="g-card aws" role="listitem" tabindex="0">
               <span class="accent" aria-hidden="true"></span>
               <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">S3 Glacier</div></div>
-              <p class="g-desc">Archivado de bajo coste con políticas de ciclo de vida y tiempos de recuperación configurables.</p>
+              <p class="g-desc">Archivado de bajo coste con ciclos de vida y tiempos de recuperación configurables.</p>
               <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
             </article>
             <!-- 14 -->
@@ -562,7 +541,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <article class="g-card gcp" role="listitem" tabindex="0">
               <span class="accent" aria-hidden="true"></span>
               <div class="g-head"><div class="g-ico">🧮</div><div class="g-title">BigQuery</div></div>
-              <p class="g-desc">Data warehouse serverless; consulta petabytes con SQL estándar y separación compute/almacenamiento.</p>
+              <p class="g-desc">Data warehouse serverless; consulta petabytes con SQL y separación compute/almacenamiento.</p>
               <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
             </article>
             <!-- 20 -->
@@ -577,18 +556,15 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-    <!-- Simuladores -->
     <section id="simuladores" aria-labelledby="sim-title">
       <div class="container">
         <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
-        <div class="muted">Modo de examen en desarrollo y más simluadores pronto</div>
+        <div class="muted">Modo de examen en desarrollo y más simuladores pronto</div>
         <div class="grid" id="simGrid" role="list"></div>
       </div>
     </section>
-
   </main>
 
-  <!-- Pie -->
   <footer role="contentinfo">
     <div class="container f-grid">
       <div>
@@ -596,12 +572,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
           <span>ITHUB.ES</span>
         </div>
-        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT  mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.<br><br>Todo en un solo lugar.</p>
       </div>
       <div>
         <div style="font-weight:800">SIMULADORES</div>
         <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
-        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFTAZURE AZ-305</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFT AZURE AZ-305</a></div>
         <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">AMAZON AWS SAA-C03</a></div>
       </div>
       <div>
@@ -614,7 +590,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
       <div>
         <div style="font-weight:800">COLABORADORES</div>
-        💬 <span><a href="https://mundoazure.cloud" target="_blank">https://mundoazure.cloud</a></span><br><br>
+        💬 <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
         <div style="font-weight:800">CONTACTO</div>
         <button id="footerContactBtn" type="button"
                 style="background:none;border:none;color:#cfe1ff;
@@ -627,23 +603,15 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
   </footer>
 
-  <!-- Región de estado accesible -->
-  <div id="srStatus" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;height:1px;width:1px;overflow:hidden"></div>
-
   <!-- Modal Feedback -->
   <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
     <div class="modal-card" role="document" tabindex="-1">
       <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
-      <p class="muted" style="margin:0 0 8px">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
-
-      <label class="visualmente-hidden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
+      <p class="muted">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
       <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
-      <label class="visualmente-hidden" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
       <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
-
       <div id="fbStatus" class="fb-status" aria-live="polite"></div>
-
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+      <div class="modal-actions">
         <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
         <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
         <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
@@ -651,71 +619,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     </div>
   </div>
 
-  <!-- Modal Diagnóstico -->
-  <div class="modal" id="diagModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="diagTitle">
-    <div class="modal-card" style="max-height:88vh;overflow:auto" role="document" tabindex="-1">
-      <h3 id="diagTitle">🧭 Mini-test Diagnóstico</h3>
-
-      <!-- Setup -->
-      <div id="diagSetup">
-        <div class="setup-grid" style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center">
-          <div>
-            <label for="diagExam" style="font-weight:900">Selecciona examen</label>
-            <select id="diagExam" style="margin:6px 0 6px">
-              <option value="AZ-104">AZ-104 · Microsoft Azure Administrator</option>
-              <option value="AZ-305">AZ-305 · Microsoft Solutions Architect Expert</option>
-              <option value="SAA-C03">SAA-C03 · AWS Solutions Architect Associate</option>
-            </select>
-          </div>
-          <div class="right" style="text-align:right;color:var(--muted);font-weight:800">
-            <label style="display:flex;gap:10px;align-items:center;justify-content:flex-end">
-              <input id="diagImmediate" type="checkbox" aria-describedby="diagNote"> Mostrar corrección inmediata por pregunta
-            </label>
-          </div>
-        </div>
-        <p id="diagNote" class="muted" style="margin:6px 0 10px">Se seleccionan 3 preguntas por dominio (4×3) y verás un resumen por dominios al finalizar.</p>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px">
-          <button class="btn" id="btnCloseDiag1" type="button">CANCELAR</button>
-          <button class="pill-btn" id="btnStartDiag" type="button">COMENZAR (12 PREGUNTAS)</button>
-        </div>
-      </div>
-
-      <!-- Quiz -->
-      <div id="diagQuiz" style="display:none">
-        <div class="q-meta">
-          <div>Pregunta <span id="dqIndex">1</span>/<span id="dqTotal">12</span> · <span id="dqDomain"></span></div>
-          <div class="muted" id="dqNote"></div>
-        </div>
-        <div class="q-block" aria-live="polite">
-          <div class="q-title" id="dqTitle">...</div>
-          <div id="dqOptions"></div>
-        </div>
-        <div style="display:flex;gap:8px;justify-content:space-between;margin-top:12px">
-          <button class="btn" id="btnPrevQ" type="button">← ANTERIOR</button>
-          <button class="pill-btn" id="btnNextQ" type="button">SIGUIENTE →</button>
-        </div>
-      </div>
-
-      <!-- Resultados -->
-      <div id="diagResult" style="display:none">
-        <h4 style="margin:8px 0">Resultados por dominios</h4>
-        <div class="diag-grid" id="diagGridModal" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px"></div>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-          <button class="btn" id="btnCloseDiag2" type="button">CERRAR</button>
-          <button class="pill-btn" id="btnSaveDiag" type="button">GUARDAR EN MI PERFIL</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script>
-    // Año
     document.getElementById('y').textContent = new Date().getFullYear();
-    const srStatus = document.getElementById('srStatus');
 
-    /* ===== AUTH ===== */
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-    function isAuthed(){ return !!getCurrentUser(); }
     function renderHeaderAuth(){
       const u=getCurrentUser();
       const login=document.getElementById('btnLogin');
@@ -725,33 +632,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
       else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); renderSims(); maybeAddViewLastBtn(); });
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); renderSims(); });
     renderHeaderAuth();
 
-    /* ===== Helpers resultado por usuario/local ===== */
-    function userKey(){
-      const u = getCurrentUser();
-      const id = (u && (u.id || u.email || u.name)) ? (u.id || u.email || u.name) : null;
-      return id ? `diagnosticResults:${id}` : null;
-    }
-    function loadResult(){
-      try{
-        const uk = userKey();
-        if(uk){
-          const rawU = localStorage.getItem(uk);
-          if(rawU) return JSON.parse(rawU);
-        }
-        const raw = localStorage.getItem('diagnosticResults');
-        return raw ? JSON.parse(raw) : null;
-      }catch{ return null; }
-    }
-    function saveResult(data){
-      const uk = userKey();
-      if(uk) localStorage.setItem(uk, JSON.stringify(data));
-      else localStorage.setItem('diagnosticResults', JSON.stringify(data));
-    }
-
-    /* ===== SIMULADORES ===== */
     const CATALOG = [
       { id:'AZ-104', provider:'MICROSOFT AZURE (ENGLISH)', title:'Administrator Associate', quiz:'az-104',
         startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html', providerClass:'prov-azure', simClass:'sim-azure',
@@ -788,57 +671,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
     renderSims();
 
-    // Click en "Empezar/Certificación"
     document.addEventListener('click', e=>{
       const b=e.target.closest('.start-btn'); if(!b) return;
       if(!!getCurrentUser()){
-        const url=b.dataset.href || b.getAttribute('href');
-        location.href = url;
-      }else{
-        location.href='/login/login.html';
-      }
+        const url=b.dataset.href || b.getAttribute('href'); location.href = url;
+      }else{ location.href='/login/login.html'; }
       e.preventDefault();
     });
 
-    /* ===== Modal helpers ===== */
-    const fbModal = document.getElementById('feedbackModal');
-    const diagModal = document.getElementById('diagModal');
-    let lastFocus = null;
-    function openModal(modal){
-      lastFocus = document.activeElement;
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden','false');
-      const card = modal.querySelector('.modal-card'); card?.focus();
-      trapFocus(modal); document.addEventListener('keydown', escCloser);
-    }
-    function closeModal(modal){
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden','true');
-      document.removeEventListener('keydown', escCloser);
-      releaseTrap(modal); if(lastFocus) lastFocus.focus();
-    }
-    function escCloser(e){ if(e.key==='Escape'){ document.querySelectorAll('.modal.show').forEach(m=>closeModal(m)); } }
-    function trapFocus(container){
-      function handler(e){
-        if(e.key!=='Tab') return;
-        const focusables = container.querySelectorAll('a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])');
-        const list = Array.from(focusables).filter(el=>el.offsetParent!==null);
-        if(!list.length) return;
-        const first = list[0], last = list[list.length-1];
-        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
-        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
-      }
-      container.__trapHandler = handler;
-      container.addEventListener('keydown', handler);
-    }
-    function releaseTrap(container){
-      if(container.__trapHandler){ container.removeEventListener('keydown', container.__trapHandler); container.__trapHandler=null; }
-    }
-
-    /* ===== Feedback → POST /items ===== */
+    /* Feedback */
     const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
     const NOTES_ENDPOINT = `${API_BASE}/items`;
-
     const fbEmail   = document.getElementById('feedbackEmail');
     const fbText    = document.getElementById('feedbackText');
     const fbStatus  = document.getElementById('fbStatus');
@@ -846,111 +689,54 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const btnFbCancel = document.getElementById('btnCancelFeedback');
     const btnFbOk   = document.getElementById('btnOkFeedback');
     const footerBtn = document.getElementById('footerContactBtn');
+    const fbModal   = document.getElementById('feedbackModal');
 
     function openFeedbackModal(){
-      fbEmail.value = '';
-      fbText.value  = '';
-      fbStatus.textContent = '';
-      fbStatus.className = 'fb-status';
-      btnFbSend.style.display   = '';
-      btnFbCancel.style.display = '';
-      btnFbOk.style.display     = 'none';
-      fbEmail.disabled = fbText.disabled = false;
-      btnFbSend.disabled = false;
-      openModal(fbModal);
+      fbEmail.value = ''; fbText.value  = '';
+      fbStatus.textContent = ''; fbStatus.className = 'fb-status';
+      btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
+      fbEmail.disabled = fbText.disabled = false; btnFbSend.disabled = false;
+      fbModal.classList.add('show');
     }
-
     footerBtn?.addEventListener('click', openFeedbackModal);
-    document.getElementById('btnFeedback')?.addEventListener('click', openFeedbackModal);
+    btnFbCancel?.addEventListener('click',()=> fbModal.classList.remove('show'));
+    btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
+    fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
 
-    btnFbCancel.addEventListener('click',()=> closeModal(fbModal));
-    fbModal.addEventListener('click',e=>{ if(e.target===fbModal) closeModal(fbModal); });
-    btnFbOk.addEventListener('click', ()=> closeModal(fbModal));
-
-    btnFbSend.addEventListener('click', async ()=>{
+    btnFbSend?.addEventListener('click', async ()=>{
       const message = (fbText.value||'').trim();
       const from    = (fbEmail.value||'').trim();
       if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; return; }
-
-      fbEmail.disabled = fbText.disabled = true;
-      btnFbSend.disabled = true;
-      fbStatus.textContent = 'Enviando…';
-      fbStatus.className = 'fb-status info';
+      fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
+      fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
 
       const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
       const user = getCurrentUser();
-      const note = {
-        id, type: 'feedback', title: 'Feedback web ITHub', message,
-        email: from || (user?.email || null), userId: user?.id || user?.email || null,
-        path: location.pathname + location.search, ua: navigator.userAgent, createdAt: new Date().toISOString()
-      };
+      const note = { id, type:'feedback', title:'Feedback web ITHub', message, email: from || user?.email || null,
+                     userId: user?.id || user?.email || null, path: location.pathname + location.search,
+                     ua: navigator.userAgent, createdAt: new Date().toISOString() };
 
       const params = new URLSearchParams();
       params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
 
-      const ctl = new AbortController();
-      const timeoutId = setTimeout(()=>ctl.abort(), 10000);
-
+      const ctl = new AbortController(); const timeoutId = setTimeout(()=>ctl.abort(), 10000);
       try{
         const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
         clearTimeout(timeoutId);
-        if(!res.ok){
-          const text = await res.text().catch(()=> '');
-          throw new Error(`HTTP ${res.status} ${text}`);
-        }
-        fbStatus.textContent = '¡Gracias! Mensaje recibido 👌';
-        fbStatus.className = 'fb-status ok';
-        btnFbSend.style.display   = 'none';
-        btnFbCancel.style.display = 'none';
-        btnFbOk.style.display     = '';
-        btnFbOk.focus();
+        if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
+        fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display=''; btnFbOk.focus();
       }catch(err){
         console.error('Error guardando feedback:', err);
-        fbStatus.textContent = 'No se pudo enviar la info. :(';
-        fbStatus.className = 'fb-status err';
-        btnFbSend.style.display   = 'none';
-        btnFbCancel.style.display = 'none';
-        btnFbOk.style.display     = '';
-        btnFbOk.focus();
+        fbStatus.textContent = 'No se pudo enviar la info. :('; fbStatus.className='fb-status err';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display=''; btnFbOk.focus();
       }
     });
 
-    /* ===== MINI-TEST DIAGNÓSTICO ===== */
-    const DIAG_BANK=[/* -- banco de preguntas (igual que antes) -- */];
-
-    const diagBtns = document.getElementById('diagBtns');
-    function createViewLastBtn(){
-      if(document.getElementById('btnViewDiag')) return;
-      const b = document.createElement('button');
-      b.className = 'btn';
-      b.id = 'btnViewDiag';
-      b.type = 'button';
-      b.textContent = 'Ver último resultado';
-      b.addEventListener('click', ()=>{
-        const data=loadResult();
-        if(!data){ alert('Aún no hay un mini-test guardado.'); return; }
-        document.getElementById('diagSetup').style.display='none';
-        document.getElementById('diagQuiz').style.display='none';
-        document.getElementById('diagResult').style.display='block';
-        renderHeatmap(document.getElementById('diagGridModal'), data);
-        openModal(diagModal);
-      });
-      diagBtns.appendChild(b);
-    }
-    function maybeAddViewLastBtn(){
-      const has = !!loadResult();
-      if(has) createViewLastBtn();
-      else document.getElementById('btnViewDiag')?.remove();
-    }
-    maybeAddViewLastBtn();
-
-    // ... (resto de lógica del mini-test igual que antes)
-  </script>
-
-  <script>
-    /* ===== Carrusel → lógica (desktop grid / móvil flex) ===== */
+    /* Carrusel → lógica */
     (function(){
       const track = document.getElementById('gTrack');
+      if(!track) return;
       const prev  = document.getElementById('gPrev');
       const next  = document.getElementById('gNext');
 
@@ -959,12 +745,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         if(!first) return 320;
         const rect = first.getBoundingClientRect();
         const gap  = parseFloat(getComputedStyle(track).gap || '12');
-
-        if (window.matchMedia('(max-width: 720px)').matches){
-          // Móvil (flex): avanza una slide exacta
-          return Math.ceil(rect.width + gap);
-        }
-        // Escritorio/tablet (grid 2 filas)
         return Math.ceil(rect.width + gap);
       }
 
@@ -978,13 +758,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         track.scrollBy({ left: dir * columnStride(), behavior:'smooth' });
       }
 
-      prev.addEventListener('click', ()=> scrollCols(-1));
-      next.addEventListener('click', ()=> scrollCols(1));
+      prev?.addEventListener('click', ()=> scrollCols(-1));
+      next?.addEventListener('click', ()=> scrollCols(1));
       track.addEventListener('scroll', updateArrows);
       window.addEventListener('resize', updateArrows);
       updateArrows();
 
-      // Teclado cuando el carrusel tiene foco
       track.addEventListener('keydown', (e)=>{
         if(e.key === 'ArrowRight'){ e.preventDefault(); scrollCols(1); }
         if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
