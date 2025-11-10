@@ -28,7 +28,9 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .logo{width:28px;height:28px;border-radius:9px;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 0 0 6px rgba(130,150,255,.16)}
 .nav-right{display:flex;gap:8px;align-items:center}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--pill);border:1px solid #2b356a;font-weight:900}
+.badge.link{text-decoration:none;color:inherit}
 .user{font-weight:900;border-radius:12px;padding:8px 12px;background:#0f183b;border:1px solid #2b356a}
+.hidden{display:none}
 
 /* Layout */
 .container{max-width:1260px;margin:0 auto;padding:18px}
@@ -40,13 +42,8 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 
 /* HEAD — filtros + progreso en la MISMA línea */
 .panel-head{
-  display:grid;
-  grid-template-columns:1fr auto;
-  align-items:center;
-  column-gap:16px;
-  padding:12px;
-  border-bottom:1px solid var(--line);
-  background:var(--panel2)
+  display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:16px;
+  padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)
 }
 .h-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
 .title-chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap}
@@ -75,10 +72,7 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 @media(max-width:1040px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}}
 .card{position:relative;background:linear-gradient(180deg,#10183a,#0f1736);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;min-height:180px}
-.meta{
-  display:flex;align-items:center;gap:6px;flex-wrap:nowrap;
-  overflow:hidden;white-space:nowrap
-}
+.meta{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden;white-space:nowrap}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap}
 .chip.sm{padding:4px 8px;font-size:.86rem;line-height:1}
 .cert{background:var(--azure);border-color:#2d4eaa;color:#cfe6ff}
@@ -145,11 +139,14 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
   <div class="nav">
     <div class="brand"><span class="logo"></span><span>IT <strong>Hub</strong> .es</span></div>
     <div class="nav-right">
-      <span class="badge" id="greeter">👋 Hola, Quizzer!</span>
-      <span class="badge">Arena Battle</span>
+      <!-- Enlace al perfil -->
+      <a class="badge link" id="greeter" href="/user/profile.html">👋 Hola, Quizzer!</a>
+      <!-- Cambiado a "Tu puntuación" -->
+      <span class="badge">Tu puntuación</span>
       <span class="badge" id="badgeLv">Lv. 0</span>
       <span class="badge" id="badgeXP">⚡ 0</span>
-      <span class="user" id="userName">GUEST</span>
+      <!-- Quitado visualmente el chip de usuario (se deja oculto para no romper JS) -->
+      <span class="user hidden" id="userName">GUEST</span>
     </div>
   </div>
 </header>
@@ -205,9 +202,15 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 
     <aside class="panel">
       <div class="sidebar">
-        <div class="rtitle">🏆 Ranking</div>
+        <div class="rtitle">🏆 RANKING EN VIVO</div>
         <div class="rlist" id="rlist"></div>
-        <div class="reco"><h4>🔗 Recomendado</h4></div>
+        <div class="reco" style="margin-top:12px">
+          <h4 style="margin:0 0 6px">📝 NOTAS</h4>
+          <p style="margin:0;color:#cfd8ff">
+            • Puedes participar sin iniciar sesión, con un usuario Invitado aleatorio cuyos datos se eliminarán en 24h.<br/>
+            • Si quieres mantener tu progreso, créate una cuenta con nosotros.
+          </p>
+        </div>
       </div>
     </aside>
   </div>
@@ -281,7 +284,7 @@ let userXP = 0;
 let userLv = 0;
 const badgeXP = document.getElementById('badgeXP');
 const badgeLv = document.getElementById('badgeLv');
-const userNameSpan = document.getElementById('userName');
+const userNameSpan = document.getElementById('userName'); // oculto pero usado por el ranking
 
 function addXPLocal(x){
   userXP += x;
@@ -561,8 +564,11 @@ async function syncBadgesFromBackend(){
   const uid = localStorage.getItem('arenaUserId');
   const storedName = localStorage.getItem('arenaUserName');
   const me = await apiGetMe(uid, storedName);
+  // Greeter + nombre (chip oculto para ranking local)
+  const greeter = document.getElementById('greeter');
+  greeter.textContent = `👋 Hola, ${me.name || storedName}!`;
   userNameSpan.textContent = me.name || storedName;
-  document.getElementById('greeter').textContent = `👋 Hola, ${me.name || storedName}!`;
+
   userXP = Number(me.xp || 0);
   userLv = Number(me.level != null ? me.level : Math.floor(userXP/1000));
   badgeXP.textContent = `⚡ ${userXP}`;
