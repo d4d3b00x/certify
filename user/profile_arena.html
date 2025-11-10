@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ITHub.es. Perfil de Usuario</title>
+
+  <style>
+    :root{
+      --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --card:#111937;
+      --ink:#e8ecff; --muted:#9ca8d9; --stroke:#283056; --shadow:0 12px 28px rgba(6,12,40,.45);
+      --radius:16px; --accent:#7b5cff; --accent-2:#8166ff; --accent-warn:#ffb84d;
+      --ok:#25b873; --danger:#ff6b6b; --gap:12px;
+      --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue","Noto Sans",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 520px at 12% -10%, #101738 0, transparent 60%),
+        radial-gradient(1200px 520px at 88% -10%, #1a1430 0, transparent 60%),
+        linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+      line-height:1.6; min-height:100vh; overflow-x:hidden;
+      display:flex; flex-direction:column;
+    }
+    a{color:inherit}
+
+    .wrap{max-width:1200px;margin:0 auto;padding:20px;width:100%}
+
+    /* ===== HEADER ===== */
+    header.site{
+      position:sticky; top:0; z-index:20;
+      background:linear-gradient(180deg,#0e1222 0%, #0b0f1c 100%);
+      border-bottom:1px solid rgba(40,48,86,.6);
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
+    }
+    .nav{
+      max-width:1200px; margin:0 auto; padding:10px 20px;
+      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px;text-decoration:none}
+    .brand .badge{width:30px;height:30px;border-radius:10px;background:linear-gradient(180deg,#7693ff,#6a7cff);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:inset 0 -4px 8px rgba(0,0,0,.25)}
+    .brand .name{display:flex;align-items:baseline;gap:6px}
+    .brand .name b{font-size:1.05rem}
+    .brand .name .dot{opacity:.9}
+    .brand .name .es{opacity:.7;font-weight:800}
+
+    .navlinks{display:flex;align-items:center;justify-content:center;gap:28px;font-weight:900}
+    .navlinks a{text-decoration:none;color:#bac4ff;letter-spacing:.5px}
+    .navlinks a:hover{color:#fff;text-shadow:0 0 12px rgba(123,92,255,.35)}
+
+    .usercapsule{display:flex;align-items:center;gap:10px;padding:6px;background:linear-gradient(180deg, rgba(16,22,43,.9), rgba(10,14,30,.9));border:1px solid var(--stroke);border-radius:999px;box-shadow:var(--shadow)}
+    .chip-user{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-weight:900;color:#e8ecff;background:linear-gradient(180deg, rgba(124,146,255,.18), rgba(90,110,220,.14));border:1px solid rgba(70,80,150,.7);white-space:nowrap}
+    .chip-user .flame{color:var(--accent-warn)}
+    .btn{appearance:none;border:1px solid var(--stroke);cursor:pointer;background:var(--surface2);color:var(--ink);font-weight:900;letter-spacing:.2px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);transition:transform .08s, box-shadow .12s, filter .12s, border-color .12s; text-decoration:none}
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.35) }
+    .btn.pill{ border-radius:999px; padding:10px 16px }
+    .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border-color:transparent }
+    .btn.ghost{ background:transparent; border-color:rgba(80,92,160,.6) }
+    .btn.small{ padding:6px 10px; font-size:.9rem }
+    .hidden{display:none !important}
+
+    /* Tarjetas / Hero */
+    .card{background:linear-gradient(180deg, var(--card), #0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);color:var(--ink);margin-bottom:12px}
+    .hero{padding:16px 18px;background:linear-gradient(180deg, #111937 0, #0f1633 100%);border:1px solid var(--stroke);border-radius:var(--radius);margin:12px 0 var(--gap)}
+    .hero h1{margin:4px 0 6px;font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem);font-weight:900}
+    .hero .desc{color:var(--muted);margin:0}
+
+    /* Authbar (estado) */
+    .authbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--stroke);border-radius:999px;font-weight:800;box-shadow:var(--shadow);margin:0 0 var(--gap)}
+    .authbar .actions{display:flex;gap:8px}
+
+    /* Grid */
+    .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:var(--gap);align-items:start}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}.nav{grid-template-columns:auto auto;grid-template-rows:auto auto}.navlinks{order:3;grid-column:1/-1;padding-top:6px}}
+    .col-right{display:flex;flex-direction:column;gap:var(--gap)}
+    .col-right>.card{width:100%}
+
+    /* Perfil */
+    .profile{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+    .avatar{width:86px;height:86px;border-radius:14px;overflow:hidden;border:1px solid var(--stroke);background:var(--surface);display:flex;align-items:center;justify-content:center;font-weight:900;color:#cbd6ff;font-size:1.4rem}
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    .muted{color:var(--muted)} .divider{border:0;border-top:1px solid var(--stroke);margin:12px 0}
+    .field{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+    .field label{font-weight:900;color:#cbd6ff}
+    .control{display:flex;align-items:center;gap:8px;border:1px solid var(--stroke);border-radius:12px;padding:10px 12px;background:var(--surface2)}
+    .control input{border:none;outline:none;background:transparent;width:100%;font-weight:800;color:var(--ink);padding:4px 0}
+    .control input::placeholder{color:#7f8ac2}
+    .hint{font-size:.92rem;color:var(--muted)}
+
+    /* Tabs / tablas / kpis */
+    .tabs{display:flex;gap:8px;background:var(--surface);border:1px solid var(--stroke);border-radius:12px;padding:6px;width:fit-content}
+    .tab-btn{border:1px solid transparent;background:transparent;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:900;color:#e2e7ff}
+    .tab-btn.active{background:var(--surface2);border-color:var(--stroke)}
+    .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:16px;box-shadow:var(--shadow);padding:12px;overflow:auto}
+    table{width:100%;min-width:680px;border-collapse:separate;border-spacing:0}
+    thead th{position:sticky;top:0;z-index:1;background:var(--surface2);color:#dbe3ff;font-weight:900;letter-spacing:.01em;text-align:center;padding:10px;border-bottom:1px solid var(--stroke)}
+    tbody td{padding:10px;text-align:center;border-bottom:1px solid #1f2446;background:var(--surface);color:var(--ink)}
+    tbody tr:nth-child(even) td{background:#171d36}
+    tbody tr:hover td{background:#1b2240}
+    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:900;font-size:.8rem;background:rgba(108,139,255,.12);color:#cbd6ff;border:1px solid var(--stroke)}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(108,139,255,.10);color:#d8e2ff;border:1px solid var(--stroke);font-weight:800}
+    .pct{display:flex;align-items:center;justify-content:center;gap:8px;font-variant-numeric:tabular-nums;font-weight:900}
+    .pbar{position:relative;flex:1 1 120px;height:8px;background:#0b1024;border-radius:999px;overflow:hidden;max-width:160px;margin:0 auto}
+    .pbar>i{position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .kpi{text-align:center;border:1px solid var(--stroke);border-radius:12px;padding:12px;background:linear-gradient(180deg, var(--surface2), var(--surface))}
+    .kpi h4{margin:0;font-size:1rem;color:#cbd6ff;font-weight:900}
+    .kpi .n{font-size:1.4rem;font-weight:900}
+
+    .heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
+    .heat i{display:block;height:14px;border-radius:4px;background:#0b1024;border:1px solid var(--stroke)}
+    .heat i.lv1{background:#15224a}.heat i.lv2{background:#1c2b5d}.heat i.lv3{background:#213471}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+    .badge-chip{border:1px solid var(--stroke);background:var(--surface2);color:#dbe3ff;border-radius:999px;padding:6px 10px;font-weight:900}
+
+    /* Ranking mini */
+    .rank-mini .table-wrap{overflow-x:hidden}
+    .rank-mini table{min-width:0;width:100%;table-layout:auto}
+    .medal{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-weight:800;color:#1b1830}
+    .medal.gold{background:linear-gradient(135deg,#ffd662,#ffb300)}
+    .medal.silver{background:linear-gradient(135deg,#e6e6e6,#bfbfbf)}
+    .medal.bronze{background:linear-gradient(135deg,#e2a97a,#d18d5a)}
+    .points-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-weight:900;border:1px solid var(--stroke);background:var(--surface2)}
+    .points-chip.top{background:linear-gradient(180deg,#6c8bff,#3e64ff);color:#fff;border:none}
+    .namebox{display:inline-flex;align-items:center;gap:8px;justify-content:flex-start;white-space:nowrap}
+    .avatar-sm{width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:900}
+    .name-strong{font-weight:900}
+    .name-gold{color:var(--gold)} .name-silver{color:var(--silver)} .name-bronze{color:var(--bronze)}
+    .level-inline{display:inline-flex;align-items:center;gap:6px}
+    .level-inline .bar{width:90px;height:6px;background:#0b1024;border-radius:999px;overflow:hidden}
+    .level-inline .bar i{display:block;height:100%;background:linear-gradient(90deg,#6c8bff,#3e64ff)}
+    .ibadges{display:inline-flex;align-items:center;gap:6px;justify-content:center}
+    .ibadge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--surface2)}
+    .ibadge.fast{color:#ffb84d}.ibadge.perfect{color:#bb86fc}.ibadge.ok{color:#4ee69a}.ibadge.streak{color:#ff6b6b}.ibadge.grinder{color:#64b5f6}.ibadge.sharp{color:#00c8aa}.ibadge.veteran{color:#ffd662}
+
+    /* Footer */
+    footer.site{margin-top:auto;border-top:1px solid var(--stroke);background:linear-gradient(180deg,#0f1633,#0b1024)}
+    .foot{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .foot a{color:#cbd6ff;text-decoration:none}
+    .foot .muted{color:#9ca8d9}
+
+    /* Quitar subrayado de la lupa */
+    a.review-icon,
+    a.review-icon:link,
+    a.review-icon:visited,
+    a.review-icon:hover,
+    a.review-icon:active{
+      text-decoration: none !important;
+      border: 0 !important;
+      outline: none;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    /* CTA Leaderboard pequeño bajo ranking */
+    .rank-footer{display:flex;justify-content:flex-end;margin-top:10px}
+
+    /* ===== Arena (nueva sección) ===== */
+    .arena-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .arena-kpi{ text-align:center;border:1px solid var(--stroke);border-radius:12px;padding:12px;background:linear-gradient(180deg, var(--surface2), var(--surface)) }
+    .arena-kpi h4{margin:0;font-size:1rem;color:#cbd6ff;font-weight:900}
+    .arena-kpi .n{font-size:1.4rem;font-weight:900}
+    .arena-level{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:8px}
+    .arena-level .bar{width:120px;height:8px;background:#0b1024;border-radius:999px;overflow:hidden;border:1px solid var(--stroke)}
+    .arena-level .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site">
+    <nav class="nav">
+      <a class="brand" href="/" aria-label="IT Hub">
+        <div class="badge">□</div>
+        <div class="name"><b>IT&nbsp;&nbsp;Hub</b><span class="dot">.</span><span class="es">es</span></div>
+      </a>
+      <div class="navlinks" aria-label="Navegación principal">
+        <a href="/">HOME</a>
+        <a href="/contenidos">CONTENIDOS</a>
+        <a href="/score/ranking.html">RANKING</a>
+      </div>
+      <div class="usercapsule">
+        <span id="hdrUser" class="chip-user hidden"><span class="flame">🔥</span><span id="hdrUserName">USER</span></span>
+        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/profile">PERFIL</a>
+        <button id="btnHdrLogout" class="btn pill primary hidden">LOGOUT</button>
+        <button id="btnHdrLogin" class="btn pill primary">LOGIN</button>
+        <button id="btnHdrSignup" class="btn pill ghost">CREAR CUENTA</button>
+      </div>
+    </nav>
+  </header>
+
+  <div class="wrap">
+    <section class="card hero">
+      <h1>Bienvenido a tu perfil.</h1>
+      <p class="desc">Gestiona tu cuenta, consulta tu ranking y revisa tus últimos exámenes y logros.</p>
+    </section>
+
+    <section class="authbar" id="authBar">
+      <span id="authText" class="muted">🔒 No has iniciado sesión</span>
+      <div class="actions">
+        <button id="btnHome" class="btn small hidden">🏠 Home</button>
+        <button id="btnLogout" class="btn small hidden">Cerrar Sesión</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <!-- ===== Columna izquierda ===== -->
+      <div class="col-left">
+        <article class="card">
+          <h3 style="margin:0 0 10px;font-weight:900">Perfil</h3>
+          <div class="profile">
+            <div class="avatar" id="avatarBox">👤</div>
+            <div>
+              <div id="userNameTxt" style="font-weight:900">—</div>
+              <div id="userEmailTxt" class="muted">—</div>
+            </div>
+          </div>
+          <hr class="divider">
+          <form id="formProfile">
+            <div class="field">
+              <label for="name">Nombre</label>
+              <div class="control"><input id="name" required placeholder="Your name"></div>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <div class="control"><input id="email" type="email" required placeholder="you@email.com"></div>
+            </div>
+            <div class="field">
+              <label for="avatarUrl">Avatar URL (opcional)</label>
+              <div class="control"><input id="avatarUrl" type="url" placeholder="https://.../avatar.png"></div>
+            </div>
+            <div class="hint">Tip: si no estableces tu avatar, usaremos tus iniciales.</div>
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+              <button type="button" class="btn" id="btnResetProfile">Reset</button>
+              <button class="btn primary" type="submit">Save</button>
+            </div>
+            <div id="profMsg" class="hint" style="margin-top:6px"></div>
+          </form>
+        </article>
+
+        <article class="card">
+          <h3 style="margin:0 0 10px;font-weight:900;">Objetivos y Streaks</h3>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <label for="weeklyGoal" style="font-weight:900;color:#cbd6ff;">Objetivo Semanal (intentos)</label>
+            <input id="weeklyGoal" type="number" min="1" step="1" value="7" style="width:90px;padding:8px;border:1px solid var(--stroke);border-radius:10px;font-weight:900;background:var(--surface2);color:var(--ink);">
+            <button id="btnSaveGoal" class="btn small">Guardar Objetivo</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="font-weight:900;">This week</div>
+            <div style="position:relative;flex:1;height:10px;background:#0b1024;border-radius:999px;overflow:hidden;border:1px solid var(--stroke);">
+              <i id="goalFill" style="position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2));"></i>
+            </div>
+            <div id="goalText" style="font-weight:900;">0 / 7</div>
+          </div>
+          <div style="margin-top:10px;" class="hint">
+            streak actual: <b id="streakDays">0</b> día(s)
+          </div>
+        </article>
+      </div>
+
+      <!-- ===== Columna derecha ===== -->
+      <div class="col-right">
+        <!-- RANKING GLOBAL mini -->
+        <article class="card rank-mini">
+          <h3 style="margin:0 0 10px;font-weight:900;">🏆 RANKING GLOBAL</h3>
+          <div id="rankMiniWrap" class="table-wrap">Cargando…</div>
+          <div id="rankMiniCta" class="rank-footer"></div>
+        </article>
+
+        <!-- 🏟️ RANKING ARENA (nuevo) -->
+        <article class="card">
+          <h3 style="margin:0 0 10px;font-weight:900;">🏟️ RANKING ARENA</h3>
+          <div class="arena-kpis">
+            <div class="arena-kpi">
+              <h4>Nivel</h4>
+              <div class="n" id="arenaLevel">—</div>
+              <div class="arena-level">
+                <span style="font-weight:900">XP</span>
+                <div class="bar"><i id="arenaXpBar" style="width:0%"></i></div>
+                <span id="arenaXp" class="n" style="font-size:1rem">0</span>
+              </div>
+            </div>
+            <div class="arena-kpi">
+              <h4>Tu posición</h4>
+              <div class="n" id="arenaRank">—</div>
+            </div>
+            <div class="arena-kpi">
+              <h4>Acertadas</h4>
+              <div class="n" id="arenaCorrect">0</div>
+            </div>
+            <div class="arena-kpi">
+              <h4>Falladas</h4>
+              <div class="n" id="arenaWrong">0</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ÚLTIMOS EXÁMENES -->
+        <article class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <h3 style="margin:0;font-weight:900">📘 TUS ÚLTIMOS QUIZS</h3>
+            <div class="tabs">
+              <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
+              <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
+              <button id="tabAZ305" class="tab-btn" type="button">AZ-305</button>
+              <button id="tabAWS"  class="tab-btn" type="button">AWS SAA-C03</button>
+            </div>
+          </div>
+
+          <div class="kpis" style="margin:10px 0 12px">
+            <div class="kpi"><h4>Intentos totales</h4><div id="kpiAttempts" class="n">0</div></div>
+            <div class="kpi"><h4>Media  %</h4><div id="kpiAvg" class="n">0%</div></div>
+            <div class="kpi"><h4>Mejor %</h4><div id="kpiBest" class="n">0%</div></div>
+          </div>
+
+          <div id="resultsWrap" class="table-wrap">Loading…</div>
+
+          <div style="display:flex;gap:8px;justify-content:space-between;margin-top:10px;align-items:center;">
+            <div id="trendHint" class="muted">—</div>
+          </div>
+        </article>
+
+        <!-- PREGUNTAS MARCADAS -->
+        <article class="card">
+          <h3 style="margin:0 0 10px;font-weight:900;">TUS PREGUNTAS MARCADAS</h3>
+          <div id="markedWrap" class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th><th>QUIZ</th><th>Pregunta</th><th>Nota</th>
+                </tr>
+              </thead>
+              <tbody id="markedBody">
+                <tr><td colspan="4" style="text-align:center;">No hay preguntas marcadas todavía.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site">
+    <div class="foot">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="brand" style="gap:8px">
+          <div class="badge" style="width:22px;height:22px;border-radius:7px">□</div>
+          <strong>IT Hub<span class="dot">.</span><span class="es">es</span></strong>
+        </div>
+        <span class="muted">© <span id="yearNow"></span></span>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <span class="muted">v1.3.2</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ===== API bases ===== */
+    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // resultados globales
+    const ARENA_API_BASE = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena"; // MISMO que el front de Arena
+
+    const AUTH_KEY = "currentUser";
+    const GOAL_KEY = "weeklyGoal";
+    const LOGIN_URL = "/login/login.html";
+
+    const byId = id => document.getElementById(id);
+    const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
+    const pad = n => String(n).padStart(2,'0');
+    const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    const fmtDuration = sec => { sec = toInt(sec); if (!sec || sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`; };
+    const fmtDateTime = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; } };
+    const norm = s => (s||"").toString().trim().toLowerCase();
+    const initialsOf = (name)=>{ const s=(name||"").trim(); if(!s) return "👤"; const parts=s.split(/\s+/).slice(0,2); return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤"; };
+
+    function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
+    function getUserAny(){ let u=getUser(); if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} } return u; }
+    function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
+
+    const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
+    const setGoal = (n)=> localStorage.setItem(GOAL_KEY, String(Math.max(1,toInt(n))));
+
+    const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
+
+    /* Header dinámico */
+    function renderHeaderAuth(){
+      const u = getUserAny();
+      const pillName = byId('hdrUser');
+      const pillNameTxt = byId('hdrUserName');
+      const btnPerfil = byId('btnHdrPerfil');
+      const btnLogout = byId('btnHdrLogout');
+      const btnLogin = byId('btnHdrLogin');
+      const btnSignup = byId('btnHdrSignup');
+
+      if(u){
+        pillNameTxt.textContent = (u.name || u.displayName || u.userName || u.email || 'USER').toUpperCase();
+        pillName.classList.remove('hidden');
+        btnPerfil.classList.remove('hidden');
+        btnLogout.classList.remove('hidden');
+        btnLogin.classList.add('hidden');
+        btnSignup.classList.add('hidden');
+      }else{
+        pillName.classList.add('hidden');
+        btnPerfil.classList.add('hidden');
+        btnLogout.classList.add('hidden');
+        btnLogin.classList.remove('hidden');
+        btnSignup.classList.remove('hidden');
+      }
+    }
+
+    function renderAuth(){
+      const u = getUserAny();
+      const authText = byId("authText");
+      const btnLogout = byId("btnLogout");
+      const btnHome = byId("btnHome");
+      if (u){
+        authText.textContent = `✅ Signed in as: ${u.name||u.displayName||u.userName||''} (${u.email||''})`;
+        btnLogout.classList.remove("hidden");
+        btnHome.classList.remove("hidden");
+      }else{
+        authText.textContent = "🔒 You’re not signed in.";
+        btnLogout.classList.add("hidden");
+        btnHome.classList.add("hidden");
+      }
+      renderProfileForm();
+      renderGoalUI();
+      renderHeaderAuth();
+    }
+
+    function renderProfileForm(){
+      const u = getUserAny() || {};
+      byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
+      byId("userEmailTxt").textContent = u.email || "—";
+      byId("name").value = u.name || "";
+      byId("email").value = u.email || "";
+      byId("avatarUrl").value = u.avatarUrl || "";
+      const box = byId("avatarBox");
+      box.innerHTML = "";
+      if (u.avatarUrl){
+        const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar";
+        im.onload = () => { box.innerHTML = ""; box.appendChild(im); }
+        im.onerror = () => { box.textContent = initialsOf(u.name); }
+      }else{
+        box.textContent = initialsOf(u.name);
+      }
+    }
+
+    async function loadRemoteMe(){
+      const u = getUserAny(); if(!u) return;
+      try{
+        const res = await fetch(`${API_BASE}/me`, {mode:"cors",cache:"no-store"});
+        if(res.ok){
+          const data = await res.json();
+          const merged = {...u, ...data};
+          setUser(merged);
+        }
+      }catch{}
+    }
+
+    /* ====== Ranking Global ====== */
+    const QUIZZES = ["az-104","az-305","aws-saa-c03"];
+    const pick = v => (typeof v === "string" ? v.trim() : "");
+    const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+
+    function pointsForAttempt(r){
+      const correct = toInt(r.correct), total = toInt(r.total), dur = toInt(r.durationSec);
+      let pts = correct * 5;
+      const pct = total>0 ? (correct/total)*100 : (r.pct||0);
+      if (pct >= 70) pts += 50;
+      if (total>0 && dur>0 && (dur/total) <= 30) pts += 10;
+      return { pts, passed: pct>=70 };
+    }
+    function levelFromXP(xp){
+      const lvl = Math.max(1, Math.floor(xp/150)+1);
+      const prog = Math.max(0, Math.min(100, Math.floor((xp%150)/150*100)));
+      return {lvl, prog};
+    }
+    async function fetchAllResults(limit=3000){
+      const r = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors",cache:"no-store"});
+      const data = await r.json();
+      if(!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      const items = Array.isArray(data.items)? data.items: [];
+      return items.map(x=>({
+        userId: x.userId || "(unknown)",
+        userName: getName(x),
+        quizId: (x.quizId || "-").toLowerCase(),
+        correct: Number(x.correct)||0,
+        total: Number(x.total)||0,
+        pct: Number(x.pct||0),
+        durationSec: Number(x.durationSec)||0,
+        ts: x.ts || null
+      })).filter(r=> QUIZZES.includes(r.quizId));
+    }
+    function aggregateGlobal(rows){
+      const byUser=new Map();
+      rows.forEach(r=>{
+        const {pts,passed}=pointsForAttempt(r);
+        const key=(r.userId||'')+'|'+(r.userName||'');
+        if(!byUser.has(key)){
+          byUser.set(key,{userId:r.userId,userName:r.userName,xp:0,attempts:0,passed:0,badges:new Set(),correctSum:0,totalSum:0});
+        }
+        const u=byUser.get(key);
+        if(passed) u.passed++;
+        u.xp+=pts; u.attempts++; u.correctSum+=toInt(r.correct); u.totalSum+=toInt(r.total);
+        if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+        if((r.correct|0)===(r.total|0) && r.total>0) u.badges.add('perfect');
+        if(passed) u.badges.add('ok');
+      });
+      for(const u of byUser.values()){
+        if(u.attempts>=10) u.badges.add('grinder');
+        if(u.xp>=2000) u.badges.add('veteran');
+        const acc=u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
+        if(acc>=90) u.badges.add('sharp');
+      }
+      return [...byUser.values()]
+        .map(u=>{ const {lvl,prog}=levelFromXP(u.xp); return {...u,lvl,prog}; })
+        .sort((a,b)=> b.xp-a.xp || b.passed-a.passed || String(a.userName).localeCompare(String(b.userName)));
+    }
+    function medalCell(rank){
+      if(rank===1) return `<span class="medal gold">1</span>`;
+      if(rank===2) return `<span class="medal silver">2</span>`;
+      if(rank===3) return `<span class="medal bronze">3</span>`;
+      return String(rank);
+    }
+    function nameClassByRank(rank){
+      if(rank===1) return "name-strong name-gold";
+      if(rank===2) return "name-strong name-silver";
+      if(rank===3) return "name-strong name-bronze";
+      return "name-strong";
+    }
+    function badgesSmallHTML(set){
+      const s=new Set(set); let out='<span class="ibadges">';
+      if(s.has('fast')) out+=`<span class="ibadge fast" title="Rápido">⚡</span>`;
+      if(s.has('perfect')) out+=`<span class="ibadge perfect" title="Perfect">💯</span>`;
+      if(s.has('ok')) out+=`<span class="ibadge ok" title="Pro">✅</span>`;
+      if(s.has('grinder')) out+=`<span class="ibadge grinder" title="Grinder">💪</span>`;
+      if(s.has('sharp')) out+=`<span class="ibadge sharp" title="Preciso">🧠</span>`;
+      if(s.has('veteran')) out+=`<span class="ibadge veteran" title="Veterano">🏅</span>`;
+      out+='</span>'; return out;
+    }
+    async function renderMyGlobalRank(){
+      const host=byId('rankMiniWrap'); host.textContent='Cargando…';
+      const cta = byId('rankMiniCta'); cta.innerHTML='';
+      const me=getUserAny(); if(!me){
+        host.innerHTML='<p class="muted" style="text-align:center">Inicia sesión para ver tu ranking.</p>';
+        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+        return;
+      }
+      try{
+        const all=await fetchAllResults(3000);
+        const agg=aggregateGlobal(all);
+        const uid=(me.userId||me.id||'').toString();
+        const foundIndex=agg.findIndex(x=> (x.userId||'').toString()===uid || (x.userName||'').trim()===(me.name||me.displayName||me.userName||'').trim());
+        if(foundIndex<0){
+          host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>';
+          cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+          return;
+        }
+        const row=agg[foundIndex], rank=foundIndex+1;
+        const pointsCls = rank<=3 ? 'points-chip top' : 'points-chip';
+        const nameCls = nameClassByRank(rank);
+        const initials = initialsOf(row.userName);
+
+        host.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Puntos</th>
+                <th>Quizzer</th>
+                <th>Nivel</th>
+                <th>Aprobados</th>
+                <th>Intentos</th>
+                <th>Insignias</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${medalCell(rank)}</td>
+                <td><span class="${pointsCls}">⭐ ${row.xp}</span></td>
+                <td style="text-align:left">
+                  <span class="namebox">
+                    <span class="avatar-sm">${initials}</span>
+                    <span class="${nameCls}">${escapeHtml(row.userName)}</span>
+                  </span>
+                </td>
+                <td><span class="level-inline">Lv ${row.lvl} <span class="bar"><i style="width:${row.prog}%"></i></span></span></td>
+                <td>${row.passed}</td>
+                <td>${row.attempts}</td>
+                <td>${badgesSmallHTML(row.badges)}</td>
+              </tr>
+            </tbody>
+          </table>`;
+        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+      }catch(e){
+        host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking.</p>`;
+        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+        console.warn(e);
+      }
+    }
+
+  /* ===== Arena: MISMA API que el front ===== */
+function getArenaIdentity(){
+  let uid = localStorage.getItem('arenaUserId');
+  let name = localStorage.getItem('arenaUserName');
+  const u = getUserAny() || {};
+  if(!uid)  uid  = (u.userId || u.id || '').toString();
+  if(!name) name = (u.name || u.displayName || u.userName || 'guest').toString();
+  return { uid, name };
+}
+
+async function fetchArenaRank(uid){
+  // Buscamos al usuario en el leaderboard del mismo API que Arena
+  try{
+    const r = await fetch(`${ARENA_API_BASE}/leaderboard?limit=2000`, {mode:"cors",cache:"no-store"});
+    if(!r.ok) throw new Error("leaderboard");
+    const data = await r.json();
+    const items = Array.isArray(data.items) ? data.items : data;
+    const idx = items.findIndex(x => (x.userId||'') === uid);
+    if(idx >= 0) return { rank: idx+1, total: items.length };
+    return { rank: null, total: items.length||0 };
+  }catch(_){
+    return { rank: null, total: 0 };
+  }
+}
+
+async function fetchArenaStats(){
+  const { uid, name } = getArenaIdentity();
+  if(!uid){
+    return { level:1, xp:0, xpForNext:1000, correct:0, wrong:0, rank:null, total:0 };
+  }
+
+  let level = 1, xp = 0, xpForNext = 1000, correct = 0, wrong = 0;
+
+  // 1) Datos base (igual que el front)
+  try{
+    const url = `${ARENA_API_BASE}/user/me?userId=${encodeURIComponent(uid)}&name=${encodeURIComponent(name||'guest')}`;
+    const r = await fetch(url, {mode:"cors",cache:"no-store"});
+    if(r.ok){
+      const me = await r.json();
+      xp = Number(me.xp||0);
+      level = (me.level!=null) ? Number(me.level) : Math.floor(xp/1000);
+      // por coherencia con Arena: 1000 XP por nivel
+      xpForNext = 1000;
+    }
+  }catch(e){ console.warn('Arena /user/me error', e); }
+
+  // 2) Intentamos correct/wrong si hay endpoint de stats
+  const statUrls = [
+    `${ARENA_API_BASE}/stats?userId=${encodeURIComponent(uid)}`,
+    `${ARENA_API_BASE}/user/stats?userId=${encodeURIComponent(uid)}`,
+    `${ARENA_API_BASE}/arena/stats?userId=${encodeURIComponent(uid)}`
+  ];
+  for(const su of statUrls){
+    try{
+      const rs = await fetch(su, {mode:"cors",cache:"no-store"});
+      if(rs.ok){
+        const data = await rs.json();
+        correct = Number(data.correct || data.right || data.ok || 0);
+        wrong   = Number(data.wrong   || data.fail  || data.ko || 0);
+        break;
+      }
+    }catch{}
+  }
+
+  // 3) Rank en leaderboard
+  const { rank, total } = await fetchArenaRank(uid);
+
+  return { level, xp, xpForNext, correct, wrong, rank, total };
+}
+
+function renderArena(stats){
+  const lvl = Number(stats.level)||1;
+  const xp = Number(stats.xp)||0;
+  const next = Math.max(1, Number(stats.xpForNext)||1000);
+  const pct = Math.max(0, Math.min(100, Math.round((xp % next) / next * 100)));
+
+  // Nivel + XP + barra
+  document.getElementById('arenaLevel').textContent = `Lv ${lvl}`;
+  document.getElementById('arenaXp').textContent = xp.toString();
+  document.getElementById('arenaXpBar').style.width = pct + '%';
+
+  // Posición en ranking
+  const rankBox = document.getElementById('arenaRank');
+  if (stats.rank && stats.total){
+    rankBox.textContent = `#${stats.rank} / ${stats.total}`;
+  } else if (stats.total) {
+    rankBox.textContent = `— / ${stats.total}`;
+  } else {
+    rankBox.textContent = '—';
+  }
+
+  // Aciertos / fallos
+  document.getElementById('arenaCorrect').textContent = String(Number(stats.correct)||0);
+  document.getElementById('arenaWrong').textContent   = String(Number(stats.wrong)||0);
+}
+    /* ===== Resultados propios ===== */
+    async function fetchMyResults(limit=500){
+      const u = getUserAny(); if (!u) return [];
+      const uid = (u.userId || u.id || "").toString();
+      const uemail = (u.email||'').toLowerCase();
+
+      const qs = new URLSearchParams({ limit: String(limit) });
+      if (uid) qs.set("userId", uid);
+      if (uemail) qs.set("email", uemail);
+
+      const res = await fetch(`${API_BASE}/results?${qs.toString()}`, {mode:"cors",cache:"no-store"});
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+
+      const items = Array.isArray(data.items) ? data.items : [];
+      const isMine = (x) => {
+        const xid = (x.userId || x.id || x?.user?.id || "").toString();
+        const xemail = (x.email || x.userEmail || x?.user?.email || x?.profile?.email || '').toLowerCase();
+        return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
+      };
+      const mine = items.filter(isMine);
+      const pick = v => (typeof v === "string" ? v.trim() : "");
+      const getName2 = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+
+      return mine.map(x => ({
+        userId: x.userId || x.id || "(unknown)",
+        userName: getName2(x),
+        quizId: (x.quizId || "-").toLowerCase(),
+        correct: (x.correct|0),
+        total: (x.total|0),
+        pct: (x.pct|0),
+        durationSec: (x.durationSec|0),
+        ts: x.ts || null,
+        sessionId: x.sessionId || x.session || x.resultId || x.id || ""
+      }));
+    }
+
+    function calcKPIs(rows){
+      const n = rows.length;
+      const avg = n ? Math.round(rows.reduce((a,b)=>a + ((b.pct|0)||0),0)/n) : 0;
+      const best = rows.reduce((m,b)=> Math.max(m, (b.pct|0)||0), 0);
+      byId("kpiAttempts").textContent = String(n);
+      byId("kpiAvg").textContent = `${avg}%`;
+      byId("kpiBest").textContent = `${best}%`;
+    }
+
+    function computeStreak(rows){
+      if (!rows.length) return 0;
+      const datesSet = new Set(rows.filter(r=>r.ts).map(r=> new Date(r.ts)).map(d=> toDateOnly(d).toISOString().slice(0,10)));
+      let streak = 0;
+      let cursor = toDateOnly(new Date());
+      while (datesSet.has(cursor.toISOString().slice(0,10))){
+        streak++;
+        cursor = new Date(cursor.getTime() - 86400000);
+      }
+      return streak;
+    }
+    function weeklyProgress(rows){
+      const goal = getGoal();
+      const attempts = rows.filter(r=> r.ts && isWithinDays(r.ts, 6)).length;
+      const pct = Math.min(100, Math.round((attempts / Math.max(1,goal)) * 100));
+      return { attempts, goal, pct };
+    }
+    function renderGoalUI(){
+      const goal = getGoal();
+      byId("weeklyGoal").value = goal;
+      byId("goalText").textContent = `0 / ${goal}`;
+      byId("goalFill").style.width = `0%`;
+    }
+
+    window.__filters = {days:'all', fromDate:null};
+    const activeFilterKey = ()=> {
+      const t = (document.querySelector('.tab-btn.active')?.textContent || 'All').toLowerCase();
+      if(t.includes('aws')) return 'aws-saa-c03';
+      if(t.includes('az-305')) return 'az-305';
+      if(t.includes('az')) return 'az-104';
+      return 'all';
+    };
+
+    function renderResults(rows, filter="all"){
+      const root = byId("resultsWrap");
+      let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
+      const f = filter.toLowerCase();
+      if (f==="az-104" || f==="aws-saa-c03" || f==="az-305") list = list.filter(x=>x.quizId===f);
+
+      const { days } = window.__filters || {};
+      if (days && days!=="all"){
+        const cutoff = Date.now() - Number(days)*86400000;
+        list = list.filter(x=> x.ts && new Date(x.ts).getTime() >= cutoff);
+      }
+
+      const rowsForKpi = (f==="all" ? rows : rows.filter(x=>x.quizId===f));
+      calcKPIs(rowsForKpi);
+
+      const streak = computeStreak(rows);
+      byId("streakDays").textContent = String(streak);
+      const {attempts, goal, pct} = weeklyProgress(rows);
+      byId("goalText").textContent = `${attempts} / ${goal}`;
+      byId("goalFill").style.width = `${pct}%`;
+
+      if (!list.length){
+        root.innerHTML = `<div class="table-wrap"><p style="text-align:center;margin:12px 0;">No results yet.</p></div>`;
+        return;
+      }
+      let html = `<table>
+        <thead><tr>
+          <th>#</th><th>QUIZ</th><th>Correct</th><th>Total</th><th>Score</th><th>Duration</th><th>Date</th><th>Review</th>
+        </tr></thead><tbody>`;
+      list.slice(0,10).forEach((r,i)=>{
+        const pct = Math.min(100, Math.max(0, (r.pct|0)));
+        html += `<tr>
+          <td>${i+1}</td>
+          <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
+          <td>${r.correct}</td>
+          <td>${r.total}</td>
+          <td>
+            <div class="pct">
+              <div class="pbar"><i style="width:${pct}%"></i></div>
+              <span>${pct}%</span>
+            </div>
+          </td>
+          <td><span class="chip">${fmtDuration(r.durationSec)}</span></td>
+          <td>${fmtDateTime(r.ts)}</td>
+          <td>${
+            r.sessionId
+              ? `<a class="review-icon" href="/user/report_quiz.html?sessionId=${encodeURIComponent(r.sessionId)}" title="Ver reporte">🔍</a>`
+              : `<span class="review-icon" title="Sin sessionId">—</span>`
+          }</td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+      root.innerHTML = html;
+    }
+
+    /* ===== Marcadas ===== */
+    function getLastSessionId() {
+      const keys = Object.keys(localStorage).filter(k => k.startsWith("quiz.session."));
+      keys.sort().reverse();
+      for (const k of keys) {
+        const sid = localStorage.getItem(k);
+        if (sid) return sid;
+      }
+      return null;
+    }
+
+    async function fetchMyMarked(limit=200){
+      const out = [];
+      try{
+        const u = getUserAny();
+        if (u && (u.userId || u.id || u.email)) {
+          const uid = (u.userId || u.id || "").toString();
+          const uemail = (u.email||'').toLowerCase();
+          const qs = new URLSearchParams({ limit: String(limit) });
+          if (uid) qs.set("userId", uid);
+          if (uemail) qs.set("email", uemail);
+
+          const r = await fetch(`${API_BASE}/progress?${qs.toString()}`, {mode:"cors",cache:"no-store"});
+          const data = await r.json().catch(()=> ({}));
+          if (r.ok && Array.isArray(data.items)) {
+            const sessions = data.items.slice().sort((a,b)=> String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));
+            for (const it of sessions) {
+              const quiz = String(it.quizId||'-').toLowerCase();
+              const items = Array.isArray(it.markedItems) ? it.markedItems : [];
+              if (items.length){
+                for (const m of items) {
+                  out.push({
+                    quizId: quiz, questionId: m.questionId || null, question: m.question || '(no text)',
+                    domain: m.domain || null, category: m.category || null,
+                    sessionId: m.sessionId || it.sessionId || '', idx: (typeof m.index==='number'? m.index : null),
+                    markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+                  });
+                }
+                continue;
+              }
+              const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
+              const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
+              Object.entries(markedMap).forEach(([idxStr,flag])=>{
+                if(!flag) return;
+                const idx = parseInt(idxStr,10);
+                const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
+                out.push({
+                  quizId: quiz, questionId: qid, question: '(marked question — open session to review)',
+                  domain: null, category: null, sessionId: it.sessionId || '', idx, markedAt: it.updatedAt || it.startedAt || null
+                });
+              });
+            }
+          }
+        }
+
+        if (out.length === 0) {
+          const sid = getLastSessionId();
+          if (sid) {
+            const r2 = await fetch(`${API_BASE}/progress?sessionId=${encodeURIComponent(sid)}`, {mode:"cors",cache:"no-store"});
+            const data2 = await r2.json().catch(()=> ({}));
+            if (r2.ok && data2 && data2.item) {
+              const it = data2.item;
+              const quiz = String(it.quizId||'-').toLowerCase();
+              const items = Array.isArray(it.markedItems) ? it.markedItems : [];
+              if (items.length){
+                for (const m of items) {
+                  out.push({
+                    quizId: quiz, questionId: m.questionId || null, question: m.question || '(no text)',
+                    domain: m.domain || null, category: null,
+                    sessionId: m.sessionId || it.sessionId || '', idx: (typeof m.index==='number'? m.index : null),
+                    markedAt: m.markedAt || it.updatedAt || it.startedAt || null
+                  });
+                }
+              } else {
+                const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
+                const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
+                Object.entries(markedMap).forEach(([idxStr,flag])=>{
+                  if(!flag) return;
+                  const idx = parseInt(idxStr,10);
+                  const qid = (idx>=0 && idx<questionIds.length) ? questionIds[idx] : null;
+                  out.push({
+                    quizId: quiz, questionId: qid, question: '(marked question — open session to review)',
+                    domain: null, category: null, sessionId: it.sessionId || '', idx, markedAt: it.updatedAt || it.startedAt || null
+                  });
+                });
+              }
+            }
+          }
+        }
+
+        out.sort((a,b)=> String(b.markedAt||'').localeCompare(String(a.markedAt||'')));
+        return out.slice(0, 50);
+      }catch(e){
+        console.warn('Marked fetch failed:', e);
+        return out.slice(0,50);
+      }
+    }
+
+    // ===== Eventos header/auth =====
+    byId('btnHdrLogin').onclick  = ()=> location.href = LOGIN_URL;
+    byId('btnHdrSignup').onclick = ()=> location.href = LOGIN_URL;
+    byId('btnHdrLogout').onclick = ()=> { localStorage.removeItem(AUTH_KEY); renderAuth(); location.href = LOGIN_URL; };
+
+    // ===== Eventos existentes =====
+    byId("btnHome").onclick = ()=>{ location.href = "/"; };
+    byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = LOGIN_URL; };
+    byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
+    byId("btnSaveGoal").onclick = ()=>{
+      const val = Math.max(1, Number(byId("weeklyGoal").value)||1);
+      setGoal(val);
+      const rows = window.__myRows || [];
+      const {attempts, goal, pct} = weeklyProgress(rows);
+      byId("goalText").textContent = `${attempts} / ${goal}`;
+      byId("goalFill").style.width = `${pct}%`;
+    };
+
+    function activateTab(which){
+      byId("tabAll").classList.toggle("active", which==="all");
+      byId("tabAZ").classList.toggle("active", which==="az-104");
+      byId("tabAZ305").classList.toggle("active", which==="az-305");
+      byId("tabAWS").classList.toggle("active", which==="aws-saa-c03");
+    }
+    byId("tabAll").onclick  = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
+    byId("tabAZ").onclick   = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
+    byId("tabAZ305").onclick= ()=>{ activateTab("az-305"); renderResults(window.__myRows||[], "az-305"); };
+    byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
+
+    function renderProfile(){
+      const u=getUserAny()||{};
+      byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
+      byId("userEmailTxt").textContent = u.email || "—";
+      const box = byId("avatarBox");
+      box.innerHTML = "";
+      if (u.avatarUrl){
+        const im = new Image(); im.src = u.avatarUrl; im.alt = "avatar";
+        im.onload = () => { box.innerHTML = ""; box.appendChild(im); }
+        im.onerror = () => { box.textContent = initialsOf(u.name); }
+      }else{
+        box.textContent = initialsOf(u.name);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async ()=>{
+      byId('yearNow').textContent = new Date().getFullYear();
+
+      if(!getUserAny()){
+        if (window.location.pathname !== LOGIN_URL) {
+          window.location.replace(LOGIN_URL);
+        }
+        return;
+      }
+
+      renderAuth();
+      loadRemoteMe();
+      renderProfile();
+
+      /* ===== Arena (MISMA API que el front) ===== */
+      try{
+        const arena = await fetchArenaStats();
+        renderArena(arena||{level:1,xp:0,xpForNext:1000,correct:0,wrong:0});
+      }catch(e){ console.warn('Arena render failed', e); }
+
+      try{
+        const rows = await fetchMyResults(500);
+        window.__myRows = rows;
+        renderResults(rows, "all");
+        byId('trendHint').textContent = ``;
+        const plan = weeklyProgress(rows);
+        if(plan.attempts < plan.goal){
+          const remain = Math.max(0, plan.goal - plan.attempts);
+          byId('trendHint').textContent += ``;
+        }
+      }catch(e){
+        document.getElementById("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#ff8f8f;">Error loading results or not signed in.</p></div>`;
+        console.warn('Results fetch failed:', e);
+      }
+
+      // Ranking Global mini + CTA
+      renderMyGlobalRank();
+
+      // Marcadas
+      try{
+        const marked = await fetchMyMarked(200);
+        const body = byId('markedBody');
+        if(!marked.length){
+          body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>`;
+        }else{
+          body.innerHTML = marked.map((r,i)=>`
+            <tr>
+              <td>${i+1}</td>
+              <td><span class="badge">${escapeHtml(r.quizId).toUpperCase()}</span></td>
+              <td style="text-align:left">${escapeHtml(r.question)}</td>
+              <td>${escapeHtml(r.domain || r.category || '')}</td>
+            </tr>
+          `).join('');
+        }
+      }catch(e){
+        console.warn('Marked render failed:', e);
+      }
+    });
+  </script>
+</body>
+</html>
