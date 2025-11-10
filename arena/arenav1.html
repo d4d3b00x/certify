@@ -140,7 +140,7 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
     <div class="brand"><span class="logo"></span><span>IT <strong>Hub</strong> .es</span></div>
     <div class="nav-right">
       <a class="badge link" id="greeter" href="/user/profile.html">👋 Hola, Quizzer!</a>
-      <span class="badge">Tu puntuación</span>
+      <!--<span class="badge">Tu puntuación</span>-->
       <span class="badge" id="badgeLv">Lv. 0</span>
       <span class="badge" id="badgeXP">⚡ 0</span>
       <span class="user hidden" id="userName">GUEST</span>
@@ -150,7 +150,7 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 
 <main class="container">
   <h1 style="margin:6px 0 2px">Arena Battle – Quizzes Relámpago</h1>
-  <p style="color:#9fb2ff;margin:0 0 14px">Elige certificación y resuelve misiones de 1, 2 o 3 preguntas. Acierta para puntuar y sube de nivel.</p>
+  <p style="color:#9fb2ff;margin:0 0 14px">Elige certificación y resuelve misiones de 1, 2 o 3 preguntas.</p>
 
   <div class="layout">
     <section class="panel" id="arena">
@@ -200,7 +200,7 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
         <div class="rtitle">🏆 RANKING EN VIVO</div>
         <div class="rlist" id="rlist"></div>
         <div class="reco" style="margin-top:12px">
-          <h4 style="margin:0 0 6px">📝 NOTAS</h4>
+          <br><h4 style="margin:0 0 6px">📝 NOTAS</h4>
           <p style="margin:0;color:#cfd8ff">
             • Puedes participar sin iniciar sesión, con un usuario Invitado aleatorio cuyos datos se eliminarán en 24h.<br/>
             • Si quieres mantener tu progreso, créate una cuenta con nosotros.
@@ -407,7 +407,7 @@ function createCard(m){
       <span class="chip xp sm">+${xp} XP</span>
     </div>
     <div class="title">${m.title}</div>
-    <div class="desc">Acierta para puntuar.</div>
+    <div class="desc">Acierta para puntuar y sube de nivel en el ranking.</div>
     <div class="controls">
       <button class="play">JUGAR</button>
       <button class="kill" title="Quitar">✖</button>
