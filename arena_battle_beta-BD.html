@@ -432,7 +432,7 @@ function renderLeaderboard(items) {
   for (const u of items) {
     const me = (u.userId && u.userId === localStorage.getItem('arenaUserId'));
     const xp = Number(u.xp_total ?? u.xp ?? 0);
-    const lvl = (u.level != null) ? Number(u.level) : Math.floor(xp/1000);
+   const lvl = (u.level != null) ? Number(u.level) : Math.floor(xp/1000);
 
     const row = document.createElement('div');
     row.className = 'rrow' + (me ? ' me' : '');
