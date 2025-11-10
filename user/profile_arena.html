@@ -646,42 +646,53 @@ async function fetchArenaStats(){
 
   let level = 1, xp = 0, xpForNext = 1000, correct = 0, wrong = 0;
 
-  // 1) Datos base (igual que el front)
+  // 1) Perfil base (mismo endpoint que usa Arena)
   try{
     const url = `${ARENA_API_BASE}/user/me?userId=${encodeURIComponent(uid)}&name=${encodeURIComponent(name||'guest')}`;
     const r = await fetch(url, {mode:"cors",cache:"no-store"});
     if(r.ok){
       const me = await r.json();
-      xp = Number(me.xp||0);
-      level = (me.level!=null) ? Number(me.level) : Math.floor(xp/1000);
-      // por coherencia con Arena: 1000 XP por nivel
-      xpForNext = 1000;
-    }
-  }catch(e){ console.warn('Arena /user/me error', e); }
 
-  // 2) Intentamos correct/wrong si hay endpoint de stats
-  const statUrls = [
-    `${ARENA_API_BASE}/stats?userId=${encodeURIComponent(uid)}`,
-    `${ARENA_API_BASE}/user/stats?userId=${encodeURIComponent(uid)}`,
-    `${ARENA_API_BASE}/arena/stats?userId=${encodeURIComponent(uid)}`
-  ];
-  for(const su of statUrls){
-    try{
-      const rs = await fetch(su, {mode:"cors",cache:"no-store"});
-      if(rs.ok){
-        const data = await rs.json();
-        correct = Number(data.correct || data.right || data.ok || 0);
-        wrong   = Number(data.wrong   || data.fail  || data.ko || 0);
-        break;
-      }
-    }catch{}
+      // XP/Nivel (Arena usa 1000 XP por nivel)
+      xp = Number(me.xp || 0);
+      level = (me.level != null) ? Number(me.level) : Math.floor(xp/1000);
+      xpForNext = 1000;
+
+      // ✅ Nuevo: aciertos y fallos desde /user/me
+      // (el backend expone count_ok y count_ko)
+      correct = Number(me.count_ok ?? me.ok ?? me.correct ?? 0);
+      wrong   = Number(me.count_ko ?? me.ko ?? me.wrong   ?? 0);
+    }
+  }catch(e){
+    console.warn('Arena /user/me error', e);
   }
 
-  // 3) Rank en leaderboard
+  // 2) Si por cualquier motivo no vinieran, intentamos endpoints alternativos (fallback)
+  if ((correct|0) === 0 && (wrong|0) === 0){
+    const statUrls = [
+      `${ARENA_API_BASE}/stats?userId=${encodeURIComponent(uid)}`,
+      `${ARENA_API_BASE}/user/stats?userId=${encodeURIComponent(uid)}`,
+      `${ARENA_API_BASE}/arena/stats?userId=${encodeURIComponent(uid)}`
+    ];
+    for(const su of statUrls){
+      try{
+        const rs = await fetch(su, {mode:"cors",cache:"no-store"});
+        if(rs.ok){
+          const data = await rs.json();
+          correct = Number(data.correct || data.right || data.ok || 0);
+          wrong   = Number(data.wrong   || data.fail  || data.ko || 0);
+          break;
+        }
+      }catch{}
+    }
+  }
+
+  // 3) Posición en leaderboard
   const { rank, total } = await fetchArenaRank(uid);
 
   return { level, xp, xpForNext, correct, wrong, rank, total };
 }
+
 
 function renderArena(stats){
   const lvl = Number(stats.level)||1;

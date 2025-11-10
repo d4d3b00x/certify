@@ -11,7 +11,6 @@
   --ok:#39e08d;--bad:#ff7d7d;--chip:#0f1736;--chipLine:#324081;--azure:#2a7bff22;--aws:#ff990022;
   --pill:#10183a;--accent:#7e6bff;--radius:14px;--shadow:0 16px 40px rgba(6,12,40,.45)
 }
-/* Base */
 *{box-sizing:border-box}
 html,body{
   margin:0;
@@ -32,15 +31,12 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .user{font-weight:900;border-radius:12px;padding:8px 12px;background:#0f183b;border:1px solid #2b356a}
 .hidden{display:none}
 
-/* Layout */
 .container{max-width:1260px;margin:0 auto;padding:18px}
 .layout{display:grid;grid-template-columns:1fr 360px;gap:16px}
 @media(max-width:1040px){.layout{grid-template-columns:1fr}}
 
-/* Panel */
 .panel{background:linear-gradient(180deg,var(--panel),#0e1533);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
 
-/* HEAD — filtros + progreso en la MISMA línea */
 .panel-head{
   display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:16px;
   padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)
@@ -57,9 +53,8 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .filter.active{background:linear-gradient(180deg,#7890ff,#5c70ff);color:#fff;border-color:#6f82ff;box-shadow:0 10px 22px rgba(80,95,255,.25)}
 .filter[data-cert^="AZ"]::after{content:attr(data-count);position:absolute;right:-6px;top:-8px;font-size:.72rem;font-weight:900;background:#23306b;border:2px solid #6f82ff;color:#cfe1ff;border-radius:999px;padding:2px 6px}
 .filter[data-cert^="SAA"]{background:linear-gradient(180deg,#1a1622,#2a1f30);border-color:#5d4670}
-.filter[data-cert^="SAA"]::after{content:attr(data-count);position:absolute;right:-6px;top:-8px;font-size:.72rem;font-weight:900;background:#3a2c3f;border:2px solid #ff9900;color:#ffe6cc;border-radius:999px;padding:2px 6px}
+.filter[data-cert^="SAA"]::after{content:attr(data-count);position:absolute;right:-6px;top:-8px;font-size:.72rem;font-weight:900;background:#3a2c3f;border:2px solid #ff9900;color:#ffe2cc;border-radius:999px;padding:2px 6px}
 
-/* Progreso compacto */
 .h-right{display:flex;align-items:center;gap:12px}
 .goal-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--chipLine);background:var(--chip);border-radius:999px;padding:8px 12px;font-weight:900;white-space:nowrap}
 .goal-pill .ico{display:inline-flex;align-items:center;line-height:1}
@@ -67,7 +62,6 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .prog>span{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#3be180,#76f4bc);transition:width .35s ease}
 .reset{padding:8px 14px;border-radius:999px;border:1px solid #4151a8;background:#111a3e;color:#dfe1ff;font-weight:900}
 
-/* Grid / Cards */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:12px}
 @media(max-width:1040px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}}
@@ -88,7 +82,6 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .play{flex:1;display:inline-flex;align-items:center;justify-content:center;height:42px;border-radius:12px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer}
 .kill{width:42px;height:42px;border-radius:12px;border:1px solid #3a4270;background:#111a33;color:#cfe1ff;cursor:pointer}
 
-/* Ribbons y transiciones */
 .ribbon{position:absolute;right:-30px;bottom:14px;transform:rotate(-12deg);font-weight:900;padding:6px 30px;border-radius:10px;border:2px solid rgba(0,0,0,.15);box-shadow:0 8px 18px rgba(0,0,0,.25);display:none}
 .card.win .ribbon{display:block;background:var(--ok);color:#05361c}
 .card.fail .ribbon{display:block;background:var(--bad);color:#3b0a0a}
@@ -96,7 +89,6 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .card.new{animation:pop .35s ease}
 @keyframes pop{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
 
-/* Modal / preguntas */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:60}
 .modal.show{display:flex}
 .modal-card{width:min(820px,92vw);max-height:86vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
@@ -109,7 +101,6 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .opt.correct{background:rgba(57,224,141,.10);border-color:rgba(57,224,141,.7)}
 .opt.wrong{background:rgba(255,125,125,.10);border-color:rgba(255,125,125,.7)}
 
-/* Sidebar / Ranking */
 .sidebar{padding:12px}
 .rtitle{font-weight:900;margin:0 0 10px}
 .rlist{display:grid;gap:8px}
@@ -119,13 +110,11 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .rlvl,.rxp{display:inline-flex;align-items:center;gap:8px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 12px;font-weight:900}
 .rxp::before{content:"⚡"}
 
-/* Reglas (colapsables) */
 .rules{padding:12px}
 .rule-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #4151a8;background:#111a3e;color:#dfe1ff;font-weight:900;cursor:pointer}
 .rule-body{display:none;margin-top:10px;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:12px}
 .rule-body.show{display:block}
 
-/* Toast / fly */
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#12204c;border:1px solid #3856a8;color:#dfe1ff;padding:10px 14px;border-radius:12px;font-weight:900;z-index:80;display:none}
 .toast.show{display:block;animation:fade 1.1s ease}
 @keyframes fade{0%{opacity:0;transform:translate(-50%,-6px)}20%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0}}
@@ -140,7 +129,6 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
     <div class="brand"><span class="logo"></span><span>IT <strong>Hub</strong> .es</span></div>
     <div class="nav-right">
       <a class="badge link" id="greeter" href="/user/profile.html">👋 Hola, Quizzer!</a>
-      <!--<span class="badge">Tu puntuación</span>-->
       <span class="badge" id="badgeLv">Lv. 0</span>
       <span class="badge" id="badgeXP">⚡ 0</span>
       <span class="user hidden" id="userName">GUEST</span>
@@ -244,8 +232,8 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 const API_BASE = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena";
 
 /* ================== CONSTANTES ================== */
-const WEEKLY_MAX = 30;            // <- NUEVO máximo
-const WEEKLY_KEY = "weekly";      // clave localStorage (conservamos la misma)
+const WEEKLY_MAX = 30;
+const WEEKLY_KEY = "weekly";
 
 /* ===== Identidad (sincronizada con login del portal) ===== */
 (function bootstrapIdentity(){
@@ -253,7 +241,7 @@ const WEEKLY_KEY = "weekly";      // clave localStorage (conservamos la misma)
   const gotUid  = p.get('userId');
   const gotName = p.get('name');
 
-  // 1) Intentamos sincronizar con el login global (currentUser)
+  // 1) Traer del login global (currentUser) si existe
   try{
     const portal = JSON.parse(localStorage.getItem('currentUser')||"null");
     if (portal) {
@@ -269,11 +257,11 @@ const WEEKLY_KEY = "weekly";      // clave localStorage (conservamos la misma)
     }
   }catch{}
 
-  // 2) Parámetros de URL tienen prioridad (deep-links)
+  // 2) Parámetros de URL mandan
   if (gotUid)  localStorage.setItem('arenaUserId', gotUid);
   if (gotName) localStorage.setItem('arenaUserName', gotName);
 
-  // 3) Si aún no hay identidad, generamos una de invitado
+  // 3) Invitado si sigue sin identidad
   let uid  = localStorage.getItem('arenaUserId');
   let name = localStorage.getItem('arenaUserName');
   if (!uid) {
@@ -288,7 +276,6 @@ const WEEKLY_KEY = "weekly";      // clave localStorage (conservamos la misma)
     localStorage.setItem('arenaUserName', name);
   }
 
-  // limpiamos querystring si venía
   if (gotUid || gotName) history.replaceState({}, '', location.pathname);
 })();
 
@@ -302,7 +289,7 @@ let userXP = 0;
 let userLv = 0;
 const badgeXP = document.getElementById('badgeXP');
 const badgeLv = document.getElementById('badgeLv');
-const userNameSpan = document.getElementById('userName'); // oculto pero usado por el ranking
+const userNameSpan = document.getElementById('userName');
 
 function addXPLocal(x){
   userXP += x;
@@ -312,7 +299,7 @@ function addXPLocal(x){
   if(userLv>oldLv){ badgeLv.textContent = `Lv. ${userLv}`; pulse(badgeLv); }
 }
 
-/* ==== Objetivo semanal 30/30 (solo local, NO pisar desde backend) ==== */
+/* ==== Objetivo semanal 30/30 ==== */
 let weekly = Number(localStorage.getItem(WEEKLY_KEY) || "0");
 const goalTxt = document.getElementById('goalTxt');
 const goalBar = document.getElementById('goalBar');
@@ -465,7 +452,7 @@ function removeCard(card, consume){
   },350);
 }
 
-/* ====== API: registrar aciertos/fallos ====== */
+/* ====== API: registrar aciertos/fallos (pregunta) ====== */
 async function apiTrackAnswer(qid, wasCorrect){
   if(!qid) return;
   try{
@@ -480,6 +467,20 @@ async function apiTrackAnswer(qid, wasCorrect){
   }
 }
 
+/* ====== API: sumar OK/KO por usuario ====== */
+async function apiPostUserStat(result){ // result: "ok" | "ko"
+  try{
+    const userId = localStorage.getItem('arenaUserId');
+    const userName = localStorage.getItem('arenaUserName') || 'guest';
+    const url = `${API_BASE}/user/stat?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName)}`;
+    await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type":"application/json" },
+      body: JSON.stringify({ result })   // el backend incrementa count_ok o count_ko
+    });
+  }catch(e){ console.warn("stat fail", e); }
+}
+
 async function onWin(m){
   modal.classList.remove('show');
   const card = activeCard;
@@ -487,6 +488,7 @@ async function onWin(m){
   card.querySelector('.ribbon').textContent = 'YEAH :)';
 
   apiTrackAnswer(m.qid || m.id, true);
+  apiPostUserStat("ok");
 
   await addXPAndSync(m.xp);
   updateGoal(weekly+1);
@@ -502,6 +504,7 @@ function onFail(){
   card.querySelector('.ribbon').textContent = 'OH NO :(';
 
   apiTrackAnswer(activeMission?.qid || activeMission?.id, false);
+  apiPostUserStat("ko");
 
   setTimeout(()=> card.classList.remove('fail'), 2000);
 }
@@ -593,9 +596,6 @@ async function syncBadgesFromBackend(){
   userLv = Number(me.level != null ? me.level : Math.floor(userXP/1000));
   badgeXP.textContent = `⚡ ${userXP}`;
   badgeLv.textContent = `Lv. ${userLv}`;
-
-  // ⛔️ YA NO PISAMOS weekly DESDE BACKEND
-  // if (typeof me.weekly === 'number') updateGoal(me.weekly);
 }
 
 async function addXPAndSync(delta){
@@ -669,7 +669,6 @@ rulesBtn.onclick=()=>{
   rulesBtn.textContent = rulesBody.classList.contains('show') ? "📖 Ocultar Reglas" : "📖 Ver Reglas del juego";
   if(rulesBody.classList.contains('show')) rulesBody.scrollIntoView({behavior:'smooth',block:'start'});
 };
-// Ocultar reglas al arrancar
 rulesBody.classList.remove('show');
 rulesBtn.textContent = "📖 Ver Reglas del juego";
 
@@ -682,7 +681,7 @@ document.getElementById('btnReset').onclick=()=>{ updateGoal(0); showToast('🔄
 
 function init(){
   document.getElementById('greeter').animate([{filter:'brightness(1)'},{filter:'brightness(1.4)'},{filter:'brightness(1)'}],{duration:900});
-  updateGoal(weekly);        // <- arranca con el valor persistido
+  updateGoal(weekly);
   updateFilterCounts();
   buildGrid();
   fetchLeaderboardAndRender();
