@@ -691,9 +691,9 @@ function init(){
 (async () => {
   await syncBadgesFromBackend();
   await Promise.all([
-    loadFromAPI("AZ-104", "AZ-104", 111),
-    loadFromAPI("AZ-305", "AZ-305", 111),
-    loadFromAPI(["SAA-C03","AWS-SAA"], "SAA-C03", 111)
+    loadFromAPI("AZ-104", "AZ-104", 175),
+    loadFromAPI("AZ-305", "AZ-305", 175),
+    loadFromAPI(["SAA-C03","AWS-SAA"], "SAA-C03", 175)
   ]);
   init();
   startLiveRefresh();

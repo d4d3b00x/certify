@@ -25,7 +25,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
   <style>
     :root{
-      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#aebaf0;
       --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
       --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
       --pill-bg:linear-gradient(180deg,#151b31,#12182c);
@@ -118,6 +118,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .prov-azure{background:rgba(0,120,212,.16);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
     .prov-aws{background:rgba(255,153,0,.18);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
     .sim-title{font-weight:900;font-size:1.05rem}
+    .sim-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:2px}
+    .sim-badge{padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-weight:800;font-size:.72rem;color:#cfe1ff;background:rgba(108,139,255,.12)}
     .btns-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
     .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);min-height:44px;letter-spacing:.8px;}
     .cta-btn[aria-disabled="true"]{opacity:.65;cursor:not-allowed;filter:grayscale(.35)}
@@ -234,7 +236,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .g-arrow[disabled]{opacity:.45;cursor:not-allowed;transform:none}
     .g-arrow svg{width:20px;height:20px}
 
-    /* Indicador + Ver todos */
+    /* Indicador (queda) + Ver todos (comentado) */
     .g-meta{display:flex;align-items:center;gap:10px;margin-left:auto}
     .g-indicator{font-weight:800;color:#cfe1ff;background:rgba(108,139,255,.12);border:1px solid rgba(108,139,255,.35);padding:6px 10px;border-radius:999px;font-size:.85rem}
 
@@ -284,7 +286,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .fb-status.err{color:var(--bad)}
     .fb-status.info{color:var(--muted)}
 
-    /* === Reducción de sombras en móvil (punto 4) === */
+    /* Reducción de sombras en móvil */
     @media (max-width:720px){
       .sim-card,
       .g-card,
@@ -329,7 +331,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <div class="container">
         <div class="hero-head">
           <h1 id="hero-title"><span aria-hidden="true">🎮</span>Aprende y practica para <b>aprobar tus certificaciones IT</b> y avanzar en tu carrera.</h1>
-          <p class="lead">Simuladores realistas, explicaciones claras y resúmenes por dominio. Pensado para <b>trabajadores</b> y <b>estudiantes</b> que quieren <b>mejorar conocimientos, oportunidades y salario</b>.</p>
+          <p class="lead">Simuladores realistas + resúmenes por dominio. Practica lo que más cae y mide tu progreso hasta aprobar.</p>
         </div>
         <div class="hero-actions" role="group" aria-label="Acciones principales">
          <!-- <a class="btn" href="/score/ranking.html">🏆 VER RANKING GLOBAL</a>-->
@@ -346,9 +348,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         </div>
         <div class="pitch-grid" role="list">
           <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🎯</div><h3>Preguntas enfocadas</h3></div><p>Simuladores para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b>.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🧠</div><h3>Aprendizaje útil</h3></div><p>Hojas de trucos y resúmenes aplicables al trabajo.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🧠</div><h3>Resúmenes accionables</h3></div><p>Hojas de trucos y resúmenes aplicables al trabajo.</p></article>
           <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🔗</div><h3>Explicaciones con fuentes</h3></div><p>Rationale + documentación oficial en cada respuesta.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">💼</div><h3>Impulsa tu carrera</h3></div><p>Certifícate, suma puntos en ranking y demuestra progreso.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">💼</div><h3>Demuestra progreso</h3></div><p>Certifícate, suma puntos en ranking y demuestra progreso.</p></article>
         </div>
         <div class="hook-ctas" role="group" aria-label="Acciones destacadas">
           <a class="pill-btn big" href="/catalog/itcatalog.html">EMPEZAR A PRACTICAR</a>
@@ -392,7 +394,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <div class="prov-pill prov-azure">MICROSOFT AZURE</div>
             <div class="v-title">Explora las certificaciones de Azure</div>
             <p>Rutas y guías de estudio CLOUD de Microsoft</p>
-            <div class="btns-row" role="group" aria-label="Acciones Microsoft Azure">
+            <div class="btns-row" aria-label="Acciones Microsoft Azure">
               <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
               <a class="btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a>
               <a class="btn" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a>
@@ -404,7 +406,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <div class="prov-pill prov-aws">AMAZON AWS</div>
             <div class="v-title">Explora las certificaciones de AWS</div>
             <p>Rutas y guías de estudio CLOUD de Amazon</p>
-            <div class="btns-row" role="group" aria-label="Acciones Amazon AWS">
+            <div class="btns-row" aria-label="Acciones Amazon AWS">
               <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
               <a class="btn" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a>
             </div>
@@ -419,17 +421,16 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         <h2 id="g-title" class="sec-title">Carrusel de Conceptos a Examen</h2>
 
         <div class="g-arrows" role="group" aria-label="Navegación del glosario">
-          <button class="g-arrow" id="gPrev" aria-label="Anterior">
+          <button class="g-arrow" id="gPrev" aria-label="Anterior" aria-controls="gTrack">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
           </button>
-          <button class="g-arrow" id="gNext" aria-label="Siguiente">
+          <button class="g-arrow" id="gNext" aria-label="Siguiente" aria-controls="gTrack">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
           </button>
 
-          <!-- Indicador + Ver todos (punto 4) -->
           <div class="g-meta">
             <div class="g-indicator" id="gIndicator" aria-live="polite">1–2 / 20</div>
-            <!--<a class="btn small" href="/content/content.html#glosario" aria-label="Ver todos los conceptos">Ver todos</a>-->
+            <!-- <a class="btn small" href="/content/content.html#glosario" aria-label="Ver todos los conceptos">Ver todos</a> -->
           </div>
         </div>
 
@@ -662,13 +663,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const CATALOG = [
       { id:'AZ-104', provider:'MICROSOFT AZURE (ENGLISH)', title:'Administrator Associate', quiz:'az-104',
         startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html', providerClass:'prov-azure', simClass:'sim-azure',
-        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))' },
+        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:650 },
       { id:'SAA-C03', provider:'AMAZON AWS (ENGLISH)', title:'Solutions Architect Associate', quiz:'aws-saa-c03',
         startUrl:'/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html', providerClass:'prov-aws', simClass:'sim-aws',
-        accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))' },
+        accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))', q:720 },
       { id:'AZ-305', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Architect Expert', quiz:'az-305',
         startUrl:'/certification/microsoft-azure/az-305/lz-azure-az-305.html', providerClass:'prov-azure', simClass:'sim-azure',
-        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))' }
+        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:580 }
     ];
     const simGrid=document.getElementById('simGrid');
 
@@ -684,7 +685,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <span class="accent" style="background:${c.accent}" aria-hidden="true"></span>
           <div class="prov-pill ${c.providerClass}">${c.provider}</div>
           <div class="sim-title">${c.id} ${c.title}</div>
-          <div class="btns-row" role="group" aria-label="Acciones de simulador ${c.id}">
+          <div class="sim-badges">
+            <span class="sim-badge">+${c.q} preguntas</span>
+            <span class="sim-badge">Mixto</span>
+            <span class="sim-badge">Explicadas</span>
+          </div>
+          <div class="btns-row" aria-label="Acciones de simulador ${c.id}">
             <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}">🏆 Ranking</a>
             <a class="cta-btn start-btn" data-href="${c.startUrl}" href="${startHref}">${startLabel}</a>
           </div>
@@ -730,7 +736,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     btnFbSend?.addEventListener('click', async ()=>{
       const message = (fbText.value||'').trim();
       const from    = (fbEmail.value||'').trim();
-      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; return; }
+      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; fbStatus.focus?.(); return; }
       fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
       fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
 
@@ -749,15 +755,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         clearTimeout(timeoutId);
         if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
         fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
-        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display=''; btnFbOk.focus();
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus(); // A11y: anunciar estado
       }catch(err){
         console.error('Error guardando feedback:', err);
         fbStatus.textContent = 'No se pudo enviar la info. :('; fbStatus.className='fb-status err';
-        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display=''; btnFbOk.focus();
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
       }
     });
 
-    /* Carrusel → lógica (+ indicador, punto 4) */
+    /* Carrusel → lógica (con indicador) */
     (function(){
       const track = document.getElementById('gTrack');
       if(!track) return;
