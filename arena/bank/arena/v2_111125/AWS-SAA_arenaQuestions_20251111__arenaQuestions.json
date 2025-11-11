@@ -1,0 +1,2908 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-VEKHE5OJYAVTXM47Z8KA3NQZ"
+          },
+          "question": {
+            "S": "Necesitas DR activo/pasivo entre us-east-1 y eu-west-1 para una web. ¿Qué eliges a nivel DNS?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design resilient architectures"
+          },
+          "title": {
+            "S": "Multi-Region failover"
+          },
+          "concept": {
+            "S": "Route 53 + health checks"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Hosted zone privada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Route 53 failover con health checks"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "S3 estático"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "route53",
+              "dr"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design resilient architectures#medium#X-CPC9UKMSEXCGBD9RH8RF4I8E"
+          },
+          "diff_qid": {
+            "S": "medium#Y-4QSS6HQS00XT4VPU29HC6M9Z"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-1MXBAPUELSN8YSLQKUVHD5AR"
+          },
+          "question": {
+            "S": "Trabajo de Big Data en EC2 necesita throughput secuencial enorme y no persistente. ¿Qué volumen?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design high-performing architectures"
+          },
+          "title": {
+            "S": "EC2 storage"
+          },
+          "concept": {
+            "S": "Throughput alto secuencial"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "EBS gp3"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instance Store NVMe"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EBS sc1"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "EFS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ec2",
+              "storage"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design high-performing architectures#easy#X-P6WMBY4F4F706OOAX8B9VUCV"
+          },
+          "diff_qid": {
+            "S": "easy#Y-YKNGGS15ZN3LRBP5NC7FTXOL"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-Q6VHFPSHL4PTCQXOEWZW86XV"
+          },
+          "question": {
+            "S": "Un SaaS debe asumir un rol en tu cuenta de forma segura. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "Cross-account access"
+          },
+          "concept": {
+            "S": "IAM Roles"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Access keys de un usuario"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "IAM Role con trust policy + external ID"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bucket público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ACLs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "iam",
+              "cross-account"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#medium#X-FFLQFEA6FAHVG3HS12KMG07H"
+          },
+          "diff_qid": {
+            "S": "medium#Y-CWXM13SUVC66C752HMPBPZOO"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-4DDSUN2S7P1WNSMRRR8VH7HW"
+          },
+          "question": {
+            "S": "Pagas mucho por transferencia desde S3 a clientes globales. ¿Qué ayudaría?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design cost-optimized architectures"
+          },
+          "title": {
+            "S": "Data transfer"
+          },
+          "concept": {
+            "S": "Reducir costes salientes"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Mover a EFS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CloudFront con OAC delante de S3"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Abrir bucket al público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Usar NAT GW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cloudfront",
+              "s3",
+              "cost"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design cost-optimized architectures#easy#X-IV4N088FSL1M6XIR2M7XCOWB"
+          },
+          "diff_qid": {
+            "S": "easy#Y-0COEBMEV4BX9CC32VUZ4GI4Q"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-J3GY6QFGTJ27RFS8N9GYYZSC"
+          },
+          "question": {
+            "S": "Microservicio productor picos y consumidor irregular. ¿Patrón correcto?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design resilient architectures"
+          },
+          "title": {
+            "S": "Queues"
+          },
+          "concept": {
+            "S": "Desacoplar procesamiento"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "HTTP directo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SQS con Lambda y DLQ"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SNS puro"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Step Functions Síncrono"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "sqs",
+              "lambda"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design resilient architectures#easy#X-GV7YBEJ0X8V8B95QEDYA5CLE"
+          },
+          "diff_qid": {
+            "S": "easy#Y-3K91GAYPTYG9XXK7KCWUIP9Q"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-6VC2CFZ8UXTKSW3VR7OSWO94"
+          },
+          "question": {
+            "S": "Cumplimiento exige rotación anual de claves de cifrado. ¿Qué habilitas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "KMS"
+          },
+          "concept": {
+            "S": "Rotación y CMK"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Claves hardcoded"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "KMS CMK con rotación automática"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SSE-S3 sin KMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Desactivar cifrado"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kms",
+              "encryption"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#medium#X-TSEQJFQV6O49782KHHNPOKNL"
+          },
+          "diff_qid": {
+            "S": "medium#Y-M2ZTI8BWJOYBUA5QN6P4PO96"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-396FZ92FH0VG4KW3CMMNSZCH"
+          },
+          "question": {
+            "S": "Carga impredecible en MySQL administrado con segundos a picos altos. ¿Opción?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design high-performing architectures"
+          },
+          "title": {
+            "S": "Aurora Serverless v2"
+          },
+          "concept": {
+            "S": "Elasticidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RDS MySQL t3.micro"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Aurora Serverless v2"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EC2 con MySQL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DynamoDB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aurora",
+              "serverless"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design high-performing architectures#medium#X-KF5OPI7WL4R9FKYCNMTXI7PZ"
+          },
+          "diff_qid": {
+            "S": "medium#Y-S0DZCLHZDRZ363LAM8LXPSHQ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-8SHXFOSL0N14V5FIKKNC7NGH"
+          },
+          "question": {
+            "S": "Instancias privadas necesitan acceder a S3 sin salir a Internet. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "VPC endpoints"
+          },
+          "concept": {
+            "S": "Acceso privado a S3"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NAT Instance"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VPC Gateway Endpoint para S3"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "IGW temporal"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Transit Gateway"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "vpc",
+              "endpoint",
+              "s3"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#easy#X-D6LRZBCS6HQZVXQ350UVP9M8"
+          },
+          "diff_qid": {
+            "S": "easy#Y-Y9MP7TQOL4N305GDLOMWJSNL"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-V5VA5JEEGVPD5B7VTGKOSUJJ"
+          },
+          "question": {
+            "S": "Pretendes ahorrar en cómputo flexible (EC2, Fargate, Lambda). ¿Qué contrato?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design cost-optimized architectures"
+          },
+          "title": {
+            "S": "Savings Plans vs RIs"
+          },
+          "concept": {
+            "S": "Ahorro compute"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "On-Demand siempre"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Compute Savings Plan 1-3 años"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "RI zonal convertible"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Spot exclusivamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cost",
+              "savings-plans"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design cost-optimized architectures#medium#X-6I8A5ZWIJCZKFR00FSEB2JIO"
+          },
+          "diff_qid": {
+            "S": "medium#Y-NSA70SQ4X5W6KV8BJZ9NQ4XY"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-SW4AUT5FVZ6EE0N73701OUYY"
+          },
+          "question": {
+            "S": "Exigen HA para base de datos PostgreSQL gestionada en una región. ¿Qué activas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design resilient architectures"
+          },
+          "title": {
+            "S": "RDS Multi-AZ"
+          },
+          "concept": {
+            "S": "Alta disponibilidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Read replica misma AZ"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "RDS Multi-AZ"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Snapshots diarios"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Aurora Global"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "rds",
+              "ha"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design resilient architectures#easy#X-F1B5DC7AD1L7VQRCZQYITM8L"
+          },
+          "diff_qid": {
+            "S": "easy#Y-2NMFVT6ZAI752FLQWSHGTHB2"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-TJKGMNETCYLLHJ3ECB6OOU1W"
+          },
+          "question": {
+            "S": "Tabla DynamoDB con hot key; necesitas distribuir carga. ¿Qué haces?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design high-performing architectures"
+          },
+          "title": {
+            "S": "DynamoDB partitions"
+          },
+          "concept": {
+            "S": "Escalado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Aumentar RCU sin más"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Elegir mejor partition key/añadir sufijo aleatorio"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Mover a RDS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Usar DAX"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dynamodb",
+              "scaling"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design high-performing architectures#hard#X-SLIXJHK8079SCU8ND5ZXARZ2"
+          },
+          "diff_qid": {
+            "S": "hard#Y-ATH6GBYMJYVXY0ML9D6F6YBL"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-2PE5O3PAGKWNEHYT0FTF75C3"
+          },
+          "question": {
+            "S": "Regla de seguridad: ningún bucket público. ¿Qué config global aplicas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "S3 encryption"
+          },
+          "concept": {
+            "S": "Bloquear acceso público"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ACL privadas solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "S3 Block Public Access a nivel cuenta y buckets"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Policy '*'"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CloudTrail"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#easy#X-H87MWJQP8E95GPJESOMLPDIH"
+          },
+          "diff_qid": {
+            "S": "easy#Y-EUKAWUIF2QSGCVHKW8Q30JCA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-TJT0B7JZQ8KC835AWN3J1TOZ"
+          },
+          "question": {
+            "S": "Muchas instancias privadas sólo acceden a APIs de AWS. ¿Cómo reducir coste de NAT?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design cost-optimized architectures"
+          },
+          "title": {
+            "S": "NAT cost"
+          },
+          "concept": {
+            "S": "Reducir coste NAT"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Un solo NAT GW para todas las AZs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Interface VPC Endpoints (PrivateLink) hacia servicios necesarios"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NAT Instance"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "IGW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "privatelink",
+              "cost"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design cost-optimized architectures#medium#X-ZAKV3LKIQ4IDU3CXWTPGAHG6"
+          },
+          "diff_qid": {
+            "S": "medium#Y-6LY4596QCMGWUCMJ37SG4TGJ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-5C6ZLU5NU19S661WU97RD3AV"
+          },
+          "question": {
+            "S": "Necesitas HA para microservicios contenedorizados. ¿Qué arquitectura?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design resilient architectures"
+          },
+          "title": {
+            "S": "ECS/EKS HA"
+          },
+          "concept": {
+            "S": "Multi-AZ y ALB"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Una subred privada única"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Varias subredes en múltiples AZ con ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EC2 único grande"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "API Gateway sin ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ecs",
+              "eks",
+              "alb"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design resilient architectures#medium#X-6SAG3WAYJXOHODGGDIA85F3H"
+          },
+          "diff_qid": {
+            "S": "medium#Y-GB8SM8KTUE9BPDY40HQICWT0"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-Q70C11EK5KFWZVPKXUY7EPSO"
+          },
+          "question": {
+            "S": "Lecturas microsegundo desde DynamoDB con patrón read-heavy. ¿Qué agregas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design high-performing architectures"
+          },
+          "title": {
+            "S": "DAX"
+          },
+          "concept": {
+            "S": "Cache para Dynamo"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Aurora"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DAX cluster"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ElastiCache Redis"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "S3 Select"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dax",
+              "dynamodb"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design high-performing architectures#medium#X-RRKRRYFJ9J1484Q2S8ZHVEJ6"
+          },
+          "diff_qid": {
+            "S": "medium#Y-1J3YQX80MHH4YGNX2PCB4I01"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-BQKEQBJS7YYHTHLBAQ3K5S3C"
+          },
+          "question": {
+            "S": "Expones APIs en ALB público; piden mitigar OWASP Top 10. ¿Qué añades?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "WAF"
+          },
+          "concept": {
+            "S": "Protección web"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Shield Advanced sin WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "AWS WAF con reglas administradas delante del ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NACLs solamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "GuardDuty"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "waf",
+              "owasp"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#easy#X-OYZBDSWL0EE7OB6GQ4UN5HGT"
+          },
+          "diff_qid": {
+            "S": "easy#Y-F7PNVKVQS8F1O9P0H8AWX2IU"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-O8AFCJKHKSGKWU4SA71Z99N8"
+          },
+          "question": {
+            "S": "Acceso impredecible a objetos grandes. ¿Qué clase reduce coste sin sobrecarga operacional?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design cost-optimized architectures"
+          },
+          "title": {
+            "S": "S3 storage classes"
+          },
+          "concept": {
+            "S": "Optimización"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Standard IA con lifecycle manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Intelligent-Tiering"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Glacier Deep Archive siempre"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "One Zone-IA por defecto"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "storage-class"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design cost-optimized architectures#easy#X-GMMQ739DS1OVPMB3831ALQDJ"
+          },
+          "diff_qid": {
+            "S": "easy#Y-CG2GJ5RVE7UUGFMISCNX1POE"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-FSWC6GBJ419Y7G8VOEC6T7OG"
+          },
+          "question": {
+            "S": "Necesitas streaming gestionado con mínimo mantenimiento; consumidores diversos. ¿Qué servicio?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design resilient architectures"
+          },
+          "title": {
+            "S": "MSK vs Kinesis"
+          },
+          "concept": {
+            "S": "Streaming"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Autoalojar Kafka en EC2"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Kinesis Data Streams"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "MSK siempre"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "SQS FIFO"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kinesis",
+              "streaming"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design resilient architectures#medium#X-JF1417L69DSOT01T0ZEM4SV8"
+          },
+          "diff_qid": {
+            "S": "medium#Y-BYKUIP350BYJPQVLQF9BCTEN"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-CQXYKF80SCFB2B7H79QGBU7W"
+          },
+          "question": {
+            "S": "App global requiere lecturas/escrituras locales en múltiples regiones. ¿Solución?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design high-performing architectures"
+          },
+          "title": {
+            "S": "Global reads"
+          },
+          "concept": {
+            "S": "DynamoDB Global Tables"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Replicación S3"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DynamoDB Global Tables"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Aurora read replicas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RDS Multi-AZ"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dynamodb",
+              "global"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design high-performing architectures#hard#X-FQGZ5237O5H31J6V8SGPWAY6"
+          },
+          "diff_qid": {
+            "S": "hard#Y-46UI6Z9EKICCDRKTUFU1WZK6"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-L1G0L6U3S5TXPBO586QNREGC"
+          },
+          "question": {
+            "S": "Quieres rotación automática de credenciales de RDS. ¿Qué servicio?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "Secrets"
+          },
+          "concept": {
+            "S": "Gestión de secretos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "KMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "AWS Secrets Manager"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Parameter Store estándar"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Guardar en código"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "secrets",
+              "rds"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#medium#X-VJLQQ1280DY14P68BDMTBDQ9"
+          },
+          "diff_qid": {
+            "S": "medium#Y-TYXHZGAH2VT6PDCHTU6O15KX"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-SOG8KZUK5PYXBU039U886LSD"
+          },
+          "question": {
+            "S": "Deseas simplificar gestión de nodos para cargas de tamaño variable. ¿Qué opción?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design cost-optimized architectures"
+          },
+          "title": {
+            "S": "EKS compute"
+          },
+          "concept": {
+            "S": "Fargate vs EC2"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "EKS en EC2 gestionando Auto Scaling Groups"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "EKS on Fargate"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ECS EC2"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Lambda"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "eks",
+              "fargate"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design cost-optimized architectures#medium#X-JPLPD516V48HTISD48NPZ91I"
+          },
+          "diff_qid": {
+            "S": "medium#Y-TV9C7XJGRIXX24PAS73KLHBS"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-3R1I9BIRCJNWDVLE5A5YXKRZ"
+          },
+          "question": {
+            "S": "Cumplimiento exige copia de objetos S3 en otra región con cifrado KMS. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design resilient architectures"
+          },
+          "title": {
+            "S": "S3 replication"
+          },
+          "concept": {
+            "S": "CRR"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Replicación sin KMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CRR con SSE-KMS y permisos en la clave destino"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Mover a Glacier"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Multi-Upload"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "replication",
+              "kms"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design resilient architectures#medium#X-LXSJRCSPQH26NX6XCZZD66LK"
+          },
+          "diff_qid": {
+            "S": "medium#Y-WIMB7JOBP455K7JQ55BAZT9J"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-9K13EBGJ43NQPKCDC7I0EUES"
+          },
+          "question": {
+            "S": "API de lectura intensiva con respuestas repetidas. ¿Optimización?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design high-performing architectures"
+          },
+          "title": {
+            "S": "API caching"
+          },
+          "concept": {
+            "S": "CloudFront + API GW cache"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Aumentar tamaño de Lambda"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Habilitar caché en API Gateway y TTL adecuado"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Multi-Region activo-activo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Shield Advanced"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apigw",
+              "cache"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design high-performing architectures#easy#X-WN8N3SBEYJD6GV624KYT75ME"
+          },
+          "diff_qid": {
+            "S": "easy#Y-0HREXYHP3Y3OAA4J4TK9ZOZM"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-OAJ4D00E0652X3A6VWPUGUJH"
+          },
+          "question": {
+            "S": "Quieren detectar comportamiento anómalo en cuentas y VPC. ¿Qué servicio?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "Inspector/GuardDuty"
+          },
+          "concept": {
+            "S": "Detección amenazas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Inspector"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "GuardDuty"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CloudTrail únicamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Macie"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "security",
+              "guardduty"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#easy#X-NWN8ES9WRHIXPPQOFC01LMX6"
+          },
+          "diff_qid": {
+            "S": "easy#Y-NPXH9UYCGWYIRSOWXJ5TVQO8"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-2F3QFKMJRWPP7U1QQUTG9HBN"
+          },
+          "question": {
+            "S": "Función Lambda con latencia fría no aceptable. ¿Qué config ayuda sin servidores?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design cost-optimized architectures"
+          },
+          "title": {
+            "S": "Lambda cost"
+          },
+          "concept": {
+            "S": "Optimizar"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "EC2 fijo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Provisioned Concurrency"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Aumentar timeout"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DLQ"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "lambda",
+              "performance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design cost-optimized architectures#medium#X-RHJEV5VY2WI47LJ4U54IGCNQ"
+          },
+          "diff_qid": {
+            "S": "medium#Y-C9TG99EA89BYMJTNAMEI06S5"
+          }
+        }
+      }
+    }
+  ]
+}

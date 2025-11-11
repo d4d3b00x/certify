@@ -1,0 +1,355 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-AJQI8WKRK0IVJ7MOW07Y6M2G"
+          },
+          "question": {
+            "S": "Necesitas que un servicio A llame a B sin secretos persistentes. ¿Qué patrón recomiendas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design security solutions"
+          },
+          "title": {
+            "S": "Token de corto tiempo con Managed Identities y Access Tokens OBO"
+          },
+          "concept": {
+            "S": "Minimizar exposición de credenciales en microservicios"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SP con secreto en Key Vault permanente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Managed Identity + On-Behalf-Of para emitir tokens cortos"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SAS de 1 año"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Clave simétrica en appsettings"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "managed-identity",
+              "obo",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design security solutions#hard#AZ305-AJQI8WKRK0IVJ7MOW07Y6M2G"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-AJQI8WKRK0IVJ7MOW07Y6M2G"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-SN4IY4HXEMP67VHMYCXJTMIF"
+          },
+          "question": {
+            "S": "Tu base PaaS necesita crecer hasta varios TB y escalar lectura. ¿Qué opción?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "Cargas OLTP con Azure SQL Hyperscale y escalado de lectura"
+          },
+          "concept": {
+            "S": "Aislar lecturas pesadas de la ruta de escritura"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SQL Database General Purpose Single"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure SQL Hyperscale con replicas de lectura"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VMs con AlwaysOn manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Cosmos DB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "sql",
+              "hyperscale",
+              "read-scale"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#medium#AZ305-SN4IY4HXEMP67VHMYCXJTMIF"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-SN4IY4HXEMP67VHMYCXJTMIF"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-25072A7DG3T2U561IRC3NU1L"
+          },
+          "question": {
+            "S": "Necesitas validar certificados de cliente y bloquear patrones específicos. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "Azure Application Gateway WAF v2 con mTLS y reglas personalizadas"
+          },
+          "concept": {
+            "S": "Seguridad L7 con autenticación mutua y protección OWASP"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Load Balancer estándar L4"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Application Gateway WAF v2 con mTLS y reglas personalizadas"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Front Door sin WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Traffic Manager"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "appgw",
+              "waf",
+              "mtls"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#hard#AZ305-25072A7DG3T2U561IRC3NU1L"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-25072A7DG3T2U561IRC3NU1L"
+          }
+        }
+      }
+    }
+  ]
+}

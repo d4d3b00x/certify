@@ -1,0 +1,2804 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-02I4WDCK3KWSE4KG6A810HCG"
+          },
+          "question": {
+            "S": "Un equipo de soporte debe reiniciar VMs y leer métricas, sin poder modificar redes ni discos. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage identities and governance"
+          },
+          "title": {
+            "S": "Control de acceso granular con Custom Roles en RBAC"
+          },
+          "concept": {
+            "S": "Diseño de roles personalizados para mínimos privilegios y segmentación de acciones"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Asignar Owner en el grupo de recursos"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Crear un Custom Role con actions limitadas y asignarlo al RG"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Aplicar Deny Assignments a toda la suscripción"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Usar Access Reviews trimestrales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "rbac",
+              "least-privilege",
+              "custom-role"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage identities and governance#medium#AZ104-02I4WDCK3KWSE4KG6A810HCG"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-02I4WDCK3KWSE4KG6A810HCG"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-HN5LET9TONLHKXBGJ4ZAT2RD"
+          },
+          "question": {
+            "S": "La organización exige que todas las NIC tengan IP forwarding deshabilitado; nuevas y existentes deben cumplir. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage identities and governance"
+          },
+          "title": {
+            "S": "Bloqueo de configuración con Azure Policy Deny y DINE"
+          },
+          "concept": {
+            "S": "Enforcement de estándares con efectos Deny/DeployIfNotExists"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Blueprint sin políticas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Policy con efecto Deny + DINE para remediación"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Etiquetas y scripts manuales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Sólo Activity Log Alerts"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "policy",
+              "compliance",
+              "remediation"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage identities and governance#medium#AZ104-HN5LET9TONLHKXBGJ4ZAT2RD"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-HN5LET9TONLHKXBGJ4ZAT2RD"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-B6HD6FL9136W3QFHXC9T6X3Z"
+          },
+          "question": {
+            "S": "Quieres forzar MFA y dispositivos conformes sólo para portales de administración. ¿Qué implementas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage identities and governance"
+          },
+          "title": {
+            "S": "Acceso condicional para administración segura en Azure"
+          },
+          "concept": {
+            "S": "MFA y restricciones por ubicación/riesgo para tareas privilegiadas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de origen"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Conditional Access dirigido a roles administrativos"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Service Endpoint al portal"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "PIM sin MFA"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "conditional-access",
+              "admin-security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage identities and governance#hard#AZ104-B6HD6FL9136W3QFHXC9T6X3Z"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-B6HD6FL9136W3QFHXC9T6X3Z"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-3WD4DAVYZGEENYNESO6SC74G"
+          },
+          "question": {
+            "S": "Requieres mezclar tamaños de VM y tolerar caída de una zona. ¿Qué despliegas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage compute"
+          },
+          "title": {
+            "S": "Mantenimiento con VMSS Flexible y zonas para alta disponibilidad"
+          },
+          "concept": {
+            "S": "Conjuntos de escalado en modo Flexible con balanceo y zonas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "VMSS Uniform sin zonas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VMSS Flexible distribuido en Zonas + LB"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Disponibilidad por Update Domains"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Un único VM grande"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "vmss",
+              "zones",
+              "ha"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage compute#medium#AZ104-3WD4DAVYZGEENYNESO6SC74G"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-3WD4DAVYZGEENYNESO6SC74G"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-NLHVZ1GTQ2OPYLO39HJBK03T"
+          },
+          "question": {
+            "S": "Necesitas exponer RDP/SSH temporal con aprobación y auditoría. ¿Qué componente?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage compute"
+          },
+          "title": {
+            "S": "Guest attestation y seguridad con Defender para Cloud"
+          },
+          "concept": {
+            "S": "Endurecimiento de VMs con recomendaciones y JIT VM Access"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG inbound permanente 22/3389"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Just-In-Time VM Access en Defender for Cloud"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Private Endpoint para RDP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Peering con UseRemoteGateways"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "defender",
+              "jit",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage compute#medium#AZ104-NLHVZ1GTQ2OPYLO39HJBK03T"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-NLHVZ1GTQ2OPYLO39HJBK03T"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-I6A9HLF72EO0NOPE5P0DM9BY"
+          },
+          "question": {
+            "S": "Buscas mejorar tiempos de provisión y ahorrar en el disco del SO. ¿Qué opción eliges?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage compute"
+          },
+          "title": {
+            "S": "Ephemeral OS Disk para arranque rápido y coste"
+          },
+          "concept": {
+            "S": "Discos efímeros en el host con redes administradas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Standard HDD para OS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Ephemeral OS Disk en VM compatibles"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Premium SSD v2 para OS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "VHD no administrado"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ephemeral-os",
+              "performance",
+              "cost"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage compute#hard#AZ104-I6A9HLF72EO0NOPE5P0DM9BY"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-I6A9HLF72EO0NOPE5P0DM9BY"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-1KSJRCSKWZBQ68WHER210LJC"
+          },
+          "question": {
+            "S": "Debes prevenir sobrescrituras maliciosas y recuperar estados anteriores de blobs. ¿Qué habilitas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Implement and manage storage"
+          },
+          "title": {
+            "S": "Snapshots incrementales de blob con versioning y bloqueo"
+          },
+          "concept": {
+            "S": "Protección de objetos con versioning y legal hold"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Sólo Soft Delete para contenedores"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Versioning + Immutability (Legal hold/Time-based)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Lifecycle sin versioning"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NFSv3"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "blob",
+              "immutability",
+              "versioning"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Implement and manage storage#medium#AZ104-1KSJRCSKWZBQ68WHER210LJC"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-1KSJRCSKWZBQ68WHER210LJC"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-BYM6OZ6KQVFY50KRYY45AWJU"
+          },
+          "question": {
+            "S": "Requieres shares SMB con alto IOPS y resiliencia zonal. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Implement and manage storage"
+          },
+          "title": {
+            "S": "Azure Files rendimiento y redundancia para cargas productivas"
+          },
+          "concept": {
+            "S": "Files Premium con ZRS y multi-channel SMB"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Files Standard LRS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Files Premium ZRS con SMB Multichannel"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Blob con SFTP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ANF NFSv3"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "azure-files",
+              "premium",
+              "zrs"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Implement and manage storage#hard#AZ104-BYM6OZ6KQVFY50KRYY45AWJU"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-BYM6OZ6KQVFY50KRYY45AWJU"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-R8QLK918J9OCP9WSM8Q7UGN1"
+          },
+          "question": {
+            "S": "Montar WSFC sobre discos administrados compartidos. ¿Qué SKU soporta?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Implement and manage storage"
+          },
+          "title": {
+            "S": "Discos compartidos para clústeres de Windows"
+          },
+          "concept": {
+            "S": "Shared Disks con SCSI PR para failover"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Standard HDD con snapshots"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Premium SSD con Shared Disks"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Ephemeral OS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Ultra sin compartir"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "shared-disks",
+              "wsfc"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Implement and manage storage#medium#AZ104-R8QLK918J9OCP9WSM8Q7UGN1"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-R8QLK918J9OCP9WSM8Q7UGN1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-256WF7JBNEWXQPA1CEATZ9KP"
+          },
+          "question": {
+            "S": "Quieres eliminar IPs públicas en VMs y mantener acceso de admin. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage virtual networking"
+          },
+          "title": {
+            "S": "Azure Bastion como salto seguro sin IP pública en VMs"
+          },
+          "concept": {
+            "S": "Acceso RDP/SSH por portal/túnel sin exponer puertos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NAT Gateway hacia las VMs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Bastion en la VNet"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Public IP dinámica por VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "VPN P2S a cada VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "bastion",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage virtual networking#medium#AZ104-256WF7JBNEWXQPA1CEATZ9KP"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-256WF7JBNEWXQPA1CEATZ9KP"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-HM59ZZASMHR9E80JXI6KUACH"
+          },
+          "question": {
+            "S": "Necesitas acceso privado a Azure SQL sin pasar por Internet. ¿Cuál es el patrón?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage virtual networking"
+          },
+          "title": {
+            "S": "Private Link para bases de datos PaaS sin exposición pública"
+          },
+          "concept": {
+            "S": "Private Endpoints y DNS privado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Service Endpoints únicamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Private Endpoint + Private DNS Zone enlazada"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Public IP con firewall por IP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "App Gateway WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "private-link",
+              "sql"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage virtual networking#hard#AZ104-HM59ZZASMHR9E80JXI6KUACH"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-HM59ZZASMHR9E80JXI6KUACH"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-TAW762T823N9JGBTKOLFLW84"
+          },
+          "question": {
+            "S": "Quieres investigar conexiones permitidas/denegadas y tendencias. ¿Qué habilitas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage virtual networking"
+          },
+          "title": {
+            "S": "NSG Flow Logs y Traffic Analytics para visibilidad"
+          },
+          "concept": {
+            "S": "Diagnóstico de red con NSG flow logs en LA/Storage"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Activity Log export"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG Flow Logs + Traffic Analytics"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Metrics clásicas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Azure Policy solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "nsg",
+              "flow-logs",
+              "monitoring"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage virtual networking#medium#AZ104-TAW762T823N9JGBTKOLFLW84"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-TAW762T823N9JGBTKOLFLW84"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-VW01PK2GVQ41E8Y8MJ8RS972"
+          },
+          "question": {
+            "S": "Exigen DR a otra región manteniendo IP privada tras el failover. ¿Qué componente consideras?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Backup and disaster recovery"
+          },
+          "title": {
+            "S": "ASR con replicación entre Zonas y Regiones"
+          },
+          "concept": {
+            "S": "Site Recovery para VMs con failover planificado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Snapshots y scripts"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Site Recovery con reprotección"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Azure Backup diario"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Availability Set"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "asr",
+              "dr",
+              "ip"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Backup and disaster recovery#medium#AZ104-VW01PK2GVQ41E8Y8MJ8RS972"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-VW01PK2GVQ41E8Y8MJ8RS972"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-G9NUMP4S938HAYX0MMM4MEFE"
+          },
+          "question": {
+            "S": "Quieres proteger HANA en VM con restauración consistente. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Backup and disaster recovery"
+          },
+          "title": {
+            "S": "Backup de SAP HANA en VM con integridad"
+          },
+          "concept": {
+            "S": "Extensión de backup para HANA y políticas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Snapshots de disco sin agente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Backup para HANA en VM con políticas apropiadas"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Export a Blob manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Copy-only en SQL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "backup",
+              "hana",
+              "consistency"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Backup and disaster recovery#hard#AZ104-G9NUMP4S938HAYX0MMM4MEFE"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-G9NUMP4S938HAYX0MMM4MEFE"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-4EEB2P3AS1J49QJKLMBCUXY3"
+          },
+          "question": {
+            "S": "Necesitas que operadores de backup no puedan borrar recursos de producción. ¿Qué diseño aplicas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Backup and disaster recovery"
+          },
+          "title": {
+            "S": "Vaults aislados y RBAC para separación de funciones"
+          },
+          "concept": {
+            "S": "Separación de administración de backup y producción"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Mismo RG y mismos roles"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Vault dedicado en RG/Subscription separada con RBAC segregado"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Etiquetas de color"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Deshabilitar Soft Delete"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "rbac",
+              "backup",
+              "segregation"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Backup and disaster recovery#medium#AZ104-4EEB2P3AS1J49QJKLMBCUXY3"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-4EEB2P3AS1J49QJKLMBCUXY3"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-BQDLN4E8SR7QWJYG02I6EKX2"
+          },
+          "question": {
+            "S": "La carga es variable y el umbral fijo genera ruido. ¿Qué tipo de alerta usas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Monitor and maintain"
+          },
+          "title": {
+            "S": "Alertas dinámicas con métricas basadas en umbral inteligente"
+          },
+          "concept": {
+            "S": "Dynamic thresholds y action groups"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Static metric threshold"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Dynamic threshold alert en Azure Monitor"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Activity Log alert"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Service Health"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "monitor",
+              "alerts",
+              "dynamic"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Monitor and maintain#medium#AZ104-BQDLN4E8SR7QWJYG02I6EKX2"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-BQDLN4E8SR7QWJYG02I6EKX2"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-CA1WXR2TVMEFQD9PJ3ZH8SCL"
+          },
+          "question": {
+            "S": "Necesitas un panel operativo con métricas de VM, LB y logs. ¿Qué herramienta?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Monitor and maintain"
+          },
+          "title": {
+            "S": "Azure Workbooks para observabilidad unificada"
+          },
+          "concept": {
+            "S": "Dashboards con métricas y KQL de múltiples recursos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Diagramas de Visio"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Monitor Workbooks"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Only Metrics explorer"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Policy"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "workbooks",
+              "kql"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Monitor and maintain#medium#AZ104-CA1WXR2TVMEFQD9PJ3ZH8SCL"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-CA1WXR2TVMEFQD9PJ3ZH8SCL"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-OX3OMAIWPPX9GEGPFAUQ2P2Z"
+          },
+          "question": {
+            "S": "Quieres enviar SecurityEvent 2 años y Syslog 30 días. ¿Cómo lo diseñas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Monitor and maintain"
+          },
+          "title": {
+            "S": "Azure Monitor Agent y DCR por entorno"
+          },
+          "concept": {
+            "S": "Data Collection Rules segmentando tablas y destinos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Workspace único sin DCR"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DCR por tipo de dato y retención por tabla"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Deshabilitar Syslog"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ama",
+              "dcr",
+              "log-analytics"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Monitor and maintain#hard#AZ104-OX3OMAIWPPX9GEGPFAUQ2P2Z"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-OX3OMAIWPPX9GEGPFAUQ2P2Z"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-GVG5J0E2XQNCZGREEEBJO29L"
+          },
+          "question": {
+            "S": "Tienes batch tolerante a corte. ¿Qué config recomiendas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage compute"
+          },
+          "title": {
+            "S": "Spot + Eviction Policy y prioridad de escala"
+          },
+          "concept": {
+            "S": "Estrategia de coste con interrupciones controladas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Dedicated host"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VMSS con instancias Spot y política de evacuación + prioridad Mix"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM única Standard"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RI 3 años"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "spot",
+              "vmss",
+              "cost"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage compute#medium#AZ104-GVG5J0E2XQNCZGREEEBJO29L"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-GVG5J0E2XQNCZGREEEBJO29L"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-KBS43YP65YYK9UEGUEPI3SYK"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico este-oeste entre subredes. ¿Qué defines?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage virtual networking"
+          },
+          "title": {
+            "S": "User Defined Routes con Appliance virtual"
+          },
+          "concept": {
+            "S": "Enrutamiento forzado a NVA/Firewall"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG con Deny"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "UDR con next hop Virtual Appliance"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering sin más"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute Global Reach"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "udr",
+              "nva",
+              "east-west"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage virtual networking#medium#AZ104-KBS43YP65YYK9UEGUEPI3SYK"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-KBS43YP65YYK9UEGUEPI3SYK"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-XOMO2IQJJ38G2QPY9QWS88MQ"
+          },
+          "question": {
+            "S": "Requieres latencia sub-ms garantizada y control de IOPS. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Implement and manage storage"
+          },
+          "title": {
+            "S": "Ultra Disk y límites de latencia para bases críticas"
+          },
+          "concept": {
+            "S": "Discos Ultra con IOPS/Throughput aprovisionado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Premium SSD v1"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Ultra Disk con valores aprovisionados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Standard HDD"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Premium SSD v2 sin tuning"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ultra-disk",
+              "latency"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Implement and manage storage#hard#AZ104-XOMO2IQJJ38G2QPY9QWS88MQ"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-XOMO2IQJJ38G2QPY9QWS88MQ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-6ATKF00JSXYIC6KQ6O704NDG"
+          },
+          "question": {
+            "S": "Quieres doble aprobación para activar Owner temporal. ¿Cómo lo logras?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Manage identities and governance"
+          },
+          "title": {
+            "S": "Privileged Identity Management con aprobadores múltiples"
+          },
+          "concept": {
+            "S": "Flujo de activación JIT con MFA y justificación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Rol permanente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "PIM con asignación Elegible y aprobadores configurados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Access Package sin revisión"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Policy AuditOnly"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "pim",
+              "jit",
+              "mfa"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Manage identities and governance#hard#AZ104-6ATKF00JSXYIC6KQ6O704NDG"
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-6ATKF00JSXYIC6KQ6O704NDG"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-RRSUYOA9U1ECT7L89N1YBN26"
+          },
+          "question": {
+            "S": "Necesitas restaurar en región secundaria durante un desastre. ¿Qué capacidad habilitas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Backup and disaster recovery"
+          },
+          "title": {
+            "S": "Cross Region Restore para Recovery Services Vaults"
+          },
+          "concept": {
+            "S": "Restauración en región emparejada sin preconfiguración"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Copiar a mano los backups"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Cross Region Restore en el vault"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ExpressRoute"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Solo GRS en Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "crr",
+              "backup"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Backup and disaster recovery#medium#AZ104-RRSUYOA9U1ECT7L89N1YBN26"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-RRSUYOA9U1ECT7L89N1YBN26"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-RWCNKPN099S6QBXAIAZUCSAP"
+          },
+          "question": {
+            "S": "Quieres notificaciones automáticas ante incidentes de la plataforma. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Monitor and maintain"
+          },
+          "title": {
+            "S": "Service Health Alerts y Resource Health para SLA"
+          },
+          "concept": {
+            "S": "Alertas por incidentes/regresiones de servicio"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Metric alerts CPU"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Service Health alerts + Resource Health checks"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo Activity Log"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "UDR"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "service-health",
+              "sre"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Monitor and maintain#medium#AZ104-RWCNKPN099S6QBXAIAZUCSAP"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-RWCNKPN099S6QBXAIAZUCSAP"
+          }
+        }
+      }
+    }
+  ]
+}

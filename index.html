@@ -65,16 +65,18 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px}
     nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
 
     .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
       border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
     .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;letter-spacing:1px;}
     .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
-    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;}
     .btn:hover{border-color:#3a4580}
+    .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
+
     @media (max-width:720px){
       nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
       .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
@@ -112,12 +114,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .sim-card .accent{position:absolute;top:0;left:0;right:0;height:4px;opacity:.9;}
     .sim-card.sim-azure{ box-shadow:0 0 0 1px rgba(0,120,212,.45) inset, 0 10px 26px rgba(0,120,212,.10), var(--shadow); }
     .sim-card.sim-aws{   box-shadow:0 0 0 1px rgba(255,153,0,.35) inset, 0 10px 26px rgba(255,153,0,.10), var(--shadow); }
-    .prov-pill{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;font-weight:900;letter-spacing:.3px;border:1px solid rgba(255,255,255,.15); text-transform:uppercase}
+    .prov-pill{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;font-weight:900;letter-spacing:.6px;border:1px solid rgba(255,255,255,.15); text-transform:uppercase}
     .prov-azure{background:rgba(0,120,212,.16);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
     .prov-aws{background:rgba(255,153,0,.18);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
     .sim-title{font-weight:900;font-size:1.05rem}
     .btns-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);min-height:44px;}
+    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);min-height:44px;letter-spacing:.8px;}
     .cta-btn[aria-disabled="true"]{opacity:.65;cursor:not-allowed;filter:grayscale(.35)}
     .grid{ gap:10px; } .sim-card{ padding:14px; border-radius:16px; gap:10px; }
     .prov-pill{ padding:6px 12px; font-size:12px; } .sim-title{ font-size:.98rem; }
@@ -169,6 +171,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       text-transform: uppercase;
       box-shadow: 0 0 15px rgba(108, 139, 255, .4), 0 4px 14px rgba(80, 90, 240, .25);
       transition: all .15s ease-in-out;
+      letter-spacing:.9px;
     }
     .hero .btn:hover {
       background: linear-gradient(180deg, #8a78ff, #6b54ff);
@@ -220,7 +223,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .tag-aws{background:rgba(255,153,0,.14);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
     .tag-gcp{background:rgba(66,133,244,.14);color:#d7e5ff;border-color:rgba(66,133,244,.35)}
 
-    .g-arrows{display:flex;gap:8px;justify-content:flex-end;margin:8px 2px 0}
+    .g-arrows{display:flex;gap:8px;justify-content:flex-end;margin:8px 2px 0;align-items:center;flex-wrap:wrap}
     .g-arrow{
       appearance:none;border:1px solid var(--stroke);background:linear-gradient(180deg,#1b2142,#161b34);
       color:#cbd3ff;border-radius:12px;min-width:44px;min-height:38px;cursor:pointer;font-weight:900;
@@ -230,6 +233,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .g-arrow:hover{transform:translateY(-1px);border-color:#3a4580}
     .g-arrow[disabled]{opacity:.45;cursor:not-allowed;transform:none}
     .g-arrow svg{width:20px;height:20px}
+
+    /* Indicador + Ver todos */
+    .g-meta{display:flex;align-items:center;gap:10px;margin-left:auto}
+    .g-indicator{font-weight:800;color:#cfe1ff;background:rgba(108,139,255,.12);border:1px solid rgba(108,139,255,.35);padding:6px 10px;border-radius:999px;font-size:.85rem}
 
     /* Móvil: flex + scroll-snap */
     @media (max-width: 720px){
@@ -276,6 +283,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .fb-status.ok{color:var(--ok)}
     .fb-status.err{color:var(--bad)}
     .fb-status.info{color:var(--muted)}
+
+    /* === Reducción de sombras en móvil (punto 4) === */
+    @media (max-width:720px){
+      .sim-card,
+      .g-card,
+      .cta-btn,
+      .hero-head,
+      .p-ico{
+        box-shadow:0 4px 10px rgba(5,10,30,.18) !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -294,12 +312,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </nav>
 
       <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
 
         <div id="userArea" style="display:none;align-items:center;gap:6px">
           <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
           <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
         </div>
       </div>
@@ -314,7 +332,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <p class="lead">Simuladores realistas, explicaciones claras y resúmenes por dominio. Pensado para <b>trabajadores</b> y <b>estudiantes</b> que quieren <b>mejorar conocimientos, oportunidades y salario</b>.</p>
         </div>
         <div class="hero-actions" role="group" aria-label="Acciones principales">
-         <!-- <a class="btn" href="/score/ranking.html" role="button">🏆 VER RANKING GLOBAL</a>-->
+         <!-- <a class="btn" href="/score/ranking.html">🏆 VER RANKING GLOBAL</a>-->
         </div>
       </div>
     </section>
@@ -333,9 +351,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">💼</div><h3>Impulsa tu carrera</h3></div><p>Certifícate, suma puntos en ranking y demuestra progreso.</p></article>
         </div>
         <div class="hook-ctas" role="group" aria-label="Acciones destacadas">
-          <a class="pill-btn big" href="/catalog/itcatalog.html" role="button">EMPEZAR A PRACTICAR</a>
-          <a class="btn big" href="/content/content.html" role="button">VER RESÚMENES</a>
-          <a class="btn big" href="/score/ranking.html" role="button">VER RANKING</a>
+          <a class="pill-btn big" href="/catalog/itcatalog.html">EMPEZAR A PRACTICAR</a>
+          <a class="btn big" href="/content/content.html">VER RESÚMENES</a>
+          <a class="btn big" href="/score/ranking.html">VER RANKING</a>
         </div>
       </div>
     </section>
@@ -348,7 +366,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <h2 style="margin:10px 0 8px;font-size:clamp(1.4rem,3.6vw,2.2rem)">Aprueba tu certificación IT y da el siguiente paso</h2>
             <p class="muted">Guardamos tu progreso y te guiamos por dominios con más peso en el examen.</p>
             <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-              <a class="pill-btn" href="/login/login.html?view=signup" role="button">CREAR CUENTA</a>
+              <a class="pill-btn" href="/login/login.html?view=signup">CREAR CUENTA</a>
             </div>
           </div>
           <div class="right" aria-label="Beneficios">
@@ -375,7 +393,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <div class="v-title">Explora las certificaciones de Azure</div>
             <p>Rutas y guías de estudio CLOUD de Microsoft</p>
             <div class="btns-row" role="group" aria-label="Acciones Microsoft Azure">
-              <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html" role="button">🔎 CATÁLOGO AZURE</a>
+              <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
               <a class="btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a>
               <a class="btn" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a>
             </div>
@@ -387,7 +405,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <div class="v-title">Explora las certificaciones de AWS</div>
             <p>Rutas y guías de estudio CLOUD de Amazon</p>
             <div class="btns-row" role="group" aria-label="Acciones Amazon AWS">
-              <a class="cta-btn" href="/certification/amazon aws/index.html" role="button">🔎 CATÁLOGO AWS</a>
+              <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
               <a class="btn" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a>
             </div>
           </article>
@@ -407,6 +425,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <button class="g-arrow" id="gNext" aria-label="Siguiente">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
           </button>
+
+          <!-- Indicador + Ver todos (punto 4) -->
+          <div class="g-meta">
+            <div class="g-indicator" id="gIndicator" aria-live="polite">1–2 / 20</div>
+            <!--<a class="btn small" href="/content/content.html#glosario" aria-label="Ver todos los conceptos">Ver todos</a>-->
+          </div>
         </div>
 
         <div class="g-wrap">
@@ -661,7 +685,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <div class="prov-pill ${c.providerClass}">${c.provider}</div>
           <div class="sim-title">${c.id} ${c.title}</div>
           <div class="btns-row" role="group" aria-label="Acciones de simulador ${c.id}">
-            <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}" role="button">🏆 Ranking</a>
+            <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}">🏆 Ranking</a>
             <a class="cta-btn start-btn" data-href="${c.startUrl}" href="${startHref}">${startLabel}</a>
           </div>
           ${loginMsg}
@@ -733,12 +757,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
     });
 
-    /* Carrusel → lógica */
+    /* Carrusel → lógica (+ indicador, punto 4) */
     (function(){
       const track = document.getElementById('gTrack');
       if(!track) return;
       const prev  = document.getElementById('gPrev');
       const next  = document.getElementById('gNext');
+      const indicator = document.getElementById('gIndicator');
 
       function columnStride(){
         const first = track.querySelector('.g-card');
@@ -748,10 +773,27 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         return Math.ceil(rect.width + gap);
       }
 
+      function totalCols(){
+        const perCol = 2; // 2 filas → 2 ítems por columna
+        return Math.ceil(track.children.length / perCol);
+      }
+
+      function updateIndicator(){
+        const stride = columnStride();
+        const cols = totalCols();
+        const col = Math.max(1, Math.min(cols, Math.round(track.scrollLeft / stride) + 1));
+        const first = (col - 1) * 2 + 1;
+        const last  = Math.min(first + 1, track.children.length);
+        if(indicator){
+          indicator.textContent = `${first}–${last} / ${track.children.length}`;
+        }
+      }
+
       function updateArrows(){
         const max = track.scrollWidth - track.clientWidth - 2;
         prev.disabled = track.scrollLeft <= 0;
         next.disabled = track.scrollLeft >= max;
+        updateIndicator();
       }
 
       function scrollCols(dir){

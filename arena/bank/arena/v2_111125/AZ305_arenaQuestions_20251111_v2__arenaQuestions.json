@@ -1,0 +1,2792 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-Y7Q8PU5UQWPHQWTF6BQYNQMN"
+          },
+          "question": {
+            "S": "Tienes hot partitions por clave 'tenantId'. ¿Qué estrategia aplicas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "Particionado y clave de partición adecuada en Cosmos DB"
+          },
+          "concept": {
+            "S": "Elección de clave para distribución uniforme y escalado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Mantener la misma clave"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Cambiar a una clave de mayor cardinalidad (p.ej. userId) y rehidratar datos"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Subir RU x10"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Usar Table Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cosmos",
+              "partitioning",
+              "scaling"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#hard#AZ305-Y7Q8PU5UQWPHQWTF6BQYNQMN"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-Y7Q8PU5UQWPHQWTF6BQYNQMN"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-JY8IRITON5Y0O03Y08LCUIBL"
+          },
+          "question": {
+            "S": "Necesitas lectura rápida y escritura desacoplada. ¿Qué patrón?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "CQRS con colas y proyección a lectura"
+          },
+          "concept": {
+            "S": "Separación de comandos y consultas con colas/eventos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Monolito con ORM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CQRS con Event Sourcing/cola y proyección"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Polling cada 5s"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Triggers SQL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cqrs",
+              "event-driven"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#medium#AZ305-JY8IRITON5Y0O03Y08LCUIBL"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-JY8IRITON5Y0O03Y08LCUIBL"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-NB8QGUV94OTOJL3USBUH5M27"
+          },
+          "question": {
+            "S": "Socios externos requieren acceso temporal y revisión periódica. ¿Qué propones?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity, governance, and monitoring solutions"
+          },
+          "title": {
+            "S": "Acceso B2B con External Identities y términos"
+          },
+          "concept": {
+            "S": "Invitados con políticas de consentimiento y revisión"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Cuentas locales permanentes"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "B2B invitado + Access Reviews y expiración"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LDAP público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "VPN a AD"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "b2b",
+              "access-reviews"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity, governance, and monitoring solutions#medium#AZ305-NB8QGUV94OTOJL3USBUH5M27"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-NB8QGUV94OTOJL3USBUH5M27"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-9E3B33BZHWNKVO8VRIM0HACP"
+          },
+          "question": {
+            "S": "Debes inspeccionar TLS saliente y reglas por FQDN. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "Hub-Spoke con Firewall Premium e inspección TLS"
+          },
+          "concept": {
+            "S": "Arquitectura centralizada con políticas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG L4"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Firewall Premium + Firewall Policy"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NVA sin TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "LB básico"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "firewall-premium"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#hard#AZ305-9E3B33BZHWNKVO8VRIM0HACP"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-9E3B33BZHWNKVO8VRIM0HACP"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-W0GGZ4JZFQUTX5PDXZVCF5Y7"
+          },
+          "question": {
+            "S": "Exigen RPO bajo sin mantenimiento complejo. ¿Qué combinas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design business continuity solutions"
+          },
+          "title": {
+            "S": "Estrategia RPO/RTO con GZRS y failover de cuenta"
+          },
+          "concept": {
+            "S": "Redundancia de almacenamiento conmutando a región secundaria"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "LRS + scripts"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "GZRS y cuenta secundaria con failover manual planeado"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ZRS sin secundaria"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ANF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "storage",
+              "gzrs",
+              "dr"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design business continuity solutions#medium#AZ305-W0GGZ4JZFQUTX5PDXZVCF5Y7"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-W0GGZ4JZFQUTX5PDXZVCF5Y7"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-L8PBVV61YL8WZ68LDYWRQEER"
+          },
+          "question": {
+            "S": "Microservicios producen duplicados por reintentos. ¿Qué activas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "Mensajería idempotente con Service Bus y deduplicación"
+          },
+          "concept": {
+            "S": "Evitar procesar mensajes duplicados"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "FIFO en Storage Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Deduplication en Service Bus (MessageId + ventana)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DLQ deshabilitada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Topic sin sesiones"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "service-bus",
+              "idempotency"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#medium#AZ305-L8PBVV61YL8WZ68LDYWRQEER"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-L8PBVV61YL8WZ68LDYWRQEER"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-9DR16KHXLMDNAG4G4EU55HVR"
+          },
+          "question": {
+            "S": "CI/CD debe autenticarse a Key Vault sin secretos. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design security solutions"
+          },
+          "title": {
+            "S": "Protección de secretos y rotación con Managed Identities"
+          },
+          "concept": {
+            "S": "Eliminar secretos en pipelines y apps"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SP con contraseña en variable"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Workload identity federation/OIDC y Managed Identity"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SAS largas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Claves en código"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "managed-identity",
+              "oidc",
+              "kv"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design security solutions#hard#AZ305-9DR16KHXLMDNAG4G4EU55HVR"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-9DR16KHXLMDNAG4G4EU55HVR"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-X6P1CZOHCPKA1N2TZN3UOQTK"
+          },
+          "question": {
+            "S": "Necesitas costos controlados y retenciones diferentes por tabla. ¿Qué diseñas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design monitoring solutions"
+          },
+          "title": {
+            "S": "Arquitectura de logs por capa con DCR y tablas dedicadas"
+          },
+          "concept": {
+            "S": "Separación por dominio y retenciones distintas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Workspace único con retención global"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DCRs específicos + retención por tabla"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Export a Event Hub solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Desactivar ingestion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dcr",
+              "retention"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design monitoring solutions#medium#AZ305-X6P1CZOHCPKA1N2TZN3UOQTK"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-X6P1CZOHCPKA1N2TZN3UOQTK"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-YLYG429GW0ERWADR6VTVL7I9"
+          },
+          "question": {
+            "S": "Necesitas federación social y claims personalizados. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity solutions"
+          },
+          "title": {
+            "S": "Entra B2C con user flows vs custom policies"
+          },
+          "concept": {
+            "S": "Seleccionar complejidad adecuada"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "User flows básicos"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Custom policies en B2C"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LDAP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Base local"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "b2c",
+              "custom-policies"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity solutions#hard#AZ305-YLYG429GW0ERWADR6VTVL7I9"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-YLYG429GW0ERWADR6VTVL7I9"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-I33FVW208W8KIZ2QXR0VKHGA"
+          },
+          "question": {
+            "S": "Clúster AKS debe acceder a Key Vault y salir por Firewall. ¿Diseño?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "AKS workload identity y control de egress"
+          },
+          "concept": {
+            "S": "Eliminar secretos y egress restringido"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Secrets en Kubernetes"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Workload identity + UDR a Firewall/NATGW"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Public IP por pod"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "IGW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aks",
+              "workload-identity",
+              "egress"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#medium#AZ305-I33FVW208W8KIZ2QXR0VKHGA"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-I33FVW208W8KIZ2QXR0VKHGA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-ZDW1X6CK2G29O4FXOI2MN208"
+          },
+          "question": {
+            "S": "Necesitas publicar APIs multi-backend con control central. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "API Gateway con APIM y patrones de transformaciones"
+          },
+          "concept": {
+            "S": "Governanza, throttling y JWT"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Functions proxies"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "API Management con policies"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Traefik sin control"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Application Gateway"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "governance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#medium#AZ305-ZDW1X6CK2G29O4FXOI2MN208"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-ZDW1X6CK2G29O4FXOI2MN208"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-4FMAFJ31ZWJV49PRUPCRC2X4"
+          },
+          "question": {
+            "S": "Requieres failover automático de bases PaaS. ¿Qué opción?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design business continuity solutions"
+          },
+          "title": {
+            "S": "SQL MI y grupos de conmutación por error"
+          },
+          "concept": {
+            "S": "DR automatizado entre regiones para PaaS SQL"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Backups GRS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Auto-failover groups en Azure SQL"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "AlwaysOn en VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Replication en Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "sql",
+              "dr"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design business continuity solutions#hard#AZ305-4FMAFJ31ZWJV49PRUPCRC2X4"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-4FMAFJ31ZWJV49PRUPCRC2X4"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-OQN8PVTKVFCKRQYWI73UV3L0"
+          },
+          "question": {
+            "S": "Regulador exige protección de datos en uso. ¿Qué propones?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design security solutions"
+          },
+          "title": {
+            "S": "Confidential Computing para datos en uso"
+          },
+          "concept": {
+            "S": "Aislamiento con SEV-SNP y vTPM"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Sólo cifrado en reposo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Confidential VMs/Containers"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Firewall Premium"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "confidential-computing"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design security solutions#hard#AZ305-OQN8PVTKVFCKRQYWI73UV3L0"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-OQN8PVTKVFCKRQYWI73UV3L0"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-D3SGW36QCV06C1YB16JTDBKK"
+          },
+          "question": {
+            "S": "Auditoría pide ventanas cortas y aprobadores. ¿Qué recomiendas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity, governance, and monitoring solutions"
+          },
+          "title": {
+            "S": "PIM con flujos de aprobación y acceso temporal"
+          },
+          "concept": {
+            "S": "Justificación y registro para roles críticos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Roles permanentes Owner"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "PIM con JIT y aprobadores múltiples"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Access packages sin expiración"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Policy AuditOnly"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "pim",
+              "audit"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity, governance, and monitoring solutions#medium#AZ305-D3SGW36QCV06C1YB16JTDBKK"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-D3SGW36QCV06C1YB16JTDBKK"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-NMRD3V0DUH5J4QTWOF1RO5NO"
+          },
+          "question": {
+            "S": "Servicio HTTP global con performance y seguridad. ¿Qué seleccionas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "Front Door Premium con WAF y caching global"
+          },
+          "concept": {
+            "S": "Entrega L7, reglas WAF y rutas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Traffic Manager"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Front Door Premium con WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LB estándar público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Bastion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "frontdoor",
+              "waf"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#medium#AZ305-NMRD3V0DUH5J4QTWOF1RO5NO"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-NMRD3V0DUH5J4QTWOF1RO5NO"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-DNOTEKJT5GSKZHKV50BEFDSQ"
+          },
+          "question": {
+            "S": "Requieres pipelines analíticos robustos en ADLS. ¿Qué adoptas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "Synapse + Delta Lake para analítica"
+          },
+          "concept": {
+            "S": "Formato abierto con ACID y time travel"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CSV plano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Delta Lake con Synapse/ADF"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Parquet sin transacciones"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "JSON"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "delta",
+              "synapse"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#medium#AZ305-DNOTEKJT5GSKZHKV50BEFDSQ"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-DNOTEKJT5GSKZHKV50BEFDSQ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-8WNGCADXZYVTL396EDWQOHHI"
+          },
+          "question": {
+            "S": "Debes notificar suscriptores por cambios discretos de recursos. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "Event Grid vs Event Hubs: selección adecuada"
+          },
+          "concept": {
+            "S": "Eventos reactivos vs ingestión de telemetría"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Event Hubs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Event Grid con filtros"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Service Bus FIFO"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Queues"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "event-grid",
+              "events"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#medium#AZ305-8WNGCADXZYVTL396EDWQOHHI"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-8WNGCADXZYVTL396EDWQOHHI"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-APB1E2UNSDM1TQF0Z34TWJCL"
+          },
+          "question": {
+            "S": "Necesitas avisos al 80% por proyecto. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design monitoring solutions"
+          },
+          "title": {
+            "S": "Cost Management Budgets con alertas y etiquetas por proyecto"
+          },
+          "concept": {
+            "S": "Control de gasto con segmentación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Sólo tags"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Budgets + alertas y análisis por tag"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Savings Plan"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RI"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cost",
+              "budgets"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design monitoring solutions#medium#AZ305-APB1E2UNSDM1TQF0Z34TWJCL"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-APB1E2UNSDM1TQF0Z34TWJCL"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-0C8HUIEJZX1MPIP3ZCW9U98C"
+          },
+          "question": {
+            "S": "Requieres exigir dispositivos conformes para apps críticas. ¿Qué implementas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity solutions"
+          },
+          "title": {
+            "S": "Hybrid Join y acceso condicional por dispositivo"
+          },
+          "concept": {
+            "S": "Estados de dispositivo y cumplimiento"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "MFA solamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Conditional Access con 'Require compliant device'"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DDoS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "device-compliance",
+              "conditional-access"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity solutions#medium#AZ305-0C8HUIEJZX1MPIP3ZCW9U98C"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-0C8HUIEJZX1MPIP3ZCW9U98C"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-PB8J7NE741NTGLRK6TQFD5DR"
+          },
+          "question": {
+            "S": "Necesitas baja latencia al hub y enlazar dos sedes por Azure. ¿Qué combinas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "ExpressRoute + FastPath y Global Reach"
+          },
+          "concept": {
+            "S": "Optimizar latencia y emparejar on-premises"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "VPN S2S"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ExpressRoute con FastPath y Global Reach"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Front Door"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "BGP estático"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "expressroute",
+              "latency"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#hard#AZ305-PB8J7NE741NTGLRK6TQFD5DR"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-PB8J7NE741NTGLRK6TQFD5DR"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-DWNRZ7WGN3HOVJMXRC3WRITH"
+          },
+          "question": {
+            "S": "Piden copias inmutables y separación de blast radius. ¿Diseño?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design business continuity solutions"
+          },
+          "title": {
+            "S": "Backups aislados y suscripción de recuperación"
+          },
+          "concept": {
+            "S": "Separación lógica y controles de borrado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Mismo RG de prod"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Vault/Storage en suscripción/tenant separado con Soft Delete y RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo snapshots"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "isolation",
+              "backup",
+              "rbac"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design business continuity solutions#hard#AZ305-DWNRZ7WGN3HOVJMXRC3WRITH"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-DWNRZ7WGN3HOVJMXRC3WRITH"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-P1WAZVEPKWHCIO7F1L8F2KVC"
+          },
+          "question": {
+            "S": "Cumplimiento FIPS 140-2 nivel alto. ¿Qué seleccionas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design security solutions"
+          },
+          "title": {
+            "S": "Key Vault Managed HSM para requisitos FIPS"
+          },
+          "concept": {
+            "S": "Aislamiento criptográfico dedicado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "KV estándar"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Managed HSM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Claves en appsettings"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "KMS AWS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "hsm",
+              "fips"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design security solutions#hard#AZ305-P1WAZVEPKWHCIO7F1L8F2KVC"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-P1WAZVEPKWHCIO7F1L8F2KVC"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-NGO48433V04BBOV8ZKGL3VTR"
+          },
+          "question": {
+            "S": "Procesos largos con consolidación de resultados. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "Durable Functions fan-out/fan-in de larga duración"
+          },
+          "concept": {
+            "S": "Orquestación confiable con estado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Timers y colas sueltas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Durable Functions"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM cron"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Event Hubs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "durable",
+              "orchestration"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#medium#AZ305-NGO48433V04BBOV8ZKGL3VTR"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-NGO48433V04BBOV8ZKGL3VTR"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-4S4Y7MG5G5H1WH5OFV8N8C9N"
+          },
+          "question": {
+            "S": "Necesitas alertar si se registran 5 errores 500 en 2 min. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design monitoring solutions"
+          },
+          "title": {
+            "S": "Alertas por consulta KQL en Log Analytics"
+          },
+          "concept": {
+            "S": "Detección de patrones en logs"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Metric alert CPU"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Log Alerts con KQL agregando por ventana"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Activity Log alert"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Budget"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kql",
+              "alerts"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:32:52Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design monitoring solutions#medium#AZ305-4S4Y7MG5G5H1WH5OFV8N8C9N"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-4S4Y7MG5G5H1WH5OFV8N8C9N"
+          }
+        }
+      }
+    }
+  ]
+}

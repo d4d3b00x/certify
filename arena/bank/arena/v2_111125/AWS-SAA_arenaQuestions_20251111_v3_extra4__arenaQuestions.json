@@ -1,0 +1,2908 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-RWGHW7883P4WKY0KRY9Q2WMP"
+          },
+          "question": {
+            "S": "Tu servicio HTTP debe escalar según RPS y no gestionar nodos. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Containers"
+          },
+          "title": {
+            "S": "ECS on Fargate con Service Autoscaling por petición"
+          },
+          "concept": {
+            "S": "Escalado por métricas de ALB/CPU en servicios serverless"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ECS en EC2 fijo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ECS on Fargate con Service Autoscaling"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Lambda ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Beanstalk clásico"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ecs",
+              "fargate",
+              "autoscaling"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Containers#medium#AWSSAA-RWGHW7883P4WKY0KRY9Q2WMP"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-RWGHW7883P4WKY0KRY9Q2WMP"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-YIWWUIQIEMTKSL8K9ICQF6FK"
+          },
+          "question": {
+            "S": "Los pods necesitan acceder a S3/KMS sin credenciales estáticas. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Containers"
+          },
+          "title": {
+            "S": "EKS con Managed Node Groups y IRSA"
+          },
+          "concept": {
+            "S": "Identidades granulares sin secretos en pods"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Vars con keys"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "IAM Roles for Service Accounts (IRSA)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Userdata con claves"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "EC2 Instance Profile compartido"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "eks",
+              "irsa",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Containers#hard#AWSSAA-YIWWUIQIEMTKSL8K9ICQF6FK"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-YIWWUIQIEMTKSL8K9ICQF6FK"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-9ZOQNIFNUSWRCN5BQFO718K2"
+          },
+          "question": {
+            "S": "Necesitas crear cuentas con controles de seguridad y logging central. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Organizations and control"
+          },
+          "title": {
+            "S": "Control Tower con guardrails obligatorios"
+          },
+          "concept": {
+            "S": "Baseline multi‑cuenta con seguridad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Cuentas manuales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "AWS Control Tower con guardrails"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Solo Organizations"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CloudTrail sin org"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "control-tower",
+              "organizations"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Organizations and control#medium#AWSSAA-9ZOQNIFNUSWRCN5BQFO718K2"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-9ZOQNIFNUSWRCN5BQFO718K2"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-CT8L0KY7ZM3IGBZMVLR4H5S6"
+          },
+          "question": {
+            "S": "Deseas SSO a cuentas y apps con auto‑aprovisionamiento. ¿Qué implementas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Identity and access"
+          },
+          "title": {
+            "S": "AWS IAM Identity Center (SSO) con SCIM"
+          },
+          "concept": {
+            "S": "Federación y aprovisionamiento de usuarios"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Usuarios locales por cuenta"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "IAM Identity Center con SCIM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Cognito User Pool"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "STS AssumeRole manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "sso",
+              "scim"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Identity and access#medium#AWSSAA-CT8L0KY7ZM3IGBZMVLR4H5S6"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-CT8L0KY7ZM3IGBZMVLR4H5S6"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-S41OSFWI2J3A52IZ15KBSRBS"
+          },
+          "question": {
+            "S": "Quieren proteger microservicios con scopes específicos. ¿Qué compones?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Zero Trust"
+          },
+          "title": {
+            "S": "Cognito con App Client y Resource Servers (OAuth2)"
+          },
+          "concept": {
+            "S": "Scopes y validación de tokens en APIs"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "API Key simple"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Cognito User Pool + Resource Servers y scopes"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ACLs públicas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "S3 pre-signed"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cognito",
+              "oauth2"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Zero Trust#hard#AWSSAA-S41OSFWI2J3A52IZ15KBSRBS"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-S41OSFWI2J3A52IZ15KBSRBS"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-ZYUYKX3QOFYNBMKNAXKT40T1"
+          },
+          "question": {
+            "S": "Requieres copias inmutables en otra cuenta/región. ¿Cómo?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Backup and DR"
+          },
+          "title": {
+            "S": "AWS Backup con vaults cross‑account y copiar a otra región"
+          },
+          "concept": {
+            "S": "Aislamiento y recuperación ante ransomware"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Snapshots manuales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "AWS Backup con copia cross‑account y vault KMS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "RD GW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aws-backup",
+              "dr"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Backup and DR#medium#AWSSAA-ZYUYKX3QOFYNBMKNAXKT40T1"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-ZYUYKX3QOFYNBMKNAXKT40T1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-BYLTV8IDBWHWYY5HTZGOMHFU"
+          },
+          "question": {
+            "S": "Deseas que varios equipos consuman eventos sin acoplarse. ¿Qué diseñas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Event-driven"
+          },
+          "title": {
+            "S": "EventBridge con reglas y bus dedicado por dominio"
+          },
+          "concept": {
+            "S": "Enrutamiento desacoplado por patrón"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SNS único"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "EventBridge con buses/rules/targets"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SQS FIFO"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Kinesis Firehose"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "eventbridge",
+              "events"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Event-driven#medium#AWSSAA-BYLTV8IDBWHWYY5HTZGOMHFU"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-BYLTV8IDBWHWYY5HTZGOMHFU"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-N9O5LWQCUE3PUFIVEX9NUSQZ"
+          },
+          "question": {
+            "S": "Necesitas coordinar pagos y envíos con compensaciones. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Step Functions"
+          },
+          "title": {
+            "S": "Orquestación con retries y compensación"
+          },
+          "concept": {
+            "S": "Sagas de múltiples servicios con manejo de errores"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Lambda encadenadas manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Step Functions con retries y tareas compensatorias"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SQS solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Glue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "step-functions",
+              "saga"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Step Functions#hard#AWSSAA-N9O5LWQCUE3PUFIVEX9NUSQZ"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-N9O5LWQCUE3PUFIVEX9NUSQZ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-5ID1EJG5A77E6AZ1FVROMJ3E"
+          },
+          "question": {
+            "S": "Operaciones requiere ver métricas y logs en cuenta central. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Observability"
+          },
+          "title": {
+            "S": "CloudWatch cross‑account y metric streams a Firehose"
+          },
+          "concept": {
+            "S": "Visibilidad central en multi‑cuenta"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Compartir credenciales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Metric streams + cross‑account dashboards/links"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo Logs Insights local"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "X-Ray únicamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cloudwatch",
+              "observability"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Observability#medium#AWSSAA-5ID1EJG5A77E6AZ1FVROMJ3E"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-5ID1EJG5A77E6AZ1FVROMJ3E"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-J3CDDZD330T8DU8DR7IT9I9R"
+          },
+          "question": {
+            "S": "On‑prem debe resolver privados en VPC y viceversa. ¿Qué despliegas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "DNS and networking"
+          },
+          "title": {
+            "S": "Route 53 Resolver inbound/outbound endpoints"
+          },
+          "concept": {
+            "S": "Resolución híbrida privada segura"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Zona pública"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Route 53 Resolver con reglas outbound/inbound"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DHCP options"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "route53",
+              "resolver"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "DNS and networking#medium#AWSSAA-J3CDDZD330T8DU8DR7IT9I9R"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-J3CDDZD330T8DU8DR7IT9I9R"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-4N093EZB08T5VDB4QC0U0GM5"
+          },
+          "question": {
+            "S": "Quieres una vista central de amenazas y cumplimiento. ¿Qué activas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security posture"
+          },
+          "title": {
+            "S": "Security Hub + GuardDuty organizacional"
+          },
+          "concept": {
+            "S": "Hallazgos agregados y respuesta"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Inspector solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Security Hub + GuardDuty en org con cuenta admin"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NACLs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CloudTrail único"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "security-hub",
+              "guardduty"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security posture#medium#AWSSAA-4N093EZB08T5VDB4QC0U0GM5"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-4N093EZB08T5VDB4QC0U0GM5"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-0NUF9WYXNU8GUE1BLEK39KMT"
+          },
+          "question": {
+            "S": "Cargas variables con picos impredecibles. ¿Qué base eliges?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Data stores"
+          },
+          "title": {
+            "S": "Aurora Serverless v2 y autoscaling de capacidad"
+          },
+          "concept": {
+            "S": "Elasticidad de base sin downtime"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RDS Single-AZ"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Aurora Serverless v2"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EC2 MySQL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DynamoDB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aurora",
+              "serverless"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data stores#medium#AWSSAA-0NUF9WYXNU8GUE1BLEK39KMT"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-0NUF9WYXNU8GUE1BLEK39KMT"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-46XBJFZG9K09CXGY6EN5TW9O"
+          },
+          "question": {
+            "S": "Debes bloquear acceso directo a S3 y normalizar headers. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Edge and CDN"
+          },
+          "title": {
+            "S": "CloudFront con OAC y funciones en el borde"
+          },
+          "concept": {
+            "S": "Seguridad y manipulación de headers"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Bucket público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CloudFront + OAC y Function@Edge"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo OAI"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cloudfront",
+              "oac"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Edge and CDN#hard#AWSSAA-46XBJFZG9K09CXGY6EN5TW9O"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-46XBJFZG9K09CXGY6EN5TW9O"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-NLE7FR3SAB6HX4T2XCATQ1LZ"
+          },
+          "question": {
+            "S": "Consultas sobre S3 tardan mucho. ¿Qué ajustas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Analytics"
+          },
+          "title": {
+            "S": "Athena con particionado por fecha y compresión"
+          },
+          "concept": {
+            "S": "Optimizar coste y tiempo de consulta"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CSV plano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Particiones por fecha + Parquet/GZIP"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "TXT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ZIP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "athena",
+              "parquet"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Analytics#medium#AWSSAA-NLE7FR3SAB6HX4T2XCATQ1LZ"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-NLE7FR3SAB6HX4T2XCATQ1LZ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-BYLKHM9UNU4I60SQIJYANB8D"
+          },
+          "question": {
+            "S": "Necesitas desplegar recursos en muchas cuentas. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "IaC"
+          },
+          "title": {
+            "S": "CloudFormation StackSets para multi‑cuenta/región"
+          },
+          "concept": {
+            "S": "Despliegues consistentes a escala"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CLI en bucle"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CloudFormation StackSets"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "EC2 UserData"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cfn",
+              "stacksets"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "IaC#medium#AWSSAA-BYLKHM9UNU4I60SQIJYANB8D"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-BYLKHM9UNU4I60SQIJYANB8D"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-KBH8NW0YQ7JPKFDN05HYPWF9"
+          },
+          "question": {
+            "S": "Clientes globales deben acceder al bucket más cercano. ¿Qué habilitas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage and transfer"
+          },
+          "title": {
+            "S": "S3 Multi-Region Access Points para clientes globales"
+          },
+          "concept": {
+            "S": "Acceso global con routing inteligente"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Un solo bucket en us-east-1"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "S3 MRAP con políticas adecuadas"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EFS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NFS EC2"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "mrap"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage and transfer#hard#AWSSAA-KBH8NW0YQ7JPKFDN05HYPWF9"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-KBH8NW0YQ7JPKFDN05HYPWF9"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-CBJP6DTMKUQ2G21B7XNPDCUN"
+          },
+          "question": {
+            "S": "Pedidos deben procesarse en orden y sin duplicados. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Queueing"
+          },
+          "title": {
+            "S": "SQS FIFO con exactamente-once y orden"
+          },
+          "concept": {
+            "S": "Procesamiento ordenado con deduplicación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SNS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SQS FIFO con content-based deduplication"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SQS estándar"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "EventBridge"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "sqs",
+              "fifo"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Queueing#medium#AWSSAA-CBJP6DTMKUQ2G21B7XNPDCUN"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-CBJP6DTMKUQ2G21B7XNPDCUN"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-6TBPIQMVST8R2XI2MBGLRRR4"
+          },
+          "question": {
+            "S": "Quieres reducir coste de integración y bloquear ataques. ¿Qué combinas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "API"
+          },
+          "title": {
+            "S": "API Gateway con caché y WAF regional"
+          },
+          "concept": {
+            "S": "Protección y performance para APIs públicas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "API GW + Cache + WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Direct Connect"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apigw",
+              "waf"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "API#medium#AWSSAA-6TBPIQMVST8R2XI2MBGLRRR4"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-6TBPIQMVST8R2XI2MBGLRRR4"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-5K5VMVMLEKG9VPFDCJSBN9PO"
+          },
+          "question": {
+            "S": "Deseas inspección L7 en tránsito entre VPCs. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Networking"
+          },
+          "title": {
+            "S": "Gateway Load Balancer con appliances de terceros"
+          },
+          "concept": {
+            "S": "Inserción transparente de firewalls"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Gateway Load Balancer"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "IGW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "VPC Peering simple"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "gwlb",
+              "inspection"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AWSSAA-5K5VMVMLEKG9VPFDCJSBN9PO"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-5K5VMVMLEKG9VPFDCJSBN9PO"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-HLWNE3M588EUNZ2XBKULP3R1"
+          },
+          "question": {
+            "S": "Debes borrar items a 30 días y operar en 3 regiones. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Databases"
+          },
+          "title": {
+            "S": "DynamoDB con TTL y Global Tables"
+          },
+          "concept": {
+            "S": "Cumplimiento de retención y replicación multi‑región"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RCU altas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "TTL + Global Tables"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Aurora global"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RDS Multi-AZ"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dynamodb",
+              "ttl",
+              "global"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Databases#medium#AWSSAA-HLWNE3M588EUNZ2XBKULP3R1"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-HLWNE3M588EUNZ2XBKULP3R1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-2GPUOWKY1ZFS8IT6454N1YVG"
+          },
+          "question": {
+            "S": "Necesitas cifrar en dos regiones y rotar automáticamente. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security keys"
+          },
+          "title": {
+            "S": "KMS con claves multi‑Region y rotación"
+          },
+          "concept": {
+            "S": "Criptografía consistente entre regiones"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Claves únicas sin relación"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "KMS multi‑Region keys con rotación"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SSE-S3"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ACLs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kms",
+              "multi-region"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security keys#medium#AWSSAA-2GPUOWKY1ZFS8IT6454N1YVG"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-2GPUOWKY1ZFS8IT6454N1YVG"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-6FERK95M6SKBE3RVVIUM7H5B"
+          },
+          "question": {
+            "S": "Deseas catalogar S3 y transformar a Parquet. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Data integration"
+          },
+          "title": {
+            "S": "Glue ETL con crawlers y jobs programados"
+          },
+          "concept": {
+            "S": "Catálogo y transformación serverless"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "EC2 cron"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Glue Crawlers + Jobs"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Data Pipeline legacy"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Batch"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "glue",
+              "etl"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data integration#medium#AWSSAA-6FERK95M6SKBE3RVVIUM7H5B"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-6FERK95M6SKBE3RVVIUM7H5B"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-YJ9862K6KGF7DE46WRRYCRLO"
+          },
+          "question": {
+            "S": "Quieren tolerar fallos de una AZ. ¿Qué arquitectura?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Resilience"
+          },
+          "title": {
+            "S": "Multi‑AZ ALB/NLB con health checks estrictos"
+          },
+          "concept": {
+            "S": "Alta disponibilidad de capa L7/L4"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Una subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ALB/NLB en subnets múltiples con health checks"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EC2 único"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "S3 estático"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "nlb",
+              "ha"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Resilience#medium#AWSSAA-YJ9862K6KGF7DE46WRRYCRLO"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-YJ9862K6KGF7DE46WRRYCRLO"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-E1C04V4BGWB9A4BP2L63GLZ1"
+          },
+          "question": {
+            "S": "Workloads batch con ventanas nocturnas. ¿Qué estrategia?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Cost"
+          },
+          "title": {
+            "S": "Savings Plans y mezcla con Spot para batch"
+          },
+          "concept": {
+            "S": "Optimizar coste en cómputo elástico"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "On‑Demand"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Savings Plans + Spot para jobs batch"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "RI estándar 3 años todo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Dedicated Hosts"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cost",
+              "spot"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Cost#medium#AWSSAA-E1C04V4BGWB9A4BP2L63GLZ1"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-E1C04V4BGWB9A4BP2L63GLZ1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-EVSI3KBAYCIBP3D7545YGGGA"
+          },
+          "question": {
+            "S": "Deseas rotar contraseñas sin downtime. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Secrets"
+          },
+          "title": {
+            "S": "Secrets Manager con rotación para RDS"
+          },
+          "concept": {
+            "S": "Gestión de credenciales y rotación automática"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Parámetros sin rotación"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Secrets Manager con rotación integrada"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "KMS puro"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "TXT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "secrets",
+              "rds"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T09:27:30Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Secrets#hard#AWSSAA-EVSI3KBAYCIBP3D7545YGGGA"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-EVSI3KBAYCIBP3D7545YGGGA"
+          }
+        }
+      }
+    }
+  ]
+}

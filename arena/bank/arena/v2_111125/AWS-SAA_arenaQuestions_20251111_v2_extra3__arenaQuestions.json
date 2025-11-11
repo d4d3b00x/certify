@@ -1,0 +1,355 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-9TM9T3TROR15E5L76BOQ1SKC"
+          },
+          "question": {
+            "S": "Quieres disparar lógica en tiempo casi real ante inserciones y actualizar una vista materializada. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design high-performing architectures"
+          },
+          "title": {
+            "S": "DynamoDB Streams + Lambda para proyecciones y auditoría"
+          },
+          "concept": {
+            "S": "Reaccionar a cambios en tablas sin sondeo"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Polling con EC2 cada 5s"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DynamoDB Streams suscrito por Lambda"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Aurora binlog a mano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "SQS sin integración"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dynamodb",
+              "streams",
+              "lambda"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design high-performing architectures#medium#AWSSAA-9TM9T3TROR15E5L76BOQ1SKC"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-9TM9T3TROR15E5L76BOQ1SKC"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-K6Z6C6CLC4VYWGJH4259YQIT"
+          },
+          "question": {
+            "S": "Varias apps deben acceder a diferentes prefijos de un mismo bucket sin exponerlo públicamente. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design secure architectures"
+          },
+          "title": {
+            "S": "S3 Access Points y VPC Access Points para aislamiento por aplicación"
+          },
+          "concept": {
+            "S": "Controlar acceso a datasets compartidos a nivel de aplicación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Un bucket por app público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "S3 Access Points y VPC Access Points con políticas por prefijo"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ACLs sobre objetos"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Hacer el bucket privado y ya"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "access-points",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design secure architectures#hard#AWSSAA-K6Z6C6CLC4VYWGJH4259YQIT"
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-K6Z6C6CLC4VYWGJH4259YQIT"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-Z6SXPJKD672EB7JO6OAHLOXO"
+          },
+          "question": {
+            "S": "Tu ASG tarda en escalar por tiempos de boot. ¿Qué habilitas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Design cost-optimized architectures"
+          },
+          "title": {
+            "S": "Auto Scaling con Warm Pools para reducir cold starts en flotas EC2"
+          },
+          "concept": {
+            "S": "Reposicionar instancias preinicializadas para picos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Incrementar cooldown"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Warm Pools en el Auto Scaling Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Spot al 100% sin más"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "AMI más pesada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "asg",
+              "warm-pools",
+              "cost"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T08:46:31Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design cost-optimized architectures#medium#AWSSAA-Z6SXPJKD672EB7JO6OAHLOXO"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-Z6SXPJKD672EB7JO6OAHLOXO"
+          }
+        }
+      }
+    }
+  ]
+}

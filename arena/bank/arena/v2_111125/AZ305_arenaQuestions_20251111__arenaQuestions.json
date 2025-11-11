@@ -1,0 +1,2905 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-4WRIOQDM0VXTASU72HA0ZL3T"
+          },
+          "question": {
+            "S": "Requieres baja latencia global, SLA 99.999% y modelo de documentos. ¿Qué base propones?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "Multi-model datos"
+          },
+          "concept": {
+            "S": "Elección Cosmos DB"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SQL MI Single"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Cosmos DB con API SQL y réplicas multirregión"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "PostgreSQL flexible con read replicas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Table Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cosmos",
+              "global"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#medium#X-YVIKXN1HOINUUGXK3Y4QL7SL"
+          },
+          "diff_qid": {
+            "S": "medium#Y-LYT4VD2SIKWJUPPFJOM5FSI6"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-UA76VJ97QE2GBIX7Z93M5JS4"
+          },
+          "question": {
+            "S": "Para minimizar riesgo en tareas privilegiadas, recomiendas usar estaciones endurecidas y elevación JIT. ¿Qué patrón?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity, governance, and monitoring solutions"
+          },
+          "title": {
+            "S": "Privileged access workstation"
+          },
+          "concept": {
+            "S": "PAW + PIM"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Administrar desde VMs de dev"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "PAW + PIM + Conditional Access"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SSH directo desde laptop personal"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Roles permanentes Owner"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "security",
+              "PIM",
+              "PAW"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity, governance, and monitoring solutions#hard#X-3F8MKP3U7BCFM04K607HIZJO"
+          },
+          "diff_qid": {
+            "S": "hard#Y-PXEJ8O8EOH63VWJVJ1O7UFIH"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-FOAFD9OQRYTA6HJRS4BZQC6I"
+          },
+          "question": {
+            "S": "Un clúster AKS no debe exponer API pública y todo egress debe inspeccionarse. ¿Diseño correcto?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "AKS red privada"
+          },
+          "concept": {
+            "S": "AKS privado y control egress"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "AKS público sin restricciones"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "AKS con API privada + Azure Firewall/NAT GW para egress"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Solo NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Peering sin UDR"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "AKS",
+              "networking"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#medium#X-DL7IDGEGLQUTOKELQAI5JBUZ"
+          },
+          "diff_qid": {
+            "S": "medium#Y-Z47EDEGEBN9ZLF4UTR9YY3YI"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-68DDUG3UBHSB8LY3MENEOCIN"
+          },
+          "question": {
+            "S": "Necesitas alta resiliencia dentro de región y copia asincrónica a región secundaria. ¿Qué redundancia?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design business continuity solutions"
+          },
+          "title": {
+            "S": "Georreplicación datos"
+          },
+          "concept": {
+            "S": "ZRS vs GZRS"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "LRS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ZRS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "GZRS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "GRS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "storage",
+              "redundancy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design business continuity solutions#easy#X-LZ0UH23NC5VB2G83NVIYY3LP"
+          },
+          "diff_qid": {
+            "S": "easy#Y-U5N4EN82KZ2CT3U39JB4HR3A"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-N1EAQIJPEH6XON3EQK50M2Y2"
+          },
+          "question": {
+            "S": "Para notificar cambios de Blob a múltiples suscriptores con mínimo acoplamiento, ¿qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "Event-driven"
+          },
+          "concept": {
+            "S": "Event Grid vs Service Bus"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Service Bus Topic"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Event Grid con suscripciones y filtros"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Webhook casero"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Queues con pooling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "event-grid",
+              "serverless"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#easy#X-D42POTUAA4YMX2LLVSX3M6PJ"
+          },
+          "diff_qid": {
+            "S": "easy#Y-FDQK6SYPN68DJW0HJ3LHW8AG"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-X1AX4ZRTT5L02FNMU0JJWTTL"
+          },
+          "question": {
+            "S": "Quieres analítica near-real-time sobre datos operacionales en Cosmos. ¿Opción nativa?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "Analytics"
+          },
+          "concept": {
+            "S": "Sincronización near-real-time"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Exportar CSV diario"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Synapse Link para Cosmos hacia ADLS/Synapse"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Replicar con funciones manuales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "SQL MI CDC a mano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "synapse",
+              "cosmos"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#medium#X-W8NX67SZ9G8HK4HQ6X9EXP4F"
+          },
+          "diff_qid": {
+            "S": "medium#Y-M43DE2V3M2IROJ7U05MNXGBZ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-QH9HMKTB2QZN3VY6NFQQ2NK6"
+          },
+          "question": {
+            "S": "Necesitas routing L7, WAF y caché global para microservicio HTTP. ¿Qué servicio eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "Global web"
+          },
+          "concept": {
+            "S": "Front Door vs Traffic Manager"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Traffic Manager"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Front Door Standard/Premium"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Load Balancer"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Bastion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "frontdoor",
+              "waf"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#medium#X-OPWQ1YFRGO9N9408JCWLSN1G"
+          },
+          "diff_qid": {
+            "S": "medium#Y-MBOU669Y48DHJ3GC1UIDTP8F"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-33T7VGEDVRZUE9U0PTEU38OT"
+          },
+          "question": {
+            "S": "Una regulación exige módulos HSM dedicados y aislamiento criptográfico. ¿Qué seleccionas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design security solutions"
+          },
+          "title": {
+            "S": "Keys & secrets"
+          },
+          "concept": {
+            "S": "HSM dedicado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Key Vault estándar con soft delete"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Managed HSM (Azure Key Vault Managed HSM)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Guardar claves en appsettings"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Discos cifrados únicamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "hsm",
+              "compliance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design security solutions#hard#X-CFOXJ90PI3J2F78K49X7CUID"
+          },
+          "diff_qid": {
+            "S": "hard#Y-WP0C622IMWV14Y5LF8N25767"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-XYL2GU7SENPVGJMH2972RRMP"
+          },
+          "question": {
+            "S": "Debes retener 2 años SecurityEvent y 30 días métricas de actividad. ¿Cómo?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design monitoring solutions"
+          },
+          "title": {
+            "S": "Log retención"
+          },
+          "concept": {
+            "S": "Coste y retención"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Un único workspace sin control"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Configurar retención por tabla y DCRs adecuados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Deshabilitar logs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "log-analytics",
+              "dcr"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design monitoring solutions#medium#X-T4Y52Q28MCZCJZGIPBIWY83J"
+          },
+          "diff_qid": {
+            "S": "medium#Y-75VVOYA4UUC7RT8XLAXE8YIY"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-PGVAEW7TR74XKCR4PIK8KWY3"
+          },
+          "question": {
+            "S": "Una app para clientes externos necesita social login y MFA. ¿Qué propones?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity solutions"
+          },
+          "title": {
+            "S": "B2C"
+          },
+          "concept": {
+            "S": "Identidades externas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Directorio interno únicamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Entra External ID (B2C) con user flows/policies"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LDAP expuesto"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Local Accounts en DB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "b2c",
+              "external-id"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity solutions#easy#X-OEEMVGNPVFYXMFI7RF81CYKY"
+          },
+          "diff_qid": {
+            "S": "easy#Y-Z013QAJI40U1J51W15AW0N4G"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-5JWCMVCTBZ83AGQ2Q432ZN70"
+          },
+          "question": {
+            "S": "Requieres HA dentro de región y escalado vertical sencillo. ¿Qué despliegue?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "PostgreSQL"
+          },
+          "concept": {
+            "S": "Alta disponibilidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Single Server (retirado)"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Flexible Server Zonal HA + PG Bouncer"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM con RAID"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Cosmos Mongo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "postgres",
+              "ha"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#medium#X-I9DDYMKK6UTMT537UJIA2CMA"
+          },
+          "diff_qid": {
+            "S": "medium#Y-L9CVYTQPBO6XUO2Q3OB2XKQJ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-58X5D2417UV7CIBJSIVM4KD5"
+          },
+          "question": {
+            "S": "Buscas inspección L3-L7 gestionada y centralizada. ¿Qué eliges por defecto?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "VNET appliance"
+          },
+          "concept": {
+            "S": "Firewall como servicio"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NVA cualquiera"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Firewall/Azure Firewall Premium con Firewall Policy"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Load Balancer"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "policy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#medium#X-E64Z5A7JD3M0NZFYD0JUW360"
+          },
+          "diff_qid": {
+            "S": "medium#Y-MAN7GYMW3X7BO0XDC9WW9YSC"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-ILB0873IGXBYL7GP1SU50WZH"
+          },
+          "question": {
+            "S": "Necesitas patrón request/reply entre microservicios con correlación. ¿Servicio?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "Mensajería"
+          },
+          "concept": {
+            "S": "Request/Reply"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Event Hubs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Service Bus Topics/Queues"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Storage Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Cron jobs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "service-bus",
+              "integration"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#hard#X-C8A0VQH0B3W0Q5Y1SL2WMFW3"
+          },
+          "diff_qid": {
+            "S": "hard#Y-3NGWQOEEZAUYK7BEFZFGZY1A"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-PG4HUGUP18D30IPQPIC9657A"
+          },
+          "question": {
+            "S": "Para Azure SQL Database, ¿qué opción nativa da failover automático regional?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design business continuity solutions"
+          },
+          "title": {
+            "S": "SQL PaaS"
+          },
+          "concept": {
+            "S": "DR cross-region"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Backups GRS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Auto-failover groups"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Always On en VMs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ASR"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "sql",
+              "geo-replication"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design business continuity solutions#medium#X-LUXZGBS852OCZ0FBOJU2OSXW"
+          },
+          "diff_qid": {
+            "S": "medium#Y-BKROCMJYD3QLHV3ZPUYUGFS6"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-ER5TLKKMF5GGI8P9VSSWVJJS"
+          },
+          "question": {
+            "S": "Quieren aplicar MFA sólo fuera de red corporativa y bloquear desde países específicos. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity solutions"
+          },
+          "title": {
+            "S": "Conditional Access"
+          },
+          "concept": {
+            "S": "Zero Trust"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Conditional Access"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DDoS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "conditional-access",
+              "zero-trust"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity solutions#easy#X-X63811C1U0MT91PUVWRGC4AD"
+          },
+          "diff_qid": {
+            "S": "easy#Y-4LC4A5KZ8SS7G347MGFG9NXM"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-9TRDJAV892W40LZYLNUDO9IF"
+          },
+          "question": {
+            "S": "Necesitas conectividad privada y estable 10 Gbps a Azure desde on-prem. ¿Qué tecnología?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "Hybrid connectivity"
+          },
+          "concept": {
+            "S": "ExpressRoute"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "VPN S2S básica"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ExpressRoute con FastPath"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Front Door"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Peering público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "expressroute",
+              "networking"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#medium#X-LW21XH9PSZQPC65UXTLKK5G4"
+          },
+          "diff_qid": {
+            "S": "medium#Y-W1BD69FU2PMCG1YKG3MGW6SJ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-4784VWHMKT9DBI8SR20AGSJ6"
+          },
+          "question": {
+            "S": "Una orquestación de larga duración con fan-out/fan-in es requisito. ¿Qué servicio?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "Serverless"
+          },
+          "concept": {
+            "S": "Durable patterns"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Functions normales con colas sueltas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Durable Functions (orchestrator/activities)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Logic Apps Standard"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "VM cron"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "durable",
+              "serverless"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#medium#X-LMJK1LB7XEIRB9ZJB0801IBH"
+          },
+          "diff_qid": {
+            "S": "medium#Y-EWUW3BON7DHTO8K3FQXEP0EP"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-JN5IR6HSL4DV7BHLIC00QH02"
+          },
+          "question": {
+            "S": "Debes proteger datos en uso para cargas sensibles. ¿Qué recomiendas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design security solutions"
+          },
+          "title": {
+            "S": "Privacidad datos"
+          },
+          "concept": {
+            "S": "Confidential computing"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Sólo cifrado en reposo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Confidential VM/ACI con enclaves"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Disk Encryption Set"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ANF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "confidential-computing"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design security solutions#hard#X-C0W8SUFVZFWPZ7AID5SQG0AW"
+          },
+          "diff_qid": {
+            "S": "hard#Y-O29SERD4C1HZ9XCHZDC63HEX"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-A9S3GWP4BCVEY2ZZ1OXHZM79"
+          },
+          "question": {
+            "S": "Microservicios leen datos cálidos con latencia <2 ms. ¿Qué componente añades?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "Caching"
+          },
+          "concept": {
+            "S": "Redis"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Storage Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Cache for Redis"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Event Grid"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Key Vault"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "redis",
+              "cache"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#easy#X-UJM22JBCDQMI9DJMQ1S58VMS"
+          },
+          "diff_qid": {
+            "S": "easy#Y-5KZBUAEUMFF8LDMNZYQZPUUN"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-5B6ZUTNQERQEKZ41RXEH8VHJ"
+          },
+          "question": {
+            "S": "Quieres alertas al superar 80% del presupuesto mensual. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design monitoring solutions"
+          },
+          "title": {
+            "S": "Cost management"
+          },
+          "concept": {
+            "S": "Budgets"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Action Group vacío"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Cost Management Budget con alerta"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo etiquetas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Savings plan"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "easy"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cost",
+              "budget"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design monitoring solutions#easy#X-4Z0W4TQPJ827G9ZSBBDOX8EK"
+          },
+          "diff_qid": {
+            "S": "easy#Y-U2UXR2RJXERVUYYU6HPD1XS8"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-NS7WPV0NT86Y7NB1M16HTXRX"
+          },
+          "question": {
+            "S": "Base de datos requiere IOPS altos y latencia sub-ms variable. ¿Qué discos propones?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design infrastructure solutions"
+          },
+          "title": {
+            "S": "Storage performance"
+          },
+          "concept": {
+            "S": "PremiumV2"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Standard HDD"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Premium SSD v2 o Ultra según IOPS/latencia requerida"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Ephemeral OS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Managed disk sin cambiar SKU"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "disks",
+              "performance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design infrastructure solutions#hard#X-CS4GVXB3W8KNV5F9W1T42VX8"
+          },
+          "diff_qid": {
+            "S": "hard#Y-GKIM2HDMFWVRAFWEWBTURXMT"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-7GC7D9A0X5LYDH34WUCAM1BB"
+          },
+          "question": {
+            "S": "Requieres gateway de APIs en on-prem pero gobernado desde Azure. ¿Qué opción?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design application solutions"
+          },
+          "title": {
+            "S": "API gateway"
+          },
+          "concept": {
+            "S": "APIM self-hosted"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "APIM self-hosted gateway"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Application Gateway"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Functions proxies"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Traefik sin control"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "hybrid"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design application solutions#medium#X-LC2SQM7YL1IIUDT5L7H3ZGGO"
+          },
+          "diff_qid": {
+            "S": "medium#Y-JZ1AZ2F86SRZV24AZIDASVSO"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-G5QQPKLITQRDT36WVX2Z3X8T"
+          },
+          "question": {
+            "S": "Necesitas DR de AKS. ¿Qué enfoque recomiendas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design business continuity solutions"
+          },
+          "title": {
+            "S": "AKS DR"
+          },
+          "concept": {
+            "S": "Multi región"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Snapshot de nodos"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Recrear clúster con IaC + backup de datos (PV) y usar tráfico global"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Apagar y encender"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "No se puede"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aks",
+              "dr"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design business continuity solutions#hard#X-REKG1ABQX25XH1NZQIH7RIUD"
+          },
+          "diff_qid": {
+            "S": "hard#Y-65N42DO17FIUVQRLM6IBSN0K"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-RHR06X07RANYYHHE0EBRZ5KK"
+          },
+          "question": {
+            "S": "Quieres evitar secretos para CI/CD que accede a Azure. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design identity solutions"
+          },
+          "title": {
+            "S": "Workload identity"
+          },
+          "concept": {
+            "S": "Federación con OIDC"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Service principal con secreto permanente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Workload identity federation OIDC"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Managed Identity de VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "SAS larga"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "oidc",
+              "cicd"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design identity solutions#medium#X-M4BV3RB9ETR3MG04U726D4HY"
+          },
+          "diff_qid": {
+            "S": "medium#Y-RH2YOYN2VI1O8SEBY5IDNX9G"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-6V3B60NSISZG95J1OLJ5WYL1"
+          },
+          "question": {
+            "S": "Tu data lake debe aislarse de Internet y aplicar permisos granulares por carpeta/archivo. ¿Diseño recomendado?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design data storage solutions"
+          },
+          "title": {
+            "S": "Data Lake seguridad"
+          },
+          "concept": {
+            "S": "ADLS Gen2 + ACLs + Private Endpoints"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Blob público con SAS largo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ADLS Gen2 con ACLs POSIX + Private Endpoint y firewall por red confiable"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SQL MI con tabla heap"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Cosmos DB Table API"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "adls",
+              "security",
+              "private-endpoint"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T07:50:56Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design data storage solutions#medium#X-0XHM8ZZ5QBWJNZLXUN3DZGIG"
+          },
+          "diff_qid": {
+            "S": "medium#Y-E5JLSFETA5A20KFXE7GJTRSV"
+          }
+        }
+      }
+    }
+  ]
+}
