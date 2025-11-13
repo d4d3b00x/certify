@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Azure Compute — Máquinas Virtuales & VM Scale Sets (AZ-104) — Azure AZ-104 | ITHub</title>
+<meta name="description" content="Guía completa de Azure Compute para AZ-104: máquinas virtuales, discos, imágenes, Availability Sets, Availability Zones, VM Scale Sets, extensiones, monitorización y backup. Incluye laboratorios guiados y tips de examen." />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+
+<style>
+:root{
+  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
+  border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:40px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
+.pill-btn:hover{transform:translateY(-1px)}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
+/* Hero */
+.hero{padding:26px 0 8px}
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
+  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
+.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
+.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
+.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
+/* Layout */
+.grid{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr);
+  gap:18px;
+  margin-top:16px;
+}
+@media(max-width:980px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* Sidebar index */
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.aside h3{margin:8px 0 10px}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff;font-size:.86rem}
+.toc a small{color:#9fb3e7;font-weight:700}
+.toc a:hover{border-color:#31539a; transform:translateX(2px)}
+
+/* Content column */
+.content-wrap{
+  max-width:880px;
+  margin:0 auto;
+}
+
+/* Content card */
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:2px 0 8px;font-size:clamp(1.15rem,2.1vw,1.55rem)}
+.card h3{margin:10px 0 6px;font-size:1.02rem}
+.card p{margin:0 0 6px}
+.card ul, .card ol{margin:0 0 6px 20px}
+
+/* Callouts */
+blockquote.tip,
+blockquote.warning{
+  margin:10px 0 2px;
+  padding:10px 12px;
+  border-radius:10px;
+  max-width:100%;
+  font-size:.9rem;
+}
+blockquote.tip{
+  border-left:4px solid var(--ok);
+  background:rgba(58,217,122,.08);
+}
+blockquote.warning{
+  border-left:4px solid var(--warn);
+  background:rgba(255,214,107,.08);
+}
+
+/* Code */
+pre{
+  background:#0b1222;
+  color:#e8f1ff;
+  border:1px solid #22304f;
+  border-radius:10px;
+  padding:9px 10px;
+  overflow-x:auto;
+  max-width:100%;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-size:.85rem;
+}
+code{font-family:Consolas,ui-monospace,monospace}
+kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+
+/* Tables */
+.table-scroll{overflow-x:auto;width:100%;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:6px 0;
+  border:1px solid #22304f;
+  font-size:.85rem;
+}
+th,td{
+  border:1px solid #22304f;
+  padding:6px 8px;
+  white-space:normal;
+  word-break:break-word;
+}
+th{background:#16213a}
+
+/* Footer */
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+</style>
+</head>
+<body>
+
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
+    </div>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="/">HOME</a>
+      <a href="/content/content.html">CONTENIDOS</a>
+      <a href="/score/ranking.html">RANKING</a>
+    </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
+    </div>
+  </div>
+</header>
+<script>
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+(function(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){
+    login.style.display='none';
+    signup.style.display='none';
+    userArea.style.display='flex';
+    nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+  }
+})();
+</script>
+
+<main class="container hero">
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+  </div>
+  <h1>Azure Compute — Máquinas Virtuales &amp; VM Scale Sets (AZ-104)</h1>
+  <div class="meta">
+    <span class="pill">Dominios: Cómputo (D2), Almacenamiento (D3), Monitorización (D5)</span>
+    <span class="pill">Nivel: Intermedio / Avanzado</span>
+    <span class="pill">Tiempo de lectura: 35–45 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="aside">
+      <h3>ÍNDICE</h3>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> Cómo entra Compute en el examen AZ-104</a></li>
+        <li><a href="#sec1"><small>1.</small> Fundamentos de máquinas virtuales en Azure</a></li>
+        <li><a href="#sec1b"><small>1.1</small> Elección de tamaños y familias</a></li>
+        <li><a href="#sec2"><small>2.</small> Discos administrados y rendimiento</a></li>
+        <li><a href="#sec3"><small>3.</small> Red de la VM: NIC, IP, NSG y disponibilidad</a></li>
+        <li><a href="#sec4"><small>4.</small> Alta disponibilidad: Availability Sets y Zones</a></li>
+        <li><a href="#sec5"><small>5.</small> Imágenes, captura y Shared Image Gallery</a></li>
+        <li><a href="#sec6"><small>6.</small> Virtual Machine Scale Sets (VMSS)</a></li>
+        <li><a href="#sec7"><small>7.</small> Extensiones, cloud-init y automatización</a></li>
+        <li><a href="#sec8"><small>8.</small> Diagnóstico, monitorización y rendimiento</a></li>
+        <li><a href="#sec9"><small>9.</small> Backup y restauración de VMs</a></li>
+        <li><a href="#sec10"><small>10.</small> Tips de examen y laboratorios recomendados</a></li>
+      </ul>
+    </aside>
+
+    <!-- ===== CONTENT ===== -->
+    <div class="content-wrap">
+
+      <section id="sec0" class="card">
+        <h2>0. Cómo entra Compute en el examen AZ-104</h2>
+        <p>En el examen AZ-104, la parte de <b>Compute</b> no es sólo “crear máquinas virtuales”. El objetivo es que seas capaz de:</p>
+        <ul>
+          <li>Elegir el tipo de VM adecuado según carga (CPU, memoria, disco y red).</li>
+          <li>Diseñar alta disponibilidad con <b>Availability Sets</b> y <b>Availability Zones</b>.</li>
+          <li>Usar <b>VM Scale Sets</b> para escalar horizontalmente cargas sin estado.</li>
+          <li>Configurar discos, rendimiento y redundancia de forma correcta.</li>
+          <li>Monitorizar, diagnosticar problemas y proteger con backup.</li>
+        </ul>
+        <blockquote class="tip">
+          <b>Patrón mental de examen:</b> en cada pregunta de Compute fíjate siempre en cuatro ejes:
+          <i>tipo de carga</i> (web, base de datos, batch), <i>requisitos de SLA</i>, <i>nivel de rendimiento de disco</i> y
+          <i>elasticidad</i> (¿necesita escalar?). La combinación de esos factores suele llevarte a la opción correcta.
+        </blockquote>
+      </section>
+
+      <section id="sec1" class="card">
+        <h2>1. Fundamentos de máquinas virtuales en Azure</h2>
+        <p>Una VM en Azure está formada por varios recursos que puedes administrar de forma independiente:</p>
+        <ul>
+          <li><b>Recurso de VM</b> <code>Microsoft.Compute/virtualMachines</code> (la definición de compute).</li>
+          <li><b>Disco del sistema operativo</b> y uno o más <b>discos de datos</b>.</li>
+          <li><b>NIC</b> asociada a una subred dentro de una VNet.</li>
+          <li><b>IP privada</b> (obligatoria) y <b>IP pública</b> opcional.</li>
+          <li><b>Network Security Group</b> (NSG) asociado a la NIC o a la subred.</li>
+          <li><b>Availability Set</b> o <b>Zona</b> si necesitas SLA alto.</li>
+        </ul>
+
+        <h3>Estados de una VM</h3>
+        <ul>
+          <li><b>running</b> → La VM está encendida y se factura compute.</li>
+          <li><b>stopped</b> → La VM está apagada desde el SO, pero los recursos siguen reservados (se factura compute).</li>
+          <li><b>stopped (deallocated)</b> → Se liberan los recursos de compute: no se factura CPU/RAM, sólo discos y IP reservadas.</li>
+        </ul>
+
+        <h3>Crear una VM con CLI</h3>
+        <pre><code># 1. Grupo de recursos
+az group create -n rg-az104-compute -l westeurope
+
+# 2. VM Linux básica
+az vm create   --resource-group rg-az104-compute   --name vm-az104-demo   --image UbuntuLTS   --size Standard_D2s_v3   --admin-username azureuser   --generate-ssh-keys   --public-ip-sku Standard</code></pre>
+      </section>
+
+      <section id="sec1b" class="card">
+        <h2>1.1 Elección de tamaños y familias de VM</h2>
+        <p>Las familias de VMs están orientadas a distintos tipos de carga. En el examen aparecerán descripciones de escenario que te llevan a una familia concreta.</p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Familia</th><th>Tipo</th><th>Uso típico</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>B-series</b></td><td>Burstable</td><td>Servidores de bajo uso, labs, Dev/Test.</td></tr>
+              <tr><td><b>D-series</b></td><td>General purpose</td><td>Aplicaciones web y servicios de negocio generales.</td></tr>
+              <tr><td><b>E-series</b></td><td>Memory optimized</td><td>Bases de datos, servicios in-memory, BI.</td></tr>
+              <tr><td><b>F-series</b></td><td>Compute optimized</td><td>Procesado intensivo de CPU, batch.</td></tr>
+              <tr><td><b>Lsv2</b></td><td>Storage optimized</td><td>Cargas con I/O muy alto, uso de discos locales NVMe.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <blockquote class="tip">
+          <b>Tip de examen:</b> si la pregunta menciona “<i>alto rendimiento de disco, baja latencia y grandes IOPS</i>”
+          piensa en <b>Premium SSD</b> o <b>Ultra Disk</b> y, si se habla de almacenamiento local efímero, en familias como <b>Lsv2</b>.
+        </blockquote>
+      </section>
+
+      <section id="sec2" class="card">
+        <h2>2. Discos administrados y rendimiento</h2>
+        <p>Los discos administrados se crean como recursos independientes. Elegir bien el tipo de disco marca la diferencia en rendimiento y coste.</p>
+
+        <h3>Tipos principales de discos</h3>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Tipo</th><th>Uso recomendado</th><th>Durabilidad / SLA</th><th>Notas para el examen</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>Standard HDD</b></td>
+                <td>Entornos de prueba, cargas poco críticas, backup.</td>
+                <td>Rendimiento bajo.</td>
+                <td>Opción más barata. Evítalo para bases de datos.</td>
+              </tr>
+              <tr>
+                <td><b>Standard SSD</b></td>
+                <td>Web apps y servicios de uso moderado.</td>
+                <td>Buen compromiso precio/rendimiento.</td>
+                <td>Elección razonable para muchas cargas no críticas.</td>
+              </tr>
+              <tr>
+                <td><b>Premium SSD</b></td>
+                <td>Producción, bases de datos, VMs críticas.</td>
+                <td>IOPS y throughput altos, baja latencia.</td>
+                <td>Si en el enunciado ves “producción y SLA”, casi siempre Premium.</td>
+              </tr>
+              <tr>
+                <td><b>Ultra Disk</b></td>
+                <td>Bases de datos OLTP exigentes, analítica pesada.</td>
+                <td>IOPS/throughput muy altos y configurables.</td>
+                <td>No disponible en todas las regiones ni tamaños. Suele aparecer en preguntas avanzadas.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>OS Disk, Data Disk y disco temporal</h3>
+        <ul>
+          <li><b>OS Disk</b>: contiene el sistema operativo. Mejor no almacenar datos críticos aquí.</li>
+          <li><b>Data Disks</b>: donde alojas bases de datos y datos de aplicación.</li>
+          <li><b>Disco temporal</b> (<code>D:</code> en Windows, <code>/dev/sdb</code> en Linux): efímero, se borra al deallocate.</li>
+        </ul>
+
+        <h3>Crear y anexar un disco</h3>
+        <pre><code># Disco Premium de 128 GB
+az disk create   -g rg-az104-compute   -n disk-datos-01   --size-gb 128   --sku Premium_LRS
+
+# Anexarlo a una VM
+az vm disk attach   -g rg-az104-compute   --vm-name vm-az104-demo   --name disk-datos-01</code></pre>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. Red de la VM: NIC, IP, NSG y disponibilidad</h2>
+        <p>Aunque la seguridad de red se trata en otro módulo, aquí necesitas entender cómo se encaja con la VM.</p>
+        <ul>
+          <li><b>NIC</b>: interfaz de red que conectas a una subred de una VNet.</li>
+          <li><b>IP privada</b>: obligatoria, es la dirección interna de la VM.</li>
+          <li><b>IP pública</b>: opcional. En producción se recomienda usar <b>Azure Bastion</b> en vez de exponer RDP/SSH.</li>
+          <li><b>NSG</b>: firewall L3/L4 asociado a NIC y/o subred.</li>
+        </ul>
+
+        <h3>Buenas prácticas</h3>
+        <ul>
+          <li>Evita IPs públicas en VMs de producción; centraliza acceso con Bastion o VPN.</li>
+          <li>Usa subredes separadas para frontend, backend, datos y administración.</li>
+          <li>Aplica reglas NSG específicas y evita “Allow Any” innecesarios.</li>
+        </ul>
+
+        <pre><code># NSG y regla para SSH
+az network nsg create -g rg-az104-compute -n nsg-vm1
+az network nsg rule create -g rg-az104-compute   --nsg-name nsg-vm1   -n allow-ssh   --priority 100   --access Allow --direction Inbound --protocol Tcp   --source-address-prefixes 'Internet'   --destination-port-ranges 22
+
+# Asociar NSG a NIC
+az network nic update   -g rg-az104-compute   -n vm-az104-demoVMNic   --network-security-group nsg-vm1</code></pre>
+      </section>
+
+      <section id="sec4" class="card">
+        <h2>4. Alta disponibilidad: Availability Sets y Availability Zones</h2>
+        <p>Debes distinguir claramente ambos conceptos.</p>
+
+        <h3>Availability Sets</h3>
+        <ul>
+          <li>Agrupan VMs dentro de un mismo datacenter.</li>
+          <li>Proporcionan separación en <b>fault domains</b> (hardware/fallos físicos) y <b>update domains</b> (ventanas de mantenimiento).</li>
+          <li>Requieren al menos 2 VMs para mejorar el SLA.</li>
+        </ul>
+
+        <h3>Availability Zones (AZ)</h3>
+        <ul>
+          <li>Separan físicamente las instancias en distintos datacenters de la misma región.</li>
+          <li>Ofrecen el SLA más alto cuando despliegas 2+ instancias en distintas zonas.</li>
+          <li>Se especifican por VM (zona 1, 2 o 3).</li>
+        </ul>
+
+        <blockquote class="tip">
+          <b>Regla rápida de examen:</b> “tolerar caída completa de datacenter” → <b>Availability Zones</b>.
+          Si sólo se menciona “alta disponibilidad de la aplicación” → suele bastar con <b>Availability Sets</b> combinados con un balanceador.
+        </blockquote>
+
+        <pre><code># Availability Set
+az vm availability-set create   -g rg-az104-compute   -n avset-app   --platform-fault-domain-count 2   --platform-update-domain-count 5
+
+# VM en el Availability Set
+az vm create   -g rg-az104-compute   -n vm-app-01   --availability-set avset-app   --image Win2019Datacenter   --size Standard_D2s_v3   --admin-username azureuser   --admin-password &lt;PasswordSegura!&gt;</code></pre>
+      </section>
+
+      <section id="sec5" class="card">
+        <h2>5. Imágenes, captura y Shared Image Gallery</h2>
+        <p>Para desplegar muchas VMs consistentes necesitas imágenes personalizadas.</p>
+        <ul>
+          <li><b>Imágenes de marketplace</b>: Windows Server, Ubuntu, etc.</li>
+          <li><b>Custom images</b>: a partir de una VM “golden”.</li>
+          <li><b>Shared Image Gallery (SIG)</b>: catálogo central de imágenes versionadas y replicadas.</li>
+        </ul>
+
+        <h3>Flujo típico de imagen “golden”</h3>
+        <ol>
+          <li>Creas una VM base y la configuras (parches, agentes, software corporativo).</li>
+          <li>La generalizas (Sysprep en Windows, deprovision en Linux).</li>
+          <li>Creas una imagen gestionada o la publicas en una SIG.</li>
+          <li>Despliegas VMs o VMSS a partir de esa imagen.</li>
+        </ol>
+
+        <pre><code># Crear imagen desde VM generalizada
+az image create   -g rg-az104-compute   -n img-golden-az104   --source vm-golden
+
+# VM nueva desde la imagen
+az vm create   -g rg-az104-compute   -n vm-desde-golden   --image img-golden-az104   --admin-username azureuser   --generate-ssh-keys</code></pre>
+
+        <blockquote class="warning">
+          <b>Ojo en el examen:</b> si se menciona que la VM original ya está en producción con datos, no debes usarla directamente como imagen.
+          Primero crea una VM específica para la imagen “golden”, generalízala y luego captura.
+        </blockquote>
+      </section>
+
+      <section id="sec6" class="card">
+        <h2>6. Virtual Machine Scale Sets (VMSS)</h2>
+        <p>Los <b>VM Scale Sets</b> son clave cuando la pregunta habla de “escalar automáticamente” y “todas las instancias idénticas”.</p>
+
+        <h3>Escenarios típicos</h3>
+        <ul>
+          <li>Frontends web sin estado detrás de un Load Balancer o Application Gateway.</li>
+          <li>Trabajos batch que requieren más nodos cuando hay picos de trabajo.</li>
+          <li>Entornos de prueba que crecen/disminuyen según el uso.</li>
+        </ul>
+
+        <h3>Modos de orquestación</h3>
+        <ul>
+          <li><b>Uniform</b>: todas las instancias idénticas; se usa con imágenes gestionadas y autoscaling clásico.</li>
+          <li><b>Flexible</b>: mezcla tamaños y zonas, pensado para alta disponibilidad avanzada (por ejemplo, clusters con nodos diferentes).</li>
+        </ul>
+
+        <pre><code># VMSS simple con 2 instancias
+az vmss create   -g rg-az104-compute   -n vmss-web   --image UbuntuLTS   --upgrade-policy-mode automatic   --instance-count 2   --vm-sku Standard_D2s_v3</code></pre>
+
+        <h3>Autoscaling basado en métricas</h3>
+        <pre><code># Escalar hacia arriba si CPU &gt; 70% 10 min
+az monitor autoscale rule create   -g rg-az104-compute   --autoscale-name vmss-web   --condition "Percentage CPU &gt; 70 avg 10m"   --scale out 2
+
+# Escalar hacia abajo si CPU &lt; 30% 15 min
+az monitor autoscale rule create   -g rg-az104-compute   --autoscale-name vmss-web   --condition "Percentage CPU &lt; 30 avg 15m"   --scale in 1</code></pre>
+
+        <blockquote class="tip">
+          Si el escenario menciona “número de instancias variable según la carga” la respuesta más probable será un <b>VMSS</b> delante de un balanceador.
+        </blockquote>
+      </section>
+
+      <section id="sec7" class="card">
+        <h2>7. Extensiones, cloud-init y automatización</h2>
+        <p>Las extensiones de VM y cloud-init son dos formas clave de automatizar la configuración.</p>
+
+        <h3>VM Extensions</h3>
+        <ul>
+          <li><b>Custom Script</b>: ejecutar scripts tras el despliegue.</li>
+          <li><b>Extensiones de monitorización</b>: Azure Monitor Agent, Dependency Agent, etc.</li>
+          <li><b>Extensiones de seguridad</b>: antimalware, Azure Key Vault, etc.</li>
+        </ul>
+
+        <pre><code># Custom Script Extension para ejecutar un script
+az vm extension set   -g rg-az104-compute   --vm-name vm-az104-demo   --name customScript   --publisher Microsoft.Azure.Extensions   --settings '{ "fileUris": ["https://mi-storage.blob.core.windows.net/scripts/config.sh"], "commandToExecute": "bash config.sh" }'</code></pre>
+
+        <h3>cloud-init (Linux)</h3>
+        <pre><code>#cloud-config
+packages:
+  - nginx
+runcmd:
+  - systemctl enable nginx
+  - systemctl start nginx</code></pre>
+      </section>
+
+      <section id="sec8" class="card">
+        <h2>8. Diagnóstico, monitorización y rendimiento</h2>
+        <p>Para detectar problemas de arranque y rendimiento tienes varias herramientas:</p>
+        <ul>
+          <li><b>Boot diagnostics</b>: captura de consola de arranque y pantallas.</li>
+          <li><b>Agente de Azure Monitor</b>: métricas y logs internos.</li>
+          <li><b>Alertas</b> basadas en CPU, disco, red u otras métricas.</li>
+        </ul>
+
+        <pre><code># Activar diagnóstico de arranque
+az vm boot-diagnostics enable   -g rg-az104-compute   -n vm-az104-demo   --storage https://miStorageAccount.blob.core.windows.net/</code></pre>
+
+        <blockquote class="warning">
+          Si una pregunta describe una VM que no arranca correctamente y el administrador necesita ver la salida de consola o capturas del arranque, la opción
+          correcta suele incluir habilitar <b>boot diagnostics</b> en la VM.
+        </blockquote>
+      </section>
+
+      <section id="sec9" class="card">
+        <h2>9. Backup y restauración de VMs</h2>
+        <p>El backup de máquinas virtuales se gestiona normalmente con <b>Recovery Services Vault</b>.</p>
+        <ul>
+          <li>Definir políticas de backup (frecuencia y retención).</li>
+          <li>Habilitar protección para VMs nuevas o existentes.</li>
+          <li>Restaurar VMs completas o sólo discos.</li>
+        </ul>
+
+        <pre><code># Recovery Services Vault
+az backup vault create   -g rg-az104-compute   -n rsv-az104-demo   -l westeurope
+
+# Política de backup diaria (simplificada)
+az backup policy set -g rg-az104-compute   --vault-name rsv-az104-demo   --name DefaultPolicy
+
+# Habilitar protección en una VM
+az backup protection enable-for-vm   -g rg-az104-compute   --vault-name rsv-az104-demo   --vm vm-az104-demo   --policy-name DefaultPolicy</code></pre>
+      </section>
+
+      <section id="sec10" class="card">
+        <h2>10. Tips de examen y laboratorios recomendados</h2>
+        <h3>Patrones que debes memorizar</h3>
+        <ul>
+          <li><b>Alta disponibilidad intra-datacenter</b> → Availability Set.</li>
+          <li><b>Alta disponibilidad entre datacenters</b> → Availability Zones.</li>
+          <li><b>Escalado automático según carga</b> → VM Scale Set.</li>
+          <li><b>Arranque problemático</b> → habilitar Boot diagnostics.</li>
+          <li><b>Despliegues consistentes a gran escala</b> → Shared Image Gallery.</li>
+          <li><b>Datos críticos</b> → discos de datos Premium/Ultra + Backup en RSV.</li>
+        </ul>
+
+        <h3>Laboratorio 1 — VMs altamente disponibles</h3>
+        <ol>
+          <li>Crea un Availability Set con 2 fault domains y 5 update domains.</li>
+          <li>Despliega 2 VMs Windows en dicho Availability Set.</li>
+          <li>Configura un Load Balancer público que reparta tráfico RDP entre ellas.</li>
+          <li>Simula la caída de una VM y comprueba que sigues pudiendo conectarte.</li>
+        </ol>
+
+        <h3>Laboratorio 2 — VMSS con autoscaling</h3>
+        <ol>
+          <li>Crea un VMSS de Ubuntu con 2 instancias iniciales.</li>
+          <li>Habilita autoscaling por CPU (reglas &gt;70% y &lt;30%).</li>
+          <li>Instala <code>stress-ng</code> y genera carga para observar el escalado.</li>
+        </ol>
+
+        <h3>Laboratorio 3 — Backup y restauración</h3>
+        <ol>
+          <li>Configura un Recovery Services Vault y habilita backup para una VM.</li>
+          <li>Fuerza un backup bajo demanda.</li>
+          <li>Restaura la VM a una nueva instancia y verifica conectividad y datos.</li>
+        </ol>
+
+        <blockquote class="tip">
+          Repite mentalmente estos patrones la semana del examen. Cuando veas una pregunta de Compute, piensa:
+          <b>tipo de carga + SLA + rendimiento + elasticidad</b>. La respuesta correcta suele ser la combinación que mejor satisface esos cuatro criterios.
+        </blockquote>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">
+        ITHub.es
+      </span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span>
+    </div>
+    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

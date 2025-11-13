@@ -1,100 +1,168 @@
-<!doctype html><html lang="es"><head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Identidad y acceso en Azure (AZ-104) | ITHub.es</title>
-  <meta name="description" content="Guía completa de identidad y acceso para Azure (AZ-104): RBAC, PIM, MFA, Managed Identities, Key Vault, Conditional Access y Entra ID."/>
-  <meta name="keywords" content="Azure,AZ-104,Identidad,RBAC,PIM,Key Vault,Managed Identities,MFA,Conditional Access"/>
-  <link rel="canonical" href="https://beta.ithub.es/content/azure-identity-az104.html"/>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Identidad y Acceso en Azure (AZ-104) — ITHub.es</title>
+<meta name="description" content="Guía premium de identidad y acceso para AZ-104: RBAC, PIM, Managed Identities, registros de aplicaciones, Access Reviews y Key Vault." />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} 
-    gtag('js', new Date());
-    gtag('config', 'G-DYZ3GCXHEK');
-  </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
 
-  <style>
-    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;--p:#0078d4;--tint:rgba(0,120,212,.18);--chip:#cfe9ff;--bd:rgba(0,120,212,.65);--shadow:0 12px 28px rgba(6,12,40,.45)}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-    .container{max-width:1100px;margin:0 auto;padding:0 18px}
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:10px;align-items:center;font-weight:900}
-    nav a{color:#cbd6ff;text-decoration:none;padding:10px 12px;border-radius:10px;border:1px solid transparent}
-    nav a:hover{border-color:#2a3150;color:#fff}
-    .hero{text-align:center;padding:28px 0 16px;border-bottom:1px solid var(--stroke);background:linear-gradient(180deg,#0f1320,#0f1320 70%,#141a33)}
-    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);color:var(--chip);font-weight:900}
-    h1{margin:.6rem 0 .8rem;font-size:clamp(1.9rem,3.8vw,2.6rem)}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-    .meta .b{padding:8px 12px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);font-weight:800;color:#e8f1ff}
-    .layout{display:grid;grid-template-columns:300px 1fr;gap:18px;margin:18px auto;max-width:1200px;padding:0 10px}
-    @media(max-width:980px){.layout{grid-template-columns:1fr}}
-    .toc{position:sticky;top:86px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
-    .toc h3{margin:0 0 10px;color:#dfe6ff;letter-spacing:.06em;text-transform:uppercase;font-size:14px}
-    .toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-    .toc a{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid transparent;border-radius:12px;color:#e9f2ff;text-decoration:none}
-    .toc a:hover{border-color:var(--bd);background:var(--tint)}
-    .dot{width:7px;height:7px;border-radius:999px;background:var(--p);box-shadow:0 0 0 4px rgba(255,255,255,.04)}
-    article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
-    article h2{margin:16px 0 8px;font-size:1.22rem;border-left:4px solid var(--p);padding-left:10px}
-    .callout{border:1px solid var(--bd);background:var(--tint);border-radius:12px;padding:12px;margin:10px 0}
-    .table{width:100%;border-collapse:collapse;margin:.6rem 0;border:1px solid #283056}
-    .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
-    .table th{background:#141a33;text-align:left}
-    .muted{color:var(--muted)}
-    ul{margin-top:0}
-  
+<style>
 
-/* --- Header alignment (screenshot-like) --- */
-header{position:sticky;top:0;z-index:60;backdrop-filter:blur(10px);
-  background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));
+:root{
+  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
   border-bottom:1px solid var(--stroke)}
-.nav{height:64px;display:flex;align-items:center;gap:18px}
-.brand{display:flex;gap:10px;align-items:center;font-weight:900}
-.brand img{height:42px}
-.brand span{letter-spacing:.5px}
-.mainbar{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%}
-nav.menu{display:flex;gap:28px;margin:0 auto}
-nav.menu a{font-weight:900;letter-spacing:.04em;text-transform:uppercase}
-/* pill group (right side) */
-.session{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:999px;
-  border:1px solid var(--stroke);
-  background:radial-gradient(80% 180% at 100% 0%, rgba(255,255,255,.04), rgba(0,0,0,.06) 60%);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
-.session .hello{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.06)}
-.pill-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:#fff;font-weight:900}
-.pill-btn:hover{filter:brightness(1.06)}
-/* AWS / Azure accent for pills */
-:root{--pill:#5b6bdc} /* default */
-.pill-btn.primary{background:var(--pill)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:40px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
+.pill-btn:hover{transform:translateY(-1px)}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
 
-/* Username handle look */
-.handle{opacity:.95}
+/* Hero */
+.hero{padding:26px 0 8px}
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
+  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
+.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
+.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
+.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
 
-/* Azure blues */
-:root{--pill:#5b6bdc}
-.session{border-color:var(--bd)}
-nav.menu a:hover{border-color:var(--bd);background:var(--tint)}
+/* Layout */
+.grid{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr);
+  gap:18px;
+  margin-top:16px;
+}
+@media(max-width:980px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* Sidebar index */
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.aside h3{margin:8px 0 10px}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff;font-size:.86rem}
+.toc a small{color:#9fb3e7;font-weight:700}
+.toc a:hover{border-color:#31539a; transform:translateX(2px)}
+
+/* Content column */
+.content-wrap{
+  max-width:880px;
+  margin:0 auto;
+}
+
+/* Content card */
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:2px 0 8px;font-size:clamp(1.15rem,2.1vw,1.55rem)}
+.card h3{margin:10px 0 6px;font-size:1.02rem}
+.card p{margin:0 0 6px}
+.card ul, .card ol{margin:0 0 6px 20px}
+
+/* Callouts */
+blockquote.tip,
+blockquote.warning{
+  margin:10px 0 2px;
+  padding:10px 12px;
+  border-radius:10px;
+  max-width:100%;
+  font-size:.9rem;
+}
+blockquote.tip{
+  border-left:4px solid var(--ok);
+  background:rgba(58,217,122,.08);
+}
+blockquote.warning{
+  border-left:4px solid var(--warn);
+  background:rgba(255,214,107,.08);
+}
+
+/* Code */
+pre{
+  background:#0b1222;
+  color:#e8f1ff;
+  border:1px solid #22304f;
+  border-radius:10px;
+  padding:9px 10px;
+  overflow-x:auto;
+  max-width:100%;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-size:.85rem;
+}
+code{font-family:Consolas,ui-monospace,monospace}
+kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+
+/* Tables */
+.table-scroll{overflow-x:auto;width:100%;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:6px 0;
+  border:1px solid #22304f;
+  font-size:.85rem;
+}
+th,td{
+  border:1px solid #22304f;
+  padding:6px 8px;
+  white-space:normal;
+  word-break:break-word;
+}
+th{background:#16213a}
+
+/* Footer */
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+
 </style>
-</head><body>
+</head>
+<body>
+
 <header role="banner">
   <div class="container nav">
     <div class="brand">
       <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
-    
     </div>
-    <div class="mainbar">
-      <nav class="menu" aria-label="Navegación principal">
-        <a href="/">HOME</a>
-        <a href="/content/content.html">CONTENIDOS</a>
-        <a href="/score/ranking.html">RANKING</a>
-      </nav>
-      <div class="session" id="authWrap" aria-label="Acciones de sesión">
-        <div class="hello">👋 <span class="handle" id="userNameTop" style="font-weight:900">@USER</span></div>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="/">HOME</a>
+      <a href="/content/content.html">CONTENIDOS</a>
+      <a href="/score/ranking.html">RANKING</a>
+    </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
         <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-        <button id="btnLogout" class="pill-btn primary" type="button">LOGOUT</button>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
       </div>
     </div>
   </div>
@@ -103,126 +171,268 @@ nav.menu a:hover{border-color:var(--bd);background:var(--tint)}
 function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
 (function(){
   const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
   const nameTop=document.getElementById('userNameTop');
-  const wrap=document.getElementById('authWrap');
-  if(u && nameTop){ nameTop.textContent='@'+(u.handle||u.name||u.email||'user').toUpperCase(); }
-  if(!u && wrap){ /* if not logged, show generic */ nameTop && (nameTop.textContent='@INVITADO'); }
-  const btnLogout=document.getElementById('btnLogout');
-  if(btnLogout){ btnLogout.addEventListener('click', function(){ localStorage.removeItem('currentUser'); location.href='/'; }); }
+  if(u){
+    login.style.display='none';
+    signup.style.display='none';
+    userArea.style.display='flex';
+    nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+  }
 })();
 </script>
 
-<section class="hero"><div class="container">
-  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor' width="16" height="16"><path d='M3 18h6l3-8 3 8h6l-9-14-9 14z'/></svg>&nbsp; Azure · AZ-104</span>
-  <h1>Identidad y acceso en Azure (AZ-104)</h1>
-  <div class="meta"><span class='b'>Dominio: Gestión de identidades</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 30–40 min</span><span class='b'>Última revisión: Nov 2025</span></div>
-</div></section>
+<main class="container hero">
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+  </div>
+  <h1>Azure Identity & Access (AZ-104) — RBAC, PIM y Managed Identities</h1>
+  <div class="meta">
+    <span class="pill">Dominio: Gestión de identidades y gobernanza</span>
+    <span class="pill">Nivel: Intermedio / Avanzado</span>
+    <span class="pill">Tiempo de lectura: 35–45 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
 
-<div class="container layout">
-  <aside class="toc"><h3>Índice</h3>
-    <ol>
-      <li><a href='#entra'><span class='dot'></span><span>1. Microsoft Entra ID</span></a></li>
-      <li><a href='#rbac'><span class='dot'></span><span>2. Roles RBAC y ámbitos</span></a></li>
-      <li><a href='#pim'><span class='dot'></span><span>3. Privileged Identity Management</span></a></li>
-      <li><a href='#mfa'><span class='dot'></span><span>4. MFA y Conditional Access</span></a></li>
-      <li><a href='#mi'><span class='dot'></span><span>5. Managed Identities</span></a></li>
-      <li><a href='#kv'><span class='dot'></span><span>6. Azure Key Vault</span></a></li>
-      <li><a href='#tips'><span class='dot'></span><span>7. Tips de examen</span></a></li>
-    </ol>
-  </aside>
+  <div class="grid">
+    <aside class="aside">
+      <h3>ÍNDICE</h3>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> Rol de identidad en AZ-104</a></li>
+        <li><a href="#sec1"><small>1.</small> Azure AD vs RBAC de Azure</a></li>
+        <li><a href="#sec2"><small>2.</small> RBAC: roles, ámbitos y buenas prácticas</a></li>
+        <li><a href="#sec3"><small>3.</small> Privileged Identity Management (PIM)</a></li>
+        <li><a href="#sec4"><small>4.</small> Identidades administradas (Managed Identities)</a></li>
+        <li><a href="#sec5"><small>5.</small> Registros de aplicaciones y permisos</a></li>
+        <li><a href="#sec6"><small>6.</small> Access Reviews y gobernanza de acceso</a></li>
+        <li><a href="#sec7"><small>7.</small> Key Vault y secretos en el examen</a></li>
+        <li><a href="#sec8"><small>8.</small> Escenarios típicos de examen y laboratorios</a></li>
+      </ul>
+    </aside>
 
-  <article>
-    <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
+    <div class="content-wrap">
+      
+<section id="sec0" class="card">
+  <h2>0. Rol de identidad en el examen AZ-104</h2>
+  <p>En AZ-104 la identidad es el <b>primer nivel de seguridad</b>. Microsoft quiere comprobar que sabes:</p>
+  <ul>
+    <li>Diferenciar claramente <b>Azure AD (Entra ID)</b> de <b>RBAC sobre recursos de Azure</b>.</li>
+    <li>Asignar permisos con el <b>principio de mínimo privilegio</b>.</li>
+    <li>Usar <b>PIM</b> para roles privilegiados temporales.</li>
+    <li>Configurar <b>Managed Identities</b> para que las aplicaciones accedan a recursos sin secretos.</li>
+    <li>Proteger secretos con <b>Key Vault</b> y delegar permisos correctamente.</li>
+  </ul>
+  <blockquote class="tip">
+    <b>Patrón de examen:</b> cuando el enunciado habla de “administrador que necesita permisos temporales y auditados”
+    casi siempre la respuesta correcta implica <b>Privileged Identity Management (PIM)</b> y un rol elegible.
+  </blockquote>
+</section>
 
-    <h2 id="entra">1. Microsoft Entra ID (Azure AD)</h2>
-    <p>Servicio de identidad principal en Azure. Gestiona usuarios, grupos, apps y autenticación.</p>
-    <ul>
-      <li><b>Usuarios y grupos:</b> base de asignación de roles RBAC y acceso a recursos.</li>
-      <li><b>Licencias:</b> P1 y P2 habilitan PIM, Identity Protection y Conditional Access.</li>
-      <li><b>Sincronización híbrida:</b> Entra Connect / Cloud Sync desde Active Directory local.</li>
-      <li><b>Autenticación:</b> soporta MFA, FIDO2, pass-through y federation.</li>
-    </ul>
-    <div class="callout"><b>EXAM TIP:</b> Azure AD ahora se llama <b>Microsoft Entra ID</b> — usa este término en el examen.</div>
+<section id="sec1" class="card">
+  <h2>1. Azure AD (Entra ID) vs RBAC de Azure</h2>
+  <p>Dos sistemas de permisos distintos que debes separar mentalmente:</p>
+  <ul>
+    <li><b>Azure AD / Entra ID</b>: identidades, grupos, apps, MFA, Conditional Access.</li>
+    <li><b>RBAC de Azure</b>: permisos sobre <i>recursos</i> como suscripciones, grupos de recursos, VMs, cuentas de almacenamiento, etc.</li>
+  </ul>
+  <h3>Ejemplos típicos</h3>
+  <ul>
+    <li>“Habilitar MFA para todos los administradores” → <b>Azure AD</b> (políticas de acceso condicional).</li>
+    <li>“Conceder acceso de solo lectura a un grupo sobre un grupo de recursos” → <b>RBAC</b> (rol <code>Reader</code> en ese scope).</li>
+  </ul>
+  <blockquote class="warning">
+    Muchas preguntas mezclan identidad de Azure AD con RBAC. Pregúntate siempre:
+    <b>¿están hablando de <i>cómo se autentican</i> los usuarios o de <i>a qué recursos</i> acceden?</b>
+  </blockquote>
+</section>
 
-    <h2 id="rbac">2. Roles RBAC y ámbitos</h2>
-    <p><b>Role-Based Access Control (RBAC)</b> otorga permisos según rol y ámbito.</p>
-    <table class="table">
-      <thead><tr><th>Ámbito</th><th>Ejemplo de uso</th></tr></thead>
+<section id="sec2" class="card">
+  <h2>2. RBAC: roles, ámbitos y buenas prácticas</h2>
+  <p>RBAC se basa en tres conceptos:</p>
+  <ul>
+    <li><b>Security principal</b>: usuario, grupo, service principal o managed identity.</li>
+    <li><b>Rol</b>: colección de permisos (por ejemplo, <code>Reader</code>, <code>Contributor</code>, <code>Owner</code>).</li>
+    <li><b>Ámbito (scope)</b>: Management Group, suscripción, grupo de recursos o recurso individual.</li>
+  </ul>
+
+  <h3>Ámbitos y herencia</h3>
+  <p>Las asignaciones se heredan hacia abajo:</p>
+  <ul>
+    <li>Rol en <b>Management Group</b> → aplica a todas las suscripciones y recursos debajo.</li>
+    <li>Rol en <b>suscripción</b> → aplica a todos los grupos de recursos y recursos de esa suscripción.</li>
+    <li>Rol en <b>grupo de recursos</b> → aplica sólo a los recursos de ese grupo.</li>
+  </ul>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Rol</th><th>Permisos clave</th><th>Uso típico</th></tr></thead>
       <tbody>
-        <tr><td>Tenant / Management Group</td><td>Control global de políticas y compliance.</td></tr>
-        <tr><td>Suscripción</td><td>Gestión de facturación y recursos generales.</td></tr>
-        <tr><td>Grupo de recursos</td><td>Control sobre un conjunto de servicios relacionados.</td></tr>
-        <tr><td>Recurso</td><td>Permiso específico sobre un recurso concreto (VM, Storage, etc.).</td></tr>
+        <tr>
+          <td><b>Reader</b></td>
+          <td>Ver recursos, sin modificarlos.</td>
+          <td>Auditores, equipos de soporte de primer nivel.</td>
+        </tr>
+        <tr>
+          <td><b>Contributor</b></td>
+          <td>Crear y modificar recursos, sin cambiar asignaciones de rol.</td>
+          <td>Equipos DevOps o de plataforma que gestionan recursos.</td>
+        </tr>
+        <tr>
+          <td><b>Owner</b></td>
+          <td>Permisos totales, incluido cambiar roles.</td>
+          <td>Administradores de suscripción. Úsalo con mucha cautela.</td>
+        </tr>
       </tbody>
     </table>
-    <ul>
-      <li><b>Owner:</b> control total (evítalo salvo administración central).</li>
-      <li><b>Contributor:</b> puede gestionar, no asignar roles.</li>
-      <li><b>Reader:</b> solo lectura.</li>
-      <li><b>User Access Administrator:</b> delega permisos RBAC.</li>
-      <li><b>Custom roles:</b> define permisos personalizados JSON.</li>
-    </ul>
+  </div>
 
-    <h2 id="pim">3. Privileged Identity Management (PIM)</h2>
-    <p>Controla accesos privilegiados de manera temporal (“Just-In-Time”).</p>
-    <ul>
-      <li><b>Asignaciones elegibles:</b> requieren activación manual + MFA.</li>
-      <li><b>Duración:</b> configurable (ej. 1h) con registro de auditoría.</li>
-      <li><b>Aprobación previa:</b> se puede exigir autorización de otro administrador.</li>
-      <li><b>Alertas:</b> detectan roles permanentes o sin uso.</li>
-    </ul>
-    <div class="callout"><b>EXAM TIP:</b> Preguntas con “acceso temporal” o “just-in-time” → <b>PIM</b>.</div>
+  <h3>Buenas prácticas que suelen salir en el examen</h3>
+  <ul>
+    <li>Asignar roles siempre a <b>grupos</b>, no a usuarios individuales.</li>
+    <li>Revisar periódicamente las asignaciones (Access Reviews o auditoría de roles).</li>
+    <li>Evitar usar <code>Owner</code> salvo para tareas muy concretas.</li>
+  </ul>
+</section>
 
-    <h2 id="mfa">4. MFA y Conditional Access</h2>
-    <p><b>Multi-Factor Authentication (MFA)</b> añade una capa adicional de seguridad.</p>
-    <ul>
-      <li><b>Recomendado:</b> habilitar MFA para todos los usuarios.</li>
-      <li><b>Conditional Access:</b> aplica políticas basadas en condiciones (ubicación, dispositivo, app).</li>
-      <li><b>Identity Protection:</b> analiza riesgo de inicio de sesión y usuario.</li>
-      <li><b>Self-service password reset (SSPR):</b> permite restablecer la contraseña de forma segura.</li>
-    </ul>
-    <div class="callout"><b>EXAM TIP:</b> “Aplicar MFA solo fuera del país” → usa <b>Conditional Access</b> con filtros de ubicación.</div>
+<section id="sec3" class="card">
+  <h2>3. Privileged Identity Management (PIM)</h2>
+  <p><b>PIM</b> permite que los roles privilegiados sean <b>temporales</b> y con <b>elevación bajo demanda</b>.</p>
+  <h3>Conceptos clave</h3>
+  <ul>
+    <li><b>Elegible</b> vs <b>Activo</b>: el usuario es “elegible” para el rol y debe activarlo cuando lo necesita.</li>
+    <li><b>Tiempo de activación</b>: minutos u horas durante los que el rol está activo.</li>
+    <li><b>Justificación y aprobación</b>: se puede exigir motivo y aprobación para activar el rol.</li>
+    <li><b>Auditoría</b>: todas las activaciones quedan registradas.</li>
+  </ul>
+  <blockquote class="tip">
+    En preguntas donde se pida “<i>minimizar el tiempo que los usuarios tienen permisos administrativos</i>”
+    la respuesta suele ser: <b>convertir las asignaciones permanentes en roles elegibles usando PIM</b>.
+  </blockquote>
+</section>
 
-    <h2 id="mi">5. Managed Identities</h2>
-    <p>Permiten que los servicios de Azure se autentiquen en Entra ID sin credenciales manuales.</p>
-    <ul>
-      <li><b>System-assigned:</b> ligada a una VM o App; se elimina con el recurso.</li>
-      <li><b>User-assigned:</b> independiente, reutilizable por varios recursos.</li>
-      <li>Se usa para acceder a <b>Key Vault</b>, <b>Storage</b> o APIs protegidas sin guardar secretos.</li>
-    </ul>
-    <pre>// Ejemplo: asignar acceso a KV
-az keyvault set-policy --name kvDemo --object-id &lt;MI_ID&gt; --secret-permissions get list</pre>
+<section id="sec4" class="card">
+  <h2>4. Identidades administradas (Managed Identities)</h2>
+  <p>Las <b>Managed Identities</b> permiten que las aplicaciones que corren en Azure obtengan tokens
+     para acceder a otros recursos <b>sin almacenar secretos ni claves</b>.</p>
 
-    <h2 id="kv">6. Azure Key Vault</h2>
-    <p>Almacena secretos, claves y certificados con controles RBAC y auditoría.</p>
-    <ul>
-      <li><b>Soft-delete y purge protection:</b> evita eliminaciones accidentales.</li>
-      <li><b>Access Policies (modelo heredado)</b> o <b>Azure RBAC (recomendado)</b> para permisos.</li>
-      <li><b>Networking:</b> usa Private Endpoint + firewall para acceso interno.</li>
-      <li><b>Logging:</b> habilita diagnóstico hacia Log Analytics.</li>
-    </ul>
-    <table class="table">
-      <thead><tr><th>Permiso</th><th>Ejemplo</th></tr></thead>
-      <tbody>
-        <tr><td>get / list</td><td>Leer secretos existentes</td></tr>
-        <tr><td>set</td><td>Crear o actualizar un secreto</td></tr>
-        <tr><td>delete / purge</td><td>Eliminar permanentemente</td></tr>
-      </tbody>
-    </table>
+  <h3>Tipos</h3>
+  <ul>
+    <li><b>System-assigned</b>: identidad ligada a un único recurso (VM, App Service, Function…).</li>
+    <li><b>User-assigned</b>: identidad como recurso independiente que puedes adjuntar a varios recursos.</li>
+  </ul>
 
-    <h2 id="tips">7. Tips de examen AZ-104</h2>
-    <ul>
-      <li>Los roles se asignan en <b>Azure Resource Manager</b> (ARM), no en AD clásico.</li>
-      <li><b>PIM</b> = acceso temporal + MFA + aprobación opcional.</li>
-      <li><b>Managed Identities</b> eliminan la necesidad de credenciales en código.</li>
-      <li><b>Key Vault</b>: habilita <b>soft-delete</b> siempre.</li>
-      <li><b>MFA</b> y <b>Conditional Access</b> son esenciales para proteger identidades.</li>
-      <li>Las preguntas suelen combinar RBAC + PIM + Key Vault en un mismo escenario.</li>
-    </ul>
-  </article>
-</div>
+  <h3>Patrón típico con Key Vault</h3>
+  <ol>
+    <li>Habilitas una Managed Identity en tu VM o App Service.</li>
+    <li>Concedes a esa identidad permisos de <b>Get/List</b> sobre secretos en Key Vault (RBAC o políticas de acceso).</li>
+    <li>La aplicación usa la librería de Azure para obtener un token y leer el secreto sin ninguna contraseña embebida.</li>
+  </ol>
 
-<footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
-  <div class="container">© 2025 ITHub.es · Identidad y acceso en Azure (AZ-104)</div>
+  <pre><code># Ejemplo CLI: habilitar identidad administrada en una VM
+az vm identity assign \
+  -g rg-az104-identity \
+  -n vm-app-01</code></pre>
+
+  <blockquote class="warning">
+    Si en el enunciado aparece algo como “<i>evitar almacenar secretos en código o variables de entorno</i>”,
+    la respuesta correcta casi siempre implica <b>Managed Identities + Key Vault</b>.
+  </blockquote>
+</section>
+
+<section id="sec5" class="card">
+  <h2>5. Registros de aplicaciones y permisos</h2>
+  <p>Los <b>registros de aplicaciones</b> representan apps que necesitan autenticarse contra Azure AD
+     (por ejemplo, una API o una SPA) y obtener permisos.</p>
+
+  <h3>Elementos clave del registro</h3>
+  <ul>
+    <li><b>Application (client) ID</b>: identificador de la app.</li>
+    <li><b>Directory (tenant) ID</b>: inquilino en el que vive la app.</li>
+    <li><b>Client secret / certificado</b>: credenciales para apps confidenciales.</li>
+    <li><b>API permissions</b>: permisos delegados (en nombre del usuario) o de aplicación (app-only).</li>
+  </ul>
+
+  <h3>Escenarios típicos en el examen</h3>
+  <ul>
+    <li>Aplicación que necesita leer todos los usuarios del tenant → permiso <b>Microsoft Graph</b> de tipo aplicación.</li>
+    <li>API protegida a la que se accede desde un front-end SPA → flujo OAuth2 / OpenID Connect con scopes definidos.</li>
+  </ul>
+</section>
+
+<section id="sec6" class="card">
+  <h2>6. Access Reviews y gobernanza de acceso</h2>
+  <p>Los <b>Access Reviews</b> permiten revisar periódicamente qué usuarios y grupos mantienen acceso
+     a aplicaciones, grupos o roles específicos.</p>
+  <ul>
+    <li>Definir un <b>scope</b>: grupo de seguridad, app, rol, etc.</li>
+    <li>Elegir revisores (propietarios, managers, usuarios auto-revisión).</li>
+    <li>Configurar acciones automáticas al expirar: <i>remove</i>, <i>approve</i>, etc.</li>
+  </ul>
+
+  <blockquote class="tip">
+    Si una organización quiere asegurarse de que “<i>los usuarios no conserven acceso tras cambiar de puesto</i>”,
+    la respuesta típica es configurar <b>Access Reviews periódicos</b> sobre los grupos o roles implicados.
+  </blockquote>
+</section>
+
+<section id="sec7" class="card">
+  <h2>7. Key Vault y secretos en el examen</h2>
+  <p><b>Azure Key Vault</b> aparece en muchas preguntas combinando identidad y datos. Para AZ-104 debes dominar:</p>
+  <ul>
+    <li>Uso de Key Vault para almacenar <b>secretos, claves y certificados</b>.</li>
+    <li>Protecciones como <b>soft-delete</b> y <b>purge protection</b>.</li>
+    <li>Acceso mediante RBAC (rol <code>Key Vault Secrets User</code>, etc.) o políticas de acceso clásicas.</li>
+    <li>Integración con Managed Identities y aplicaciones.</li>
+  </ul>
+
+  <pre><code># Conceder acceso a secretos mediante RBAC
+az role assignment create \
+  --assignee &lt;principalIdMI&gt; \
+  --role "Key Vault Secrets User" \
+  --scope /subscriptions/&lt;subId&gt;/resourceGroups/&lt;rg&gt;/providers/Microsoft.KeyVault/vaults/&lt;nombreVault&gt;</code></pre>
+</section>
+
+<section id="sec8" class="card">
+  <h2>8. Escenarios típicos de examen y laboratorios</h2>
+  <h3>Escenarios que se repiten</h3>
+  <ul>
+    <li><b>Administrador con demasiados permisos permanentes</b> → PIM + rol elegible + MFA.</li>
+    <li><b>App que usa contraseñas en código</b> → migrar a Managed Identity + Key Vault.</li>
+    <li><b>Auditoría y revisión de accesos</b> → Access Reviews y Activity Logs.</li>
+    <li><b>Delegar administración de un grupo de recursos</b> → rol <code>Contributor</code> al grupo, no a la suscripción.</li>
+  </ul>
+
+  <h3>Laboratorio sugerido</h3>
+  <ol>
+    <li>Crea un grupo de recursos y asigna el rol <code>Contributor</code> a un grupo de seguridad.</li>
+    <li>Habilita PIM para este rol y convierte la asignación en elegible con duración de 1 hora.</li>
+    <li>Habilita Managed Identity en una VM y dale acceso de lectura a secretos en un Key Vault.</li>
+    <li>Comprueba desde la VM que puedes leer un secreto usando la CLI o SDK.</li>
+  </ol>
+
+  <blockquote class="tip">
+    Antes del examen revisa el portal y ubica dónde se gestionan:
+    <b>RBAC en recursos</b>, <b>PIM</b>, <b>Access Reviews</b> y <b>App registrations</b>. Eso te dará mucha confianza.
+  </blockquote>
+</section>
+
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">
+        ITHub.es
+      </span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span>
+    </div>
+    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+  </div>
 </footer>
-</body></html>
+
+</body>
+</html>

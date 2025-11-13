@@ -3,25 +3,33 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Coste y gobernanza en Azure (AZ-104) — Azure AZ-104 | ITHub</title>
-<meta name="description" content="Guía completa de coste y gobernanza para AZ-104: etiquetas, Azure Policy, Management Groups, Cost Management + Budgets, Advisor, reservas y Savings Plans, Hybrid Benefit, RBAC, locks, automatización con CLI/Bicep y laboratorios."/>
-<link rel="canonical" href="https://beta.ithub.es/content/azure-cost-governance-az104.html"/>
+<title>Coste y gobernanza en Azure (AZ-104) — ITHub.es</title>
+<meta name="description" content="Guía premium de coste y gobernanza para AZ-104: Cost Management, budgets, tags, Azure Advisor, reservas y Azure Policy para controlar el gasto." />
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config','G-DYZ3GCXHEK');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
 
 <style>
+
 :root{
   --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b; --info:#6aa9ff;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
   --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+body{
+  font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;
+}
 a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 20px}
+.container{max-width:1180px;margin:0 auto;padding:0 16px}
 
 /* Header */
 header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
@@ -49,30 +57,91 @@ h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
 .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
 
 /* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:16px}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
+.grid{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr);
+  gap:18px;
+  margin-top:16px;
+}
+@media(max-width:980px){
+  .grid{grid-template-columns:1fr}
+}
 
 /* Sidebar index */
 .aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
 .aside h3{margin:8px 0 10px}
 .toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff;font-size:.86rem}
 .toc a small{color:#9fb3e7;font-weight:700}
 .toc a:hover{border-color:#31539a; transform:translateX(2px)}
 
-/* Cards */
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
-.card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{margin:14px 0;padding:12px 14px;border-left:4px solid var(--warn); background:rgba(255,214,107,.08);border-radius:12px}
-pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+/* Content column */
+.content-wrap{
+  max-width:880px;
+  margin:0 auto;
+}
+
+/* Content card */
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:2px 0 8px;font-size:clamp(1.15rem,2.1vw,1.55rem)}
+.card h3{margin:10px 0 6px;font-size:1.02rem}
+.card p{margin:0 0 6px}
+.card ul, .card ol{margin:0 0 6px 20px}
+
+/* Callouts */
+blockquote.tip,
+blockquote.warning{
+  margin:10px 0 2px;
+  padding:10px 12px;
+  border-radius:10px;
+  max-width:100%;
+  font-size:.9rem;
+}
+blockquote.tip{
+  border-left:4px solid var(--ok);
+  background:rgba(58,217,122,.08);
+}
+blockquote.warning{
+  border-left:4px solid var(--warn);
+  background:rgba(255,214,107,.08);
+}
+
+/* Code */
+pre{
+  background:#0b1222;
+  color:#e8f1ff;
+  border:1px solid #22304f;
+  border-radius:10px;
+  padding:9px 10px;
+  overflow-x:auto;
+  max-width:100%;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-size:.85rem;
+}
+code{font-family:Consolas,ui-monospace,monospace}
 kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
-table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
-th,td{border:1px solid #22304f;padding:8px 10px}
+
+/* Tables */
+.table-scroll{overflow-x:auto;width:100%;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:6px 0;
+  border:1px solid #22304f;
+  font-size:.85rem;
+}
+th,td{
+  border:1px solid #22304f;
+  padding:6px 8px;
+  white-space:normal;
+  word-break:break-word;
+}
 th{background:#16213a}
 
 /* Footer */
 footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+
 </style>
 </head>
 <body>
@@ -106,265 +175,212 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
   const signup=document.getElementById('btnSignup');
   const userArea=document.getElementById('userArea');
   const nameTop=document.getElementById('userNameTop');
-  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+  if(u){
+    login.style.display='none';
+    signup.style.display='none';
+    userArea.style.display='flex';
+    nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+  }
 })();
 </script>
 
 <main class="container hero">
-  <div style="display:flex;justify-content:center;margin:10px 0"><span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span></div>
-  <h1>Coste y gobernanza en Azure (AZ-104)</h1>
-
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+  </div>
+  <h1>Coste y Gobernanza (AZ-104) — Budgets, tags y control del gasto</h1>
   <div class="meta">
-    <span class="pill">Dominios: D1 (Identidad/gobierno), D5 (Monitorizar/mantener)</span>
+    <span class="pill">Dominio: Coste y gobernanza</span>
     <span class="pill">Nivel: Intermedio</span>
-    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Tiempo de lectura: 30–40 min</span>
     <span class="pill">Última revisión: Nov 2025</span>
   </div>
 
-  <div class="grid" style="margin-top:16px">
-    <!-- Sidebar -->
+  <div class="grid">
     <aside class="aside">
       <h3>ÍNDICE</h3>
       <ul class="toc">
-        <li><a href="#sec0"><small>0.</small> Principios de FinOps y gobierno</a></li>
-        <li><a href="#sec1"><small>1.</small> Estructura LZ: Management Groups y suscripciones</a></li>
-        <li><a href="#sec2"><small>2.</small> Etiquetas (naming) + Azure Policy (enforcement)</a></li>
-        <li><a href="#sec3"><small>3.</small> Cost Management: presupuestos, alertas y exports</a></li>
-        <li><a href="#sec4"><small>4.</small> Azure Advisor, rightsizing y apagados</a></li>
-        <li><a href="#sec5"><small>5.</small> Reservations y Savings Plans</a></li>
-        <li><a href="#sec6"><small>6.</small> Azure Hybrid Benefit y Spot</a></li>
-        <li><a href="#sec7"><small>7.</small> Optimización de Storage y redes</a></li>
-        <li><a href="#sec8"><small>8.</small> RBAC, Locks y separaciones de coste</a></li>
-        <li><a href="#sec9"><small>9.</small> Automatización (CLI/Bicep/Policy) y ejemplos</a></li>
-        <li><a href="#sec10"><small>10.</small> Cuadros de mando y reporting</a></li>
-        <li><a href="#sec11"><small>11.</small> Checklist para el examen</a></li>
-        <li><a href="#sec12"><small>12.</small> Laboratorios guiados</a></li>
+        <li><a href="#sec0"><small>0.</small> Por qué importa el coste en AZ-104</a></li>
+        <li><a href="#sec1"><small>1.</small> Estructura de facturación y responsabilidades</a></li>
+        <li><a href="#sec2"><small>2.</small> Etiquetas (tags), grupos de recursos y Management Groups</a></li>
+        <li><a href="#sec3"><small>3.</small> Herramientas de coste: Cost Management + Billing, budgets y alerts</a></li>
+        <li><a href="#sec4"><small>4.</small> Ahorro en cómputo: right-sizing, reservas y Savings Plans</a></li>
+        <li><a href="#sec5"><small>5.</small> Ahorro en almacenamiento y red</a></li>
+        <li><a href="#sec6"><small>6.</small> Azure Advisor y Azure Policy para controlar el gasto</a></li>
+        <li><a href="#sec7"><small>7.</small> Escenarios de examen y laboratorio guiado</a></li>
       </ul>
     </aside>
 
-    <!-- Content -->
-    <div>
+    <div class="content-wrap">
+      
+<section id="sec0" class="card">
+  <h2>0. Por qué importa el coste en AZ-104</h2>
+  <p>En muchos proyectos reales, el administrador de Azure no solo mantiene recursos: también debe ayudar a
+     <b>optimizar costes</b> y evitar sorpresas en la factura. Por eso el examen AZ-104 dedica varias preguntas a:</p>
+  <ul>
+    <li>Ver y analizar el consumo en <b>Cost Management + Billing</b>.</li>
+    <li>Crear <b>presupuestos (budgets)</b> y alertas de gasto.</li>
+    <li>Usar <b>tags</b> para repartir costes entre proyectos, departamentos o clientes.</li>
+    <li>Aplicar buenas prácticas de <b>right-sizing</b>, reservas y apagado de recursos fuera de horario.</li>
+  </ul>
+  <blockquote class="tip">
+    Ten presente este mantra: <b>“lo que no está etiquetado, no se puede imputar”</b>. Gran parte de la gobernanza de coste
+    consiste en que todos los recursos tengan tags coherentes.
+  </blockquote>
+</section>
 
-      <section id="sec0" class="card">
-        <h2>0. Principios de FinOps y gobierno</h2>
-        <p>Para AZ-104 debes ser capaz de <b>controlar, optimizar y monitorizar</b> el gasto en Azure mediante una combinación de diseño (landing zones), <b>Azure Policy</b>, etiquetado coherente, <b>presupuestos</b> y automatizaciones de ahorro.</p>
-        <ul>
-          <li><b>Visibilidad</b>: estructura por MG/RG, etiquetas obligatorias (owner, env, costCenter).</li>
-          <li><b>Control</b>: políticas para tamaños/regiones/sku permitidos, locks, RBAC mínimo.</li>
-          <li><b>Optimización</b>: rightsizing, <b>reservas/Savings Plans</b>, <b>Hybrid Benefit</b>, autoapagado y <b>tiering</b> de datos.</li>
-        </ul>
-      </section>
+<section id="sec1" class="card">
+  <h2>1. Estructura de facturación y responsabilidades</h2>
+  <p>Como administrador AZ-104, normalmente trabajarás a nivel de <b>suscripción</b>, pero es útil entender la jerarquía:</p>
+  <ul>
+    <li><b>Tenant de Entra ID</b> (Azure AD): contiene usuarios, grupos y objetos de directorio.</li>
+    <li><b>Accounts / billing scopes</b>: definen cómo se agrupan suscripciones para facturar.</li>
+    <li><b>Suscripciones</b>: unidad principal de facturación técnica.</li>
+    <li><b>Grupos de recursos y recursos</b>: donde realmente viven las cargas.</li>
+  </ul>
+  <p>En escenarios de examen, cuando se habla de compartir costes entre “departamentos” o “unidades de negocio”,
+     normalmente se espera que uses <b>tags</b> y vistas de coste filtradas, más que crear una suscripción nueva por cada uno.</p>
+</section>
 
-      <section id="sec1" class="card">
-        <h2>1. Estructura LZ: Management Groups y suscripciones</h2>
-        <p>Organiza por jerarquía de <b>Management Groups (MG)</b> y asigna políticas a alto nivel. Usa suscripciones separadas por <i>prod</i>, <i>nonprod</i>, <i>seguridad</i> o por dominio de negocio para aislar presupuestos y límites.</p>
-        <table>
-          <thead><tr><th>Estrategia</th><th>Pros</th><th>Contras</th></tr></thead>
-          <tbody>
-            <tr><td>MG por entorno (Corp/Prod/NonProd)</td><td>Políticas y costes por entorno</td><td>Puede duplicar artefactos</td></tr>
-            <tr><td>Sub por unidad de negocio</td><td>Propiedad clara, presupuestos por BU</td><td>Más suscripciones a gestionar</td></tr>
-          </tbody>
-        </table>
-        <blockquote class="tip"><b>Examen:</b> “aplicar una política de tagging a todos los recursos” → Asignar <b>Policy</b> al MG raíz o al de entorno.</blockquote>
-      </section>
+<section id="sec2" class="card">
+  <h2>2. Etiquetas (tags), grupos de recursos y Management Groups</h2>
+  <p>Las <b>etiquetas</b> (tags) son pares clave/valor que aplicas a recursos y grupos de recursos para clasificarlos.
+     Ejemplos habituales:</p>
+  <ul>
+    <li><code>Environment = Prod / Dev / QA</code></li>
+    <li><code>Owner = EquipoSAP</code></li>
+    <li><code>CostCenter = 1001</code></li>
+    <li><code>Project = MigracionERP</code></li>
+  </ul>
 
-      <section id="sec2" class="card">
-        <h2>2. Etiquetas (naming) + Azure Policy (enforcement)</h2>
-        <p>Define un <b>estándar de etiquetas</b> mínimo:</p>
-        <ul>
-          <li><code>owner</code>, <code>env</code> (prod/nonprod/dev), <code>costCenter</code>, <code>app</code>, <code>criticality</code>.</li>
-        </ul>
-        <h3>2.1 Policy: exigir etiquetas</h3>
-<pre><code>// Asignación (resumen): append de etiqueta 'costCenter' si falta
-{
-  "properties": {
-    "displayName": "Enforce costCenter tag",
-    "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/xxxx",
-    "parameters": { "tagName": { "value": "costCenter" }, "tagValue": { "value": "UNKNOWN" } }
-  }
-}
-</code></pre>
-        <h3>2.2 Policy: restringir SKUs/regiones</h3>
-        <p>Usa <b>Allowed resource types</b> y <b>Allowed locations</b> o definiciones personalizadas para limitar costes.</p>
-        <blockquote class="warning"><b>Nota:</b> Evita “deny” sin exclusiones planificadas; puedes empezar con “audit” + reporte.</blockquote>
-      </section>
+  <p>Buenas prácticas que le encantan al examen:</p>
+  <ul>
+    <li>Definir un <b>conjunto estándar de tags</b> para toda la organización.</li>
+    <li>Aplicar tags en el <b>grupo de recursos</b> y heredarlos a los recursos mediante herramientas o políticas.</li>
+    <li>Usar <b>Azure Policy</b> para exigir que ciertos tags estén presentes (o incluso rellenarlos automáticamente).</li>
+  </ul>
 
-      <section id="sec3" class="card">
-        <h2>3. Cost Management: presupuestos, alertas y exports</h2>
-        <p><b>Budgets</b> permiten alertar por umbral mensual/trimestral/anual a nivel de <b>suscripción</b> o <b>grupo de recursos</b>. Crea <b>Exports</b> diarios hacia Storage para reporting externo.</p>
+  <p>Por encima de las suscripciones puedes tener <b>Management Groups</b>, útiles para aplicar políticas y RBAC a nivel
+     de organización. A efectos de coste, permiten ver consumo agregado por línea de negocio o país.</p>
+</section>
 
-        <h3>3.1 Presupuesto: CLI</h3>
-<pre><code class="language-bash"># Presupuesto mensual de 2,000 EUR con alertas al 80% y 100%
-az consumption budget create \
-  --amount 2000 --budget-name "budget-prod" --category cost \
-  --time-grain monthly --start-date 2025-01-01 --end-date 2025-12-31 \
-  --notifications actual_greater_than_80 enabled=true threshold=80 contact-emails="finops@contoso.com" \
-  --notifications actual_greater_than_100 enabled=true threshold=100 contact-emails="oncall@contoso.com"
-</code></pre>
+<section id="sec3" class="card">
+  <h2>3. Herramientas de coste: Cost Management + Billing, budgets y alerts</h2>
+  <p>La consola de <b>Cost Management + Billing</b> permite analizar el gasto y configurar alertas.</p>
+  <h3>Vista de costes</h3>
+  <ul>
+    <li>Filtra por <b>suscripción, grupo de recursos, recurso, tag</b> o tipo de servicio.</li>
+    <li>Elige periodo: mensual, personalizado, anualmente, etc.</li>
+    <li>Exporta datos a CSV o a una cuenta de Storage para análisis externo.</li>
+  </ul>
 
-        <h3>3.2 Exportar coste diario a Storage</h3>
-<pre><code class="language-bash"># Crear export (CSV diario) a una cuenta de Storage
-az costmanagement export create \
-  --name exp-daily --type Usage \
-  --storage-account-id $(az storage account show -g rg-ops -n stfinops --query id -o tsv) \
-  --storage-container finops --recurrence Daily --recurrence-period from=2025-01-01 to=2025-12-31
-</code></pre>
+  <h3>Budgets (presupuestos)</h3>
+  <ul>
+    <li>Definen un límite de gasto para un periodo (mensual, trimestral, anual).</li>
+    <li>Puedes crear presupuestos por suscripción, grupo de recursos o tag.</li>
+    <li>Se configuran umbrales, por ejemplo 50%, 80%, 100% del presupuesto.</li>
+  </ul>
 
-        <h3>3.3 Alertas + Action Groups</h3>
-        <p>Para escalar avisos, integra con <b>Action Groups</b> (correo, webhook, Teams/ITSM vía Logic Apps).</p>
-      </section>
+  <p>Cuando se alcanza un umbral, el presupuesto dispara una <b>alerta</b> que puede notificar por email o integrarse
+     con Action Groups para automatizar acciones (por ejemplo, etiquetar recursos o abrir un ticket).</p>
 
-      <section id="sec4" class="card">
-        <h2>4. Azure Advisor, rightsizing y apagados</h2>
-        <ul>
-          <li><b>Advisor</b> sugiere bajar SKU, apagar VMs inactivas, cambiar tier de discos o bases de datos.</li>
-          <li><b>Apagado automático</b> en Dev/Test (Auto-shutdown en lab/VMs) y <b>Runbooks</b> por etiquetas (<code>env=dev</code>).</li>
-          <li><b>VMSS</b> con <b>Autoscale</b> por CPU/colas evita sobreaprovisionamiento.</li>
-        </ul>
-<pre><code class="language-bash"># Autoapagado simple con tags (ejemplo con Automation Account + Runbook)
-# (Pseudocódigo) Filtra por tag env=dev y apaga VMs a las 20:00
-</code></pre>
-      </section>
+  <blockquote class="tip">
+    Pregunta típica: “<i>La dirección quiere recibir un aviso cuando el gasto mensual supere el 75% del presupuesto</i>”.
+    Respuesta: <b>crear un Budget en Cost Management con umbral al 75% y notificaciones por email/Action Group</b>.
+  </blockquote>
+</section>
 
-      <section id="sec5" class="card">
-        <h2>5. Reservations y Savings Plans</h2>
-        <p>Compromisos 1/3 años a cambio de descuento.</p>
-        <table>
-          <thead><tr><th>Opción</th><th>Aplica a</th><th>Ventaja</th><th>Consideraciones</th></tr></thead>
-          <tbody>
-            <tr><td><b>Reservations</b></td><td>Recursos concretos (VM/SQL/Storage)</td><td>Máximo descuento si hay patrón estable</td><td>Planifica tamaño/región</td></tr>
-            <tr><td><b>Savings Plans</b></td><td>Consumo de compute (flexible)</td><td>Flexibilidad de familia/región</td><td>Menor descuento que reserva precisa</td></tr>
-          </tbody>
-        </table>
-        <blockquote class="tip"><b>Examen:</b> “carga estable 24/7 por 3 años” → <b>Reservation</b>. “variación pero constante gasto de compute” → <b>Savings Plan</b>.</blockquote>
-      </section>
+<section id="sec4" class="card">
+  <h2>4. Ahorro en cómputo: right-sizing, reservas y Savings Plans</h2>
+  <p>La mayor parte del coste suele venir de las <b>VMs</b> y otros recursos de cómputo. Para optimizarlos:</p>
+  <ul>
+    <li><b>Right-sizing</b>: ajustar el tamaño de las VMs según uso real de CPU/RAM (usando métricas de Azure Monitor).</li>
+    <li><b>Apagado automático</b> de entornos no productivos fuera de horario con Automation o funciones.</li>
+    <li><b>Reserved Instances (RIs)</b> y <b>Savings Plans</b> para workloads estables.</li>
+    <li>Uso de <b>Spot VMs</b> para cargas flexibles como batch o testing no crítico.</li>
+  </ul>
 
-      <section id="sec6" class="card">
-        <h2>6. Azure Hybrid Benefit y Spot</h2>
-        <ul>
-          <li><b>Azure Hybrid Benefit (AHB)</b>: usa licencias on-prem de Windows Server/SQL para reducir coste en Azure.</li>
-          <li><b>Spot VMs</b>: compute desahuciable con gran descuento (no apto para cargas críticas; perfecto para batch/CI).</li>
-        </ul>
-<pre><code class="language-bash"># Habilitar AHB en una VM Windows
-az vm update -g rg-app -n vm-win --license-type Windows_Server
-</code></pre>
-      </section>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Opción</th><th>Compromiso</th><th>Ventaja</th><th>Cuándo usar</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Precio Pay-as-you-go</td>
+          <td>Ninguno</td>
+          <td>Máxima flexibilidad</td>
+          <td>Entornos muy variables o pruebas de concepto.</td>
+        </tr>
+        <tr>
+          <td>Reservas (RIs)</td>
+          <td>1 o 3 años, tamaño/region concretos</td>
+          <td>Ahorro significativo (hasta &gt;40%)</td>
+          <td>Workloads estables en tipo y región (bases de datos, VMs fijas).</td>
+        </tr>
+        <tr>
+          <td>Savings Plans</td>
+          <td>Compromiso de gasto por hora, flexible en tipos de compute</td>
+          <td>Más flexibles que las RIs con ahorro similar</td>
+          <td>Organizaciones con muchos tipos de cómputo pero gasto estable.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-      <section id="sec7" class="card">
-        <h2>7. Optimización de Storage y redes</h2>
-        <h3>7.1 Storage</h3>
-        <ul>
-          <li>Usa <b>tiering</b> en Blob: Hot/Cool/Archive según patrón de acceso.</li>
-          <li><b>Lifecycle policies</b> para mover a Cool/Archive tras N días.</li>
-          <li>Evita redundancias innecesarias (LRS vs ZRS/GRS) si no hay requisito.</li>
-          <li>Activa <b>compresión</b>/caché según servicio (por ejemplo, Azure Files Premium sólo cuando se necesite).</li>
-        </ul>
-<pre><code class="language-bash"># Política de ciclo de vida: mover a Cool tras 30 días, Archive tras 180
-az storage account management-policy create -g rg-ops -n stdata --policy '{
-  "rules":[{"name":"tiering","type":"Lifecycle","definition":{
-    "filters":{"blobTypes":["blockBlob"]},"actions":{
-      "baseBlob":{"tierToCool":{"daysAfterModificationGreaterThan":30},
-                  "tierToArchive":{"daysAfterModificationGreaterThan":180}}
-  }}}] }'
-</code></pre>
+<section id="sec5" class="card">
+  <h2>5. Ahorro en almacenamiento y red</h2>
+  <p>Aunque el compute suele ser el gran protagonista, en entornos de datos el coste de <b>Storage</b> y <b>red</b> también importa.</p>
+  <h3>Buenas prácticas en almacenamiento</h3>
+  <ul>
+    <li>Usar <b>tiers de acceso adecuados</b> (Hot, Cool, Archive) con reglas de <b>lifecycle management</b>.</li>
+    <li>Eliminar snapshots y backups antiguos que ya no sean necesarios.</li>
+    <li>Evitar duplicidad de datos entre cuentas, salvo necesidades de resiliencia.</li>
+  </ul>
 
-        <h3>7.2 Redes</h3>
-        <ul>
-          <li>Reduce <b>egress</b> (salida a Internet) con <b>Private Link</b> / endpoints privados y cachés locales.</li>
-          <li>Centraliza inspección en un <b>hub</b> (firewall) para evitar appliances duplicadas.</li>
-        </ul>
-      </section>
+  <h3>Costes de red</h3>
+  <ul>
+    <li>Recordar que el <b>egress a Internet</b> suele tener coste; el tráfico dentro de la misma región es más barato o gratuito.</li>
+    <li>Diseñar la arquitectura para minimizar tráfico interregional innecesario.</li>
+  </ul>
+</section>
 
-      <section id="sec8" class="card">
-        <h2>8. RBAC, Locks y separaciones de coste</h2>
-        <ul>
-          <li><b>RBAC</b> mínimo: <i>Cost Management Reader</i> para ver costes; evita permisos excesivos.</li>
-          <li><b>Locks</b> (ReadOnly/CanNotDelete) en RG/recursos sensibles para evitar borrados accidentales.</li>
-          <li>Separa por <b>RG</b>/<b>sub</b> para costeo independiente y delegación clara.</li>
-        </ul>
-<pre><code class="language-bash"># Lock de protección contra borrado
-az lock create -g rg-prod --name protect-rg --lock-type CanNotDelete
-</code></pre>
-      </section>
+<section id="sec6" class="card">
+  <h2>6. Azure Advisor y Azure Policy para controlar el gasto</h2>
+  <p><b>Azure Advisor</b> analiza el entorno y propone recomendaciones en cuatro áreas: coste, seguridad, rendimiento y alta disponibilidad.</p>
+  <ul>
+    <li>Puede sugerir pasar a VMs más pequeñas o parar recursos infrautilizados.</li>
+    <li>Propone migrar discos a opciones más baratas si no necesitas tanto rendimiento.</li>
+  </ul>
 
-      <section id="sec9" class="card">
-        <h2>9. Automatización (CLI/Bicep/Policy) y ejemplos</h2>
+  <p><b>Azure Policy</b> es la otra cara de la moneda: en lugar de recomendar, <b>impone</b> reglas.</p>
+  <ul>
+    <li>Ejemplos: impedir crear VMs de tamaño muy grande, exigir tags, limitar regiones disponibles, etc.</li>
+    <li>Las políticas se aplican a <b>Management Groups, suscripciones o grupos de recursos</b>.</li>
+  </ul>
 
-        <h3>9.1 Bicep: etiquetas obligatorias en RG y recursos</h3>
-<pre><code class="language-bicep">param env string
-param costCenter string
-resource rgPolicy 'Microsoft.Authorization/policyAssignments@2021-06-01' = {
-  name: 'enforce-tags'
-  properties: {
-    displayName: 'Enforce required tags'
-    policyDefinitionId: '/providers/Microsoft.Authorization/policyDefinitions/TAG_INHERIT_ID'
-    parameters: {
-      tagName: { value: 'costCenter' }
-      tagValue: { value: costCenter }
-    }
-    scope: subscriptionResourceId('Microsoft.Resources/resourceGroups', resourceGroup().name)
-  }
-}
-</code></pre>
+  <blockquote class="tip">
+    Pregunta clásica: “<i>Evitar que los administradores desplieguen recursos en regiones no aprobadas</i>”.
+    Respuesta: <b>Azure Policy</b> con una política de <i>allowed locations</i> aplicada al scope adecuado.
+  </blockquote>
+</section>
 
-        <h3>9.2 CLI: marcar recursos huérfanos sin tag</h3>
-<pre><code class="language-bash"># Listar recursos sin 'costCenter'
-az resource list --tag costCenter='' --query "[].{name:name,type:type,rg:resourceGroup}" -o table
-</code></pre>
+<section id="sec7" class="card">
+  <h2>7. Escenarios de examen y laboratorio guiado</h2>
+  <h3>Escenarios frecuentes</h3>
+  <ul>
+    <li>“<i>Necesitamos imputar el coste de un conjunto de recursos a un proyecto</i>” → usar tags y vistas filtradas.</li>
+    <li>“<i>Queremos recibir alertas cuando el gasto mensual supere cierto umbral</i>” → budgets con alertas.</li>
+    <li>“<i>Evitar que se creen VMs de serie costosa en dev</i>” → Azure Policy sobre la suscripción de desarrollo.</li>
+  </ul>
 
-        <h3>9.3 Policy: denegar SKUs costosos en dev</h3>
-<pre><code>// Pseudopolítica: deny VM sizes &gt;= D8_v5 si env = dev
-</code></pre>
-        <blockquote class="tip">Usa <b>iniciativas</b> (policySet) para agrupar: tagging + SKUs + regiones + diagnóstico → cumplimiento por entorno.</blockquote>
-      </section>
-
-      <section id="sec10" class="card">
-        <h2>10. Cuadros de mando y reporting</h2>
-        <ul>
-          <li><b>Azure Portal</b>: vistas de Cost Analysis por <i>group by tag</i> (costCenter/app/env).</li>
-          <li><b>Exports</b> a Storage + <b>Power BI</b> para informes mensuales con tendencia y previsión.</li>
-          <li><b>Alertas</b>: desviaciones vs presupuesto o crecimiento inusual (comparativa rolling 7/30 días).</li>
-        </ul>
-      </section>
-
-      <section id="sec11" class="card">
-        <h2>11. Checklist para el examen</h2>
-        <ul>
-          <li>¿Puedes <b>aplicar tags</b> automáticamente con <b>Policy</b> y <b>deny</b> cuando falten?</li>
-          <li>¿Sabes crear <b>budgets</b> y alertas por porcentaje?</li>
-          <li>¿Cuándo usar <b>Reservations</b> vs <b>Savings Plans</b> vs <b>Spot</b>?</li>
-          <li>¿Cómo <b>apagar</b> Dev/Test fuera de horario y <b>rightsizing</b> con Advisor?</li>
-          <li>¿Cómo <b>reducir egress</b> y <b>tiering</b> de Blob para abaratar?</li>
-          <li>¿Dónde asignar <b>Policy</b> para cubrir toda la organización? → <b>Management Group</b>.</li>
-        </ul>
-      </section>
-
-      <section id="sec12" class="card">
-        <h2>12. Laboratorios guiados</h2>
-
-        <h3>Lab 1 — Gobierno base</h3>
-        <ol>
-          <li>Crear MG <code>/Contoso/Prod</code> y <code>/Contoso/NonProd</code>. Mover suscripciones.</li>
-          <li>Asignar iniciativa: <i>tagging obligatorio</i> + <i>diagnostic settings</i> + <i>allowed locations</i>.</li>
-          <li>Ver cumplimiento en <b>Policy Compliance</b>.</li>
-        </ol>
-
-        <h3>Lab 2 — Cost Management end-to-end</h3>
-        <ol>
-          <li>Crear presupuesto mensual 1.000€ en <i>rg-app-prod</i> con alertas al 80/100% (CLI).</li>
-          <li>Export diario a Storage y panel en Power BI.</li>
-          <li>Simular subida de gasto con una VM grande; validar alertas.</li>
-        </ol>
-
-        <h3>Lab 3 — Optimización compute + storage</h3>
-        <ol>
-          <li>Advisor: aplicar rightsizing a una VM sobredimensionada.</li>
-          <li>Configurar lifecycle policy (30→Cool, 180→Archive).</li>
-          <li>Habilitar AHB en VM Windows y comparar coste.</li>
-        </ol>
-
-        <blockquote class="tip"><b>Tip final:</b> para preguntas teóricas, piensa en <i>visibilidad → control → optimización</i> y contesta con herramientas propias de Azure (Policy, Budgets, Advisor, Reservations, AHB).</blockquote>
-      </section>
+  <h3>Laboratorio sugerido</h3>
+  <ol>
+    <li>Aplica tags estándar (<code>Environment</code>, <code>CostCenter</code>, <code>Project</code>) a varios recursos.</li>
+    <li>Crea un presupuesto mensual en Cost Management para una suscripción de pruebas.</li>
+    <li>Configura un umbral al 50% que envíe un email a tu cuenta.</li>
+    <li>Define una Azure Policy de <i>allowed locations</i> y aplícala a un grupo de recursos para limitar la creación de recursos.</li>
+  </ol>
+</section>
 
     </div>
   </div>
@@ -372,8 +388,12 @@ az resource list --tag costCenter='' --query "[].{name:name,type:type,rg:resourc
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">ITHub.es</span>
-      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">
+        ITHub.es
+      </span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span>
+    </div>
     <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
   </div>
 </footer>

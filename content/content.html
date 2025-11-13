@@ -39,7 +39,7 @@
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
-    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+    nav.menu a.link-btn:hover{border-color:var(--stroke);color:var(--ink)}
     .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c);border:1px solid #2a3150;border-radius:999px;padding:4px;box-shadow:0 6px 18px rgba(5,10,30,.35);max-height:44px}
     .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
     .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--cta);color:#fff;font-weight:900;cursor:pointer;transition:transform .08s,background .12s;font-size:13px;text-transform:uppercase}
@@ -115,7 +115,6 @@
       font-size:12px; border-radius:10px; background:var(--cta);
     }
 
-    /* Micro-animación en hover para el enlace del título */
     .card h3 a{position:relative}
     .card h3 a::after{
       content:""; position:absolute; left:0; bottom:-2px; height:2px; width:0; background:#7e73ff;
@@ -239,32 +238,268 @@
   }
   renderHeaderAuth();
 
-/* === ÍNDICE /content (16 marcados) === */
+/* === ÍNDICE COMPLETO /content === */
 const CONTENT = [
-  /* Transversal */
-  { title:"Backup inmutable & Ciberrecuperación", href:"/content/immutable-backup-cyberrecovery.html", exam:["AZ-104","AZ-305","SAA-C03"], vendor:["Azure","AWS"], level:"avanzado", summary:"Estrategia 3-2-1-1-0, inmutabilidad (Blob/S3), bóvedas aisladas, redes cerradas y runbooks de respuesta." },
 
-  /* Azure AZ-104 */
-  { title:"Identidad y Acceso (AZ-104)", href:"/content/azure-identity-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC, PIM, Access Reviews, Managed Identities, App Regs y mejores prácticas con Key Vault." },
-  { title:"Seguridad de red (AZ-104)", href:"/content/azure-network-security-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"NSG/ASG, UDR, Azure Firewall, WAF, Private Endpoints y DNS privado para PaaS." },
-  { title:"Azure Storage (AZ-104)", href:"/content/azure-storage-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"RBAC vs claves, SAS delegación de usuario, WORM, replicación (LRS/ZRS/GRS/GZRS) y PE." },
-  { title:"Monitorización y alertas (AZ-104)", href:"/content/azure-monitoring-alerts-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"básico", summary:"Azure Monitor, Log Analytics, DCR, KQL, alertas métricas y de logs, Action Groups." },
-  { title:"Coste y gobernanza (AZ-104)", href:"/content/azure-cost-governance-az104.html", exam:["AZ-104"], vendor:["Azure"], level:"intermedio", summary:"Budgets, Cost Management, etiquetado, Azure Advisor y Policy para control de gasto." },
+  /* ============================================================
+     TRANSVERSAL (Azure + AWS)
+  ============================================================ */
+  {
+    title:"Backup inmutable & Ciberrecuperación",
+    href:"/content/immutable-backup-cyberrecovery.html",
+    exam:["AZ-104","AZ-305","SAA-C03"],
+    vendor:["Azure","AWS"],
+    level:"avanzado",
+    summary:"Estrategia 3-2-1-1-0, WORM (Blob/S3), bóvedas aisladas, Zero Trust, redes cerradas y runbooks para recuperación ante ransomware."
+  },
 
-  /* Azure AZ-305 */
-  { title:"Azure Landing Zone (AZ-305)", href:"/content/azure-landing-zone.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura de red base." },
-  { title:"Conectividad híbrida (AZ-305)", href:"/content/azure-hybrid-connectivity-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"VPN/ER, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones HUB/SPOKE/vWAN." },
-  { title:"Arquitectura de red (AZ-305)", href:"/content/azure-network-architecture-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"avanzado", summary:"vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial." },
-  { title:"Alta disponibilidad y DR (AZ-305)", href:"/content/azure-ha-dr-az305.html", exam:["AZ-305"], vendor:["Azure"], level:"intermedio", summary:"Pares regionales, zonas, ASR, geo-replicación y estrategias de failover multi-región." },
+  /* ============================================================
+     MICROSOFT AZURE · EXAMEN AZ-104
+  ============================================================ */
 
-  /* AWS SAA-C03 */
-  { title:"IAM y Organizations (SAA-C03)", href:"/content/aws-iam-organizations-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"Principios de IAM, roles/políticas, MFA, multi-cuenta con Organizations y SCP." },
-  { title:"Elasticidad de cómputo (SAA-C03)", href:"/content/aws-compute-elasticity-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Auto Scaling, ALB/NLB, EC2 tipos de compra (On-Demand/RI/Savings/Spot) y blue/green." },
-  { title:"Bases de datos y almacenamiento (SAA-C03)", href:"/content/aws-databases-storage-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"RDS/Aurora (Multi-AZ/replicas), DynamoDB (WCU/RCU), S3 con KMS y lifecycle." },
-  { title:"Observabilidad (SAA-C03)", href:"/content/aws-observability-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"básico", summary:"CloudWatch métricas/reglas, logs, X-Ray, CloudTrail y AWS Config." },
-  { title:"S3: diseño (SAA-C03)", href:"/content/aws-s3-design-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Bloqueo público, SSE-KMS, Object Lock WORM, clases de almacenamiento y rendimiento." },
-  { title:"VPC avanzado y Endpoints (SAA-C03)", href:"/content/aws-vpc-advanced-endpoints-saac03.html", exam:["SAA-C03"], vendor:["AWS"], level:"intermedio", summary:"Transit Gateway, endpoints Gateway/Interface, PrivateLink, Route 53 y DNS." }
+  /* Identidad */
+  {
+    title:"Identidad y Acceso (AZ-104)",
+    href:"/content/azure-identity-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"RBAC, PIM, Access Reviews, Managed Identities, App Registrations, Key Vault y mejores prácticas de seguridad."
+  },
+
+  /* Seguridad de red */
+  {
+    title:"Seguridad de red (AZ-104)",
+    href:"/content/azure-network-security-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"NSG, ASG, UDR, Azure Firewall, WAF, Private Endpoints, Defender for Cloud y DNS privado."
+  },
+
+  /* Storage */
+  {
+    title:"Azure Storage (AZ-104)",
+    href:"/content/azure-storage-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"RBAC vs claves, SAS delegadas, WORM, replicación LRS/ZRS/GRS/GZRS, redundancia, rendimiento y Private Endpoints."
+  },
+
+  /* Monitorización */
+  {
+    title:"Monitorización y alertas (AZ-104)",
+    href:"/content/azure-monitoring-alerts-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"básico",
+    summary:"Azure Monitor, Log Analytics, KQL, DCR, métricas, alertas de logs, Action Groups e Insights."
+  },
+
+  /* Cost governance */
+  {
+    title:"Coste y gobernanza (AZ-104)",
+    href:"/content/azure-cost-governance-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"Cost Management, Budgets, etiquetado, Azure Advisor, Azure Policy y optimización continua."
+  },
+
+  /* NUEVOS MÓDULOS AZ-104 */
+  {
+    title:"Azure Compute — Máquinas Virtuales & VMSS (AZ-104)",
+    href:"/content/azure-compute-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"VMs, imágenes, snapshots, Availability Sets/Zonas, VMSS, escalado automático, actualizaciones y recomendaciones del examen."
+  },
+/*
+  {
+    title:"Load Balancing en Azure (AZ-104)",
+    href:"/content/azure-load-balancing-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"Load Balancer, Application Gateway, Front Door, tráfico L4/L7, health probes, escenarios híbridos y arquitectura recomendada."
+  },
+
+  {
+    title:"Backup & Restore para VMs y Azure Files (AZ-104)",
+    href:"/content/azure-backup-restore-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"Recovery Services Vault, políticas, snapshots, cross-region restore, protección de VMs y Azure Files, laboratorios oficiales."
+  },
+
+  {
+    title:"Fundamentos de red: VNets, Subnets, IP, DNS (AZ-104)",
+    href:"/content/azure-network-fundamentals-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"básico",
+    summary:"Direccionamiento, subredes, tipos de IP, conceptos de DNS, emparejamiento, routing básico y reglas comunes en el examen."
+  },
+
+  {
+    title:"Defender for Cloud & Seguridad avanzada (AZ-104)",
+    href:"/content/azure-defender-security-az104.html",
+    exam:["AZ-104"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"Recomendaciones, Secure Score, JIT, protección de workloads, políticas automáticas, alertas y gobernanza de seguridad."
+  },*/
+
+  /* ============================================================
+     MICROSOFT AZURE · EXAMEN AZ-305
+  ============================================================ */
+
+  {
+    title:"Azure Landing Zone (AZ-305)",
+    href:"/content/azure-landing-zone.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"avanzado",
+    summary:"Cloud Adoption Framework, Management Groups, suscripciones, identidad, arquitectura de red y Policy-as-Code."
+  },
+
+  {
+    title:"Conectividad híbrida (AZ-305)",
+    href:"/content/azure-hybrid-connectivity-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"VPN, ExpressRoute, BGP, Private Link, DNS híbrido, arquitectura Hub-Spoke y conectividad Zero Trust."
+  },
+
+  {
+    title:"Arquitectura de red avanzada (AZ-305)",
+    href:"/content/azure-network-architecture-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"avanzado",
+    summary:"vWAN, Firewall Premium, Front Door, segmentación, routing corporativo, DNS empresarial y patrones multi-región."
+  },
+
+  {
+    title:"Alta disponibilidad & Disaster Recovery (AZ-305)",
+    href:"/content/azure-ha-dr-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"Zonas, pares regionales, ASR, geo-replicación, arquitecturas multi-región y decisiones de RPO/RTO en Azure."
+  },
+
+  /* NUEVOS MÓDULOS AZ-305 
+  {
+    title:"Elección de base de datos en Azure (AZ-305)",
+    href:"/content/azure-data-choices-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"SQL MI, Azure SQL, Cosmos DB, PostgreSQL Flexible, patrones de consistencia, escalado y trade-offs de arquitectura."
+  },
+
+  {
+    title:"Identidad híbrida y autenticación avanzada (AZ-305)",
+    href:"/content/azure-hybrid-identity-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"Entra ID, AAD Connect, PHS, PTA, SSPR, Conditional Access, Zero Trust y decisiones arquitectónicas clave."
+  },
+
+  {
+    title:"Arquitectura avanzada de aplicaciones (AZ-305)",
+    href:"/content/azure-advanced-apps-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"avanzado",
+    summary:"App Services, Functions, Kubernetes (AKS), contenedores, APIs, enrutamiento global, CI/CD y diseño para resiliencia."
+  },
+
+  {
+    title:"Diseño de almacenamiento en Azure (AZ-305)",
+    href:"/content/azure-storage-design-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"intermedio",
+    summary:"ADLS, Blob, Premium, rendimiento, redundancia (LRS/ZRS/GZRS), arquitectura de data lakes y seguridad con Private Link."
+  },
+
+  {
+    title:"Zero Trust aplicado a Azure (AZ-305)",
+    href:"/content/azure-zero-trust-az305.html",
+    exam:["AZ-305"],
+    vendor:["Azure"],
+    level:"avanzado",
+    summary:"Identidad primero, segmentación, CA Policies, Defender, Private Access, verificación explícita y telemetría continua."
+  },*/
+
+  /* ============================================================
+     AMAZON AWS · EXAMEN SAA-C03
+  ============================================================ */
+
+  {
+    title:"IAM y Organizations (SAA-C03)",
+    href:"/content/aws-iam-organizations-saac03.html",
+    exam:["SAA-C03"],
+    vendor:["AWS"],
+    level:"básico",
+    summary:"IAM, políticas, MFA, roles, AWS Organizations, SCP, acceso seguro y buenas prácticas del examen."
+  },
+
+  {
+    title:"Elasticidad de cómputo (SAA-C03)",
+    href:"/content/aws-compute-elasticity-saac03.html",
+    exam:["SAA-C03"],
+    vendor:["AWS"],
+    level:"intermedio",
+    summary:"Auto Scaling, ALB/NLB, opciones de compra (On-Demand, RI, Savings, Spot) y despliegues blue/green."
+  },
+
+  {
+    title:"Bases de datos y almacenamiento (SAA-C03)",
+    href:"/content/aws-databases-storage-saac03.html",
+    exam:["SAA-C03"],
+    vendor:["AWS"],
+    level:"intermedio",
+    summary:"RDS Multi-AZ, Aurora, DynamoDB (WCU/RCU), S3 con KMS y políticas de lifecycle."
+  },
+
+  {
+    title:"Observabilidad (SAA-C03)",
+    href:"/content/aws-observability-saac03.html",
+    exam:["SAA-C03"],
+    vendor:["AWS"],
+    level:"básico",
+    summary:"CloudWatch métricas y logs, X-Ray, CloudTrail, AWS Config y Health Dashboard."
+  },
+
+  {
+    title:"S3: diseño avanzado (SAA-C03)",
+    href:"/content/aws-s3-design-saac03.html",
+    exam:["SAA-C03"],
+    vendor:["AWS"],
+    level:"intermedio",
+    summary:"Bloqueo público, SSE-KMS, Object Lock WORM, rendimiento, clases de almacenamiento y multi-region."
+  },
+
+  {
+    title:"VPC avanzado y Endpoints (SAA-C03)",
+    href:"/content/aws-vpc-advanced-endpoints-saac03.html",
+    exam:["SAA-C03"],
+    vendor:["AWS"],
+    level:"intermedio",
+    summary:"Transit Gateway, PrivateLink, Endpoints Gateway/Interface, Route 53, peering y seguridad avanzada."
+  }
+
 ];
+
+
 
   function badge(el, text, cls=""){ 
     const b=document.createElement("span"); b.className="badge "+cls; 
@@ -293,9 +528,7 @@ const CONTENT = [
         <div><a class="pill-btn" href="${c.href}">LEER</a></div>`;
       const b=card.querySelector(".badges");
       badge(b, `Nivel: ${c.level[0].toUpperCase()+c.level.slice(1)}`);
-      // Exámenes
       c.exam.forEach(e=>badge(b, e, e.startsWith("AZ")?"azure":"aws"));
-      // Proveedor/es
       c.vendor.forEach(v=>badge(b, v, v==="Azure"?"azure":"aws"));
       if(c.vendor.length>1) badge(b,"Multi","multi");
       root.appendChild(card);

@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Backup & Recovery en Azure (AZ-104) — Azure AZ-104 | ITHub</title>
+<meta name="description" content="Guía de Backup & Recovery para AZ-104: Recovery Services Vault, políticas de copia, soft delete, backup de VM, SQL y archivos, restauración cross-region y escenarios de examen." />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);} gtag('js',new Date()); gtag('config','G-DYZ3GCXHEK');</script>
+
+<style>
+/* reutilizamos el mismo CSS que en la página anterior para consistencia */
+:root{
+  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+  --accent-aws:#ffb74d; --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
+  border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:40px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
+.pill-btn:hover{transform:translateY(-1px)}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
+/* Hero */
+.hero{padding:26px 0 8px}
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
+  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
+.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
+.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
+.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
+/* Layout */
+.grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:16px}
+@media(max-width:980px){ .grid{grid-template-columns:1fr} }
+
+/* Sidebar index */
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.aside h3{margin:8px 0 10px}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
+.toc a small{color:#9fb3e7;font-weight:700}
+.toc a:hover{border-color:#31539a; transform:translateX(2px)}
+
+/* Content card */
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
+blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
+blockquote.warning{margin:14px 0;padding:12px 14px;border-left:4px solid var(--warn); background:rgba(255,214,107,.08);border-radius:12px}
+pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+
+/* Tables */
+table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
+th,td{border:1px solid #22304f;padding:8px 10px}
+th{background:#16213a}
+
+/* Footer */
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+</style>
+</head>
+<body>
+
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
+    </div>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="/">HOME</a>
+      <a href="/content/content.html">CONTENIDOS</a>
+      <a href="/score/ranking.html">RANKING</a>
+    </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
+    </div>
+  </div>
+</header>
+<script>
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+(function(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+})();
+</script>
+
+<main class="container hero">
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+  </div>
+  <h1>Backup &amp; Recovery en Azure (AZ-104)</h1>
+  <div class="meta">
+    <span class="pill">Dominios: Backup (D5) y Seguridad</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
+    <!-- Sidebar -->
+    <aside class="aside">
+      <h3>ÍNDICE</h3>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> Fundamentos: qué entra en el examen</a></li>
+        <li><a href="#sec1"><small>1.</small> Recovery Services Vault vs Backup Vault</a></li>
+        <li><a href="#sec2"><small>2.</small> Backup de máquinas virtuales</a></li>
+        <li><a href="#sec3"><small>3.</small> Backup de SQL, archivos y workloads</a></li>
+        <li><a href="#sec4"><small>4.</small> Soft delete, seguridad y protección frente a borrados</a></li>
+        <li><a href="#sec5"><small>5.</small> Restore, Instant Restore y Cross-Region Restore</a></li>
+        <li><a href="#sec6"><small>6.</small> Coste, límites y decisiones típicas</a></li>
+        <li><a href="#sec7"><small>7.</small> Tips de examen y laboratorios</a></li>
+      </ul>
+    </aside>
+
+    <!-- Content -->
+    <div>
+
+      <section id="sec0" class="card">
+        <h2>0. Fundamentos de Backup en AZ-104</h2>
+        <p>AZ-104 no espera que seas experto en todas las cargas, pero sí que domines:</p>
+        <ul>
+          <li>Cuándo usar <b>Recovery Services Vault (RSV)</b> frente a <b>Backup Vault</b> (nuevo modelo).</li>
+          <li>Cómo configurar políticas de backup para <b>VM</b> y <b>SQL</b>.</li>
+          <li>Qué significa <b>soft delete</b> y cómo protege frente a borrados maliciosos.</li>
+          <li>Opciones de restauración y tiempos de retención.</li>
+        </ul>
+      </section>
+
+      <section id="sec1" class="card">
+        <h2>1. Recovery Services Vault vs Backup Vault</h2>
+        <p>Ambos sirven para orquestar backups, pero:</p>
+        <ul>
+          <li><b>Recovery Services Vault</b>: servicios “clásicos”: VM, SQL en VM, Azure Files, MARS agent, etc.</li>
+          <li><b>Backup Vault</b>: nuevo modelo (Azure Backup para blobs, Postgres, etc.). Menos presente todavía en el examen.</li>
+        </ul>
+        <blockquote class="tip"><b>Regla rápida de examen:</b> Si la pregunta es de <b>VM</b> o <b>SQL en Azure VM</b>, piensa en <b>Recovery Services Vault</b>.</blockquote>
+      </section>
+
+      <section id="sec2" class="card">
+        <h2>2. Backup de máquinas virtuales</h2>
+        <ol>
+          <li>Crear un <b>Recovery Services Vault</b> en la misma región que las VMs.</li>
+          <li>Configurar una <b>política de protección</b> (frecuencia, retención diaria/semanal/mensual/anual).</li>
+          <li>Habilitar backup en las VMs existentes o durante la creación.</li>
+        </ol>
+        <pre><code class="language-bash"># Habilitar backup para una VM existente
+az backup protection enable-for-vm \
+  --resource-group rg-app \
+  --vault-name rsv-prod \
+  --vm vm-app01 \
+  --policy-name "DefaultPolicy"</code></pre>
+        <p>Importante: el backup de VM es <b>application-consistent</b> usando el agente; si falla, Azure intentará backup crash-consistent.</p>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. Backup de SQL, archivos y workloads</h2>
+        <ul>
+          <li><b>SQL Server en Azure VM</b>: usa el servicio <b>Azure Backup para SQL VM</b> (registro a través del portal o extensión).</li>
+          <li><b>Azure Files</b>: integración directa con Azure Backup. Se selecciona el File Share y se asigna política.</li>
+          <li><b>On-prem</b> (ficheros, System State): usa el <b>Microsoft Azure Recovery Services (MARS) agent</b> o Azure Backup Server.</li>
+        </ul>
+      </section>
+
+      <section id="sec4" class="card">
+        <h2>4. Soft delete, seguridad y protección frente a borrados</h2>
+        <ul>
+          <li><b>Soft delete</b> mantiene items borrados durante un periodo extra (por defecto 14 días o más) para evitar borrado accidental o malicioso.</li>
+          <li>Eliminar un vault con elementos protegidos requiere <b>deshabilitar soft delete</b> (acción muy controlada).</li>
+          <li>Activa <b>Multi-User Authorization</b> (MUA) cuando esté disponible para cambios sensibles.</li>
+        </ul>
+        <blockquote class="warning"><b>Pregunta típica:</b> “un administrador borra accidentalmente el backup de una VM, ¿cómo recuperarlo?” → gracias al <b>soft delete</b> puedes restaurarlo mientras esté en periodo de gracia.</blockquote>
+      </section>
+
+      <section id="sec5" class="card">
+        <h2>5. Restore, Instant Restore y Cross-Region Restore</h2>
+        <ul>
+          <li><b>Restore</b> de VM: puedes restaurar la VM completa, o discos para montarlos en otra VM.</li>
+          <li><b>Instant Restore</b>: usa snapshots locales para restauraciones rápidas (horas/días recientes).</li>
+          <li><b>Cross-Region Restore (CRR)</b>: si has habilitado <b>geo-redundancia</b> en el vault, puedes restaurar en la región emparejada.</li>
+        </ul>
+        <pre><code class="language-bash"># Iniciar restauración de disco de VM
+az backup restore restore-disks \
+  --resource-group rg-app \
+  --vault-name rsv-prod \
+  --container-name iaasvmcontainer;rg-app;vm-app01 \
+  --item-name vm-app01 \
+  --storage-account stbackupdiag \
+  --rp-name "Latest"</code></pre>
+      </section>
+
+      <section id="sec6" class="card">
+        <h2>6. Coste, límites y decisiones</h2>
+        <table>
+          <thead><tr><th>Elemento</th><th>Clave de examen</th></tr></thead>
+          <tbody>
+            <tr><td>Vault GRS vs LRS</td><td>GRS permite CRR pero es más caro; LRS es suficiente si ya tienes otra estrategia de DR.</td></tr>
+            <tr><td>Retención muy larga</td><td>Impacta en coste de almacenamiento; piensa en separar políticas para prod y dev.</td></tr>
+            <tr><td>Backup on-prem</td><td>Requiere MARS agent / Azure Backup Server, no RSV “a pelo”.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="sec7" class="card">
+        <h2>7. Tips de examen y labs</h2>
+        <h3>Tips</h3>
+        <ul>
+          <li>“<b>Recuperar backup borrado</b>” → Soft delete.</li>
+          <li>“<b>DR multi-región con mínimo esfuerzo</b>” → Vault GRS + Cross-Region Restore.</li>
+          <li>“<b>Backup de archivos on-prem</b>” → MARS agent / Azure Backup Server hacia RSV.</li>
+        </ul>
+        <h3>Lab sugerido</h3>
+        <ol>
+          <li>Crear un Recovery Services Vault GRS y proteger una VM.</li>
+          <li>Forzar un backup bajo demanda.</li>
+          <li>Simular borrado del item protegido y recuperar usando soft delete.</li>
+        </ol>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">ITHub.es</span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
+    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

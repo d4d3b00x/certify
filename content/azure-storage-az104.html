@@ -1,65 +1,397 @@
-<!doctype html><html lang="es"><head>
-  <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Azure Storage para el examen AZ‑104 | ITHub.es</title>
-  <meta name="description" content="Autenticación AAD y SAS, inmutabilidad, replicación y Private Endpoints."/>
-  <meta name="keywords" content="Azure,AZ-104,Storage,SAS,Immutable,GRS,GZRS"/>
-  <meta name="author" content="ITHub.es"/>
-  <link rel="canonical" href="https://beta.ithub.es/content/azure-storage-az104.html"/>
-  <style>
-    :root{--bg:#0f1320;--surface:#161b2d;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-          --p:#0078d4;--tint:rgba(0,120,212,.18);--chip:#cfe9ff;--bd:rgba(0,120,212,.65);--shadow:0 12px 28px rgba(6,12,40,.45)}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-    .container{max-width:1100px;margin:0 auto;padding:0 18px}
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:10px;align-items:center;font-weight:900}
-    nav a{color:#cbd6ff;text-decoration:none;padding:10px 12px;border-radius:10px;border:1px solid transparent}
-    nav a:hover{border-color:#2a3150;color:#fff}
-    .hero{text-align:center;padding:28px 0 16px;border-bottom:1px solid var(--stroke);background:linear-gradient(180deg,#0f1320,#0f1320 70%,#141a33)}
-    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);color:var(--chip);font-weight:900}
-    h1{margin:.6rem 0 .8rem;font-size:clamp(1.9rem,3.8vw,2.6rem)}
-    .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-    .meta .b{padding:8px 12px;border-radius:999px;border:1px solid var(--bd);background:var(--tint);font-weight:800;color:#e8f1ff}
-    .layout{display:grid;grid-template-columns:300px 1fr;gap:18px;margin:18px auto;max-width:1200px;padding:0 10px}
-    @media(max-width:980px){.layout{grid-template-columns:1fr}}
-    .toc{position:sticky;top:86px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
-    .toc h3{margin:0 0 10px;color:#dfe6ff;letter-spacing:.06em;text-transform:uppercase;font-size:14px}
-    .toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-    .toc a{display:flex;gap:10px;align-items:center;padding:10px 12px;border:1px solid transparent;border-radius:12px;color:#e9f2ff;text-decoration:none}
-    .toc a:hover{border-color:var(--bd);background:var(--tint)}
-    .dot{width:7px;height:7px;border-radius:999px;background:var(--p);box-shadow:0 0 0 4px rgba(255,255,255,.04)}
-    article{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:16px;padding:22px;box-shadow:var(--shadow)}
-    article h2{margin:16px 0 8px;font-size:1.22rem;border-left:4px solid var(--p);padding-left:10px}
-    .callout{border:1px solid var(--bd);background:var(--tint);border-radius:12px;padding:12px;margin:10px 0}
-    .table{width:100%;border-collapse:collapse;margin:.6rem 0;border:1px solid #283056}
-    .table th,.table td{border-bottom:1px solid #283056;padding:10px;vertical-align:top}
-    .table th{background:#141a33;text-align:left}
-    .muted{color:var(--muted)}
-  </style>
-</head><body>
-<header><div class="container nav">
-  <div class="brand"><img src="/assets/ithub-logo.svg" alt="ITHub: inicio" style="height:42px"><span>ITHub.es</span></div>
-  <nav><a href="/">HOME</a><a href="/content/content.html">CONTENIDOS</a><a href="/score/ranking.html">RANKING</a></nav>
-</div></header>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Azure Storage (AZ-104) — ITHub.es</title>
+<meta name="description" content="Guía premium de Azure Storage para AZ-104: cuentas StorageV2, redundancia LRS/ZRS/GRS/GZRS, SAS, RBAC, inmutabilidad y Private Endpoints." />
 
-<section class="hero"><div class="container">
-  <span class="eyebrow"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M3 18h6l3-8 3 8h6l-9-14-9 14z'/></svg>&nbsp; Azure · AZ-104</span>
-  <h1>Azure Storage para el examen AZ‑104</h1>
-  <div class="meta"><span class='b'>Dominio: Datos y seguridad</span><span class='b'>Nivel: Intermedio</span><span class='b'>Tiempo de lectura: 20–30 min</span><span class='b'>Última revisión: Nov 2025</span></div>
-</div></section>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
 
-<div class="container layout">
-  <aside class="toc"><h3>Índice</h3><ol><li><a href='#auth'><span class='dot'></span><span>1. Autenticación</span></a></li><li><a href='#immut'><span class='dot'></span><span>2. Inmutabilidad</span></a></li><li><a href='#rep'><span class='dot'></span><span>3. Replicación</span></a></li><li><a href='#pe'><span class='dot'></span><span>4. Private Endpoints</span></a></li></ol></aside>
-  <article>
-    <p class="muted"><a href="/content/content.html" style="text-decoration:none;color:#cfe1ff">← Volver a contenidos</a></p>
-    <h2 id='auth'>1. Autenticación</h2><p>Preferir **RBAC** con AAD y **SAS de delegación**; rota claves si usas acceso por clave de cuenta.</p>
-<h2 id='immut'>2. Inmutabilidad</h2><p>Políticas **WORM** (legal o tiempo) para cumplimiento; bloquea borrados.</p>
-<h2 id='rep'>3. Replicación</h2><p>Elige **LRS/ZRS/GRS/GZRS** según SLA y latencia. **RA‑GRS** permite lecturas en emergencia.</p><table class='table'><thead><tr><th>Opción</th><th>Uso</th></tr></thead><tbody><tr><td>LRS</td><td>Alta durabilidad local</td></tr><tr><td>ZRS</td><td>Tolerante a zona</td></tr><tr><td>GRS</td><td>Replicación a par regional</td></tr><tr><td>GZRS</td><td>Zonal + geo</td></tr></tbody></table>
-<h2 id='pe'>4. Private Endpoints</h2><p>Acceso a cuentas de Storage por red privada y resolución DNS zonal; integra Private DNS Resolver para on‑prem.</p>
-  </article>
-</div>
+<style>
 
-<footer style="border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))">
-  <div class="container">© Nov 2025 ITHub.es</div>
+:root{
+  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
+  border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:40px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
+.pill-btn:hover{transform:translateY(-1px)}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
+/* Hero */
+.hero{padding:26px 0 8px}
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
+  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
+.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
+.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
+.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
+/* Layout */
+.grid{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr);
+  gap:18px;
+  margin-top:16px;
+}
+@media(max-width:980px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* Sidebar index */
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.aside h3{margin:8px 0 10px}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff;font-size:.86rem}
+.toc a small{color:#9fb3e7;font-weight:700}
+.toc a:hover{border-color:#31539a; transform:translateX(2px)}
+
+/* Content column */
+.content-wrap{
+  max-width:880px;
+  margin:0 auto;
+}
+
+/* Content card */
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:2px 0 8px;font-size:clamp(1.15rem,2.1vw,1.55rem)}
+.card h3{margin:10px 0 6px;font-size:1.02rem}
+.card p{margin:0 0 6px}
+.card ul, .card ol{margin:0 0 6px 20px}
+
+/* Callouts */
+blockquote.tip,
+blockquote.warning{
+  margin:10px 0 2px;
+  padding:10px 12px;
+  border-radius:10px;
+  max-width:100%;
+  font-size:.9rem;
+}
+blockquote.tip{
+  border-left:4px solid var(--ok);
+  background:rgba(58,217,122,.08);
+}
+blockquote.warning{
+  border-left:4px solid var(--warn);
+  background:rgba(255,214,107,.08);
+}
+
+/* Code */
+pre{
+  background:#0b1222;
+  color:#e8f1ff;
+  border:1px solid #22304f;
+  border-radius:10px;
+  padding:9px 10px;
+  overflow-x:auto;
+  max-width:100%;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-size:.85rem;
+}
+code{font-family:Consolas,ui-monospace,monospace}
+kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+
+/* Tables */
+.table-scroll{overflow-x:auto;width:100%;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:6px 0;
+  border:1px solid #22304f;
+  font-size:.85rem;
+}
+th,td{
+  border:1px solid #22304f;
+  padding:6px 8px;
+  white-space:normal;
+  word-break:break-word;
+}
+th{background:#16213a}
+
+/* Footer */
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+
+</style>
+</head>
+<body>
+
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
+    </div>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="/">HOME</a>
+      <a href="/content/content.html">CONTENIDOS</a>
+      <a href="/score/ranking.html">RANKING</a>
+    </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
+    </div>
+  </div>
+</header>
+<script>
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+(function(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){
+    login.style.display='none';
+    signup.style.display='none';
+    userArea.style.display='flex';
+    nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+  }
+})();
+</script>
+
+<main class="container hero">
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+  </div>
+  <h1>Azure Storage (AZ-104) — Redundancia, seguridad y WORM</h1>
+  <div class="meta">
+    <span class="pill">Dominio: Almacenamiento en Azure</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 30–40 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
+    <aside class="aside">
+      <h3>ÍNDICE</h3>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> Rol del almacenamiento en AZ-104</a></li>
+        <li><a href="#sec1"><small>1.</small> Tipos de cuenta y redundancia (LRS/ZRS/GRS/GZRS)</a></li>
+        <li><a href="#sec2"><small>2.</small> Control de acceso: claves, SAS y RBAC</a></li>
+        <li><a href="#sec3"><small>3.</small> Clases de rendimiento y niveles de acceso</a></li>
+        <li><a href="#sec4"><small>4.</small> Inmutabilidad y protección de datos (soft delete, versioning, WORM)</a></li>
+        <li><a href="#sec5"><small>5.</small> Files, Blob, Tables y Queues: cuándo usar cada uno</a></li>
+        <li><a href="#sec6"><small>6.</small> Networking para Storage: firewalls y Private Endpoints</a></li>
+        <li><a href="#sec7"><small>7.</small> Laboratorios y patrones de examen</a></li>
+      </ul>
+    </aside>
+
+    <div class="content-wrap">
+      
+<section id="sec0" class="card">
+  <h2>0. Rol del almacenamiento en AZ-104</h2>
+  <p><b>Azure Storage</b> está presente en casi todos los escenarios de AZ-104: guardar discos, logs, backups, estáticos web, etc.</p>
+  <ul>
+    <li>Diferenciar <b>cuentas v2 de propósito general</b>, <b>premium</b> y escenarios especiales.</li>
+    <li>Elegir el nivel de redundancia correcto según requisitos de disponibilidad y coste.</li>
+    <li>Saber cuándo usar <b>claves</b>, <b>tokens SAS</b> o <b>RBAC</b> para delegar acceso.</li>
+    <li>Configurar <b>inmutabilidad</b> y protecciones frente a borrado accidental o ransomware.</li>
+  </ul>
+</section>
+
+<section id="sec1" class="card">
+  <h2>1. Tipos de cuenta y redundancia</h2>
+  <p>Para el examen centra tu cabeza en las cuentas <b>StorageV2</b> (propósito general v2). A partir de ahí decide la redundancia:</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Opción</th><th>Descripción</th><th>Uso típico</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>LRS</b></td>
+          <td>Copia sincrónica de los datos 3 veces en un único datacenter.</td>
+          <td>Entornos de desarrollo, backups secundarios, escenarios donde la pérdida regional es aceptable.</td>
+        </tr>
+        <tr>
+          <td><b>ZRS</b></td>
+          <td>Replicación sincrónica entre varias zonas de una región.</td>
+          <td>Aplicaciones productivas que necesitan alta disponibilidad dentro de la región.</td>
+        </tr>
+        <tr>
+          <td><b>GRS</b></td>
+          <td>LRS local + replicación asíncrona a una región emparejada (lectura solo tras failover).</td>
+          <td>Escenarios de DR económico, con capacidad de hacer <i>geo-failover</i> manual.</td>
+        </tr>
+        <tr>
+          <td><b>GZRS</b></td>
+          <td>ZRS local + replicación asíncrona a región emparejada.</td>
+          <td>Cargas críticas que requieren resiliencia a fallos de zona y región.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <blockquote class="tip">
+    Pregunta típica: “<i>máxima disponibilidad dentro de la región sin replicar a otra región</i>” → <b>ZRS</b>.
+    “<i>protección ante caída completa de región</i>” → GRS o GZRS según nivel de criticidad.
+  </blockquote>
+</section>
+
+<section id="sec2" class="card">
+  <h2>2. Control de acceso: claves, SAS y RBAC</h2>
+  <p>Existen tres grandes formas de acceso a Storage:</p>
+  <ul>
+    <li><b>Claves de cuenta</b> (account keys): control total, evita usarlas directamente en aplicaciones.</li>
+    <li><b>Shared Access Signatures (SAS)</b>: tokens firmados que limitan permiso, tiempo y origen.</li>
+    <li><b>RBAC con Azure AD</b>: acceso basado en identidades y roles, ideal para producción.</li>
+  </ul>
+
+  <h3>Clave de cuenta vs SAS vs RBAC en el examen</h3>
+  <ul>
+    <li>Si el enunciado habla de “<i>shared key</i>” o herramientas antiguas → claves o SAS.</li>
+    <li>Si pide <b>revocar acceso rápidamente</b> a un partner concreto → SAS con expiración y revocación.</li>
+    <li>Si enfatiza seguridad y cumplimiento → <b>RBAC + Managed Identities</b>.</li>
+  </ul>
+
+  <pre><code># Generar SAS de lectura sobre un contenedor durante 1 día
+az storage container generate-sas \
+  --account-name mystorage \
+  --name logs \
+  --permissions r \
+  --expiry 2025-12-31 \
+  --auth-mode login</code></pre>
+</section>
+
+<section id="sec3" class="card">
+  <h2>3. Clases de rendimiento y niveles de acceso</h2>
+  <p>Para Blob Storage tienes dos ejes de decisión: <b>rendimiento</b> y <b>tier de acceso</b>.</p>
+  <ul>
+    <li><b>Rendimiento</b>: Estándar (HDD) vs Premium (SSD). Premium para latencias bajas y transacciones altas.</li>
+    <li><b>Tier de acceso</b>: Hot, Cool, Archive. Cambia el coste de almacenamiento vs acceso.</li>
+  </ul>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Tier</th><th>Coste de almacenamiento</th><th>Coste de acceso</th><th>Uso típico</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Hot</b></td>
+          <td>Más alto</td>
+          <td>Bajo</td>
+          <td>Datos muy accedidos (logs recientes, contenido web).</td>
+        </tr>
+        <tr>
+          <td><b>Cool</b></td>
+          <td>Medio</td>
+          <td>Medio/alto</td>
+          <td>Datos que se leen ocasionalmente (backups de semanas, informes).</td>
+        </tr>
+        <tr>
+          <td><b>Archive</b></td>
+          <td>Muy bajo</td>
+          <td>Muy alto y acceso con latencia de horas</td>
+          <td>Retención legal, backups a largo plazo.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="sec4" class="card">
+  <h2>4. Inmutabilidad y protección de datos</h2>
+  <p>Este tema está muy ligado a ransomware, por lo que Microsoft lo empuja fuerte en el examen.</p>
+  <ul>
+    <li><b>Soft delete</b> para blobs y contenedores: permite recuperar objetos borrados.</li>
+    <li><b>Versioning</b>: cada cambio genera una nueva versión del blob.</li>
+    <li><b>WORM (Immutable Blob Storage)</b>: modo de retención legal o basada en tiempo.</li>
+  </ul>
+  <blockquote class="tip">
+    Si el requisito dice “<i>impedir que incluso un administrador pueda borrar o modificar datos durante N días</i>”
+    la respuesta es configurar <b>políticas de inmutabilidad (WORM)</b> con bloqueo de la política tras validarla.
+  </blockquote>
+</section>
+
+<section id="sec5" class="card">
+  <h2>5. Files, Blob, Tables y Queues: cuándo usar cada uno</h2>
+  <ul>
+    <li><b>Blob</b>: datos no estructurados, grandes volúmenes (imágenes, backups, logs).</li>
+    <li><b>Files</b>: compartidos SMB para lift-and-shift o aplicaciones que esperan un file share clásico.</li>
+    <li><b>Tables</b>: NoSQL clave/atributo, consultas simples, alta escalabilidad.</li>
+    <li><b>Queues</b>: mensajería simple para desacoplar componentes.</li>
+  </ul>
+
+  <blockquote class="tip">
+    Pregunta típica: “<i>migrar un servidor de ficheros on-premises sin modificar la aplicación</i>” →
+    <b>Azure Files con Azure File Sync</b>.
+  </blockquote>
+</section>
+
+<section id="sec6" class="card">
+  <h2>6. Networking para Storage: firewalls y Private Endpoints</h2>
+  <p>En entornos seguros es habitual restringir Storage a redes internas.</p>
+  <ul>
+    <li>Activar el <b>firewall de Storage</b> para permitir sólo rangos específicos o VNets.</li>
+    <li>Crear <b>Private Endpoints</b> en las subredes donde están las aplicaciones.</li>
+    <li>Configurar <b>Private DNS Zones</b> para resolver el FQDN al endpoint privado.</li>
+  </ul>
+</section>
+
+<section id="sec7" class="card">
+  <h2>7. Laboratorios y patrones de examen</h2>
+  <h3>Laboratorio recomendado</h3>
+  <ol>
+    <li>Crea una cuenta StorageV2 con redundancia ZRS y un contenedor <code>datos</code>.</li>
+    <li>Habilita soft delete y versioning en blobs.</li>
+    <li>Crea una política de inmutabilidad basada en tiempo para un conjunto de datos críticos.</li>
+    <li>Configura el firewall para permitir acceso sólo desde una VNet y un private endpoint.</li>
+  </ol>
+
+  <h3>Patrones de examen</h3>
+  <ul>
+    <li><b>Coste vs recuperación</b>: mover datos antiguos a Cool/Archive con <b>lifecycle management</b>.</li>
+    <li><b>Seguridad</b>: reemplazar claves compartidas por RBAC y Managed Identities.</li>
+    <li><b>Ransomware</b>: combinar soft delete, versioning e inmutabilidad para tener varias capas de protección.</li>
+  </ul>
+</section>
+
+    </div>
+  </div>
+</main>
+
+<footer role="contentinfo">
+  <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">
+        ITHub.es
+      </span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span>
+    </div>
+    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
+  </div>
 </footer>
-</body></html>
+
+</body>
+</html>
