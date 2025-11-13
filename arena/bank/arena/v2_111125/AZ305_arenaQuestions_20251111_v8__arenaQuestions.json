@@ -1,0 +1,2904 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-KJO44YP2V5WGRIP7VSBLAZ7J"
+          },
+          "question": {
+            "S": "¿Qué elementos básicos incluirías en una landing zone?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Design basics"
+          },
+          "title": {
+            "S": "Capas de una landing zone"
+          },
+          "concept": {
+            "S": "Componentes mínimos de una landing zone"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Redes, identidad, políticas y logs"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Solo VMs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Solo DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "landing-zone",
+              "basics"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Design basics#low#AZ305-KJO44YP2V5WGRIP7VSBLAZ7J"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-KJO44YP2V5WGRIP7VSBLAZ7J"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-V2M9V8BKV2DRQE9DOTRQYHLT"
+          },
+          "question": {
+            "S": "¿Qué enfoque aplica mínimo privilegio en Azure?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Identity basics"
+          },
+          "title": {
+            "S": "Separación de roles"
+          },
+          "concept": {
+            "S": "Control de acceso por mínimo privilegio"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RBAC con roles adecuados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Owner para todos"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Usuarios locales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Sin MFA"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "rbac",
+              "least-privilege"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Identity basics#low#AZ305-V2M9V8BKV2DRQE9DOTRQYHLT"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-V2M9V8BKV2DRQE9DOTRQYHLT"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-QT5QLK7NH9UQZAAEF8RXUA2W"
+          },
+          "question": {
+            "S": "¿Qué topología separa cargas en VNets spoke y centraliza servicios?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Networking basics"
+          },
+          "title": {
+            "S": "Topología hub-spoke"
+          },
+          "concept": {
+            "S": "Compartir servicios comunes"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Hub-spoke"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Single VNet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Full mesh"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Ad-hoc"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "network",
+              "hub-spoke"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking basics#low#AZ305-QT5QLK7NH9UQZAAEF8RXUA2W"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-QT5QLK7NH9UQZAAEF8RXUA2W"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-23MV00Z9GM68M84Z4LKT6PIR"
+          },
+          "question": {
+            "S": "¿Qué opción ofrece múltiples copias en una región?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Storage basics"
+          },
+          "title": {
+            "S": "Elección de redundancia"
+          },
+          "concept": {
+            "S": "Alta durabilidad dentro de una región"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ZRS/LRS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "No redundancy"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "RA-GRS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Cold archive"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "storage",
+              "redundancy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage basics#low#AZ305-23MV00Z9GM68M84Z4LKT6PIR"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-23MV00Z9GM68M84Z4LKT6PIR"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-413NZUYFW71ILM8GKW57TI5R"
+          },
+          "question": {
+            "S": "¿Qué servicio usarías para proteger una web frente a OWASP Top 10?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security basics"
+          },
+          "title": {
+            "S": "Protección web"
+          },
+          "concept": {
+            "S": "Capa para proteger HTTP frente a OWASP"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "WAF (App Gateway/Front Door)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NACL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "waf",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security basics#low#AZ305-413NZUYFW71ILM8GKW57TI5R"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-413NZUYFW71ILM8GKW57TI5R"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-GDUEWKIIDU68OGZNRX2H5HAH"
+          },
+          "question": {
+            "S": "¿Qué recurso define alertas por presupuesto?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Cost basics"
+          },
+          "title": {
+            "S": "Presupuestos de coste"
+          },
+          "concept": {
+            "S": "Control por proyecto con alertas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Budget"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Runbook"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VMSS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "KV"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cost",
+              "budget"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Cost basics#low#AZ305-GDUEWKIIDU68OGZNRX2H5HAH"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-GDUEWKIIDU68OGZNRX2H5HAH"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-EDTB0NZZD7FX6AVHTAP4EYAG"
+          },
+          "question": {
+            "S": "¿Dónde consultarías logs con KQL?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Observability basics"
+          },
+          "title": {
+            "S": "Centralizar logs"
+          },
+          "concept": {
+            "S": "Servicio para consultar logs con KQL"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Log Analytics"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Boards"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Excel"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "PowerPoint"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kql",
+              "logs"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Observability basics#low#AZ305-EDTB0NZZD7FX6AVHTAP4EYAG"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-EDTB0NZZD7FX6AVHTAP4EYAG"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-V84BXW5J661RVW5SEZDB7UEL"
+          },
+          "question": {
+            "S": "¿Qué significan RPO y RTO?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "DR basics"
+          },
+          "title": {
+            "S": "Requerimientos de DR"
+          },
+          "concept": {
+            "S": "Objetivos básicos de continuidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Pérdida y tiempo de recuperación"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Tamaño de VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "IP pública"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "SKU"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dr",
+              "rpo-rto"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "DR basics#low#AZ305-V84BXW5J661RVW5SEZDB7UEL"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-V84BXW5J661RVW5SEZDB7UEL"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-M0D3Y11QGK6BGF7YB4BJC0W6"
+          },
+          "question": {
+            "S": "¿Qué servicio gestiona y protege APIs a escala?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "API basics"
+          },
+          "title": {
+            "S": "Puerta de entrada a APIs"
+          },
+          "concept": {
+            "S": "Exponer y proteger APIs"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "API Management"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "App Service"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Function"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Traffic Manager"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "apis"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "API basics#low#AZ305-M0D3Y11QGK6BGF7YB4BJC0W6"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-M0D3Y11QGK6BGF7YB4BJC0W6"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-I1USW3TM6JFAU5XJBNSGL60J"
+          },
+          "question": {
+            "S": "Para documentos JSON con baja latencia global, ¿qué elegirías?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Database basics"
+          },
+          "title": {
+            "S": "Elección relacional vs NoSQL"
+          },
+          "concept": {
+            "S": "Modelo de base de datos adecuado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Cosmos DB"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SQL Managed Instance"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Azure SQL DB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Redis"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cosmos",
+              "json"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Database basics#low#AZ305-I1USW3TM6JFAU5XJBNSGL60J"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-I1USW3TM6JFAU5XJBNSGL60J"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-HN59KBKQFUOK7MF9C2A26IX5"
+          },
+          "question": {
+            "S": "¿Qué combinación sirve para colas y eventos en Azure?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Queue/Event basics"
+          },
+          "title": {
+            "S": "Desacoplar y eventos"
+          },
+          "concept": {
+            "S": "Servicios para colas y eventos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Service Bus y Event Grid"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Blob y Disk"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM y NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "KV y RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "service-bus",
+              "event-grid"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Queue/Event basics#low#AZ305-HN59KBKQFUOK7MF9C2A26IX5"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-HN59KBKQFUOK7MF9C2A26IX5"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-R8FN9LH995HPSHWLDNV6EZS9"
+          },
+          "question": {
+            "S": "¿Qué servicio proporciona cache en memoria gestionada?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Cache basics"
+          },
+          "title": {
+            "S": "Acelerar lecturas"
+          },
+          "concept": {
+            "S": "Servicio para cache distribuida"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Cache for Redis"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Storage Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "App Service"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Bastion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cache",
+              "redis"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Cache basics#low#AZ305-R8FN9LH995HPSHWLDNV6EZS9"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-R8FN9LH995HPSHWLDNV6EZS9"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-JQWWWZHUDA27AYAECPL4WJSR"
+          },
+          "question": {
+            "S": "¿Qué usarías para resolver privatelink.*?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "DNS basics"
+          },
+          "title": {
+            "S": "Nombres privados"
+          },
+          "concept": {
+            "S": "Resolver nombres de PaaS privados"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Private DNS Zones"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Zona pública"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Hosts"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DHCP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dns",
+              "private"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "DNS basics#low#AZ305-JQWWWZHUDA27AYAECPL4WJSR"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-JQWWWZHUDA27AYAECPL4WJSR"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-EKPE2BW46T52QQC8WUSYWRDJ"
+          },
+          "question": {
+            "S": "¿Qué opción agrega login sin código a una web?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Auth basics"
+          },
+          "title": {
+            "S": "Autenticación en apps web"
+          },
+          "concept": {
+            "S": "Agregar identidad a una web"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "App Service Authentication (Easy Auth)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Runbook"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "auth",
+              "easy-auth"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Auth basics#low#AZ305-EKPE2BW46T52QQC8WUSYWRDJ"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-EKPE2BW46T52QQC8WUSYWRDJ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-2ZXDAKWAZSZLM12NMIYM3HWC"
+          },
+          "question": {
+            "S": "¿Cuáles son las capas típicas del modelo medallón?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data basics"
+          },
+          "title": {
+            "S": "Patrón medallón"
+          },
+          "concept": {
+            "S": "Capas del lago de datos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Bronze, Silver, Gold"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Raw, Fast, Cold"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Blue, Red, Green"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Edge, Core, Cloud"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "lakehouse",
+              "medallion"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data basics#low#AZ305-2ZXDAKWAZSZLM12NMIYM3HWC"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-2ZXDAKWAZSZLM12NMIYM3HWC"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-I33CREOQPWRXIJ7XQLRLEVN6"
+          },
+          "question": {
+            "S": "¿Qué ventaja aporta separar entornos por suscripción?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Governance basics"
+          },
+          "title": {
+            "S": "Organización y políticas"
+          },
+          "concept": {
+            "S": "Separación por suscripción"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Aislamiento y límites de cuota"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Más ancho de banda"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Menos latencia siempre"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Evita DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "governance",
+              "subscription"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance basics#low#AZ305-I33CREOQPWRXIJ7XQLRLEVN6"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-I33CREOQPWRXIJ7XQLRLEVN6"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-P094S622Q8AJX2SFO6J4PFK2"
+          },
+          "question": {
+            "S": "¿Qué recurso agrupa VMs para distribuir en dominios de fallo?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Availability basics"
+          },
+          "title": {
+            "S": "Zonas y conjuntos"
+          },
+          "concept": {
+            "S": "Alta disponibilidad de VMs"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Availability Set"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Resource Group"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VNet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ASG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "availability",
+              "set"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Availability basics#low#AZ305-P094S622Q8AJX2SFO6J4PFK2"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-P094S622Q8AJX2SFO6J4PFK2"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-RBVWRE7S1H2IQQOB2Z0LIARI"
+          },
+          "question": {
+            "S": "¿Qué estrategia reduce riesgo en despliegues?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "App basics"
+          },
+          "title": {
+            "S": "Estrategias de despliegue"
+          },
+          "concept": {
+            "S": "Despliegue con bajo riesgo"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Blue/Green o canary"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Big bang"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Manual sin pruebas"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Desactivar logs"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "release",
+              "strategy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "App basics#low#AZ305-RBVWRE7S1H2IQQOB2Z0LIARI"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-RBVWRE7S1H2IQQOB2Z0LIARI"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-UYPJ791KJPG31Z5NESVM4JA7"
+          },
+          "question": {
+            "S": "¿Qué característica cifra discos gestionados?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security basics"
+          },
+          "title": {
+            "S": "Cifrado en reposo"
+          },
+          "concept": {
+            "S": "Protección de datos en disco"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Server-Side Encryption"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DHCP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "BGP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "TTL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "encryption",
+              "disks"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security basics#low#AZ305-UYPJ791KJPG31Z5NESVM4JA7"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-UYPJ791KJPG31Z5NESVM4JA7"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-SL7X5EIOBOWO4XSAKRRKCUWW"
+          },
+          "question": {
+            "S": "¿Qué usarías para balancear HTTP/S con reglas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Networking basics"
+          },
+          "title": {
+            "S": "Balanceo HTTP"
+          },
+          "concept": {
+            "S": "Balanceo de capa 7"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Application Gateway"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Load Balancer Basic"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NAT Gateway"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "l7",
+              "app-gw"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking basics#low#AZ305-SL7X5EIOBOWO4XSAKRRKCUWW"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-SL7X5EIOBOWO4XSAKRRKCUWW"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-N2SGI4ESWSA2WTF8KB7P4O4H"
+          },
+          "question": {
+            "S": "¿Dónde configurarías una alerta cuando CPU > 80%?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Monitoring basics"
+          },
+          "title": {
+            "S": "Alertas simples"
+          },
+          "concept": {
+            "S": "Crear alerta por métrica"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Monitor"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Resource Graph"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Front Door"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Key Vault"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "monitor",
+              "alerts"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Monitoring basics#low#AZ305-N2SGI4ESWSA2WTF8KB7P4O4H"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-N2SGI4ESWSA2WTF8KB7P4O4H"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-SF3Z8M6Q3FKHN3CDCTJEM2YN"
+          },
+          "question": {
+            "S": "¿Qué tecnología declarativa nativa usar para IaC en Azure?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "DevOps basics"
+          },
+          "title": {
+            "S": "Infra as Code"
+          },
+          "concept": {
+            "S": "Desplegar recursos repetibles"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Bicep/ARM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Batch"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NFS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RDP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "iac",
+              "bicep"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "DevOps basics#low#AZ305-SF3Z8M6Q3FKHN3CDCTJEM2YN"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-SF3Z8M6Q3FKHN3CDCTJEM2YN"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-W712NN221W6P2A4OE3GSUTQW"
+          },
+          "question": {
+            "S": "En Kubernetes, ¿qué ejecuta contenedores?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "AKS basics"
+          },
+          "title": {
+            "S": "Nodo y pod"
+          },
+          "concept": {
+            "S": "Unidad de despliegue"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Pod"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Service"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Namespace"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Secret"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aks",
+              "pod"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "AKS basics#low#AZ305-W712NN221W6P2A4OE3GSUTQW"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-W712NN221W6P2A4OE3GSUTQW"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-T45AMUIFQ2RNCNN6O2R9T11I"
+          },
+          "question": {
+            "S": "¿Qué característica limita peticiones por minuto?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "API basics"
+          },
+          "title": {
+            "S": "Limitación de consumo"
+          },
+          "concept": {
+            "S": "Proteger de picos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Rate limiting (APIM)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Uptime SLA"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DHCP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "rate-limit"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "API basics#low#AZ305-T45AMUIFQ2RNCNN6O2R9T11I"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-T45AMUIFQ2RNCNN6O2R9T11I"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-03C8UVWDN6TZ6UBHDQZFNRGI"
+          },
+          "question": {
+            "S": "¿Qué ofrece replicación automática a región emparejada para algunos servicios?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "DR basics"
+          },
+          "title": {
+            "S": "Geo-emparejamiento"
+          },
+          "concept": {
+            "S": "Cobertura regional"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Region pair"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Zone pair"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VNet pair"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DNS pair"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "low"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "region",
+              "pair"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T11:16:37Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "DR basics#low#AZ305-03C8UVWDN6TZ6UBHDQZFNRGI"
+          },
+          "diff_qid": {
+            "S": "low#AZ305-03C8UVWDN6TZ6UBHDQZFNRGI"
+          }
+        }
+      }
+    }
+  ]
+}

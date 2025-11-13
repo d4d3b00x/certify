@@ -1,0 +1,2904 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-RY8VEADZ5HJJ1340YPP1ICSK"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-RY8VEADZ5HJJ1340YPP1ICSK"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-RY8VEADZ5HJJ1340YPP1ICSK"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-V4ZKBTS0T1MXZTB0ITV0JIKR"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-V4ZKBTS0T1MXZTB0ITV0JIKR"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-V4ZKBTS0T1MXZTB0ITV0JIKR"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Necesitas una **web** escalable que tolere caída de una AZ y realice balanceo **HTTP/HTTPS (L7)**. ¿Qué arquitectura recomiendas?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AWSSAA-UXFN3BWKG7U91L39R905H7DR"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-UXFN3BWKG7U91L39R905H7DR"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Arquitectura resiliente y escalable"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ASG en múltiples AZ detrás de un **ALB**; health checks del ALB y targets en Target Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instancia EC2 única con EIP y script de escalado manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ASG en una sola AZ detrás de NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB público front‑end y back‑end sin Auto Scaling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Compute#hard#AWSSAA-UXFN3BWKG7U91L39R905H7DR"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "autoscaling"
+            ]
+          },
+          "title": {
+            "S": "Auto Scaling + ALB [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Compute"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Necesitas una **web** escalable que tolere caída de una AZ y realice balanceo **HTTP/HTTPS (L7)**. ¿Qué arquitectura recomiendas?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AWSSAA-L58DL8NDEXJ17X9GW7J06XOP"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-L58DL8NDEXJ17X9GW7J06XOP"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Arquitectura resiliente y escalable"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ASG en múltiples AZ detrás de un **ALB**; health checks del ALB y targets en Target Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instancia EC2 única con EIP y script de escalado manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ASG en una sola AZ detrás de NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB público front‑end y back‑end sin Auto Scaling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Compute#hard#AWSSAA-L58DL8NDEXJ17X9GW7J06XOP"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "autoscaling"
+            ]
+          },
+          "title": {
+            "S": "Auto Scaling + ALB [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Compute"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-HEWOS42QWIPHNT9PWH9UC3ZY"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-HEWOS42QWIPHNT9PWH9UC3ZY"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-HEWOS42QWIPHNT9PWH9UC3ZY"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-6TWMNNNN4XH5KXVTDL27Y0N4"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-6TWMNNNN4XH5KXVTDL27Y0N4"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-6TWMNNNN4XH5KXVTDL27Y0N4"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Necesitas una **web** escalable que tolere caída de una AZ y realice balanceo **HTTP/HTTPS (L7)**. ¿Qué arquitectura recomiendas?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AWSSAA-J5L2Q0HA316QQM7WFIKZMN0Y"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-J5L2Q0HA316QQM7WFIKZMN0Y"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Arquitectura resiliente y escalable"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ASG en múltiples AZ detrás de un **ALB**; health checks del ALB y targets en Target Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instancia EC2 única con EIP y script de escalado manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ASG en una sola AZ detrás de NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB público front‑end y back‑end sin Auto Scaling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Compute#hard#AWSSAA-J5L2Q0HA316QQM7WFIKZMN0Y"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "autoscaling"
+            ]
+          },
+          "title": {
+            "S": "Auto Scaling + ALB [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Compute"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-5738MXF9GWDKPG3T1ARES8UB"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-5738MXF9GWDKPG3T1ARES8UB"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-5738MXF9GWDKPG3T1ARES8UB"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-T13HJKVHWG5UNFQZUJ2WLX3A"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-T13HJKVHWG5UNFQZUJ2WLX3A"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-T13HJKVHWG5UNFQZUJ2WLX3A"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-YZ00O3WQHFIKKEQC2AIE092Q"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-YZ00O3WQHFIKKEQC2AIE092Q"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-YZ00O3WQHFIKKEQC2AIE092Q"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Necesitas una **web** escalable que tolere caída de una AZ y realice balanceo **HTTP/HTTPS (L7)**. ¿Qué arquitectura recomiendas?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AWSSAA-TBLKHZYHT0A15MD7124RPYDO"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-TBLKHZYHT0A15MD7124RPYDO"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Arquitectura resiliente y escalable"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ASG en múltiples AZ detrás de un **ALB**; health checks del ALB y targets en Target Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instancia EC2 única con EIP y script de escalado manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ASG en una sola AZ detrás de NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB público front‑end y back‑end sin Auto Scaling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Compute#hard#AWSSAA-TBLKHZYHT0A15MD7124RPYDO"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "autoscaling"
+            ]
+          },
+          "title": {
+            "S": "Auto Scaling + ALB [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Compute"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-LLBPHP267EWXZM7LUK5V4CUM"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-LLBPHP267EWXZM7LUK5V4CUM"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-LLBPHP267EWXZM7LUK5V4CUM"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-BKX986HRNZYHOAU72P00EL54"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-BKX986HRNZYHOAU72P00EL54"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-BKX986HRNZYHOAU72P00EL54"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-L0K060ZU1UL9DM6AALLLVSH0"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-L0K060ZU1UL9DM6AALLLVSH0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-L0K060ZU1UL9DM6AALLLVSH0"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-RECEJKHKQQC8M448R2K4EOKR"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-RECEJKHKQQC8M448R2K4EOKR"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-RECEJKHKQQC8M448R2K4EOKR"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-F73F8B0OS09X3UVY7LP7HD87"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-F73F8B0OS09X3UVY7LP7HD87"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-F73F8B0OS09X3UVY7LP7HD87"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Necesitas una **web** escalable que tolere caída de una AZ y realice balanceo **HTTP/HTTPS (L7)**. ¿Qué arquitectura recomiendas?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AWSSAA-AXMUS3GSBXO4QZ9QGYVY54PW"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-AXMUS3GSBXO4QZ9QGYVY54PW"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Arquitectura resiliente y escalable"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ASG en múltiples AZ detrás de un **ALB**; health checks del ALB y targets en Target Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instancia EC2 única con EIP y script de escalado manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ASG en una sola AZ detrás de NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB público front‑end y back‑end sin Auto Scaling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Compute#hard#AWSSAA-AXMUS3GSBXO4QZ9QGYVY54PW"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "autoscaling"
+            ]
+          },
+          "title": {
+            "S": "Auto Scaling + ALB [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Compute"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-WMW81O5PO1YUPESGYPO8QQHB"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-WMW81O5PO1YUPESGYPO8QQHB"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-WMW81O5PO1YUPESGYPO8QQHB"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Necesitas una **web** escalable que tolere caída de una AZ y realice balanceo **HTTP/HTTPS (L7)**. ¿Qué arquitectura recomiendas?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AWSSAA-6IKSR6WCW4MEADKN10JGWSIJ"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-6IKSR6WCW4MEADKN10JGWSIJ"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Arquitectura resiliente y escalable"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ASG en múltiples AZ detrás de un **ALB**; health checks del ALB y targets en Target Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instancia EC2 única con EIP y script de escalado manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ASG en una sola AZ detrás de NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB público front‑end y back‑end sin Auto Scaling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Compute#hard#AWSSAA-6IKSR6WCW4MEADKN10JGWSIJ"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "autoscaling"
+            ]
+          },
+          "title": {
+            "S": "Auto Scaling + ALB [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Compute"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-UC5AENLXZ4FJ68VLKAOCCRKA"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-UC5AENLXZ4FJ68VLKAOCCRKA"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-UC5AENLXZ4FJ68VLKAOCCRKA"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-MR9IXWVS8DY5PZOS6AV4G403"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-MR9IXWVS8DY5PZOS6AV4G403"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-MR9IXWVS8DY5PZOS6AV4G403"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Necesitas una **web** escalable que tolere caída de una AZ y realice balanceo **HTTP/HTTPS (L7)**. ¿Qué arquitectura recomiendas?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AWSSAA-V4UM8K0H4NRUQ3VFMH7W4FWT"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AWSSAA-V4UM8K0H4NRUQ3VFMH7W4FWT"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Arquitectura resiliente y escalable"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ASG en múltiples AZ detrás de un **ALB**; health checks del ALB y targets en Target Group"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Instancia EC2 única con EIP y script de escalado manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ASG en una sola AZ detrás de NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ALB público front‑end y back‑end sin Auto Scaling"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Compute#hard#AWSSAA-V4UM8K0H4NRUQ3VFMH7W4FWT"
+          },
+          "tags": {
+            "SS": [
+              "alb",
+              "autoscaling"
+            ]
+          },
+          "title": {
+            "S": "Auto Scaling + ALB [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Compute"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes inspeccionar tráfico TLS **saliente** de VMs y centralizar reglas sin exponer IPs públicas. ¿Qué diseño eliges?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ104-736DDHHF39D0GKPE71EHQHK2"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ104-736DDHHF39D0GKPE71EHQHK2"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Control egress con TLS inspection"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Firewall **Premium** con TLS inspection habilitado + UDR a Firewall + Policy para CA/certificados"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG con reglas de capa 7 y TLS termination en NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Bastion para salir a Internet con inspección TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NVA básica en una VM sin soporte de TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking#hard#AZ104-736DDHHF39D0GKPE71EHQHK2"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "title": {
+            "S": "Firewall Premium + TLS inspection [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Networking"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-AOBFEXKDD74Q149QEURTQB2G"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-AOBFEXKDD74Q149QEURTQB2G"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-AOBFEXKDD74Q149QEURTQB2G"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "saved_count": {
+            "N": "0"
+          },
+          "question": {
+            "S": "Debes aislar aplicaciones por **spokes** y centralizar seguridad/rutas en un **hub** con conectividad a on‑prem. ¿Qué diseño es más adecuado?"
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "qid": {
+            "S": "AZ305-ZHUSQS65JM8IKX595O72IW21"
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "updated_at": {
+            "S": "2025-11-11T14:45:09Z"
+          },
+          "active": {
+            "BOOL": true
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-ZHUSQS65JM8IKX595O72IW21"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "concept": {
+            "S": "Diseño avanzado entre VNets"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Topología **Hub‑and‑Spoke** con VNet peering; UDR al **Azure Firewall/Route Server** del hub; Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Todas las VMs en una única VNet plana con NSG por subred"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Peering completo entre todos los spokes sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ExpressRoute directo desde cada spoke a on‑prem sin hub"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "cert_domain_diff_qid": {
+            "S": "Architecture#hard#AZ305-ZHUSQS65JM8IKX595O72IW21"
+          },
+          "tags": {
+            "SS": [
+              "hub-spoke",
+              "vnet"
+            ]
+          },
+          "title": {
+            "S": "Design Hub-Spoke [FIXED]"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "domain": {
+            "S": "Architecture"
+          }
+        }
+      }
+    }
+  ]
+}

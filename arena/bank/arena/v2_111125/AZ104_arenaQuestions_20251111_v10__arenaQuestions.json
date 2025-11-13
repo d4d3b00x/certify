@@ -1,0 +1,2906 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-327J5XCD2KAA8WMFZ3GRC8JI"
+          },
+          "question": {
+            "S": "¿Qué configuración protege mejor un Key Vault?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Key Vault seguro"
+          },
+          "concept": {
+            "S": "Mínimo privilegio y recuperación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RBAC + soft delete + purge protection"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "KV público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Secretos en appsettings"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Access Policies sin MFA"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "keyvault",
+              "rbac",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-327J5XCD2KAA8WMFZ3GRC8JI"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-327J5XCD2KAA8WMFZ3GRC8JI"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-5KUUOZFNRMJ1D3X7HPMX024U"
+          },
+          "question": {
+            "S": "¿Qué mecanismo mueve blobs a Cool/Archive por antigüedad?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Storage"
+          },
+          "title": {
+            "S": "Lifecycle en Blob"
+          },
+          "concept": {
+            "S": "Automatizar transición de tiers"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Lifecycle Management"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Runbook manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Budgets"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "blob",
+              "lifecycle"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage#medium#AZ104-5KUUOZFNRMJ1D3X7HPMX024U"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-5KUUOZFNRMJ1D3X7HPMX024U"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-8H7K8PEPCEZ6TKUSSN2NW7TV"
+          },
+          "question": {
+            "S": "¿Qué usarías para bloquear recursos sin el tag 'env'?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Governance"
+          },
+          "title": {
+            "S": "Etiquetado obligatorio"
+          },
+          "concept": {
+            "S": "Enforce de tags"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Locks"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Alertas en Monitor"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Azure Policy con efecto Deny"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "policy",
+              "tags"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance#medium#AZ104-8H7K8PEPCEZ6TKUSSN2NW7TV"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-8H7K8PEPCEZ6TKUSSN2NW7TV"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-B04E0Q8R3CWBKA1CUSJIJKTW"
+          },
+          "question": {
+            "S": "¿Qué feature abre RDP/SSH sólo bajo solicitud aprobada?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Just-In-Time"
+          },
+          "concept": {
+            "S": "Apertura temporal de puertos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "JIT VM Access"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Bastion siempre abierto"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "IP pública fija"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG estático"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "jit",
+              "vm"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-B04E0Q8R3CWBKA1CUSJIJKTW"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-B04E0Q8R3CWBKA1CUSJIJKTW"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-VOXYXHQGFCDLCVNV4YAM2HTY"
+          },
+          "question": {
+            "S": "¿Qué servicio ofrece SMB/NFS gestionado?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Storage"
+          },
+          "title": {
+            "S": "Azure Files"
+          },
+          "concept": {
+            "S": "Comparticiones gestionadas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Azure Files"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Managed Disks"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Blob"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "files",
+              "smb"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage#medium#AZ104-VOXYXHQGFCDLCVNV4YAM2HTY"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-VOXYXHQGFCDLCVNV4YAM2HTY"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-3PH94JR0W6ZGJHZH5AJAXH80"
+          },
+          "question": {
+            "S": "¿Qué recurso crea alertas por sobrepasar tope de coste?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Governance"
+          },
+          "title": {
+            "S": "Budgets"
+          },
+          "concept": {
+            "S": "Control de gasto"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DDoS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Resource Graph"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Budget en Cost Management"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Migrate"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "budget",
+              "cost"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance#medium#AZ104-3PH94JR0W6ZGJHZH5AJAXH80"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-3PH94JR0W6ZGJHZH5AJAXH80"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-MCQ6F9GLJN778JVKP2HRIJNJ"
+          },
+          "question": {
+            "S": "¿Qué SKU recomiendas para cargas públicas críticas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "DDoS Standard"
+          },
+          "concept": {
+            "S": "Protección perimetral"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NAT GW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Basic"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DDoS Protection Standard"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ddos",
+              "public"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-MCQ6F9GLJN778JVKP2HRIJNJ"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-MCQ6F9GLJN778JVKP2HRIJNJ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-UHL90QDHT7FW1HWWA6KUXEXI"
+          },
+          "question": {
+            "S": "¿Qué recurso captura un punto de un disco gestionado?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Storage"
+          },
+          "title": {
+            "S": "Snapshots de disco"
+          },
+          "concept": {
+            "S": "Punto de recuperación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Snapshot"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Image Gallery"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Table"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "disks",
+              "snapshot"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage#medium#AZ104-UHL90QDHT7FW1HWWA6KUXEXI"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-UHL90QDHT7FW1HWWA6KUXEXI"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-19UP538IQE8S42MF3DSQNOIQ"
+          },
+          "question": {
+            "S": "¿Dónde aplicarías políticas para todas las suscripciones?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Governance"
+          },
+          "title": {
+            "S": "Management Groups"
+          },
+          "concept": {
+            "S": "Alcance de políticas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VNet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Resource Group"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Management Group raíz"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "mg",
+              "policy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance#medium#AZ104-19UP538IQE8S42MF3DSQNOIQ"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-19UP538IQE8S42MF3DSQNOIQ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-VZAFBTVQ17TL7BNM2BF6U589"
+          },
+          "question": {
+            "S": "¿Qué conecta privado a Storage/SQL?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Private Endpoint"
+          },
+          "concept": {
+            "S": "Acceso privado a PaaS"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Private Endpoint"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Public IP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "UDR a Internet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Bastion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "private-link",
+              "endpoint"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-VZAFBTVQ17TL7BNM2BF6U589"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-VZAFBTVQ17TL7BNM2BF6U589"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-Q9MXAAYO54E4D4ODRPL3SWKH"
+          },
+          "question": {
+            "S": "¿Qué configuración protege mejor un Key Vault?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Key Vault seguro"
+          },
+          "concept": {
+            "S": "Mínimo privilegio y recuperación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Access Policies sin MFA"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Secretos en appsettings"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "KV público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RBAC + soft delete + purge protection"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "keyvault",
+              "rbac",
+              "security"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-Q9MXAAYO54E4D4ODRPL3SWKH"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-Q9MXAAYO54E4D4ODRPL3SWKH"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-JBO68KQ3LTP103WKEYT1H337"
+          },
+          "question": {
+            "S": "¿Qué mecanismo mueve blobs a Cool/Archive por antigüedad?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Storage"
+          },
+          "title": {
+            "S": "Lifecycle en Blob"
+          },
+          "concept": {
+            "S": "Automatizar transición de tiers"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Budgets"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Runbook manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Lifecycle Management"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "blob",
+              "lifecycle"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage#medium#AZ104-JBO68KQ3LTP103WKEYT1H337"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-JBO68KQ3LTP103WKEYT1H337"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-76QAJRX041UOD2U3S0TSAGFK"
+          },
+          "question": {
+            "S": "¿Qué usarías para bloquear recursos sin el tag 'env'?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Governance"
+          },
+          "title": {
+            "S": "Etiquetado obligatorio"
+          },
+          "concept": {
+            "S": "Enforce de tags"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Alertas en Monitor"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Azure Policy con efecto Deny"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Locks"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "policy",
+              "tags"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance#medium#AZ104-76QAJRX041UOD2U3S0TSAGFK"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-76QAJRX041UOD2U3S0TSAGFK"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-0WDT7UIP9P8N171I8CH0OES1"
+          },
+          "question": {
+            "S": "¿Qué feature abre RDP/SSH sólo bajo solicitud aprobada?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Just-In-Time"
+          },
+          "concept": {
+            "S": "Apertura temporal de puertos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "JIT VM Access"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "IP pública fija"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Bastion siempre abierto"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG estático"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "jit",
+              "vm"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-0WDT7UIP9P8N171I8CH0OES1"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-0WDT7UIP9P8N171I8CH0OES1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-0IQ129UUYUAKTZ04D2C01F7I"
+          },
+          "question": {
+            "S": "¿Qué servicio ofrece SMB/NFS gestionado?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Storage"
+          },
+          "title": {
+            "S": "Azure Files"
+          },
+          "concept": {
+            "S": "Comparticiones gestionadas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Managed Disks"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Azure Files"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Blob"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "files",
+              "smb"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage#medium#AZ104-0IQ129UUYUAKTZ04D2C01F7I"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-0IQ129UUYUAKTZ04D2C01F7I"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-3HXU680QBTPRF2B1BKFZT4CH"
+          },
+          "question": {
+            "S": "¿Qué recurso crea alertas por sobrepasar tope de coste?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Governance"
+          },
+          "title": {
+            "S": "Budgets"
+          },
+          "concept": {
+            "S": "Control de gasto"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Budget en Cost Management"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DDoS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Azure Migrate"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Resource Graph"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "budget",
+              "cost"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance#medium#AZ104-3HXU680QBTPRF2B1BKFZT4CH"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-3HXU680QBTPRF2B1BKFZT4CH"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-AQIJU1J2NP3R0W1G122ALJ6U"
+          },
+          "question": {
+            "S": "¿Qué SKU recomiendas para cargas públicas críticas?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "DDoS Standard"
+          },
+          "concept": {
+            "S": "Protección perimetral"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NAT GW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DDoS Protection Standard"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Basic"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ddos",
+              "public"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-AQIJU1J2NP3R0W1G122ALJ6U"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-AQIJU1J2NP3R0W1G122ALJ6U"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-B7I8H31WL7MZ6V5B6O119953"
+          },
+          "question": {
+            "S": "¿Qué recurso captura un punto de un disco gestionado?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Storage"
+          },
+          "title": {
+            "S": "Snapshots de disco"
+          },
+          "concept": {
+            "S": "Punto de recuperación"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Table"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Image Gallery"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Snapshot"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "disks",
+              "snapshot"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage#medium#AZ104-B7I8H31WL7MZ6V5B6O119953"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-B7I8H31WL7MZ6V5B6O119953"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-58UPJ87PLPTTF92UE4RK0JHC"
+          },
+          "question": {
+            "S": "¿Dónde aplicarías políticas para todas las suscripciones?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Governance"
+          },
+          "title": {
+            "S": "Management Groups"
+          },
+          "concept": {
+            "S": "Alcance de políticas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VNet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Management Group raíz"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Resource Group"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "mg",
+              "policy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance#medium#AZ104-58UPJ87PLPTTF92UE4RK0JHC"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-58UPJ87PLPTTF92UE4RK0JHC"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-KY7TRKBZ8O2W9H42DQGCXP16"
+          },
+          "question": {
+            "S": "¿Qué conecta privado a Storage/SQL?"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Private Endpoint"
+          },
+          "concept": {
+            "S": "Acceso privado a PaaS"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Bastion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Public IP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Private Endpoint"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "UDR a Internet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "private-link",
+              "endpoint"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-KY7TRKBZ8O2W9H42DQGCXP16"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-KY7TRKBZ8O2W9H42DQGCXP16"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-WT3GLWH3ZMNFD5WFAMHSM9KA"
+          },
+          "question": {
+            "S": "¿Qué conecta privado a Storage/SQL? (var 1)"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Private Endpoint"
+          },
+          "concept": {
+            "S": "Acceso privado a PaaS"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Bastion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Private Endpoint"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "UDR a Internet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Public IP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "private-link",
+              "endpoint"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-WT3GLWH3ZMNFD5WFAMHSM9KA"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-WT3GLWH3ZMNFD5WFAMHSM9KA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-7GIJBD4T424EHUP33ROI0G5G"
+          },
+          "question": {
+            "S": "¿Qué SKU recomiendas para cargas públicas críticas? (var 2)"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "DDoS Standard"
+          },
+          "concept": {
+            "S": "Protección perimetral"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "DDoS Protection Standard"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Basic"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NAT GW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "ddos",
+              "public"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-7GIJBD4T424EHUP33ROI0G5G"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-7GIJBD4T424EHUP33ROI0G5G"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-Y9D9RST7Y0X3BOUJXGW1RI70"
+          },
+          "question": {
+            "S": "¿Dónde aplicarías políticas para todas las suscripciones? (var 3)"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Governance"
+          },
+          "title": {
+            "S": "Management Groups"
+          },
+          "concept": {
+            "S": "Alcance de políticas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Resource Group"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Management Group raíz"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VNet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "mg",
+              "policy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Governance#medium#AZ104-Y9D9RST7Y0X3BOUJXGW1RI70"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-Y9D9RST7Y0X3BOUJXGW1RI70"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-3VI4T0P5MVO3TABF3WX6ED8X"
+          },
+          "question": {
+            "S": "¿Qué feature abre RDP/SSH sólo bajo solicitud aprobada? (var 4)"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Just-In-Time"
+          },
+          "concept": {
+            "S": "Apertura temporal de puertos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "IP pública fija"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG estático"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "JIT VM Access"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Bastion siempre abierto"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "jit",
+              "vm"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AZ104-3VI4T0P5MVO3TABF3WX6ED8X"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-3VI4T0P5MVO3TABF3WX6ED8X"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ104-MOTA1NA01DTUYGOV64GSPKVM"
+          },
+          "question": {
+            "S": "¿Qué servicio ofrece SMB/NFS gestionado? (var 5)"
+          },
+          "cert": {
+            "S": "AZ-104"
+          },
+          "domain": {
+            "S": "Storage"
+          },
+          "title": {
+            "S": "Azure Files"
+          },
+          "concept": {
+            "S": "Comparticiones gestionadas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Blob"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Azure Files"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Managed Disks"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "files",
+              "smb"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage#medium#AZ104-MOTA1NA01DTUYGOV64GSPKVM"
+          },
+          "diff_qid": {
+            "S": "medium#AZ104-MOTA1NA01DTUYGOV64GSPKVM"
+          }
+        }
+      }
+    }
+  ]
+}

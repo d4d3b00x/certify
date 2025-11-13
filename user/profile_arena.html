@@ -12,7 +12,9 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f1320" />
   <title>ITHub.es. Perfil de Usuario</title>
+  <meta name="description" content="Perfil de usuario en ITHub: progreso, últimos exámenes, ranking e integración con Arena Battle.">
 
   <style>
     :root{
@@ -34,44 +36,34 @@
       line-height:1.6; min-height:100vh; overflow-x:hidden;
       display:flex; flex-direction:column;
     }
-    a{color:inherit}
+    a{color:inherit;text-decoration:none}
 
     .wrap{max-width:1200px;margin:0 auto;padding:20px;width:100%}
 
-    /* ===== HEADER ===== */
-    header.site{
-      position:sticky; top:0; z-index:20;
-      background:linear-gradient(180deg,#0e1222 0%, #0b0f1c 100%);
-      border-bottom:1px solid rgba(40,48,86,.6);
-      box-shadow:0 10px 24px rgba(0,0,0,.35);
+    /* ====== HEADER (del código proporcionado) ====== */
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    header[role="banner"]{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .brand img.site-logo{height:42px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:#aebaf0;font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px}
+    nav.menu a.link-btn:hover{border-color:#2a3150;color:#fff}
+    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150;
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7a67ff,#5f48ff); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+    .pill-btn:hover{background:linear-gradient(180deg,#8a78ff,#6b54ff); transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;}
+    .btn:hover{border-color:#3a4580}
+    .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
+    @media (max-width:720px){
+      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
     }
-    .nav{
-      max-width:1200px; margin:0 auto; padding:10px 20px;
-      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
-    }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px;text-decoration:none}
-    .brand .badge{width:30px;height:30px;border-radius:10px;background:linear-gradient(180deg,#7693ff,#6a7cff);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:inset 0 -4px 8px rgba(0,0,0,.25)}
-    .brand .name{display:flex;align-items:baseline;gap:6px}
-    .brand .name b{font-size:1.05rem}
-    .brand .name .dot{opacity:.9}
-    .brand .name .es{opacity:.7;font-weight:800}
 
-    .navlinks{display:flex;align-items:center;justify-content:center;gap:28px;font-weight:900}
-    .navlinks a{text-decoration:none;color:#bac4ff;letter-spacing:.5px}
-    .navlinks a:hover{color:#fff;text-shadow:0 0 12px rgba(123,92,255,.35)}
-
-    .usercapsule{display:flex;align-items:center;gap:10px;padding:6px;background:linear-gradient(180deg, rgba(16,22,43,.9), rgba(10,14,30,.9));border:1px solid var(--stroke);border-radius:999px;box-shadow:var(--shadow)}
-    .chip-user{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-weight:900;color:#e8ecff;background:linear-gradient(180deg, rgba(124,146,255,.18), rgba(90,110,220,.14));border:1px solid rgba(70,80,150,.7);white-space:nowrap}
-    .chip-user .flame{color:var(--accent-warn)}
-    .btn{appearance:none;border:1px solid var(--stroke);cursor:pointer;background:var(--surface2);color:var(--ink);font-weight:900;letter-spacing:.2px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);transition:transform .08s, box-shadow .12s, filter .12s, border-color .12s; text-decoration:none}
-    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.35) }
-    .btn.pill{ border-radius:999px; padding:10px 16px }
-    .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border-color:transparent }
-    .btn.ghost{ background:transparent; border-color:rgba(80,92,160,.6) }
-    .btn.small{ padding:6px 10px; font-size:.9rem }
-    .hidden{display:none !important}
-
-    /* Tarjetas / Hero */
+    /* ===== Tarjetas / Hero ===== */
     .card{background:linear-gradient(180deg, var(--card), #0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);color:var(--ink);margin-bottom:12px}
     .hero{padding:16px 18px;background:linear-gradient(180deg, #111937 0, #0f1633 100%);border:1px solid var(--stroke);border-radius:var(--radius);margin:12px 0 var(--gap)}
     .hero h1{margin:4px 0 6px;font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem);font-weight:900}
@@ -83,7 +75,7 @@
 
     /* Grid */
     .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:var(--gap);align-items:start}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}.nav{grid-template-columns:auto auto;grid-template-rows:auto auto}.navlinks{order:3;grid-column:1/-1;padding-top:6px}}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
     .col-right{display:flex;flex-direction:column;gap:var(--gap)}
     .col-right>.card{width:100%}
 
@@ -119,12 +111,6 @@
     .kpi h4{margin:0;font-size:1rem;color:#cbd6ff;font-weight:900}
     .kpi .n{font-size:1.4rem;font-weight:900}
 
-    .heat{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
-    .heat i{display:block;height:14px;border-radius:4px;background:#0b1024;border:1px solid var(--stroke)}
-    .heat i.lv1{background:#15224a}.heat i.lv2{background:#1c2b5d}.heat i.lv3{background:#213471}
-    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-    .badge-chip{border:1px solid var(--stroke);background:var(--surface2);color:#dbe3ff;border-radius:999px;padding:6px 10px;font-weight:900}
-
     /* Ranking mini */
     .rank-mini .table-wrap{overflow-x:hidden}
     .rank-mini table{min-width:0;width:100%;table-layout:auto}
@@ -145,6 +131,20 @@
     .ibadge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--surface2)}
     .ibadge.fast{color:#ffb84d}.ibadge.perfect{color:#bb86fc}.ibadge.ok{color:#4ee69a}.ibadge.streak{color:#ff6b6b}.ibadge.grinder{color:#64b5f6}.ibadge.sharp{color:#00c8aa}.ibadge.veteran{color:#ffd662}
 
+    /* CTA Leaderboard pequeño bajo ranking */
+    .rank-footer{display:flex;justify-content:flex-end;margin-top:10px}
+
+    /* ===== Arena (sección) ===== */
+    .arena-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .arena-kpi{ text-align:center;border:1px solid var(--stroke);border-radius:12px;padding:12px;background:linear-gradient(180deg, var(--surface2), var(--surface)) }
+    .arena-kpi h4{margin:0;font-size:1rem;color:#cbd6ff;font-weight:900}
+    .arena-kpi .n{font-size:1.4rem;font-weight:900}
+    .arena-level{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:8px}
+    .arena-level .bar{width:120px;height:8px;background:#0b1024;border-radius:999px;overflow:hidden;border:1px solid var(--stroke)}
+    .arena-level .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .arena-link{color:#bb86fc;text-decoration:none}
+    .arena-link:hover{text-decoration:underline}
+
     /* Footer */
     footer.site{margin-top:auto;border-top:1px solid var(--stroke);background:linear-gradient(180deg,#0f1633,#0b1024)}
     .foot{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
@@ -163,42 +163,34 @@
       display: inline-block;
       line-height: 1;
     }
-
-    /* CTA Leaderboard pequeño bajo ranking */
-    .rank-footer{display:flex;justify-content:flex-end;margin-top:10px}
-
-    /* ===== Arena (nueva sección) ===== */
-    .arena-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .arena-kpi{ text-align:center;border:1px solid var(--stroke);border-radius:12px;padding:12px;background:linear-gradient(180deg, var(--surface2), var(--surface)) }
-    .arena-kpi h4{margin:0;font-size:1rem;color:#cbd6ff;font-weight:900}
-    .arena-kpi .n{font-size:1.4rem;font-weight:900}
-    .arena-level{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:8px}
-    .arena-level .bar{width:120px;height:8px;background:#0b1024;border-radius:999px;overflow:hidden;border:1px solid var(--stroke)}
-    .arena-level .bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
   </style>
 </head>
 <body>
 
-  <!-- ===== HEADER ===== -->
-  <header class="site">
-    <nav class="nav">
-      <a class="brand" href="/" aria-label="IT Hub">
-        <div class="badge">□</div>
-        <div class="name"><b>IT&nbsp;&nbsp;Hub</b><span class="dot">.</span><span class="es">es</span></div>
-      </a>
-      <div class="navlinks" aria-label="Navegación principal">
-        <a href="/">HOME</a>
-        <a href="/contenidos">CONTENIDOS</a>
-        <a href="/score/ranking.html">RANKING</a>
+  <!-- ===== HEADER (del código proporcionado) ===== -->
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
       </div>
-      <div class="usercapsule">
-        <span id="hdrUser" class="chip-user hidden"><span class="flame">🔥</span><span id="hdrUserName">USER</span></span>
-        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/profile">PERFIL</a>
-        <button id="btnHdrLogout" class="btn pill primary hidden">LOGOUT</button>
-        <button id="btnHdrLogin" class="btn pill primary">LOGIN</button>
-        <button id="btnHdrSignup" class="btn pill ghost">CREAR CUENTA</button>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a class="link-btn" href="/catalog/itcatalog.html">CATÁLOGOS</a>
+        <a class="link-btn" href="/content/content.html">RESÚMENES</a>
+        <a class="link-btn" href="/score/ranking.html">RANKING</a>
+      </nav>
+
+      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
+
+        <div id="userArea" style="display:none;align-items:center;gap:6px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        </div>
       </div>
-    </nav>
+    </div>
   </header>
 
   <div class="wrap">
@@ -211,7 +203,7 @@
       <span id="authText" class="muted">🔒 No has iniciado sesión</span>
       <div class="actions">
         <button id="btnHome" class="btn small hidden">🏠 Home</button>
-        <button id="btnLogout" class="btn small hidden">Cerrar Sesión</button>
+        <button id="btnLogoutLocal" class="btn small hidden">Cerrar Sesión</button>
       </div>
     </section>
 
@@ -244,7 +236,7 @@
             <div class="hint">Tip: si no estableces tu avatar, usaremos tus iniciales.</div>
             <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
               <button type="button" class="btn" id="btnResetProfile">Reset</button>
-              <button class="btn primary" type="submit">Save</button>
+              <button class="btn" style="background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#111;border-color:transparent" type="submit">Save</button>
             </div>
             <div id="profMsg" class="hint" style="margin-top:6px"></div>
           </form>
@@ -272,16 +264,42 @@
 
       <!-- ===== Columna derecha ===== -->
       <div class="col-right">
-        <!-- RANKING GLOBAL mini -->
+
+        <!-- 1) ÚLTIMOS EXÁMENES (primero) -->
+        <article class="card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <h3 style="margin:0;font-weight:900">📘 TUS ÚLTIMOS EXÁMENES</h3>
+            <div class="tabs">
+              <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
+              <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
+              <button id="tabAZ305" class="tab-btn" type="button">AZ-305</button>
+              <button id="tabAWS"  class="tab-btn" type="button">AWS SAA-C03</button>
+            </div>
+          </div>
+
+          <div class="kpis" style="margin:10px 0 12px">
+            <div class="kpi"><h4>Intentos totales</h4><div id="kpiAttempts" class="n">0</div></div>
+            <div class="kpi"><h4>Media  %</h4><div id="kpiAvg" class="n">0%</div></div>
+            <div class="kpi"><h4>Mejor %</h4><div id="kpiBest" class="n">0%</div></div>
+          </div>
+
+          <div id="resultsWrap" class="table-wrap">Loading…</div>
+
+          <div style="display:flex;gap:8px;justify-content:space-between;margin-top:10px;align-items:center;">
+            <div id="trendHint" class="muted">—</div>
+          </div>
+        </article>
+
+        <!-- 2) RANKING EXÁMENES -->
         <article class="card rank-mini">
-          <h3 style="margin:0 0 10px;font-weight:900;">🏆 RANKING GLOBAL</h3>
+          <h3 style="margin:0 0 10px;font-weight:900;">🏆 RANKING EXÁMENES</h3>
           <div id="rankMiniWrap" class="table-wrap">Cargando…</div>
           <div id="rankMiniCta" class="rank-footer"></div>
         </article>
 
-        <!-- 🏟️ RANKING ARENA (nuevo) -->
+        <!-- 3) RANKING ARENA -->
         <article class="card">
-          <h3 style="margin:0 0 10px;font-weight:900;">🏟️ RANKING ARENA</h3>
+          <h3 style="margin:0 0 10px;font-weight:900;">🏟️ RANKING <a class="arena-link" href="/arena/arenav1.html">ARENA</a></h3>
           <div class="arena-kpis">
             <div class="arena-kpi">
               <h4>Nivel</h4>
@@ -307,34 +325,9 @@
           </div>
         </article>
 
-        <!-- ÚLTIMOS EXÁMENES -->
+        <!-- 4) PREGUNTAS MARCADAS (último) -->
         <article class="card">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
-            <h3 style="margin:0;font-weight:900">📘 TUS ÚLTIMOS QUIZS</h3>
-            <div class="tabs">
-              <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
-              <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
-              <button id="tabAZ305" class="tab-btn" type="button">AZ-305</button>
-              <button id="tabAWS"  class="tab-btn" type="button">AWS SAA-C03</button>
-            </div>
-          </div>
-
-          <div class="kpis" style="margin:10px 0 12px">
-            <div class="kpi"><h4>Intentos totales</h4><div id="kpiAttempts" class="n">0</div></div>
-            <div class="kpi"><h4>Media  %</h4><div id="kpiAvg" class="n">0%</div></div>
-            <div class="kpi"><h4>Mejor %</h4><div id="kpiBest" class="n">0%</div></div>
-          </div>
-
-          <div id="resultsWrap" class="table-wrap">Loading…</div>
-
-          <div style="display:flex;gap:8px;justify-content:space-between;margin-top:10px;align-items:center;">
-            <div id="trendHint" class="muted">—</div>
-          </div>
-        </article>
-
-        <!-- PREGUNTAS MARCADAS -->
-        <article class="card">
-          <h3 style="margin:0 0 10px;font-weight:900;">TUS PREGUNTAS MARCADAS</h3>
+          <h3 style="margin:0 0 10px;font-weight:900;">TUS PREGUNTAS MARCADAS (EN DESARROLLO)</h3>
           <div id="markedWrap" class="table-wrap">
             <table>
               <thead>
@@ -348,6 +341,7 @@
             </table>
           </div>
         </article>
+
       </div>
     </section>
   </div>
@@ -356,10 +350,7 @@
   <footer class="site">
     <div class="foot">
       <div style="display:flex;align-items:center;gap:10px">
-        <div class="brand" style="gap:8px">
-          <div class="badge" style="width:22px;height:22px;border-radius:7px">□</div>
-          <strong>IT Hub<span class="dot">.</span><span class="es">es</span></strong>
-        </div>
+        <strong>IT Hub<span class="dot">.</span><span class="es">es</span></strong>
         <span class="muted">© <span id="yearNow"></span></span>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
@@ -369,78 +360,62 @@
   </footer>
 
   <script>
-    /* ===== API bases ===== */
+    /* ===== Constantes base ===== */
     const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // resultados globales
-    const ARENA_API_BASE = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena"; // MISMO que el front de Arena
-
+    const ARENA_API_BASE = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena";
     const AUTH_KEY = "currentUser";
     const GOAL_KEY = "weeklyGoal";
     const LOGIN_URL = "/login/login.html";
 
+    /* ===== Utilidades ===== */
     const byId = id => document.getElementById(id);
     const toInt = v => Number.isFinite(Number(v)) ? (Number(v)|0) : 0;
     const pad = n => String(n).padStart(2,'0');
     const escapeHtml = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
     const fmtDuration = sec => { sec = toInt(sec); if (!sec || sec<0) return "—"; const m=Math.floor(sec/60), s=sec%60; return `${pad(m)}:${pad(s)}`; };
     const fmtDateTime = iso => { if(!iso) return "—"; try{ return new Date(iso).toLocaleString([], {year:'numeric',month:'short',day:'2-digit',hour:'2-digit',minute:'2-digit'});}catch{ return iso; } };
-    const norm = s => (s||"").toString().trim().toLowerCase();
+    const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
     const initialsOf = (name)=>{ const s=(name||"").trim(); if(!s) return "👤"; const parts=s.split(/\s+/).slice(0,2); return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤"; };
 
     function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
     function getUserAny(){ let u=getUser(); if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} } return u; }
-    function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
+    function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); }
 
     const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
     const setGoal = (n)=> localStorage.setItem(GOAL_KEY, String(Math.max(1,toInt(n))));
 
-    const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
-
-    /* Header dinámico */
+    /* ===== Header auth (del código proporcionado, adaptado) ===== */
+    function getCurrentUser(){ return getUserAny(); }
     function renderHeaderAuth(){
-      const u = getUserAny();
-      const pillName = byId('hdrUser');
-      const pillNameTxt = byId('hdrUserName');
-      const btnPerfil = byId('btnHdrPerfil');
-      const btnLogout = byId('btnHdrLogout');
-      const btnLogin = byId('btnHdrLogin');
-      const btnSignup = byId('btnHdrSignup');
-
-      if(u){
-        pillNameTxt.textContent = (u.name || u.displayName || u.userName || u.email || 'USER').toUpperCase();
-        pillName.classList.remove('hidden');
-        btnPerfil.classList.remove('hidden');
-        btnLogout.classList.remove('hidden');
-        btnLogin.classList.add('hidden');
-        btnSignup.classList.add('hidden');
-      }else{
-        pillName.classList.add('hidden');
-        btnPerfil.classList.add('hidden');
-        btnLogout.classList.add('hidden');
-        btnLogin.classList.remove('hidden');
-        btnSignup.classList.remove('hidden');
-      }
+      const u=getCurrentUser();
+      const login=byId('btnLogin');
+      const signup=byId('btnSignup');
+      const userArea=byId('userArea');
+      const nameTop=byId('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
+    byId('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem(AUTH_KEY); renderHeaderAuth(); location.href = LOGIN_URL; });
 
-    function renderAuth(){
+    /* ===== Authbar local ===== */
+    function renderAuthBar(){
       const u = getUserAny();
       const authText = byId("authText");
-      const btnLogout = byId("btnLogout");
+      const btnLogoutLocal = byId("btnLogoutLocal");
       const btnHome = byId("btnHome");
       if (u){
         authText.textContent = `✅ Signed in as: ${u.name||u.displayName||u.userName||''} (${u.email||''})`;
-        btnLogout.classList.remove("hidden");
+        btnLogoutLocal.classList.remove("hidden");
         btnHome.classList.remove("hidden");
       }else{
         authText.textContent = "🔒 You’re not signed in.";
-        btnLogout.classList.add("hidden");
+        btnLogoutLocal.classList.add("hidden");
         btnHome.classList.add("hidden");
       }
-      renderProfileForm();
-      renderGoalUI();
-      renderHeaderAuth();
     }
 
+    /* ===== Perfil ===== */
     function renderProfileForm(){
       const u = getUserAny() || {};
       byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
@@ -467,11 +442,12 @@
           const data = await res.json();
           const merged = {...u, ...data};
           setUser(merged);
+          renderHeaderAuth();
         }
       }catch{}
     }
 
-    /* ====== Ranking Global ====== */
+    /* ===== Ranking Exámenes ===== */
     const QUIZZES = ["az-104","az-305","aws-saa-c03"];
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
@@ -557,7 +533,7 @@
       const cta = byId('rankMiniCta'); cta.innerHTML='';
       const me=getUserAny(); if(!me){
         host.innerHTML='<p class="muted" style="text-align:center">Inicia sesión para ver tu ranking.</p>';
-        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+        cta.innerHTML = `<a class="btn small" href="/score/ranking.html">🏆 Leaderboard</a>`;
         return;
       }
       try{
@@ -567,7 +543,7 @@
         const foundIndex=agg.findIndex(x=> (x.userId||'').toString()===uid || (x.userName||'').trim()===(me.name||me.displayName||me.userName||'').trim());
         if(foundIndex<0){
           host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>';
-          cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+          cta.innerHTML = `<a class="btn small" href="/score/ranking.html">🏆 Leaderboard</a>`;
           return;
         }
         const row=agg[foundIndex], rank=foundIndex+1;
@@ -605,15 +581,15 @@
               </tr>
             </tbody>
           </table>`;
-        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+        cta.innerHTML = `<a class="btn small" href="/score/ranking.html">🏆 Leaderboard</a>`;
       }catch(e){
         host.innerHTML = `<p class="muted" style="text-align:center">Error cargando ranking.</p>`;
-        cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
+        cta.innerHTML = `<a class="btn small" href="/score/ranking.html">🏆 Leaderboard</a>`;
         console.warn(e);
       }
     }
 
-  /* ===== Arena: MISMA API que el front ===== */
+// ===== Arena =====
 function getArenaIdentity(){
   let uid = localStorage.getItem('arenaUserId');
   let name = localStorage.getItem('arenaUserName');
@@ -624,7 +600,6 @@ function getArenaIdentity(){
 }
 
 async function fetchArenaRank(uid){
-  // Buscamos al usuario en el leaderboard del mismo API que Arena
   try{
     const r = await fetch(`${ARENA_API_BASE}/leaderboard?limit=2000`, {mode:"cors",cache:"no-store"});
     if(!r.ok) throw new Error("leaderboard");
@@ -641,12 +616,11 @@ async function fetchArenaRank(uid){
 async function fetchArenaStats(){
   const { uid, name } = getArenaIdentity();
   if(!uid){
-    return { level:1, xp:0, xpForNext:1000, correct:0, wrong:0, rank:null, total:0 };
+    return { level:0, xp:0, xpForNext:1000, correct:0, wrong:0, rank:null, total:0 };
   }
 
-  let level = 1, xp = 0, xpForNext = 1000, correct = 0, wrong = 0;
+  let level = 0, xp = 0, xpForNext = 1000, correct = 0, wrong = 0;
 
-  // 1) Perfil base (mismo endpoint que usa Arena)
   try{
     const url = `${ARENA_API_BASE}/user/me?userId=${encodeURIComponent(uid)}&name=${encodeURIComponent(name||'guest')}`;
     const r = await fetch(url, {mode:"cors",cache:"no-store"});
@@ -656,10 +630,10 @@ async function fetchArenaStats(){
       // XP/Nivel (Arena usa 1000 XP por nivel)
       xp = Number(me.xp || 0);
       level = (me.level != null) ? Number(me.level) : Math.floor(xp/1000);
+      if(!Number.isFinite(level)) level = 0;
       xpForNext = 1000;
 
-      // ✅ Nuevo: aciertos y fallos desde /user/me
-      // (el backend expone count_ok y count_ko)
+      // Aciertos y fallos
       correct = Number(me.count_ok ?? me.ok ?? me.correct ?? 0);
       wrong   = Number(me.count_ko ?? me.ko ?? me.wrong   ?? 0);
     }
@@ -667,7 +641,7 @@ async function fetchArenaStats(){
     console.warn('Arena /user/me error', e);
   }
 
-  // 2) Si por cualquier motivo no vinieran, intentamos endpoints alternativos (fallback)
+  // Fallbacks si no vinieran
   if ((correct|0) === 0 && (wrong|0) === 0){
     const statUrls = [
       `${ARENA_API_BASE}/stats?userId=${encodeURIComponent(uid)}`,
@@ -687,25 +661,22 @@ async function fetchArenaStats(){
     }
   }
 
-  // 3) Posición en leaderboard
   const { rank, total } = await fetchArenaRank(uid);
 
   return { level, xp, xpForNext, correct, wrong, rank, total };
 }
 
-
 function renderArena(stats){
-  const lvl = Number(stats.level)||1;
-  const xp = Number(stats.xp)||0;
+  // ⚠️ No usar "|| 1" para permitir nivel 0
+  const lvl  = Number.isFinite(Number(stats.level)) ? Number(stats.level) : 0;
+  const xp   = Number.isFinite(Number(stats.xp)) ? Number(stats.xp) : 0;
   const next = Math.max(1, Number(stats.xpForNext)||1000);
-  const pct = Math.max(0, Math.min(100, Math.round((xp % next) / next * 100)));
+  const pct  = Math.max(0, Math.min(100, Math.round((xp % next) / next * 100)));
 
-  // Nivel + XP + barra
   document.getElementById('arenaLevel').textContent = `Lv ${lvl}`;
-  document.getElementById('arenaXp').textContent = xp.toString();
+  document.getElementById('arenaXp').textContent    = String(xp);
   document.getElementById('arenaXpBar').style.width = pct + '%';
 
-  // Posición en ranking
   const rankBox = document.getElementById('arenaRank');
   if (stats.rank && stats.total){
     rankBox.textContent = `#${stats.rank} / ${stats.total}`;
@@ -715,10 +686,10 @@ function renderArena(stats){
     rankBox.textContent = '—';
   }
 
-  // Aciertos / fallos
   document.getElementById('arenaCorrect').textContent = String(Number(stats.correct)||0);
   document.getElementById('arenaWrong').textContent   = String(Number(stats.wrong)||0);
 }
+
     /* ===== Resultados propios ===== */
     async function fetchMyResults(limit=500){
       const u = getUserAny(); if (!u) return [];
@@ -740,8 +711,7 @@ function renderArena(stats){
         return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
       };
       const mine = items.filter(isMine);
-      const pick = v => (typeof v === "string" ? v.trim() : "");
-      const getName2 = x => pick(x.userName)||pick(x.username)||pick(x.displayName)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+      const getName2 = x => (x.userName||x.username||x.displayName||x.name||x?.user?.name||x?.profile?.name||"(no name)").trim();
 
       return mine.map(x => ({
         userId: x.userId || x.id || "(unknown)",
@@ -790,14 +760,6 @@ function renderArena(stats){
     }
 
     window.__filters = {days:'all', fromDate:null};
-    const activeFilterKey = ()=> {
-      const t = (document.querySelector('.tab-btn.active')?.textContent || 'All').toLowerCase();
-      if(t.includes('aws')) return 'aws-saa-c03';
-      if(t.includes('az-305')) return 'az-305';
-      if(t.includes('az')) return 'az-104';
-      return 'all';
-    };
-
     function renderResults(rows, filter="all"){
       const root = byId("resultsWrap");
       let list = rows.slice().sort((a,b)=> (b.ts||"").localeCompare(a.ts||""));
@@ -863,7 +825,6 @@ function renderArena(stats){
       }
       return null;
     }
-
     async function fetchMyMarked(limit=200){
       const out = [];
       try{
@@ -951,14 +912,9 @@ function renderArena(stats){
       }
     }
 
-    // ===== Eventos header/auth =====
-    byId('btnHdrLogin').onclick  = ()=> location.href = LOGIN_URL;
-    byId('btnHdrSignup').onclick = ()=> location.href = LOGIN_URL;
-    byId('btnHdrLogout').onclick = ()=> { localStorage.removeItem(AUTH_KEY); renderAuth(); location.href = LOGIN_URL; };
-
-    // ===== Eventos existentes =====
+    /* ===== Eventos ===== */
     byId("btnHome").onclick = ()=>{ location.href = "/"; };
-    byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = LOGIN_URL; };
+    byId("btnLogoutLocal").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = LOGIN_URL; };
     byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
     byId("btnSaveGoal").onclick = ()=>{
       const val = Math.max(1, Number(byId("weeklyGoal").value)||1);
@@ -995,6 +951,7 @@ function renderArena(stats){
       }
     }
 
+    /* ===== Init ===== */
     document.addEventListener("DOMContentLoaded", async ()=>{
       byId('yearNow').textContent = new Date().getFullYear();
 
@@ -1005,32 +962,30 @@ function renderArena(stats){
         return;
       }
 
-      renderAuth();
+      renderHeaderAuth();
+      renderAuthBar();
       loadRemoteMe();
       renderProfile();
+      renderGoalUI();
 
-      /* ===== Arena (MISMA API que el front) ===== */
+      // Arena
       try{
         const arena = await fetchArenaStats();
-        renderArena(arena||{level:1,xp:0,xpForNext:1000,correct:0,wrong:0});
+          renderArena(arena||{level:0,xp:0,xpForNext:1000,correct:0,wrong:0});
       }catch(e){ console.warn('Arena render failed', e); }
 
+      // Tus últimos exámenes
       try{
         const rows = await fetchMyResults(500);
         window.__myRows = rows;
         renderResults(rows, "all");
         byId('trendHint').textContent = ``;
-        const plan = weeklyProgress(rows);
-        if(plan.attempts < plan.goal){
-          const remain = Math.max(0, plan.goal - plan.attempts);
-          byId('trendHint').textContent += ``;
-        }
       }catch(e){
         document.getElementById("resultsWrap").innerHTML = `<div class="table-wrap"><p style="text-align:center;color:#ff8f8f;">Error loading results or not signed in.</p></div>`;
         console.warn('Results fetch failed:', e);
       }
 
-      // Ranking Global mini + CTA
+      // Ranking exámenes
       renderMyGlobalRank();
 
       // Marcadas
@@ -1038,7 +993,7 @@ function renderArena(stats){
         const marked = await fetchMyMarked(200);
         const body = byId('markedBody');
         if(!marked.length){
-          body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No marked questions yet.</td></tr>`;
+          body.innerHTML = `<tr><td colspan="4" style="text-align:center;">No hay preguntas marcadas todavía.</td></tr>`;
         }else{
           body.innerHTML = marked.map((r,i)=>`
             <tr>

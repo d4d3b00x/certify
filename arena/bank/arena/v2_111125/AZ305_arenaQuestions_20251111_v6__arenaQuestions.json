@@ -1,0 +1,2557 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-AL6O1O032R4YFYTC5MJIJUI8"
+          },
+          "question": {
+            "S": "Quieres reducir latencia y calls al modelo. ¿Qué añades?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "RAG design"
+          },
+          "title": {
+            "S": "Cognitive Search + embeddings + cache"
+          },
+          "concept": {
+            "S": "Arquitectura RAG con costos controlados"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CSV sin índice"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Cache + chunking + Cognitive Search"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SQL puro"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "rag",
+              "search"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "RAG design#medium#AZ305-AL6O1O032R4YFYTC5MJIJUI8"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-AL6O1O032R4YFYTC5MJIJUI8"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-S8JTDH4XV722TMMG2AAUCHNG"
+          },
+          "question": {
+            "S": "Debes auditar prompts y limitar por equipo. ¿Qué diseñas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Responsible AI"
+          },
+          "title": {
+            "S": "APIM delante de OpenAI con logging"
+          },
+          "concept": {
+            "S": "Trazabilidad y límites"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Endpoint público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "APIM con quotas y logs a LA"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Excel"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "rai",
+              "apim"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Responsible AI#hard#AZ305-S8JTDH4XV722TMMG2AAUCHNG"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-S8JTDH4XV722TMMG2AAUCHNG"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-T6CH7FMSM4FSA3RW8U12F5MA"
+          },
+          "question": {
+            "S": "Admins sólo desde dispositivos privilegiados. ¿Qué combinas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Zero Trust+"
+          },
+          "title": {
+            "S": "PAW + CA + PIM"
+          },
+          "concept": {
+            "S": "Operación segura por identidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RDP abierto"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "PAW + Conditional Access + PIM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "paw",
+              "zero-trust"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Zero Trust+#medium#AZ305-T6CH7FMSM4FSA3RW8U12F5MA"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-T6CH7FMSM4FSA3RW8U12F5MA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-BUEWJWJZBG1VO15L7HVMLTA0"
+          },
+          "question": {
+            "S": "Quieres baseline común (seguridad/redes/logs). ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Landing Zone multi-tenant"
+          },
+          "title": {
+            "S": "Stacks/Blueprints + Policy"
+          },
+          "concept": {
+            "S": "Base repetible para muchas suscripciones"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Stacks/Blueprints + Policy y RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DNS público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "landing-zone",
+              "policy"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Landing Zone multi-tenant#medium#AZ305-BUEWJWJZBG1VO15L7HVMLTA0"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-BUEWJWJZBG1VO15L7HVMLTA0"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-NSKPQDLNZCNGW208W1XT0M11"
+          },
+          "question": {
+            "S": "Requisito regulatorio exige aislamiento. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Confidential AI"
+          },
+          "title": {
+            "S": "Confidential VMs/containers + vTPM"
+          },
+          "concept": {
+            "S": "Proteger datos en uso"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Sólo cifrado en reposo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Confidential Computing (SEV-SNP) + vTPM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Front Door"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "confidential",
+              "vtpm"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Confidential AI#hard#AZ305-NSKPQDLNZCNGW208W1XT0M11"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-NSKPQDLNZCNGW208W1XT0M11"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-0Z02ZRSBKDOLX8CQNQE5DB8N"
+          },
+          "question": {
+            "S": "Datos no pueden salir. ¿Qué estrategia?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Hybrid AI"
+          },
+          "title": {
+            "S": "Arc Data/AKS + Private Link a OpenAI"
+          },
+          "concept": {
+            "S": "Procesar on‑prem manteniendo privacidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Publicar en Internet"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Arc + Private Link a OpenAI"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "FTP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CSV"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "arc",
+              "openai"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Hybrid AI#medium#AZ305-0Z02ZRSBKDOLX8CQNQE5DB8N"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-0Z02ZRSBKDOLX8CQNQE5DB8N"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-ZU355O3S5ISOPFE044979076"
+          },
+          "question": {
+            "S": "Finanzas pide reporting por equipo. ¿Qué diseñas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "FinOps avanzado"
+          },
+          "title": {
+            "S": "Budgets por tag + exports a Storage/LA"
+          },
+          "concept": {
+            "S": "Showback/chargeback E2E"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Excel manual"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Budgets por tag + Exports + LA"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RI random"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "finops",
+              "exports"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "FinOps avanzado#medium#AZ305-ZU355O3S5ISOPFE044979076"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-ZU355O3S5ISOPFE044979076"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-NKNC1QC0BDYFIE0PTQB6M72I"
+          },
+          "question": {
+            "S": "Quieres bloquear CVEs y firmas inválidas. ¿Qué adoptas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "DevSecOps supply chain"
+          },
+          "title": {
+            "S": "ACR signing + escaneo + OPA"
+          },
+          "concept": {
+            "S": "Confianza de build a deploy"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ECR"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ACR content trust/Sign + escaneo + OPA"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ZIP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "FTP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "acr",
+              "signing",
+              "opa"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "DevSecOps supply chain#hard#AZ305-NKNC1QC0BDYFIE0PTQB6M72I"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-NKNC1QC0BDYFIE0PTQB6M72I"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-JUBTBEAUXRBIHBPXO185IQQ4"
+          },
+          "question": {
+            "S": "Requieres ver latencias E2E. ¿Stack?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Observability modern"
+          },
+          "title": {
+            "S": "OTEL + App Insights/LA"
+          },
+          "concept": {
+            "S": "Trazas distribuidas y métricas"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Logs planos"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "OTEL a App Insights/LA"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Sólo métricas VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Excel"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "otel",
+              "appinsights"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Observability modern#medium#AZ305-JUBTBEAUXRBIHBPXO185IQQ4"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-JUBTBEAUXRBIHBPXO185IQQ4"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-RYVMA44TNS2X83EXCP1ISFOA"
+          },
+          "question": {
+            "S": "Decenas de VNets consumidoras. ¿Topología DNS?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Private Link scale"
+          },
+          "title": {
+            "S": "DNS hub-spoke con Resolver"
+          },
+          "concept": {
+            "S": "Consumo de PaaS privados desde múltiples VNets"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Hosts"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Resolver en hub + zonas privadas enlazadas"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DNS público"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "dns",
+              "hub-spoke"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Private Link scale#hard#AZ305-RYVMA44TNS2X83EXCP1ISFOA"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-RYVMA44TNS2X83EXCP1ISFOA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-1PARDTEROKDQ1F0PXVWEMB7F"
+          },
+          "question": {
+            "S": "Piden restaurar en región emparejada. ¿Qué combinas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data protection"
+          },
+          "title": {
+            "S": "Immutability y CRR para backups"
+          },
+          "concept": {
+            "S": "Aislamiento ante ransomware"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Snapshots locales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Immutability + CRR + vault aislado"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CSV"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "RAID"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "backup",
+              "immutability"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data protection#medium#AZ305-1PARDTEROKDQ1F0PXVWEMB7F"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-1PARDTEROKDQ1F0PXVWEMB7F"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-ZNLIZB476K51EPZW1RI46WN1"
+          },
+          "question": {
+            "S": "Restringir salida. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Firewall egress"
+          },
+          "title": {
+            "S": "Premium TLS inspection + FQDN"
+          },
+          "concept": {
+            "S": "Sólo dominios aprobados"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Firewall Premium + TLS inspection"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Bastion"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "firewall",
+              "tls"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Firewall egress#hard#AZ305-ZNLIZB476K51EPZW1RI46WN1"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-ZNLIZB476K51EPZW1RI46WN1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-PCI57TI1ZLRE3EICHWUV1FFP"
+          },
+          "question": {
+            "S": "Quieres proteger y medir consumo. ¿Qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "API strategy"
+          },
+          "title": {
+            "S": "APIM con quotas/ratelimiting y JWT"
+          },
+          "concept": {
+            "S": "Gobierno de APIs"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Endpoint directo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "APIM con JWT/ratelimit/quotas"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Front Door only"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "jwt"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "API strategy#medium#AZ305-PCI57TI1ZLRE3EICHWUV1FFP"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-PCI57TI1ZLRE3EICHWUV1FFP"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-1CCAIUVQG5N9LHEIRHG5N02D"
+          },
+          "question": {
+            "S": "Necesitas auditoría y time-travel. ¿Qué formato?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "RAG storage"
+          },
+          "title": {
+            "S": "ADLS + Delta para historiales"
+          },
+          "concept": {
+            "S": "Persistencia ACID de conversaciones"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "JSON plano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Delta Lake sobre ADLS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "TXT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CSV"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "delta",
+              "adls"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "RAG storage#medium#AZ305-1CCAIUVQG5N9LHEIRHG5N02D"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-1CCAIUVQG5N9LHEIRHG5N02D"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-X7APGMDC9QBP1CQFCHGG66KM"
+          },
+          "question": {
+            "S": "¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Resiliencia"
+          },
+          "title": {
+            "S": "Chaos Studio con blast radius acotado"
+          },
+          "concept": {
+            "S": "Pruebas sin afectar críticos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Eliminar RG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Targets etiquetados + exclusiones"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Failover real"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "chaos",
+              "resilience"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Resiliencia#medium#AZ305-X7APGMDC9QBP1CQFCHGG66KM"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-X7APGMDC9QBP1CQFCHGG66KM"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-FDFB8F6S4EULOBH7323ZPRWW"
+          },
+          "question": {
+            "S": "GitHub → Azure. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Modern auth"
+          },
+          "title": {
+            "S": "OIDC federation para CI/CD"
+          },
+          "concept": {
+            "S": "Eliminar secretos en pipelines"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SP password"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "OIDC federation"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SAS largo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Basic"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "oidc",
+              "cicd"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Modern auth#medium#AZ305-FDFB8F6S4EULOBH7323ZPRWW"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-FDFB8F6S4EULOBH7323ZPRWW"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-T9IQFYS4EPEU8B0X0B89MZL1"
+          },
+          "question": {
+            "S": "¿Qué contrato eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Cost commitments"
+          },
+          "title": {
+            "S": "Savings Plan vs RI"
+          },
+          "concept": {
+            "S": "Cargas 24/7 estables"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "On-Demand"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Compute Savings Plan o RI estándar"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Spot 100%"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "savings",
+              "ri"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Cost commitments#medium#AZ305-T9IQFYS4EPEU8B0X0B89MZL1"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-T9IQFYS4EPEU8B0X0B89MZL1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-HSMQCTUYN9EFOCRM0FN6FE9G"
+          },
+          "question": {
+            "S": "¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Serverless orchestration"
+          },
+          "title": {
+            "S": "Durable Functions fan-out/fan-in"
+          },
+          "concept": {
+            "S": "Procesos largos y paralelos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Timers"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Durable Functions"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "durable",
+              "orchestration"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Serverless orchestration#hard#AZ305-HSMQCTUYN9EFOCRM0FN6FE9G"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-HSMQCTUYN9EFOCRM0FN6FE9G"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-94EMD1G3SE9KVYP9E7ZJK7CR"
+          },
+          "question": {
+            "S": "Miles de dispositivos. ¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Edge"
+          },
+          "title": {
+            "S": "IoT Hub DPS + Edge por anillos"
+          },
+          "concept": {
+            "S": "Despliegue gradual seguro"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SSH"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DPS + Edge por capas"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "FTP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "SMB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "iot",
+              "dps"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Edge#medium#AZ305-94EMD1G3SE9KVYP9E7ZJK7CR"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-94EMD1G3SE9KVYP9E7ZJK7CR"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-S44IRPCWPM2IQLQTMSH0RTFM"
+          },
+          "question": {
+            "S": "Partners deben aceptar términos y caducar. ¿Qué usas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Identity external"
+          },
+          "title": {
+            "S": "B2B con términos y expiración"
+          },
+          "concept": {
+            "S": "Colaboración con control"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Locales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "External Identities + Access Reviews"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LDAP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "VPN"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "b2b",
+              "terms"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Identity external#medium#AZ305-S44IRPCWPM2IQLQTMSH0RTFM"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-S44IRPCWPM2IQLQTMSH0RTFM"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-W2SR84IC44K3JJBAVHKMVKKS"
+          },
+          "question": {
+            "S": "¿Qué configuras?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Alerts KQL"
+          },
+          "title": {
+            "S": "Reglas por ventana temporal"
+          },
+          "concept": {
+            "S": "Errores 500 > umbral"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CPU"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Log alert KQL con agregaciones"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Health"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Budget"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "alerts",
+              "kql"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Alerts KQL#medium#AZ305-W2SR84IC44K3JJBAVHKMVKKS"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-W2SR84IC44K3JJBAVHKMVKKS"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-GUO9TNS4UDOPOAPMI0XYMP7V"
+          },
+          "question": {
+            "S": "¿Qué combinas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "AI private"
+          },
+          "title": {
+            "S": "Private Link a OpenAI/Search"
+          },
+          "concept": {
+            "S": "Acceso sin Internet"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "IP pública"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Private Endpoint + DNS privado"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "VPN"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "hard"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "openai",
+              "private-link"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T10:23:57Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "AI private#hard#AZ305-GUO9TNS4UDOPOAPMI0XYMP7V"
+          },
+          "diff_qid": {
+            "S": "hard#AZ305-GUO9TNS4UDOPOAPMI0XYMP7V"
+          }
+        }
+      }
+    }
+  ]
+}

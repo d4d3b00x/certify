@@ -25,7 +25,7 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .nav{max-width:1260px;margin:0 auto;padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:900}
 .logo{width:28px;height:28px;border-radius:9px;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 0 0 6px rgba(130,150,255,.16)}
-.nav-right{display:flex;gap:8px;align-items:center}
+.nav-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--pill);border:1px solid #2b356a;font-weight:900}
 .badge.link{text-decoration:none;color:inherit}
 .user{font-weight:900;border-radius:12px;padding:8px 12px;background:#0f183b;border:1px solid #2b356a}
@@ -34,52 +34,49 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .container{max-width:1260px;margin:0 auto;padding:18px}
 .layout{display:grid;grid-template-columns:1fr 360px;gap:16px}
 @media(max-width:1040px){.layout{grid-template-columns:1fr}}
-
 .panel{background:linear-gradient(180deg,var(--panel),#0e1533);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
 
-.panel-head{
-  display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:16px;
-  padding:12px;border-bottom:1px solid var(--line);background:var(--panel2)
-}
-.h-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
-.title-chip{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap}
-.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.filter{
-  position:relative;display:inline-flex;align-items:center;gap:8px;
-  padding:8px 12px;border:1px solid var(--chipLine);
+/* ===== Top filtros ===== */
+.topbar{margin:6px 0 10px}
+.toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.title-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap;font-size:.92rem}
+.filters{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.filter,.pill{
+  position:relative;display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px;border:1px solid var(--chipLine);
   background:linear-gradient(180deg,#0f1736,#121d48);
-  border-radius:999px;font-weight:900;cursor:pointer;color:#dfe7ff;white-space:nowrap
+  border-radius:999px;font-weight:900;cursor:pointer;color:#dfe7ff;white-space:nowrap;
+  font-size:.90rem; line-height:1
 }
-.filter.active{background:linear-gradient(180deg,#7890ff,#5c70ff);color:#fff;border-color:#6f82ff;box-shadow:0 10px 22px rgba(80,95,255,.25)}
-.filter[data-cert^="AZ"]::after{content:attr(data-count);position:absolute;right:-6px;top:-8px;font-size:.72rem;font-weight:900;background:#23306b;border:2px solid #6f82ff;color:#cfe1ff;border-radius:999px;padding:2px 6px}
+.filter.active,.pill.active{background:linear-gradient(180deg,#7890ff,#5c70ff);color:#fff;border-color:#6f82ff;box-shadow:0 10px 22px rgba(80,95,255,.25)}
+.filter[data-cert]::after{
+  content:attr(data-count);position:absolute;right:-6px;top:-8px;font-size:.68rem;font-weight:900;
+  background:#23306b;border:2px solid #6f82ff;color:#cfe1ff;border-radius:999px;padding:1px 6px
+}
 .filter[data-cert^="SAA"]{background:linear-gradient(180deg,#1a1622,#2a1f30);border-color:#5d4670}
-.filter[data-cert^="SAA"]::after{content:attr(data-count);position:absolute;right:-6px;top:-8px;font-size:.72rem;font-weight:900;background:#3a2c3f;border:2px solid #ff9900;color:#ffe2cc;border-radius:999px;padding:2px 6px}
+.filter[data-cert^="SAA"]::after{background:#3a2c3f;border-color:#ff9900;color:#ffe2cc}
 
-.h-right{display:flex;align-items:center;gap:12px}
-.goal-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--chipLine);background:var(--chip);border-radius:999px;padding:8px 12px;font-weight:900;white-space:nowrap}
-.goal-pill .ico{display:inline-flex;align-items:center;line-height:1}
-.prog{flex:none;position:relative;width:240px;height:12px;border-radius:999px;background:#0b1028;border:1px solid var(--line);overflow:hidden}
-.prog>span{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,#3be180,#76f4bc);transition:width .35s ease}
-.reset{padding:8px 14px;border-radius:999px;border:1px solid #4151a8;background:#111a3e;color:#dfe1ff;font-weight:900}
-
+/* ===== GRID 3×3 ===== */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:12px}
 @media(max-width:1040px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}}
 .card{position:relative;background:linear-gradient(180deg,#10183a,#0f1736);border:1px solid var(--line);border-radius:14px;padding:12px;display:grid;grid-template-rows:auto auto 1fr auto;row-gap:8px;min-height:190px}
-.meta{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;overflow:hidden;white-space:nowrap}
-.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap}
-.chip.sm{padding:4px 8px;font-size:.86rem;line-height:1}
+.meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;overflow:hidden}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;border:1px solid var(--chipLine);background:var(--chip);font-weight:900;white-space:nowrap;font-size:.86rem}
+.chip.sm{padding:4px 7px;font-size:.82rem;line-height:1}
 .cert{background:var(--azure);border-color:#2d4eaa;color:#cfe6ff}
 .cert.aws{background:var(--aws);border-color:#9c6b22;color:#ffe2c0}
-.diff{gap:6px}
-.diff .dot{width:10px;height:10px;border-radius:999px;background:#5ce083;box-shadow:0 0 0 4px rgba(92,224,131,.18)}
-.diff.medio .dot{background:#ffd66b;box-shadow:0 0 0 4px rgba(255,214,107,.18)}
-.diff.dificil .dot{background:#ff7d7d;box-shadow:0 0 0 4px rgba(255,125,125,.18)}
+.diff .dot{width:9px;height:9px;border-radius:999px;background:#5ce083}
+.diff.medio .dot{background:#ffd66b}
+.diff.dificil .dot{background:#ff7d7d}
+.len::before{content:"🎯"}
 .xp::before{content:"⚡"}
 .title{font-weight:900;min-height:24px}
 .desc{color:var(--muted)}
 .controls{display:flex;gap:10px;align-items:center}
 .play{flex:1;display:inline-flex;align-items:center;justify-content:center;height:42px;border-radius:12px;border:1px solid #4655a8;background:linear-gradient(180deg,#6677ff,#5a6df7);color:#fff;font-weight:900;cursor:pointer}
+.play.lock{background:#1b2145;border-color:#3a4270}
 .kill{width:42px;height:42px;border-radius:12px;border:1px solid #3a4270;background:#111a33;color:#cfe1ff;cursor:pointer}
 
 .ribbon{position:absolute;right:-30px;bottom:14px;transform:rotate(-12deg);font-weight:900;padding:6px 30px;border-radius:10px;border:2px solid rgba(0,0,0,.15);box-shadow:0 8px 18px rgba(0,0,0,.25);display:none}
@@ -89,37 +86,60 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 .card.new{animation:pop .35s ease}
 @keyframes pop{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
 
+/* ===== MODAL ===== */
 .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:60}
 .modal.show{display:flex}
-.modal-card{width:min(820px,92vw);max-height:86vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px}
+.modal-card{width:min(820px,92vw);max-height:86vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column}
 .mhead{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
 .meta-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.close{border:1px solid var(--line);background:#182152;color:#cfe1ff;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer}
 .qbox{background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:14px}
 .qtitle{font-weight:900;margin:0 0 10px}
 .opt{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:start;margin:8px 0;padding:10px;border:1px solid var(--line);border-radius:10px;background:#0e1633;cursor:pointer}
 .opt.correct{background:rgba(57,224,141,.10);border-color:rgba(57,224,141,.7)}
 .opt.wrong{background:rgba(255,125,125,.10);border-color:rgba(255,125,125,.7)}
+.mfoot{position:sticky;bottom:0;display:flex;gap:10px;justify-content:flex-end;padding:12px;margin-top:10px;background:linear-gradient(180deg,transparent,#111a34);border-top:1px solid var(--line);border-bottom-left-radius:12px;border-bottom-right-radius:12px}
+.close,.mark{border:1px solid var(--line);background:#182152;color:#cfe1ff;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer}
+.mark{ background:#101a3b }
 
+/* ===== Sidebar ===== */
 .sidebar{padding:12px}
+.block{background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px}
+.block h4{margin:0 0 10px;font-weight:900;display:flex;align-items:center;gap:8px}
+.small-gap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.progress{height:8px;border-radius:999px;background:#0b1028;border:1px solid var(--line);overflow:hidden;margin:10px 0 4px}
+.progress>span{display:block;height:100%;width:0;background:linear-gradient(90deg,#3be180,#76f4bc)}
+.btn-reset{padding:8px 14px;border-radius:999px;border:1px solid #4151a8;background:#111a3e;color:#dfe1ff;font-weight:900}
+.badge-progress{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--chipLine);background:#10183a;border-radius:999px;padding:8px 12px;font-weight:900}
+
+/* Ranking */
 .rtitle{font-weight:900;margin:0 0 10px}
 .rlist{display:grid;gap:8px}
 .rrow{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto;gap:10px;align-items:center;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
 .rrow.me{outline:2px solid rgba(124,212,255,.55)}
 .rname{font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.rlvl,.rxp{display:inline-flex;align-items:center;gap:8px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 12px;font-weight:900}
+.rlvl,.rxp{display:inline-flex;align-items:center;gap:8px;background:#12204c;border:1px solid #3856a8;border-radius:999px;padding:6px 10px;font-weight:900}
 .rxp::before{content:"⚡"}
 
+/* Historial */
+.hist{display:grid;gap:8px}
+.hitem{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#0f1736;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.92rem}
+.hleft{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.hxp{font-weight:900}
+
+/* Reglas / Toast */
 .rules{padding:12px}
 .rule-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #4151a8;background:#111a3e;color:#dfe1ff;font-weight:900;cursor:pointer}
 .rule-body{display:none;margin-top:10px;background:#0f1736;border:1px solid var(--line);border-radius:12px;padding:12px}
 .rule-body.show{display:block}
-
 .toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:#12204c;border:1px solid #3856a8;color:#dfe1ff;padding:10px 14px;border-radius:12px;font-weight:900;z-index:80;display:none}
 .toast.show{display:block;animation:fade 1.1s ease}
 @keyframes fade{0%{opacity:0;transform:translate(-50%,-6px)}20%{opacity:1;transform:translate(-50%,0)}80%{opacity:1}100%{opacity:0}}
 .fly{position:fixed;pointer-events:none;background:#12204c;border:1px solid #3856a8;color:#dfe1ff;padding:6px 10px;border-radius:999px;font-weight:900;z-index:90;box-shadow:0 10px 24px rgba(0,0,0,.4)}
 #congrats .modal-card{max-width:560px}
+
+/* Pulse XP */
+@keyframes pulseXP{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+.pulse-xp{animation:pulseXP .5s ease}
 </style>
 </head>
 <body>
@@ -138,28 +158,45 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 
 <main class="container">
   <h1 style="margin:6px 0 2px">Arena Battle – Quizzes Relámpago</h1>
-  <p style="color:#9fb2ff;margin:0 0 14px">Elige certificación y resuelve misiones de 1, 2 o 3 preguntas.</p>
+  <p style="color:#9fb2ff;margin:0 0 10px">Elige certificación y resuelve misiones de 1, 2 o 3 preguntas.</p>
 
-  <div class="layout">
-    <section class="panel" id="arena">
-      <div class="panel-head">
-        <div class="h-left">
-          <div class="title-chip">🎯 Certificación</div>
-          <div class="filters" id="filters">
-            <button class="filter active" data-cert="ALL">Todas</button>
-            <button class="filter" data-cert="AZ-104" data-count="0">AZ-104</button>
-            <button class="filter" data-cert="AZ-305" data-count="0">AZ-305</button>
-            <button class="filter" data-cert="SAA-C03" data-count="0">SAA-C03</button>
-          </div>
-        </div>
-
-        <div class="h-right">
-          <div class="goal-pill"><span class="ico">🎯</span> <span id="goalTxt">0 / 30</span></div>
-          <div class="prog"><span id="goalBar"></span></div>
-          <button id="btnReset" class="reset">RESET</button>
+  <!-- ===== FILTROS ARRIBA ===== -->
+  <div class="topbar">
+    <div class="toolbar" id="toolbar">
+      <div class="group">
+        <div class="title-chip">🎯 Certificación</div>
+        <div class="filters" id="filtersCert">
+          <button class="filter active" data-cert="ALL" data-count="0">Todas</button>
+          <button class="filter" data-cert="AZ-104" data-count="0">AZ-104</button>
+          <button class="filter" data-cert="AZ-305" data-count="0">AZ-305</button>
+          <button class="filter" data-cert="SAA-C03" data-count="0">SAA-C03</button>
         </div>
       </div>
 
+      <div class="group">
+        <div class="title-chip">🧠 Dificultad</div>
+        <div class="filters" id="filtersDiff">
+          <button class="pill active" data-diff="all">Todas</button>
+          <button class="pill" data-diff="facil">Fácil</button>
+          <button class="pill" data-diff="medio">Medio</button>
+          <button class="pill" data-diff="dificil">Difícil</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <div class="title-chip">🎯 Tamaño</div>
+        <div class="filters" id="filtersLen">
+          <button class="pill active" data-len="all">Todas</button>
+          <button class="pill" data-len="1">1P</button>
+          <button class="pill" data-len="2">2P</button>
+          <button class="pill" data-len="3">3P</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <section class="panel" id="arena">
       <div class="grid" id="grid"></div>
 
       <div class="rules">
@@ -167,17 +204,26 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
         <div class="rule-body" id="rulesBody">
           <h3>Reglas</h3>
           <ul>
-            <li>Tablero <b>3×3</b> (hasta 9 cartas). No se repiten misiones superadas.</li>
-            <li><b>XP = nivel</b>: cada <b>1000 XP</b> subes <b>+1</b> nivel.</li>
-            <li>Dificultad:
-              <span class="chip diff sm"><span class="dot"></span>Fácil</span> /
-              <span class="chip diff medio sm"><span class="dot"></span>Medio</span> /
-              <span class="chip diff dificil sm"><span class="dot"></span>Difícil</span>
+            <li><b>Tablero</b>: 3×3 (9 cartas). Tu objetivo es completar misiones; una misión superada se reemplaza por otra nueva.</li>
+            <li><b>Misiones</b>: de 1, 2 o 3 preguntas (<b>• nP</b>). La dificultad puede ser <b>Fácil</b>, <b>Medio</b> o <b>Difícil</b>.</li>
+            <li><b>Puntuación</b>:
+              <ul>
+                <li>Base: Fácil <b>10</b>, Medio <b>20</b>, Difícil <b>35</b>.</li>
+                <li>Bonus por tamaño: 2P <b>+8</b>, 3P <b>+18</b>.</li>
+                <li>Bonus de maestría (solo Medio/Difícil): <b>+5</b> por cada pregunta extra en Medio, <b>+10</b> por extra en Difícil.</li>
+                <li><b>XP final = base + tamaño + maestría</b>.</li>
+              </ul>
             </li>
-            <li>Al acertar: aparece <b>YEAH :)</b>, sumas XP y la carta se sustituye por otra disponible.</li>
-            <li>Al fallar: <b>OH NO :(</b> durante 2s y puedes reintentar más tarde.</li>
-            <li><b>Objetivo semanal</b>: 30/30 ⇒ modal de enhorabuena (+120 XP) y reset.</li>
-            <li><b>Completar una certificación</b> ⇒ <b>+500 XP</b> bonus.</li>
+            <li><b>Resultado</b>:
+              <ul>
+                <li>Si aciertas todas, la misión muestra <b>YEAH :)</b> y sumas XP.</li>
+                <li>Si fallas alguna, <b>OH NO :(</b> (0 XP) y podrás intentarla de nuevo más tarde.</li>
+              </ul>
+            </li>
+            <li><b>Progreso semanal</b>: al llegar a <b>30/30</b> recibes <b>+120 XP</b> extra y el contador se reinicia.</li>
+            <li><b>Certificación completa</b>: al agotar el banco de esa certificación recibes <b>+500 XP</b> extra.</li>
+            <li><b>Niveles</b>: cada <b>1000 XP</b> subes de nivel.</li>
+            <li><b>Filtros</b>: puedes limitar por certificación, dificultad o tamaño. “Todas” desactiva el filtro correspondiente.</li>
           </ul>
         </div>
       </div>
@@ -185,31 +231,49 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 
     <aside class="panel">
       <div class="sidebar">
-        <div class="rtitle">🏆 RANKING EN VIVO</div>
-        <div class="rlist" id="rlist"></div>
-        <div class="reco" style="margin-top:12px">
-          <br><h4 style="margin:0 0 6px">📝 NOTAS</h4>
-          <p style="margin:0;color:#cfd8ff">
-            • Puedes participar sin iniciar sesión, con un usuario Invitado aleatorio cuyos datos se eliminarán en 24h.<br/>
-            • Si quieres mantener tu progreso, créate una cuenta con nosotros.
-          </p>
+
+        <!-- PROGRESO semanal -->
+        <div class="block">
+          <h4>🗓️ Progreso semanal</h4>
+          <div style="color:#cfd8ff;margin:0 0 6px">Completa 30 misiones para +120 XP</div>
+          <div class="small-gap">
+            <span class="badge-progress" id="goalTxtBox">🎯 <span id="goalTxt">0 / 30</span></span>
+            <button id="btnReset" class="btn-reset">Reset</button>
+          </div>
+          <div class="progress"><span id="goalBar"></span></div>
         </div>
+
+        <!-- RANKING -->
+        <div class="block">
+          <div class="rtitle">🏆 TOP 10 en vivo</div>
+          <div class="rlist" id="rlist"></div>
+        </div>
+
+        <!-- HISTORIAL -->
+        <div class="block">
+          <h4>📜 Historial</h4>
+          <div class="hist" id="history"></div>
+        </div>
+
       </div>
     </aside>
   </div>
 </main>
 
-<!-- Modales -->
+<!-- MODALES -->
 <div class="modal" id="modal">
   <div class="modal-card">
     <div class="mhead">
       <div class="meta-inline" id="mMeta"></div>
       <div class="meta-inline" id="mInfo"></div>
-      <button class="close" id="mClose">CERRAR</button>
     </div>
     <div class="qbox">
       <h3 class="qtitle" id="mTitle">...</h3>
       <div id="mOpts"></div>
+    </div>
+    <div class="mfoot">
+      <button class="mark" id="mMark">☆ MARCAR</button>
+      <button class="close" id="mClose">CERRAR</button>
     </div>
   </div>
 </div>
@@ -228,476 +292,410 @@ header{background:#0e1328;border-bottom:1px solid var(--line)}
 <div class="fly" id="fly" style="display:none">+0 XP</div>
 
 <script>
-/* ================= API ================= */
+/* ================= Constantes y helpers ================= */
 const API_BASE = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena";
-
-/* ================== CONSTANTES ================== */
 const WEEKLY_MAX = 30;
 const WEEKLY_KEY = "weekly";
+const GRID_SIZE = 9;         // 3x3
+const LIVE_MS = 3500;
 
-/* ===== Identidad (sincronizada con login del portal) ===== */
-(function bootstrapIdentity(){
-  const p = new URLSearchParams(location.search);
-  const gotUid  = p.get('userId');
-  const gotName = p.get('name');
-
-  // 1) Traer del login global (currentUser) si existe
-  try{
-    const portal = JSON.parse(localStorage.getItem('currentUser')||"null");
-    if (portal) {
-      const uidFromPortal =
-        (portal.userId||portal.id||portal.email||"").toString().trim();
-      const nameFromPortal =
-        portal.name || portal.displayName || portal.userName || portal.username ||
-        (portal.email ? portal.email.split("@")[0] : "") || "Guest";
-      if (uidFromPortal) {
-        localStorage.setItem('arenaUserId', uidFromPortal);
-        localStorage.setItem('arenaUserName', nameFromPortal);
-      }
-    }
-  }catch{}
-
-  // 2) Parámetros de URL mandan
-  if (gotUid)  localStorage.setItem('arenaUserId', gotUid);
-  if (gotName) localStorage.setItem('arenaUserName', gotName);
-
-  // 3) Invitado si sigue sin identidad
-  let uid  = localStorage.getItem('arenaUserId');
-  let name = localStorage.getItem('arenaUserName');
-  if (!uid) {
-    const rnd = crypto.getRandomValues(new Uint8Array(16));
-    rnd[6] = (rnd[6] & 0x0f) | 0x40;
-    rnd[8] = (rnd[8] & 0x3f) | 0x80;
-    uid = [...rnd].map((b,i)=> (i===4||i===6||i===8||i===10?'-':'')+b.toString(16).padStart(2,'0')).join('');
-    localStorage.setItem('arenaUserId', uid);
+const by = s => document.querySelector(s);
+const $all = s => Array.from(document.querySelectorAll(s));
+const cap = s => s ? s[0].toUpperCase()+s.slice(1) : s;
+const toast = by('#toast');
+function showToast(t){ toast.textContent=t; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1100); }
+const safeStr = v => {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v === "object") {
+    if ("text" in v && typeof v.text === "string") return v.text;
+    if ("question" in v && typeof v.question === "string") return v.question;
+    try { return String(v); } catch { return ""; }
   }
-  if (!name) {
-    name = "Guest" + Math.floor(1000 + Math.random()*9000);
-    localStorage.setItem('arenaUserName', name);
-  }
-
-  if (gotUid || gotName) history.replaceState({}, '', location.pathname);
-})();
-
-/* ================= BANK ================= */
-const BANK = {"AZ-104": [], "AZ-305": [], "SAA-C03": []};
-
-/* ================= STATE ================= */
-const GRID_SIZE = 9;
-let filterCert = "ALL";
-let userXP = 0;
-let userLv = 0;
-const badgeXP = document.getElementById('badgeXP');
-const badgeLv = document.getElementById('badgeLv');
-const userNameSpan = document.getElementById('userName');
-
-function addXPLocal(x){
-  userXP += x;
-  const oldLv = userLv;
-  userLv = Math.floor(userXP/1000);
-  badgeXP.textContent = `⚡ ${userXP}`;
-  if(userLv>oldLv){ badgeLv.textContent = `Lv. ${userLv}`; pulse(badgeLv); }
-}
-
-/* ==== Objetivo semanal 30/30 ==== */
-let weekly = Number(localStorage.getItem(WEEKLY_KEY) || "0");
-const goalTxt = document.getElementById('goalTxt');
-const goalBar = document.getElementById('goalBar');
-function updateGoal(v){
-  weekly = Math.min(WEEKLY_MAX, Math.max(0, Number(v)||0));
-  localStorage.setItem(WEEKLY_KEY, String(weekly));
-  goalTxt.textContent = `${weekly} / ${WEEKLY_MAX}`;
-  goalBar.style.width = `${(weekly/WEEKLY_MAX)*100}%`;
-}
-
-/* ==== Conjuntos de estado ==== */
-const remaining = {};
-const inPlay = {};
-const completed = {};
-Object.keys(BANK).forEach(c=>{
-  remaining[c]=new Set(BANK[c].map(x=>x.id));
-  inPlay[c]=new Set();
-  completed[c]=new Set();
-});
-
-const grid = document.getElementById('grid');
-const filters = document.getElementById('filters');
-
-const rand = (min,max)=> Math.floor(Math.random()*(max-min+1))+min;
-const byId = (id)=> {
-  for(const c of Object.keys(BANK)){ const f=BANK[c].find(x=>x.id===id); if(f) return f; }
-  return null;
+  return String(v);
 };
-function availableIds(cert){ return Array.from(remaining[cert]).filter(id=>!inPlay[cert].has(id)); }
-function pickOne(cert){ const pool = availableIds(cert); if(pool.length===0) return null; return pool[rand(0,pool.length-1)]; }
-function updateFilterCounts(){
-  for(const btn of filters.querySelectorAll('.filter[data-cert]')){
-    const c = btn.dataset.cert;
-    if(c==="ALL") continue;
-    btn.setAttribute('data-count', remaining[c].size);
-  }
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  return arr;
 }
 
-function buildGrid(){
-  grid.innerHTML = '';
-  Object.keys(inPlay).forEach(c=> inPlay[c].clear());
-  const addCard = (id)=>{
-    if(!id) return;
-    const m = byId(id);
-    if(!m) return;
-    const card = createCard(m);
-    grid.appendChild(card);
-    inPlay[mCert(m).cert].add(id);
-  };
-  if(filterCert==="ALL"){
-    let slots = GRID_SIZE, guard = 0;
-    const order = Object.keys(BANK);
-    while(slots>0 && guard<200){
-      guard++;
-      let picked = null;
-      for(const c of order){ const id = pickOne(c); if(id){ picked=id; break; } }
-      if(!picked) break;
-      addCard(picked); slots--;
-    }
-  }else{
-    const ids = availableIds(filterCert).slice(0, GRID_SIZE);
-    ids.forEach(addCard);
-  }
-  updateFilterCounts();
-}
-function mCert(m){
-  for(const c of Object.keys(BANK)) if(BANK[c].some(x=>x.id===m.id)) return {cert:c};
-  return {cert:""};
+/* ================= Login / identidad ================= */
+function getPortalUser(){ try{ return JSON.parse(localStorage.getItem('currentUser')||'null'); }catch{return null;} }
+function isLocked(){ const u=getPortalUser(); return !(u && (u.email||u.userId||u.id)); }
+function ensureArenaIdentity(){
+  const u=getPortalUser(); if(!u){ localStorage.removeItem('arenaUserId'); localStorage.removeItem('arenaUserName'); return; }
+  const uid=(u.userId||u.id||u.email||"").toString().trim();
+  const name=u.name||u.displayName||u.userName||u.username||(u.email?u.email.split("@")[0]:"")||"User";
+  if(uid){ localStorage.setItem('arenaUserId',uid); localStorage.setItem('arenaUserName',name); }
 }
 
-/* ============== CARD / QUIZ FLOW ============== */
-const modal = document.getElementById('modal');
-const mClose = document.getElementById('mClose');
-const mMeta = document.getElementById('mMeta');
-const mInfo = document.getElementById('mInfo');
-const mTitle = document.getElementById('mTitle');
-const mOpts = document.getElementById('mOpts');
-let activeCard=null, activeMission=null;
-let answerLocked=false;
-
-function createCard(m){
-  const {cert} = mCert(m);
-  const diff = m.diff; const xp = m.xp;
-  const card = document.createElement('article');
-  card.className='card new';
-  card.dataset.id = m.id; card.dataset.cert = cert;
-  const aws = (cert==="SAA-C03")?' aws':'';
-  card.innerHTML = `
-    <div class="meta">
-      <span class="chip cert sm${aws}">${cert}</span>
-      <span class="chip diff sm ${diff}"><span class="dot"></span>${cap(diff)}</span>
-      <span class="chip xp sm">+${xp} XP</span>
-    </div>
-    <div class="title">${m.title}</div>
-    <div class="desc">Acierta para puntuar y sube de nivel en el ranking.</div>
-    <div class="controls">
-      <button class="play">JUGAR</button>
-      <button class="kill" title="Quitar">✖</button>
-    </div>
-    <div class="ribbon">YEAH :)</div>`;
-  card.querySelector('.play').onclick=()=>openMission(card,m);
-  card.querySelector('.kill').onclick=()=>removeCard(card,false);
-  return card;
+/* ================= Badges / progreso ================= */
+let userXP=0,userLv=0;
+const badgeXP=by('#badgeXP'), badgeLv=by('#badgeLv'), userNameSpan=by('#userName');
+function pulseXP(){ badgeXP.classList.remove('pulse-xp'); void badgeXP.offsetWidth; badgeXP.classList.add('pulse-xp'); }
+function setBadges(xp, lvlOverride){
+  const nxp=Number(xp||0); const nlvl=(lvlOverride!=null)?Number(lvlOverride):Math.floor(nxp/1000);
+  if(nxp>userXP) pulseXP();
+  userXP=nxp; userLv=nlvl; badgeXP.textContent=`⚡ ${userXP}`; badgeLv.textContent=`Lv. ${userLv}`;
+}
+let weekly=Number(localStorage.getItem(WEEKLY_KEY)||"0");
+const goalTxt=by('#goalTxt'), goalBar=by('#goalBar');
+function updateGoal(v){
+  weekly=Math.min(WEEKLY_MAX,Math.max(0,Number(v)||0));
+  localStorage.setItem(WEEKLY_KEY,String(weekly));
+  goalTxt.textContent=`${weekly} / ${WEEKLY_MAX}`;
+  goalBar.style.width=`${(weekly/WEEKLY_MAX)*100}%`;
 }
 
-function openMission(card,m){
-  activeCard=card; activeMission=m;
-  const {cert} = mCert(m);
-  mMeta.innerHTML = `
-    <span class="chip cert sm ${cert==="SAA-C03"?'aws':''}">${cert}</span>
-    <span class="chip diff sm ${m.diff}"><span class="dot"></span>${cap(m.diff)}</span>
-    <span class="chip xp sm">+${m.xp} XP</span>`;
-  mInfo.textContent = "Selecciona la respuesta correcta";
-  mTitle.textContent = m.q.q;
-  mOpts.innerHTML='';
-  answerLocked=false;
+/* ================= Bancos / filtros ================= */
+const BANK_Q={"AZ-104":[], "AZ-305":[], "SAA-C03":[]};
+const BANK_M={"AZ-104":[], "AZ-305":[], "SAA-C03":[]};
+const remaining={"AZ-104":new Set(),"AZ-305":new Set(),"SAA-C03":new Set()};
+const inPlay   ={"AZ-104":new Set(),"AZ-305":new Set(),"SAA-C03":new Set()};
+const completed={"AZ-104":new Set(),"AZ-305":new Set(),"SAA-C03":new Set()};
+let filterCert="ALL", filterDiff="all", filterLen="all";
+const grid=by('#grid'), filtersCert=by('#filtersCert'), filtersDiff=by('#filtersDiff'), filtersLen=by('#filtersLen');
 
-  m.q.opts.forEach((t,idx)=>{
-    const el = document.createElement('label'); el.className='opt';
-    el.innerHTML=`<input type="radio" name="opt"> <span>${t}</span>`;
-    el.onclick=()=>{
-      if (answerLocked) return;
-      answerLocked=true;
-
-      const correct = (idx===m.q.ok);
-      Array.from(mOpts.children).forEach((o,i)=>{
-        o.classList.toggle('correct', i===m.q.ok);
-        if(i===idx && !correct) o.classList.add('wrong');
-      });
-      setTimeout(()=> correct? onWin(m) : onFail(), 350);
-    };
-    mOpts.appendChild(el);
-  });
-  modal.classList.add('show');
+/* ================= API usuario ================= */
+async function apiGetMe(){
+  const userId=localStorage.getItem('arenaUserId'); const userName=localStorage.getItem('arenaUserName')||'';
+  if(!userId) throw new Error('no uid');
+  const url=`${API_BASE}/user/me?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName)}`;
+  const r=await fetch(url,{mode:"cors",cache:"no-store"}); if(!r.ok) throw new Error('me '+r.status); return r.json();
 }
-mClose.onclick=()=>modal.classList.remove('show');
-modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('show');});
-
-function removeCard(card, consume){
-  const cert = card.dataset.cert, id = card.dataset.id;
-  inPlay[cert].delete(id);
-  if(consume){ remaining[cert].delete(id); completed[cert].add(id); }
-  if(consume && remaining[cert].size===0){ addXPLocal(500); showToast("🎖️ ¡Certificación completa! +500 XP"); }
-  const nxt = pickOne(cert);
-  card.classList.add('out');
-  setTimeout(()=>{
-    card.remove();
-    if(nxt){ const m = byId(nxt); if(m){ grid.appendChild(createCard(m)); inPlay[cert].add(nxt); } }
-    updateFilterCounts();
-  },350);
+async function apiPostXP(delta){
+  const userId=localStorage.getItem('arenaUserId'); const userName=localStorage.getItem('arenaUserName')||'';
+  const url=`${API_BASE}/user/xp?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName)}`;
+  const r=await fetch(url,{method:"POST",headers:{"Content-Type":"text/plain"},body:`delta=${encodeURIComponent(delta)}`,mode:"cors",cache:"no-store"}); if(!r.ok){ console.warn('xp fail', await r.text().catch(()=>'')); }
+}
+async function apiPostUserStat(result){
+  const userId=localStorage.getItem('arenaUserId'); const userName=localStorage.getItem('arenaUserName')||'';
+  if(!userId) return;
+  const url=`${API_BASE}/user/stat?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName)}`;
+  await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({result}),mode:"cors",cache:"no-store"}).catch(()=>{});
+}
+async function syncBadges(){
+  if(isLocked()){ setBadges(0,0); by('#greeter').textContent="👋 Hola, Invitado"; userNameSpan.textContent="GUEST"; return; }
+  const me=await apiGetMe().catch(()=>({name:localStorage.getItem('arenaUserName'),xp_total:0,level:0}));
+  const xp = me.xp_total ?? me.xp ?? 0;
+  const lvl = me.level ?? Math.floor(xp/1000);
+  const name = me.name || localStorage.getItem('arenaUserName') || 'User';
+  by('#greeter').textContent=`👋 Hola, ${name}!`; userNameSpan.textContent=name; setBadges(xp,lvl);
 }
 
-/* ====== API: registrar aciertos/fallos (pregunta) ====== */
-async function apiTrackAnswer(qid, wasCorrect){
-  if(!qid) return;
-  try{
-    const r = await fetch(`${API_BASE}/answer`, {
-      method: "POST",
-      headers: { "Content-Type":"application/json" },
-      body: JSON.stringify({ qid, correct: !!wasCorrect })
-    });
-    if(!r.ok) throw new Error("HTTP "+r.status);
-  }catch(_){
-    await fetch(`${API_BASE}/answer?qid=${encodeURIComponent(qid)}&correct=${wasCorrect?1:0}`, { method: "POST" }).catch(()=>{});
-  }
-}
-
-/* ====== API: sumar OK/KO por usuario ====== */
-async function apiPostUserStat(result){ // result: "ok" | "ko"
-  try{
-    const userId = localStorage.getItem('arenaUserId');
-    const userName = localStorage.getItem('arenaUserName') || 'guest';
-    const url = `${API_BASE}/user/stat?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName)}`;
-    await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type":"application/json" },
-      body: JSON.stringify({ result })   // el backend incrementa count_ok o count_ko
-    });
-  }catch(e){ console.warn("stat fail", e); }
-}
-
-async function onWin(m){
-  modal.classList.remove('show');
-  const card = activeCard;
-  card.classList.remove('fail'); card.classList.add('win');
-  card.querySelector('.ribbon').textContent = 'YEAH :)';
-
-  apiTrackAnswer(m.qid || m.id, true);
-  apiPostUserStat("ok");
-
-  await addXPAndSync(m.xp);
-  updateGoal(weekly+1);
-  flyToMe(`+${m.xp} XP`, card);
-
-  setTimeout(()=> removeCard(card,true), 1100);
-  if(weekly>=WEEKLY_MAX){ setTimeout(()=>showCongrats(), 700); }
-}
-function onFail(){
-  modal.classList.remove('show');
-  const card = activeCard;
-  card.classList.remove('win'); card.classList.add('fail');
-  card.querySelector('.ribbon').textContent = 'OH NO :(';
-
-  apiTrackAnswer(activeMission?.qid || activeMission?.id, false);
-  apiPostUserStat("ko");
-
-  setTimeout(()=> card.classList.remove('fail'), 2000);
-}
-
-/* ============== Ranking ============== */
-const rlist = document.getElementById('rlist');
-
-function renderMyRow() {
-  const row = document.createElement('div');
-  row.className = 'rrow me';
-  row.innerHTML = `<div>1</div>
-    <div class="rname" id="rankName">${userNameSpan.textContent}</div>
-    <div class="rlvl" id="rankLv">Lv ${userLv}</div>
-    <div class="rxp"  id="rankXP">${userXP}</div>`;
-  return row;
-}
-function renderLeaderboard(items) {
-  rlist.innerHTML = '';
-  if (!Array.isArray(items) || items.length === 0) { rlist.appendChild(renderMyRow()); return; }
-  let pos = 1;
-  for (const u of items) {
-    const me = (u.userId && u.userId === localStorage.getItem('arenaUserId'));
-    const xp = Number(u.xp_total ?? u.xp ?? 0);
-    const lvl = (u.level != null) ? Number(u.level) : Math.floor(xp/1000);
-
-    const row = document.createElement('div');
-    row.className = 'rrow' + (me ? ' me' : '');
-    row.innerHTML = `<div>${pos++}</div>
-      <div class="rname">${u.name ?? 'Anon'}</div>
-      <div class="rlvl">Lv ${lvl}</div>
-      <div class="rxp">${xp}</div>`;
+/* ================= Leaderboard (TOP10) ================= */
+const rlist=by('#rlist');
+function renderMyRow(){ const row=document.createElement('div'); row.className='rrow me'; row.innerHTML=`<div>1</div><div class="rname" id="rankName">${userNameSpan.textContent}</div><div class="rlvl" id="rankLv">Lv ${userLv}</div><div class="rxp" id="rankXP">${userXP}</div>`; return row; }
+function renderLeaderboard(items){
+  rlist.innerHTML=''; const arr=(Array.isArray(items)?items:[]).slice(0,10);
+  if(arr.length===0){ rlist.appendChild(renderMyRow()); return; }
+  let pos=1; const myId=localStorage.getItem('arenaUserId');
+  for(const u of arr){
+    const xp=Number(u.xp_total??u.xp??0); const lvl=(u.level!=null)?Number(u.level):Math.floor(xp/1000);
+    const isMe = myId && u.userId===myId;
+    if(isMe) setBadges(xp,lvl);
+    const row=document.createElement('div'); row.className='rrow'+(isMe?' me':'');
+    row.innerHTML=`<div>${pos++}</div><div class="rname">${u.name??'Anon'}</div><div class="rlvl">Lv ${lvl}</div><div class="rxp">${xp}</div>`;
     rlist.appendChild(row);
   }
 }
-async function fetchLeaderboardAndRender() {
-  try {
-    const res = await fetch(`${API_BASE}/leaderboard?limit=20`);
-    if (!res.ok) throw new Error('no leaderboard');
-    const data = await res.json();
-    renderLeaderboard(data.items || data);
-  } catch {
-    rlist.innerHTML = ''; rlist.appendChild(renderMyRow());
+async function fetchLeaderboardAndRender(){
+  try{ const res=await fetch(`${API_BASE}/leaderboard?limit=20`,{mode:"cors",cache:"no-store"}); if(!res.ok) throw 0; const data=await res.json(); renderLeaderboard(data.items||data); }
+  catch{ rlist.innerHTML=''; rlist.appendChild(renderMyRow()); }
+}
+
+/* ================= Historial (solo últimas 5) ================= */
+const HIST_KEY='arena.history';
+function pushHistory(entry){
+  try{
+    const arr=JSON.parse(localStorage.getItem(HIST_KEY)||'[]');
+    arr.unshift(entry);
+    localStorage.setItem(HIST_KEY, JSON.stringify(arr.slice(0,5))); // guarda solo 5
+    renderHistory();
+  }catch{}
+}
+function renderHistory(){
+  const box=by('#history'); box.innerHTML='';
+  let arr=[]; try{ arr=JSON.parse(localStorage.getItem(HIST_KEY)||'[]'); }catch{}
+  if(!Array.isArray(arr)||arr.length===0){ box.innerHTML='<div style="color:#9fb2ff">Aún no hay misiones.</div>'; return; }
+  for(const it of arr.slice(0,5)){
+    const row=document.createElement('div'); row.className='hitem';
+    row.innerHTML=`<div class="hleft"><span class="chip sm ${it.cert==='SAA-C03'?'cert aws':'cert'}">${it.cert}</span>
+      <span class="chip sm diff ${it.diff}"><span class="dot"></span>${cap(it.diff)}</span>
+      <span class="chip sm">• ${it.len}P</span>
+      <span style="color:#9fb2ff">${new Date(it.ts).toLocaleTimeString()}</span>
+      </div>
+      <div class="hxp">+${it.xp} XP</div>`;
+    box.appendChild(row);
   }
 }
 
-/* ============== UI utils ============== */
-function cap(s){return s ? s[0].toUpperCase()+s.slice(1) : s}
-function pulse(el){el.animate([{transform:'scale(1)'},{transform:'scale(1.08)'},{transform:'scale(1)'}],{duration:420});}
-const toast = document.getElementById('toast');
-function showToast(t){ toast.textContent=t; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1100); }
-const fly = document.getElementById('fly');
-function flyToMe(text, fromCard){
-  const meRow = rlist.querySelector('.rrow.me'); if(!meRow) return;
-  const start = fromCard.getBoundingClientRect(); const end = meRow.getBoundingClientRect();
-  fly.textContent = text; fly.style.display='block';
-  fly.style.left = (start.left+start.width/2)+'px'; fly.style.top  = (start.top)+'px';
-  fly.animate([{transform:'translate(-50%,0)', opacity:1},
-    {transform:`translate(${end.left - (start.left+start.width/2)}px, ${end.top - start.top}px)`, opacity:0.6}],
-    {duration:1200, easing:'cubic-bezier(.2,.9,.2,1)'}).onfinish=()=>{ fly.style.display='none'; fetchLeaderboardAndRender(); };
-}
-
-/* ====== API usuario ====== */
-async function apiGetMe(userId, userName){
-  const url = `${API_BASE}/user/me?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName||"guest")}`;
-  const r = await fetch(url);
-  if(!r.ok) throw new Error("GET /user/me "+r.status);
-  return await r.json();
-}
-async function apiPostXP(delta){
-  const userId = localStorage.getItem('arenaUserId');
-  const userName = localStorage.getItem('arenaUserName');
-  const url = `${API_BASE}/user/xp?userId=${encodeURIComponent(userId)}&name=${encodeURIComponent(userName||"guest")}`;
-  const r = await fetch(url, { method:"POST", headers:{ "Content-Type":"text/plain" }, body:`delta=${encodeURIComponent(delta)}` });
-  if(!r.ok){
-    const t = await r.text().catch(()=> ""); console.warn("[/user/xp] HTTP", r.status, t);
-  }
-}
-
-async function syncBadgesFromBackend(){
-  const uid = localStorage.getItem('arenaUserId');
-  const storedName = localStorage.getItem('arenaUserName');
-  const me = await apiGetMe(uid, storedName);
-
-  const greeter = document.getElementById('greeter');
-  greeter.textContent = `👋 Hola, ${me.name || storedName}!`;
-  userNameSpan.textContent = me.name || storedName;
-
-  userXP = Number(me.xp || 0);
-  userLv = Number(me.level != null ? me.level : Math.floor(userXP/1000));
-  badgeXP.textContent = `⚡ ${userXP}`;
-  badgeLv.textContent = `Lv. ${userLv}`;
-}
-
-async function addXPAndSync(delta){
-  await apiPostXP(delta);
-  await syncBadgesFromBackend();
-  await fetchLeaderboardAndRender();
-}
-
-/* ====== Carga preguntas ====== */
+/* ================= Preguntas / XP ================= */
 function mapDiff(d){ const s=String(d||"").toLowerCase(); if(s.startsWith("easy")||s==="facil")return"facil"; if(s.startsWith("med")||s==="medio")return"medio"; return"dificil"; }
-function xpFromDiff(diff){ return diff==="facil"?10: diff==="medio"?22:36; }
-async function loadFromAPI(certValues, bucketKey, limit=50){
-  const certList = Array.isArray(certValues) ? certValues : [certValues];
-  let bank = []; let usedCert = certList[0];
-  for (const cert of certList){
+function xpBase(diff){ return diff==="facil"?10: diff==="medio"?20:35; }
+function bonusLen(len){ return (len===1)?0:(len===2)?8:18; }
+function bonusMastery(diff,len){ if(len<=1) return 0; if(diff==="medio") return (len-1)*5; if(diff==="dificil") return (len-1)*10; return 0; }
+function missionXP(diff,len){ return xpBase(diff)+bonusLen(len)+bonusMastery(diff,len); }
+
+function looksLikeAnswerTitle(title, opts){
+  const t = (title||'').toString().trim().toLowerCase();
+  if(!t) return true;
+  if(t.includes('fixed')) return true;
+  for(const o of (opts||[])){ const s=safeStr(o).trim().toLowerCase(); if(s && s===t) return true; }
+  return t.length<4;
+}
+function cleanTitle(title,opts,okIdx, fallback){
+  const base = safeStr(title);
+  if(looksLikeAnswerTitle(base, opts)) return fallback || "Pregunta de la certificación";
+  return base;
+}
+
+async function loadQuestions(certValues,bucketKey,limit=400){
+  const certList=Array.isArray(certValues)?certValues:[certValues]; let out=[];
+  for(const cert of certList){
     try{
-      const url = `${API_BASE}/questions?cert=${encodeURIComponent(cert)}&limit=${limit}&admin=1`;
-      const res = await fetch(url);
-      if(!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      const items = Array.isArray(data.items) ? data.items : data;
-      bank = (items||[])
-        .filter(it => it && (it.question || it.title) && Array.isArray(it.options))
-        .map(it => {
-          const diff = mapDiff(it.difficulty);
-          const opts = it.options.map(o => (o && typeof o === "object" && "text" in o) ? String(o.text ?? "") : String(o ?? ""));
+      const url=`${API_BASE}/questions?cert=${encodeURIComponent(cert)}&limit=${limit}&admin=1`;
+      const res=await fetch(url,{mode:"cors",cache:"no-store"}); if(!res.ok) throw new Error(res.status);
+      const data=await res.json(); const items=Array.isArray(data.items)?data.items:data;
+      out=(items||[])
+        .filter(it=>it && (it.question || it.title) && Array.isArray(it.options))
+        .map(it=>{
+          const diff=mapDiff(it.difficulty);
+          const rawOpts = it.options.map(o => (o && typeof o === "object" && "text" in o) ? o.text : o);
           let okIndex = it.options.findIndex(o => o && typeof o === "object" && o.is_correct === true);
           if (okIndex < 0) okIndex = 0;
+          // barajar y ajustar correcto
+          const paired = rawOpts.map((v,i)=>({t:safeStr(v), ok:(i===okIndex)}));
+          shuffle(paired);
+          const opts = paired.map(p=>p.t);
+          const newOk = paired.findIndex(p=>p.ok);
+
+          const fallback = safeStr(it.question) || safeStr(it.title) || "Pregunta";
+          const goodTitle=cleanTitle(it.title||it.concept||it.domain, opts, newOk, fallback);
+
           return {
             id: it.qid || `${bucketKey.toLowerCase()}_${Math.random().toString(36).slice(2,9)}`,
             qid: it.qid || null,
-            title: it.title || it.concept || it.domain || `Pregunta ${bucketKey}`,
+            cert: bucketKey,
             diff,
-            xp: xpFromDiff(diff),
-            q: { q: it.question || it.title, opts, ok: okIndex }
+            title: goodTitle,
+            q: { q: safeStr(it.question) || goodTitle, opts, ok:newOk }
           };
         });
-      usedCert = cert;
-      if (bank.length > 0) break;
-    }catch(e){
-      console.warn(`[LOAD ${bucketKey}] error con cert=${cert}:`, e);
-    }
+      if(out.length) break;
+    }catch(e){ console.warn(`[LOAD ${bucketKey}]`, e); }
   }
-  BANK[bucketKey] = bank;
-  remaining[bucketKey] = new Set(BANK[bucketKey].map(x => x.id));
-  inPlay[bucketKey] = new Set();
-  completed[bucketKey] = new Set();
-  updateFilterCounts();
-  if (filterCert === "ALL" || filterCert === bucketKey) buildGrid();
-  showToast(`${bucketKey} cargado (${bank.length})${bank.length===0 ? ' – sin resultados' : ''}`);
+  BANK_Q[bucketKey]=out;
 }
 
-/* ===== Auto-Refresh ===== */
-const LIVE_MS = 1500;
-let liveTimer = null;
-async function liveTick() {
-  try { await syncBadgesFromBackend(); await fetchLeaderboardAndRender(); } catch {}
-}
-function startLiveRefresh() {
-  if (liveTimer) clearInterval(liveTimer);
-  liveTick();
-  liveTimer = setInterval(liveTick, LIVE_MS);
-}
-window.addEventListener('focus', liveTick);
+/* ================= Misiones ================= */
+function groupIntoMissions(bucketKey){
+  const src=BANK_Q[bucketKey].slice();
+  for(let i=src.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [src[i],src[j]]=[src[j],src[i]]; }
 
-/* ===== INIT ===== */
-const rulesBtn = document.getElementById('toggleRules');
-const rulesBody = document.getElementById('rulesBody');
-rulesBtn.onclick=()=>{
-  rulesBody.classList.toggle('show');
-  rulesBtn.textContent = rulesBody.classList.contains('show') ? "📖 Ocultar Reglas" : "📖 Ver Reglas del juego";
-  if(rulesBody.classList.contains('show')) rulesBody.scrollIntoView({behavior:'smooth',block:'start'});
-};
-rulesBody.classList.remove('show');
-rulesBtn.textContent = "📖 Ver Reglas del juego";
+  const missions=[]; let i=0; const rank={facil:1,medio:2,dificil:3};
+  while(i<src.length){
+    const len=Math.min(1+Math.floor(Math.random()*3), src.length-i);
+    const qs=src.slice(i,i+len); i+=len;
+    const diff=qs.map(q=>q.diff).sort((a,b)=>rank[b]-rank[a])[0]||"medio";
+    const xp=missionXP(diff, qs.length);
+    const title=qs[0]?.title||`Misión ${bucketKey}`;
+    missions.push({
+      id:`m_${bucketKey}_${Math.random().toString(36).slice(2,9)}`,
+      cert:bucketKey,
+      diff,
+      xp,
+      len:qs.length,
+      // FIX: usar el texto real de la pregunta y no el objeto completo
+      qs:qs.map(q=>({
+        id:q.id,
+        qid:q.qid,
+        title:q.title,
+        question:q.q.q,            // <— texto
+        opts:q.q.opts,             // <— opciones
+        ok:q.q.ok                  // <— índice correcto
+      }))
+    });
+  }
+  BANK_M[bucketKey]=missions;
+  remaining[bucketKey]=new Set(missions.map(m=>m.id));
+  inPlay[bucketKey].clear(); completed[bucketKey].clear();
+}
 
-filters.addEventListener('click', e=>{
-  const b = e.target.closest('.filter'); if(!b) return;
-  document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active'); filterCert = b.dataset.cert; buildGrid();
+/* ================= Tarjetas ================= */
+function createCard(m){
+  const aws=(m.cert==="SAA-C03")?' aws':''; const isLock=isLocked();
+  const el=document.createElement('article'); el.className='card new'; el.dataset.id=m.id; el.dataset.cert=m.cert;
+  const frase=(m.diff==='facil')?"🧩 Reto de calentamiento.":(m.diff==='medio')?"⚡ Pon a prueba tu conocimiento.":"🔥 Desafío avanzado.";
+  el.innerHTML=`
+    <div class="meta">
+      <span class="chip cert sm${aws}">${m.cert}</span>
+      <span class="chip diff sm ${m.diff}"><span class="dot"></span>${cap(m.diff)}</span>
+      <span class="chip len sm">• ${m.len}P</span>
+      <span class="chip xp sm">+${m.xp} XP</span>
+    </div>
+    <div class="title">${m.qs[0].title || 'Misión'}</div>
+    <div class="desc">${frase}</div>
+    <div class="controls">
+      <button class="${isLock?'play lock':'play'}" data-action="play">${isLock?'🔒 LOGIN':'JUGAR'}</button>
+      <button class="kill" data-action="kill" title="Quitar">✖</button>
+    </div>
+    <div class="ribbon">YEAH :)</div>`;
+  return el;
+}
+
+/* ================= Delegación grid ================= */
+grid.addEventListener('click', (e)=>{
+  const btn=e.target.closest('button'); if(!btn) return;
+  const card=btn.closest('.card'); if(!card) return;
+  if(btn.dataset.action==='kill'){ removeCard(card,false); return; }
+  if(btn.dataset.action==='play'){
+    if(isLocked()){ showToast("🔒 Inicia sesión para jugar"); try{ location.href="/login/login.html"; }catch{} return; }
+    const m=findMissionById(card.dataset.id); if(!m){ showToast("No se pudo abrir la misión"); return; }
+    openMission(card,m);
+  }
 });
-document.getElementById('btnReset').onclick=()=>{ updateGoal(0); showToast('🔄 Progreso semanal a 0'); };
+function findMissionById(mid){ for(const c of Object.keys(BANK_M)){ const f=BANK_M[c].find(x=>x.id===mid); if(f) return f; } return null; }
 
-function init(){
-  document.getElementById('greeter').animate([{filter:'brightness(1)'},{filter:'brightness(1.4)'},{filter:'brightness(1)'}],{duration:900});
-  updateGoal(weekly);
-  updateFilterCounts();
-  buildGrid();
-  fetchLeaderboardAndRender();
+/* ================= Modal ================= */
+const modal=by('#modal'), mClose=by('#mClose'), mMark=by('#mMark');
+const mMeta=by('#mMeta'), mInfo=by('#mInfo'), mTitle=by('#mTitle'), mOpts=by('#mOpts');
+let activeCard=null, activeMission=null, qIndex=0, locked=false;
+
+function markKey(){ const uid=localStorage.getItem('arenaUserId')||'guest'; return `arena.marked.${uid}`; }
+function readMarked(){ try{ return new Set(JSON.parse(localStorage.getItem(markKey())||'[]')); }catch{return new Set();} }
+function writeMarked(set){ localStorage.setItem(markKey(), JSON.stringify(Array.from(set))); }
+function updateMarkBtn(){ const cur=activeMission?.qs?.[qIndex]; const id=cur?.qid||cur?.id; mMark.textContent=(id && readMarked().has(id))?"★ MARCADA":"☆ MARCAR"; }
+mMark.onclick=()=>{ const cur=activeMission?.qs?.[qIndex]; const id=cur?.qid||cur?.id; if(!id){ showToast("Sin identificador"); return; } const set=readMarked(); if(set.has(id)){ set.delete(id); showToast("🔖 Desmarcada"); } else { set.add(id); showToast("⭐ Marcada"); } writeMarked(set); updateMarkBtn(); };
+
+function openMission(card,m){
+  activeCard=card; activeMission=m; qIndex=0; locked=false;
+  mMeta.innerHTML=`
+    <span class="chip cert sm ${m.cert==="SAA-C03"?'aws':''}">${m.cert}</span>
+    <span class="chip diff sm ${m.diff}"><span class="dot"></span>${cap(m.diff)}</span>
+    <span class="chip len sm">• ${m.len}P</span>
+    <span class="chip xp sm">+${m.xp} XP</span>`;
+  renderQuestion(); modal.classList.add('show');
+}
+function renderQuestion(){
+  const cur=activeMission.qs[qIndex];
+  mInfo.textContent=`Pregunta ${qIndex+1} de ${activeMission.len}`;
+  mTitle.textContent=safeStr(cur.question)||safeStr(cur.title)||"…";
+  mOpts.innerHTML=''; updateMarkBtn();
+  cur.opts.forEach((t,idx)=>{
+    const el=document.createElement('label'); el.className='opt'; el.innerHTML=`<input type="radio" name="opt${qIndex}"> <span>${safeStr(t)}</span>`;
+    el.onclick=()=>{
+      if(locked) return; locked=true;
+      const correct=(idx===cur.ok);
+      Array.from(mOpts.children).forEach((o,i)=>{ o.classList.toggle('correct',i===cur.ok); if(i===idx && !correct) o.classList.add('wrong'); });
+      apiTrackAnswer(cur.qid||cur.id, correct); apiPostUserStat(correct?"ok":"ko");
+      setTimeout(()=>{ locked=false; if(correct){ qIndex++; if(qIndex<activeMission.len){ renderQuestion(); } else { onMissionWin(); } } else { onMissionFail(); } }, 320);
+    };
+    mOpts.appendChild(el);
+  });
+}
+mClose.onclick=()=>modal.classList.remove('show'); modal.addEventListener('click',e=>{if(e.target===modal) modal.classList.remove('show');});
+async function apiTrackAnswer(qid,wasCorrect){
+  if(!qid) return;
+  try{ const r=await fetch(`${API_BASE}/answer`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({qid,correct:!!wasCorrect}),mode:"cors",cache:"no-store"}); if(!r.ok) throw 0; }catch{ await fetch(`${API_BASE}/answer?qid=${encodeURIComponent(qid)}&correct=${wasCorrect?1:0}`,{method:"POST"}).catch(()=>{}); }
 }
 
-/* ARRANQUE */
-(async () => {
-  await syncBadgesFromBackend();
+/* ================= Éxito / fallo ================= */
+const rlistEl=by('#rlist');
+function flyToMe(text,fromCard){
+  const meRow=rlistEl.querySelector('.rrow.me'); if(!meRow) return;
+  const fly=by('#fly'); const s=fromCard.getBoundingClientRect(); const e=meRow.getBoundingClientRect();
+  fly.textContent=text; fly.style.display='block'; fly.style.left=(s.left+s.width/2)+'px'; fly.style.top=(s.top)+'px';
+  fly.animate([{transform:'translate(-50%,0)',opacity:1},{transform:`translate(${e.left-(s.left+s.width/2)}px,${e.top-s.top}px)`,opacity:0.6}],{duration:1200,easing:'cubic-bezier(.2,.9,.2,1)'}).onfinish=()=>{ fly.style.display='none'; fetchLeaderboardAndRender(); };
+}
+async function onMissionWin(){
+  modal.classList.remove('show');
+  const card=activeCard; card.classList.remove('fail'); card.classList.add('win'); card.querySelector('.ribbon').textContent='YEAH :)';
+  await apiPostXP(activeMission.xp); await syncBadges();
+  updateGoal(weekly+1);
+  pushHistory({ts:Date.now(), cert:activeMission.cert, diff:activeMission.diff, len:activeMission.len, xp:activeMission.xp});
+  flyToMe(`+${activeMission.xp} XP`, card);
+  setTimeout(()=> removeCard(card,true),1100);
+
+  // Bonus semanal +120 XP cuando alcanzas 30/30
+  if(weekly>=WEEKLY_MAX){
+    await apiPostXP(120); await syncBadges();
+    setTimeout(()=>showCongrats(),500);
+  }
+}
+function onMissionFail(){ modal.classList.remove('show'); const card=activeCard; card.classList.remove('win'); card.classList.add('fail'); card.querySelector('.ribbon').textContent='OH NO :('; setTimeout(()=>card.classList.remove('fail'),1800); }
+
+/* ================= Reemplazos / filtros ================= */
+function availableIds(cert){
+  let pool=Array.from(remaining[cert]).filter(id=>!inPlay[cert].has(id));
+  if(filterDiff!=='all'){ pool=pool.filter(id=>{ const m=BANK_M[cert].find(x=>x.id===id); return m && m.diff===filterDiff; }); }
+  if(filterLen!=='all'){ const L=Number(filterLen); pool=pool.filter(id=>{ const m=BANK_M[cert].find(x=>x.id===id); return m && m.len===L; }); }
+  return pool;
+}
+function pickOne(cert){ const pool=availableIds(cert); if(pool.length===0) return null; return pool[Math.floor(Math.random()*pool.length)]; }
+function removeCard(card,consume){
+  const cert=card.dataset.cert,id=card.dataset.id; inPlay[cert].delete(id);
+  if(consume){ remaining[cert].delete(id); completed[cert].add(id); if(remaining[cert].size===0){ apiPostXP(500); syncBadges(); showToast("🎖️ ¡Certificación completa! +500 XP"); } }
+  const nxt=pickOne(cert); card.classList.add('out');
+  setTimeout(()=>{ card.remove(); if(nxt){ const m=BANK_M[cert].find(x=>x.id===nxt); if(m){ grid.appendChild(createCard(m)); inPlay[cert].add(nxt);} } updateCounts(); },350);
+}
+
+/* ===== Contadores ===== */
+function updateCounts(){
+  const total = (BANK_Q["AZ-104"]?.length||0) + (BANK_Q["AZ-305"]?.length||0) + (BANK_Q["SAA-C03"]?.length||0);
+  const allBtn = filtersCert.querySelector('[data-cert="ALL"]'); if(allBtn) allBtn.setAttribute('data-count', total);
+  $all('#filtersCert .filter').forEach(btn=>{
+    const c=btn.dataset.cert; if(c==="ALL") return;
+    btn.setAttribute('data-count', BANK_Q[c]?.length ?? 0);
+  });
+}
+
+/* ================= Grid ================= */
+function buildGrid(){
+  grid.innerHTML=''; for(const c of Object.keys(inPlay)) inPlay[c].clear();
+  const addCard=m=>{ const el=createCard(m); grid.appendChild(el); inPlay[m.cert].add(m.id); };
+  if(filterCert==="ALL"){
+    const order=Object.keys(BANK_M); let slots=GRID_SIZE, guard=0, idx=0;
+    while(slots>0 && guard<400){ guard++; const c=order[idx%order.length]; idx++; const nextId=pickOne(c); if(!nextId) continue; const m=BANK_M[c].find(x=>x.id===nextId); if(!m) continue; addCard(m); slots--; }
+  }else{
+    const ids=availableIds(filterCert).slice(0, GRID_SIZE);
+    ids.forEach(id=>{ const m=BANK_M[filterCert].find(x=>x.id===id); if(m) addCard(m); });
+  }
+  updateCounts();
+}
+
+/* ================= Reglas / eventos ================= */
+const rulesBtn=by('#toggleRules'), rulesBody=by('#rulesBody');
+rulesBtn.onclick=()=>{ rulesBody.classList.toggle('show'); rulesBtn.textContent = rulesBody.classList.contains('show') ? "📖 Ocultar Reglas" : "📖 Ver Reglas del juego"; };
+const cg=by('#congrats'), cgOk=by('#cgOk'); function showCongrats(){ cg.classList.add('show'); } cgOk.onclick=()=>{ cg.classList.remove('show'); updateGoal(0); };
+
+by('#btnReset').onclick=()=>{ updateGoal(0); showToast('🔄 Progreso semanal a 0'); };
+
+/* Filtros (cada grupo recuerda su selección) */
+filtersCert.addEventListener('click',e=>{ const b=e.target.closest('.filter'); if(!b) return; $all('.filter',filtersCert).forEach(x=>x.classList.remove('active')); b.classList.add('active'); filterCert=b.dataset.cert; buildGrid(); });
+filtersDiff.addEventListener('click',e=>{ const b=e.target.closest('.pill'); if(!b) return; $all('.pill',filtersDiff).forEach(x=>x.classList.remove('active')); b.classList.add('active'); filterDiff=b.dataset.diff; buildGrid(); });
+filtersLen.addEventListener('click',e=>{ const b=e.target.closest('.pill'); if(!b) return; $all('.pill',filtersLen).forEach(x=>x.classList.remove('active')); b.classList.add('active'); filterLen=b.dataset.len; buildGrid(); });
+
+/* ================= Live ================= */
+let liveTimer=null; async function liveTick(){ try{ await syncBadges(); await fetchLeaderboardAndRender(); refreshPlayButtonsText(); }catch{} }
+function startLiveRefresh(){ if(liveTimer) clearInterval(liveTimer); liveTick(); liveTimer=setInterval(liveTick, LIVE_MS); }
+window.addEventListener('focus', liveTick);
+function refreshPlayButtonsText(){ if(!isLocked()){ $all('#grid .card .play').forEach(b=>{ b.classList.remove('lock'); b.textContent='JUGAR'; }); } else { $all('#grid .card .play').forEach(b=>{ b.classList.add('lock'); b.textContent='🔒 LOGIN'; }); }}
+
+/* ================= INIT ================= */
+async function init(){
+  updateGoal(weekly); rulesBody.classList.remove('show'); rulesBtn.textContent="📖 Ver Reglas del juego";
+  ensureArenaIdentity(); await syncBadges(); await fetchLeaderboardAndRender(); renderHistory();
   await Promise.all([
-    loadFromAPI("AZ-104", "AZ-104", 175),
-    loadFromAPI("AZ-305", "AZ-305", 175),
-    loadFromAPI(["SAA-C03","AWS-SAA"], "SAA-C03", 175)
+    loadQuestions("AZ-104","AZ-104",500),
+    loadQuestions("AZ-305","AZ-305",500),
+    loadQuestions(["SAA-C03","AWS-SAA"],"SAA-C03",500)
   ]);
-  init();
+  ["AZ-104","AZ-305","SAA-C03"].forEach(groupIntoMissions);
+  buildGrid();
   startLiveRefresh();
-})();
+}
+init();
 </script>
 </body>
 </html>

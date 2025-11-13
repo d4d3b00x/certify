@@ -1,0 +1,2904 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-LPGIRMBPZZFXTN6JECY9COZQ"
+          },
+          "question": {
+            "S": "¿Qué trío recomiendas para admins?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "Zero Trust base"
+          },
+          "concept": {
+            "S": "Admins con menor privilegio"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Owner permanente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LDAP sin TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "PAW + Conditional Access + PIM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VPN abierta"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "zero-trust",
+              "governance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-LPGIRMBPZZFXTN6JECY9COZQ"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-LPGIRMBPZZFXTN6JECY9COZQ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-J1354TOSFL6S43RDNFK8VQJY"
+          },
+          "question": {
+            "S": "¿Qué política de APIM cachea respuestas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "APIM cache"
+          },
+          "concept": {
+            "S": "Reducir latencia"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ip-filter"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "set-header"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "cache-lookup/cache-store"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "set-body"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "cache"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-J1354TOSFL6S43RDNFK8VQJY"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-J1354TOSFL6S43RDNFK8VQJY"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-91NKU7CBIT6K35K09L6XWQSU"
+          },
+          "question": {
+            "S": "¿Cómo pruebas DR sin afectar producción?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "ASR pruebas"
+          },
+          "concept": {
+            "S": "Validación sin impacto"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Restaurar manual todo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ASR test failover en red aislada"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Apagar producción"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "asr",
+              "tests"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-91NKU7CBIT6K35K09L6XWQSU"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-91NKU7CBIT6K35K09L6XWQSU"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-8VHAL7WGRBGAYY42ZRDQ88J8"
+          },
+          "question": {
+            "S": "¿Qué formato habilita upserts y auditoría en lago?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "Delta Lake"
+          },
+          "concept": {
+            "S": "ACID y time-travel"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "JSON plano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CSV"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "TXT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Delta Lake"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "delta",
+              "adls"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-8VHAL7WGRBGAYY42ZRDQ88J8"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-8VHAL7WGRBGAYY42ZRDQ88J8"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-L4USI4UC0W36PB3SO0LJWXQJ"
+          },
+          "question": {
+            "S": "¿Qué componente protege contra OWASP Top 10?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "WAF"
+          },
+          "concept": {
+            "S": "Protección OWASP"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NACL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "WAF (AppGW/Front Door)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "waf",
+              "owasp"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-L4USI4UC0W36PB3SO0LJWXQJ"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-L4USI4UC0W36PB3SO0LJWXQJ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-2PD8ESI7DSH7VL68R1Y8JEKX"
+          },
+          "question": {
+            "S": "¿Qué diseño tolera caída de una zona?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "Zonas de disponibilidad"
+          },
+          "concept": {
+            "S": "HA regional"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Tags"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RG único"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Zonas de disponibilidad"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "availability",
+              "zones"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-2PD8ESI7DSH7VL68R1Y8JEKX"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-2PD8ESI7DSH7VL68R1Y8JEKX"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-0YAJZGMLC55JI9WKB2MAGQ6F"
+          },
+          "question": {
+            "S": "¿Qué patrón recomiendas para PaaS privado?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "Private Link"
+          },
+          "concept": {
+            "S": "Consumo privado PaaS"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DNAT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CDN"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Public IP + NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Private Endpoint + Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "private-link",
+              "dns"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-0YAJZGMLC55JI9WKB2MAGQ6F"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-0YAJZGMLC55JI9WKB2MAGQ6F"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-VT2G0NTCB2PXDN95P521867D"
+          },
+          "question": {
+            "S": "Para fan-out de eventos, ¿qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "Event Grid"
+          },
+          "concept": {
+            "S": "Eventos de sistema"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Event Grid"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Webhook directo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Queue Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Service Bus"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "events",
+              "grid"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-VT2G0NTCB2PXDN95P521867D"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-VT2G0NTCB2PXDN95P521867D"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-VPQL11JJVSP416YMDP8UERQ6"
+          },
+          "question": {
+            "S": "¿Cómo controlas claves de Storage?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "Key Management"
+          },
+          "concept": {
+            "S": "Control de cifrado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CMK en Key Vault"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "TLS off"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Sin cifrado"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Microsoft-managed keys solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cmk",
+              "kv"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-VPQL11JJVSP416YMDP8UERQ6"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-VPQL11JJVSP416YMDP8UERQ6"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-YYMEMTSUMFPDJZHEUIMUZWOI"
+          },
+          "question": {
+            "S": "¿Qué centraliza el estado de backups?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "Backup Center"
+          },
+          "concept": {
+            "S": "Gobierno de copias"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Resource Graph"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Backup Center"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Budgets"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Migrate"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "backup-center",
+              "governance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-YYMEMTSUMFPDJZHEUIMUZWOI"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-YYMEMTSUMFPDJZHEUIMUZWOI"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-KE5BDMBY2F4WU7GPCRVNYFX9"
+          },
+          "question": {
+            "S": "¿Qué trío recomiendas para admins?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "Zero Trust base"
+          },
+          "concept": {
+            "S": "Admins con menor privilegio"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "PAW + Conditional Access + PIM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Owner permanente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VPN abierta"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LDAP sin TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "zero-trust",
+              "governance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-KE5BDMBY2F4WU7GPCRVNYFX9"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-KE5BDMBY2F4WU7GPCRVNYFX9"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-OUKBGWEGCG2IHUTB53TY4LT1"
+          },
+          "question": {
+            "S": "¿Qué política de APIM cachea respuestas?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "APIM cache"
+          },
+          "concept": {
+            "S": "Reducir latencia"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "cache-lookup/cache-store"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "set-header"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ip-filter"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "set-body"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "cache"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-OUKBGWEGCG2IHUTB53TY4LT1"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-OUKBGWEGCG2IHUTB53TY4LT1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-IK05HU2ZVGOS85G45G2ZGKXK"
+          },
+          "question": {
+            "S": "¿Cómo pruebas DR sin afectar producción?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "ASR pruebas"
+          },
+          "concept": {
+            "S": "Validación sin impacto"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "ASR test failover en red aislada"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Apagar producción"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Restaurar manual todo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Nada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "asr",
+              "tests"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-IK05HU2ZVGOS85G45G2ZGKXK"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-IK05HU2ZVGOS85G45G2ZGKXK"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-0DKI0Y5S27PNX3MCQJW0JQJD"
+          },
+          "question": {
+            "S": "¿Qué formato habilita upserts y auditoría en lago?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "Delta Lake"
+          },
+          "concept": {
+            "S": "ACID y time-travel"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "TXT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Delta Lake"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "JSON plano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CSV"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "delta",
+              "adls"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-0DKI0Y5S27PNX3MCQJW0JQJD"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-0DKI0Y5S27PNX3MCQJW0JQJD"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-85KES24Y52YGGXU6PHZNOA96"
+          },
+          "question": {
+            "S": "¿Qué componente protege contra OWASP Top 10?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "WAF"
+          },
+          "concept": {
+            "S": "Protección OWASP"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "WAF (AppGW/Front Door)"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NACL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Queue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "waf",
+              "owasp"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-85KES24Y52YGGXU6PHZNOA96"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-85KES24Y52YGGXU6PHZNOA96"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-9I6RF7PERQD1XPKZ181B7497"
+          },
+          "question": {
+            "S": "¿Qué diseño tolera caída de una zona?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "Zonas de disponibilidad"
+          },
+          "concept": {
+            "S": "HA regional"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RG único"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Zonas de disponibilidad"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Tags"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "availability",
+              "zones"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-9I6RF7PERQD1XPKZ181B7497"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-9I6RF7PERQD1XPKZ181B7497"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-IJIMI6N0CA3BBE4QF2K66Q9L"
+          },
+          "question": {
+            "S": "¿Qué patrón recomiendas para PaaS privado?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "Private Link"
+          },
+          "concept": {
+            "S": "Consumo privado PaaS"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CDN"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Public IP + NSG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "DNAT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Private Endpoint + Private DNS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "private-link",
+              "dns"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-IJIMI6N0CA3BBE4QF2K66Q9L"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-IJIMI6N0CA3BBE4QF2K66Q9L"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-AP3H2BNZQQS0VO8HCEQ8R6A8"
+          },
+          "question": {
+            "S": "Para fan-out de eventos, ¿qué eliges?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "Event Grid"
+          },
+          "concept": {
+            "S": "Eventos de sistema"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Webhook directo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Queue Storage"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Event Grid"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Service Bus"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "events",
+              "grid"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-AP3H2BNZQQS0VO8HCEQ8R6A8"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-AP3H2BNZQQS0VO8HCEQ8R6A8"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-01QS6EHWWH75EMGXXBBHG4UF"
+          },
+          "question": {
+            "S": "¿Cómo controlas claves de Storage?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "Key Management"
+          },
+          "concept": {
+            "S": "Control de cifrado"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Microsoft-managed keys solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CMK en Key Vault"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "TLS off"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Sin cifrado"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cmk",
+              "kv"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-01QS6EHWWH75EMGXXBBHG4UF"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-01QS6EHWWH75EMGXXBBHG4UF"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-STM2TEMPCXXNOZR6TAFM8VJA"
+          },
+          "question": {
+            "S": "¿Qué centraliza el estado de backups?"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "Backup Center"
+          },
+          "concept": {
+            "S": "Gobierno de copias"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Budgets"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Resource Graph"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Migrate"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Backup Center"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "backup-center",
+              "governance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-STM2TEMPCXXNOZR6TAFM8VJA"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-STM2TEMPCXXNOZR6TAFM8VJA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-JN6QHEB7F3FWTAYCBDDHPOVP"
+          },
+          "question": {
+            "S": "¿Qué centraliza el estado de backups? (var 1)"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "Backup Center"
+          },
+          "concept": {
+            "S": "Gobierno de copias"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Azure Migrate"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Budgets"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Backup Center"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Resource Graph"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "backup-center",
+              "governance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-JN6QHEB7F3FWTAYCBDDHPOVP"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-JN6QHEB7F3FWTAYCBDDHPOVP"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-EC3COG4LKGFTK0JTFOQVVP5X"
+          },
+          "question": {
+            "S": "¿Qué formato habilita upserts y auditoría en lago? (var 2)"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "Delta Lake"
+          },
+          "concept": {
+            "S": "ACID y time-travel"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "JSON plano"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CSV"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Delta Lake"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "TXT"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "delta",
+              "adls"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-EC3COG4LKGFTK0JTFOQVVP5X"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-EC3COG4LKGFTK0JTFOQVVP5X"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-RFDRSEL931XP7ERPJ8SN6UK3"
+          },
+          "question": {
+            "S": "¿Qué política de APIM cachea respuestas? (var 3)"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Data & Integration"
+          },
+          "title": {
+            "S": "APIM cache"
+          },
+          "concept": {
+            "S": "Reducir latencia"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "set-header"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "cache-lookup/cache-store"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ip-filter"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "set-body"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apim",
+              "cache"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Data & Integration#medium#AZ305-RFDRSEL931XP7ERPJ8SN6UK3"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-RFDRSEL931XP7ERPJ8SN6UK3"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-D7P42XF1ARV8BJ5W7V2P20UA"
+          },
+          "question": {
+            "S": "¿Qué diseño tolera caída de una zona? (var 4)"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Reliability & BCDR"
+          },
+          "title": {
+            "S": "Zonas de disponibilidad"
+          },
+          "concept": {
+            "S": "HA regional"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Tags"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Zonas de disponibilidad"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "RG único"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "RBAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "availability",
+              "zones"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Reliability & BCDR#medium#AZ305-D7P42XF1ARV8BJ5W7V2P20UA"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-D7P42XF1ARV8BJ5W7V2P20UA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AZ305-IPUSP5NYZE3WT39PDY1WIK55"
+          },
+          "question": {
+            "S": "¿Qué trío recomiendas para admins? (var 5)"
+          },
+          "cert": {
+            "S": "AZ-305"
+          },
+          "domain": {
+            "S": "Security & Governance"
+          },
+          "title": {
+            "S": "Zero Trust base"
+          },
+          "concept": {
+            "S": "Admins con menor privilegio"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "LDAP sin TLS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Owner permanente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "PAW + Conditional Access + PIM"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "VPN abierta"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "zero-trust",
+              "governance"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security & Governance#medium#AZ305-IPUSP5NYZE3WT39PDY1WIK55"
+          },
+          "diff_qid": {
+            "S": "medium#AZ305-IPUSP5NYZE3WT39PDY1WIK55"
+          }
+        }
+      }
+    }
+  ]
+}

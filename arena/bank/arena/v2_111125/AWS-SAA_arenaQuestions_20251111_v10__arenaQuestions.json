@@ -1,0 +1,2904 @@
+{
+  "arenaQuestions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-C53HOFP1K2ZE7Q2CJFMTCY20"
+          },
+          "question": {
+            "S": "¿Qué combinación agrega findings org-wide?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Security Hub + GuardDuty"
+          },
+          "concept": {
+            "S": "Hallazgos centralizados"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NACL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Security Hub + GuardDuty organizacional"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Inspector solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "security-hub",
+              "guardduty"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-C53HOFP1K2ZE7Q2CJFMTCY20"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-C53HOFP1K2ZE7Q2CJFMTCY20"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-AMOJ36514WD3FIJ7QI30JMU2"
+          },
+          "question": {
+            "S": "¿Qué mueve objetos tras 30 días?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "S3 Lifecycle"
+          },
+          "concept": {
+            "S": "Transición automática"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Bucket policy"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CORS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Lifecycle policy"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ACL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "lifecycle"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-AMOJ36514WD3FIJ7QI30JMU2"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-AMOJ36514WD3FIJ7QI30JMU2"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-VJS0ZISYU9RZ2IG3OFX9CLBK"
+          },
+          "question": {
+            "S": "¿Qué evita IGW/NAT para S3?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Networking & Integration"
+          },
+          "title": {
+            "S": "VPC Endpoint"
+          },
+          "concept": {
+            "S": "Acceso privado a S3"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NAT GW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Gateway VPC Endpoint"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "IGW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "vpc",
+              "endpoint"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking & Integration#medium#AWSSAA-VJS0ZISYU9RZ2IG3OFX9CLBK"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-VJS0ZISYU9RZ2IG3OFX9CLBK"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-1EBZ0Y267VN1OP2SINOVMDFR"
+          },
+          "question": {
+            "S": "¿Qué gestiona claves para cifrar servicios?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "KMS"
+          },
+          "concept": {
+            "S": "Cifrado en reposo"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "IAM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "STS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "AWS KMS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Glue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kms",
+              "encryption"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-1EBZ0Y267VN1OP2SINOVMDFR"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-1EBZ0Y267VN1OP2SINOVMDFR"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-QVXL3FCHNYQNUHDCSEX8W7C3"
+          },
+          "question": {
+            "S": "¿Qué mejora disponibilidad?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "Aurora HA"
+          },
+          "concept": {
+            "S": "Alta disponibilidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Multi-AZ / réplicas de lectura"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Instancia única"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EIP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Snapshots manuales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aurora",
+              "ha"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-QVXL3FCHNYQNUHDCSEX8W7C3"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-QVXL3FCHNYQNUHDCSEX8W7C3"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-KFZ6WMIA0LVQ3Y67AYGX53ZZ"
+          },
+          "question": {
+            "S": "¿Cómo proteges contra OWASP?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Networking & Integration"
+          },
+          "title": {
+            "S": "API GW + WAF"
+          },
+          "concept": {
+            "S": "Protección HTTP"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CloudTrail"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Shield sin WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "API Gateway con AWS WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apigw",
+              "waf"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking & Integration#medium#AWSSAA-KFZ6WMIA0LVQ3Y67AYGX53ZZ"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-KFZ6WMIA0LVQ3Y67AYGX53ZZ"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-91ESRDLT9NYMJWZEM84KSQ3B"
+          },
+          "question": {
+            "S": "¿Qué bloquea políticas públicas en S3?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Block Public Access"
+          },
+          "concept": {
+            "S": "Evitar exposición"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CORS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "OAI/OAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "S3 Block Public Access"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ACL privada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "public-block"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-91ESRDLT9NYMJWZEM84KSQ3B"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-91ESRDLT9NYMJWZEM84KSQ3B"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-AUFT9PUQY62ULF6388AO44X4"
+          },
+          "question": {
+            "S": "¿Qué combo consulta el CUR?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "Athena + CUR"
+          },
+          "concept": {
+            "S": "Cost analytics"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Glue sin catálogo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CUR en S3 + Athena"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "QuickSight solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CSV local"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cur",
+              "athena"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-AUFT9PUQY62ULF6388AO44X4"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-AUFT9PUQY62ULF6388AO44X4"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-7B3EVHSL7N84I4U3BH203L6U"
+          },
+          "question": {
+            "S": "¿Qué servicio orquesta eventos con reglas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Networking & Integration"
+          },
+          "title": {
+            "S": "EventBridge"
+          },
+          "concept": {
+            "S": "Enrutado de eventos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SNS sin filtros"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Amazon EventBridge"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SQS solamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EC2"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "eventbridge",
+              "events"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking & Integration#medium#AWSSAA-7B3EVHSL7N84I4U3BH203L6U"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-7B3EVHSL7N84I4U3BH203L6U"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-G4JFOOPPUI1MWKBM62BJF3YA"
+          },
+          "question": {
+            "S": "¿Qué detecta acceso público/externo?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Access Analyzer"
+          },
+          "concept": {
+            "S": "Exposición de recursos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SNS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CloudWatch"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "IAM Access Analyzer"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "iam",
+              "analyzer"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-G4JFOOPPUI1MWKBM62BJF3YA"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-G4JFOOPPUI1MWKBM62BJF3YA"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-CTUQWRID185267D3SLBV7NZ0"
+          },
+          "question": {
+            "S": "¿Qué combinación agrega findings org-wide?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Security Hub + GuardDuty"
+          },
+          "concept": {
+            "S": "Hallazgos centralizados"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Inspector solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Security Hub + GuardDuty organizacional"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "NACL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "SG"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "security-hub",
+              "guardduty"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-CTUQWRID185267D3SLBV7NZ0"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-CTUQWRID185267D3SLBV7NZ0"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-HADI1Z2HW9BIU8EI673Z4TJX"
+          },
+          "question": {
+            "S": "¿Qué mueve objetos tras 30 días?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "S3 Lifecycle"
+          },
+          "concept": {
+            "S": "Transición automática"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "ACL"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CORS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Bucket policy"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Lifecycle policy"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "lifecycle"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-HADI1Z2HW9BIU8EI673Z4TJX"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-HADI1Z2HW9BIU8EI673Z4TJX"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-5K85GYUIAAFDB5QBBTBDRB42"
+          },
+          "question": {
+            "S": "¿Qué evita IGW/NAT para S3?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Networking & Integration"
+          },
+          "title": {
+            "S": "VPC Endpoint"
+          },
+          "concept": {
+            "S": "Acceso privado a S3"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "IGW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Gateway VPC Endpoint"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "ALB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NAT GW"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "vpc",
+              "endpoint"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking & Integration#medium#AWSSAA-5K85GYUIAAFDB5QBBTBDRB42"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-5K85GYUIAAFDB5QBBTBDRB42"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-TKYW9ZD74ZXUZJY0V3CR91HD"
+          },
+          "question": {
+            "S": "¿Qué gestiona claves para cifrar servicios?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "KMS"
+          },
+          "concept": {
+            "S": "Cifrado en reposo"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "IAM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "AWS KMS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "STS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Glue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kms",
+              "encryption"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-TKYW9ZD74ZXUZJY0V3CR91HD"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-TKYW9ZD74ZXUZJY0V3CR91HD"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-6RL95WRSZQFWD55YH755N145"
+          },
+          "question": {
+            "S": "¿Qué mejora disponibilidad?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "Aurora HA"
+          },
+          "concept": {
+            "S": "Alta disponibilidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Instancia única"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Snapshots manuales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EIP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Multi-AZ / réplicas de lectura"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aurora",
+              "ha"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-6RL95WRSZQFWD55YH755N145"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-6RL95WRSZQFWD55YH755N145"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-0FPJG9FKBBUCYQVZTI77SH1H"
+          },
+          "question": {
+            "S": "¿Cómo proteges contra OWASP?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Networking & Integration"
+          },
+          "title": {
+            "S": "API GW + WAF"
+          },
+          "concept": {
+            "S": "Protección HTTP"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CloudTrail"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "NLB"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Shield sin WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "API Gateway con AWS WAF"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "apigw",
+              "waf"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking & Integration#medium#AWSSAA-0FPJG9FKBBUCYQVZTI77SH1H"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-0FPJG9FKBBUCYQVZTI77SH1H"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-EOYZGVW2BLZB8BWJYB6HD34P"
+          },
+          "question": {
+            "S": "¿Qué bloquea políticas públicas en S3?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Block Public Access"
+          },
+          "concept": {
+            "S": "Evitar exposición"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "CORS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "ACL privada"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "S3 Block Public Access"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "OAI/OAC"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "s3",
+              "public-block"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-EOYZGVW2BLZB8BWJYB6HD34P"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-EOYZGVW2BLZB8BWJYB6HD34P"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-OQ22TEI1Y8PTGVYCGWYFUTPC"
+          },
+          "question": {
+            "S": "¿Qué combo consulta el CUR?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "Athena + CUR"
+          },
+          "concept": {
+            "S": "Cost analytics"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "QuickSight solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CUR en S3 + Athena"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Glue sin catálogo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CSV local"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cur",
+              "athena"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-OQ22TEI1Y8PTGVYCGWYFUTPC"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-OQ22TEI1Y8PTGVYCGWYFUTPC"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-ZJOYRXIPY45YMXIZ9KZX1HRO"
+          },
+          "question": {
+            "S": "¿Qué servicio orquesta eventos con reglas?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Networking & Integration"
+          },
+          "title": {
+            "S": "EventBridge"
+          },
+          "concept": {
+            "S": "Enrutado de eventos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SNS sin filtros"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "SQS solamente"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EC2"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Amazon EventBridge"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "eventbridge",
+              "events"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Networking & Integration#medium#AWSSAA-ZJOYRXIPY45YMXIZ9KZX1HRO"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-ZJOYRXIPY45YMXIZ9KZX1HRO"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-GOE4NT0VSSBC9XW8686KP295"
+          },
+          "question": {
+            "S": "¿Qué detecta acceso público/externo?"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Access Analyzer"
+          },
+          "concept": {
+            "S": "Exposición de recursos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "IAM Access Analyzer"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CloudWatch"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SNS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "iam",
+              "analyzer"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-GOE4NT0VSSBC9XW8686KP295"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-GOE4NT0VSSBC9XW8686KP295"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-K2OFSC6V59C5DQKVUAFUHTW8"
+          },
+          "question": {
+            "S": "¿Qué mejora disponibilidad? (var 1)"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "Aurora HA"
+          },
+          "concept": {
+            "S": "Alta disponibilidad"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "Instancia única"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "Snapshots manuales"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "EIP"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "Multi-AZ / réplicas de lectura"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "aurora",
+              "ha"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-K2OFSC6V59C5DQKVUAFUHTW8"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-K2OFSC6V59C5DQKVUAFUHTW8"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-VL0YN3N7XYP5DIX8U9KRP1L4"
+          },
+          "question": {
+            "S": "¿Qué detecta acceso público/externo? (var 2)"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Access Analyzer"
+          },
+          "concept": {
+            "S": "Exposición de recursos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SNS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CloudWatch"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "IAM Access Analyzer"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "iam",
+              "analyzer"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-VL0YN3N7XYP5DIX8U9KRP1L4"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-VL0YN3N7XYP5DIX8U9KRP1L4"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-WFAX9ZNCQWCB40KCDQ6UTGGX"
+          },
+          "question": {
+            "S": "¿Qué combo consulta el CUR? (var 3)"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Storage & Data"
+          },
+          "title": {
+            "S": "Athena + CUR"
+          },
+          "concept": {
+            "S": "Cost analytics"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "CUR en S3 + Athena"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Glue sin catálogo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "QuickSight solo"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "CSV local"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "cur",
+              "athena"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Storage & Data#medium#AWSSAA-WFAX9ZNCQWCB40KCDQ6UTGGX"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-WFAX9ZNCQWCB40KCDQ6UTGGX"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-M4969NJP38UHL6W9CVSQRB4K"
+          },
+          "question": {
+            "S": "¿Qué gestiona claves para cifrar servicios? (var 4)"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "KMS"
+          },
+          "concept": {
+            "S": "Cifrado en reposo"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "IAM"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "AWS KMS"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "STS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "Glue"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "kms",
+              "encryption"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-M4969NJP38UHL6W9CVSQRB4K"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-M4969NJP38UHL6W9CVSQRB4K"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "qid": {
+            "S": "AWSSAA-N8WZQ9SGTC7S95MWCSJDD9IZ"
+          },
+          "question": {
+            "S": "¿Qué detecta acceso público/externo? (var 5)"
+          },
+          "cert": {
+            "S": "AWS-SAA"
+          },
+          "domain": {
+            "S": "Security"
+          },
+          "title": {
+            "S": "Access Analyzer"
+          },
+          "concept": {
+            "S": "Exposición de recursos"
+          },
+          "options": {
+            "L": [
+              {
+                "M": {
+                  "id": {
+                    "S": "D"
+                  },
+                  "text": {
+                    "S": "IAM Access Analyzer"
+                  },
+                  "is_correct": {
+                    "BOOL": true
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "A"
+                  },
+                  "text": {
+                    "S": "CloudWatch"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "B"
+                  },
+                  "text": {
+                    "S": "SNS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              },
+              {
+                "M": {
+                  "id": {
+                    "S": "C"
+                  },
+                  "text": {
+                    "S": "DMS"
+                  },
+                  "is_correct": {
+                    "BOOL": false
+                  }
+                }
+              }
+            ]
+          },
+          "difficulty": {
+            "S": "medium"
+          },
+          "correct_count": {
+            "N": "0"
+          },
+          "wrong_count": {
+            "N": "0"
+          },
+          "saved_count": {
+            "N": "0"
+          },
+          "tags": {
+            "SS": [
+              "iam",
+              "analyzer"
+            ]
+          },
+          "active": {
+            "BOOL": true
+          },
+          "version": {
+            "N": "1"
+          },
+          "created_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "updated_at": {
+            "S": "2025-11-11T15:06:45Z"
+          },
+          "cert_domain_diff_qid": {
+            "S": "Security#medium#AWSSAA-N8WZQ9SGTC7S95MWCSJDD9IZ"
+          },
+          "diff_qid": {
+            "S": "medium#AWSSAA-N8WZQ9SGTC7S95MWCSJDD9IZ"
+          }
+        }
+      }
+    }
+  ]
+}
