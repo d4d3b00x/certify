@@ -425,6 +425,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   opacity: 0.7;
 }
 
+.submenu.open {
+  display: flex;
+}
+
 /* Mostrar submenú en escritorio al pasar el ratón o enfocar */
 @media (min-width: 721px) {
   .menu-group:hover > .submenu,
@@ -449,11 +453,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     margin-top: 4px;
     width: 100%;
     box-shadow: 0 6px 16px rgba(5,10,30,.35);
-    display: none;          /* por defecto oculto */
+    display: none;        /* oculto por defecto */
   }
 
   .menu-group .submenu.open {
-    display: flex;          /* se muestra cuando JS añade .open */
+    display: flex;        /* visible al abrir */
   }
 }
 
@@ -535,14 +539,31 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
       <!-- 1. CERTIFICACIONES -->
       <div class="menu-group">
-        <a class="link-btn has-sub-trigger" href="/catalog/itcatalog.html">CERTIFICACIONES<span class="caret" aria-hidden="true">▾</span></a>
-        <div class="submenu"><a class="submenu-mainlink" href="/certification/microsoft-azure/az-104/index.html">PORTADA AZURE</a>
-         <a class="submenu-child" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104 ADMINISTRATOR</a>
-          <a class="submenu-child" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305 ARCHITECT</a> 
-          <a class="submenu-mainlink" href="/certification/amazon aws/index.html">PORTADA AWS</a>
-          <a class="submenu-child" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03 ARCHITECT</a>
-         </div>
-      </div>
+  <a class="link-btn has-sub-trigger" href="/catalog/itcatalog.html">
+    CERTIFICACIONES
+    <span class="caret" aria-hidden="true">▾</span>
+  </a>
+  <div class="submenu">
+    <span class="submenu-title">AZURE</span>
+    <a class="submenu-mainlink" href="/certification/microsoft-azure/az-104/index.html">
+      PORTADA AZURE
+    </a>
+    <a class="submenu-child" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">
+      AZ-104 · ADMINISTRATOR
+    </a>
+    <a class="submenu-child" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">
+      AZ-305 · ARCHITECT
+    </a>
+
+    <span class="submenu-title">AWS</span>
+    <a class="submenu-mainlink" href="/certification/amazon aws/index.html">
+      PORTADA AWS
+    </a>
+    <a class="submenu-child" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">
+      SAA-C03 · ARCHITECT
+    </a>
+  </div>
+</div>
 
       <!-- 2. COMUNIDAD -->
       <div class="menu-group">
