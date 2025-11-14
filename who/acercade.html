@@ -14,15 +14,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
-  <title>ITHub.es. Simulador de exámenes y recursos gratuitos en Español para aprobar tus certificaciones IT (Azure, AWS, Cisco...)</title>
-  <meta name="description" content="Simuladores de examen, resúmenes por dominio y guías prácticas para aprobar certificaciones Azure AZ-104, AZ-305 y AWS SAA-C03. Practica con preguntas explicadas, ranking y XP en ITHub.es." />
-  <link rel="canonical" href="https://www.ithub.es/" />
+  <title>Quiénes somos y metodología · ITHub.es — Simuladores de certificaciones IT</title>
+  <meta name="description" content="Conoce quién está detrás de ITHub.es y cómo diseñamos simuladores, resúmenes y recursos prácticos para ayudarte a aprobar certificaciones Azure, AWS y otras nubes." />
+  <link rel="canonical" href="https://www.ithub.es/who/acercade.html" />
   <meta name="robots" content="index,follow" />
 
-  <meta property="og:title" content="ITHub.es · Simuladores y guías para certificaciones IT (Azure, AWS)" />
-  <meta property="og:description" content="Simuladores realistas, resúmenes accionables y ranking global para preparar certificaciones Azure y AWS con preguntas explicadas y enlaces oficiales." />
+  <meta property="og:title" content="Quiénes somos · ITHub.es" />
+  <meta property="og:description" content="ITHub.es es una comunidad de profesionales IT que crea simuladores y recursos prácticos para ayudarte a aprobar certificaciones cloud." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.ithub.es/" />
+  <meta property="og:url" content="https://www.ithub.es/who/acercade.html" />
   <meta property="og:site_name" content="ITHub.es" />
 
   <link rel="icon" type="image/svg+xml" 
@@ -162,7 +162,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .bridge-section{padding-top:10px;}
     .bridge{
       position:relative;
-      display:grid; grid-template-columns:.95fr 1.05fr; /* más aire a la derecha */
+      display:grid; grid-template-columns:.95fr 1.05fr;
       gap:0;
       border-radius:18px; overflow:hidden;
       background:linear-gradient(180deg,#12183a,#0f1531);
@@ -184,24 +184,21 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         radial-gradient(480px 240px at 10% -20%, rgba(0,120,212,.25), transparent 60%),
         radial-gradient(380px 220px at 120% 120%, rgba(255,153,0,.22), transparent 60%);
     }
-    /* TAG naranja como la antigua sección */
     .bridge .tag{
       display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
       background:rgba(255,153,0,.12);border:1px solid rgba(255,153,0,.3);color:#ffd7a0;font-weight:800
     }
-    /* Compactar título y texto izquierdos para equilibrar altura */
     .bridge h2{margin:10px 0 6px;font-size:clamp(1.35rem,2.8vw,2rem);line-height:1.15}
     .bridge p{margin:0;color:var(--muted)}
     .bridge .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
     .note{font-size:.85rem;color:#cfe1ff;opacity:.9;margin-top:6px;font-weight:800}
 
-    /* 3 cajitas alineadas (sin flechas) y centradas verticalmente */
     .flow{
       width:100%;
       display:grid;
       grid-template-columns:repeat(3,1fr);
       gap:12px;
-      align-content:center; /* centra el bloque dentro de la columna derecha */
+      align-content:center;
     }
     .step{
       background:linear-gradient(180deg,#141b3a,#101631);
@@ -295,11 +292,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .g-arrow[disabled]{opacity:.45;cursor:not-allowed;transform:none}
     .g-arrow svg{width:20px;height:20px}
 
-    /* Indicador (queda) + Ver todos (comentado) */
     .g-meta{display:flex;align-items:center;gap:10px;margin-left:auto}
     .g-indicator{font-weight:800;color:#cfe1ff;background:rgba(108,139,255,.12);border:1px solid rgba(108,139,255,.35);padding:6px 10px;border-radius:999px;font-size:.85rem}
 
-    /* Móvil: flex + scroll-snap */
     @media (max-width: 720px){
       .g-arrows{
         position: sticky; top: 8px; z-index: 5;
@@ -328,7 +323,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       .g-desc{ font-size: .95rem; }
     }
 
-    /* MODALES (feedback) */
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);z-index:120}
     .modal.show{display:flex}
     .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
@@ -345,7 +339,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .fb-status.err{color:var(--bad)}
     .fb-status.info{color:var(--muted)}
 
-    /* Reducción de sombras en móvil */
     @media (max-width:720px){
       .sim-card,
       .g-card,
@@ -367,10 +360,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
 
       <nav class="menu" aria-label="Navegación principal">
-  
-        <a class="link-btn" href="/catalog/itcatalog.html">CERTIFICACIONES</a>
-        <a class="link-btn" href="/who/acercade.html">NOSOTROS</a>
-        <a class="link-btn" href="/blog/blog.html">BLOG</a>
+        <a class="link-btn" href="/">INICIO</a>
+        <a class="link-btn" href="/catalog/itcatalog.html">CATÁLOGOS</a>
+        <a class="link-btn" href="/content/content.html">RESÚMENES</a>
+        <a class="link-btn" href="/score/ranking.html">RANKING</a>
       </nav>
 
       <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
@@ -387,274 +380,189 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   </header>
 
   <main id="main" tabindex="-1">
+    <!-- HERO QUIÉNES SOMOS -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
         <div class="hero-head">
-          <h1 id="hero-title"><span aria-hidden="true">🎮</span>Aprende y practica para <b>aprobar tus certificaciones IT</b> y avanzar en tu carrera.</h1>
-          <p class="lead">Simuladores realistas + resúmenes por dominio. Practica lo que más cae y mide tu progreso hasta aprobar.</p>
+          <h1 id="hero-title"><span aria-hidden="true">🧑‍💻</span>Quiénes somos en <b>ITHub.es</b></h1>
+          <p class="lead">
+            En ITHub.es somos una comunidad que ha pasado por lo mismo que tú:
+            preparar certificaciones IT mientras trabajas o estudias, con poco tiempo y mucha presión.
+            Por eso creamos contenido pensado en <b>aprender practicando</b>.
+          </p>
         </div>
       </div>
     </section>
 
-    <section class="hook" aria-labelledby="hook-title">
+    <!-- NUESTRA MISIÓN -->
+    <section class="hook" aria-labelledby="mission-title">
       <div class="container">
-        <h2 id="hook-title" class="sec-title">Certifícate y gana competitividad </h2>
-        <!--<p class="hook-sub">Diseñado para tu realidad: poco tiempo, mucho por aprender y necesidad de resultados. En ITHub practicas lo importante.</p>-->
-        <div class="hook-badges" aria-hidden="true">
-          <span>+3.000 preguntas</span><span>Resúmenes por dominio</span><span>Enlaces oficiales</span><span>Ranking e insignias</span>
-        </div>
+        <h2 id="mission-title" class="sec-title">Nuestra misión</h2>
+        <p class="hook-sub">
+          Ayudarte a <b>aprobar certificaciones IT</b> (Azure, AWS y otras nubes) mientras mejoras tu nivel técnico real.
+          No queremos que memorices preguntas: queremos que entiendas patrones, escenarios y decisiones de arquitectura.
+        </p>
         <div class="pitch-grid" role="list">
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🎯</div><h3>Preguntas enfocadas</h3></div><p>Simuladores para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b>.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🧠</div><h3>Resúmenes accionables</h3></div><p>Hojas de trucos y resúmenes aplicables al trabajo.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🔗</div><h3>Explicaciones fiables</h3></div><p>Rationale + documentación oficial en cada respuesta.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">💼</div><h3>Demuestra progreso</h3></div><p>Certifícate, suma puntos en ranking y demuestra progreso.</p></article>
-        </div>
-        <div class="hook-ctas" role="group" aria-label="Acciones destacadas">
-          <!--<a class="pill-btn big" href="/catalog/itcatalog.html">EMPEZAR A PRACTICAR</a>-->
-          
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">🎯</div><h3>Reducir ruido</h3></div>
+            <p>Ir directo a lo que más cae en el examen, alineado con los exam guides oficiales.</p>
+          </article>
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">🧠</div><h3>Aumentar tu confianza</h3></div>
+            <p>Llegar al día del examen sabiendo qué tipo de preguntas y escenarios vas a encontrarte.</p>
+          </article>
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">💼</div><h3>Subir tu nivel técnico</h3></div>
+            <p>Que lo que estudias te sirva también en tu trabajo diario con Azure, AWS u otras plataformas.</p>
+          </article>
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">🤝</div><h3>Construir comunidad</h3></div>
+            <p>Crear un sitio donde la gente que se certifica comparte feedback, ideas y buenas prácticas.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- === SECCIÓN: Aprende · Practica · Compite (ajustada) === -->
-    <section class="bridge-section" aria-labelledby="bridge-title">
+    <!-- QUÉ ES ITHUB.ES -->
+    <section aria-labelledby="what-title">
       <div class="container">
-        <div class="bridge" role="region" aria-labelledby="bridge-title">
+        <h2 id="what-title" class="sec-title">Qué es ITHub.es</h2>
+        <p class="muted">
+          ITHub.es es un hub de recursos centrado en el aprendizaje y la práctica para preparar certificaciones IT:
+        </p>
+        <div class="grid">
+          <article class="sim-card">
+            <span class="accent" aria-hidden="true" style="background:linear-gradient(90deg, rgba(108,139,255,.85), rgba(108,139,255,.35))"></span>
+            <div class="sim-title">Simuladores por dominio</div>
+            <p class="muted">Preguntas realistas para AZ-104, AZ-305 y SAA-C03, organizadas por dominios y objetivos de examen.</p>
+          </article>
+          <article class="sim-card">
+            <span class="accent" aria-hidden="true" style="background:linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))"></span>
+            <div class="sim-title">Resúmenes accionables</div>
+            <p class="muted">Hojas de trucos y resúmenes por dominio pensados para repasar rápido antes del examen.</p>
+          </article>
+          <article class="sim-card">
+            <span class="accent" aria-hidden="true" style="background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))"></span>
+            <div class="sim-title">Explicaciones + enlaces oficiales</div>
+            <p class="muted">Cada pregunta incluye rationale y enlace a la documentación oficial para que puedas profundizar.</p>
+          </article>
+          <article class="sim-card">
+            <span class="accent" aria-hidden="true" style="background:linear-gradient(90deg, rgba(108,139,255,.85), rgba(255,153,0,.35))"></span>
+            <div class="sim-title">Ranking y gamificación</div>
+            <p class="muted">XP, ranking global y próximamente <b>Arena Battle</b> para entrenar con quizzes relámpago.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- METODOLOGÍA -->
+    <section aria-labelledby="metodo-title">
+      <div class="container">
+        <h2 id="metodo-title" class="sec-title">Nuestra metodología</h2>
+        <p class="muted">
+          Queremos que cada minuto que pases en la plataforma sume. Así es cómo diseñamos y mantenemos el contenido.
+        </p>
+
+        <div class="bridge" role="region" aria-label="Pasos de la metodología ITHub.es">
           <div class="left">
-            <span class="tag" id="bridge-title">ENTRENA TU MENTE Y TU CERTIFICACIÓN</span>
-            <!--<h2>Aprende con los simuladores, mejora en el Arena</h2>-->
+            <span class="tag">CÓMO CREAMOS LOS SIMULADORES</span>
+            <h2>De la guía al escenario real</h2>
             <p class="muted">
-              <br>Empieza con los <b>simuladores</b> para aprender cada dominio del examen con <b>explicaciones</b> y enlaces oficiales.
-              Estamos preparando el juego <b>Arena Battle</b>: <b>quizzes relámpago</b> de 1, 2 o 3 preguntas, <b>XP</b> y ranking en vivo para ganar agilidad.
+              Partimos de los <b>exam guides oficiales</b>, desglosamos dominios y objetivos,
+              y los convertimos en preguntas basadas en escenarios que verías en proyectos reales.
             </p>
-            <div class="cta-row" role="group" aria-label="Acciones de entrenamiento">
-              <a class="pill-btn" href="">PRONTO ARENA BATTLE</a>
-              <a class="btn" href="/catalog/itcatalog.html">VER SIMULADORES</a>
-            </div>
-            <!--<div class="note" aria-hidden="true">🏆 Ranking en vivo · 🎯 XP por acierto · 🔁 Repaso constante</div>-->
+            <ul class="muted">
+              <li>Identificamos los conceptos imprescindibles para aprobar.</li>
+              <li>Ligamos cada objetivo a casos de uso concretos.</li>
+              <li>Priorizamos contenido que aporta valor en tu día a día.</li>
+            </ul>
           </div>
-          <div class="right" aria-label="Cómo se complementan">
+          <div class="right">
             <div class="flow">
               <div class="step">
-                <div class="s-head"><div class="s-ico">📘</div><h3>Simuladores</h3></div>
-                <p>Práctica guiada por dominio con <b>explicaciones</b> y enlaces oficiales.</p>
+                <div class="s-head"><div class="s-ico">📘</div><h3>1. Exam guides</h3></div>
+                <p>Analizamos los objetivos y pesos de cada certificación para cubrir lo que realmente importa.</p>
               </div>
               <div class="step">
-                <div class="s-head"><div class="s-ico">⚡</div><h3>Gamificación</h3></div>
-                <p>Quizzes de <b>1·2·3</b> preguntas, <b>XP</b> para ganar agilidad en Arena Battle.</p>
+                <div class="s-head"><div class="s-ico">🧩</div><h3>2. Escenarios</h3></div>
+                <p>Creamos preguntas basadas en casos reales de arquitectura, operaciones y troubleshooting.</p>
               </div>
               <div class="step">
-                <div class="s-head"><div class="s-ico">🎓</div><h3>Certificación</h3></div>
-                <p>Llega al examen con <b>confianza</b>, ritmo y control de puntos débiles.</p>
+                <div class="s-head"><div class="s-ico">🔍</div><h3>3. Explicaciones</h3></div>
+                <p>Cada respuesta incluye rationale y enlace oficial para que conviertas cada ítem en una mini-lección.</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-    <!-- === /SECCIÓN === -->
 
-    <section aria-labelledby="fab-title">
-      <div class="container">
-        <div id="fab-title" class="sec-title">CATÁLOGO DE CERTIFICACIONES</div>
-        <div class="vendor-grid">
-          <article class="sim-card sim-azure vendor-card vendor-azure">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="prov-pill prov-azure">MICROSOFT AZURE</div>
-            <div class="v-title">Explora las certificaciones de Azure</div>
-            <p>Rutas y guías de estudio CLOUD de Microsoft</p>
-            <div class="btns-row" aria-label="Acciones Microsoft Azure">
-              <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
-              <a class="btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a>
-              <a class="btn" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a>
-            </div>
+        <div class="grid" style="margin-top:18px">
+          <article class="pitch-card">
+            <div class="p-head"><div class="p-ico">📈</div><h3>Dificultad progresiva</h3></div>
+            <p>Preguntas básicas para fijar conceptos, intermedias para combinar ideas y avanzadas para entrenar el “modo examen”.</p>
           </article>
-
-          <article class="sim-card sim-aws vendor-card vendor-aws">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="prov-pill prov-aws">AMAZON AWS</div>
-            <div class="v-title">Explora las certificaciones de AWS</div>
-            <p>Rutas y guías de estudio CLOUD de Amazon</p>
-            <div class="btns-row" aria-label="Acciones Amazon AWS">
-              <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
-              <a class="btn" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a>
-            </div>
+          <article class="pitch-card">
+            <div class="p-head"><div class="p-ico">♻️</div><h3>Revisión continua</h3></div>
+            <p>Revisamos cambios en servicios y exam guides, y actualizamos el banco según la evolución de Azure y AWS.</p>
+          </article>
+          <article class="pitch-card">
+            <div class="p-head"><div class="p-ico">📣</div><h3>Feedback de la comunidad</h3></div>
+            <p>Escuchamos tus comentarios para corregir, aclarar o ampliar preguntas y resúmenes.</p>
+          </article>
+          <article class="pitch-card">
+            <div class="p-head"><div class="p-ico">✅</div><h3>Calidad sobre cantidad</h3></div>
+            <p>Preferimos menos preguntas bien explicadas que miles de ítems sin contexto ni enlaces oficiales.</p>
           </article>
         </div>
       </div>
     </section>
 
-<!-- Glosario → CARRUSEL (20 tarjetas completas) -->
-    <section class="glossary" aria-labelledby="g-title">
+    <!-- COMPROMISOS Y COMUNIDAD -->
+    <section aria-labelledby="commit-title">
       <div class="container">
-        <h2 id="g-title" class="sec-title">Carrusel de Conceptos a Examen</h2>
-
-        <div class="g-arrows" role="group" aria-label="Navegación del glosario">
-          <button class="g-arrow" id="gPrev" aria-label="Anterior" aria-controls="gTrack">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-          </button>
-          <button class="g-arrow" id="gNext" aria-label="Siguiente" aria-controls="gTrack">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
-          </button>
-
-          <div class="g-meta">
-            <div class="g-indicator" id="gIndicator" aria-live="polite">1–2 / 20</div>
-            <!-- <a class="btn small" href="/content/content.html#glosario" aria-label="Ver todos los conceptos">Ver todos</a> -->
-          </div>
+        <h2 id="commit-title" class="sec-title">Nuestros compromisos contigo</h2>
+        <div class="grid">
+          <article class="pitch-card">
+            <div class="p-head"><div class="p-ico">🔍</div><h3>Transparencia</h3></div>
+            <p>Indicamos el estado del catálogo (disponible, en curso, planificado) y cómo trabajamos cada certificación.</p>
+          </article>
+          <article class="pitch-card">
+            <div class="p-head"><div class="p-ico">🛠️</div><h3>Enfoque práctico</h3></div>
+            <p>Todo lo que construimos debería ayudarte también en tu trabajo, no solo para pasar el examen.</p>
+          </article>
+          <article class="pitch-card">
+            <div class="p-head"><div class="p-ico">🌱</div><h3>Mejora continua</h3></div>
+            <p>ITHub.es está vivo: vamos incorporando nuevas certificaciones y mejorando con tu feedback.</p>
+          </article>
         </div>
 
-        <div class="g-wrap">
-          <div class="g-track" id="gTrack" tabindex="0" role="list" aria-label="Carrusel de términos del glosario (dos filas)">
-            <!-- 1 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🌐</div><div class="g-title">Azure Front Door</div></div>
-              <p class="g-desc">CDN + WAF global (L7) con terminación TLS y enrutamiento al punto más cercano para apps multi-región.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
-            </article>
-            <!-- 2 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">GZRS</div></div>
-              <p class="g-desc">Geo-Zone-Redundant Storage: resiliencia a nivel de zona y réplica geográfica para máxima durabilidad.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-            </article>
-            <!-- 3 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">📣</div><div class="g-title">SNS Fanout</div></div>
-              <p class="g-desc">Patrón pub/sub para distribuir eventos a múltiples consumidores (SQS, Lambda, HTTPS) de forma desacoplada.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 4 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🛡️</div><div class="g-title">Azure Bastion</div></div>
-              <p class="g-desc">Accede por RDP/SSH desde el navegador sin exponer IP pública ni abrir 22/3389. Menor superficie de ataque.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-            </article>
-            <!-- 5 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🌀</div><div class="g-title">VM Scale Sets</div></div>
-              <p class="g-desc">Escala grupos de VMs con zonas, actualizaciones orquestadas y autoescalado por métricas para mantener SLA.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-            </article>
-            <!-- 6 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">📏</div><div class="g-title">Azure Policy</div></div>
-              <p class="g-desc">Gobernanza declarativa con efectos audit/deny; aplica estándares a nivel de Management Group y suscripciones.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
-            </article>
-            <!-- 7 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🌍</div><div class="g-title">Cosmos DB</div></div>
-              <p class="g-desc">Base NoSQL distribuida globalmente con latencia de un dígito, APIs múltiples y replicación multi-región.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-            </article>
-            <!-- 8 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🔁</div><div class="g-title">Azure Site Recovery</div></div>
-              <p class="g-desc">Orquesta DR para VMs con RPO de minutos y pruebas no disruptivas. Failover y failback guiados.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-            </article>
-            <!-- 9 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🧭</div><div class="g-title">Gateway VPC Endpoint</div></div>
-              <p class="g-desc">Acceso a S3/DynamoDB desde la VPC sin Internet Gateway ni NAT. Más seguro y económico.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 10 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🚀</div><div class="g-title">CloudFront</div></div>
-              <p class="g-desc">CDN global con TLS, caché y protección integrada (Shield/WAF). Orígenes S3/ALB/EC2.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 11 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">⚡</div><div class="g-title">DynamoDB</div></div>
-              <p class="g-desc">NoSQL serverless con On-Demand/Provisioned, Streams y Global Tables para replicación multi-región.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 12 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🏛️</div><div class="g-title">RDS Multi-AZ</div></div>
-              <p class="g-desc">Replica sincrónica a standby en otra zona y failover automático para mejorar disponibilidad.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 13 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">S3 Glacier</div></div>
-              <p class="g-desc">Archivado de bajo coste con ciclos de vida y tiempos de recuperación configurables.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 14 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">📶</div><div class="g-title">Kinesis Data Streams</div></div>
-              <p class="g-desc">Ingesta en tiempo real con orden por shard, múltiples consumidores y retención configurable.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 15 -->
-            <article class="g-card aws" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">💸</div><div class="g-title">Savings Plans</div></div>
-              <p class="g-desc">Compromiso de gasto que reduce costes de compute manteniendo flexibilidad de familia, tamaño y región.</p>
-              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-            </article>
-            <!-- 16 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🧱</div><div class="g-title">Application Gateway (WAF)</div></div>
-              <p class="g-desc">Balanceo L7 con WAF administrado, rutas por host/path y TLS end-to-end. Integrable con AKS.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-            </article>
-            <!-- 17 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🔐</div><div class="g-title">Key Vault (HSM)</div></div>
-              <p class="g-desc">Gestión de claves, secretos y certificados con protección HSM, soft-delete y purge protection.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-            </article>
-            <!-- 18 -->
-            <article class="g-card azure" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🗂️</div><div class="g-title">Azure Files</div></div>
-              <p class="g-desc">SMB gestionado con AD/ACLs y snapshots. Ideal para lift &amp; shift y perfiles de usuario.</p>
-              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-            </article>
-            <!-- 19 -->
-            <article class="g-card gcp" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🧮</div><div class="g-title">BigQuery</div></div>
-              <p class="g-desc">Data warehouse serverless; consulta petabytes con SQL y separación compute/almacenamiento.</p>
-              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
-            </article>
-            <!-- 20 -->
-            <article class="g-card gcp" role="listitem" tabindex="0">
-              <span class="accent" aria-hidden="true"></span>
-              <div class="g-head"><div class="g-ico">🐳</div><div class="g-title">Cloud Run</div></div>
-              <p class="g-desc">Contenedores serverless con escalado a cero y facturación por solicitud. Integración con Pub/Sub y VPC.</p>
-              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
-            </article>
-          </div>
-        </div>
+        <h2 class="sec-title" style="margin-top:26px">Comunidad y colaboración</h2>
+        <p class="muted">
+          ITHub.es nace con espíritu de comunidad. Colaboramos con profesionales y creadores de contenido especializados en cloud
+          para mejorar y ampliar los recursos disponibles.
+        </p>
+        <p class="muted">
+          Si quieres proponer una certificación a priorizar, reportar una duda o colaborar creando contenido, puedes escribirnos
+          desde la sección de <b>Contacto</b> o usar el botón de feedback al pie de la web.
+        </p>
       </div>
     </section>
 
-    <section id="simuladores" aria-labelledby="sim-title">
+    <!-- CTA FINAL -->
+    <section aria-labelledby="cta-title">
       <div class="container">
-        <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
-        <div class="muted">Modo de examen en desarrollo y más simuladores pronto</div>
-        <div class="grid" id="simGrid" role="list"></div>
+        <h2 id="cta-title" class="sec-title">Y ahora, ¿qué puedes hacer?</h2>
+        <p class="muted">
+          Si estás empezando con ITHub.es:
+        </p>
+        <ul class="muted">
+          <li>Entra en el <b>catálogo</b> y elige tu próxima certificación.</li>
+          <li>Haz tus primeros tests por dominio para <b>medir tu nivel inicial</b>.</li>
+          <li>Usa los <b>resúmenes</b> para reforzar las áreas más flojas.</li>
+        </ul>
+        <div class="hook-ctas" role="group" aria-label="Acciones recomendadas">
+          <a class="pill-btn big" href="/catalog/itcatalog.html">VER CATÁLOGO DE CERTIFICACIONES</a>
+          <a class="btn big" href="/content/content.html">IR A LOS RESÚMENES</a>
+        </div>
       </div>
     </section>
   </main>
@@ -676,7 +584,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
       <div>
         <div style="font-weight:800">CONTENIDOS</div>
-        
         <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
         <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
         <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
@@ -726,7 +633,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
       else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); renderSims(); });
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
     renderHeaderAuth();
 
     const CATALOG = [
@@ -743,6 +650,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const simGrid=document.getElementById('simGrid');
 
     function renderSims(){
+      if(!simGrid) return;
       simGrid.innerHTML='';
       const authed = !!getCurrentUser();
       CATALOG.forEach(c=>{
@@ -778,7 +686,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       e.preventDefault();
     });
 
-    /* Feedback */
     const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
     const NOTES_ENDPOINT = `${API_BASE}/items`;
     const fbEmail   = document.getElementById('feedbackEmail');
@@ -825,7 +732,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
         fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
         btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
-        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus(); // A11y: anunciar estado
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
       }catch(err){
         console.error('Error guardando feedback:', err);
         fbStatus.textContent = 'No se pudo enviar la info. :('; fbStatus.className='fb-status err';
@@ -834,7 +741,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
     });
 
-    /* Carrusel → lógica (con indicador) */
     (function(){
       const track = document.getElementById('gTrack');
       if(!track) return;
@@ -851,7 +757,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
 
       function totalCols(){
-        const perCol = 2; // 2 filas → 2 ítems por columna
+        const perCol = 2;
         return Math.ceil(track.children.length / perCol);
       }
 
