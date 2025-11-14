@@ -1,24 +1,36 @@
 <!doctype html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Alta disponibilidad y Recuperación ante desastres (HA/DR) en Azure — AZ-305 | ITHub</title>
-<meta name="description" content="Guía completa de Alta disponibilidad y Recuperación ante desastres en Azure para AZ-305: Zonas, pares regionales, ASR, Backup, patrones HA/DR por servicio, orquestación global y checklist de examen."/>
+<title>Alta disponibilidad y Disaster Recovery (AZ-305) | ITHub.es</title>
+<meta name="description" content="Guía premium de balanceo de carga en Azure para AZ-104: Load Balancer, Application Gateway y Azure Front Door, con patrones de examen y laboratorio." />
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-DYZ3GCXHEK');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+
 <style>
+
 :root{
   --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
-  --accent-azure:#6aa9ff; --accent-multi:#9b8cff;
   --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
   --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
+body{
+  font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;
+}
 a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 20px}
+.container{max-width:1180px;margin:0 auto;padding:0 16px}
+
 /* Header */
 header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
   background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
@@ -33,41 +45,105 @@ nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
 .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
 .pill-btn:hover{transform:translateY(-1px)}
 .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
 /* Hero */
 .hero{padding:26px 0 8px}
-.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
-  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900; color:#e7f1ff }
-.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55) }
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
+  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
+.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
+.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
 h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
 .meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
 .meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
 /* Layout */
-.grid{display:grid;grid-template-columns:320px 1fr;gap:18px;margin-top:16px}
-@media(max-width:980px){ .grid{grid-template-columns:1fr} }
+.grid{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr);
+  gap:18px;
+  margin-top:16px;
+}
+@media(max-width:980px){
+  .grid{grid-template-columns:1fr}
+}
+
 /* Sidebar index */
 .aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
 .aside h3{margin:8px 0 10px}
 .toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.toc a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff;font-size:.86rem}
 .toc a small{color:#9fb3e7;font-weight:700}
 .toc a:hover{border-color:#31539a; transform:translateX(2px)}
-.toc.azure a{ border-color:rgba(106,169,255,.25); background:rgba(106,169,255,.06); color:#e7f1ff}
-.toc.azure a:hover{ border-color:rgba(106,169,255,.7) }
+
+/* Content column */
+.content-wrap{
+  max-width:880px;
+  margin:0 auto;
+}
+
 /* Content card */
-.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
-.card h2{margin:4px 0 10px;font-size:clamp(1.2rem,2.2vw,1.6rem)}
-blockquote.tip{margin:14px 0;padding:12px 14px;border-left:4px solid var(--ok);background:rgba(58,217,122,.08);border-radius:12px}
-blockquote.warning{border-left:4px solid var(--warn); background:rgba(255,214,107,.08)}
-pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:2px 0 8px;font-size:clamp(1.15rem,2.1vw,1.55rem)}
+.card h3{margin:10px 0 6px;font-size:1.02rem}
+.card p{margin:0 0 6px}
+.card ul, .card ol{margin:0 0 6px 20px}
+
+/* Callouts */
+blockquote.tip,
+blockquote.warning{
+  margin:10px 0 2px;
+  padding:10px 12px;
+  border-radius:10px;
+  max-width:100%;
+  font-size:.9rem;
+}
+blockquote.tip{
+  border-left:4px solid var(--ok);
+  background:rgba(58,217,122,.08);
+}
+blockquote.warning{
+  border-left:4px solid var(--warn);
+  background:rgba(255,214,107,.08);
+}
+
+/* Code */
+pre{
+  background:#0b1222;
+  color:#e8f1ff;
+  border:1px solid #22304f;
+  border-radius:10px;
+  padding:9px 10px;
+  overflow-x:auto;
+  max-width:100%;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-size:.85rem;
+}
+code{font-family:Consolas,ui-monospace,monospace}
 kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
-table{border-collapse:collapse;width:100%;margin:10px 0;border:1px solid #22304f}
-th,td{border:1px solid #22304f;padding:8px 10px}
+
+/* Tables */
+.table-scroll{overflow-x:auto;width:100%;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:6px 0;
+  border:1px solid #22304f;
+  font-size:.85rem;
+}
+th,td{
+  border:1px solid #22304f;
+  padding:6px 8px;
+  white-space:normal;
+  word-break:break-word;
+}
 th{background:#16213a}
-.bad{color:#ffb3b3;font-weight:800}
-.ok{color:#b6f5d0;font-weight:800}
+
 /* Footer */
 footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
-</style></head>
+
+</style>
+</head>
 <body>
 
 <header role="banner">
@@ -99,210 +175,182 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
   const signup=document.getElementById('btnSignup');
   const userArea=document.getElementById('userArea');
   const nameTop=document.getElementById('userNameTop');
-  if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+  if(u){
+    login.style.display='none';
+    signup.style.display='none';
+    userArea.style.display='flex';
+    nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+  }
 })();
 </script>
-
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0">
     <span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span>
   </div>
-  <h1>Alta disponibilidad y Recuperación ante desastres (HA/DR) en Azure</h1>
+
+  <h1>Alta disponibilidad y Disaster Recovery (AZ-305)</h1>
+
   <div class="meta">
-    <span class="pill">Dominio: Resiliencia multi-AZ/Región</span>
-    <span class="pill">Nivel: Intermedio-Avanzado</span>
-    <span class="pill">Tiempo de lectura: 30–40 min</span>
+    <span class="pill">Dominio: Resiliencia y continuidad</span>
+    <span class="pill">Nivel: Intermedio / Avanzado</span>
+    <span class="pill">Tiempo de lectura: 40–50 min</span>
     <span class="pill">Última revisión: Nov 2025</span>
   </div>
 
   <div class="grid">
     <aside class="aside">
       <h3>ÍNDICE</h3>
-      <ul class="toc azure">
-        <li><a href="#sec1"><small>1.</small> Fundamentos: SLA, RTO/RPO, zonas y pares</a></li>
-        <li><a href="#sec2"><small>2.</small> Cómputo: patrones de alta disponibilidad</a></li>
-        <li><a href="#sec3"><small>3.</small> Datos: almacenamiento y bases de datos</a></li>
-        <li><a href="#sec4"><small>4.</small> Backup & Restore</a></li>
-        <li><a href="#sec5"><small>5.</small> Azure Site Recovery (ASR)</a></li>
-        <li><a href="#sec6"><small>6.</small> Orquestación global: Front Door / Traffic Manager</a></li>
-        <li><a href="#sec7"><small>7.</small> Pruebas, costes y operación</a></li>
-        <li><a href="#sec8"><small>8.</small> Checklist de examen</a></li>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> RPO, RTO y matriz de opciones</a></li>
+        <li><a href="#sec1"><small>1.</small> HA en una sola región</a></li>
+        <li><a href="#sec2"><small>2.</small> Multi-región y pares regionales</a></li>
+        <li><a href="#sec3"><small>3.</small> Azure Site Recovery para IaaS</a></li>
+        <li><a href="#sec4"><small>4.</small> Estrategias de DR para datos</a></li>
+        <li><a href="#sec5"><small>5.</small> Patrones y escenarios de examen</a></li>
       </ul>
     </aside>
 
-    <div>
+    <div class="content-wrap">
 
-      <!-- 1. Fundamentos -->
+      <section id="sec0" class="card">
+        <h2>0. RPO, RTO y matriz de opciones</h2>
+        <p>
+          Casi todas las preguntas de HA/DR en AZ-305 giran alrededor de dos parámetros:
+        </p>
+        <ul>
+          <li><b>RPO</b> (Recovery Point Objective): cuánto dato puedes perder.</li>
+          <li><b>RTO</b> (Recovery Time Objective): cuánto tiempo puedes estar caído.</li>
+        </ul>
+        <p>
+          El truco es mapear el RPO/RTO a la combinación adecuada de:
+        </p>
+        <ul>
+          <li><b>Zonas de disponibilidad</b> y <b>conjuntos de disponibilidad</b>.</li>
+          <li><b>Replicación de datos</b> (LRS/ZRS/GRS/GZRS, geo-replicación de BD).</li>
+          <li><b>Orquestación de DR</b> (Azure Site Recovery, Traffic Manager/Front Door).</li>
+        </ul>
+      </section>
+
       <section id="sec1" class="card">
-        <h2>1. Fundamentos: SLA, RTO/RPO, zonas y pares regionales</h2>
+        <h2>1. Alta disponibilidad en una sola región</h2>
+        <p>
+          Cuando el requisito habla de fallos de <b>host</b> o <b>rack</b>, pero no de región completa,
+          nos centramos en mecanismos dentro de la misma región:
+        </p>
         <ul>
-          <li><b>SLA</b>: disponibilidad garantizada del servicio (ej. 99.95%). Aumenta combinando zonas/regiones.</li>
-          <li><b>RTO</b>: tiempo objetivo de recuperación. <b>RPO</b>: punto objetivo (pérdida máxima de datos).</li>
-          <li><b>Zonas de disponibilidad (AZ)</b>: 3 dominios físicos separados dentro de una región (alimentación, red, DC).</li>
-          <li><b>Parejas regionales</b>: cada región de Azure tiene un par predeterminado para DR, actualizaciones coordinadas y prioridad de recuperación.</li>
-          <li><b>Niveles de resiliencia</b>:
-            <ul>
-              <li><span class="ok">Intra-AZ</span>: redundancia dentro de una subzona (VMSS, App Service multi-instancia).</li>
-              <li><span class="ok">Multi-AZ</span>: distribución entre zonas (VMSS zonal, ZRS/GZRS).</li>
-              <li><span class="ok">Multi-Región</span>: replicación geográfica + fronting global (Front Door/Traffic Manager).</li>
-            </ul>
-          </li>
+          <li><b>Availability Sets</b> para distribuir VMs en dominios de fallo y actualización.</li>
+          <li><b>Availability Zones</b> para aislar físicamente (data centers diferentes).</li>
+          <li><b>VM Scale Sets</b> con zonas para escalado automático + HA.</li>
         </ul>
-        <table>
-          <tr><th>Escenario</th><th>Objetivo</th><th>Patrón recomendado</th></tr>
-          <tr><td>Disponibilidad 99.9–99.95%</td><td>Evitar paradas por mantenimiento</td><td>VM en <b>Availability Set</b> + discos administrados</td></tr>
-          <tr><td>Resiliencia zona</td><td>Caída de AZ</td><td>VM/VMSS <b>zonal</b> + LB Standard + ZRS</td></tr>
-          <tr><td>DR regional</td><td>Caída región completa</td><td><b>ASR</b> + datos GZRS/RA-GZRS + Front Door/Traffic Manager</td></tr>
-        </table>
-        <blockquote class="tip">Define RTO/RPO por carga y que guíen la elección de servicios (PaaS vs IaaS) y de redundancia (LRS/ZRS/GZRS/RA-GZRS).</blockquote>
+        <blockquote class="tip">
+          Si el fallo esperado es de <b>data center completo</b> dentro de la región,
+          la respuesta suele incluir <b>Availability Zones</b>; si solo es de host/rack, basta con
+          <b>Availability Sets</b> o réplicas de BD en la misma región.
+        </blockquote>
       </section>
 
-      <!-- 2. Compute -->
       <section id="sec2" class="card">
-        <h2>2. Cómputo: patrones de alta disponibilidad</h2>
-        <h3>Máquinas virtuales (IaaS)</h3>
+        <h2>2. Multi-región y pares regionales</h2>
+        <p>
+          Cuando el requisito menciona “<i>caída completa de la región</i>” o “<i>desastre mayor</i>”,
+          tienes que pensar en <b>multi-región</b>:
+        </p>
         <ul>
-          <li><b>Availability Sets</b>: separa VMs en dominios de error/actualización (≥2 instancias para SLA 99.95%).</li>
-          <li><b>Availability Zones</b>: VMs zonales (Z1/Z2/Z3) con <b>Load Balancer Standard</b> para SLA superior.</li>
-          <li><b>VM Scale Sets</b>: escalado automático; puede ser zonal o multi-zona; combina con <b>Health Probes</b>.</li>
-          <li><b>PPG (Proximity Placement Groups)</b>: baja latencia entre VMs dependientes (DB ↔ App); no aporta resiliencia, sólo proximidad.</li>
-          <li><b>Imágenes y dorado</b>: <i>Shared Image Gallery</i> para distribuir imágenes a varias regiones.</li>
+          <li>Uso de <b>pares regionales</b> para replicación y actualizaciones coordinadas.</li>
+          <li>Servicios con soporte nativo multi-región: Front Door, Traffic Manager, Cosmos DB, etc.</li>
+          <li>Refugio (DR) en región secundaria con capacidad suficiente para cargas críticas.</li>
         </ul>
-        <h3>App Service / Functions</h3>
+        <p>
+          En muchos casos, el diseño correcto combina:
+        </p>
         <ul>
-          <li>Despliegue en <b>múltiples instancias</b> + <b>zonas</b> (si el plan lo soporta).</li>
-          <li>DR con <b>slotted deployments</b> y emparejar a otra región + Front Door para conmutación.</li>
+          <li>Front Door / Traffic Manager para enrutar tráfico entre regiones.</li>
+          <li>BD con <b>geo-replicación</b> (por ejemplo, Azure SQL active geo-replication).</li>
+          <li>VMs replicadas por <b>Azure Site Recovery</b> o plantillas IaC para reconstrucción.</li>
         </ul>
-        <h3>AKS</h3>
-        <ul>
-          <li>Nodos en múltiples <b>zonas</b>; <b>pod disruption budgets</b> y <b>node auto-repair</b>.</li>
-          <li>DR: clúster secundario en otra región + <b>GitOps</b> (Flux/Argo) para reaplicar estado.</li>
-        </ul>
-        <blockquote class="warning">No mezcles PPG con distribución multi-AZ en el mismo conjunto si tu prioridad es resiliencia. PPG puede concentrar recursos en una AZ.</blockquote>
       </section>
 
-      <!-- 3. Datos -->
       <section id="sec3" class="card">
-        <h2>3. Datos: almacenamiento y bases de datos</h2>
-        <h3>Almacenamiento</h3>
+        <h2>3. Azure Site Recovery para IaaS</h2>
+        <p>
+          <b>Azure Site Recovery (ASR)</b> es el servicio principal para orquestar DR de máquinas:
+        </p>
         <ul>
-          <li><b>LRS</b> (intra-DC), <b>ZRS</b> (entre zonas), <b>GZRS</b> (zonas + réplica geográfica), <b>RA-GZRS</b> (lectura en secundario).</li>
-          <li><b>Managed Disks</b>: soporte <b>ZRS</b> para OS/Data (en regiones compatibles).</li>
-          <li><b>Snapshot/Instant Restore</b> para VMs críticas.</li>
+          <li>Replica VMs entre regiones de Azure o desde on-prem a Azure.</li>
+          <li>Permite definir <b>planes de recuperación</b> con orden, grupos de arranque y scripts.</li>
+          <li>Consigue RPO de minutos en muchos escenarios.</li>
         </ul>
-        <h3>Bases de datos</h3>
+
+        <h3>Detalles que AZ-305 suele explotar</h3>
         <ul>
-          <li><b>Azure SQL</b>: 
-            <ul>
-              <li>SQL Database/MI: <b>Zona-redundante</b> y <b>Auto-failover groups</b> multi-región (R/W y Read-only listener).</li>
-              <li>SQL en VM: Always On AG con testigos (File Share Witness/Cloud Witness) y réplica síncrona intra-región; asíncrona a DR.</li>
-            </ul>
-          </li>
-          <li><b>Cosmos DB</b>: multi-región activa/activa; consistencias (Strong, Bounded, Session…). <b>Failover</b> automático.</li>
-          <li><b>PostgreSQL/MySQL flexibles</b>: <b>HA zona</b> + <b>read replicas</b> entre regiones.</li>
-          <li><b>Cache</b> (Azure Cache for Redis): <b>cluster</b> + <b>geo-replication</b> para DR.</li>
+          <li>Los <b>Recovery Plans</b> coordinan aplicaciones multi-tier.</li>
+          <li>Puede integrarse con <b>runbooks</b> (Automation) para tareas extra durante el failover.</li>
+          <li>Es diferente de Azure Backup: <b>ASR es DR, Backup es retención y recuperación de datos</b>.</li>
         </ul>
-        <table>
-          <tr><th>Servicio</th><th>HA</th><th>DR</th><th>Notas</th></tr>
-          <tr><td>SQL Database</td><td>Zona-redundante</td><td>Auto-failover group</td><td>Endpoint R/W único; RPO≈0–5s</td></tr>
-          <tr><td>SQL en VM</td><td>Always On AG</td><td>AG asíncrono + ASR</td><td>Necesita quorum y listener</td></tr>
-          <tr><td>Cosmos DB</td><td>Multi-AZ</td><td>Multi-región activa</td><td>Elige consistencia por app</td></tr>
-          <tr><td>Storage</td><td>ZRS</td><td>GZRS/RA-GZRS</td><td>Leer desde secundario (RA)</td></tr>
-        </table>
       </section>
 
-      <!-- 4. Backup -->
       <section id="sec4" class="card">
-        <h2>4. Backup & Restore</h2>
+        <h2>4. Estrategias de DR para datos</h2>
+        <p>
+          La pieza de datos manda: de nada sirve el DR de VMs si tus datos no están replicados correctamente.
+        </p>
         <ul>
-          <li><b>Recovery Services Vault</b>: copias de VMs, SQL, SAP HANA, Azure Files. Políticas (retención diaria/semanal/mensual/anual).</li>
-          <li><b>Azure Backup (Vault vs Backup Vault)</b>: el nuevo <b>Backup Vault</b> soporta RBAC granular y soft delete mejorado.</li>
-          <li><b>Cross-region restore</b>: restaurar desde réplicas GRS cuando la región primaria no está disponible.</li>
-          <li><b>Instant Restore</b> para VMs (blobs de snapshots). <b>Item-level recovery</b> en Azure Files/SQL.</li>
-          <li><b>Inmutabilidad</b>: <i>Immutable vault</i> + <i>soft delete</i> activado; bloqueo de cambios críticos.</li>
+          <li><b>Azure SQL</b>: active geo-replication, failover groups.</li>
+          <li><b>Cosmos DB</b>: multi-región con multi-master opcional.</li>
+          <li><b>Storage</b>: GRS / GZRS (escrituras asincrónicas a región emparejada).</li>
+          <li><b>BD en VMs</b>: tecnologías propias (Always On, log shipping, etc.) + ASR.</li>
         </ul>
-        <blockquote class="tip">Separa <b>vaults</b> por entorno (Prod/No-Prod) y etiqueta los recursos (owner, criticality, RTO/RPO) para auditoría.</blockquote>
+        <p>
+          El examen valora que alinees la estrategia de datos con la de computación:
+          si haces failover de la app a otra región, los datos deben estar allí también.
+        </p>
       </section>
 
-      <!-- 5. ASR -->
       <section id="sec5" class="card">
-        <h2>5. Azure Site Recovery (ASR)</h2>
-        <p>Servicio de replicación y orquestación de <b>failover</b> para VMs (Azure ↔ Azure, on-prem ↔ Azure).</p>
-        <h3>Conceptos clave</h3>
-        <ul>
-          <li><b>Appliance/agent</b> según origen (vSphere/Hyper-V/Azure). Replica a <b>Storage</b> en región de DR.</li>
-          <li><b>Tipos de failover</b>: Planeado (cero pérdida), No planeado (DR real), <b>Test failover</b> (aislado, sin impacto).</li>
-          <li><b>Runbooks</b> y <b>Recovery Plans</b>: secuencia por grupos (DB → backend → frontend), scripts de arranque, cambios DNS.</li>
-          <li><b>Red</b>: prepara VNets, NSG y UDR en la región DR. Reasigna IPs y emparejamientos.</li>
-          <li><b>Volver</b>: <b>Failback</b> con reprotección cuando la primaria se recupere.</li>
-        </ul>
-        <h3>Flujo típico</h3>
-        <pre>
-[Origen] Descubrimiento → Habilitar replicación → Objetivos RPO/RTO
-→ (Opcional) Test Failover aislado → Validación app
-→ Failover (planeado/no planeado) → Runbooks post-failover → Fallback
-        </pre>
-        <blockquote class="warning">Incluye <b>dependencias externas</b>: Key Vault, identidades, DNS, colas/mensajería y endpoints públicos. Planifícalas en el Recovery Plan.</blockquote>
-      </section>
+        <h2>5. Patrones y escenarios de examen</h2>
 
-      <!-- 6. Orquestación global -->
-      <section id="sec6" class="card">
-        <h2>6. Orquestación global: Front Door / Traffic Manager</h2>
+        <h3>Patrones típicos</h3>
         <ul>
-          <li><b>Azure Front Door</b>: CDN + WAF + anycast; <b>health probes</b> L7; enrutamiento por prioridad, latencia o path; TLS end-to-end.</li>
-          <li><b>Traffic Manager</b>: gestor DNS con métodos (Priority, Performance, Weighted, Geographic); útil para endpoints que no son HTTP.</li>
-          <li><b>Escenarios</b>:
-            <ul>
-              <li><b>Activa-activa</b>: múltiples regiones activas detrás de Front Door; consistencia de estado mediante cachés distribuidas/GeoDB.</li>
-              <li><b>Activa-pasiva</b>: Traffic Manager con prioridad (primaria → secundaria); más simple, coste menor.</li>
-            </ul>
+          <li>
+            RPO bajo (minutos) y RTO reducido, fallo de región completa
+            → <b>ASR + geo-replicación de datos + Front Door/Traffic Manager</b>.
+          </li>
+          <li>
+            Alta disponibilidad frente a fallos de host
+            → <b>Availability Sets</b> o <b>Scale Sets</b> con múltiples instancias.
+          </li>
+          <li>
+            Alta disponibilidad dentro de la región, riesgo de caída de data center
+            → <b>Availability Zones</b>.
           </li>
         </ul>
-        <table>
-          <tr><th>Necesidad</th><th>Servicio</th><th>Motivo</th></tr>
-          <tr><td>HTTP(S) global + WAF</td><td>Front Door</td><td>Anycast, aceleración, protección capa 7</td></tr>
-          <tr><td>Servicios no HTTP</td><td>Traffic Manager</td><td>Basado en DNS, soporta puertos variados</td></tr>
-          <tr><td>Failover sencillo</td><td>Traffic Manager (Priority)</td><td>Fácil y barato</td></tr>
-        </table>
-      </section>
 
-      <!-- 7. Operación -->
-      <section id="sec7" class="card">
-        <h2>7. Pruebas, costes y operación</h2>
-        <ul>
-          <li><b>Pruebas periódicas</b>: <i>Test failover</i> al menos trimestral; documenta resultados y tiempos.</li>
-          <li><b>Automatización</b>: ARM/Bicep/Terraform para levantar la región DR (infra as code), scripts de datos semilla.</li>
-          <li><b>Coste</b>: DR <i>cold</i> (infra apagada) vs <i>warm</i> (mínimo encendido) vs <i>hot</i> (activa-activa). Ajusta SKU y escalado.</li>
-          <li><b>Identidad</b>: Entra ID está globalizado pero revisa <b>Conditional Access</b>, PIM y claves de <b>Key Vault</b> (habilita recuperación suave y purge protection).</li>
-          <li><b>Observabilidad</b>: Log Analytics + Azure Monitor + alertas; <b>Workbook de DR</b> para panelizar RPOs y estado réplica.</li>
-        </ul>
-      </section>
-
-      <!-- 8. Checklist -->
-      <section id="sec8" class="card">
-        <h2>8. Checklist de examen</h2>
-        <ul>
-          <li>Define <b>RTO/RPO</b> por carga. Elige redundancia: LRS/ZRS/GZRS/RA-GZRS.</li>
-          <li>VMs: <b>Availability Set</b> (intra-DC) vs <b>AZ</b> (multi-zona) + LB Standard.</li>
-          <li>Datos: <b>SQL Auto-failover groups</b>, <b>Cosmos multi-región</b>, discos <b>ZRS</b>.</li>
-          <li>Backup: <b>Recovery/Backup Vault</b>, inmutabilidad y <b>Cross-region restore</b>.</li>
-          <li>DR: <b>ASR</b> + Recovery Plans + Test Failover sin impacto.</li>
-          <li>Global: <b>Front Door</b> para HTTP(S), <b>Traffic Manager</b> para DNS/otros protocolos.</li>
-          <li>Operación: pruebas periódicas, etiquetado, observabilidad y coste según <i>cold/warm/hot</i>.</li>
-        </ul>
+        <h3>Laboratorio recomendado</h3>
+        <ol>
+          <li>Crear una aplicación sencilla con front + BD en una región primaria.</li>
+          <li>Habilitar ASR para las VMs hacia una región secundaria.</li>
+          <li>Configurar geo-replicación para la BD.</li>
+          <li>Orquestar un plan de recuperación y probar un failover de prueba.</li>
+        </ol>
       </section>
 
     </div>
   </div>
 </main>
 
+>
+
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="exam-chip azure">ITHub.es</span>
-      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
-      <div><a href="javascript:history.back()" class="pill-btn">< VOLVER</a></div>
-
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">
+        ITHub.es
+      </span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span>
+    </div>
+    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
   </div>
 </footer>
 
-</body></html>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Monitorización y alertas en Azure (AZ-104) | ITHub.es</title>
-<meta name="description" content="Guía premium de monitorización en Azure para AZ-104: Azure Monitor, Log Analytics, DCR, alertas de métrica y logs, Action Groups y Activity Log." />
+<title>Load Balancing en Azure (AZ-104) | ITHub.es</title>
+<meta name="description" content="Guía premium de balanceo de carga en Azure para AZ-104: Load Balancer, Application Gateway y Azure Front Door, con patrones de examen y laboratorio." />
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
@@ -183,16 +183,17 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
   }
 })();
 </script>
-
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0">
-    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span>
   </div>
-  <h1>Azure Monitoring & Alerts (AZ-104) — Azure Monitor, Log Analytics y alertas</h1>
+
+  <h1>Coste y fiabilidad en Azure (AZ-305)</h1>
+
   <div class="meta">
-    <span class="pill">Dominio: Monitorización y mantenimiento</span>
-    <span class="pill">Nivel: Básico / Intermedio</span>
-    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Dominio: Coste y resiliencia</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 30–40 min</span>
     <span class="pill">Última revisión: Nov 2025</span>
   </div>
 
@@ -200,108 +201,128 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
     <aside class="aside">
       <h3>ÍNDICE</h3>
       <ul class="toc">
-        <li><a href="#sec0"><small>0.</small> Visión general de monitorización en Azure</a></li>
-        <li><a href="#sec1"><small>1.</small> Azure Monitor y métricas básicas</a></li>
-        <li><a href="#sec2"><small>2.</small> Log Analytics Workspaces y DCR</a></li>
-        <li><a href="#sec3"><small>3.</small> Alertas de métricas vs alertas de logs</a></li>
-        <li><a href="#sec4"><small>4.</small> Action Groups, notificaciones y automatización</a></li>
-        <li><a href="#sec5"><small>5.</small> Diagnósticos, Activity Log y recursos clave</a></li>
-        <li><a href="#sec6"><small>6.</small> Escenarios de examen y laboratorio práctico</a></li>
+        <li><a href="#sec0"><small>0.</small> Encontrar el equilibrio coste–fiabilidad</a></li>
+        <li><a href="#sec1"><small>1.</small> Tipos de compra de cómputo</a></li>
+        <li><a href="#sec2"><small>2.</small> Right-sizing y elasticidad</a></li>
+        <li><a href="#sec3"><small>3.</small> Niveles de redundancia en almacenamiento</a></li>
+        <li><a href="#sec4"><small>4.</small> Diseño de SLA de extremo a extremo</a></li>
+        <li><a href="#sec5"><small>5.</small> Patrones de examen</a></li>
       </ul>
     </aside>
 
     <div class="content-wrap">
-      
-<section id="sec0" class="card">
-  <h2>0. Visión general de monitorización en Azure</h2>
-  <p>La monitorización es un dominio específico del examen AZ-104. Debes entender cómo usar:</p>
-  <ul>
-    <li><b>Azure Monitor</b> como plano central de métricas y logs.</li>
-    <li><b>Log Analytics</b> para consultas avanzadas (KQL).</li>
-    <li><b>Alertas</b> que disparan correos, webhooks, runbooks, etc.</li>
-  </ul>
-  <blockquote class="tip">
-    Piensa siempre en tres pasos: <b>recoger</b> datos, <b>almacenarlos</b> en el sitio correcto y
-    crear <b>alertas</b> o paneles en base a ellos.
-  </blockquote>
-</section>
 
-<section id="sec1" class="card">
-  <h2>1. Azure Monitor y métricas básicas</h2>
-  <p><b>Azure Monitor</b> agrega métricas de todos los recursos de Azure.</p>
-  <ul>
-    <li><b>Métricas</b>: valores numéricos en el tiempo (CPU, memoria, IOPS, etc.).</li>
-    <li><b>Logs</b>: eventos estructurados (registros de actividad, diagnósticos, etc.).</li>
-    <li>La mayoría de recursos exponen métricas sin configuración adicional; sólo debes decidir si crear alertas.</li>
-  </ul>
-</section>
+      <section id="sec0" class="card">
+        <h2>0. Encontrar el equilibrio coste–fiabilidad</h2>
+        <p>
+          AZ-305 insiste en que un buen arquitecto no solo diseña soluciones fiables,
+          sino que también <b>optimiza coste</b>. Muchas preguntas plantean:
+        </p>
+        <ul>
+          <li>Una arquitectura “sobredimensionada” que hay que abaratar sin perder SLA.</li>
+          <li>Un requisito de SLA concreto (99,9%, 99,95%, 99,99%).</li>
+          <li>Decisiones entre pagar capacidad fija vs elasticidad.</li>
+        </ul>
+      </section>
 
-<section id="sec2" class="card">
-  <h2>2. Log Analytics Workspaces y Data Collection Rules</h2>
-  <p>Los <b>Log Analytics Workspaces</b> son la base para consolidar logs y consultar con KQL.</p>
-  <ul>
-    <li>Varios recursos pueden enviar sus logs al mismo workspace.</li>
-    <li>Las <b>Data Collection Rules (DCR)</b> definen qué datos se recogen, cómo se transforman y a qué destino se envían.</li>
-    <li>En el examen se enfatiza el envío de logs de <b>VMs</b>, <b>Azure Firewall</b>, <b>Key Vault</b>, etc.</li>
-  </ul>
-</section>
+      <section id="sec1" class="card">
+        <h2>1. Tipos de compra de cómputo</h2>
+        <p>
+          Para VMs, AKS y otros recursos compute, las opciones principales son:
+        </p>
+        <ul>
+          <li><b>On-Demand (pago por uso)</b>: máxima flexibilidad, coste más alto.</li>
+          <li><b>Reserved Instances / Reservations</b>: compromiso 1–3 años, ahorro importante.</li>
+          <li><b>Savings Plans</b>: compromiso de gasto en compute por hora, más flexibles que RIs.</li>
+          <li><b>Spot</b>: muy barato, pero capacidad puede retirarse; ideal para batch o cargas tolerantes.</li>
+        </ul>
+        <p>
+          Patrón del examen: para cargas <b>estables y críticas</b>, suele ganar la combinación
+          de <b>Reservations o Savings Plans</b> + diseño HA apropiado. Para cargas batch
+          o no críticas, <b>Spot VMs</b> puede ser la respuesta más eficiente.
+        </p>
+      </section>
 
-<section id="sec3" class="card">
-  <h2>3. Alertas de métricas vs alertas de logs</h2>
-  <p>La distinción es muy importante:</p>
-  <ul>
-    <li><b>Alertas de métricas</b>: reaccionan casi en tiempo real a valores numéricos (CPU &gt; 80%, disco lleno, etc.).</li>
-    <li><b>Alertas de logs</b>: basadas en una consulta KQL contra el workspace o Activity Log.</li>
-  </ul>
-  <blockquote class="tip">
-    Si el requisito es <i>latencia mínima</i> usa alertas de <b>métrica</b>.
-    Si necesitas condiciones complejas (varias tablas, agregaciones) → alerta de <b>logs</b>.
-  </blockquote>
-</section>
+      <section id="sec2" class="card">
+        <h2>2. Right-sizing y elasticidad</h2>
+        <p>
+          Dos formas de ahorrar manteniendo fiabilidad:
+        </p>
+        <ul>
+          <li><b>Right-sizing</b>: ajustar tamaños de VM, eliminar infra infrautilizada.</li>
+          <li><b>Elasticidad</b>: adaptar la capacidad al tráfico (auto scale, serverless).</li>
+        </ul>
+        <p>
+          En AZ-305 es típico que el caso de uso sugiera pasar de VMs fijas a:
+        </p>
+        <ul>
+          <li><b>VM Scale Sets</b> con autoescalado.</li>
+          <li><b>App Service</b> o <b>Functions</b> donde tenga sentido el modelo PaaS/serverless.</li>
+        </ul>
+      </section>
 
-<section id="sec4" class="card">
-  <h2>4. Action Groups, notificaciones y automatización</h2>
-  <p>Las alertas no hacen nada por sí solas: necesitan un <b>Action Group</b> que defina las acciones.</p>
-  <ul>
-    <li>Notificaciones: email/SMS/Push/Teams.</li>
-    <li>Automatización: webhooks, Logic Apps, Functions, Automation Runbooks.</li>
-    <li>Es buena práctica reutilizar Action Groups para grupos de alertas similares.</li>
-  </ul>
-</section>
+      <section id="sec3" class="card">
+        <h2>3. Niveles de redundancia en almacenamiento</h2>
+        <p>
+          Elegir la redundancia adecuada impacta tanto en coste como en durabilidad:
+        </p>
+        <ul>
+          <li><b>LRS</b>: 3 copias en un único data center.</li>
+          <li><b>ZRS</b>: 3 copias en distintas zonas de la misma región.</li>
+          <li><b>GRS</b>: LRS local + copia asincrónica en región emparejada.</li>
+          <li><b>GZRS</b>: ZRS local + copia asincrónica en región emparejada.</li>
+        </ul>
+        <p>
+          El examen suele plantear requisitos de:
+        </p>
+        <ul>
+          <li><b>Durabilidad muy alta</b> y tolerancia a caída regional → GRS / GZRS.</li>
+          <li>Coste contenido y alta disponibilidad local → ZRS.</li>
+        </ul>
+      </section>
 
-<section id="sec5" class="card">
-  <h2>5. Diagnósticos, Activity Log y recursos clave</h2>
-  <p>Muchos servicios tienen configuración de <b>Diagnostic settings</b> para enviar datos a:</p>
-  <ul>
-    <li><b>Log Analytics workspace</b>.</li>
-    <li><b>Storage Account</b> (retención barata a largo plazo).</li>
-    <li><b>Event Hub</b> (integración con sistemas externos).</li>
-  </ul>
-  <p>El <b>Azure Activity Log</b> registra cambios de control-plane (creación, borrado, modificaciones de recursos) y
-     suele aparecer en preguntas de auditoría y cumplimiento.</p>
-</section>
+      <section id="sec4" class="card">
+        <h2>4. Diseño de SLA de extremo a extremo</h2>
+        <p>
+          Los SLAs de Azure se dan por servicio, pero el usuario final percibe un
+          <b>SLA compuesto</b>. Por ejemplo:
+        </p>
+        <ul>
+          <li>SLA de App Service + SLA de SQL Database + SLA de Storage.</li>
+          <li>Si uno falla, tu aplicación falla.</li>
+        </ul>
+        <p>
+          Para subir el SLA, las preguntas suelen dirigir hacia:
+        </p>
+        <ul>
+          <li>Desplegar instancias en varias <b>zonas de disponibilidad</b>.</li>
+          <li>Usar <b>multi-región</b> con balanceadores globales.</li>
+          <li>Añadir redundancia de datos adecuada.</li>
+        </ul>
+      </section>
 
-<section id="sec6" class="card">
-  <h2>6. Escenarios de examen y laboratorio práctico</h2>
-  <h3>Escenarios frecuentes</h3>
-  <ul>
-    <li>“<i>Notificar al administrador cuando la CPU de una VM supere el 80% durante 10 minutos</i>” → alerta de métrica + Action Group.</li>
-    <li>“<i>Auditar quién borró un recurso concreto</i>” → consulta al <b>Activity Log</b>.</li>
-    <li>“<i>Centralizar logs de firewall, Key Vault y VMs</i>” → Diagnostic settings hacia un workspace común.</li>
-  </ul>
-
-  <h3>Laboratorio sugerido</h3>
-  <ol>
-    <li>Crea un workspace de Log Analytics y conecta un par de VMs con Azure Monitor Agent (AMA).</li>
-    <li>Activa diagnostic settings para un recurso (por ejemplo, Key Vault) apuntando al workspace.</li>
-    <li>Crea una alerta de logs basada en una consulta KQL sencilla (por ejemplo, accesos denegados).</li>
-    <li>Crea un Action Group que envíe emails a tu dirección y prueba a disparar la alerta.</li>
-  </ol>
-</section>
+      <section id="sec5" class="card">
+        <h2>5. Patrones de examen</h2>
+        <ul>
+          <li>
+            “<i>Carga estable en producción, 24x7, importante ahorro</i>”
+            → <b>Reserved Instances o Savings Plans</b> + diseño HA estándar.
+          </li>
+          <li>
+            “<i>Jobs batch nocturnos que pueden interrumpirse</i>”
+            → uso de <b>Spot VMs</b> o workloads serverless.
+          </li>
+          <li>
+            “<i>Requisito de supervivencia a caída regional</i>”
+            → <b>GZRS/GRS</b> + arquitectura multi-región para la app.
+          </li>
+        </ul>
+      </section>
 
     </div>
   </div>
 </main>
+
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">

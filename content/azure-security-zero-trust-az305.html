@@ -1,136 +1,331 @@
 <!doctype html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Seguridad y Zero Trust en Azure (AZ-305) — ITHub</title>
-<meta name="description" content="Diseño de seguridad, segmentación y Zero Trust en Azure para el examen AZ-305. Incluye Defender, identidades, cifrado y acceso seguro."/>
-<link rel="icon" href="/assets/ithub.ico">
+<title>Zero Trust en Azure (AZ-305) | ITHub.es</title>
+<meta name="description" content="Guía premium de balanceo de carga en Azure para AZ-104: Load Balancer, Application Gateway y Azure Front Door, con patrones de examen y laboratorio." />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DYZ3GCXHEK');
+</script>
+
 <style>
-:root{--bg:#0e111a;--surface:#121826;--ink:#eaf0ff;--muted:#a9b6e5;--stroke:#24304d;--accent:#6aa9ff;--radius:16px;--shadow:0 24px 48px rgba(8,12,30,.45);}
-body{margin:0;font-family:Inter,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65}
-.container{max-width:1100px;margin:0 auto;padding:0 20px}
-header{border-bottom:1px solid var(--stroke);background:#101628;position:sticky;top:0;z-index:50}
-header .nav{height:60px;display:flex;align-items:center;justify-content:space-between}
-.menu a{color:var(--muted);margin:0 8px;text-transform:uppercase;font-weight:800;text-decoration:none}
-.menu a:hover{color:var(--ink)}
-.pill-btn{background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;padding:6px 14px;border-radius:10px;font-size:12px;font-weight:900;text-transform:uppercase;text-decoration:none}
+
+:root{
+  --bg:#0e111a; --surface:#121826; --surface2:#0f1523; --ink:#eaf0ff; --muted:#a9b6e5; --stroke:#24304d;
+  --badge:#1a2135; --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+  --radius:16px; --shadow:0 24px 48px rgba(8,12,30,.45);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(10,14,25,.9),rgba(10,14,25,.55));
+  border-bottom:1px solid var(--stroke)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+.brand img.site-logo{height:40px;width:auto;display:block}
+nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+nav.menu a{display:inline-flex;align-items:center;justify-content:center;min-width:100px;height:38px;padding:0 12px;border-radius:12px;border:1px solid transparent}
+nav.menu a:hover{border-color:#2b3455;color:var(--ink)}
+.authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#161d33,#121a31); border:1px solid #2b3455; border-radius:999px; padding:4px 6px; box-shadow:0 8px 20px rgba(5,10,30,.35); max-height:44px;}
+.pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:84px;height:32px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:linear-gradient(180deg,#7e73ff,#6457ff);color:#fff;font-weight:900;cursor:pointer;font-size:12px;text-transform:uppercase}
+.pill-btn:hover{transform:translateY(-1px)}
+.hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+
+/* Hero */
 .hero{padding:26px 0 8px}
-.exam-chip{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:20px;border:1px solid var(--stroke);background:#1a2135;font-weight:900;color:#eaf0ff}
-h1{text-align:center;margin:14px 0;font-size:2rem}
-.grid{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:20px}
-@media(max-width:980px){.grid{grid-template-columns:1fr}}
-.aside{background:#101a33;border:1px solid var(--stroke);border-radius:var(--radius);padding:14px}
-.toc{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
-.toc a{display:block;padding:10px 12px;border-radius:12px;border:1px solid #22304f;background:#0e1629;color:#dbe7ff;font-weight:800;text-decoration:none}
-.toc a:hover{border-color:#31539a}
-.card{background:#111937;border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}
-blockquote.tip{margin:14px 0;padding:12px;border-left:4px solid #3ad97a;background:rgba(58,217,122,.08);border-radius:12px}
-pre{background:#0b1222;color:#e8f1ff;border:1px solid #22304f;border-radius:10px;padding:10px;overflow:auto}
-footer{border-top:1px solid var(--stroke);padding:22px 0;text-align:center;color:#9ca8d9;margin-top:18px}
+.exam-chip{ display:inline-flex; align-items:center; gap:10px; padding:8px 14px; 
+  border-radius:20px; border:1px solid var(--stroke); background:var(--badge); font-weight:900 }
+.exam-chip i{width:16px;height:2px;background:#ffe9cc;display:inline-block;box-shadow:0 6px 0 #ffe9cc, 0 -6px 0 #ffe9cc;border-radius:2px}
+.exam-chip.azure{ border-color:rgba(106,169,255,.7); background:rgba(18,30,52,.55); color:#e7f1ff }
+h1{font-size:clamp(1.6rem,3.6vw,2.6rem);margin:16px 0 10px;text-align:center}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 0;justify-content:center}
+.meta .pill{padding:8px 12px;border:1px solid var(--stroke);border-radius:999px;font-weight:800;background:var(--surface)}
+
+/* Layout */
+.grid{
+  display:grid;
+  grid-template-columns:260px minmax(0,1fr);
+  gap:18px;
+  margin-top:16px;
+}
+@media(max-width:980px){
+  .grid{grid-template-columns:1fr}
+}
+
+/* Sidebar index */
+.aside{background:linear-gradient(180deg,#0f1627,#0f1424); border:1px solid var(--stroke); border-radius:var(--radius); padding:14px; box-shadow:var(--shadow)}
+.aside h3{margin:8px 0 10px}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;border:1px solid #22304f;background:#0e1629;font-weight:800;color:#dbe7ff;font-size:.86rem}
+.toc a small{color:#9fb3e7;font-weight:700}
+.toc a:hover{border-color:#31539a; transform:translateX(2px)}
+
+/* Content column */
+.content-wrap{
+  max-width:880px;
+  margin:0 auto;
+}
+
+/* Content card */
+.card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);margin-bottom:14px}
+.card h2{margin:2px 0 8px;font-size:clamp(1.15rem,2.1vw,1.55rem)}
+.card h3{margin:10px 0 6px;font-size:1.02rem}
+.card p{margin:0 0 6px}
+.card ul, .card ol{margin:0 0 6px 20px}
+
+/* Callouts */
+blockquote.tip,
+blockquote.warning{
+  margin:10px 0 2px;
+  padding:10px 12px;
+  border-radius:10px;
+  max-width:100%;
+  font-size:.9rem;
+}
+blockquote.tip{
+  border-left:4px solid var(--ok);
+  background:rgba(58,217,122,.08);
+}
+blockquote.warning{
+  border-left:4px solid var(--warn);
+  background:rgba(255,214,107,.08);
+}
+
+/* Code */
+pre{
+  background:#0b1222;
+  color:#e8f1ff;
+  border:1px solid #22304f;
+  border-radius:10px;
+  padding:9px 10px;
+  overflow-x:auto;
+  max-width:100%;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-size:.85rem;
+}
+code{font-family:Consolas,ui-monospace,monospace}
+kbd{background:#0a1221;border:1px solid #22304f;border-bottom-width:2px;border-radius:6px;padding:2px 6px}
+
+/* Tables */
+.table-scroll{overflow-x:auto;width:100%;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:6px 0;
+  border:1px solid #22304f;
+  font-size:.85rem;
+}
+th,td{
+  border:1px solid #22304f;
+  padding:6px 8px;
+  white-space:normal;
+  word-break:break-word;
+}
+th{background:#16213a}
+
+/* Footer */
+footer{border-top:1px solid var(--stroke);margin-top:18px;padding:22px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+
 </style>
 </head>
 <body>
-<header>
- <div class="container nav">
-  <div><a href="/"><img src="/assets/ithub-logo.svg" alt="ITHub" height="38"></a></div>
-  <nav class="menu"><a href="/">Home</a><a href="/content/content.html">Contenidos</a><a href="/score/ranking.html">Ranking</a></nav>
-  <a href="/login/login.html" class="pill-btn">Login</a>
- </div>
-</header>
 
-<main class="container hero">
- <div style="display:flex;justify-content:center"><span class="exam-chip">Azure · AZ-305</span></div>
- <h1>Seguridad y Zero Trust en Azure (AZ-305)</h1>
-
- <div class="grid">
-  <aside class="aside">
-   <h3>ÍNDICE</h3>
-   <ul class="toc">
-    <li><a href="#sec1">1. Principios Zero Trust</a></li>
-    <li><a href="#sec2">2. Identidad y control de acceso</a></li>
-    <li><a href="#sec3">3. Protección de red y endpoints</a></li>
-    <li><a href="#sec4">4. Cifrado y protección de datos</a></li>
-    <li><a href="#sec5">5. Monitoreo y respuesta</a></li>
-    <li><a href="#sec6">6. Checklist de examen</a></li>
-   </ul>
-  </aside>
-
-  <div>
-   <section id="sec1" class="card">
-    <h2>1. Principios Zero Trust</h2>
-    <p>Zero Trust asume que nada dentro o fuera del perímetro es confiable. Toda conexión se valida explícitamente.</p>
-    <ul>
-     <li><b>Verificar explícitamente:</b> autenticación fuerte y continua.</li>
-     <li><b>Usar acceso con privilegio mínimo:</b> roles temporales y segmentación.</li>
-     <li><b>Asumir brecha:</b> telemetría, detección y respuesta continua.</li>
-    </ul>
-    <blockquote class="tip">Zero Trust ≠ una herramienta, es una <b>estrategia arquitectónica</b>.</blockquote>
-   </section>
-
-   <section id="sec2" class="card">
-    <h2>2. Identidad y control de acceso</h2>
-    <ul>
-     <li><b>Microsoft Entra ID:</b> identidad central con autenticación multifactor (MFA) y Conditional Access.</li>
-     <li><b>Privileged Identity Management (PIM):</b> acceso just-in-time para roles administrativos.</li>
-     <li><b>Managed Identities:</b> evitan credenciales en código.</li>
-     <li><b>Access Reviews</b> y <b>Entitlement Management</b> para gobernanza de usuarios.</li>
-    </ul>
-    <pre>Ejemplo: PIM activa Owner 1h → MFA → registro de auditoría</pre>
-   </section>
-
-   <section id="sec3" class="card">
-    <h2>3. Protección de red y endpoints</h2>
-    <ul>
-     <li><b>Azure Firewall Premium:</b> inspección TLS, filtrado FQDN y categorías URL.</li>
-     <li><b>Network Security Groups (NSG):</b> reglas L4 por subred o NIC.</li>
-     <li><b>Azure DDoS Protection:</b> capa perimetral.</li>
-     <li><b>WAF:</b> protege apps web en App Gateway o Front Door.</li>
-     <li><b>Just-In-Time Access:</b> Defender habilita acceso temporal a VMs.</li>
-    </ul>
-   </section>
-
-   <section id="sec4" class="card">
-    <h2>4. Cifrado y protección de datos</h2>
-    <ul>
-     <li><b>Azure Key Vault:</b> almacena claves, secretos y certificados.</li>
-     <li><b>Encryption at rest:</b> Storage y SQL usan AES-256.</li>
-     <li><b>Encryption in transit:</b> TLS 1.2/1.3 obligatorio.</li>
-     <li><b>Confidential Compute:</b> protege datos en uso con enclaves SGX.</li>
-    </ul>
-   </section>
-
-   <section id="sec5" class="card">
-    <h2>5. Monitoreo y respuesta</h2>
-    <ul>
-     <li><b>Microsoft Defender for Cloud:</b> postura, recomendaciones y alertas.</li>
-     <li><b>Sentinel:</b> SIEM/SOAR nativo con correlación de eventos.</li>
-     <li><b>Secure Score:</b> medición global del cumplimiento de seguridad.</li>
-    </ul>
-   </section>
-
-   <section id="sec6" class="card">
-    <h2>6. Checklist de examen</h2>
-    <ul>
-     <li>Zero Trust = verificar, minimizar, asumir brecha.</li>
-     <li>MFA + PIM + Conditional Access = obligatorio.</li>
-     <li>Firewall Premium + NSG + DDoS + WAF.</li>
-     <li>Key Vault + cifrado AES-256 + Confidential Compute.</li>
-     <li>Defender + Sentinel + Secure Score.</li>
-    </ul>
-   </section>
+<header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <a href="/"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></a>
+    </div>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="/">HOME</a>
+      <a href="/content/content.html">CONTENIDOS</a>
+      <a href="/score/ranking.html">RANKING</a>
+    </nav>
+    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+      <a id="btnLogin" class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
+      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+      </div>
+    </div>
   </div>
- </div>
+</header>
+<script>
+function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+(function(){
+  const u=getCurrentUser();
+  const login=document.getElementById('btnLogin');
+  const signup=document.getElementById('btnSignup');
+  const userArea=document.getElementById('userArea');
+  const nameTop=document.getElementById('userNameTop');
+  if(u){
+    login.style.display='none';
+    signup.style.display='none';
+    userArea.style.display='flex';
+    nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+  }
+})();
+</script>
+<main class="container hero">
+  <div style="display:flex;justify-content:center;margin:10px 0">
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span>
+  </div>
+
+  <h1>Zero Trust en Azure (AZ-305)</h1>
+
+  <div class="meta">
+    <span class="pill">Dominio: Seguridad y Zero Trust</span>
+    <span class="pill">Nivel: Avanzado</span>
+    <span class="pill">Tiempo de lectura: 40–50 min</span>
+    <span class="pill">Última revisión: Nov 2025</span>
+  </div>
+
+  <div class="grid">
+    <aside class="aside">
+      <h3>ÍNDICE</h3>
+      <ul class="toc">
+        <li><a href="#sec0"><small>0.</small> Principios de Zero Trust</a></li>
+        <li><a href="#sec1"><small>1.</small> Identidad como perímetro</a></li>
+        <li><a href="#sec2"><small>2.</small> Acceso privado a PaaS y datos</a></li>
+        <li><a href="#sec3"><small>3.</small> Microsegmentación de red</a></li>
+        <li><a href="#sec4"><small>4.</small> Postura de seguridad y políticas</a></li>
+        <li><a href="#sec5"><small>5.</small> Patrones Zero Trust de examen</a></li>
+      </ul>
+    </aside>
+
+    <div class="content-wrap">
+
+      <section id="sec0" class="card">
+        <h2>0. Principios de Zero Trust</h2>
+        <p>
+          Zero Trust se resume en tres ideas clave:
+        </p>
+        <ul>
+          <li><b>No confiar nunca, verificar siempre</b>.</li>
+          <li><b>Asumir brecha</b>: diseñar como si la red ya estuviera comprometida.</li>
+          <li><b>Acceso con privilegios mínimos</b> y segmentación fina.</li>
+        </ul>
+        <p>
+          En AZ-305 se traduce en elegir arquitecturas que:
+        </p>
+        <ul>
+          <li>Minimicen exposición pública.</li>
+          <li>Usen <b>identidad fuerte</b> y <b>acceso condicional</b>.</li>
+          <li>Reduzcan movimientos laterales mediante segmentación.</li>
+        </ul>
+      </section>
+
+      <section id="sec1" class="card">
+        <h2>1. Identidad como perímetro</h2>
+        <p>
+          En lugar de confiar en la IP de origen, Zero Trust pone el foco en la <b>identidad</b>:
+        </p>
+        <ul>
+          <li><b>Azure AD / Entra ID</b> como plano de identidad central.</li>
+          <li><b>Conditional Access</b> para evaluar riesgo, ubicación, dispositivo y app.</li>
+          <li><b>Multi-Factor Authentication</b> obligatorio para roles privilegiados.</li>
+          <li><b>Privileged Identity Management (PIM)</b> para roles just-in-time.</li>
+        </ul>
+      </section>
+
+      <section id="sec2" class="card">
+        <h2>2. Acceso privado a PaaS y datos</h2>
+        <p>
+          Un diseño Zero Trust evita exponer servicios PaaS directamente a Internet.
+          Los patrones principales son:
+        </p>
+        <ul>
+          <li><b>Private Endpoints</b> para Storage, SQL, Web Apps, etc.</li>
+          <li>Uso de <b>Private DNS Zones</b> para resolución interna de estos endpoints.</li>
+          <li>Acceso desde VNets, redes on-prem o VPN/ER, nunca desde IPs públicas anónimas.</li>
+        </ul>
+        <p>
+          Este enfoque suele aparecer en el examen cuando el requisito es
+          “<i>acceder a datos PaaS solo desde redes privadas y dispositivos gestionados</i>”.
+        </p>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. Microsegmentación de red</h2>
+        <p>
+          En lugar de tener una única gran red “de confianza”, Zero Trust promueve
+          la <b>microsegmentación</b>:
+        </p>
+        <ul>
+          <li>Subredes separadas para front, lógica, datos y gestión.</li>
+          <li>NSG y Azure Firewall controlando tráfico Este-Oeste de forma explícita.</li>
+          <li>Uso de <b>Application Security Groups</b> para simplificar reglas por rol.</li>
+        </ul>
+        <p>
+          El objetivo es que, si un nodo se compromete, el atacante no pueda moverse fácilmente
+          hacia otros activos críticos.
+        </p>
+      </section>
+
+      <section id="sec4" class="card">
+        <h2>4. Postura de seguridad y políticas</h2>
+        <p>
+          Zero Trust no es solo red: requiere una <b>postura de seguridad</b> consistente y automatizada:
+        </p>
+        <ul>
+          <li><b>Defender for Cloud</b> para recomendaciones, Secure Score y planes de protección.</li>
+          <li><b>Azure Policy</b> para imponer configuraciones (por ejemplo, exigir cifrado, denegar recursos públicos, etc.).</li>
+          <li><b>Compliance</b> y estándares (ISO, NIST, etc.) como marco de referencia.</li>
+        </ul>
+      </section>
+
+      <section id="sec5" class="card">
+        <h2>5. Patrones Zero Trust de examen</h2>
+        <ul>
+          <li>
+            “<i>Reducir la exposición de servicios PaaS</i>”
+            → Private Endpoints + Private DNS + acceso solo desde VNets.
+          </li>
+          <li>
+            “<i>Evitar el uso de cuentas con privilegios permanentes</i>”
+            → PIM + roles just-in-time + MFA.
+          </li>
+          <li>
+            “<i>Limitar movimientos laterales</i>”
+            → microsegmentación con NSG, ASG y Azure Firewall.
+          </li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
 </main>
+
+>
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:10px"><span class="exam-chip azure">ITHub.es</span>
-      <span>© 2025 · Contenido educativo para certificaciones.</span></div>
-     <div><a href="javascript:history.back()" class="pill-btn">< VOLVER</a></div>
-
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stroke);background:var(--badge);padding:6px 10px;border-radius:999px;font-weight:900">
+        ITHub.es
+      </span>
+      <span>© 2025 · Contenido educativo para certificaciones.</span>
+    </div>
+    <div><a href="/content/content.html" class="pill-btn">VOLVER A CONTENIDOS</a></div>
   </div>
 </footer>
-
 
 </body>
 </html>

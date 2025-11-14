@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Monitorización y alertas en Azure (AZ-104) | ITHub.es</title>
-<meta name="description" content="Guía premium de monitorización en Azure para AZ-104: Azure Monitor, Log Analytics, DCR, alertas de métrica y logs, Action Groups y Activity Log." />
+<title>Elección de servicios de datos en Azure (AZ-305) | ITHub.es</title>
+<meta name="description" content="Guía premium de balanceo de carga en Azure para AZ-104: Load Balancer, Application Gateway y Azure Front Door, con patrones de examen y laboratorio." />
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
@@ -183,16 +183,17 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
   }
 })();
 </script>
-
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0">
-    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span>
   </div>
-  <h1>Azure Monitoring & Alerts (AZ-104) — Azure Monitor, Log Analytics y alertas</h1>
+
+  <h1>Elección de servicios de datos en Azure (AZ-305)</h1>
+
   <div class="meta">
-    <span class="pill">Dominio: Monitorización y mantenimiento</span>
-    <span class="pill">Nivel: Básico / Intermedio</span>
-    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Dominio: Datos y almacenamiento</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 35–45 min</span>
     <span class="pill">Última revisión: Nov 2025</span>
   </div>
 
@@ -200,108 +201,128 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
     <aside class="aside">
       <h3>ÍNDICE</h3>
       <ul class="toc">
-        <li><a href="#sec0"><small>0.</small> Visión general de monitorización en Azure</a></li>
-        <li><a href="#sec1"><small>1.</small> Azure Monitor y métricas básicas</a></li>
-        <li><a href="#sec2"><small>2.</small> Log Analytics Workspaces y DCR</a></li>
-        <li><a href="#sec3"><small>3.</small> Alertas de métricas vs alertas de logs</a></li>
-        <li><a href="#sec4"><small>4.</small> Action Groups, notificaciones y automatización</a></li>
-        <li><a href="#sec5"><small>5.</small> Diagnósticos, Activity Log y recursos clave</a></li>
-        <li><a href="#sec6"><small>6.</small> Escenarios de examen y laboratorio práctico</a></li>
+        <li><a href="#sec0"><small>0.</small> Dimensiones de decisión en datos</a></li>
+        <li><a href="#sec1"><small>1.</small> Azure SQL vs SQL Managed Instance vs SQL en VM</a></li>
+        <li><a href="#sec2"><small>2.</small> Cosmos DB y bases de datos NoSQL</a></li>
+        <li><a href="#sec3"><small>3.</small> PostgreSQL / MySQL gestionados</a></li>
+        <li><a href="#sec4"><small>4.</small> Data Lake (ADLS Gen2) y analítica</a></li>
+        <li><a href="#sec5"><small>5.</small> Patrones de examen</a></li>
       </ul>
     </aside>
 
     <div class="content-wrap">
-      
-<section id="sec0" class="card">
-  <h2>0. Visión general de monitorización en Azure</h2>
-  <p>La monitorización es un dominio específico del examen AZ-104. Debes entender cómo usar:</p>
-  <ul>
-    <li><b>Azure Monitor</b> como plano central de métricas y logs.</li>
-    <li><b>Log Analytics</b> para consultas avanzadas (KQL).</li>
-    <li><b>Alertas</b> que disparan correos, webhooks, runbooks, etc.</li>
-  </ul>
-  <blockquote class="tip">
-    Piensa siempre en tres pasos: <b>recoger</b> datos, <b>almacenarlos</b> en el sitio correcto y
-    crear <b>alertas</b> o paneles en base a ellos.
-  </blockquote>
-</section>
 
-<section id="sec1" class="card">
-  <h2>1. Azure Monitor y métricas básicas</h2>
-  <p><b>Azure Monitor</b> agrega métricas de todos los recursos de Azure.</p>
-  <ul>
-    <li><b>Métricas</b>: valores numéricos en el tiempo (CPU, memoria, IOPS, etc.).</li>
-    <li><b>Logs</b>: eventos estructurados (registros de actividad, diagnósticos, etc.).</li>
-    <li>La mayoría de recursos exponen métricas sin configuración adicional; sólo debes decidir si crear alertas.</li>
-  </ul>
-</section>
+      <section id="sec0" class="card">
+        <h2>0. Dimensiones de decisión en datos</h2>
+        <p>
+          En AZ-305 no se trata de saber todos los SKUs, sino de elegir el <b>servicio correcto
+          para cada tipo de carga</b>. Las dimensiones clave son:
+        </p>
+        <ul>
+          <li><b>Modelo de datos</b>: relacional, clave-valor, documental, grafo, tiempo real, etc.</li>
+          <li><b>Tipo de carga</b>: transaccional OLTP, analítica OLAP, streaming, etc.</li>
+          <li><b>Requisitos de compatibilidad</b>: migración desde SQL Server on-prem, features específicos.</li>
+          <li><b>Gestión</b>: PaaS totalmente gestionado vs control granular en IaaS.</li>
+        </ul>
+      </section>
 
-<section id="sec2" class="card">
-  <h2>2. Log Analytics Workspaces y Data Collection Rules</h2>
-  <p>Los <b>Log Analytics Workspaces</b> son la base para consolidar logs y consultar con KQL.</p>
-  <ul>
-    <li>Varios recursos pueden enviar sus logs al mismo workspace.</li>
-    <li>Las <b>Data Collection Rules (DCR)</b> definen qué datos se recogen, cómo se transforman y a qué destino se envían.</li>
-    <li>En el examen se enfatiza el envío de logs de <b>VMs</b>, <b>Azure Firewall</b>, <b>Key Vault</b>, etc.</li>
-  </ul>
-</section>
+      <section id="sec1" class="card">
+        <h2>1. Azure SQL vs SQL Managed Instance vs SQL en VM</h2>
+        <p>
+          Para cargas SQL, las opciones típicas son:
+        </p>
+        <ul>
+          <li><b>Azure SQL Database</b>: PaaS multi-tenant, ideal para nuevas aplicaciones SaaS y cargas OLTP.</li>
+          <li><b>Azure SQL Managed Instance (MI)</b>: compatibilidad muy alta con SQL Server, perfecto para lift &amp; shift.</li>
+          <li><b>SQL Server en VM</b>: máximo control, recomendada solo cuando necesitas features muy específicos o integraciones no soportadas en PaaS.</li>
+        </ul>
+        <blockquote class="tip">
+          Patrón de examen: si el requisito insiste en “<i>compatibilidad casi total con SQL Server on-prem</i>”
+          y en minimizar cambios, la respuesta ideal suele ser <b>SQL Managed Instance</b>.
+        </blockquote>
+      </section>
 
-<section id="sec3" class="card">
-  <h2>3. Alertas de métricas vs alertas de logs</h2>
-  <p>La distinción es muy importante:</p>
-  <ul>
-    <li><b>Alertas de métricas</b>: reaccionan casi en tiempo real a valores numéricos (CPU &gt; 80%, disco lleno, etc.).</li>
-    <li><b>Alertas de logs</b>: basadas en una consulta KQL contra el workspace o Activity Log.</li>
-  </ul>
-  <blockquote class="tip">
-    Si el requisito es <i>latencia mínima</i> usa alertas de <b>métrica</b>.
-    Si necesitas condiciones complejas (varias tablas, agregaciones) → alerta de <b>logs</b>.
-  </blockquote>
-</section>
+      <section id="sec2" class="card">
+        <h2>2. Cosmos DB y bases de datos NoSQL</h2>
+        <p>
+          <b>Azure Cosmos DB</b> está pensado para aplicaciones globales, de baja latencia y alta escala.
+        </p>
+        <ul>
+          <li>Soporta varios modelos: documentos, clave-valor, columnas anchas, grafos.</li>
+          <li>Multi-región nativo con replicación automática.</li>
+          <li>Modelos de consistencia configurables (strong, bounded staleness, session, etc.).</li>
+        </ul>
+        <p>
+          En AZ-305 suele aparecer cuando:
+        </p>
+        <ul>
+          <li>La aplicación necesita <b>latencia de milisegundos</b> a nivel global.</li>
+          <li>La carga es <b>altamente escalable</b> y el esquema es flexible.</li>
+          <li>Se requiere <b>multi-region write</b> o replicación global transparente.</li>
+        </ul>
+      </section>
 
-<section id="sec4" class="card">
-  <h2>4. Action Groups, notificaciones y automatización</h2>
-  <p>Las alertas no hacen nada por sí solas: necesitan un <b>Action Group</b> que defina las acciones.</p>
-  <ul>
-    <li>Notificaciones: email/SMS/Push/Teams.</li>
-    <li>Automatización: webhooks, Logic Apps, Functions, Automation Runbooks.</li>
-    <li>Es buena práctica reutilizar Action Groups para grupos de alertas similares.</li>
-  </ul>
-</section>
+      <section id="sec3" class="card">
+        <h2>3. PostgreSQL / MySQL gestionados</h2>
+        <p>
+          Para bases relacionales open-source, Azure ofrece servicios gestionados:
+        </p>
+        <ul>
+          <li><b>Azure Database for PostgreSQL Flexible Server</b>.</li>
+          <li><b>Azure Database for MySQL Flexible Server</b>.</li>
+        </ul>
+        <p>
+          Ventajas típicas:
+        </p>
+        <ul>
+          <li>Parches automáticos, backups gestionados, HA integrada.</li>
+          <li>Configuración ajustable de rendimiento y almacenamiento.</li>
+          <li>Buena opción para migrar apps existentes basadas en Postgres/MySQL.</li>
+        </ul>
+      </section>
 
-<section id="sec5" class="card">
-  <h2>5. Diagnósticos, Activity Log y recursos clave</h2>
-  <p>Muchos servicios tienen configuración de <b>Diagnostic settings</b> para enviar datos a:</p>
-  <ul>
-    <li><b>Log Analytics workspace</b>.</li>
-    <li><b>Storage Account</b> (retención barata a largo plazo).</li>
-    <li><b>Event Hub</b> (integración con sistemas externos).</li>
-  </ul>
-  <p>El <b>Azure Activity Log</b> registra cambios de control-plane (creación, borrado, modificaciones de recursos) y
-     suele aparecer en preguntas de auditoría y cumplimiento.</p>
-</section>
+      <section id="sec4" class="card">
+        <h2>4. Data Lake (ADLS Gen2) y analítica</h2>
+        <p>
+          Para escenarios de analítica y big data, el patrón clásico es:
+        </p>
+        <ul>
+          <li>Centralizar datos en un <b>Data Lake</b> con <b>Azure Data Lake Storage Gen2</b>.</li>
+          <li>Consumirlos desde <b>Synapse</b>, Spark, Databricks u otras herramientas analíticas.</li>
+          <li>Segregar por zonas (raw, curated, gold) y por dominios de negocio.</li>
+        </ul>
+        <p>
+          ADLS Gen2 añade:
+        </p>
+        <ul>
+          <li><b>Namespace jerárquico</b> tipo sistema de archivos.</li>
+          <li>Permisos <b>POSIX-like</b> sobre directorios y ficheros.</li>
+          <li>Integración fluida con herramientas de analítica y pipelines de datos.</li>
+        </ul>
+      </section>
 
-<section id="sec6" class="card">
-  <h2>6. Escenarios de examen y laboratorio práctico</h2>
-  <h3>Escenarios frecuentes</h3>
-  <ul>
-    <li>“<i>Notificar al administrador cuando la CPU de una VM supere el 80% durante 10 minutos</i>” → alerta de métrica + Action Group.</li>
-    <li>“<i>Auditar quién borró un recurso concreto</i>” → consulta al <b>Activity Log</b>.</li>
-    <li>“<i>Centralizar logs de firewall, Key Vault y VMs</i>” → Diagnostic settings hacia un workspace común.</li>
-  </ul>
-
-  <h3>Laboratorio sugerido</h3>
-  <ol>
-    <li>Crea un workspace de Log Analytics y conecta un par de VMs con Azure Monitor Agent (AMA).</li>
-    <li>Activa diagnostic settings para un recurso (por ejemplo, Key Vault) apuntando al workspace.</li>
-    <li>Crea una alerta de logs basada en una consulta KQL sencilla (por ejemplo, accesos denegados).</li>
-    <li>Crea un Action Group que envíe emails a tu dirección y prueba a disparar la alerta.</li>
-  </ol>
-</section>
+      <section id="sec5" class="card">
+        <h2>5. Patrones de examen</h2>
+        <ul>
+          <li>
+            “<i>Aplicación existente en SQL Server on-prem con muchos stored procedures</i>”
+            → <b>SQL Managed Instance</b>.
+          </li>
+          <li>
+            “<i>Aplicación global con latencia de milisegundos y esquema flexible</i>”
+            → <b>Cosmos DB</b>.
+          </li>
+          <li>
+            “<i>Plataforma analítica con grandes volúmenes históricos</i>”
+            → <b>Data Lake en ADLS Gen2</b> + motor analítico (Synapse/Spark).
+          </li>
+        </ul>
+      </section>
 
     </div>
   </div>
 </main>
+
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">

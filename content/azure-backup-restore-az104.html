@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Arquitectura de red en Azure (AZ-305) | ITHub.es</title>
+<title>Backup & Restore para VMs y Azure Files (AZ-104) | ITHub.es</title>
 <meta name="description" content="Guía premium de balanceo de carga en Azure para AZ-104: Load Balancer, Application Gateway y Azure Front Door, con patrones de examen y laboratorio." />
 
 <!-- Google tag (gtag.js) -->
@@ -185,15 +185,15 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
 </script>
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0">
-    <span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span>
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
   </div>
 
-  <h1>Arquitectura de red en Azure (AZ-305)</h1>
+  <h1>Backup &amp; Restore para VMs y Azure Files (AZ-104)</h1>
 
   <div class="meta">
-    <span class="pill">Dominio: Diseño de red</span>
-    <span class="pill">Nivel: Avanzado</span>
-    <span class="pill">Tiempo de lectura: 40–50 min</span>
+    <span class="pill">Dominio: Backup y recuperación</span>
+    <span class="pill">Nivel: Intermedio</span>
+    <span class="pill">Tiempo de lectura: 35–45 min</span>
     <span class="pill">Última revisión: Nov 2025</span>
   </div>
 
@@ -201,11 +201,11 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
     <aside class="aside">
       <h3>ÍNDICE</h3>
       <ul class="toc">
-        <li><a href="#sec0"><small>0.</small> Cómo entra la red en AZ-305</a></li>
-        <li><a href="#sec1"><small>1.</small> Hub &amp; Spoke vs Virtual WAN</a></li>
-        <li><a href="#sec2"><small>2.</small> Segmentación, subredes y dominios de confianza</a></li>
-        <li><a href="#sec3"><small>3.</small> Salida a Internet inspeccionada (egress)</a></li>
-        <li><a href="#sec4"><small>4.</small> DNS empresarial en Azure</a></li>
+        <li><a href="#sec0"><small>0.</small> Papel del backup en AZ-104</a></li>
+        <li><a href="#sec1"><small>1.</small> Recovery Services Vault y políticas</a></li>
+        <li><a href="#sec2"><small>2.</small> Backup de máquinas virtuales</a></li>
+        <li><a href="#sec3"><small>3.</small> Backup de Azure Files y snapshots</a></li>
+        <li><a href="#sec4"><small>4.</small> Restauración y Cross-Region Restore</a></li>
         <li><a href="#sec5"><small>5.</small> Patrones de examen y laboratorio</a></li>
       </ul>
     </aside>
@@ -213,138 +213,174 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
     <div class="content-wrap">
 
       <section id="sec0" class="card">
-        <h2>0. Cómo entra la red en AZ-305</h2>
+        <h2>0. Papel del backup en AZ-104</h2>
         <p>
-          En AZ-305 ya no basta con saber crear una VNet. Se espera que <b>diseñes topologías completas</b>
-          que soporten varios entornos (prod / pre / dev), múltiples regiones y conectividad híbrida.
-        </p>
-        <p>
-          El tipo de preguntas suele girar en torno a:
+          En AZ-104, el backup se evalúa como parte de la <b>resiliencia</b> y la
+          <b>continuidad de negocio</b>. El objetivo del examen no es que recuerdes todas las
+          pantallas del portal, sino que sepas:
         </p>
         <ul>
-          <li>Elegir entre <b>HUB &amp; SPOKE clásico</b> o <b>Virtual WAN</b> para diseños a gran escala.</li>
-          <li>Definir <b>segmentación por dominios de seguridad</b> (front, back, datos, gestión).</li>
-          <li>Diseñar <b>salida a Internet inspeccionada</b> con Azure Firewall / NVAs.</li>
-          <li>Integrar <b>DNS corporativo</b> con servicios PaaS usando Private Endpoints.</li>
+          <li>Qué es un <b>Recovery Services Vault</b> y cuándo usarlo.</li>
+          <li>Cómo proteger <b>VMs</b> y <b>Azure Files</b> con Azure Backup.</li>
+          <li>Qué opciones hay para <b>restaurar</b> recursos y cómo minimizar el impacto.</li>
+          <li>Cuándo entra en juego <b>Cross-Region Restore</b> y la redundancia de datos.</li>
         </ul>
         <blockquote class="tip">
-          Patrón mental AZ-305: piensa siempre en <b>plano de conectividad</b> (VNets, peers, gateways),
-          <b>plano de seguridad</b> (NSG, Firewall, WAF, Private Link) y <b>plano de nombres</b> (DNS).
+          Patrón mental: piensa siempre en <b>vault + política + recurso protegido</b>.
+          Si falta uno de los tres, el backup no está realmente operativo.
         </blockquote>
       </section>
 
       <section id="sec1" class="card">
-        <h2>1. Hub &amp; Spoke vs Virtual WAN</h2>
+        <h2>1. Recovery Services Vault y políticas de backup</h2>
         <p>
-          Los dos modelos que más aparecen en el examen son:
-        </p>
-
-        <h3>Hub &amp; Spoke clásico</h3>
-        <ul>
-          <li>Una VNet central (<b>hub</b>) con componentes compartidos: firewall, VPN, ExpressRoute, etc.</li>
-          <li>Varias VNets <b>spoke</b> para aplicaciones/entornos, emparejadas al hub.</li>
-          <li>Ideal cuando tienes <b>pocas regiones</b> y el número de VNets es manejable.</li>
-        </ul>
-
-        <h3>Virtual WAN (vWAN)</h3>
-        <ul>
-          <li>Servicio global que abstrae la conectividad: hubs virtuales gestionados por Microsoft.</li>
-          <li>Conecta <b>sedes, VNets y usuarios remotos</b> de manera centralizada.</li>
-          <li>Escenario típico: organizaciones con <b>muchas sedes y múltiples regiones</b>.</li>
-        </ul>
-
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr><th>Situación</th><th>Patrón recomendado</th><th>Comentario de examen</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Pocas VNets, 1–2 regiones, equipo con experiencia en redes</td>
-                <td>Hub &amp; Spoke con hub autogestionado</td>
-                <td>Más control, más responsabilidad operativa.</td>
-              </tr>
-              <tr>
-                <td>Muchas sedes, múltiples regiones, necesidad de simplificar</td>
-                <td>Virtual WAN con hubs seguros</td>
-                <td>Opción “enterprise” que el examen suele premiar.</td>
-              </tr>
-              <tr>
-                <td>Proyecto nuevo global, greenfield</td>
-                <td>Evaluar vWAN desde el inicio</td>
-                <td>Te permite crecer sin re-arquitecturas.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section id="sec2" class="card">
-        <h2>2. Segmentación, subredes y dominios de confianza</h2>
-        <p>
-          Una buena arquitectura de red en AZ-305 implica definir <b>dominios de confianza</b> claros:
+          El <b>Recovery Services Vault</b> es el corazón de Azure Backup en IaaS. Es un
+          recurso lógico donde se:
         </p>
         <ul>
-          <li><b>Capa de presentación</b>: front-ends web, APIs públicas.</li>
-          <li><b>Capa de negocio</b>: microservicios, APIs internas.</li>
-          <li><b>Capa de datos</b>: bases de datos, caches, colas internas.</li>
-          <li><b>Capa de gestión</b>: jumpboxes, herramientas de administración, bastion hosts.</li>
+          <li>Almacenan metadatos de los backups.</li>
+          <li>Definen las <b>políticas de protección</b> (frecuencia + retención).</li>
+          <li>Orquestan las tareas de backup y restore.</li>
         </ul>
-        <p>
-          Cada dominio suele mapearse a una o varias <b>subredes dedicadas</b> con NSG específicos.
-          En los enunciados se valora que:
-        </p>
-        <ul>
-          <li>Limites claramente el <b>acceso Este-Oeste</b> entre capas.</li>
-          <li>La gestión vaya siempre por subredes y puertos diferenciados.</li>
-          <li>Los datos nunca sean accesibles directamente desde Internet.</li>
-        </ul>
-      </section>
 
-      <section id="sec3" class="card">
-        <h2>3. Salida a Internet inspeccionada (egress)</h2>
+        <h3>Características clave que AZ-104 espera que conozcas</h3>
+        <ul>
+          <li>Es <b>regional</b>: un vault está asociado a una región concreta.</li>
+          <li>Puede proteger recursos de <b>una o varias RG</b> dentro de la misma región.</li>
+          <li>Soporta <b>soft delete</b> para proteger puntos de recuperación borrados por error.</li>
+        </ul>
+
+        <h3>Políticas de backup</h3>
         <p>
-          Uno de los puntos clave en diseños modernos es cómo sale el tráfico hacia Internet:
+          Las políticas definen:
         </p>
         <ul>
-          <li>Salida directa por <b>IP pública</b> en cada recurso → simple, pero difícil de controlar.</li>
-          <li>Salida centralizada por <b>Azure Firewall</b> o NVA en el hub → controla y registra todo.</li>
-          <li>Salida a través de <b>Secure Web Gateway</b> o proxy corporativo.</li>
+          <li><b>Frecuencia</b> (diaria, semanal, etc.).</li>
+          <li><b>Hora de ejecución</b> del backup.</li>
+          <li><b>Retención</b> (días, semanas, meses, años).</li>
         </ul>
         <p>
-          En AZ-305, la opción “correcta” suele ser centralizar la salida a través de un
-          <b>Azure Firewall</b> en el hub, con UDRs que envían el tráfico a dicho firewall.
+          En los enunciados suelen jugar con requisitos del tipo:
+          “<i>retener los backups diarios 30 días, semanales 12 semanas y mensuales 5 años</i>”.
+          La respuesta suele ser una <b>política de backup con retención a largo plazo</b>
+          adecuadamente configurada.
         </p>
+
         <blockquote class="tip">
-          Si el requerimiento menciona “<i>registro y filtrado de todo el tráfico saliente hacia Internet</i>”,
-          busca una solución con <b>Azure Firewall en el hub</b> + <b>UDRs</b> desde los spokes.
+          Si el requisito menciona <b>retención de varios años</b> o cumplimiento legal,
+          piensa en una <b>política de backup con retención mensual/anual</b>, no en snapshots
+          sueltos ni en backups “ad hoc”.
         </blockquote>
       </section>
 
-      <section id="sec4" class="card">
-        <h2>4. DNS empresarial en Azure</h2>
+      <section id="sec2" class="card">
+        <h2>2. Backup de máquinas virtuales en Azure</h2>
         <p>
-          En arquitecturas avanzadas tienes tres piezas de DNS a coordinar:
+          Proteger una VM con Azure Backup sigue un patrón casi siempre igual:
         </p>
+        <ol>
+          <li>Seleccionar la VM y elegir la opción <b>Backup</b> en el portal.</li>
+          <li>Elegir un <b>vault existente</b> o crear uno nuevo.</li>
+          <li>Aplicar una <b>política de backup</b> (estándar o personalizada).</li>
+          <li>Habilitar el backup y esperar a la primera ejecución.</li>
+        </ol>
+
+        <h3>Qué se respalda exactamente</h3>
         <ul>
-          <li><b>DNS on-premises</b>: suele seguir teniendo autoridad sobre dominios internos históricos.</li>
-          <li><b>Azure Private DNS Zones</b>: resolución interna para VNets y Private Endpoints.</li>
-          <li><b>DNS público</b>: dominios que resuelven en Internet (por ejemplo, con Azure DNS).</li>
+          <li>La <b>configuración de la VM</b> (tamaño, discos, etc.).</li>
+          <li>Los <b>discos</b> de la máquina (SO y datos), de forma consistente.</li>
+          <li>Dependiendo del SO, se pueden usar <b>VSS</b> u otros mecanismos para consistencia.</li>
         </ul>
 
-        <h3>Patrones habituales</h3>
+        <h3>Modos de restauración habituales</h3>
         <ul>
           <li>
-            Definir <b>zonas privadas</b> para servicios PaaS (p.ej. <code>privatelink.database.windows.net</code>)
-            y enlazarlas a las VNets relevantes.
+            <b>Restore de VM completa</b>:
+            crea una nueva VM a partir del punto de recuperación o reemplaza la existente.
           </li>
           <li>
-            Integrar DNS on-prem con Azure reenviando consultas hacia un <b>DNS forwarder</b> en la VNet.
+            <b>Restore de discos</b>:
+            útil cuando quieres montar el disco en otra VM para recuperar solo algunos datos.
           </li>
           <li>
-            Usar <b>Private Endpoints</b> para exponer PaaS solo por redes privadas.
+            <b>File-level restore</b> (cuando está disponible):
+            permite recuperar archivos concretos sin restaurar toda la VM.
           </li>
         </ul>
+
+        <blockquote class="tip">
+          En examen: si el escenario habla de “<i>restaurar rápidamente una VM afectada por un error de actualización</i>”,
+          la opción más segura es <b>restaurar la VM desde el último punto de recuperación</b>
+          o <b>crear una nueva VM</b> a partir de ese punto.
+        </blockquote>
+      </section>
+
+      <section id="sec3" class="card">
+        <h2>3. Backup de Azure Files y snapshots</h2>
+        <p>
+          Azure Backup puede proteger <b>Azure Files</b> mediante instantáneas incrementales
+          de los shares. Es más eficiente que copiar datos a otra cuenta de almacenamiento.
+        </p>
+
+        <h3>Flujo típico de protección de Azure Files</h3>
+        <ol>
+          <li>Desde el vault, seleccionas <b>Backup</b> &gt; <b>Azure File Share</b>.</li>
+          <li>Escoges la <b>cuenta de almacenamiento</b> y el share concreto.</li>
+          <li>Asocias una <b>política de backup</b> específica para ese share.</li>
+        </ol>
+
+        <p>Opciones de restauración:</p>
+        <ul>
+          <li><b>Restaurar el share completo</b> a un punto en el tiempo.</li>
+          <li>
+            <b>Restaurar a nivel de carpeta/archivo</b> cuando solo quieres recuperar un subconjunto.
+          </li>
+          <li>Elegir restaurar en el mismo share o en otro de destino.</li>
+        </ul>
+
+        <p>
+          Aunque también existen <b>snapshots manuales</b> de Azure Files, en el examen AZ-104
+          el enfoque principal está en el <b>backup orquestado desde un Recovery Services Vault</b>.
+        </p>
+      </section>
+
+      <section id="sec4" class="card">
+        <h2>4. Restauración, Cross-Region Restore y pruebas</h2>
+        <p>
+          A partir de los puntos de recuperación almacenados, Azure Backup permite varias estrategias
+          de restauración.
+        </p>
+
+        <h3>Cross-Region Restore (CRR)</h3>
+        <ul>
+          <li>Disponible cuando el vault está configurado para usar almacenamiento
+              <b>GRS o GZRS</b> (según la característica).</li>
+          <li>Permite restaurar recursos en la <b>región emparejada</b> de Azure.</li>
+          <li>Es relevante en escenarios de <b>caída regional</b> o DR extremo.</li>
+        </ul>
+
+        <h3>Restaurar en otra suscripción o RG</h3>
+        <ul>
+          <li>Dentro del mismo tenant es posible restaurar VMs en <b>otras RG</b> o incluso en
+              <b>otra suscripción</b>, útil para entornos de contingencia.</li>
+          <li>En el examen, esto suele aparecer como la opción recomendada para
+              aislar restauraciones de producción.</li>
+        </ul>
+
+        <h3>Restauraciones de prueba</h3>
+        <p>
+          Buenas prácticas que pueden aparecer en las preguntas:
+        </p>
+        <ul>
+          <li>Realizar <b>restores periódicos de prueba</b> para verificar la validez de los backups.</li>
+          <li>Usar nomenclaturas claras para VMs restauradas de prueba (por ejemplo, <code>-test</code>).</li>
+          <li>Borrar recursos de prueba cuando ya no sean necesarios para evitar costes.</li>
+        </ul>
+
+        <blockquote class="tip">
+          Si el escenario pide “<i>validar que los backups son restaurables sin impactar en producción</i>”,
+          la respuesta tipo es realizar <b>restauraciones de prueba a una RG o suscripción de laboratorio</b>.
+        </blockquote>
       </section>
 
       <section id="sec5" class="card">
@@ -353,24 +389,26 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
         <h3>Patrones típicos de examen</h3>
         <ul>
           <li>
-            “<i>Muchas sedes en todo el mundo, múltiples regiones, gestión centralizada</i>”
-            → Virtual WAN con hubs seguros.
+            “<i>Necesitas retener backups durante 7 años para cumplimiento normativo</i>”
+            → política con <b>retención a largo plazo</b> (mensual/anual) en un Recovery Services Vault.
           </li>
           <li>
-            “<i>Necesitamos inspeccionar todo el tráfico saliente</i>”
-            → Azure Firewall en el hub + UDRs.
+            “<i>Quieres restaurar un archivo concreto eliminado de un Azure File Share</i>”
+            → <b>restore granular</b> de Azure Files desde Azure Backup.
           </li>
           <li>
-            “<i>Debemos publicar servicios PaaS solo para redes internas</i>”
-            → Private Endpoints + Private DNS Zones.
+            “<i>Quieres poder recuperarte de la caída completa de la región</i>”
+            → evaluar uso de <b>GRS/GZRS + Cross-Region Restore</b> (si está soportado).
           </li>
         </ul>
 
         <h3>Laboratorio recomendado</h3>
         <ol>
-          <li>Construir un hub &amp; spoke sencillo con un Azure Firewall en el hub.</li>
-          <li>Crear UDRs en un spoke para enviar tráfico de salida al firewall.</li>
-          <li>Configurar una Private DNS Zone y un Private Endpoint para Azure SQL.</li>
+          <li>Crear un Recovery Services Vault en una región de pruebas.</li>
+          <li>Proteger una VM Linux/Windows con una política diaria.</li>
+          <li>Crear un Azure File Share, habilitar backup y subir algunos archivos.</li>
+          <li>Forzar un backup bajo demanda de la VM y del share.</li>
+          <li>Realizar una restauración de prueba de la VM (nueva VM) y de un archivo del share.</li>
         </ol>
       </section>
 
@@ -378,7 +416,7 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
   </div>
 </main>
 
->
+
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">

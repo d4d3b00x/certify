@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Monitorización y alertas en Azure (AZ-104) | ITHub.es</title>
-<meta name="description" content="Guía premium de monitorización en Azure para AZ-104: Azure Monitor, Log Analytics, DCR, alertas de métrica y logs, Action Groups y Activity Log." />
+<title>Seguridad de red en Azure (AZ-305) | ITHub.es</title>
+<meta name="description" content="Guía premium de balanceo de carga en Azure para AZ-104: Load Balancer, Application Gateway y Azure Front Door, con patrones de examen y laboratorio." />
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
@@ -183,16 +183,17 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
   }
 })();
 </script>
-
 <main class="container hero">
   <div style="display:flex;justify-content:center;margin:10px 0">
-    <span class="exam-chip azure"><i></i><span>Azure · AZ-104</span></span>
+    <span class="exam-chip azure"><i></i><span>Azure · AZ-305</span></span>
   </div>
-  <h1>Azure Monitoring & Alerts (AZ-104) — Azure Monitor, Log Analytics y alertas</h1>
+
+  <h1>Seguridad de red en Azure (AZ-305)</h1>
+
   <div class="meta">
-    <span class="pill">Dominio: Monitorización y mantenimiento</span>
-    <span class="pill">Nivel: Básico / Intermedio</span>
-    <span class="pill">Tiempo de lectura: 25–35 min</span>
+    <span class="pill">Dominio: Seguridad de red</span>
+    <span class="pill">Nivel: Intermedio / Avanzado</span>
+    <span class="pill">Tiempo de lectura: 40–50 min</span>
     <span class="pill">Última revisión: Nov 2025</span>
   </div>
 
@@ -200,108 +201,114 @@ function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentU
     <aside class="aside">
       <h3>ÍNDICE</h3>
       <ul class="toc">
-        <li><a href="#sec0"><small>0.</small> Visión general de monitorización en Azure</a></li>
-        <li><a href="#sec1"><small>1.</small> Azure Monitor y métricas básicas</a></li>
-        <li><a href="#sec2"><small>2.</small> Log Analytics Workspaces y DCR</a></li>
-        <li><a href="#sec3"><small>3.</small> Alertas de métricas vs alertas de logs</a></li>
-        <li><a href="#sec4"><small>4.</small> Action Groups, notificaciones y automatización</a></li>
-        <li><a href="#sec5"><small>5.</small> Diagnósticos, Activity Log y recursos clave</a></li>
-        <li><a href="#sec6"><small>6.</small> Escenarios de examen y laboratorio práctico</a></li>
+        <li><a href="#sec0"><small>0.</small> Capas de defensa en red</a></li>
+        <li><a href="#sec1"><small>1.</small> NSG, ASG y filtrado L4</a></li>
+        <li><a href="#sec2"><small>2.</small> Azure Firewall y filtrado L7</a></li>
+        <li><a href="#sec3"><small>3.</small> WAF para aplicaciones web</a></li>
+        <li><a href="#sec4"><small>4.</small> Private Link y exposición mínima</a></li>
+        <li><a href="#sec5"><small>5.</small> Patrones de examen</a></li>
       </ul>
     </aside>
 
     <div class="content-wrap">
-      
-<section id="sec0" class="card">
-  <h2>0. Visión general de monitorización en Azure</h2>
-  <p>La monitorización es un dominio específico del examen AZ-104. Debes entender cómo usar:</p>
-  <ul>
-    <li><b>Azure Monitor</b> como plano central de métricas y logs.</li>
-    <li><b>Log Analytics</b> para consultas avanzadas (KQL).</li>
-    <li><b>Alertas</b> que disparan correos, webhooks, runbooks, etc.</li>
-  </ul>
-  <blockquote class="tip">
-    Piensa siempre en tres pasos: <b>recoger</b> datos, <b>almacenarlos</b> en el sitio correcto y
-    crear <b>alertas</b> o paneles en base a ellos.
-  </blockquote>
-</section>
 
-<section id="sec1" class="card">
-  <h2>1. Azure Monitor y métricas básicas</h2>
-  <p><b>Azure Monitor</b> agrega métricas de todos los recursos de Azure.</p>
-  <ul>
-    <li><b>Métricas</b>: valores numéricos en el tiempo (CPU, memoria, IOPS, etc.).</li>
-    <li><b>Logs</b>: eventos estructurados (registros de actividad, diagnósticos, etc.).</li>
-    <li>La mayoría de recursos exponen métricas sin configuración adicional; sólo debes decidir si crear alertas.</li>
-  </ul>
-</section>
+      <section id="sec0" class="card">
+        <h2>0. Capas de defensa en red</h2>
+        <p>
+          En AZ-305, seguridad de red significa diseñar <b>defensa en profundidad</b>:
+        </p>
+        <ul>
+          <li>Filtrado L3/L4 en subredes y NICs (NSG).</li>
+          <li>Filtrado L7 y análisis avanzado (Azure Firewall, NVAs).</li>
+          <li>Protección específica de aplicaciones web (WAF).</li>
+          <li>Reducción de superficie mediante Private Link y ausencia de IPs públicas.</li>
+        </ul>
+      </section>
 
-<section id="sec2" class="card">
-  <h2>2. Log Analytics Workspaces y Data Collection Rules</h2>
-  <p>Los <b>Log Analytics Workspaces</b> son la base para consolidar logs y consultar con KQL.</p>
-  <ul>
-    <li>Varios recursos pueden enviar sus logs al mismo workspace.</li>
-    <li>Las <b>Data Collection Rules (DCR)</b> definen qué datos se recogen, cómo se transforman y a qué destino se envían.</li>
-    <li>En el examen se enfatiza el envío de logs de <b>VMs</b>, <b>Azure Firewall</b>, <b>Key Vault</b>, etc.</li>
-  </ul>
-</section>
+      <section id="sec1" class="card">
+        <h2>1. NSG, ASG y filtrado L4</h2>
+        <p>
+          Los <b>Network Security Groups (NSG)</b> son el primer nivel de filtro:
+        </p>
+        <ul>
+          <li>Se aplican a subredes y/o NICs.</li>
+          <li>Definen reglas de allow/deny basadas en IP, puerto y protocolo.</li>
+          <li>Se procesan en orden de prioridad.</li>
+        </ul>
+        <p>
+          Los <b>Application Security Groups (ASG)</b> permiten agrupar NICs por rol
+          (por ejemplo, “web”, “api”, “db”) y referenciarlas en reglas NSG, simplificando la gestión
+          cuando hay muchas VMs.
+        </p>
+      </section>
 
-<section id="sec3" class="card">
-  <h2>3. Alertas de métricas vs alertas de logs</h2>
-  <p>La distinción es muy importante:</p>
-  <ul>
-    <li><b>Alertas de métricas</b>: reaccionan casi en tiempo real a valores numéricos (CPU &gt; 80%, disco lleno, etc.).</li>
-    <li><b>Alertas de logs</b>: basadas en una consulta KQL contra el workspace o Activity Log.</li>
-  </ul>
-  <blockquote class="tip">
-    Si el requisito es <i>latencia mínima</i> usa alertas de <b>métrica</b>.
-    Si necesitas condiciones complejas (varias tablas, agregaciones) → alerta de <b>logs</b>.
-  </blockquote>
-</section>
+      <section id="sec2" class="card">
+        <h2>2. Azure Firewall y filtrado L7</h2>
+        <p>
+          <b>Azure Firewall</b> proporciona inspección más avanzada que los NSG:
+        </p>
+        <ul>
+          <li>Reglas de aplicación (FQDN, categorías, etc.).</li>
+          <li>Filtrado de tráfico saliente, registro y analítica centralizada.</li>
+          <li>Integración con Threat Intelligence para bloquear dominios maliciosos.</li>
+        </ul>
+        <p>
+          Es la pieza clave cuando el caso de uso pide <b>control centralizado del tráfico</b>
+          o inspección más allá de IP/puerto.
+        </p>
+      </section>
 
-<section id="sec4" class="card">
-  <h2>4. Action Groups, notificaciones y automatización</h2>
-  <p>Las alertas no hacen nada por sí solas: necesitan un <b>Action Group</b> que defina las acciones.</p>
-  <ul>
-    <li>Notificaciones: email/SMS/Push/Teams.</li>
-    <li>Automatización: webhooks, Logic Apps, Functions, Automation Runbooks.</li>
-    <li>Es buena práctica reutilizar Action Groups para grupos de alertas similares.</li>
-  </ul>
-</section>
+      <section id="sec3" class="card">
+        <h2>3. WAF para aplicaciones web</h2>
+        <p>
+          Para aplicaciones HTTP/HTTPS, el componente esencial es el <b>Web Application Firewall (WAF)</b>,
+          disponible en:
+        </p>
+        <ul>
+          <li><b>Application Gateway WAF</b>.</li>
+          <li><b>Front Door WAF</b>.</li>
+        </ul>
+        <p>
+          El examen busca que identifiques que ataques tipo SQL injection, XSS, etc.
+          se mitigan con un WAF gestionado, no solo con NSG o Azure Firewall.
+        </p>
+      </section>
 
-<section id="sec5" class="card">
-  <h2>5. Diagnósticos, Activity Log y recursos clave</h2>
-  <p>Muchos servicios tienen configuración de <b>Diagnostic settings</b> para enviar datos a:</p>
-  <ul>
-    <li><b>Log Analytics workspace</b>.</li>
-    <li><b>Storage Account</b> (retención barata a largo plazo).</li>
-    <li><b>Event Hub</b> (integración con sistemas externos).</li>
-  </ul>
-  <p>El <b>Azure Activity Log</b> registra cambios de control-plane (creación, borrado, modificaciones de recursos) y
-     suele aparecer en preguntas de auditoría y cumplimiento.</p>
-</section>
+      <section id="sec4" class="card">
+        <h2>4. Private Link y exposición mínima</h2>
+        <p>
+          <b>Azure Private Link</b> permite exponer servicios PaaS a través de IPs privadas
+          en tus VNets, eliminando la necesidad de exponer endpoints públicos.
+        </p>
+        <ul>
+          <li>Se implementa mediante <b>Private Endpoints</b> en subredes.</li>
+          <li>Funciona junto con <b>Private DNS Zones</b> para resolución de nombres.</li>
+          <li>Es clave para diseños Zero Trust y de alta seguridad.</li>
+        </ul>
+      </section>
 
-<section id="sec6" class="card">
-  <h2>6. Escenarios de examen y laboratorio práctico</h2>
-  <h3>Escenarios frecuentes</h3>
-  <ul>
-    <li>“<i>Notificar al administrador cuando la CPU de una VM supere el 80% durante 10 minutos</i>” → alerta de métrica + Action Group.</li>
-    <li>“<i>Auditar quién borró un recurso concreto</i>” → consulta al <b>Activity Log</b>.</li>
-    <li>“<i>Centralizar logs de firewall, Key Vault y VMs</i>” → Diagnostic settings hacia un workspace común.</li>
-  </ul>
-
-  <h3>Laboratorio sugerido</h3>
-  <ol>
-    <li>Crea un workspace de Log Analytics y conecta un par de VMs con Azure Monitor Agent (AMA).</li>
-    <li>Activa diagnostic settings para un recurso (por ejemplo, Key Vault) apuntando al workspace.</li>
-    <li>Crea una alerta de logs basada en una consulta KQL sencilla (por ejemplo, accesos denegados).</li>
-    <li>Crea un Action Group que envíe emails a tu dirección y prueba a disparar la alerta.</li>
-  </ol>
-</section>
+      <section id="sec5" class="card">
+        <h2>5. Patrones de examen</h2>
+        <ul>
+          <li>
+            “<i>Controlar de forma centralizada todo el tráfico saliente de las VNets</i>”
+            → Azure Firewall en el hub + UDRs desde spokes.
+          </li>
+          <li>
+            “<i>Proteger una aplicación web contra ataques OWASP</i>”
+            → WAF (Application Gateway o Front Door).
+          </li>
+          <li>
+            “<i>Exponer un Storage Account solo a redes internas</i>”
+            → Private Endpoint + Private DNS + bloqueo de acceso público.
+          </li>
+        </ul>
+      </section>
 
     </div>
   </div>
 </main>
+
 
 <footer role="contentinfo">
   <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
