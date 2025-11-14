@@ -1,105 +1,507 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AZ‑104 — Dominio 3 · Desplegar y administrar cómputo</title>
-<style>
-:root{
-  --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
-  --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
-  --blue:#74a8ff;--purple:#c59cff;
-}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
-  color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
-a{color:var(--accent)}
-.wrap{max-width:1000px;margin:0 auto;padding:28px}
-.badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
-  padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
-h1{margin:10px 0 10px;font-size:1.9rem}
-h2{margin:22px 0 10px;font-size:1.25rem}
-.muted{color:var(--muted)}
-.card{background:linear-gradient(180deg,#101a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
-ul{padding-left:18px;margin:6px 0}
-li+li{margin-top:6px}
-.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
-code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-.toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
-.toc a{color:#e3ecff;text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
-.pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
-.hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
-.note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
-.tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
-.warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
-kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
-pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
-.footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-104 — Dominio 3 · Desplegar y administrar cómputo</title>
+  <style>
+    :root{
+      --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+      --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
+      --blue:#74a8ff;--purple:#c59cff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.65;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1000px;margin:0 auto;padding:28px}
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#0f1844,#0d1438);
+      padding:8px 14px;
+      border-radius:999px;
+      font-weight:900;
+      color:#cbd6ff;
+      box-shadow:0 0 0 3px #00000044;
+    }
+    h1{margin:10px 0 10px;font-size:1.9rem}
+    h2{margin:22px 0 10px;font-size:1.25rem}
+    .muted{color:var(--muted)}
+    .card{
+      background:linear-gradient(180deg,#101a48,#0d1538);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+      margin:12px 0;
+      box-shadow:0 6px 32px #00000055;
+    }
+    ul{padding-left:18px;margin:6px 0}
+    li+li{margin-top:6px}
+    .ok{color:var(--green)}
+    .warn{color:var(--yellow)}
+    .bad{color:var(--red)}
+    code,.mono{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    }
+    .toc{
+      background:linear-gradient(180deg,#0f1a4a,#0b1230);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      margin:12px 0;
+      display:grid;
+      gap:6px;
+    }
+    .toc a{color:#e3ecff;text-decoration:none}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+    }
+    .kicker{
+      font-size:.85rem;
+      letter-spacing:.06em;
+      color:#cfd6ff;
+      text-transform:uppercase;
+    }
+    .pill{
+      display:inline-block;
+      font-size:.75rem;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#0e1740;
+      margin-right:6px;
+    }
+    .hl{
+      background:linear-gradient(90deg,#1c245c,#191f4a);
+      border-left:3px solid var(--accent);
+      padding:10px;
+      border-radius:10px;
+    }
+    .note{
+      background:linear-gradient(180deg,#102f38,#0b2025);
+      border:1px solid #2a5f6a;
+    }
+    .tip{
+      background:linear-gradient(180deg,#163310,#10230b);
+      border:1px solid #2a6a2a;
+    }
+    .warnbox{
+      background:linear-gradient(180deg,#3a1b1b,#2a1010);
+      border:1px solid #7a2a2a;
+    }
+    kbd{
+      border:1px solid #3a4a88;
+      border-bottom-width:3px;
+      border-radius:6px;
+      padding:1px 6px;
+      background:#0e1640;
+    }
+    pre{
+      background:#0a122e;
+      border:1px solid #26336e;
+      border-radius:12px;
+      padding:12px;
+      overflow:auto;
+    }
+    .footer{
+      color:#aab7ff;
+      font-size:.9rem;
+      margin-top:22px;
+    }
+    .small{font-size:.9rem}
+    strong{font-weight:600}
+  </style>
 </head>
 <body>
 <div class="wrap">
   <span class="badge">Azure · Cómputo</span>
-  <h1>AZ‑104 — Dominio 3 · Desplegar y administrar cómputo</h1>
-  <p class="muted">VMs, VMSS, SIG, discos, disponibilidad, backup, parches y extensiones.</p>
-  
-    <div class="toc">
-      <div class="kicker">Índice</div>
-      <div class="grid">
-        <a href="#conceptos">Conceptos clave</a>
-        <a href="#decision">Guía de decisión</a>
-        <a href="#comandos">Comandos útiles</a>
-        <a href="#escenarios">Escenarios de examen</a>
-        <a href="#errores">Errores comunes</a>
-        <a href="#cross">Cross-links entre dominios</a>
+  <h1>AZ-104 — Dominio 3 · Desplegar y administrar cómputo</h1>
+  <p class="muted">
+    Aquí está el “músculo” de la infraestructura: máquinas virtuales, escalado, imágenes, disponibilidad y parches.
+    Si controlas <strong>VMs + VMSS + discos + alta disponibilidad</strong>, este dominio lo llevas muy encaminado.
+  </p>
+
+  <div class="toc">
+    <div class="kicker">Índice rápido para estudiar</div>
+    <div class="grid">
+      <a href="#conceptos">Conceptos clave que sí caen</a>
+      <a href="#decision">Guía de decisión rápida</a>
+      <a href="#comandos">Comandos y portal</a>
+      <a href="#escenarios">Escenarios tipo examen</a>
+      <a href="#errores">Errores frecuentes</a>
+      <a href="#cross">Cross-links con otros dominios</a>
+    </div>
+  </div>
+
+  <div class="card" id="conceptos">
+    <h2>Conceptos clave (lo que de verdad tienes que dominar)</h2>
+    <ul>
+      <li>
+        <strong>Máquinas virtuales (VMs)</strong><br>
+        <span class="small">
+          Es la IaaS clásica. Hay que entender:
+          <ul>
+            <li><strong>Tamaños</strong>: general purpose, compute-optimized, memory-optimized, etc.</li>
+            <li><strong>Discos</strong>: OS vs datos, tipos (Standard HDD/SSD, Premium SSD, Ultra), caching.</li>
+            <li><strong>Red</strong>: NICs, NSG, IP pública/privada.</li>
+          </ul>
+          En AZ-104 no te piden memorizar todos los tamaños, pero sí interpretar cuándo necesitas más IOPS o más memoria.
+        </span>
+      </li>
+      <li>
+        <strong>Disponibilidad: Availability Sets y Zonas</strong><br>
+        <span class="small">
+          Concepto super frecuente:
+          <ul>
+            <li><strong>Availability Set</strong>: distribuye VMs en <em>fault domains</em> y <em>update domains</em> en una región.</li>
+            <li><strong>Availability Zones</strong>: VMs en zonas físicas separadas dentro de la misma región.</li>
+          </ul>
+          El SLA mejora cuando tienes 2+ VMs repartidas en AS o Zonas + un balanceador delante.
+        </span>
+      </li>
+      <li>
+        <strong>VM Scale Sets (VMSS)</strong><br>
+        <span class="small">
+          Grupo de VMs idénticas que escalan horizontalmente.
+          Puntos clave:
+          <ul>
+            <li><strong>Autoscaling</strong> basado en métricas (CPU, cola de peticiones, etc.).</li>
+            <li><strong>Orchestration mode</strong>: Uniform (idénticas) o Flexible (más libre, combina instancias).</li>
+            <li>Se integran muy bien con <strong>Load Balancer / Application Gateway</strong>.</li>
+          </ul>
+          Si el escenario habla de “añadir instancias automáticamente según carga” → VMSS casi seguro.
+        </span>
+      </li>
+      <li>
+        <strong>Imágenes y Shared Image Gallery</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Imágenes del Marketplace</strong>: plantillas predefinidas (Ubuntu, Windows Server, etc.).</li>
+            <li><strong>Custom images</strong>: a partir de una VM preparada.</li>
+            <li><strong>Shared Image Gallery (SIG)</strong>: catálogo de imágenes compartido con versiones.</li>
+          </ul>
+          “Golden image” para desplegar muchas VMs con la misma configuración → SIG + VMSS o despliegues individuales.
+        </span>
+      </li>
+      <li>
+        <strong>Discos administrados</strong><br>
+        <span class="small">
+          Conceptos que salen:
+          <ul>
+            <li><strong>OS disk vs Data disk</strong>: separa siempre datos del sistema operativo.</li>
+            <li><strong>Cache</strong>: ReadOnly/ReadWrite/None según tipo de disco y carga.</li>
+            <li><strong>Snapshots</strong>: punto en el tiempo para backup/duplicación de discos.</li>
+          </ul>
+          Si necesitas más IOPS, pasar a <strong>Premium</strong> o <strong>Ultra</strong> y/o usar varios discos en striping.
+        </span>
+      </li>
+      <li>
+        <strong>Extensiones de VM y configuración</strong><br>
+        <span class="small">
+          Las extensiones permiten:
+          <ul>
+            <li>Ejecutar scripts al desplegar (Custom Script Extension).</li>
+            <li>Configurar agentes (por ejemplo, para Azure Monitor, Defender, etc.).</li>
+            <li>Aplicar configuración deseada (Guest Configuration, DSC, etc.).</li>
+          </ul>
+          En preguntas de “instalar automáticamente algo al desplegar la VM” → extensión o imagen personalizada.
+        </span>
+      </li>
+      <li>
+        <strong>Actualizaciones y parches</strong><br>
+        <span class="small">
+          Ahora la pieza clave es <strong>Azure Update Manager</strong> (antes Update Management).
+          Permite:
+          <ul>
+            <li>Grupos dinámicos de máquinas por tags, ubicación, etc.</li>
+            <li>Evaluación de cumplimiento de parches.</li>
+            <li>Ventanas de mantenimiento y aprobación programada.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Backup para VMs</strong><br>
+        <span class="small">
+          Se usan <strong>Recovery Services Vaults</strong> y políticas de backup:
+          <ul>
+            <li>Backups diarios/semanales, retención corta y larga.</li>
+            <li>Restore de toda la VM o solo archivos/disco.</li>
+          </ul>
+          Las preguntas suelen ir de “proteger VMs” y elegir la política adecuada.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl note" style="margin-top:10px">
+      <span class="pill">📘 Tip del examen</span>
+      Cada vez que veas “alta disponibilidad”, piensa en este patrón: 
+      <strong>2+ instancias + distribución entre zonas/AS + balanceador</strong>.
+    </div>
+  </div>
+
+  <div class="card" id="decision">
+    <h2>Guía de decisión rápida</h2>
+    <p class="small">
+      Usa este mini-árbol mental cuando no tengas claro qué servicio de cómputo elegir.
+    </p>
+    <ul>
+      <li>
+        <strong>“Quiero levantar un servidor clásico que controlo yo”</strong><br>
+        <span class="small">
+          → <strong>VM individual</strong> (o varias con AS/Zonas si piden HA).
+        </span>
+      </li>
+      <li>
+        <strong>“Necesito que el número de instancias crezca/disminuya según carga”</strong><br>
+        <span class="small">
+          → <strong>VM Scale Set</strong> con autoscaling por métricas.  
+          Usa imagen del Marketplace o Shared Image Gallery.
+        </span>
+      </li>
+      <li>
+        <strong>“Quiero máxima resiliencia en una región con zonas”</strong><br>
+        <span class="small">
+          → VMs en <strong>Availability Zones</strong> + Load Balancer / App Gateway.
+        </span>
+      </li>
+      <li>
+        <strong>“Quiero bootstrap automático de la VM (instalar software, agentes…)”</strong><br>
+        <span class="small">
+          → <strong>Extensiones de VM</strong> o <strong>imagen personalizada</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>“Necesito muchos IOPS / baja latencia”</strong><br>
+        <span class="small">
+          → <strong>Discos Premium / Ultra</strong>, ajustar tamaño y caching, y si hace falta, striping.
+        </span>
+      </li>
+      <li>
+        <strong>“Quiero centralizar el parcheo de todas las VMs”</strong><br>
+        <span class="small">
+          → <strong>Azure Update Manager</strong> con grupos dinámicos y ventanas de mantenimiento.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🎯 Estrategia</span>
+      Pregúntate siempre: ¿el problema es de <strong>escala</strong>, de <strong>resiliencia</strong>, 
+      de <strong>automatización</strong> o de <strong>backup</strong>?  
+      Eso te coloca enseguida en VM vs VMSS vs imagen vs backup.
+    </div>
+  </div>
+
+  <div class="card" id="comandos">
+    <h2>Comandos y rutas de portal recomendados</h2>
+    <div class="grid">
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Crear una VM básica</div>
+        <pre><code>az vm create \
+  -g rg-demo \
+  -n vm-demo \
+  --image UbuntuLTS \
+  --size Standard_D4s_v5 \
+  --vnet-name vnet-demo \
+  --subnet subnet-app \
+  --public-ip-sku Standard \
+  --generate-ssh-keys</code></pre>
+        <p class="small">
+          Portal: <strong>Virtual machines &gt; Create</strong>.  
+          Fíjate en: zona/AS, tamaño, discos y red al crearla.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Crear un VM Scale Set</div>
+        <pre><code>az vmss create \
+  -g rg-demo \
+  -n web-vmss \
+  --image UbuntuLTS \
+  --orchestration-mode Uniform \
+  --instance-count 2 \
+  --upgrade-policy-mode Rolling \
+  --public-ip-per-vm</code></pre>
+        <p class="small">
+          Portal: <strong>Virtual machine scale sets &gt; Create</strong>.  
+          Practica opciones de autoscaling (por CPU) y zonas de disponibilidad.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Crear y adjuntar disco de datos</div>
+        <pre><code>az disk create \
+  -g rg-demo \
+  -n data-disk1 \
+  --size-gb 512 \
+  --sku Premium_LRS
+
+az vm disk attach \
+  -g rg-demo \
+  --vm-name vm-demo \
+  --name data-disk1</code></pre>
+        <p class="small">
+          Portal: en la VM &gt; <strong>Disks</strong> &gt; + Add data disk.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Snapshot de disco</div>
+        <pre><code>az snapshot create \
+  -g rg-demo \
+  -n vm-os-snap \
+  --source /subscriptions/&lt;subId&gt;/resourceGroups/rg-demo/providers/Microsoft.Compute/disks/vm-demo_OsDisk_1</code></pre>
+        <p class="small">
+          Útil para backups rápidos y clonación de VMs en casos de laboratorio.
+        </p>
       </div>
     </div>
-    
-    <div class="card" id="conceptos"><h2>Conceptos clave</h2>
-      <ul><li><strong>Disponibilidad</strong>: Availability sets vs Zonas; SLAs y balanceadores.</li><li><strong>VMSS</strong>: Uniform/Flexible, autoescalado, actualización gradual.</li><li><strong>Imágenes</strong>: Shared Image Gallery (definiciones/versions).</li><li><strong>Discos</strong>: OS vs datos, tipos, bursting e IOPS/throughput.</li><li><strong>Estado deseado</strong>: Extensiones, Guest Configuration, VM Apps.</li><li><strong>Actualizaciones</strong>: Update Manager y ventanas de mantenimiento.</li></ul>
-      <div class="hl note" style="margin-top:10px">
-        <span class="pill">📘 Tip del examen</span>
-        En preguntas de *observabilidad*, piensa en **Azure Monitor + Log Analytics + Alertas** antes de automatizar.
-      </div>
+
+    <p class="muted small">
+      Si puedes, crea una pequeña solución con 2 VMs detrás de un Load Balancer, en un Availability Set,
+      y rompe cosas a propósito para entender qué pasa.
+    </p>
+  </div>
+
+  <div class="card" id="escenarios">
+    <h2>Escenarios tipo examen</h2>
+    <ul>
+      <li>
+        <strong>Escenario 1: Aplicación crítica sin SLA</strong><br>
+        <span class="small">
+          Tienes una sola VM con una app crítica. El negocio quiere SLA y tolerancia a mantenimiento y fallos de host.  
+          Solución típica:
+          <ul>
+            <li>2+ VMs en <strong>Availability Set</strong> o <strong>Zonas</strong>.</li>
+            <li><strong>Load Balancer</strong> delante para repartir tráfico.</li>
+            <li>Backup de VMs con Recovery Services Vault.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 2: Picos de carga impredecibles</strong><br>
+        <span class="small">
+          Una web sufre picos en campañas de marketing y quieren que escale automáticamente.  
+          Respuesta: <strong>VMSS</strong> con autoscaling basado en CPU o en longitud de cola, usando una imagen común.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 3: Estandarizar despliegues de servidores</strong><br>
+        <span class="small">
+          Distintos equipos crean VMs de forma manual y hay inconsistencias.  
+          Solución “de libro”: crear una <strong>imagen estándar (SIG)</strong> y desplegar siempre desde ella, o usar plantillas.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 4: Recuperar VM tras actualización fallida</strong><br>
+        <span class="small">
+          Una actualización de sistema operativo rompe la VM. ¿Qué opción te da vuelta atrás más rápida?  
+          Si existe un <strong>snapshot</strong> o <strong>backup reciente</strong>, restaurar desde ahí.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 5: Parches coordinados una vez al mes</strong><br>
+        <span class="small">
+          Quieren aplicar parches de seguridad a todas las VMs la noche del domingo, sin hacerlo a mano.  
+          → <strong>Azure Update Manager</strong> con grupos dinámicos y schedule en la ventana deseada.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🧪 Cómo practicar</span>
+      Piensa soluciones tipo “patrón”: <em>2 VMs + LB</em>, <em>VMSS + autoscaling</em>, <em>Imagen + plantilla</em>, 
+      <em>Backup + ASR</em>.  
+      Muchas preguntas son variaciones sobre esos mismos patrones.
     </div>
-    
-    <div class="card" id="decision"><h2>Guía de decisión (rápida)</h2>
-      <ul><li><strong>Alta disponibilidad</strong>: 2+ VMs en zonas/AS + LB.</li><li><strong>Escalado horizontal</strong>: VMSS + imagen compartida.</li><li><strong>IOPS extremo</strong>: Premium/Ultra + estripeo.</li></ul>
-      <p class="muted">Recuerda revisar costes de ingestión, retención y tablas dedicadas antes de habilitar diagnósticos masivos.</p>
-    </div>
-    
-    <div class="card" id="comandos"><h2>Comandos útiles</h2>
-      <div class="grid">
-        <div class='card' style='background:#0c1332'><div class='kicker'>Crear VM</div><pre><code>az vm create -g rg -n vm1 --image UbuntuLTS --size Standard_D4s_v5 --generate-ssh-keys</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>VMSS</div><pre><code>az vmss create -g rg -n web --image <sigImage> --orchestration-mode Uniform</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Discos</div><pre><code>az disk create -g rg -n data1 --size-gb 1024 --sku Premium_LRS</code></pre></div>
-      </div>
-      <p class="muted">Incluye <kbd>az</kbd> CLI, consultas <kbd>KQL</kbd> y opciones de portal.</p>
-    </div>
-    
-    <div class="card" id="escenarios"><h2>Escenarios de examen (tipo test)</h2>
-      <ul><li><strong>SLA durante mantenimiento</strong>: Zonas + health probes correctas; actualización gradual.</li><li><strong>Restaurar archivos</strong>: Azure Backup con recuperación granular.</li><li><strong>Golden image</strong>: SIG + despliegue masivo.</li></ul>
-      <div class="hl tip" style="margin-top:10px">
-        <span class="pill">🎯 Estrategia</span>
-        Valora ruido vs. señal: usa reglas de supresión, horarios silenciosos y grupos de acción específicos.
-      </div>
-    </div>
-    
-    <div class="card warnbox" id="errores"><h2>Errores comunes</h2>
-      <ul><li><strong>VM única crítica</strong>: Sin SLA; añade instancia y balancea.</li><li><strong>OS y datos juntos</strong>: Separa discos y cachea correctamente.</li></ul>
-    </div>
-    
-    <div class="card" id="cross"><h2>Cross-links entre dominios</h2>
-      <ul><li><strong>Redes</strong>: AGW/ALB, NSG/UDR, Private Link a PaaS.</li><li><strong>Monitor</strong>: Métricas, map de dependencias y alertas.</li><li><strong>Identidades</strong>: Managed Identity para KV/Storage.</li></ul>
-      <p class="muted">Relaciona monitoreo con identidades, redes, cómputo y almacenamiento para respuestas completas.</p>
-    </div>
-    
-  
-    <div class="footer">
-      <span class="pill">🧠 Consejo</span> Crea dashboards y *workbooks* por dominio (Identidades, Redes, Cómputo, Storage) y practica KQL con datos de demo.
-      <span class="pill">🔗</span> Usa *Action Groups* reutilizables y *Action Rules* para suprimir ruido en cambios planificados.
-    </div>
-    
+  </div>
+
+  <div class="card warnbox" id="errores">
+    <h2>Errores comunes</h2>
+    <ul>
+      <li>
+        <strong>Confiar toda la app a una sola VM</strong><br>
+        <span class="small">
+          En producción y en el examen, casi nunca es la respuesta correcta si hablan de criticidad o SLA.
+        </span>
+      </li>
+      <li>
+        <strong>Almacenar datos importantes en el disco temporal</strong><br>
+        <span class="small">
+          El disco temporal de la VM se borra cuando se reinicia/mueve la VM. Nunca guardes ahí datos críticos.
+        </span>
+      </li>
+      <li>
+        <strong>No separar OS y datos</strong><br>
+        <span class="small">
+          Por diseño, los datos van en discos aparte. Mejora rendimiento y flexibilidad (snapshots, backup, migraciones).
+        </span>
+      </li>
+      <li>
+        <strong>No tener backup “real” porque hay solo redundancia</strong><br>
+        <span class="small">
+          Tener el disco en Premium/GRS no es backup. El examen insiste en diferenciar resiliencia vs copia de seguridad.
+        </span>
+      </li>
+      <li>
+        <strong>Escalar verticalmente antes que horizontalmente</strong><br>
+        <span class="small">
+          Cuando el escenario habla de picos, elasticidad, escalado automático, piensa primero en <strong>horizontal</strong> (VMSS).
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card" id="cross">
+    <h2>Cross-links con otros dominios</h2>
+    <ul>
+      <li>
+        <strong>Con redes</strong><br>
+        <span class="small">
+          VMs detrás de Load Balancers y Application Gateways, NSG para filtrar tráfico, Private Link para hablar con PaaS.
+        </span>
+      </li>
+      <li>
+        <strong>Con identidades</strong><br>
+        <span class="small">
+          <strong>Managed identities</strong> para que las VMs accedan a Key Vault, Storage u otros recursos sin secretos.
+        </span>
+      </li>
+      <li>
+        <strong>Con almacenamiento</strong><br>
+        <span class="small">
+          Discos gestionados, snapshots a cuentas de almacenamiento, Azure Files para montar shares en las VMs.
+        </span>
+      </li>
+      <li>
+        <strong>Con monitorización</strong><br>
+        <span class="small">
+          Métricas de CPU, memoria, disco y red; logs de actividad; alertas para indicar problemas de rendimiento
+          o disponibilidad.
+        </span>
+      </li>
+    </ul>
+
+    <p class="muted small">
+      Cuando una pregunta mezcle varios temas (VM + red + almacenamiento), piensa si se puede resolver con un patrón 
+      estándar antes de buscar soluciones raras.
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="pill">🧠 Consejo final</span>
+    Dibuja el mapa: <strong>VM / VMSS → Discos → Red → Backup/Monitor</strong>.  
+    Tener claros estos bloques te ayuda a “ver” rápidamente la solución que el examen espera.
+  </div>
+
 </div>
 </body>
 </html>

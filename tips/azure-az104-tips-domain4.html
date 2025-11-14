@@ -1,105 +1,494 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AZ‑104 — Dominio 4 · Configurar y administrar redes virtuales</title>
-<style>
-:root{
-  --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
-  --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
-  --blue:#74a8ff;--purple:#c59cff;
-}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
-  color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
-a{color:var(--accent)}
-.wrap{max-width:1000px;margin:0 auto;padding:28px}
-.badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
-  padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
-h1{margin:10px 0 10px;font-size:1.9rem}
-h2{margin:22px 0 10px;font-size:1.25rem}
-.muted{color:var(--muted)}
-.card{background:linear-gradient(180deg,#101a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
-ul{padding-left:18px;margin:6px 0}
-li+li{margin-top:6px}
-.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
-code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-.toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
-.toc a{color:#e3ecff;text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
-.pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
-.hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
-.note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
-.tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
-.warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
-kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
-pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
-.footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-104 — Dominio 4 · Configurar y administrar redes virtuales</title>
+  <style>
+    :root{
+      --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+      --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
+      --blue:#74a8ff;--purple:#c59cff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.65;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1000px;margin:0 auto;padding:28px}
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#0f1844,#0d1438);
+      padding:8px 14px;
+      border-radius:999px;
+      font-weight:900;
+      color:#cbd6ff;
+      box-shadow:0 0 0 3px #00000044;
+    }
+    h1{margin:10px 0 10px;font-size:1.9rem}
+    h2{margin:22px 0 10px;font-size:1.25rem}
+    .muted{color:var(--muted)}
+    .card{
+      background:linear-gradient(180deg,#101a48,#0d1538);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+      margin:12px 0;
+      box-shadow:0 6px 32px #00000055;
+    }
+    ul{padding-left:18px;margin:6px 0}
+    li+li{margin-top:6px}
+    .ok{color:var(--green)}
+    .warn{color:var(--yellow)}
+    .bad{color:var(--red)}
+    code,.mono{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    }
+    .toc{
+      background:linear-gradient(180deg,#0f1a4a,#0b1230);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      margin:12px 0;
+      display:grid;
+      gap:6px;
+    }
+    .toc a{color:#e3ecff;text-decoration:none}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+    }
+    .kicker{
+      font-size:.85rem;
+      letter-spacing:.06em;
+      color:#cfd6ff;
+      text-transform:uppercase;
+    }
+    .pill{
+      display:inline-block;
+      font-size:.75rem;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#0e1740;
+      margin-right:6px;
+    }
+    .hl{
+      background:linear-gradient(90deg,#1c245c,#191f4a);
+      border-left:3px solid var(--accent);
+      padding:10px;
+      border-radius:10px;
+    }
+    .note{
+      background:linear-gradient(180deg,#102f38,#0b2025);
+      border:1px solid #2a5f6a;
+    }
+    .tip{
+      background:linear-gradient(180deg,#163310,#10230b);
+      border:1px solid #2a6a2a;
+    }
+    .warnbox{
+      background:linear-gradient(180deg,#3a1b1b,#2a1010);
+      border:1px solid #7a2a2a;
+    }
+    kbd{
+      border:1px solid #3a4a88;
+      border-bottom-width:3px;
+      border-radius:6px;
+      padding:1px 6px;
+      background:#0e1640;
+    }
+    pre{
+      background:#0a122e;
+      border:1px solid #26336e;
+      border-radius:12px;
+      padding:12px;
+      overflow:auto;
+    }
+    .footer{
+      color:#aab7ff;
+      font-size:.9rem;
+      margin-top:22px;
+    }
+    .small{font-size:.9rem}
+    strong{font-weight:600}
+  </style>
 </head>
 <body>
 <div class="wrap">
   <span class="badge">Azure · Redes</span>
-  <h1>AZ‑104 — Dominio 4 · Configurar y administrar redes virtuales</h1>
-  <p class="muted">VNet/subredes, NSG/UDR, Private Link, peering, VPN/ER, balanceo L4/L7, DNS y visibilidad.</p>
-  
-    <div class="toc">
-      <div class="kicker">Índice</div>
-      <div class="grid">
-        <a href="#conceptos">Conceptos clave</a>
-        <a href="#decision">Guía de decisión</a>
-        <a href="#comandos">Comandos útiles</a>
-        <a href="#escenarios">Escenarios de examen</a>
-        <a href="#errores">Errores comunes</a>
-        <a href="#cross">Cross-links entre dominios</a>
+  <h1>AZ-104 — Dominio 4 · Configurar y administrar redes virtuales</h1>
+  <p class="muted">
+    Este dominio es el “cableado” de Azure: VNets, subredes, NSG, peering, VPN, ExpressRoute, Private Link y balanceo de carga.
+    Si entiendes cómo fluye el tráfico y dónde se filtra, estás en muy buena posición.
+  </p>
+
+  <div class="toc">
+    <div class="kicker">Índice rápido para estudiar</div>
+    <div class="grid">
+      <a href="#conceptos">Conceptos clave</a>
+      <a href="#decision">Guía de decisión</a>
+      <a href="#comandos">Comandos y portal</a>
+      <a href="#escenarios">Escenarios tipo examen</a>
+      <a href="#errores">Errores típicos</a>
+      <a href="#cross">Cross-links con otros dominios</a>
+    </div>
+  </div>
+
+  <div class="card" id="conceptos">
+    <h2>Conceptos clave</h2>
+    <ul>
+      <li>
+        <strong>VNets y subredes</strong><br>
+        <span class="small">
+          <ul>
+            <li>Rangos <strong>CIDR</strong> sin solaparse (muy típico que el examen te “tiente” con solapes con on-prem).</li>
+            <li>Subredes por función: front, app, data, gestión…</li>
+            <li>Delegación de subredes para ciertos servicios PaaS.</li>
+          </ul>
+          Si ves problemas de conectividad extraños, revisa primero IPs, máscaras y solapes.
+        </span>
+      </li>
+      <li>
+        <strong>NSG y ASG</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>NSG</strong>: firewall básico L4, aplicado a subred y/o NIC.</li>
+            <li><strong>ASG</strong>: agrupación lógica de NICs para usar como origen/destino en reglas.</li>
+          </ul>
+          Reglas se procesan por prioridad (número más bajo, más importante) y por dirección (inbound/outbound).
+        </span>
+      </li>
+      <li>
+        <strong>Rutas (UDR) y BGP</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>System routes</strong>: lo que Azure pone por defecto.</li>
+            <li><strong>User-defined routes (UDR)</strong>: para forzar tráfico a ir por un firewall/NVA (forced tunneling).</li>
+            <li><strong>BGP</strong>: en ExpressRoute y algunas VPN avanzadas, para intercambio dinámico de rutas.</li>
+          </ul>
+          Pregunta típica: “todo el tráfico Internet debe pasar por un firewall central” → UDR + next hop al firewall.
+        </span>
+      </li>
+      <li>
+        <strong>Peering de VNets</strong><br>
+        <span class="small">
+          Permite que dos VNets hablen como si fueran la misma red, pero:
+          <ul>
+            <li>No hay <strong>tránsito</strong> automático (hub-&amp;-spoke: los spokes no se ven entre sí a través del hub por defecto).</li>
+            <li>Debes evitar solapes de espacio de direcciones.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Private Link y Service Endpoints</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Service endpoints</strong>: el tráfico hacia el servicio PaaS sale por la red de Microsoft; la IP del servicio sigue siendo pública.</li>
+            <li><strong>Private Endpoints</strong>: IP privada en tu VNet para el servicio PaaS, con DNS privado asociado.</li>
+          </ul>
+          En el examen, cuando hablen de “no exponer servicio en Internet” → Private Endpoints &gt; Service Endpoints.
+        </span>
+      </li>
+      <li>
+        <strong>Conectividad híbrida: VPN y ExpressRoute</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>VPN S2S</strong>: por Internet (IPsec), más barato pero con latencia variable.</li>
+            <li><strong>VPN P2S</strong>: para usuarios remotos.</li>
+            <li><strong>ExpressRoute</strong>: circuito privado, más estable y con mejores SLAs.</li>
+            <li>Muchas arquitecturas usan <strong>ER + VPN como backup</strong>.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Balanceadores: Load Balancer y Application Gateway</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Azure Load Balancer</strong>: L4 (TCP/UDP), perfecto para VMs y VMSS a nivel de puerto/IP.</li>
+            <li><strong>Application Gateway</strong>: L7 (HTTP/HTTPS), soporta <em>path-based routing</em>, offload SSL y WAF.</li>
+          </ul>
+          Si la pregunta menciona WAF, HTTPS, rutas por URL → App Gateway.  
+          Si habla de puertos y protocolos sencillos → Load Balancer.
+        </span>
+      </li>
+      <li>
+        <strong>DNS en Azure</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Azure DNS</strong>: zonas públicas.</li>
+            <li><strong>Private DNS zones</strong>: nombres privados para recursos internos (y Private Endpoints).</li>
+            <li>Importante en Private Link: usar las zonas <code>privatelink.&lt;service&gt;.azure.com</code>.</li>
+          </ul>
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl note" style="margin-top:10px">
+      <span class="pill">📘 Tip del examen</span>
+      En cada pregunta de redes, identifica: <strong>origen, destino, camino previsto y qué lo podría estar bloqueando</strong>
+      (NSG, UDR, DNS, firewall…).
+    </div>
+  </div>
+
+  <div class="card" id="decision">
+    <h2>Guía de decisión rápida</h2>
+    <ul>
+      <li>
+        <strong>“Necesito segmentar mi aplicación en capas”</strong><br>
+        <span class="small">
+          → VNet única con <strong>varias subredes</strong> (web, app, data) + NSG específicos por capa.
+        </span>
+      </li>
+      <li>
+        <strong>“Todas las salidas a Internet deben pasar por un firewall central”</strong><br>
+        <span class="small">
+          → Arquitectura <strong>hub-&amp;-spoke</strong> con firewall en el hub + <strong>UDR con next hop al firewall</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>“Quiero exponer una web con protección WAF”</strong><br>
+        <span class="small">
+          → <strong>Application Gateway v2 + WAF</strong>, con listeners HTTPS y redirecciones HTTP→HTTPS.
+        </span>
+      </li>
+      <li>
+        <strong>“Quiero conectar on-prem con Azure de forma estable y privada”</strong><br>
+        <span class="small">
+          → <strong>ExpressRoute</strong>.  
+          Si piden alta disponibilidad → 2 circuitos o ER + VPN de backup.
+        </span>
+      </li>
+      <li>
+        <strong>“Quiero que un Storage / SQL PaaS no sea accesible por Internet”</strong><br>
+        <span class="small">
+          → <strong>Private Endpoints</strong> + DNS privado + deshabilitar acceso público en el servicio.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🎯 Estrategia</span>
+      Cuando dudes, piensa si el problema es de <strong>segmentación</strong>, <strong>seguridad</strong>,
+      <strong>híbrido</strong> o <strong>publicación externa</strong>.  
+      Eso ya te encamina a subredes/NSG, UDR/firewall, VPN/ER o LB/AppGW.
+    </div>
+  </div>
+
+  <div class="card" id="comandos">
+    <h2>Comandos y rutas de portal</h2>
+    <div class="grid">
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Crear VNet + Subred</div>
+        <pre><code>az network vnet create \
+  -g rg-demo \
+  -n vnet-app \
+  --address-prefixes 10.10.0.0/16 \
+  --subnet-name web \
+  --subnet-prefix 10.10.1.0/24</code></pre>
+        <p class="small">
+          Portal: <strong>Virtual networks &gt; Create</strong>.  
+          Revisa siempre rangos para evitar solapes con on-prem.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">NSG y regla</div>
+        <pre><code>az network nsg create \
+  -g rg-demo \
+  -n web-nsg
+
+az network nsg rule create \
+  -g rg-demo \
+  --nsg-name web-nsg \
+  -n allow-https \
+  --priority 100 \
+  --direction Inbound \
+  --access Allow \
+  --protocol Tcp \
+  --destination-port-ranges 443</code></pre>
+        <p class="small">
+          Portal: <strong>Network security groups</strong>.  
+          Ten cuidado con prioridades y rangos 0.0.0.0/0.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Peering de VNets</div>
+        <pre><code>az network vnet peering create \
+  -g rg-demo \
+  --vnet-name hub-vnet \
+  -n hub-to-spoke1 \
+  --remote-vnet spoke1-vnet \
+  --allow-vnet-access</code></pre>
+        <p class="small">
+          Recuerda que el peering es bidireccional: normalmente creas uno en cada dirección.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">UDR simple</div>
+        <pre><code>az network route-table create \
+  -g rg-demo \
+  -n rt-outbound
+
+az network route-table route create \
+  -g rg-demo \
+  --route-table-name rt-outbound \
+  -n default-to-fw \
+  --address-prefix 0.0.0.0/0 \
+  --next-hop-type VirtualAppliance \
+  --next-hop-ip-address 10.10.0.4</code></pre>
+        <p class="small">
+          Luego asocias la route table a la subred deseada desde el portal.
+        </p>
       </div>
     </div>
-    
-    <div class="card" id="conceptos"><h2>Conceptos clave</h2>
-      <ul><li><strong>VNet/Subredes</strong>: CIDR sin solapes, delegaciones y subredes por función.</li><li><strong>Seguridad</strong>: NSG/ASG, Azure Firewall/NVA, DNAT/SNAT.</li><li><strong>Rutas</strong>: UDR y BGP; sin tránsito en peering.</li><li><strong>Private Link</strong>: PE a PaaS + DNS privado/Resolver.</li><li><strong>Híbrido</strong>: VPN S2S/P2S, ExpressRoute y Global Reach.</li><li><strong>Balanceo</strong>: ALB (L4) vs AGW/WAF (L7), health probes.</li></ul>
-      <div class="hl note" style="margin-top:10px">
-        <span class="pill">📘 Tip del examen</span>
-        En preguntas de *observabilidad*, piensa en **Azure Monitor + Log Analytics + Alertas** antes de automatizar.
-      </div>
+
+    <p class="muted small">
+      Network Watcher, Connection Monitor y NSG flow logs también son muy relevantes,
+      sobre todo en preguntas de troubleshooting.
+    </p>
+  </div>
+
+  <div class="card" id="escenarios">
+    <h2>Escenarios tipo examen</h2>
+    <ul>
+      <li>
+        <strong>Escenario 1: Hub-&amp;-Spoke con firewall central</strong><br>
+        <span class="small">
+          Varias VNets “spoke” conectadas a un “hub”. Todo el tráfico a Internet debe salir por un firewall en el hub.  
+          Solución:
+          <ul>
+            <li>Peering hub↔spoke con <strong>Use remote gateway</strong> donde aplique.</li>
+            <li><strong>UDR en los spokes</strong> enviando 0.0.0.0/0 al firewall.</li>
+            <li>NSG filtrando tráfico en subredes clave.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 2: Publicar web con WAF y SSL</strong><br>
+        <span class="small">
+          Una aplicación web debe estar protegida contra ataques comunes (OWASP) y forzar HTTPS.  
+          → <strong>Application Gateway v2 con WAF</strong>, listeners HTTPS con certificado,
+          redirección HTTP→HTTPS, y backends (VMs/VMSS/App Services).
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 3: Storage accesible solo desde la VNet</strong><br>
+        <span class="small">
+          Un equipo quiere que un Storage Account no sea accesible desde Internet, solo desde workloads en VNets específicas.  
+          → <strong>Private Endpoints</strong> en esas VNets, <strong>DNS privado</strong> y firewall de Storage
+          restringiendo el resto.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 4: Problema de conexión entre VMs en VNets distintas</strong><br>
+        <span class="small">
+          No se pueden comunicar, pero los NSG parecen permitirlo.  
+          Suele ser:
+          <ul>
+            <li>Falta de <strong>peering</strong> o peering mal configurado.</li>
+            <li><strong>Solape de rangos</strong> de direcciones.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 5: Conectividad híbrida con requisitos de baja latencia</strong><br>
+        <span class="small">
+          HQ tiene requisitos de latencia y seguridad altos para conectarse a Azure.  
+          → <strong>ExpressRoute</strong> (y a veces ExpressRoute + VPN failover).
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🧪 Cómo practicar</span>
+      Dibuja topologías sencillas hub-&amp;-spoke, marca NSG, UDR, firewalls y Private Endpoints.
+      Intenta seguir el camino de un paquete desde on-prem hasta una VM o un PaaS.
     </div>
-    
-    <div class="card" id="decision"><h2>Guía de decisión (rápida)</h2>
-      <ul><li><strong>PaaS privado</strong>: Private Endpoint + DNS privado.</li><li><strong>Salida controlada</strong>: UDR + Firewall (forced tunneling).</li><li><strong>Híbrido estable</strong>: ER + VPN de respaldo.</li></ul>
-      <p class="muted">Recuerda revisar costes de ingestión, retención y tablas dedicadas antes de habilitar diagnósticos masivos.</p>
-    </div>
-    
-    <div class="card" id="comandos"><h2>Comandos útiles</h2>
-      <div class="grid">
-        <div class='card' style='background:#0c1332'><div class='kicker'>VNet</div><pre><code>az network vnet create -g rg -n vnet --address-prefixes 10.0.0.0/16 --subnet-name web --subnet-prefix 10.0.1.0/24</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>NSG</div><pre><code>az network nsg rule create -g rg --nsg-name web-nsg -n allow-https --priority 100 --destination-port-ranges 443</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Peering</div><pre><code>az network vnet peering create --vnet-name hub --remote-vnet spoke --allow-vnet-access</code></pre></div>
-      </div>
-      <p class="muted">Incluye <kbd>az</kbd> CLI, consultas <kbd>KQL</kbd> y opciones de portal.</p>
-    </div>
-    
-    <div class="card" id="escenarios"><h2>Escenarios de examen (tipo test)</h2>
-      <ul><li><strong>DNS para PE</strong>: Zonas privadas privatelink.<servicio>.azure.com vinculadas.</li><li><strong>Hub-&-Spoke</strong>: Firewall en hub, UDR de salida, peering sin tránsito.</li><li><strong>Publicar con WAF</strong>: AGW v2 + WAF + redirección HTTPS.</li></ul>
-      <div class="hl tip" style="margin-top:10px">
-        <span class="pill">🎯 Estrategia</span>
-        Valora ruido vs. señal: usa reglas de supresión, horarios silenciosos y grupos de acción específicos.
-      </div>
-    </div>
-    
-    <div class="card warnbox" id="errores"><h2>Errores comunes</h2>
-      <ul><li><strong>NSG 0.0.0.0/0</strong>: Restringe orígenes; usa Service Tags.</li><li><strong>DNS no preparado</strong>: PE sin DNS → tráfico a Internet.</li></ul>
-    </div>
-    
-    <div class="card" id="cross"><h2>Cross-links entre dominios</h2>
-      <ul><li><strong>Cómputo</strong>: Backends de AGW/ALB con VMSS.</li><li><strong>Monitor</strong>: Network Watcher, Connection Monitor, NSG flow logs.</li><li><strong>Identidades</strong>: Policy para IP públicas/PE.</li></ul>
-      <p class="muted">Relaciona monitoreo con identidades, redes, cómputo y almacenamiento para respuestas completas.</p>
-    </div>
-    
-  
-    <div class="footer">
-      <span class="pill">🧠 Consejo</span> Crea dashboards y *workbooks* por dominio (Identidades, Redes, Cómputo, Storage) y practica KQL con datos de demo.
-      <span class="pill">🔗</span> Usa *Action Groups* reutilizables y *Action Rules* para suprimir ruido en cambios planificados.
-    </div>
-    
+  </div>
+
+  <div class="card warnbox" id="errores">
+    <h2>Errores comunes</h2>
+    <ul>
+      <li>
+        <strong>Abrir RDP/SSH a 0.0.0.0/0</strong><br>
+        <span class="small">
+          En el examen, casi nunca es aceptable abrir 3389/22 al mundo.  
+          Mejor: restringir origen, usar VPN/Bastion, o túneles más seguros.
+        </span>
+      </li>
+      <li>
+        <strong>Olvidar DNS en Private Link</strong><br>
+        <span class="small">
+          PE sin DNS correcto → las apps seguirán yendo al endpoint público.  
+          Fíjate en respuestas que mencionen <strong>Private DNS zones</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>Suponer tránsito automático con peering</strong><br>
+        <span class="small">
+          En hub-&amp;-spoke, que spoke A esté conectado al hub y spoke B también, no significa que A y B se vean entre sí.
+        </span>
+      </li>
+      <li>
+        <strong>Solapar rangos de IP entre on-prem y Azure</strong><br>
+        <span class="small">
+          Es un clásico: el examen te pone un rango que solapa con el de on-prem y esa respuesta suele ser la incorrecta.
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card" id="cross">
+    <h2>Cross-links con otros dominios</h2>
+    <ul>
+      <li>
+        <strong>Con cómputo</strong><br>
+        <span class="small">
+          VMs y VMSS cuelgan de VNets/Subredes, se protegen con NSG, y se publican con LB/AppGW.
+        </span>
+      </li>
+      <li>
+        <strong>Con almacenamiento</strong><br>
+        <span class="small">
+          Private Endpoints para Storage, UDR y firewalls determinan el camino de acceso a datos.
+        </span>
+      </li>
+      <li>
+        <strong>Con identidades y gobierno</strong><br>
+        <span class="small">
+          Azure Policy para impedir IP públicas, forzar uso de Private Link o requerir NSG en subredes.
+        </span>
+      </li>
+      <li>
+        <strong>Con monitorización</strong><br>
+        <span class="small">
+          Network Watcher, NSG flow logs, Connection Monitor… todo entra en el dominio de Monitor,
+          pero se apoya en el diseño de red.
+        </span>
+      </li>
+    </ul>
+
+    <p class="muted small">
+      Si en una pregunta aparecen redes + seguridad + PaaS, casi seguro que la respuesta mezcla NSG/UDR con Private Link
+      y alguna Policy.
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="pill">🧠 Consejo final</span>
+    Ten siempre en mente este esquema: <strong>VNet → Subred → NSG/UDR → Peering/VPN/ER → PaaS con Private Link</strong>.
+    Solo con eso ya lees las preguntas de red de otra forma.
+  </div>
+
 </div>
 </body>
 </html>

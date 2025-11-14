@@ -1,105 +1,606 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AZ‑104 — Dominio 1 · Administrar identidades y gobierno</title>
-<style>
-:root{
-  --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
-  --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
-  --blue:#74a8ff;--purple:#c59cff;
-}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
-  color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
-a{color:var(--accent)}
-.wrap{max-width:1000px;margin:0 auto;padding:28px}
-.badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
-  padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
-h1{margin:10px 0 10px;font-size:1.9rem}
-h2{margin:22px 0 10px;font-size:1.25rem}
-.muted{color:var(--muted)}
-.card{background:linear-gradient(180deg,#101a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
-ul{padding-left:18px;margin:6px 0}
-li+li{margin-top:6px}
-.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
-code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-.toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
-.toc a{color:#e3ecff;text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
-.pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
-.hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
-.note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
-.tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
-.warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
-kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
-pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
-.footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-104 — Dominio 1 · Administrar identidades y gobierno</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#111a3a;
+      --border:#2a3b82;
+      --text:#e8edff;
+      --muted:#a7b4ff;
+      --accent:#7ac7ff;
+      --pink:#ff6ac1;
+      --green:#6af7c0;
+      --yellow:#ffd15c;
+      --red:#ff9b9b;
+      --blue:#74a8ff;
+      --purple:#c59cff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.65;
+    }
+    a{color:var(--accent)}
+    .wrap{
+      max-width:1000px;
+      margin:0 auto;
+      padding:28px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#0f1844,#0d1438);
+      padding:8px 14px;
+      border-radius:999px;
+      font-weight:900;
+      color:#cbd6ff;
+      box-shadow:0 0 0 3px #00000044;
+    }
+    h1{
+      margin:10px 0 10px;
+      font-size:1.9rem;
+    }
+    h2{
+      margin:22px 0 10px;
+      font-size:1.25rem;
+    }
+    .muted{color:var(--muted)}
+    .card{
+      background:linear-gradient(180deg,#101a48,#0d1538);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+      margin:12px 0;
+      box-shadow:0 6px 32px #00000055;
+    }
+    ul{
+      padding-left:18px;
+      margin:6px 0;
+    }
+    li+li{margin-top:6px}
+    .ok{color:var(--green)}
+    .warn{color:var(--yellow)}
+    .bad{color:var(--red)}
+    code,.mono{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    }
+    .toc{
+      background:linear-gradient(180deg,#0f1a4a,#0b1230);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      margin:12px 0;
+      display:grid;
+      gap:6px;
+    }
+    .toc a{
+      color:#e3ecff;
+      text-decoration:none;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+    }
+    .kicker{
+      font-size:.85rem;
+      letter-spacing:.06em;
+      color:#cfd6ff;
+      text-transform:uppercase;
+    }
+    .pill{
+      display:inline-block;
+      font-size:.75rem;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#0e1740;
+      margin-right:6px;
+    }
+    .hl{
+      background:linear-gradient(90deg,#1c245c,#191f4a);
+      border-left:3px solid var(--accent);
+      padding:10px;
+      border-radius:10px;
+    }
+    .note{
+      background:linear-gradient(180deg,#102f38,#0b2025);
+      border:1px solid #2a5f6a;
+    }
+    .tip{
+      background:linear-gradient(180deg,#163310,#10230b);
+      border:1px solid #2a6a2a;
+    }
+    .warnbox{
+      background:linear-gradient(180deg,#3a1b1b,#2a1010);
+      border:1px solid #7a2a2a;
+    }
+    kbd{
+      border:1px solid #3a4a88;
+      border-bottom-width:3px;
+      border-radius:6px;
+      padding:1px 6px;
+      background:#0e1640;
+    }
+    pre{
+      background:#0a122e;
+      border:1px solid #26336e;
+      border-radius:12px;
+      padding:12px;
+      overflow:auto;
+    }
+    .footer{
+      color:#aab7ff;
+      font-size:.9rem;
+      margin-top:22px;
+    }
+    .small{font-size:.9rem}
+    strong{font-weight:600}
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <span class="badge">Azure · Identidades y Gobierno</span>
-  <h1>AZ‑104 — Dominio 1 · Administrar identidades y gobierno</h1>
-  <p class="muted">Entra ID (Azure AD), RBAC, PIM, Azure Policy, Resource Graph, Tags y gobierno multi-suscripción.</p>
-  
+  <div class="wrap">
+    <span class="badge">Azure · Identidades y Gobierno</span>
+    <h1>AZ-104 — Dominio 1 · Administrar identidades y gobierno</h1>
+    <p class="muted">
+      Este dominio es el “cerebro” de todo lo demás: quién puede hacer qué, dónde y cómo se controla.
+      Si dominas identidades (Microsoft Entra ID), RBAC y gobierno (Policy, Management Groups, tags),
+      el resto del examen se vuelve mucho más fácil.
+    </p>
+
     <div class="toc">
-      <div class="kicker">Índice</div>
+      <div class="kicker">Índice rápido para estudiar</div>
       <div class="grid">
-        <a href="#conceptos">Conceptos clave</a>
-        <a href="#decision">Guía de decisión</a>
-        <a href="#comandos">Comandos útiles</a>
-        <a href="#escenarios">Escenarios de examen</a>
-        <a href="#errores">Errores comunes</a>
-        <a href="#cross">Cross-links entre dominios</a>
+        <a href="#conceptos">Conceptos clave que sí caen</a>
+        <a href="#decision">Guía de decisión para el examen</a>
+        <a href="#comandos">Comandos y “clics” de portal</a>
+        <a href="#escenarios">Escenarios tipo examen</a>
+        <a href="#errores">Errores típicos que debes evitar</a>
+        <a href="#cross">Cómo se cruza con otros dominios</a>
       </div>
     </div>
-    
-    <div class="card" id="conceptos"><h2>Conceptos clave</h2>
-      <ul><li><strong>Microsoft Entra ID</strong>: Inquilino, objetos (usuarios, grupos, roles), apps y entidades de servicio; consentimiento y permisos.</li><li><strong>RBAC vs KV Access</strong>: RBAC de Azure (Owner/Contributor/Reader/Data) vs políticas de acceso propias de Key Vault.</li><li><strong>PIM</strong>: Asignaciones elegibles, activación JIT con MFA, revisiones de acceso y auditoría.</li><li><strong>Azure Policy</strong>: Definiciones, iniciativas, parámetros, efectos (Deny/Audit/Modify/DeployIfNotExists), cumplimiento.</li><li><strong>Resource Graph</strong>: Inventario multi-suscripción con KQL para estándares y reporting.</li><li><strong>Management Groups</strong>: Aplicar políticas y RBAC por encima de suscripciones.</li><li><strong>Tags</strong>: Clave:valor, estandarización y herencia con Policy.</li></ul>
+
+    <div class="card" id="conceptos">
+      <h2>Conceptos clave (los que de verdad tienes que entender)</h2>
+      <p class="small">
+        No hace falta memorizar definiciones de libro, pero sí saber <strong>qué usar en cada situación</strong>.
+        Piensa siempre en el contexto: empresa grande, varios equipos, seguridad razonable, coste bajo.
+      </p>
+      <ul>
+        <li>
+          <strong>Microsoft Entra ID (antes Azure AD)</strong><br>
+          <span class="small">
+            Es el directorio de identidades. Aquí viven:
+            <strong>usuarios</strong> (personas), <strong>grupos</strong> (para asignar permisos en bloque),
+            <strong>aplicaciones y entidades de servicio</strong> (apps que necesitan permisos)
+            y <strong>identidades administradas</strong> de recursos.<br>
+            En el examen, fíjate si el sujeto es “un usuario”, “un grupo” o “una aplicación”:
+            eso ya te apunta a si vas a tocar Entra ID, RBAC o Key Vault.
+          </span>
+        </li>
+        <li>
+          <strong>Roles de Entra vs RBAC de Azure</strong><br>
+          <span class="small">
+            Dos mundos distintos que se confunden mucho en las preguntas:
+            <ul>
+              <li><strong>Roles de Entra ID</strong>: administran el <em>directorio</em> (crear usuarios, gestionar apps, etc.).</li>
+              <li><strong>Azure RBAC</strong>: administran el acceso a <em>recursos</em> (VMs, RGs, suscripciones…).</li>
+            </ul>
+            Si la pregunta habla de “gestionar usuarios y grupos”, piensa en <strong>rol de Entra</strong>.<br>
+            Si habla de “acceso a recursos en un grupo de recursos”, piensa en <strong>RBAC</strong> en el scope adecuado.
+          </span>
+        </li>
+        <li>
+          <strong>Scopes en RBAC (muy examinable)</strong><br>
+          <span class="small">
+            RBAC siempre es: <code>rol + principal + scope</code>.<br>
+            Los scopes se apilan:
+            <strong>Management Group → Suscripción → Resource Group → Recurso</strong>.<br>
+            Otorgar un rol más arriba significa más amplitud de permisos. En el examen casi siempre
+            la mejor respuesta es el <strong>scope más bajo</strong> que cubra la necesidad.
+          </span>
+        </li>
+        <li>
+          <strong>Roles típicos que debes reconocer al vuelo</strong><br>
+          <span class="small">
+            En AZ-104 aparecen mucho:
+            <ul>
+              <li><strong>Owner</strong>: control total + puede delegar permisos.</li>
+              <li><strong>Contributor</strong>: puede crear y gestionar recursos, pero NO delega acceso.</li>
+              <li><strong>Reader</strong>: solo lectura.</li>
+              <li><strong>User Access Administrator</strong>: casi nunca para uso diario, pero
+                <em>clave en preguntas</em> donde alguien tiene que “gestionar permisos sin ser Owner”.</li>
+            </ul>
+            Aprende a detectar qué rol mínimo cubre lo que piden.
+          </span>
+        </li>
+        <li>
+          <strong>PIM (Privileged Identity Management)</strong><br>
+          <span class="small">
+            Para el examen, quédate con la idea de:
+            <strong>permisos just-in-time</strong>, aprobaciones, MFA y registro de auditoría.<br>
+            Palabras clave tipo “reducir riesgo de cuentas con privilegios permanentes” →
+            la respuesta suele ser <strong>activar PIM</strong> para ese rol y hacerlo elegible.
+          </span>
+        </li>
+        <li>
+          <strong>Azure Policy</strong><br>
+          <span class="small">
+            La herramienta para decir: “en esta empresa <em>siempre</em> hacemos las cosas así”.<br>
+            Conceptos que debes controlar:
+            <ul>
+              <li><strong>Definición de Policy</strong> (regla individual).</li>
+              <li><strong>Iniciativa</strong> (varias policies empaquetadas: seguridad, tagging, gobernanza…).</li>
+              <li><strong>Parámetros</strong> (para reutilizar la misma policy cambiando detalles).</li>
+              <li>
+                <strong>Efectos</strong>:
+                <strong>Deny</strong> (prohíbe), <strong>Audit</strong> (solo marca),
+                <strong>Modify</strong> (ajusta propiedades) y
+                <strong>DeployIfNotExists</strong> (despliega recursos auxiliares si faltan).
+              </li>
+            </ul>
+            Si el enunciado habla de “asegurar cumplimiento automático” o “evitar que nadie pueda crear X”,
+            probablemente es una Policy aplicada al <strong>scope correcto</strong>.
+          </span>
+        </li>
+        <li>
+          <strong>Management Groups</strong><br>
+          <span class="small">
+            Agrupan suscripciones para aplicar <strong>RBAC y Policy por encima de ellas</strong>.<br>
+            En escenarios con varias suscripciones (producción, pruebas, etc.) es muy típico que la solución sea:
+            “Aplica la Policy / rol a nivel de <strong>Management Group</strong> en lugar de ir suscripción a suscripción”.
+          </span>
+        </li>
+        <li>
+          <strong>Tags (etiquetas)</strong><br>
+          <span class="small">
+            Clave para <strong>costes y gobierno</strong>. Clave:valor (por ejemplo,
+            <code>costCenter=Ventas</code>, <code>env=Prod</code>).<br>
+            En las preguntas:
+            <ul>
+              <li>Si quieren <strong>reporting y costes</strong> por departamento, usa tags consistentes.</li>
+              <li>Si quieren obligar a que todo tenga tag, usa <strong>Azure Policy</strong> con efecto Deny o Modify.</li>
+            </ul>
+          </span>
+        </li>
+        <li>
+          <strong>Azure Resource Graph</strong><br>
+          <span class="small">
+            Piensa en él como “consulta global de recursos” con KQL.<br>
+            Escenario clásico de examen: “Tu empresa tiene 20 suscripciones y quieres ver qué VMs
+            no tienen tal tag o tal configuración” → <strong>Resource Graph</strong>, no scripts manuales.
+          </span>
+        </li>
+      </ul>
+
       <div class="hl note" style="margin-top:10px">
         <span class="pill">📘 Tip del examen</span>
-        En preguntas de *observabilidad*, piensa en **Azure Monitor + Log Analytics + Alertas** antes de automatizar.
+        Si el problema es <strong>quién tiene permisos</strong> → RBAC / PIM.<br>
+        Si el problema es <strong>cómo se configuran los recursos</strong> (ubicación, SKU, tags, diagnósticos) →
+        piensa primero en <strong>Azure Policy</strong>.
       </div>
     </div>
-    
-    <div class="card" id="decision"><h2>Guía de decisión (rápida)</h2>
-      <ul><li><strong>Imponer estándares</strong>: Azure Policy.</li><li><strong>Delegar permisos</strong>: RBAC mínimo e idealmente a grupos.</li><li><strong>Acceso privilegiado</strong>: PIM + JIT + MFA.</li><li><strong>Inventario global</strong>: Azure Resource Graph.</li></ul>
-      <p class="muted">Recuerda revisar costes de ingestión, retención y tablas dedicadas antes de habilitar diagnósticos masivos.</p>
-    </div>
-    
-    <div class="card" id="comandos"><h2>Comandos útiles</h2>
-      <div class="grid">
-        <div class='card' style='background:#0c1332'><div class='kicker'>RBAC</div><pre><code>az role assignment create --assignee <objId> --role Reader --scope /subscriptions/<subId></code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Policy</div><pre><code>az policy assignment create --name denyPublicIP --policy <policyId> --scope <scope></code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Graph</div><pre><code>az graph query -q "resources | where type =~ 'microsoft.compute/virtualmachines'"</code></pre></div>
-      </div>
-      <p class="muted">Incluye <kbd>az</kbd> CLI, consultas <kbd>KQL</kbd> y opciones de portal.</p>
-    </div>
-    
-    <div class="card" id="escenarios"><h2>Escenarios de examen (tipo test)</h2>
-      <ul><li><strong>Exigir tag costCenter</strong>: Policy con efecto Deny/Modify.</li><li><strong>App sin secretos en código</strong>: Identidad Administrada + KV.</li><li><strong>Auditoría de roles privilegiados</strong>: PIM + access reviews.</li><li><strong>Lectura a auditores multi-sub</strong>: Group Reader a nivel Management Group.</li></ul>
+
+    <div class="card" id="decision">
+      <h2>Guía de decisión rápida (para leer justo antes del examen)</h2>
+      <p class="small">
+        Cuando leas una pregunta, intenta clasificarla en una de estas categorías. Solo con eso ya te filtras
+        la mitad de las respuestas incorrectas.
+      </p>
+      <ul>
+        <li>
+          <strong>“Queremos imponer normas iguales para todos los recursos”</strong><br>
+          <span class="small">
+            → <strong>Azure Policy</strong> (y si son muchas reglas, en una <strong>Iniciativa</strong>).<br>
+            Aplica en el <strong>scope más alto</strong> que tenga sentido (Management Group o Suscripción).
+          </span>
+        </li>
+        <li>
+          <strong>“Un equipo necesita permisos sobre un conjunto de recursos”</strong><br>
+          <span class="small">
+            → <strong>RBAC:</strong> crea un <strong>grupo de seguridad</strong> en Entra ID, asígnale el rol mínimo
+            (Reader, Contributor, etc.) sobre el <strong>Resource Group</strong> que contenga esos recursos.<br>
+            Evita a toda costa dar <strong>Owner</strong> de más.
+          </span>
+        </li>
+        <li>
+          <strong>“Reducir riesgo de cuentas administrativas”</strong><br>
+          <span class="small">
+            → <strong>PIM</strong> con roles elegibles, MFA al activar y, si la pregunta lo menciona,
+            <strong>aprobaciones y registro de auditoría</strong>.
+          </span>
+        </li>
+        <li>
+          <strong>“Inventario / reporting multi-suscripción”</strong><br>
+          <span class="small">
+            → <strong>Azure Resource Graph</strong> para consultar todo de golpe.<br>
+            Si es algo puntual y solo de una suscripción, puede valer <strong>Azure Portal</strong> o CLI,
+            pero si el enunciado dice “todas las suscripciones” → apuesta por Resource Graph.
+          </span>
+        </li>
+        <li>
+          <strong>“Queremos estructura y gobierno global”</strong><br>
+          <span class="small">
+            → <strong>Management Groups</strong> para tener árbol de:
+            “Raíz → Prod / NoProd → Suscripciones”.<br>
+            A nivel raíz o de rama se colocan <strong>políticas corporativas y roles globales</strong>.
+          </span>
+        </li>
+        <li>
+          <strong>“Necesitamos separar responsabilidades”</strong><br>
+          <span class="small">
+            → Juega con scopes y roles:
+            <ul>
+              <li>Equipo de redes: permisos en RGs de redes.</li>
+              <li>Equipo de apps: permisos en RGs de aplicaciones.</li>
+              <li>Auditoría / cumplimiento: <strong>Reader</strong> o roles específicos a nivel MG o suscripción.</li>
+            </ul>
+          </span>
+        </li>
+      </ul>
+
       <div class="hl tip" style="margin-top:10px">
         <span class="pill">🎯 Estrategia</span>
-        Valora ruido vs. señal: usa reglas de supresión, horarios silenciosos y grupos de acción específicos.
+        Antes de mirar las respuestas, pregúntate:<br>
+        “¿Esto va de permisos, de configuración estándar o de inventario?”<br>
+        Solo con esa pregunta ya descartarás opciones que no tienen nada que ver.
       </div>
     </div>
-    
-    <div class="card warnbox" id="errores"><h2>Errores comunes</h2>
-      <ul><li><strong>Owner a grupos enteros</strong>: Usa roles mínimos o personalizados.</li><li><strong>Sin cuentas break-glass</strong>: Crea cuentas de emergencia con exclusiones controladas y monitorización.</li><li><strong>Confundir Blueprints</strong>: Usa Bicep/ARM + Policy; Blueprints clásicos en desuso.</li></ul>
+
+    <div class="card" id="comandos">
+      <h2>Comandos y rutas de portal que merece la pena practicar</h2>
+      <p class="small">
+        No necesitas saberte los comandos de memoria, pero sí reconocerlos y saber qué hacen.<br>
+        Te dejo algunos típicos y la ruta equivalente en el portal.
+      </p>
+      <div class="grid">
+        <div class="card" style="background:#0c1332">
+          <div class="kicker">RBAC · Asignar un rol</div>
+          <pre><code>az role assignment create \
+  --assignee &lt;objId-o-email&gt; \
+  --role "Reader" \
+  --scope /subscriptions/&lt;subId&gt;/resourceGroups/&lt;rgName&gt;</code></pre>
+          <p class="small">
+            Portal: <strong>Resource group &gt; Access control (IAM) &gt; Add role assignment</strong>.
+          </p>
+        </div>
+
+        <div class="card" style="background:#0c1332">
+          <div class="kicker">Policy · Asignar una policy</div>
+          <pre><code>az policy assignment create \
+  --name "denyPublicIP" \
+  --policy &lt;policyDefinitionId&gt; \
+  --scope /providers/Microsoft.Management/managementGroups/&lt;mgId&gt;</code></pre>
+          <p class="small">
+            Portal: <strong>Policy &gt; Assign policy</strong> o <strong>Assign initiative</strong> y eliges el scope.
+          </p>
+        </div>
+
+        <div class="card" style="background:#0c1332">
+          <div class="kicker">Resource Graph · Consulta básica</div>
+          <pre><code>az graph query -q "
+resources
+| where type =~ 'microsoft.compute/virtualmachines'
+| project name, resourceGroup, location, tags
+"</code></pre>
+          <p class="small">
+            Portal: <strong>Resource Graph Explorer</strong> con consultas KQL similares.
+          </p>
+        </div>
+
+        <div class="card" style="background:#0c1332">
+          <div class="kicker">Grupos y usuarios</div>
+          <pre><code>az ad user list --filter "startswith(displayName,'Admin')"
+az ad group owner add \
+  --group &lt;groupId&gt; \
+  --owner-object-id &lt;userId&gt;</code></pre>
+          <p class="small">
+            Portal: <strong>Microsoft Entra ID &gt; Users / Groups</strong>.<br>
+            Recuerda: mejor asignar roles a <strong>grupos</strong> que a usuarios sueltos.
+          </p>
+        </div>
+      </div>
+      <p class="muted small">
+        Para practicar, crea un sandbox o prueba con una suscripción de pruebas:<br>
+        define un par de Management Groups, aplica una Policy de ejemplo y haz consultas sencillas en Resource Graph.
+      </p>
     </div>
-    
-    <div class="card" id="cross"><h2>Cross-links entre dominios</h2>
-      <ul><li><strong>Storage</strong>: Policy para ubicación/SKU y PE obligatorios.</li><li><strong>Redes</strong>: Policy para impedir IP públicas; forzar NSG/UDR.</li><li><strong>Monitor</strong>: Policy para diagnósticos a Log Analytics.</li></ul>
-      <p class="muted">Relaciona monitoreo con identidades, redes, cómputo y almacenamiento para respuestas completas.</p>
+
+    <div class="card" id="escenarios">
+      <h2>Escenarios tipo examen (muy similares a los que verás)</h2>
+      <ul>
+        <li>
+          <strong>Escenario 1: Tags obligatorios para control de costes</strong><br>
+          <span class="small">
+            Te dicen que todos los recursos deben tener el tag <code>costCenter</code> y que nadie pueda crear
+            nuevos recursos sin ese tag.<br>
+            La solución típica es: <strong>Azure Policy con efecto Deny o Modify</strong>, asignada a
+            nivel de <strong>Management Group</strong> o Suscripción.<br>
+            Ojo con las respuestas que hablan de scripts periódicos: eso no evita la creación incorrecta.
+          </span>
+        </li>
+        <li>
+          <strong>Escenario 2: Una aplicación no debe llevar secretos en código</strong><br>
+          <span class="small">
+            Palabras clave:
+            “no queremos secretos en código fuente”, “rotación automática de secretos”…<br>
+            Lo normal es que la respuesta combine:
+            <ul>
+              <li><strong>Identidad administrada</strong> (managed identity) para la app.</li>
+              <li><strong>Azure Key Vault</strong> con políticas de acceso o RBAC según el caso.</li>
+            </ul>
+            En este dominio la clave es que entiendas que la aplicación es un “principal” más que recibe permisos.
+          </span>
+        </li>
+        <li>
+          <strong>Escenario 3: Auditoría de administradores</strong><br>
+          <span class="small">
+            Si la empresa quiere “saber quién activó qué rol y cuándo”, o “revisar periódicamente que los
+            administradores siguen necesitando esos permisos”, la pista es:
+            <strong>PIM + Access Reviews</strong>.<br>
+            Configuras roles elegibles en PIM y programas revisiones de acceso para los roles privilegiados.
+          </span>
+        </li>
+        <li>
+          <strong>Escenario 4: Lectura global para auditores</strong><br>
+          <span class="small">
+            Necesitan que un equipo de auditoría lea configuración de <strong>todas las suscripciones</strong>
+            pero sin tocar nada.<br>
+            Lo más habitual: grupo de seguridad con rol <strong>Reader</strong> asignado
+            al <strong>Management Group raíz</strong> que agrupa todas las suscripciones.
+          </span>
+        </li>
+        <li>
+          <strong>Escenario 5: Separar entornos Prod / Dev / Test</strong><br>
+          <span class="small">
+            Si aparece algo como “asegurar que las políticas de producción no afectan a desarrollo”,
+            piensa en un diseño de Management Groups tipo:
+            <code>Root &gt; Corp &gt; Prod / NonProd</code> con políticas y roles diferentes en cada rama.
+          </span>
+        </li>
+      </ul>
+
+      <div class="hl tip" style="margin-top:10px">
+        <span class="pill">🧪 Cómo practicar</span>
+        Coge un par de preguntas de ejemplo de AZ-104 y, antes de ver la solución, intenta decir en voz alta:<br>
+        “Aquí usaría RBAC sobre RG”, “esto es Policy a nivel MG”, “esto es PIM”.<br>
+        Si aciertas el tipo de herramienta, luego elegir la opción correcta es mucho más directo.
+      </div>
     </div>
-    
-  
+
+    <div class="card warnbox" id="errores">
+      <h2>Errores comunes (si los evitas, ya vas por delante de muchos)</h2>
+      <ul>
+        <li>
+          <strong>Dar Owner a todo el mundo</strong><br>
+          <span class="small">
+            En la vida real pasa, pero en el examen es casi siempre mala práctica.<br>
+            Si ves una respuesta que sugiere dar <strong>Owner</strong> cuando basta con
+            <strong>Contributor</strong> o incluso <strong>Reader</strong>, desconfía.
+          </span>
+        </li>
+        <li>
+          <strong>Confundir roles de Entra ID con roles de Azure</strong><br>
+          <span class="small">
+            Si el problema es “crear usuarios, grupos, apps”, habla de <strong>Entra ID roles</strong>.<br>
+            Si el problema es “gestionar VMs, RGs, Storage Accounts”, habla de <strong>Azure RBAC</strong>.<br>
+            Mezclarlos es uno de los fallos que más preguntas hace perder.
+          </span>
+        </li>
+        <li>
+          <strong>Asignar permisos a usuarios directamente en lugar de a grupos</strong><br>
+          <span class="small">
+            El diseño recomendado, y que suele ser la respuesta “correcta de libro”, es:
+            <strong>Usuario → Grupo → Rol en scope</strong>.<br>
+            Así no tienes que ir usuario a usuario cuando algo cambia.
+          </span>
+        </li>
+        <li>
+          <strong>No tener cuentas de emergencia (break-glass)</strong><br>
+          <span class="small">
+            Microsoft recomienda tener 1–2 cuentas de emergencia con permisos altos,
+            bien protegidas y monitorizadas, para casos extremos.<br>
+            Si la pregunta habla de “qué hacer si se bloquean los admins” o “plan de contingencia de identidades”,
+            esta idea puede aparecer.
+          </span>
+        </li>
+        <li>
+          <strong>Colocar Policy en el scope equivocado</strong><br>
+          <span class="small">
+            Otro clásico: aplicar una Policy a un único RG cuando el problema es global, o al revés.<br>
+            Tómate siempre un segundo para pensar: “esto afecta a todos los recursos de la empresa,
+            o solo a un entorno concreto”.
+          </span>
+        </li>
+        <li>
+          <strong>Depender solo del portal para todo</strong><br>
+          <span class="small">
+            El examen valora que sepas que hay opciones como CLI, PowerShell, plantillas, etc.<br>
+            Si la pregunta menciona “despliegues repetitivos” o “infraestructura como código”,
+            normalmente la respuesta no será “configúralo a mano en el portal”.
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card" id="cross">
+      <h2>Cross-links con otros dominios (para respuestas más completas)</h2>
+      <p class="small">
+        Este dominio se mezcla con casi todos los demás. Si en tu respuesta consigues unir identidades / gobierno
+        con redes, almacenamiento o monitorización, tienes muchas papeletas de acertar.
+      </p>
+      <ul>
+        <li>
+          <strong>Con Storage</strong><br>
+          <span class="small">
+            Policies que obligan a:
+            <ul>
+              <li>Ubicación permitida (por ejemplo, solo Europa).</li>
+              <li>Tipos de cuenta (StorageV2, redundancia concreta…).</li>
+              <li>Privacidad (sin acceso público, uso de Private Endpoints).</li>
+            </ul>
+            Además, puedes usar tags para diferenciar <code>env=Prod</code> / <code>env=Dev</code>
+            y luego filtrar costes y logs.
+          </span>
+        </li>
+        <li>
+          <strong>Con Redes</strong><br>
+          <span class="small">
+            Muy típico usar Policy para:
+            <ul>
+              <li>Impedir IP públicas en ciertos recursos.</li>
+              <li>Forzar NSG o UDR en subredes.</li>
+              <li>Obligar a usar Azure Firewall o soluciones de terceros.</li>
+            </ul>
+            En el examen, cuando hablen de “asegurarse de que todas las VMs cumplen ciertas reglas de red”,
+            piensa en combinar <strong>Network Security</strong> con <strong>Azure Policy</strong>.
+          </span>
+        </li>
+        <li>
+          <strong>Con Monitorización</strong><br>
+          <span class="small">
+            Puedes usar Policy para:
+            <ul>
+              <li>Obligar a enviar logs a Log Analytics.</li>
+              <li>Habilitar diagnósticos por defecto en recursos clave.</li>
+            </ul>
+            Y luego dar roles de <strong>Reader</strong> o <strong>Monitoring Reader</strong> a los equipos que
+            solo necesitan ver métricas y logs.
+          </span>
+        </li>
+        <li>
+          <strong>Con Seguridad</strong><br>
+          <span class="small">
+            Roles y policies se combinan con Defender for Cloud, Just-in-Time en VMs, etc.<br>
+            Muchas veces, la respuesta correcta incluye una parte de gobierno (Policy / RBAC)
+            y otra de seguridad (Defender, NSG, Firewall).
+          </span>
+        </li>
+      </ul>
+
+      <p class="muted small">
+        Cuando veas una pregunta que mezcla varios temas, intenta identificar qué parte corresponde a
+        <strong>identidades y gobierno</strong> y qué parte a <strong>redes / cómputo / storage</strong>.<br>
+        Eso te ayudará a construir la respuesta “completa” que el examen espera.
+      </p>
+    </div>
+
     <div class="footer">
-      <span class="pill">🧠 Consejo</span> Crea dashboards y *workbooks* por dominio (Identidades, Redes, Cómputo, Storage) y practica KQL con datos de demo.
-      <span class="pill">🔗</span> Usa *Action Groups* reutilizables y *Action Rules* para suprimir ruido en cambios planificados.
+      <span class="pill">🧠 Consejo final</span>
+      Dedica un rato a dibujar el mapa:
+      <strong>Entra ID (usuarios, grupos, roles) → RBAC (roles en scopes) →
+      Management Groups / Suscripciones / RGs</strong>.<br>
+      Tener ese esquema claro en la cabeza te permitirá leer las preguntas de este dominio con mucha más tranquilidad.
     </div>
-    
-</div>
+  </div>
 </body>
 </html>

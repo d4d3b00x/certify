@@ -1,105 +1,506 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AZ‑104 — Dominio 5 · Monitorizar y mantener recursos</title>
-<style>
-:root{
-  --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
-  --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
-  --blue:#74a8ff;--purple:#c59cff;
-}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
-  color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
-a{color:var(--accent)}
-.wrap{max-width:1000px;margin:0 auto;padding:28px}
-.badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
-  padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
-h1{margin:10px 0 10px;font-size:1.9rem}
-h2{margin:22px 0 10px;font-size:1.25rem}
-.muted{color:var(--muted)}
-.card{background:linear-gradient(180deg,#101a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
-ul{padding-left:18px;margin:6px 0}
-li+li{margin-top:6px}
-.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
-code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-.toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
-.toc a{color:#e3ecff;text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
-.pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
-.hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
-.note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
-.tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
-.warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
-kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
-pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
-.footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-104 — Dominio 5 · Monitorizar y mantener recursos</title>
+  <style>
+    :root{
+      --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+      --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
+      --blue:#74a8ff;--purple:#c59cff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.65;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1000px;margin:0 auto;padding:28px}
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#0f1844,#0d1438);
+      padding:8px 14px;
+      border-radius:999px;
+      font-weight:900;
+      color:#cbd6ff;
+      box-shadow:0 0 0 3px #00000044;
+    }
+    h1{margin:10px 0 10px;font-size:1.9rem}
+    h2{margin:22px 0 10px;font-size:1.25rem}
+    .muted{color:var(--muted)}
+    .card{
+      background:linear-gradient(180deg,#101a48,#0d1538);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+      margin:12px 0;
+      box-shadow:0 6px 32px #00000055;
+    }
+    ul{padding-left:18px;margin:6px 0}
+    li+li{margin-top:6px}
+    .ok{color:var(--green)}
+    .warn{color:var(--yellow)}
+    .bad{color:var(--red)}
+    code,.mono{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    }
+    .toc{
+      background:linear-gradient(180deg,#0f1a4a,#0b1230);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      margin:12px 0;
+      display:grid;
+      gap:6px;
+    }
+    .toc a{color:#e3ecff;text-decoration:none}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+    }
+    .kicker{
+      font-size:.85rem;
+      letter-spacing:.06em;
+      color:#cfd6ff;
+      text-transform:uppercase;
+    }
+    .pill{
+      display:inline-block;
+      font-size:.75rem;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#0e1740;
+      margin-right:6px;
+    }
+    .hl{
+      background:linear-gradient(90deg,#1c245c,#191f4a);
+      border-left:3px solid var(--accent);
+      padding:10px;
+      border-radius:10px;
+    }
+    .note{
+      background:linear-gradient(180deg,#102f38,#0b2025);
+      border:1px solid #2a5f6a;
+    }
+    .tip{
+      background:linear-gradient(180deg,#163310,#10230b);
+      border:1px solid #2a6a2a;
+    }
+    .warnbox{
+      background:linear-gradient(180deg,#3a1b1b,#2a1010);
+      border:1px solid #7a2a2a;
+    }
+    kbd{
+      border:1px solid #3a4a88;
+      border-bottom-width:3px;
+      border-radius:6px;
+      padding:1px 6px;
+      background:#0e1640;
+    }
+    pre{
+      background:#0a122e;
+      border:1px solid #26336e;
+      border-radius:12px;
+      padding:12px;
+      overflow:auto;
+    }
+    .footer{
+      color:#aab7ff;
+      font-size:.9rem;
+      margin-top:22px;
+    }
+    .small{font-size:.9rem}
+    strong{font-weight:600}
+  </style>
 </head>
 <body>
 <div class="wrap">
   <span class="badge">Azure · Operaciones</span>
-  <h1>AZ‑104 — Dominio 5 · Monitorizar y mantener recursos</h1>
-  <p class="muted">Azure Monitor, Log Analytics y KQL, alertas & Action Groups/Rules, Update Manager, Automation, Backup y ASR.</p>
-  
-    <div class="toc">
-      <div class="kicker">Índice</div>
-      <div class="grid">
-        <a href="#conceptos">Conceptos clave</a>
-        <a href="#decision">Guía de decisión</a>
-        <a href="#comandos">Comandos útiles</a>
-        <a href="#escenarios">Escenarios de examen</a>
-        <a href="#errores">Errores comunes</a>
-        <a href="#cross">Cross-links entre dominios</a>
+  <h1>AZ-104 — Dominio 5 · Monitorizar y mantener recursos</h1>
+  <p class="muted">
+    Aquí se junta todo lo operativo: Azure Monitor, Log Analytics, KQL, alertas, Update Manager, Automation, Backup y Site Recovery.
+    Es el dominio que separa “sé desplegar cosas” de “sé operarlas en serio”.
+  </p>
+
+  <div class="toc">
+    <div class="kicker">Índice rápido para estudiar</div>
+    <div class="grid">
+      <a href="#conceptos">Conceptos clave</a>
+      <a href="#decision">Guía de decisión</a>
+      <a href="#comandos">Comandos y KQL</a>
+      <a href="#escenarios">Escenarios tipo examen</a>
+      <a href="#errores">Errores comunes</a>
+      <a href="#cross">Cross-links con otros dominios</a>
+    </div>
+  </div>
+
+  <div class="card" id="conceptos">
+    <h2>Conceptos clave</h2>
+    <ul>
+      <li>
+        <strong>Azure Monitor (visión general)</strong><br>
+        <span class="small">
+          Es el “paraguas” que agrupa:
+          <ul>
+            <li><strong>Métricas</strong>: valores numéricos (CPU, IOPS, latencia) en intervalos cortos.</li>
+            <li><strong>Logs</strong>: eventos detallados enviados a Log Analytics.</li>
+            <li><strong>Alertas</strong>, <strong>dashboards</strong>, <strong>workbooks</strong>, <strong>mapas de dependencia</strong>, etc.</li>
+          </ul>
+          Fundamental: saber cuándo usar métrica vs log para una alerta.
+        </span>
+      </li>
+      <li>
+        <strong>Log Analytics y KQL</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Workspaces</strong>: contenedores donde se almacenan logs (Perf, Heartbeat, AzureActivity, etc.).</li>
+            <li><strong>KQL</strong> (Kusto Query Language): lenguaje de consulta para esos datos.</li>
+            <li><strong>Retención</strong>: días que guardas los datos (impacta en coste).</li>
+          </ul>
+          Ejemplo de consulta típica:
+          <pre><code>Heartbeat
+| summarize lastSeen=max(TimeGenerated) by Computer
+| order by lastSeen desc</code></pre>
+        </span>
+      </li>
+      <li>
+        <strong>Alertas, Action Groups y Action Rules</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Alertas de métricas</strong>: muy rápidas, para condiciones como “CPU &gt; 80% 5 minutos”.</li>
+            <li><strong>Alertas de logs</strong>: basadas en KQL, más flexibles pero algo más lentas.</li>
+            <li><strong>Action Groups</strong>: qué pasa cuando salta la alerta (email, SMS, webhook, ITSM, Runbook…).</li>
+            <li><strong>Action Rules</strong>: suprimir, enrutar o modificar alertas en ciertos periodos/condiciones.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Data Collection Rules (DCR)</strong><br>
+        <span class="small">
+          Definen qué datos se recogen de qué recursos y a qué workspace/endpoint se envían.
+          Permiten separar claramente la parte de recolección (DCR) de la de análisis (workspaces).
+        </span>
+      </li>
+      <li>
+        <strong>Update Manager (parcheo)</strong><br>
+        <span class="small">
+          Gestiona las actualizaciones de VMs:
+          <ul>
+            <li>Evalúa cumplimiento de parches.</li>
+            <li>Crea <strong>deployment schedules</strong> por grupos de máquinas (dinámicos por tags, etc.).</li>
+            <li>Permite exclusiones y ventanas de mantenimiento.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Automation y runbooks</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Automation Account</strong>: contenedor para runbooks (PowerShell/Python).</li>
+            <li><strong>Runbooks</strong>: scripts que se ejecutan bajo una identidad (generalmente managed identity).</li>
+            <li>Pueden lanzarse por horario, por webhook o desde alertas.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Backup (Recovery Services Vaults)</strong><br>
+        <span class="small">
+          <ul>
+            <li>Protege VMs, SQL, Azure Files, etc.</li>
+            <li>Políticas de backup: frecuencia de copias, retención corta/larga.</li>
+            <li>Restores a nivel de VM completa, disco, o archivos (según workload).</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Site Recovery (ASR)</strong><br>
+        <span class="small">
+          Servicio de replicación y continuidad:
+          <ul>
+            <li>Replica VMs entre regiones o desde on-prem a Azure.</li>
+            <li>Define <strong>planes de recuperación</strong> con orden de arranque, scripts, etc.</li>
+            <li>Permite <strong>test failover</strong> sin impacto en producción.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Service Health y Azure Advisor</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Service Health</strong>: estado de servicios de Azure, incidencias, mantenimiento planificado.</li>
+            <li><strong>Advisor</strong>: recomendaciones de coste, seguridad, fiabilidad y rendimiento.</li>
+          </ul>
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl note" style="margin-top:10px">
+      <span class="pill">📘 Tip del examen</span>
+      Preguntas de “cómo enterarse rápido de X” → piensa en <strong>alerta + Action Group</strong>.  
+      Preguntas de “analizar tendencias o correlaciones” → <strong>logs + KQL + workbooks</strong>.
+    </div>
+  </div>
+
+  <div class="card" id="decision">
+    <h2>Guía de decisión rápida</h2>
+    <ul>
+      <li>
+        <strong>“Queremos saber en segundos si una métrica se dispara”</strong><br>
+        <span class="small">
+          → <strong>Alerta de métrica</strong> con ventana corta (por ejemplo 5 minutos) + Action Group.
+        </span>
+      </li>
+      <li>
+        <strong>“Queremos alertar cuando pase algo más complejo (ej: cambios RBAC)”</strong><br>
+        <span class="small">
+          → <strong>Alerta de logs</strong> sobre AzureActivity / otros logs + consulta KQL.
+        </span>
+      </li>
+      <li>
+        <strong>“Hay demasiadas alertas cuando hacemos mantenimiento programado”</strong><br>
+        <span class="small">
+          → <strong>Action Rules</strong> para suprimir alertas por horario, por recurso etiquetado con <code>maintenance=true</code>, etc.
+        </span>
+      </li>
+      <li>
+        <strong>“Queremos automatizar una acción cuando salte una alerta”</strong><br>
+        <span class="small">
+          → Alertas que llamen a un <strong>Runbook de Automation</strong> o a una función.
+        </span>
+      </li>
+      <li>
+        <strong>“Necesitamos copias de seguridad de VMs y datos importantes”</strong><br>
+        <span class="small">
+          → <strong>Backup (RSV)</strong> con política adecuada de frecuencia y retención.
+        </span>
+      </li>
+      <li>
+        <strong>“Queremos poder levantar la plataforma en otra región si hay desastre”</strong><br>
+        <span class="small">
+          → <strong>Site Recovery (ASR)</strong> con replicación y planes de recuperación probados.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🎯 Estrategia</span>
+      Clasifica siempre el problema: <strong>detectar</strong> (alertas), <strong>investigar</strong> (logs/KQL),
+      <strong>automatizar respuesta</strong> (runbooks), <strong>proteger datos</strong> (backup)
+      o <strong>mantener servicio</strong> (ASR).
+    </div>
+  </div>
+
+  <div class="card" id="comandos">
+    <h2>Comandos y consultas KQL útiles</h2>
+    <div class="grid">
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Habilitar diagnósticos hacia Log Analytics</div>
+        <pre><code>az monitor diagnostic-settings create \
+  --name sendToLA \
+  --resource &lt;resourceId&gt; \
+  --workspace &lt;laWorkspaceId&gt; \
+  --logs '[
+    {"category": "Administrative", "enabled": true}
+  ]' \
+  --metrics '[
+    {"category": "AllMetrics", "enabled": true}
+  ]'</code></pre>
+        <p class="small">
+          Portal: en cada recurso, pestaña <strong>Diagnostic settings</strong>.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Crear alerta de métrica (CPU alta)</div>
+        <pre><code>az monitor metrics alert create \
+  -g rg-demo \
+  -n cpuHigh \
+  --scopes &lt;vmResourceId&gt; \
+  --condition "avg Percentage CPU &gt; 80" \
+  --window-size 5m \
+  --evaluation-frequency 1m \
+  --action-group &lt;actionGroupId&gt;</code></pre>
+        <p class="small">
+          Portal: <strong>Azure Monitor &gt; Alerts &gt; + Create</strong>.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">KQL: cambios de rol RBAC</div>
+        <pre><code>AzureActivity
+| where OperationNameValue == "Microsoft.Authorization/roleAssignments/write"
+| project TimeGenerated, Caller, ActivityStatus, ResourceGroup, SubscriptionId</code></pre>
+        <p class="small">
+          Útil para escenarios de auditoría de permisos.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Backup de VM</div>
+        <pre><code>az backup protection enable-for-vm \
+  -g rg-demo \
+  -v myVault \
+  -n vm-prod-01 \
+  --policy-name DailyPolicy</code></pre>
+        <p class="small">
+          Portal: <strong>Recovery Services vaults &gt; Backup</strong>.
+        </p>
       </div>
     </div>
-    
-    <div class="card" id="conceptos"><h2>Conceptos clave</h2>
-      <ul><li><strong>Azure Monitor</strong>: Métricas vs Logs, *workbooks*, mapas de dependencia; *data collection rules* (DCR).</li><li><strong>Log Analytics</strong>: Espacios de trabajo, tablas (Perf, Heartbeat, AzureActivity), retención y costes.</li><li><strong>Alertas</strong>: Métricas (en segundos) vs Logs/KQL; Action Groups (email/webhook/ITSM), Action Rules (supresión).</li><li><strong>Update Manager</strong>: Grupos dinámicos, clasificación de parches, evaluación y despliegue programado.</li><li><strong>Automation/Runbooks</strong>: PowerShell/Python, identidades administradas y webhooks; tareas recurrentes.</li><li><strong>Backup</strong>: Recovery Services Vaults, políticas de copia, instantáneas y restauración a nivel de archivo/disco.</li><li><strong>Site Recovery (ASR)</strong>: Replicación, objetivos RPO/RTO, pruebas de conmutación, runbooks para failover/failback.</li><li><strong>Service Health/Advisor</strong>: Incidencias, Mantenimiento planeado, recomendaciones de coste/seguridad/rendimiento.</li></ul>
-      <div class="hl note" style="margin-top:10px">
-        <span class="pill">📘 Tip del examen</span>
-        En preguntas de *observabilidad*, piensa en **Azure Monitor + Log Analytics + Alertas** antes de automatizar.
-      </div>
+
+    <p class="muted small">
+      No hace falta ser ninja de KQL para el AZ-104, pero sí reconocer consultas sencillas y entender qué hacen.
+    </p>
+  </div>
+
+  <div class="card" id="escenarios">
+    <h2>Escenarios tipo examen</h2>
+    <ul>
+      <li>
+        <strong>Escenario 1: Avisar cuando se cambian permisos críticos</strong><br>
+        <span class="small">
+          El equipo de seguridad quiere alertas cuando alguien asigne roles de Owner a recursos.  
+          Solución:
+          <ul>
+            <li>Enviar <strong>AzureActivity</strong> a Log Analytics.</li>
+            <li>Crear consulta KQL filtrando <code>roleAssignments/write</code> con rol Owner.</li>
+            <li>Crear <strong>alerta de log</strong> con esa consulta + Action Group al equipo de seguridad.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 2: Reducir ruido en mantenimiento</strong><br>
+        <span class="small">
+          Cada domingo por la noche hay alertas masivas por reinicios de VMs planificados.  
+          → Crear <strong>Action Rule</strong> que suprima ciertas alertas en ese horario
+          o para recursos con tag <code>maintenance=true</code>.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 3: Recuperar VM frente a ransomware</strong><br>
+        <span class="small">
+          Una VM ha sido cifrada por ransomware, quieren volver a un estado correcto.  
+          Solución “de libro”:
+          <ul>
+            <li>Restaurar desde <strong>backup reciente</strong> en Recovery Services Vault.</li>
+            <li>Preferible en una nueva VM para evitar contaminación.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 4: Ensayar DR a otra región</strong><br>
+        <span class="small">
+          La organización quiere probar que puede levantar servicios en otra región sin parar producción.  
+          → Usar <strong>ASR</strong> con <strong>test failover</strong> a una red aislada, validar, y después limpiar recursos de prueba.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 5: Centralizar el parcheo de VMs</strong><br>
+        <span class="small">
+          Heterogeneidad de parches en docenas de VMs.  
+          → <strong>Azure Update Manager</strong>, grupos dinámicos por tags (por ejemplo <code>env=Prod</code>),
+          campañas de parches escalonadas y ventanas de mantenimiento claras.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🧪 Cómo practicar</span>
+      Elige un recurso: VM, Storage, App Service…  
+      Activa diagnósticos → envía a Log Analytics → crea una consulta KQL → crea una alerta → así cierras todo el circuito.
     </div>
-    
-    <div class="card" id="decision"><h2>Guía de decisión (rápida)</h2>
-      <ul><li><strong>Detección rápida</strong>: Alertas de métricas (latencia baja).</li><li><strong>Correlación avanzada</strong>: Alertas de Logs con KQL y cuadernos (*workbooks*).</li><li><strong>Reducir ruido</strong>: Action Rules con supresión por horario o dimensiones.</li><li><strong>Parcheo gobernado</strong>: Update Manager con ventanas y exclusiones.</li><li><strong>Protección de datos</strong>: Backup para VM/Files/DB; ASR para continuidad regional.</li></ul>
-      <p class="muted">Recuerda revisar costes de ingestión, retención y tablas dedicadas antes de habilitar diagnósticos masivos.</p>
-    </div>
-    
-    <div class="card" id="comandos"><h2>Comandos útiles</h2>
-      <div class="grid">
-        <div class='card' style='background:#0c1332'><div class='kicker'>Habilitar diagnóstico</div><pre><code>az monitor diagnostic-settings create --name sendToLA --resource <id> --workspace <laId> --logs '[...]' --metrics '[...]'</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Crear alerta métrica</div><pre><code>az monitor metrics alert create -g rg -n cpuHigh --scopes <resId> --condition "avg Percentage CPU > 80" --window-size 5m</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Action Group</div><pre><code>az monitor action-group create -g rg -n ops --action email Admin admin@contoso.com</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>KQL (básico)</div><pre><code>Heartbeat | summarize lastSeen=max(TimeGenerated) by Computer | order by lastSeen desc</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Update Manager</div><pre><code>az update management (via portal/API); registra la VM y crea schedule de parches.</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>Backup</div><pre><code>az backup protection enable-for-vm -g rg -v <vault> -n vm1 --policy-name DailyPolicy</code></pre></div>
-      </div>
-      <p class="muted">Incluye <kbd>az</kbd> CLI, consultas <kbd>KQL</kbd> y opciones de portal.</p>
-    </div>
-    
-    <div class="card" id="escenarios"><h2>Escenarios de examen (tipo test)</h2>
-      <ul><li><strong>Auditar cambios de RBAC</strong>: Envia AzureActivity a Log Analytics y crea alerta KQL por AddRoleAssignment.</li><li><strong>Silenciar alertas en mantenimiento</strong>: Action Rule por horario + Etiqueta de recurso 'maintenance=true'.</li><li><strong>Recuperar VM por ransomware</strong>: Restaura desde Recovery Vault; valida punto consistente y ejecuta test restore.</li><li><strong>Failover regional planificado</strong>: ASR con *planned failover* y runbooks de post-tareas.</li></ul>
-      <div class="hl tip" style="margin-top:10px">
-        <span class="pill">🎯 Estrategia</span>
-        Valora ruido vs. señal: usa reglas de supresión, horarios silenciosos y grupos de acción específicos.
-      </div>
-    </div>
-    
-    <div class="card warnbox" id="errores"><h2>Errores comunes</h2>
-      <ul><li><strong>Logs sin control de costes</strong>: Sin DCR ni filtros; ajustar retención y tablas dedicadas.</li><li><strong>Alertas sin grupos de acción</strong>: Creas alerta pero nadie recibe aviso.</li><li><strong>Sin pruebas de DR</strong>: ASR sin test failover documentado.</li></ul>
-    </div>
-    
-    <div class="card" id="cross"><h2>Cross-links entre dominios</h2>
-      <ul><li><strong>Identidades</strong>: Diagnostic settings y logs de Entra/Activity; acceso a KV para runbooks.</li><li><strong>Storage</strong>: Métricas de transacciones/capacidad y alertas de tasa de éxito.</li><li><strong>Cómputo/Redes</strong>: Mapas de dependencia, métricas de LB/AGW y NSG flow logs para investigación.</li></ul>
-      <p class="muted">Relaciona monitoreo con identidades, redes, cómputo y almacenamiento para respuestas completas.</p>
-    </div>
-    
-  
-    <div class="footer">
-      <span class="pill">🧠 Consejo</span> Crea dashboards y *workbooks* por dominio (Identidades, Redes, Cómputo, Storage) y practica KQL con datos de demo.
-      <span class="pill">🔗</span> Usa *Action Groups* reutilizables y *Action Rules* para suprimir ruido en cambios planificados.
-    </div>
-    
+  </div>
+
+  <div class="card warnbox" id="errores">
+    <h2>Errores comunes</h2>
+    <ul>
+      <li>
+        <strong>Mandar todos los logs de todo a un workspace sin control</strong><br>
+        <span class="small">
+          Suben mucho los costes y además hay ruido.  
+          Lo correcto es usar <strong>DCR</strong>, filtrar categorías y ajustar retención.
+        </span>
+      </li>
+      <li>
+        <strong>Crear alertas sin Action Group útil</strong><br>
+        <span class="small">
+          Una alerta que no envía correo, webhook o no dispara runbook es básicamente ruido mudo.
+        </span>
+      </li>
+      <li>
+        <strong>No probar los planes de recuperación</strong><br>
+        <span class="small">
+          Tener ASR configurado sin hacer <strong>test failover</strong> no es un plan real.  
+          El examen suele premiar respuestas que incluyen pruebas periódicas.
+        </span>
+      </li>
+      <li>
+        <strong>Depender solo de métricas cuando necesitas contexto</strong><br>
+        <span class="small">
+          Las métricas te dicen “CPU alta”; los logs te dicen <em>por qué</em>.  
+          Para correlaciones y auditoría, piensa en logs + KQL.
+        </span>
+      </li>
+      <li>
+        <strong>No etiquetar recursos</strong><br>
+        <span class="small">
+          Sin tags es más difícil crear dashboards, agrupar en Update Manager, filtrar alertas, etc.
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card" id="cross">
+    <h2>Cross-links con otros dominios</h2>
+    <ul>
+      <li>
+        <strong>Con identidades y gobierno</strong><br>
+        <span class="small">
+          Logs de Entra ID, AzureActivity (RBAC, Policy), PIM.  
+          Alertas cuando haya cambios sensibles de permisos o incumplimiento de políticas.
+        </span>
+      </li>
+      <li>
+        <strong>Con almacenamiento</strong><br>
+        <span class="small">
+          Métricas de capacidad y rendimiento en Storage, logs de acceso para detectar patrones anómalos,
+          backup de datos clave.
+        </span>
+      </li>
+      <li>
+        <strong>Con cómputo</strong><br>
+        <span class="small">
+          Monitorización de VMs y VMSS (CPU, RAM, disco, conexiones), flujos de red, parches y backups de las instancias.
+        </span>
+      </li>
+      <li>
+        <strong>Con redes</strong><br>
+        <span class="small">
+          Network Watcher, NSG flow logs, Connection Monitor, métricas de Load Balancer / App Gateway / Firewall.
+        </span>
+      </li>
+    </ul>
+
+    <p class="muted small">
+      Piensa en este dominio como la “capa de observabilidad y resiliencia” que se apoya en todo lo que montas
+      en los otros cuatro dominios.
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="pill">🧠 Consejo final</span>
+    No necesitas memorizar todos los menús del portal, sino entender el flujo:
+    <strong>generar datos → recogerlos → consultarlos → alertar → automatizar respuesta → proteger con backup/DR</strong>.  
+    Si eso lo tienes claro, vas muy fuerte en este dominio.
+  </div>
+
 </div>
 </body>
 </html>

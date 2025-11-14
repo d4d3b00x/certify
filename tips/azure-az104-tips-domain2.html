@@ -1,105 +1,533 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AZ‑104 — Dominio 2 · Implementar y administrar almacenamiento</title>
-<style>
-:root{
-  --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
-  --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
-  --blue:#74a8ff;--purple:#c59cff;
-}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
-  color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.65}
-a{color:var(--accent)}
-.wrap{max-width:1000px;margin:0 auto;padding:28px}
-.badge{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);background:linear-gradient(180deg,#0f1844,#0d1438);
-  padding:8px 14px;border-radius:999px;font-weight:900;color:#cbd6ff;box-shadow:0 0 0 3px #00000044}
-h1{margin:10px 0 10px;font-size:1.9rem}
-h2{margin:22px 0 10px;font-size:1.25rem}
-.muted{color:var(--muted)}
-.card{background:linear-gradient(180deg,#101a48,#0d1538);border:1px solid var(--border);border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 6px 32px #00000055}
-ul{padding-left:18px;margin:6px 0}
-li+li{margin-top:6px}
-.ok{color:var(--green)}.warn{color:var(--yellow)}.bad{color:var(--red)}
-code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
-.toc{background:linear-gradient(180deg,#0f1a4a,#0b1230);border:1px solid var(--border);border-radius:12px;padding:12px;margin:12px 0;display:grid;gap:6px}
-.toc a{color:#e3ecff;text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.kicker{font-size:.85rem;letter-spacing:.06em;color:#cfd6ff;text-transform:uppercase}
-.pill{display:inline-block;font-size:.75rem;padding:4px 10px;border-radius:999px;border:1px solid var(--border);background:#0e1740;margin-right:6px}
-.hl{background:linear-gradient(90deg,#1c245c,#191f4a);border-left:3px solid var(--accent);padding:10px;border-radius:10px}
-.note{background:linear-gradient(180deg,#102f38,#0b2025);border:1px solid #2a5f6a}
-.tip{background:linear-gradient(180deg,#163310,#10230b);border:1px solid #2a6a2a}
-.warnbox{background:linear-gradient(180deg,#3a1b1b,#2a1010);border:1px solid #7a2a2a}
-kbd{border:1px solid #3a4a88;border-bottom-width:3px;border-radius:6px;padding:1px 6px;background:#0e1640}
-pre{background:#0a122e;border:1px solid #26336e;border-radius:12px;padding:12px;overflow:auto}
-.footer{color:#aab7ff;font-size:.9rem;margin-top:22px}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AZ-104 — Dominio 2 · Implementar y administrar almacenamiento</title>
+  <style>
+    :root{
+      --bg:#0b1020;--card:#111a3a;--border:#2a3b82;--text:#e8edff;--muted:#a7b4ff;
+      --accent:#7ac7ff;--pink:#ff6ac1;--green:#6af7c0;--yellow:#ffd15c;--red:#ff9b9b;
+      --blue:#74a8ff;--purple:#c59cff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:radial-gradient(1200px 600px at 10% -10%,#141a3c 0,#0b1020 50%,#070b18 100%);
+      color:var(--text);
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.65;
+    }
+    a{color:var(--accent)}
+    .wrap{max-width:1000px;margin:0 auto;padding:28px}
+    .badge{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg,#0f1844,#0d1438);
+      padding:8px 14px;
+      border-radius:999px;
+      font-weight:900;
+      color:#cbd6ff;
+      box-shadow:0 0 0 3px #00000044;
+    }
+    h1{margin:10px 0 10px;font-size:1.9rem}
+    h2{margin:22px 0 10px;font-size:1.25rem}
+    .muted{color:var(--muted)}
+    .card{
+      background:linear-gradient(180deg,#101a48,#0d1538);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:16px;
+      margin:12px 0;
+      box-shadow:0 6px 32px #00000055;
+    }
+    ul{padding-left:18px;margin:6px 0}
+    li+li{margin-top:6px}
+    .ok{color:var(--green)}
+    .warn{color:var(--yellow)}
+    .bad{color:var(--red)}
+    code,.mono{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    }
+    .toc{
+      background:linear-gradient(180deg,#0f1a4a,#0b1230);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      margin:12px 0;
+      display:grid;
+      gap:6px;
+    }
+    .toc a{color:#e3ecff;text-decoration:none}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+    }
+    .kicker{
+      font-size:.85rem;
+      letter-spacing:.06em;
+      color:#cfd6ff;
+      text-transform:uppercase;
+    }
+    .pill{
+      display:inline-block;
+      font-size:.75rem;
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:#0e1740;
+      margin-right:6px;
+    }
+    .hl{
+      background:linear-gradient(90deg,#1c245c,#191f4a);
+      border-left:3px solid var(--accent);
+      padding:10px;
+      border-radius:10px;
+    }
+    .note{
+      background:linear-gradient(180deg,#102f38,#0b2025);
+      border:1px solid #2a5f6a;
+    }
+    .tip{
+      background:linear-gradient(180deg,#163310,#10230b);
+      border:1px solid #2a6a2a;
+    }
+    .warnbox{
+      background:linear-gradient(180deg,#3a1b1b,#2a1010);
+      border:1px solid #7a2a2a;
+    }
+    kbd{
+      border:1px solid #3a4a88;
+      border-bottom-width:3px;
+      border-radius:6px;
+      padding:1px 6px;
+      background:#0e1640;
+    }
+    pre{
+      background:#0a122e;
+      border:1px solid #26336e;
+      border-radius:12px;
+      padding:12px;
+      overflow:auto;
+    }
+    .footer{
+      color:#aab7ff;
+      font-size:.9rem;
+      margin-top:22px;
+    }
+    .small{font-size:.9rem}
+    strong{font-weight:600}
+  </style>
 </head>
 <body>
 <div class="wrap">
   <span class="badge">Azure · Almacenamiento</span>
-  <h1>AZ‑104 — Dominio 2 · Implementar y administrar almacenamiento</h1>
-  <p class="muted">StorageV2, redundancia (LRS/ZRS/GRS), seguridad (SAS/CMK), ADLS Gen2, Files (SMB/NFS), ciclo de vida y rendimiento.</p>
-  
-    <div class="toc">
-      <div class="kicker">Índice</div>
-      <div class="grid">
-        <a href="#conceptos">Conceptos clave</a>
-        <a href="#decision">Guía de decisión</a>
-        <a href="#comandos">Comandos útiles</a>
-        <a href="#escenarios">Escenarios de examen</a>
-        <a href="#errores">Errores comunes</a>
-        <a href="#cross">Cross-links entre dominios</a>
+  <h1>AZ-104 — Dominio 2 · Implementar y administrar almacenamiento</h1>
+  <p class="muted">
+    Aquí está “dónde vive” tu dato: Blobs, Files, redundancia, rendimiento y seguridad.
+    Si entiendes bien <strong>tipos de cuenta</strong>, <strong>niveles de acceso</strong>, 
+    <strong>redundancia</strong> y <strong>acceso seguro</strong>, las preguntas de este dominio
+    se vuelven muy previsibles.
+  </p>
+
+  <div class="toc">
+    <div class="kicker">Índice rápido para estudiar</div>
+    <div class="grid">
+      <a href="#conceptos">Conceptos clave que sí caen</a>
+      <a href="#decision">Guía de decisión práctica</a>
+      <a href="#comandos">Comandos y rutas de portal</a>
+      <a href="#escenarios">Escenarios tipo examen</a>
+      <a href="#errores">Errores que te pueden costar puntos</a>
+      <a href="#cross">Cómo se cruza con otros dominios</a>
+    </div>
+  </div>
+
+  <div class="card" id="conceptos">
+    <h2>Conceptos clave (los que quieres tener muy claros)</h2>
+    <ul>
+      <li>
+        <strong>Tipos de cuenta de almacenamiento</strong><br>
+        <span class="small">
+          Para AZ-104, quédate con:
+          <ul>
+            <li><strong>StorageV2 (general purpose v2)</strong>: la opción por defecto. Soporta blobs, files, queues y tables.</li>
+            <li><strong>Premium</strong>: pensado para <em>baja latencia y alto IOPS</em> (por ejemplo, discos de VM o cargas muy intensivas).</li>
+            <li><strong>ADLS Gen2</strong> (hierarchical namespace activado): optimizado para analítica y big data, con ACLs tipo POSIX.</li>
+          </ul>
+          Si la pregunta no indica algo muy raro, casi siempre será una cuenta <strong>StorageV2</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>Servicios principales</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Blob Storage</strong>: objetos, backups, contenido web, datos de app.</li>
+            <li><strong>Azure Files</strong>: compartidos de ficheros SMB/NFS, lift &amp; shift de servidores de ficheros.</li>
+            <li><strong>Queues</strong>: mensajería sencilla entre componentes.</li>
+            <li><strong>Tables</strong>: almacenamiento NoSQL sencillo (cada vez menos protagonista en el examen).</li>
+          </ul>
+          En las preguntas, si hablan de <em>“compartir ficheros como si fuera un NAS”</em> → piensa en <strong>Azure Files</strong>.
+          Si hablan de objetos tipo “fotos, logs, backups” → <strong>Blob Storage</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>Redundancia (LRS, ZRS, GRS, RA-GRS)</strong><br>
+        <span class="small">
+          Es de lo más preguntado:
+          <ul>
+            <li><strong>LRS</strong>: 3 copias en el mismo datacenter.</li>
+            <li><strong>ZRS</strong>: copias en varias zonas de la misma región (resiliencia zonal).</li>
+            <li><strong>GRS / RA-GRS</strong>: replicación a otra región emparejada (y con RA puedes leer en la secundaria).</li>
+          </ul>
+          Ideas clave de examen:
+          <ul>
+            <li>Si hablan de <strong>resistencia a la caída de una zona</strong> → ZRS.</li>
+            <li>Si hablan de <strong>DR regional</strong> (caída de la región entera) → GRS / RA-GRS.</li>
+            <li><strong>Backup</strong> no es lo mismo que redundancia: son objetivos distintos.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Niveles de acceso: Hot / Cool / Archive</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Hot</strong>: acceso frecuente, coste de almacenamiento más alto, acceso barato.</li>
+            <li><strong>Cool</strong>: acceso poco frecuente (al menos 30 días), más barato almacenar.</li>
+            <li><strong>Archive</strong>: datos a muy largo plazo, recuperación lenta y más cara, mínimo 180 días.</li>
+          </ul>
+          El truco en el examen: “datos que casi nunca se leen, pero hay que guardarlos por temas legales” → <strong>Cool/Archive</strong>
+          + <strong>reglas de ciclo de vida</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>Seguridad de acceso: claves, SAS y Azure AD</strong><br>
+        <span class="small">
+          Tres grandes formas de acceso:
+          <ul>
+            <li><strong>Account keys</strong>: acceso total al almacenamiento; usarlas directamente en apps es mala práctica.</li>
+            <li><strong>SAS (Shared Access Signature)</strong>: acceso delegado y temporal sobre un recurso concreto, con permisos limitados.</li>
+            <li><strong>Azure AD / RBAC</strong>: acceso basado en identidades (usuarios, grupos, managed identities).</li>
+          </ul>
+          Si el enunciado habla de <strong>dar acceso temporal a un tercero</strong> → casi siempre es un <strong>SAS con caducidad corta</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>Protección de red: firewalls, endpoints y Private Link</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Firewall de Storage</strong>: restringe redes origen y permite solo VNets / IPs concretas.</li>
+            <li><strong>Service endpoints</strong>: el tráfico a Storage va por la red de Azure, pero el DNS sigue apuntando a la IP pública del servicio.</li>
+            <li><strong>Private Endpoints</strong>: IP privada dentro de tu VNet para el servicio PaaS.</li>
+          </ul>
+          Para el examen, cuando digan “ningún tráfico desde Internet” / “solo desde la VNet corporativa” → la solución “de libro” es
+          <strong>Private Endpoint + DNS privado</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>Protección frente a borrados: versioning y soft delete</strong><br>
+        <span class="small">
+          Dos cosas típicas:
+          <ul>
+            <li><strong>Blob versioning</strong>: cada cambio crea una versión; puedes volver atrás.</li>
+            <li><strong>Soft delete</strong>: aunque se borre algo, se mantiene durante X días y puedes recuperarlo.</li>
+          </ul>
+          Pregunta clásica: “un usuario ha borrado por error datos críticos” → si tenías <strong>soft delete o versioning</strong>,
+          puedes restaurar sin tirar de backup.
+        </span>
+      </li>
+      <li>
+        <strong>Azure Files y Azure File Sync</strong><br>
+        <span class="small">
+          <ul>
+            <li><strong>Azure Files</strong>: compartidos SMB/NFS; puedes unirlos a Entra ID o AD DS para control de acceso por identidad.</li>
+            <li><strong>Azure File Sync</strong>: sincroniza un servidor de ficheros on-prem con Azure Files, con cache local y tiering.</li>
+          </ul>
+          Si la empresa quiere <em>“mantener el servidor de ficheros pero dejar de preocuparse por la cabina”</em> → piensa en
+          <strong>Azure File Sync</strong>.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl note" style="margin-top:10px">
+      <span class="pill">📘 Tip del examen</span>
+      Si la pregunta habla de <strong>costes a largo plazo</strong> y datos poco accedidos, suele combinar:
+      <strong>niveles de acceso + reglas de ciclo de vida + redundancia adecuada</strong>.
+    </div>
+  </div>
+
+  <div class="card" id="decision">
+    <h2>Guía de decisión rápida (para el día del examen)</h2>
+    <p class="small">
+      Usa esto como “chuleta mental” cuando leas los escenarios.
+    </p>
+    <ul>
+      <li>
+        <strong>“Necesitamos compartir ficheros con usuarios de Windows”</strong><br>
+        <span class="small">
+          → <strong>Azure Files + integración con AD / Entra ID</strong>.  
+          Si además quieren mantener ficheros on-prem con caché local → añade <strong>Azure File Sync</strong>.
+        </span>
+      </li>
+      <li>
+        <strong>“Grandes volúmenes de datos para analítica / big data”</strong><br>
+        <span class="small">
+          → <strong>ADLS Gen2</strong> (hierarchical namespace, ACLs POSIX, rendimiento para analytics).
+        </span>
+      </li>
+      <li>
+        <strong>“Queremos DR regional para el almacenamiento”</strong><br>
+        <span class="small">
+          → <strong>GRS / RA-GRS</strong> o <strong>GZRS / RA-GZRS</strong> según el caso.  
+          Recuerda: redundancia ≠ backup, pero ayuda a mejorar RPO/RTO de la capa de datos.
+        </span>
+      </li>
+      <li>
+        <strong>“Acceso estrictamente privado desde VNets”</strong><br>
+        <span class="small">
+          → <strong>Private Endpoints + DNS privado</strong> y deshabilitar acceso desde Internet público.
+        </span>
+      </li>
+      <li>
+        <strong>“Optimizar costes de datos fríos”</strong><br>
+        <span class="small">
+          → <strong>Reglas de ciclo de vida</strong> que muevan blobs de Hot → Cool → Archive y borren versiones antiguas
+          después de X días.
+        </span>
+      </li>
+      <li>
+        <strong>“Acceso temporal a un contenedor para terceros”</strong><br>
+        <span class="small">
+          → <strong>SAS</strong> (con expiración corta, permisos mínimos y si es posible basado en stored access policy).
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🎯 Estrategia</span>
+      Identifica siempre estas palabras clave: <em>archivar, DR, compartir ficheros, acceso temporal, solo desde la VNet</em>.  
+      Cada una suele empujar a una combinación muy concreta de servicios.
+    </div>
+  </div>
+
+  <div class="card" id="comandos">
+    <h2>Comandos y rutas de portal que merece la pena practicar</h2>
+    <p class="small">
+      No hace falta saberse todo de memoria, pero sí reconocer qué hace cada cosa.
+    </p>
+    <div class="grid">
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Crear cuenta StorageV2</div>
+        <pre><code>az storage account create \
+  -n &lt;storageName&gt; \
+  -g &lt;resourceGroup&gt; \
+  --sku Standard_LRS \
+  --kind StorageV2 \
+  --https-only true</code></pre>
+        <p class="small">
+          Portal: <strong>Storage accounts &gt; Create</strong>.  
+          Fíjate en: tipo de cuenta, redundancia y red desde el principio.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Crear contenedor Blob</div>
+        <pre><code>az storage container create \
+  --account-name &lt;storageName&gt; \
+  --name logs \
+  --auth-mode login \
+  --public-access off</code></pre>
+        <p class="small">
+          Portal: <strong>Storage account &gt; Containers &gt; + Container</strong>.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Generar SAS</div>
+        <pre><code>az storage blob generate-sas \
+  --account-name &lt;storageName&gt; \
+  --container-name logs \
+  --name export.json \
+  --permissions r \
+  --expiry 2026-01-01T00:00Z \
+  --https-only</code></pre>
+        <p class="small">
+          Practica leyendo bien los permisos y la caducidad.  
+          Portal: pestaña <strong>Shared access signature</strong> o directamente sobre el recurso.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Habilitar soft delete</div>
+        <pre><code>az storage account blob-service-properties update \
+  --account-name &lt;storageName&gt; \
+  --enable-delete-retention true \
+  --delete-retention-days 14</code></pre>
+        <p class="small">
+          Portal: <strong>Data protection</strong> dentro de la cuenta de almacenamiento.
+        </p>
+      </div>
+
+      <div class="card" style="background:#0c1332">
+        <div class="kicker">Regla simple de ciclo de vida</div>
+        <pre><code>az storage account management-policy create \
+  --account-name &lt;storageName&gt; \
+  --policy "@policy.json"</code></pre>
+        <p class="small">
+          En el portal lo puedes hacer visualmente en <strong>Lifecycle management</strong>.
+          Saber que existe ya te gana puntos.
+        </p>
       </div>
     </div>
-    
-    <div class="card" id="conceptos"><h2>Conceptos clave</h2>
-      <ul><li><strong>Tipos de cuenta</strong>: StorageV2 general; Premium para latencia; ADLS Gen2 para jerarquía/ACLs POSIX.</li><li><strong>Redundancia</strong>: LRS/ZRS/GRS/RA-GRS — costo vs RPO/DR.</li><li><strong>Acceso</strong>: SAS ad-hoc/policy, Azure AD, firewall y redes confiables.</li><li><strong>Cifrado</strong>: SSE con MS-managed por defecto; CMK con KV; doble cifrado opcional.</li><li><strong>ADLS Gen2</strong>: ABFS, ACLs, rendimiento big data.</li><li><strong>Azure Files</strong>: SMB/NFS, Kerberos con Entra ID, snapshots y File Sync.</li><li><strong>Rendimiento</strong>: Niveles Hot/Cool/Archive y límites de tasa.</li></ul>
-      <div class="hl note" style="margin-top:10px">
-        <span class="pill">📘 Tip del examen</span>
-        En preguntas de *observabilidad*, piensa en **Azure Monitor + Log Analytics + Alertas** antes de automatizar.
-      </div>
+    <p class="muted small">
+      Si puedes, monta una cuenta de pruebas y juega con contenedores, SAS, versioning y ciclo de vida.
+      Te ayuda muchísimo a fijar los conceptos.
+    </p>
+  </div>
+
+  <div class="card" id="escenarios">
+    <h2>Escenarios tipo examen (muy parecidos a los reales)</h2>
+    <ul>
+      <li>
+        <strong>Escenario 1: Recuperar datos borrados por error</strong><br>
+        <span class="small">
+          Un usuario ha borrado un contenedor crítico con logs y no hay backup.  
+          Solución típica: tener <strong>soft delete y/o versioning</strong> habilitado y restaurar desde ahí.
+          Si la pregunta es de diseño, la respuesta será “habilitar estas opciones de protección”.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 2: Datos fríos para cumplimiento legal</strong><br>
+        <span class="small">
+          Se deben guardar documentos 7 años, casi nunca se consultan, pero deben estar disponibles.  
+          Combina:
+          <ul>
+            <li>Nivel <strong>Cool/Archive</strong> para los blobs.</li>
+            <li><strong>Lifecycle management</strong> para moverlos automáticamente según antigüedad.</li>
+            <li>Quizá <strong>GRS</strong> si piden requisitos de resiliencia extra.</li>
+          </ul>
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 3: NAS on-prem saturado</strong><br>
+        <span class="small">
+          El almacenamiento local está creciendo mucho y quieren moverlo a Azure, pero manteniendo los mismos shares
+          para usuarios.  
+          Respuesta típica: <strong>Azure Files + Azure File Sync</strong> con tiering para datos poco usados.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 4: Bloquear acceso desde Internet</strong><br>
+        <span class="small">
+          Una organización quiere que su cuenta de almacenamiento solo sea accesible desde una VNet concreta,
+          nunca desde Internet.  
+          Lo de libro: <strong>Private Endpoints</strong>, deshabilitar acceso público y ajustar DNS privado.
+        </span>
+      </li>
+      <li>
+        <strong>Escenario 5: Compartir datos con proveedor externo</strong><br>
+        <span class="small">
+          Un proveedor necesita acceso temporal a un conjunto de blobs para descargar informes.  
+          Respuesta: <strong>SAS con expiración corta y permisos mínimos</strong>,
+          idealmente basado en una stored access policy para poder revocarla.
+        </span>
+      </li>
+    </ul>
+
+    <div class="hl tip" style="margin-top:10px">
+      <span class="pill">🧪 Cómo practicar</span>
+      Crea un caso inventado y responde:  
+      “¿Dónde guardo los datos? ¿Qué redundancia? ¿Qué nivel? ¿Cómo limito el acceso? ¿Qué pasa si alguien borra algo?”
+      Si puedes razonarlo, estás listo para este dominio.
     </div>
-    
-    <div class="card" id="decision"><h2>Guía de decisión (rápida)</h2>
-      <ul><li><strong>Compartir ficheros con identidades</strong>: Azure Files + Entra ID/AD DS.</li><li><strong>Privacidad estricta</strong>: Private Endpoints + firewall; evita contenedores públicos.</li><li><strong>Optimizar costes</strong>: Lifecycle para mover/borrar versiones y expiración.</li><li><strong>Recuperación</strong>: Versioning + soft delete en Blob/Files.</li></ul>
-      <p class="muted">Recuerda revisar costes de ingestión, retención y tablas dedicadas antes de habilitar diagnósticos masivos.</p>
-    </div>
-    
-    <div class="card" id="comandos"><h2>Comandos útiles</h2>
-      <div class="grid">
-        <div class='card' style='background:#0c1332'><div class='kicker'>Cuenta Storage</div><pre><code>az storage account create --name <acct> --sku Standard_ZRS --kind StorageV2</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>SAS</div><pre><code>az storage container generate-sas --permissions rl --expiry 2026-01-01 --auth-mode login</code></pre></div><div class='card' style='background:#0c1332'><div class='kicker'>PE Blob</div><pre><code>az network private-endpoint create --group-ids blob --connection-name pe-st --name pe1 ...</code></pre></div>
-      </div>
-      <p class="muted">Incluye <kbd>az</kbd> CLI, consultas <kbd>KQL</kbd> y opciones de portal.</p>
-    </div>
-    
-    <div class="card" id="escenarios"><h2>Escenarios de examen (tipo test)</h2>
-      <ul><li><strong>Evitar Internet en Blob</strong>: Firewall + redes seleccionadas + Private Endpoint.</li><li><strong>Migrar NAS</strong>: Azure File Sync con tiering y snapshots.</li><li><strong>Auditar accesos</strong>: Diagnósticos → Log Analytics y KQL.</li></ul>
-      <div class="hl tip" style="margin-top:10px">
-        <span class="pill">🎯 Estrategia</span>
-        Valora ruido vs. señal: usa reglas de supresión, horarios silenciosos y grupos de acción específicos.
-      </div>
-    </div>
-    
-    <div class="card warnbox" id="errores"><h2>Errores comunes</h2>
-      <ul><li><strong>SAS sin caducidad</strong>: Usa stored access policy con expiración corta.</li><li><strong>Soft delete deshabilitado</strong>: Actívalo con retención adecuada.</li></ul>
-    </div>
-    
-    <div class="card" id="cross"><h2>Cross-links entre dominios</h2>
-      <ul><li><strong>Identidades</strong>: RBAC + PIM para KV/Storage.</li><li><strong>Redes</strong>: Private Endpoints + DNS privado.</li><li><strong>Monitor</strong>: Métricas de capacidad/latencia y alertas.</li></ul>
-      <p class="muted">Relaciona monitoreo con identidades, redes, cómputo y almacenamiento para respuestas completas.</p>
-    </div>
-    
-  
-    <div class="footer">
-      <span class="pill">🧠 Consejo</span> Crea dashboards y *workbooks* por dominio (Identidades, Redes, Cómputo, Storage) y practica KQL con datos de demo.
-      <span class="pill">🔗</span> Usa *Action Groups* reutilizables y *Action Rules* para suprimir ruido en cambios planificados.
-    </div>
-    
+  </div>
+
+  <div class="card warnbox" id="errores">
+    <h2>Errores comunes (que el examen “castiga” mucho)</h2>
+    <ul>
+      <li>
+        <strong>Dejar contenedores con acceso público sin pensarlo</strong><br>
+        <span class="small">
+          En el mundo real pasa; en el examen casi siempre es mala práctica salvo que el escenario hable explícitamente
+          de contenido público.
+        </span>
+      </li>
+      <li>
+        <strong>Usar account keys en lugar de identidades o SAS</strong><br>
+        <span class="small">
+          Es mucho mejor: <strong>Managed Identity + RBAC</strong> o SAS.  
+          Si ves opciones que filtran las keys al código, suele ser la incorrecta.
+        </span>
+      </li>
+      <li>
+        <strong>No habilitar soft delete / versioning</strong><br>
+        <span class="small">
+          En un diseño “de libro” casi siempre tendrás alguna forma de protección ante borrados accidentales.
+        </span>
+      </li>
+      <li>
+        <strong>Elegir redundancia cara sin motivo</strong><br>
+        <span class="small">
+          No todo necesita GRS. Fíjate si el escenario habla realmente de caída de región o solo de un datacenter.
+        </span>
+      </li>
+      <li>
+        <strong>No pensar en DNS con Private Endpoints</strong><br>
+        <span class="small">
+          Private Endpoint sin ajustar DNS = app intentando ir por Internet.  
+          Si la pregunta menciona que “no se resuelve el nombre correctamente”, suele ir por aquí.
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card" id="cross">
+    <h2>Cross-links con otros dominios</h2>
+    <p class="small">
+      Almacenamiento se mezcla con casi todo: identidades, redes, monitorización y seguridad.
+    </p>
+    <ul>
+      <li>
+        <strong>Con identidades y gobierno</strong><br>
+        <span class="small">
+          RBAC sobre cuentas de almacenamiento, uso de <strong>managed identities</strong> para acceder a blobs,
+          y <strong>Azure Policy</strong> para forzar encriptado, tipos de redundancia o evitar cuentas públicas.
+        </span>
+      </li>
+      <li>
+        <strong>Con redes</strong><br>
+        <span class="small">
+          Private Endpoints en arquitecturas hub-and-spoke, firewalls y peering.  
+          Muchas respuestas correctas combinan “Storage + Private Link + NSG/UDR”.
+        </span>
+      </li>
+      <li>
+        <strong>Con monitorización</strong><br>
+          <span class="small">
+            Métricas de capacidad, transacciones, errores y latencia.  
+            Logs de acceso a Storage enviados a Log Analytics para auditoría y detección de anomalías.
+          </span>
+      </li>
+      <li>
+        <strong>Con cómputo</strong><br>
+        <span class="small">
+          VMs que montan Azure Files, apps que leen blobs, snapshots de discos que se almacenan en cuentas de almacenamiento.
+        </span>
+      </li>
+    </ul>
+
+    <p class="muted small">
+      Intenta siempre pensar el “circuito completo”: identidad → red → Storage → logs.
+      Eso te ayuda a construir respuestas redondas que el examen premia.
+    </p>
+  </div>
+
+  <div class="footer">
+    <span class="pill">🧠 Consejo final</span>
+    Hazte un esquema simple: <strong>tipo de cuenta → redundancia → nivel de acceso → forma de acceso → protección</strong>.  
+    Con ese mapa en la cabeza, este dominio deja de dar miedo.
+  </div>
+
 </div>
 </body>
 </html>
