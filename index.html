@@ -449,6 +449,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     margin-top: 4px;
     width: 100%;
     box-shadow: 0 6px 16px rgba(5,10,30,.35);
+    display: none;          /* por defecto oculto */
+  }
+
+  .menu-group .submenu.open {
+    display: flex;          /* se muestra cuando JS añade .open */
   }
 }
 
@@ -527,16 +532,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     <nav class="menu menu-has-sub" aria-label="Navegación principal">
 
-      <a class="link-btn" href="/">INICIO</a>
 
       <!-- 1. CERTIFICACIONES -->
       <div class="menu-group">
         <a class="link-btn has-sub-trigger" href="/catalog/itcatalog.html">CERTIFICACIONES<span class="caret" aria-hidden="true">▾</span></a>
         <div class="submenu"><a class="submenu-mainlink" href="/certification/microsoft-azure/az-104/index.html">PORTADA AZURE</a>
          <a class="submenu-child" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104 ADMINISTRATOR</a>
-          <a class="submenu-child" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305 ARCHITECT</a>
-
-   
+          <a class="submenu-child" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305 ARCHITECT</a> 
           <a class="submenu-mainlink" href="/certification/amazon aws/index.html">PORTADA AWS</a>
           <a class="submenu-child" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03 ARCHITECT</a>
          </div>
@@ -1073,6 +1075,48 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
       });
     })();
-  </script>
+
+
+//menu header
+
+ // === Desplegables en móvil para el menú superior ===
+  document.addEventListener('DOMContentLoaded', function () {
+    const triggers = document.querySelectorAll('.has-sub-trigger');
+
+    triggers.forEach((trigger) => {
+      trigger.setAttribute('aria-expanded', 'false');
+
+      trigger.addEventListener('click', function (e) {
+        const isMobile = window.innerWidth <= 720;
+        if (!isMobile) return; // en escritorio, comportamiento normal (hover)
+
+        const group = trigger.closest('.menu-group');
+        const submenu = group && group.querySelector('.submenu');
+        if (!submenu) return;
+
+        const wasOpen = submenu.classList.contains('open');
+
+        if (!wasOpen) {
+          // Primer toque: solo abre el menú y no navega
+          e.preventDefault();
+
+          // Cerramos otros submenús abiertos
+          document.querySelectorAll('.menu-group .submenu.open').forEach((other) => {
+            if (other !== submenu) other.classList.remove('open');
+          });
+
+          submenu.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+        } else {
+          // Segundo toque: dejamos navegar y de paso lo cerramos
+          submenu.classList.remove('open');
+          trigger.setAttribute('aria-expanded', 'false');
+          // no hacemos preventDefault → el enlace funciona
+        }
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
