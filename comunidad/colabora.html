@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f1320" />
+
+  <title>Colabora con la comunidad ITHub.es · Crea contenido y ayuda a otros estudiantes</title>
+  <meta name="description" content="Descubre cómo colaborar con la comunidad de ITHub.es: proponer certificaciones, revisar preguntas, crear contenidos, aportar experiencia profesional y ayudar al resto de estudiantes a aprobar sus certificaciones IT." />
+  <link rel="canonical" href="https://www.ithub.es/comunidad/colabora.html" />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:title" content="Colabora con la comunidad ITHub.es" />
+  <meta property="og:description" content="Aporta tu experiencia creando preguntas, revisando contenidos y ayudando a otros estudiantes a preparar sus certificaciones IT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/comunidad/colabora.html" />
+  <meta property="og:site_name" content="ITHub.es" />
+
+  <link rel="icon" type="image/svg+xml" 
+href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
+
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#aebaf0;
+      --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
+      --pill-ring:#2a3150;
+      --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
+      --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
+      --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
+      --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.12),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.12),transparent 60%),
+        var(--bg);
+      line-height:1.6;overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
+    :focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px;}
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+    }
+
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .brand img.site-logo{height:42px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px}
+    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+    nav.menu a.link-btn.active{border-color:#3b4cff;color:#fff;background:rgba(108,139,255,.12);}
+
+    .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+    .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;}
+    .btn:hover{border-color:#3a4580}
+    .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
+
+    @media (max-width:720px){
+      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
+    }
+
+    .hero{padding:16px 0 4px;text-align:center}
+    .hero-head{
+      display:inline-block;width:100%;
+      background:linear-gradient(180deg,#12183a,#0f1531);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px 18px 18px;
+      box-shadow:0 10px 24px rgba(80,90,240,.18), 0 0 0 1px rgba(108,139,255,.22) inset;
+      position:relative;
+    }
+    .hero-head::after{
+      content:"";
+      position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
+      background:linear-gradient(135deg,rgba(108,139,255,.55),rgba(255,153,0,.25));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude; padding:1px; opacity:.55;
+    }
+    .hero h1{margin:0 0 6px;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.15;font-weight:900;letter-spacing:.2px}
+    .lead{color:var(--muted);max-width:860px;margin:0 auto;font-size:1rem}
+    .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+
+    .hero .btn {
+      background: linear-gradient(180deg, #e423b3, #d8abda);
+      border: 1px solid rgba(108, 139, 255, .5);
+      color: #fff;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(108, 139, 255, .4), 0 4px 14px rgba(80, 90, 240, .25);
+      transition: all .15s ease-in-out;
+      letter-spacing:.9px;
+    }
+    .hero .btn:hover {
+      background: linear-gradient(180deg, #8a78ff, #6b54ff);
+      border-color: rgba(108, 139, 255, .8);
+      box-shadow: 0 0 22px rgba(108, 139, 255, .6), 0 6px 18px rgba(80, 90, 240, .35);
+      transform: translateY(-2px);
+    }
+
+    section{padding:24px 0}
+    .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
+    .muted{color:var(--muted);font-size:.95rem}
+
+    /* TAGS + BADGES */
+    .coll-intro{padding:18px 0 8px;}
+    .coll-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:center}
+    .coll-tags span{
+      padding:6px 10px;border-radius:999px;background:rgba(108,139,255,.12);
+      border:1px solid rgba(108,139,255,.35);color:#cfe1ff;font-weight:800;font-size:.8rem;
+      text-transform:uppercase;letter-spacing:.6px;
+    }
+
+    /* GRID PRINCIPAL */
+    .coll-grid{display:grid;gap:16px;margin-top:16px;}
+    @media(min-width:900px){
+      .coll-grid{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);}
+    }
+
+    .pill-label{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:4px 10px;border-radius:999px;
+      background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.18);
+      font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;
+      color:#cfe1ff;
+    }
+
+    .role-grid{display:grid;gap:12px;margin-top:10px;}
+    @media(min-width:720px){.role-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+    .card{
+      background:linear-gradient(180deg,#111937,#0f1633);
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      padding:14px 16px;
+      box-shadow:0 12px 26px rgba(6,12,40,.45),0 0 0 1px rgba(108,139,255,.16) inset;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";position:absolute;inset:0;border-radius:16px;
+      padding:1px;opacity:.45;
+      background:linear-gradient(135deg,rgba(108,139,255,.6),rgba(255,153,0,.35));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;
+      pointer-events:none;
+    }
+    .card h3{margin:0 0 6px;font-size:1.05rem;}
+    .card p{margin:0 0 8px;font-size:.95rem;color:var(--muted);}
+    .card ul{margin:6px 0 0 18px;padding:0;font-size:.93rem;color:var(--muted);}
+    .card li{margin-bottom:4px;}
+
+    .side-card{
+      background:var(--surface);
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      padding:14px 16px;
+      box-shadow:0 8px 22px rgba(5,10,30,.35);
+      font-size:.94rem;
+    }
+    .side-card h3{margin:0 0 6px;font-size:1rem;}
+    .side-card p{margin:0 0 8px;color:var(--muted);}
+    .side-card ul{margin:6px 0 0 18px;padding:0;}
+    .side-card li{margin-bottom:4px;}
+
+    /* PASOS */
+    .steps-section{padding-top:8px;}
+    .steps-grid{display:grid;gap:12px;margin-top:10px;}
+    @media(min-width:720px){.steps-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+    .step-card{
+      background:var(--surface);
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      padding:12px 14px;
+      box-shadow:0 10px 24px rgba(6,12,40,.45);
+      font-size:.93rem;
+    }
+    .step-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+    .step-num{
+      width:28px;height:28px;border-radius:999px;
+      background:linear-gradient(180deg,#8aa0ff,#425dff);
+      display:grid;place-items:center;
+      font-weight:900;font-size:.9rem;
+      box-shadow:0 6px 14px rgba(80,90,240,.25);
+    }
+    .step-card h3{margin:0;font-size:1rem;}
+    .step-card p{margin:6px 0 0;color:var(--muted);}
+
+    /* CÓDIGO DE LA COMUNIDAD */
+    .code-grid{display:grid;gap:12px;margin-top:10px;}
+    @media(min-width:900px){.code-grid{grid-template-columns:1.5fr 1fr;}}
+    .list-clean{margin:6px 0 0 18px;padding:0;font-size:.94rem;color:var(--muted);}
+    .list-clean li{margin-bottom:4px;}
+
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+    .f-grid{display:grid;gap:14px}
+    @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
+
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);z-index:120}
+    .modal.show{display:flex}
+    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .modal-card h3{margin:0 0 10px;font-size:1.2rem}
+    .modal-card p{margin:0 0 8px}
+    .modal-card input,.modal-card textarea,.modal-card select{
+      width:100%;display:block;margin-top:8px;border:1px solid var(--stroke);border-radius:10px;
+      background:var(--surface2);color:var(--ink);padding:10px;font-weight:700
+    }
+    .modal-card textarea{min-height:120px;resize:vertical}
+    .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .fb-status{margin-top:8px;font-weight:800}
+    .fb-status.ok{color:var(--ok)}
+    .fb-status.err{color:var(--bad)}
+    .fb-status.info{color:var(--muted)}
+
+    @media (max-width:720px){
+      .card,.side-card,.step-card{border-radius:14px;padding:12px 12px;}
+      .coll-grid,.code-grid{grid-template-columns:1fr;}
+      .hero-head{
+        box-shadow:0 4px 10px rgba(5,10,30,.18) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      </div>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a class="link-btn" href="/">INICIO</a>
+        <a class="link-btn" href="/catalog/itcatalog.html">CATÁLOGOS</a>
+        <a class="link-btn" href="/content/content.html">RESÚMENES</a>
+        <a class="link-btn" href="/score/ranking.html">RANKING</a>
+        <a class="link-btn" href="/blog/blog.html">BLOG</a>
+        <a class="link-btn" href="/faqs/faqs.html">FAQS</a>
+        <a class="link-btn active" href="/comunidad/colabora.html">COMUNIDAD</a>
+      </nav>
+
+      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
+
+        <div id="userArea" style="display:none;align-items:center;gap:6px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-head">
+          <h1 id="hero-title"><span aria-hidden="true">🤝</span>Colabora con la comunidad <b>ITHub.es</b></h1>
+          <p class="lead">
+            ITHub.es nace como proyecto de comunidad. Si trabajas con Azure, AWS u otras tecnologías
+            y te apetece ayudar a otros estudiantes, aquí tienes un sitio para aportar:
+            revisando preguntas, proponiendo certificaciones, creando contenido o compartiendo tu experiencia.
+          </p>
+          <div class="hero-actions" role="group" aria-label="Acciones de colaboración">
+            <a class="btn" href="#formas-colaborar">Formas de colaborar</a>
+            <a class="btn" href="#como-empezar">Cómo empezar</a>
+            <a class="btn" href="/faqs/faqs.html#faq-privacidad-title">Dudas frecuentes</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="coll-intro" aria-label="Introducción a la comunidad">
+      <div class="container">
+        <p class="muted">
+          No hace falta ser “influencer” ni creador de contenido profesional. Lo que más valor tiene
+          para la comunidad son tus horas reales peleándote con Azure, AWS, redes o entornos híbridos.
+          Queremos capturar esa experiencia y convertirla en recursos que ayuden a más personas a <b>aprobar
+          sus certificaciones IT</b> y a ser mejores profesionales.
+        </p>
+        <div class="coll-tags" aria-hidden="true">
+          <span>Revisión de preguntas</span>
+          <span>Creación de contenido</span>
+          <span>Rutas de estudio</span>
+          <span>Experiencia real de proyectos</span>
+          <span>Comunidad de certificaciones</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMAS DE COLABORAR -->
+    <section id="formas-colaborar" aria-labelledby="coll-title">
+      <div class="container">
+        <h2 id="coll-title" class="sec-title">Formas de colaborar</h2>
+        <p class="muted">
+          Puedes aportar desde poco tiempo (reportar errores, sugerir mejoras) hasta implicarte más
+          (crear bancos de preguntas, escribir resúmenes o artículos técnicos). Tú decides el nivel de
+          compromiso que encaja con tu momento profesional.
+        </p>
+
+        <div class="coll-grid">
+          <div>
+            <span class="pill-label">Perfiles técnicos, docentes y estudiantes avanzados</span>
+
+            <div class="role-grid" style="margin-top:12px">
+              <article class="card">
+                <h3>🧪 Revisor/a de preguntas y contenidos</h3>
+                <p>
+                  Ideal si ya trabajas con Azure, AWS u otras nubes en tu día a día y quieres ayudar
+                  a mejorar la calidad de los simuladores.
+                </p>
+                <ul>
+                  <li>Revisar preguntas existentes y proponer mejoras o correcciones.</li>
+                  <li>Detectar matices de seguridad, coste o arquitectura que merecen ser incluidos.</li>
+                  <li>Proponer nuevas variantes de preguntas basadas en escenarios reales.</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3>✍️ Creador/a de preguntas y resúmenes</h3>
+                <p>
+                  Si te gusta explicar conceptos complejos de forma simple, puedes ayudar creando
+                  nuevos ítems y resúmenes por dominio.
+                </p>
+                <ul>
+                  <li>Diseñar preguntas alineadas con los exam guides oficiales.</li>
+                  <li>Redactar explicaciones claras con referencias a documentación oficial.</li>
+                  <li>Crear resúmenes tipo “hoja de trucos” para dominios de examen.</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3>📚 Mentor/a comunitario</h3>
+                <p>
+                  No se trata de dar clases 1:1, sino de compartir tu experiencia y consejos
+                  para ayudar a quienes empiezan.
+                </p>
+                <ul>
+                  <li>Proponer rutas de estudio realistas por semanas.</li>
+                  <li>Compartir buenas prácticas que te han funcionado en tus exámenes.</li>
+                  <li>Aportar ideas para futuros modos de juego (Arena Battle, retos, ligas…).</li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3>🌍 Embajador/a de la comunidad</h3>
+                <p>
+                  Si te apetece hablar de ITHub.es en tu entorno, puedes ayudarnos a que el proyecto
+                  llegue a más gente.
+                </p>
+                <ul>
+                  <li>Compartir recursos de ITHub.es en redes, grupos de estudio o eventos.</li>
+                  <li>Enviar feedback sobre cómo nos percibe la comunidad.</li>
+                  <li>Ayudar a que más gente contribuya con preguntas y contenidos.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+
+          <aside class="side-card" aria-label="Colaboración rápida">
+            <h3>⏱ Poco tiempo, alta ayuda</h3>
+            <p>
+              Aunque solo puedas dedicar unos minutos de vez en cuando, también puedes aportar mucho:
+            </p>
+            <ul>
+              <li>Reportando errores o ambigüedades en preguntas y resúmenes.</li>
+              <li>Indicando temas que eches en falta en los simuladores.</li>
+              <li>Votando qué certificaciones te gustaría ver primero.</li>
+            </ul>
+            <p>
+              Todo ese feedback llega directamente al equipo de ITHub.es y ayuda a priorizar
+              mejoras para toda la comunidad.
+            </p>
+            <p>
+              Si quieres una visión general antes de decidir cómo colaborar, pásate por las
+              <a href="/faqs/faqs.html">FAQs de la plataforma</a>.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓMO EMPEZAR -->
+    <section id="como-empezar" class="steps-section" aria-labelledby="steps-title">
+      <div class="container">
+        <h2 id="steps-title" class="sec-title">Cómo empezar a colaborar</h2>
+        <p class="muted">
+          No hay formulario burocrático ni procesos eternos. Queremos hacerlo sencillo: nos cuentas quién eres,
+          de qué tecnologías vienes y cómo te gustaría ayudar, y buscamos la forma más natural de encajar tu aportación.
+        </p>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <div class="step-head">
+              <div class="step-num">1</div>
+              <h3>Cuéntanos quién eres</h3>
+            </div>
+            <p>
+              Usa el botón <b>“Contáctanos”</b> del pie o el formulario de feedback y dinos:
+            </p>
+            <ul class="list-clean">
+              <li>En qué trabajas o qué estás estudiando.</li>
+              <li>Qué certificaciones tienes o estás preparando.</li>
+              <li>Cómo te ves colaborando (revisión, contenido, rutas…).</li>
+            </ul>
+          </article>
+
+          <article class="step-card">
+            <div class="step-head">
+              <div class="step-num">2</div>
+              <h3>Alineamos expectativas</h3>
+            </div>
+            <p>
+              Te propondremos algunas formas concretas de colaborar según tu perfil:
+            </p>
+            <ul class="list-clean">
+              <li>Revisar un pequeño bloque de preguntas.</li>
+              <li>Aportar ejemplos reales para un dominio concreto.</li>
+              <li>Escribir un mini-artículo para el <a href="/blog/blog.html">blog</a>.</li>
+            </ul>
+          </article>
+
+          <article class="step-card">
+            <div class="step-head">
+              <div class="step-num">3</div>
+              <h3>Iteramos con la comunidad</h3>
+            </div>
+            <p>
+              ITHub.es es un proyecto vivo. Tu feedback y tus aportaciones ayudan a:
+            </p>
+            <ul class="list-clean">
+              <li>Mejorar la calidad del banco de preguntas.</li>
+              <li>Decidir qué certificaciones priorizar.</li>
+              <li>Diseñar mejor la experiencia de estudio y el ranking.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CÓDIGO DE LA COMUNIDAD -->
+    <section aria-labelledby="code-title">
+      <div class="container">
+        <h2 id="code-title" class="sec-title">Código de la comunidad ITHub.es</h2>
+        <p class="muted">
+          Queremos que ITHub.es sea un lugar donde la gente se sienta cómoda compartiendo conocimiento,
+          dudas y aprendizajes. No es un foro, pero sí una comunidad que se refleja en el contenido.
+        </p>
+
+        <div class="code-grid">
+          <div class="card">
+            <h3>🎯 Principios básicos</h3>
+            <ul class="list-clean">
+              <li><b>Respeto</b>: detrás de cada simulador hay personas estudiando en su tiempo libre.</li>
+              <li><b>Honestidad</b>: no compartimos bancos de preguntas oficiales ni filtraciones de exámenes.</li>
+              <li><b>Calidad</b>: preferimos poco contenido muy bueno que mucho contenido “de relleno”.</li>
+              <li><b>Colaboración</b>: las críticas son bienvenidas si vienen acompañadas de propuestas de mejora.</li>
+            </ul>
+          </div>
+
+          <div class="side-card">
+            <h3>ℹ️ Más detalles en las FAQs</h3>
+            <p>
+              En la sección de <a href="/faqs/faqs.html#faq-privacidad-title">Privacidad, datos y contacto</a>
+              de las FAQs explicamos con más detalle cómo gestionamos los datos, cómo tratamos las propuestas y cómo
+              puedes pedir que eliminemos tu información si lo necesitas.
+            </p>
+            <p>
+              Si quieres colaborar revisando preguntas o creando contenido, empieza por enviarnos un mensaje
+              desde el botón de contacto de esta página.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section aria-labelledby="cta-title">
+      <div class="container">
+        <h2 id="cta-title" class="sec-title">¿Te apetece aportar algo a la comunidad?</h2>
+        <p class="muted">
+          Da igual si es revisar una sola batería de preguntas, proponer una certificación nueva o preparar un artículo corto.
+          Todo suma y puede marcar la diferencia para alguien que está estudiando después de trabajar.
+        </p>
+        <div class="hero-actions" role="group" aria-label="Siguientes pasos">
+          <button class="btn" type="button" id="openCollabFeedback">💬 Quiero colaborar</button>
+          <a class="btn" href="/faqs/faqs.html">Ver FAQs de la plataforma</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHUB.ES</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
+      </div>
+      <div>
+        <div style="font-weight:800">SIMULADORES</div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFT AZURE AZ-305</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">AMAZON AWS SAA-C03</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">CONTENIDOS</div>
+        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
+        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
+        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">COLABORADORES</div>
+        <p style="margin:4px 0 8px;font-size:.9rem;">
+          Si quieres colaborar con preguntas, contenidos o revisiones, visita
+          <a href="/comunidad/colabora.html">la página de comunidad</a> o envíanos un mensaje.
+        </p>
+        💬 <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
+        <div style="font-weight:800">CONTACTO</div>
+        <button id="footerContactBtn" type="button"
+                style="background:none;border:none;color:#cfe1ff;
+                       font-weight:800;display:inline-flex;align-items:center;
+                       gap:6px;cursor:pointer;padding:0;margin-top:6px;">
+          💬 <span>Contáctanos</span>
+        </button>
+      </div>
+    </div>
+    <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+  </footer>
+
+  <!-- Modal Feedback -->
+  <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
+    <div class="modal-card" role="document" tabindex="-1">
+      <h3 id="fbTitle">💬 QUIERO COLABORAR CON ITHub.es</h3>
+      <p class="muted">
+        Cuéntanos brevemente quién eres, qué certificaciones trabajas y cómo te gustaría ayudar
+        (revisión de preguntas, creación de contenido, rutas de estudio, etc.).
+      </p>
+      <input id="feedbackEmail" type="email" placeholder="Tu email para que podamos responderte (recomendado)">
+      <textarea id="feedbackText" placeholder="Escribe aquí tu mensaje…"></textarea>
+      <div id="fbStatus" class="fb-status" aria-live="polite"></div>
+      <div class="modal-actions">
+        <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
+        <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
+        <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function renderHeaderAuth(){
+      const u=getCurrentUser();
+      const login=document.getElementById('btnLogin');
+      const signup=document.getElementById('btnSignup');
+      const userArea=document.getElementById('userArea');
+      const nameTop=document.getElementById('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    }
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    renderHeaderAuth();
+
+    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
+    const NOTES_ENDPOINT = `${API_BASE}/items`;
+    const fbEmail   = document.getElementById('feedbackEmail');
+    const fbText    = document.getElementById('feedbackText');
+    const fbStatus  = document.getElementById('fbStatus');
+    const btnFbSend = document.getElementById('btnSendFeedback');
+    const btnFbCancel = document.getElementById('btnCancelFeedback');
+    const btnFbOk   = document.getElementById('btnOkFeedback');
+    const footerBtn = document.getElementById('footerContactBtn');
+    const collabBtn = document.getElementById('openCollabFeedback');
+    const fbModal   = document.getElementById('feedbackModal');
+
+    function openFeedbackModal(){
+      fbEmail.value = ''; fbText.value  = '';
+      fbStatus.textContent = ''; fbStatus.className = 'fb-status';
+      btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
+      fbEmail.disabled = fbText.disabled = false; btnFbSend.disabled = false;
+      fbModal.classList.add('show');
+    }
+    footerBtn?.addEventListener('click', openFeedbackModal);
+    collabBtn?.addEventListener('click', openFeedbackModal);
+    btnFbCancel?.addEventListener('click',()=> fbModal.classList.remove('show'));
+    btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
+    fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
+
+    btnFbSend?.addEventListener('click', async ()=>{
+      const message = (fbText.value||'').trim();
+      const from    = (fbEmail.value||'').trim();
+      if(!message){ fbStatus.textContent='Por favor, cuéntanos al menos brevemente cómo te gustaría colaborar.'; fbStatus.className='fb-status err'; fbStatus.focus?.(); return; }
+      fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
+      fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
+
+      const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
+      const user = getCurrentUser();
+      const note = {
+        id,
+        type:'feedback',
+        title:'Colaboración comunidad ITHub',
+        message,
+        email: from || user?.email || null,
+        userId: user?.id || user?.email || null,
+        path: location.pathname + location.search,
+        ua: navigator.userAgent,
+        createdAt: new Date().toISOString()
+      };
+
+      const params = new URLSearchParams();
+      params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
+
+      const ctl = new AbortController(); const timeoutId = setTimeout(()=>ctl.abort(), 10000);
+      try{
+        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
+        clearTimeout(timeoutId);
+        if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
+        fbStatus.textContent = '¡Gracias! Hemos recibido tu propuesta de colaboración 👌'; fbStatus.className='fb-status ok';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+      }catch(err){
+        console.error('Error guardando feedback:', err);
+        fbStatus.textContent = 'No se pudo enviar la info. Inténtalo de nuevo en unos minutos.'; fbStatus.className='fb-status err';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f1320" />
+
+  <title>FAQs ITHub.es · Preguntas frecuentes sobre simuladores y certificaciones IT</title>
+  <meta name="description" content="Preguntas frecuentes sobre ITHub.es: simuladores de examen en español, certificaciones AZ-104, AZ-305 y AWS SAA-C03, ranking, cuenta de usuario, privacidad, comunidad y próximos contenidos." />
+  <link rel="canonical" href="https://www.ithub.es/faqs/faqs.html" />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:title" content="FAQs ITHub.es · Simuladores y certificaciones IT" />
+  <meta property="og:description" content="Resuelve tus dudas sobre cómo usar los simuladores, cómo se calcula el ranking, qué certificaciones cubrimos y cómo colaborar con la comunidad ITHub.es." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/faqs/faqs.html" />
+  <meta property="og:site_name" content="ITHub.es" />
+
+  <link rel="icon" type="image/svg+xml" 
+href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
+
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#aebaf0;
+      --stroke:#283056;--brand:#6c8bff;--aws:#ff9900;--azure:#0078d4;
+      --radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
+      --pill-ring:#2a3150;
+      --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
+      --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
+      --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
+      --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.12),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.12),transparent 60%),
+        var(--bg);
+      line-height:1.6;overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
+    :focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px;}
+    @media (prefers-reduced-motion: reduce){
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+    }
+
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
+    .brand img.site-logo{height:42px;width:auto;display:block}
+    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px}
+    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+    nav.menu a.link-btn.active{border-color:#3b4cff;color:#fff;background:rgba(108,139,255,.12);}
+
+    .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+    .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;}
+    .btn:hover{border-color:#3a4580}
+    .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
+
+    @media (max-width:720px){
+      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
+    }
+
+    .hero{padding:16px 0 4px;text-align:center}
+    .hero-head{
+      display:inline-block;width:100%;
+      background:linear-gradient(180deg,#12183a,#0f1531);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:16px 18px 18px;
+      box-shadow:0 10px 24px rgba(80,90,240,.18), 0 0 0 1px rgba(108,139,255,.22) inset;
+      position:relative;
+    }
+    .hero-head::after{
+      content:"";
+      position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
+      background:linear-gradient(135deg,rgba(108,139,255,.55),rgba(255,153,0,.25));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude; padding:1px; opacity:.55;
+    }
+    .hero h1{margin:0 0 6px;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.15;font-weight:900;letter-spacing:.2px}
+    .lead{color:var(--muted);max-width:860px;margin:0 auto;font-size:1rem}
+    .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+
+    section{padding:24px 0}
+    .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
+    .muted{color:var(--muted);font-size:.95rem}
+
+    /* FAQ LAYOUT */
+    .faq-intro{padding:18px 0 8px;}
+    .faq-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;justify-content:center}
+    .faq-tags span{
+      padding:6px 10px;border-radius:999px;background:rgba(108,139,255,.12);
+      border:1px solid rgba(108,139,255,.35);color:#cfe1ff;font-weight:800;font-size:.8rem;
+      text-transform:uppercase;letter-spacing:.6px;
+    }
+
+    .faq-section{margin-top:10px;}
+    .faq-section + .faq-section{margin-top:24px;}
+    .faq-section-header{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+    .faq-icon{
+      width:32px;height:32px;border-radius:10px;
+      background:linear-gradient(180deg,#8aa0ff,#425dff);
+      display:grid;place-items:center;
+      box-shadow:0 6px 14px rgba(80,90,240,.25);
+      font-size:18px;
+    }
+
+    .faq-grid{display:grid;gap:12px;margin-top:8px;}
+    @media(min-width:850px){.faq-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+    .faq-item{
+      background:linear-gradient(180deg,#111937,#0f1633);
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 24px rgba(6,12,40,.45),0 0 0 1px rgba(108,139,255,.16) inset;
+      overflow:hidden;
+    }
+    .faq-item details{
+      margin:0;
+    }
+    .faq-item summary{
+      list-style:none;
+      cursor:pointer;
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight:800;
+      font-size:.98rem;
+    }
+    .faq-item summary::-webkit-details-marker{display:none;}
+    .faq-question{flex:1;}
+    .faq-toggle{
+      width:22px;height:22px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.25);
+      display:grid;place-items:center;
+      font-size:14px;color:#cfe1ff;
+    }
+    .faq-item details[open] .faq-toggle{
+      background:rgba(108,139,255,.18);
+    }
+    .faq-answer{
+      padding:0 14px 12px;
+      font-size:.95rem;
+      color:var(--muted);
+      border-top:1px solid rgba(255,255,255,.08);
+    }
+    .faq-answer p{margin:8px 0;}
+    .faq-answer ul{margin:6px 0 8px 18px;padding:0;}
+    .faq-answer li{margin-bottom:4px;}
+
+    .hero .btn {
+      background: linear-gradient(180deg, #e423b3, #d8abda);
+      border: 1px solid rgba(108, 139, 255, .5);
+      color: #fff;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(108, 139, 255, .4), 0 4px 14px rgba(80, 90, 240, .25);
+      transition: all .15s ease-in-out;
+      letter-spacing:.9px;
+    }
+    .hero .btn:hover {
+      background: linear-gradient(180deg, #8a78ff, #6b54ff);
+      border-color: rgba(108, 139, 255, .8);
+      box-shadow: 0 0 22px rgba(108, 139, 255, .6), 0 6px 18px rgba(80, 90, 240, .35);
+      transform: translateY(-2px);
+    }
+
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
+    .f-grid{display:grid;gap:14px}
+    @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
+    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
+
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);z-index:120}
+    .modal.show{display:flex}
+    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .modal-card h3{margin:0 0 10px;font-size:1.2rem}
+    .modal-card p{margin:0 0 8px}
+    .modal-card input,.modal-card textarea,.modal-card select{
+      width:100%;display:block;margin-top:8px;border:1px solid var(--stroke);border-radius:10px;
+      background:var(--surface2);color:var(--ink);padding:10px;font-weight:700
+    }
+    .modal-card textarea{min-height:120px;resize:vertical}
+    .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+    .fb-status{margin-top:8px;font-weight:800}
+    .fb-status.ok{color:var(--ok)}
+    .fb-status.err{color:var(--bad)}
+    .fb-status.info{color:var(--muted)}
+
+    @media (max-width:720px){
+      .faq-grid{grid-template-columns:1fr;}
+      .faq-item{border-radius:14px;}
+      .faq-answer{font-size:.94rem;}
+      .hero-head{
+        box-shadow:0 4px 10px rgba(5,10,30,.18) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      </div>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a class="link-btn" href="/">INICIO</a>
+        <a class="link-btn" href="/catalog/itcatalog.html">CATÁLOGOS</a>
+        <a class="link-btn" href="/content/content.html">RESÚMENES</a>
+        <a class="link-btn" href="/score/ranking.html">RANKING</a>
+        <a class="link-btn" href="/blog/blog.html">BLOG</a>
+        <a class="link-btn active" href="/faqs/faqs.html">FAQS</a>
+        <a class="link-btn" href="/comunidad/colabora.html">COMUNIDAD</a>
+      </nav>
+
+      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
+
+        <div id="userArea" style="display:none;align-items:center;gap:6px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-head">
+          <h1 id="hero-title"><span aria-hidden="true">❓</span>Preguntas frecuentes sobre <b>ITHub.es</b></h1>
+          <p class="lead">
+            Aquí resolvemos las dudas más habituales sobre los simuladores, el ranking, la cuenta de usuario,
+            la comunidad de colaboradores y cómo usar ITHub.es para preparar certificaciones como <b>AZ-104</b>,
+            <b>AZ-305</b> o <b>AWS SAA-C03</b>.
+          </p>
+          <div class="hero-actions" role="group" aria-label="Atajos a secciones de FAQs">
+            <a class="btn" href="#faq-plataforma">Sobre ITHub.es</a>
+            <a class="btn" href="#faq-cuenta">Cuenta y progreso</a>
+            <a class="btn" href="#faq-estudio">Estudio y exámenes</a>
+            <a class="btn" href="#faq-privacidad">Privacidad y comunidad</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-intro" aria-label="Introducción a las FAQs">
+      <div class="container">
+        <p class="muted">
+          Si no encuentras tu pregunta, puedes enviarnos feedback desde el botón del pie de página.
+          También puedes visitar la página de <a href="/comunidad/colabora.html">comunidad y colaboración</a>
+          si quieres participar en la creación de contenido o revisión de preguntas.
+        </p>
+        <div class="faq-tags" aria-hidden="true">
+          <span>Simuladores en español</span>
+          <span>Azure AZ-104</span>
+          <span>Azure AZ-305</span>
+          <span>AWS SAA-C03</span>
+          <span>Cuenta y ranking</span>
+          <span>Comunidad y colaboración</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1: PLATAFORMA -->
+    <section class="faq-section" id="faq-plataforma" aria-labelledby="faq-plataforma-title">
+      <div class="container">
+        <div class="faq-section-header">
+          <div class="faq-icon">💡</div>
+          <div>
+            <h2 id="faq-plataforma-title" class="sec-title">Sobre ITHub.es y los simuladores</h2>
+            <p class="muted">Qué es ITHub.es, qué certificaciones cubrimos y cómo están diseñados los simuladores.</p>
+          </div>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <details open>
+              <summary>
+                <span class="faq-question">¿Qué es ITHub.es exactamente?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  ITHub.es es una plataforma de <b>simuladores de examen y resúmenes en español</b> para
+                  certificaciones IT, muy enfocada a la práctica. Nuestra idea es que puedas:
+                </p>
+                <ul>
+                  <li>Practicar con <b>preguntas realistas</b> alineadas con los exam guides oficiales.</li>
+                  <li>Usar <b>resúmenes por dominio</b> para repasar lo que más cae.</li>
+                  <li>Medir tu progreso con <b>ranking</b>, XP y, próximamente, modos de juego tipo Arena Battle.</li>
+                </ul>
+                <p>
+                  No somos un proveedor oficial de exámenes, sino una comunidad que crea recursos de apoyo para que llegues
+                  mejor preparado al día del examen.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Qué certificaciones están disponibles ahora mismo?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Actualmente estamos centrados en certificaciones cloud muy demandadas, con simuladores y resúmenes para:
+                </p>
+                <ul>
+                  <li><b>Microsoft Azure AZ-104 · Azure Administrator Associate</b></li>
+                  <li><b>Microsoft Azure AZ-305 · Azure Solutions Architect Expert</b></li>
+                  <li><b>AWS SAA-C03 · Solutions Architect Associate</b></li>
+                </ul>
+                <p>
+                  Puedes ver el catálogo completo y el estado de cada certificación en
+                  <a href="/catalog/itcatalog.html">la página de catálogos</a>. A medida que la comunidad lo pida,
+                  iremos añadiendo nuevas certificaciones.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿En qué idioma están las preguntas y explicaciones?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Los simuladores de ITHub.es están <b>en español</b>, pensados para que puedas concentrarte en entender
+                  los conceptos técnicos sin la barrera del idioma.
+                </p>
+                <p>
+                  Siempre que tiene sentido, añadimos enlaces a <b>documentación oficial en inglés</b> (Microsoft Learn,
+                  AWS, etc.), porque el examen y el material oficial suelen estar en ese idioma. De esta manera, puedes
+                  usar la explicación en español como puente y luego profundizar en la fuente oficial.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Las preguntas son oficiales o reutilizan bancos de examen reales?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  No. Las preguntas de ITHub.es <b>no son preguntas oficiales ni reutilizan bancos de examen reales</b>.
+                </p>
+                <p>
+                  Diseñamos nuestros ítems a partir de:
+                </p>
+                <ul>
+                  <li>Los <b>objetivos oficiales</b> de cada examen (exam guides).</li>
+                  <li>Escenarios y patrones de arquitectura que hemos visto en proyectos reales.</li>
+                  <li>Buenas prácticas de Azure y AWS en materia de seguridad, coste y disponibilidad.</li>
+                </ul>
+                <p>
+                  Nuestro objetivo es entrenar la forma de pensar del examen, no replicar preguntas concretas.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Qué diferencia hay entre simuladores y resúmenes?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  En ITHub.es tienes dos tipos de contenido principales:
+                </p>
+                <ul>
+                  <li><b>Simuladores de examen</b>: preguntas por dominio con explicación y enlace oficial.</li>
+                  <li><b>Resúmenes por dominio</b>: hojas de trucos y contenido más compacto para repasar antes del examen.</li>
+                </ul>
+                <p>
+                  La combinación recomendada es:
+                </p>
+                <ul>
+                  <li>Estudiar un dominio con documentación oficial.</li>
+                  <li>Practicar preguntas de ese dominio en el simulador.</li>
+                  <li>Usar el resumen correspondiente como repaso rápido en los días previos al examen.</li>
+                </ul>
+                <p>
+                  Puedes ver los resúmenes disponibles en <a href="/content/content.html">la sección de contenidos</a>.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Tenéis pensado añadir más proveedores (GCP, Cisco, etc.)?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Sí, la idea de ITHub.es es ir ampliando contenido poco a poco en función del interés de la comunidad.
+                  En nuestra hoja de ruta a medio plazo tenemos:
+                </p>
+                <ul>
+                  <li>Más certificaciones de <b>Azure</b> y <b>AWS</b>.</li>
+                  <li>Certificaciones de <b>Google Cloud</b> y otras rutas cloud.</li>
+                  <li>Ciertas certificaciones de <b>redes y seguridad</b> muy demandadas.</li>
+                </ul>
+                <p>
+                  Si quieres proponer una certificación concreta, puedes usar el botón de feedback del pie de página
+                  o visitar la página de <a href="/comunidad/colabora.html">comunidad y colaboración</a>
+                  para contarnos tu propuesta.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: CUENTA -->
+    <section class="faq-section" id="faq-cuenta" aria-labelledby="faq-cuenta-title">
+      <div class="container">
+        <div class="faq-section-header">
+          <div class="faq-icon">👤</div>
+          <div>
+            <h2 id="faq-cuenta-title" class="sec-title">Cuenta, progreso y ranking</h2>
+            <p class="muted">Cómo funciona el login, cómo se guarda tu progreso y cómo se calcula el ranking.</p>
+          </div>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Necesito crear una cuenta para usar los simuladores?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Puedes <b>ver parte del contenido sin registrarte</b>, pero para que ITHub.es pueda:
+                </p>
+                <ul>
+                  <li>Guardar tu progreso en los simuladores.</li>
+                  <li>Calcular tu <b>ranking</b> y tus puntos de XP.</li>
+                  <li>Recordar tus resultados por certificación.</li>
+                </ul>
+                <p>
+                  necesitas crear una cuenta gratuita e iniciar sesión desde el botón
+                  <b>“LOGIN / REGÍSTRATE”</b> del menú superior.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Cómo se guarda mi progreso y mis resultados?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Cuando estás logueado, los resultados de tus sesiones de práctica se asocian a tu usuario.
+                  Usamos esa información para:
+                </p>
+                <ul>
+                  <li>Mostrar tu posición en el <a href="/score/ranking.html">ranking</a>.</li>
+                  <li>Calcular puntos de <b>experiencia (XP)</b> según tus aciertos.</li>
+                  <li>Ir construyendo un historial de tu evolución.</li>
+                </ul>
+                <p>
+                  No guardamos el detalle de cada respuesta indefinidamente; lo que nos interesa es el progreso
+                  por dominio y certificación, y los datos agregados para mejorar el simulador.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Cómo funciona el ranking e XP de ITHub.es?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  El <b>ranking</b> y la XP (experiencia) son nuestra forma de gamificar el estudio:
+                </p>
+                <ul>
+                  <li>Ganás puntos por preguntas correctas y por constancia al practicar.</li>
+                  <li>Planeamos dar más peso a la dificultad de las preguntas y al progreso por dominio.</li>
+                  <li>En el futuro, añadiremos <b>insignias</b> y modos de juego como Arena Battle.</li>
+                </ul>
+                <p>
+                  Puedes ver cómo te posicionas respecto al resto de la comunidad en
+                  <a href="/score/ranking.html">la página de ranking</a>.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">He olvidado mi contraseña, ¿cómo la recupero?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  En la página de <a href="/login/login.html">login</a> verás la opción de <b>recuperar tu contraseña</b>.
+                  Introduce el correo con el que te registraste y sigue las instrucciones que te enviemos.
+                </p>
+                <p>
+                  Si tienes problemas o no recibes el correo de recuperación, escríbenos usando el formulario de
+                  feedback del pie de página indicando el email con el que te registraste.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Puedo usar ITHub.es desde el móvil o tablet?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Sí. La web está pensada para ser <b>responsive</b> y funcionar correctamente en móvil y tablet.
+                  Aun así, para sesiones largas de estudio solemos recomendar pantallas algo mayores
+                  (portátil o monitor externo), sobre todo cuando alternas simulador y documentación oficial.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Puedo usar la misma cuenta desde varios dispositivos?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Sí, puedes iniciar sesión en varios dispositivos con la misma cuenta. Los resultados de tus prácticas
+                  se agregan a tu usuario independientemente del dispositivo que uses, siempre que estés logueado.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: ESTUDIO Y EXÁMENES -->
+    <section class="faq-section" id="faq-estudio" aria-labelledby="faq-estudio-title">
+      <div class="container">
+        <div class="faq-section-header">
+          <div class="faq-icon">📚</div>
+          <div>
+            <h2 id="faq-estudio-title" class="sec-title">Estudio, exámenes y metodología</h2>
+            <p class="muted">Cómo encajan los simuladores en tu plan de estudio y cuándo tiene sentido reservar el examen.</p>
+          </div>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Cómo recomendáis usar los simuladores en mi plan de estudio?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Una forma que funciona muy bien para AZ-104, AZ-305 o SAA-C03 es:
+                </p>
+                <ul>
+                  <li>Empezar con una <b>visión general</b> del exam guide.</li>
+                  <li>Estudiar un dominio utilizando documentación oficial y laboratorios.</li>
+                  <li>Hacer bloques de <b>preguntas por dominio</b> en ITHub.es para fijar conceptos.</li>
+                  <li>En las últimas semanas, hacer <b>simulacros mezclando dominios</b> y cronometrando el tiempo.</li>
+                </ul>
+                <p>
+                  En el blog tienes artículos específicos, por ejemplo un <b>plan de 6 semanas para AZ-104</b> y
+                  recomendaciones para usar simuladores sin caer en la memorización.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Qué nota debería sacar en los simuladores antes de presentarme?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  No existe una cifra mágica, pero como referencia razonable:
+                </p>
+                <ul>
+                  <li>Si en varios simulacros completos te mueves por encima del <b>75–80%</b>, vas bien encaminado.</li>
+                  <li>Si hay dominios por debajo del <b>60%</b>, conviene reforzarlos antes de reservar fecha.</li>
+                  <li>Lo importante no es solo la nota, sino que <b>entiendas por qué fallas</b> y qué deberías haber elegido.</li>
+                </ul>
+                <p>
+                  Usa los simuladores como un indicador de tu nivel, no como una garantía rígida de aprobado.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Ofrecéis clases en directo, mentoring o tutorías 1:1?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  De momento ITHub.es se centra en <b>recursos asincrónicos</b>: simuladores, resúmenes y contenido del blog.
+                  No ofrecemos clases en directo ni tutorías 1:1 de forma estándar.
+                </p>
+                <p>
+                  En función del interés de la comunidad podríamos explorar:
+                </p>
+                <ul>
+                  <li>Sesiones grupales de Q&amp;A.</li>
+                  <li>Workshops sobre escenarios de arquitectura.</li>
+                  <li>Study groups para algunos exámenes.</li>
+                </ul>
+                <p>
+                  Si esto te interesa, dínoslo en el feedback o en la página de
+                  <a href="/comunidad/colabora.html">colaboración</a> para ayudar a priorizar.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿ITHub.es sustituye a los cursos oficiales o a la documentación?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  No. ITHub.es está pensado como <b>complemento práctico</b> a cursos y documentación oficial.
+                  Te ayuda a:
+                </p>
+                <ul>
+                  <li>Comprobar si realmente estás entendiendo los conceptos.</li>
+                  <li>Detectar puntos débiles por dominio.</li>
+                  <li>Practicar el tipo de preguntas que vas a encontrar en el examen.</li>
+                </ul>
+                <p>
+                  Lo ideal es combinar nuestro contenido con formación oficial, laboratorios y documentación de Microsoft/AWS.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Ofrecéis descuentos o cupones para los exámenes oficiales?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  A día de hoy no gestionamos la compra de exámenes oficiales ni vendemos vouchers directamente.
+                  Cualquier <b>descuento para Azure o AWS</b> suele venir de:
+                </p>
+                <ul>
+                  <li>Programas oficiales de Microsoft Learn o AWS.</li>
+                  <li>Eventos, workshops o iniciativas de cada proveedor.</li>
+                </ul>
+                <p>
+                  Si en el futuro cerramos acuerdos o conseguimos códigos promocionales para la comunidad,
+                  lo comunicaremos en el blog y en esta página.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿ITHub.es es gratis? ¿Habrá versión de pago?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  La filosofía de ITHub.es es ofrecer una <b>base de contenido gratuita</b> para la comunidad. Es posible
+                  que en el futuro exista alguna modalidad de pago para:
+                </p>
+                <ul>
+                  <li>Acceso anticipado a nuevos bancos de preguntas.</li>
+                  <li>Funcionalidades avanzadas de seguimiento y estadísticas.</li>
+                  <li>Contenidos premium extensos o rutas guiadas.</li>
+                </ul>
+                <p>
+                  Si esto ocurre, siempre mantendremos una capa gratuita útil para preparar tus certificaciones.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: PRIVACIDAD Y CONTACTO -->
+    <section class="faq-section" id="faq-privacidad" aria-labelledby="faq-privacidad-title">
+      <div class="container">
+        <div class="faq-section-header">
+          <div class="faq-icon">🔐</div>
+          <div>
+            <h2 id="faq-privacidad-title" class="sec-title">Privacidad, datos y comunidad</h2>
+            <p class="muted">Qué datos guardamos, cómo los usamos y cómo puedes colaborar o contactar con nosotros.</p>
+          </div>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Qué datos personales guarda ITHub.es sobre mí?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Usamos una cantidad mínima de datos para que la plataforma funcione:
+                </p>
+                <ul>
+                  <li>Datos de tu cuenta (por ejemplo, email y nombre que indiques).</li>
+                  <li>Información básica de tu uso de los simuladores (puntuaciones, progreso, ranking).</li>
+                  <li>Los mensajes que nos envías desde el formulario de feedback para poder responder y mejorar el contenido.</li>
+                </ul>
+                <p>
+                  No vendemos tus datos a terceros ni los usamos para fines ajenos a ITHub.es.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Puedo pedir que borréis mi cuenta y mis datos?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Sí. Si quieres borrar tu cuenta y tus datos asociados (progreso, puntuaciones, etc.), escríbenos usando
+                  el botón de <b>“Contáctanos”</b> del pie de página e indícanos:
+                </p>
+                <ul>
+                  <li>El correo con el que te registraste.</li>
+                  <li>Que quieres borrar tu cuenta y datos asociados.</li>
+                </ul>
+                <p>
+                  Procesaremos la solicitud y te confirmaremos cuando esté completada.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Cómo puedo contactar con vosotros para soporte o sugerencias?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Puedes usar el botón <b>“Contáctanos”</b> del pie de página o el formulario de feedback que aparece en
+                  varias secciones de la web. Es la vía más rápida para:
+                </p>
+                <ul>
+                  <li>Reportar errores en una pregunta o un resumen.</li>
+                  <li>Sugerir nuevas funcionalidades o certificaciones.</li>
+                  <li>Consultarnos dudas sobre el funcionamiento de la plataforma.</li>
+                </ul>
+                <p>
+                  Intentamos leer y priorizar el feedback de la comunidad de forma continua.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">He detectado un posible error en una pregunta, ¿qué hago?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Nos ayuda muchísimo cuando la comunidad reporta cualquier error o ambigüedad. Si ves algo raro:
+                </p>
+                <ul>
+                  <li>Anota el <b>id del simulador</b> y, si puedes, el texto de la pregunta.</li>
+                  <li>Usa el formulario de feedback indicando lo que crees que está mal o se puede mejorar.</li>
+                </ul>
+                <p>
+                  Revisamos estos reportes con prioridad porque mejoran la calidad del banco de preguntas para todo el mundo.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Usáis cookies o herramientas de analítica?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Utilizamos herramientas de analítica (como Google Analytics) para entender cómo se usa la web, qué
+                  secciones se visitan más y qué certificaciones generan más interés. Esto nos ayuda a decidir qué
+                  contenidos priorizar.
+                </p>
+                <p>
+                  Nuestro foco está en métricas agregadas (número de visitas, rutas más usadas) y no en seguimiento
+                  individualizado de cada usuario.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">Quiero colaborar con contenido o revisando preguntas, ¿es posible?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Sí, nos interesa colaborar con profesionales que trabajen en el día a día con Azure, AWS u otras nubes.
+                  Podemos explorar colaboraciones para:
+                </p>
+                <ul>
+                  <li>Crear nuevas preguntas o escenarios.</li>
+                  <li>Revisar contenido existente.</li>
+                  <li>Preparar artículos técnicos para el <a href="/blog/blog.html">blog</a> o nuevos resúmenes.</li>
+                </ul>
+                <p>
+                  Te lo ponemos fácil: visita la página de <a href="/comunidad/colabora.html">comunidad y colaboración</a>
+                  para ver formas concretas de aportar, y envíanos un mensaje desde allí o desde el botón de contacto
+                  del pie de página indicando tu experiencia y cómo te gustaría colaborar.
+                </p>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section aria-labelledby="cta-title">
+      <div class="container">
+        <h2 id="cta-title" class="sec-title">¿No has encontrado tu pregunta?</h2>
+        <p class="muted">
+          Envíanos tu duda o sugerencia desde el botón de contacto del pie de página y la añadiremos a esta sección
+          si puede ayudar al resto de la comunidad. Si quieres ir un paso más allá y colaborar activamente,
+          pásate por la página de <a href="/comunidad/colabora.html">comunidad</a>.
+        </p>
+        <div class="hero-actions" role="group" aria-label="Siguientes pasos">
+          <a class="btn" href="/catalog/itcatalog.html">Ver catálogo de simuladores</a>
+          <a class="btn" href="/blog/blog.html">Leer artículos del blog</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHUB.ES</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
+      </div>
+      <div>
+        <div style="font-weight:800">SIMULADORES</div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFT AZURE AZ-305</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">AMAZON AWS SAA-C03</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">CONTENIDOS</div>
+        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
+        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
+        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">COLABORADORES</div>
+        <p style="margin:4px 0 8px;font-size:.9rem;">
+          Si quieres colaborar con preguntas, revisiones o contenido, visita
+          <a href="/comunidad/colabora.html">la página de comunidad</a>.
+        </p>
+        💬 <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
+        <div style="font-weight:800">CONTACTO</div>
+        <button id="footerContactBtn" type="button"
+                style="background:none;border:none;color:#cfe1ff;
+                       font-weight:800;display:inline-flex;align-items:center;
+                       gap:6px;cursor:pointer;padding:0;margin-top:6px;">
+          💬 <span>Contáctanos</span>
+        </button>
+      </div>
+    </div>
+    <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+  </footer>
+
+  <!-- Modal Feedback -->
+  <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
+    <div class="modal-card" role="document" tabindex="-1">
+      <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
+      <p class="muted">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
+      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
+      <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
+      <div id="fbStatus" class="fb-status" aria-live="polite"></div>
+      <div class="modal-actions">
+        <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
+        <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
+        <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function renderHeaderAuth(){
+      const u=getCurrentUser();
+      const login=document.getElementById('btnLogin');
+      const signup=document.getElementById('btnSignup');
+      const userArea=document.getElementById('userArea');
+      const nameTop=document.getElementById('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    }
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    renderHeaderAuth();
+
+    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
+    const NOTES_ENDPOINT = `${API_BASE}/items`;
+    const fbEmail   = document.getElementById('feedbackEmail');
+    const fbText    = document.getElementById('feedbackText');
+    const fbStatus  = document.getElementById('fbStatus');
+    const btnFbSend = document.getElementById('btnSendFeedback');
+    const btnFbCancel = document.getElementById('btnCancelFeedback');
+    const btnFbOk   = document.getElementById('btnOkFeedback');
+    const footerBtn = document.getElementById('footerContactBtn');
+    const fbModal   = document.getElementById('feedbackModal');
+
+    function openFeedbackModal(){
+      fbEmail.value = ''; fbText.value  = '';
+      fbStatus.textContent = ''; fbStatus.className = 'fb-status';
+      btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
+      fbEmail.disabled = fbText.disabled = false; btnFbSend.disabled = false;
+      fbModal.classList.add('show');
+    }
+    footerBtn?.addEventListener('click', openFeedbackModal);
+    btnFbCancel?.addEventListener('click',()=> fbModal.classList.remove('show'));
+    btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
+    fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
+
+    btnFbSend?.addEventListener('click', async ()=>{
+      const message = (fbText.value||'').trim();
+      const from    = (fbEmail.value||'').trim();
+      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; fbStatus.focus?.(); return; }
+      fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
+      fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
+
+      const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
+      const user = getCurrentUser();
+      const note = {
+        id,
+        type:'feedback',
+        title:'Feedback FAQs ITHub',
+        message,
+        email: from || user?.email || null,
+        userId: user?.id || user?.email || null,
+        path: location.pathname + location.search,
+        ua: navigator.userAgent,
+        createdAt: new Date().toISOString()
+      };
+
+      const params = new URLSearchParams();
+      params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
+
+      const ctl = new AbortController(); const timeoutId = setTimeout(()=>ctl.abort(), 10000);
+      try{
+        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
+        clearTimeout(timeoutId);
+        if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
+        fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+      }catch(err){
+        console.error('Error guardando feedback:', err);
+        fbStatus.textContent = 'No se pudo enviar la info. :('; fbStatus.className='fb-status err';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+      }
+    });
+  </script>
+</body>
+</html>
