@@ -69,9 +69,40 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
-    nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px}
-    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+    
+    
+      nav.menu{
+        display:flex;
+        gap:12px;
+        color:var(--muted);
+        font-weight:800;
+        align-items:center;
+        text-transform:uppercase;
+      }
+
+      nav.menu .link-btn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-width:110px;
+        min-height:44px;
+        height:40px;
+        padding:0 12px;
+        border-radius:10px;
+        border:1px solid transparent;
+        font-weight:900;
+        letter-spacing:.8px;
+        background:none;
+        cursor:pointer;
+        font-family:inherit;
+        color:inherit;
+      }
+
+      nav.menu .link-btn:hover{
+        border-color:#2a3150;
+        color:var(--ink);
+      }
+
 
     .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
       border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
@@ -83,7 +114,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
 
     @media (max-width:720px){
-      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
+    nav.menu{gap:8px} nav.menu .link-btn{min-width:90px;height:36px}
       .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
     }
 
@@ -536,41 +567,48 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     <nav class="menu menu-has-sub" aria-label="Navegación principal">
 
+      <!-- INICIO -->
+      
 
       <!-- 1. CERTIFICACIONES -->
       <div class="menu-group">
-  <a class="link-btn has-sub-trigger" href="/catalog/itcatalog.html">
-    CERTIFICACIONES
-    <span class="caret" aria-hidden="true">▾</span>
-  </a>
-  <div class="submenu">
-    <span class="submenu-title">AZURE</span>
-    <a class="submenu-mainlink" href="/certification/microsoft-azure/az-104/index.html">
-      PORTADA AZURE
-    </a>
-    <a class="submenu-child" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">
-      AZ-104 · ADMINISTRATOR
-    </a>
-    <a class="submenu-child" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">
-      AZ-305 · ARCHITECT
-    </a>
+        <button type="button" class="link-btn has-sub-trigger">
+          CERTIFICACIONES
+          <span class="caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="submenu">
+         
 
-    <span class="submenu-title">AWS</span>
-    <a class="submenu-mainlink" href="/certification/amazon aws/index.html">
-      PORTADA AWS
-    </a>
-    <a class="submenu-child" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">
-      SAA-C03 · ARCHITECT
-    </a>
-  </div>
-</div>
+        
+          <a class="submenu-mainlink" href="/certification/microsoft-azure/az-104/index.html">
+            PORTADA AZURE
+          </a>
+          <a class="submenu-child" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">
+            AZ-104 ADMINISTRATOR
+          </a>
+          <a class="submenu-child" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">
+            AZ-305 ARCHITECT
+          </a>
+
+          
+          <a class="submenu-mainlink" href="/certification/amazon aws/index.html">
+            PORTADA AWS
+          </a>
+          <a class="submenu-child" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">
+            SAA-C03 ARCHITECT
+          </a>
+        </div>
+      </div>
 
       <!-- 2. COMUNIDAD -->
       <div class="menu-group">
-        <a class="link-btn has-sub-trigger" href="/who/acercade.html">COMUNIDAD<span class="caret" aria-hidden="true">▾</span></a>
+        <button type="button" class="link-btn has-sub-trigger">
+          COMUNIDAD
+          <span class="caret" aria-hidden="true">▾</span>
+        </button>
         <div class="submenu">
           <a href="/who/acercade.html">NOSOTROS</a>
-          <a href="/faqs/faqs.html">FAQs</a>
+          <a href="/faqs/faqs.html">FAQS</a>
           <a href="/comunidad/colabora.html">COLABORA</a>
         </div>
       </div>
@@ -579,7 +617,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <a class="link-btn" href="/blog/blog.html">BLOG</a>
     </nav>
 
-    <!-- Bloque de login / usuario tal cual lo tenías -->
+    <!-- Bloque de login / usuario tal cual -->
     <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
       <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
       <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
@@ -592,7 +630,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     </div>
   </div>
 </header>
-
 
   <main id="main" tabindex="-1">
     <section class="hero" aria-labelledby="hero-title">
@@ -1100,43 +1137,54 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
 //menu header
 
- // === Desplegables en móvil para el menú superior ===
-  document.addEventListener('DOMContentLoaded', function () {
-    const triggers = document.querySelectorAll('.has-sub-trigger');
+ 
 
-    triggers.forEach((trigger) => {
-      trigger.setAttribute('aria-expanded', 'false');
+// === Menú superior: desplegables en móvil (CERTIFICACIONES / COMUNIDAD) ===
 
-      trigger.addEventListener('click', function (e) {
-        const isMobile = window.innerWidth <= 720;
-        if (!isMobile) return; // en escritorio, comportamiento normal (hover)
+(function(){
+  const triggers = document.querySelectorAll('.has-sub-trigger');
+  if (!triggers.length) return;
 
-        const group = trigger.closest('.menu-group');
-        const submenu = group && group.querySelector('.submenu');
-        if (!submenu) return;
+  function closeAll(exceptSubmenu){
+    document.querySelectorAll('.menu-group .submenu.open').forEach(sm => {
+      if (sm !== exceptSubmenu) sm.classList.remove('open');
+    });
+    document.querySelectorAll('.has-sub-trigger[aria-expanded="true"]').forEach(btn => {
+      const group = btn.closest('.menu-group');
+      const sm = group && group.querySelector('.submenu');
+      if (!exceptSubmenu || sm !== exceptSubmenu){
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+  }
 
-        const wasOpen = submenu.classList.contains('open');
+  triggers.forEach(trigger => {
+    trigger.setAttribute('aria-expanded','false');
 
-        if (!wasOpen) {
-          // Primer toque: solo abre el menú y no navega
-          e.preventDefault();
+    trigger.addEventListener('click', function(e){
+      const isMobile = window.innerWidth <= 720;  // móvil / tablet estrecha
+      if (!isMobile) return;                      // en escritorio usamos hover
 
-          // Cerramos otros submenús abiertos
-          document.querySelectorAll('.menu-group .submenu.open').forEach((other) => {
-            if (other !== submenu) other.classList.remove('open');
-          });
+      e.preventDefault(); // botón: solo toggle, no navegación
 
-          submenu.classList.add('open');
-          trigger.setAttribute('aria-expanded', 'true');
-        } else {
-          // Segundo toque: dejamos navegar y de paso lo cerramos
-          submenu.classList.remove('open');
-          trigger.setAttribute('aria-expanded', 'false');
-          // no hacemos preventDefault → el enlace funciona
-        }
-      });
+      const group = trigger.closest('.menu-group');
+      const submenu = group && group.querySelector('.submenu');
+      if (!submenu) return;
+
+      const isOpen = submenu.classList.contains('open');
+
+      if (isOpen){
+        submenu.classList.remove('open');
+        trigger.setAttribute('aria-expanded','false');
+      } else {
+        closeAll(submenu);
+        submenu.classList.add('open');
+        trigger.setAttribute('aria-expanded','true');
+      }
     });
   });
+})();
+
 </script>
 
 </body>
