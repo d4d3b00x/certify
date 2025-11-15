@@ -1,12 +1,34 @@
+
 <!doctype html>
 <html lang="es">
 <head>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DYZ3GCXHEK');
+  </script>
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
 
-  <title>Blog ITHub.es · Estrategias para aprobar certificaciones IT</title>
+  <title>Blog ITHub.es · Estrategias para aprobar certificaciones IT (Azure, AWS)</title>
   <meta name="description" content="Blog de ITHub.es con estrategias reales para aprobar certificaciones Azure AZ-104, AZ-305 y AWS SAA-C03. Planes de estudio, errores típicos, equilibrio trabajo-vida y cómo usar simuladores sin memorizar." />
+  <link rel="canonical" href="https://www.ithub.es/blog/blog.html" />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:title" content="Blog ITHub.es · Estrategias para certificaciones IT" />
+  <meta property="og:description" content="Guías y artículos prácticos para preparar tus certificaciones Azure y AWS con planes de estudio realistas, simuladores y ejemplos del día a día IT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/blog/blog.html" />
+  <meta property="og:site_name" content="ITHub.es" />
+
+  <link rel="icon" type="image/svg+xml" 
+href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
   <style>
     :root{
@@ -20,16 +42,6 @@
       --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
       --chip-bg:rgba(15,22,48,.9);
-
-      /* NUEVOS COLORES SUAVES PARA CATEGORÍAS */
-      --cat-estrategia:#7aa5ff;
-      --cat-errores:#ffb45c;
-      --cat-productividad:#ff7db2;
-      --cat-checklist:#a58bff;
-      --cat-saa:#ffcf6e;
-      --cat-az305:#6bd8ff;
-      --cat-plan:#7af2b8;
-      --cat-az104:#6fd3ff;
     }
 
     *{box-sizing:border-box}
@@ -52,109 +64,79 @@
       *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
 
-    /* HEADER */
-
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
-      background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));border-bottom:1px solid var(--stroke)}
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
-    .brand-logo-pill{
-      width:20px;height:34px;border-radius:999px;
-      background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);
-      box-shadow:0 0 0 6px rgba(108,139,255,.18);
-    }
+    .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px;font-size:.8rem;}
+    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px}
     nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
     nav.menu a.link-btn.active{border-color:#3b4cff;color:#fff;background:rgba(108,139,255,.12);}
 
     .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
-      border-radius:999px; padding:4px 5px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:82px;min-height:32px;height:32px;padding:0 10px;border-radius:999px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:11px;text-transform:uppercase;letter-spacing:.9px;}
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;letter-spacing:1px;}
     .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;}
+    .btn:hover{border-color:#3a4580}
+    .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
 
     @media (max-width:720px){
-      nav.menu{gap:4px} nav.menu a.link-btn{min-width:auto;padding:0 8px;height:32px;font-size:.7rem;}
-      .authwrap{gap:4px;padding:3px}.pill-btn{min-width:auto;padding:0 8px;height:30px;font-size:.7rem;}
+      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
     }
 
-    /* HERO */
-
-    .hero{padding:18px 0 10px;}
+    .hero{padding:16px 0 4px;text-align:left;}
     .hero-head{
-      background:radial-gradient(circle at 0 0,rgba(108,139,255,.35),transparent 65%) #12183a;
+      display:block;
+      background:linear-gradient(180deg,#12183a,#0f1531);
       border:1px solid rgba(255,255,255,.08);
       border-radius:18px;
       padding:18px 18px 18px;
-      box-shadow:0 10px 24px rgba(80,90,240,.2), 0 0 0 1px rgba(108,139,255,.22) inset;
+      box-shadow:0 10px 24px rgba(80,90,240,.18), 0 0 0 1px rgba(108,139,255,.22) inset;
       position:relative;
-      overflow:hidden;
     }
-    .hero-pill-label{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:4px 10px;border-radius:999px;font-size:.72rem;
-      text-transform:uppercase;letter-spacing:.12em;
-      background:rgba(6,12,40,.9);border:1px solid rgba(255,255,255,.18);
-      color:#cfd7ff;margin-bottom:6px;
+    .hero-head::after{
+      content:"";
+      position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
+      background:linear-gradient(135deg,rgba(108,139,255,.55),rgba(255,153,0,.25));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor; mask-composite:exclude; padding:1px; opacity:.55;
     }
-    .hero-pill-label span.dot{
-      width:8px;height:8px;border-radius:999px;background:#6bd8ff;
-    }
-    .hero h1{margin:0 0 6px;font-size:clamp(2rem,4vw,2.6rem);line-height:1.1;font-weight:900;letter-spacing:.01em;}
-    .hero h1 em{font-style:normal;background:linear-gradient(120deg,#8aa0ff,#ffb45c);-webkit-background-clip:text;color:transparent;}
-    .lead{color:var(--muted);max-width:780px;margin:6px 0 0;font-size:.98rem}
-    .hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.8rem;color:#cbd3ff;}
-    .hero-meta .chip{
+    .hero h1{margin:0 0 6px;font-size:clamp(1.9rem,4.4vw,3rem);line-height:1.15;font-weight:900;letter-spacing:.2px}
+    .lead{color:var(--muted);max-width:860px;margin:4px 0 0;font-size:1rem}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.85rem;color:#cbd3ff;}
+    .chip{
       padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.15);
-      background:var(--chip-bg);font-weight:800;letter-spacing:.05em;text-transform:uppercase;font-size:.72rem;
+      background:var(--chip-bg);font-weight:800;letter-spacing:.4px;text-transform:uppercase;
     }
-    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;min-height:40px;
-      padding:0 14px;border-radius:999px;border:1px solid var(--stroke);background:transparent;
-      color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem;
-    }
-    .btn-cta{
-      background:linear-gradient(180deg,#e423b3,#d8abda);
-      border-color:rgba(108,139,255,.5);
-      color:#fff;
-      box-shadow:0 0 15px rgba(108,139,255,.4),0 4px 14px rgba(80,90,240,.25);
-    }
-    .btn-ghost{
-      background:rgba(15,22,48,.7);
-    }
-    .btn-cta:hover{
-      background:linear-gradient(180deg,#8a78ff,#6b54ff);
-      border-color:rgba(108,139,255,.8);
-      box-shadow:0 0 22px rgba(108,139,255,.6),0 6px 18px rgba(80,90,240,.35);
-      transform:translateY(-1px);
-    }
-    .btn-ghost:hover{border-color:#3a4580;}
+    .hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 
-    /* BLOQUE BLOG */
+    .hero .btn {
+      background: linear-gradient(180deg, #e423b3, #d8abda);
+      border: 1px solid rgba(108, 139, 255, .5);
+      color: #fff;
+      font-weight: 900;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px rgba(108, 139, 255, .4), 0 4px 14px rgba(80, 90, 240, .25);
+      transition: all .15s ease-in-out;
+      letter-spacing:.9px;
+    }
+    .hero .btn:hover {
+      background: linear-gradient(180deg, #8a78ff, #6b54ff);
+      border-color: rgba(108, 139, 255, .8);
+      box-shadow: 0 0 22px rgba(108, 139, 255, .6), 0 6px 18px rgba(80, 90, 240, .35);
+      transform: translateY(-2px);
+    }
 
     section{padding:24px 0}
-    .sec-title{font-size:1.3rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
-    .muted{color:var(--muted);font-size:.92rem}
+    .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
+    .muted{color:var(--muted);font-size:.95rem}
 
-    .blog-section{padding:16px 0 32px;}
-    .blog-header-row{
-      display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;justify-content:space-between;margin-bottom:12px;
-    }
-    .blog-header-text{max-width:520px;}
-    .blog-filters{
-      display:flex;flex-wrap:wrap;gap:6px;
-    }
-    .filter-pill{
-      padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.18);
-      font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;
-      background:rgba(15,22,48,.8);color:#cfd7ff;cursor:pointer;
-    }
-    .filter-pill.active{
-      background:linear-gradient(120deg,#8aa0ff,#ffb45c);
-      color:#0b0f1e;border-color:transparent;box-shadow:0 0 14px rgba(108,139,255,.4);
-    }
-
+    /* Layout principal: artículos izquierda, sidebar derecha */
+    .blog-section{padding:20px 0 32px;}
     .blog-layout{
       display:grid;
       gap:18px;
@@ -165,11 +147,7 @@
         align-items:flex-start;
       }
     }
-    .blog-main{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
+    .blog-main{display:flex;flex-direction:column;gap:16px;}
     .blog-aside{
       display:flex;
       flex-direction:column;
@@ -177,191 +155,81 @@
     }
 
     .blog-intro{
-      margin-bottom:4px;
+      margin-bottom:6px;
       color:var(--muted);
-      font-size:.9rem;
+      font-size:.95rem;
     }
 
-    /* ========== ARTÍCULOS ========== */
-
+    /* Artículos */
     .blog-article{
-      background:linear-gradient(180deg,rgba(24,30,60,.97),rgba(19,24,50,.99));
+      background:var(--surface2);
       border-radius:16px;
-      border:1px solid rgba(72,88,150,.9);
-      padding:14px 15px 12px;
-      box-shadow:0 14px 30px rgba(6,12,40,.6);
+      border:1px solid var(--stroke);
+      padding:16px 16px 14px;
+      box-shadow:0 10px 26px rgba(6,12,40,.45);
       position:relative;
       overflow:hidden;
-      transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease;
     }
-    .blog-article:hover{
-      transform:translateY(-3px);
-      box-shadow:0 18px 40px rgba(6,12,40,.8);
-      border-color:#8aa0ff;
-    }
-
-    /* Banda sutil de color arriba del artículo */
     .blog-article::before{
-      content:"";
-      position:absolute;
-      left:0;right:0;top:0;
-      height:3px;
-      background:linear-gradient(90deg,
-        rgba(108,139,255,.95),
-        rgba(255,153,0,.85),
-        rgba(255,125,180,.9));
-      opacity:.9;
+      content:"";position:absolute;inset:0;border-radius:16px;
+      padding:1px;opacity:.4;
+      background:linear-gradient(135deg,rgba(108,139,255,.6),rgba(255,153,0,.35));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;mask-composite:exclude;
+      pointer-events:none;
     }
-
-    .article-inner{
-      position:relative;
-      z-index:1;
-    }
-
+    .article-inner{position:relative;z-index:1;}
     .article-label{
       display:inline-flex;align-items:center;gap:6px;
-      padding:4px 11px;
-      border-radius:999px;
-      font-size:.75rem;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.09em;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(5,10,30,.94);
-      color:#eaf0ff;
+      padding:4px 10px;border-radius:999px;
+      background:rgba(0,0,0,.24);border:1px solid rgba(255,255,255,.18);
+      font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;
+      color:#cfe1ff;
       margin-bottom:4px;
-      box-shadow:0 8px 18px rgba(4,8,28,.7);
     }
-    .article-label::before{
-      content:"";
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      background:#fff;
-      opacity:.9;
-    }
-
-    /* COLORES POR CATEGORÍA */
-    .article-label.cat-estrategia{
-      border-color:rgba(122,165,255,.9);
-      background:radial-gradient(circle at 0 0,rgba(122,165,255,.4),rgba(5,10,30,.96));
-    }
-    .article-label.cat-estrategia::before{background:var(--cat-estrategia);}
-    .article-label.cat-errores{
-      border-color:rgba(255,180,92,.9);
-      background:radial-gradient(circle at 0 0,rgba(255,180,92,.42),rgba(5,10,30,.96));
-    }
-    .article-label.cat-errores::before{background:var(--cat-errores);}
-    .article-label.cat-productividad{
-      border-color:rgba(255,125,178,.9);
-      background:radial-gradient(circle at 0 0,rgba(255,125,178,.4),rgba(5,10,30,.96));
-    }
-    .article-label.cat-productividad::before{background:var(--cat-productividad);}
-    .article-label.cat-checklist{
-      border-color:rgba(165,139,255,.9);
-      background:radial-gradient(circle at 0 0,rgba(165,139,255,.4),rgba(5,10,30,.96));
-    }
-    .article-label.cat-checklist::before{background:var(--cat-checklist);}
-    .article-label.cat-saa{
-      border-color:rgba(255,207,110,.9);
-      background:radial-gradient(circle at 0 0,rgba(255,207,110,.4),rgba(5,10,30,.96));
-    }
-    .article-label.cat-saa::before{background:var(--cat-saa);}
-    .article-label.cat-az305{
-      border-color:rgba(107,216,255,.9);
-      background:radial-gradient(circle at 0 0,rgba(107,216,255,.4),rgba(5,10,30,.96));
-    }
-    .article-label.cat-az305::before{background:var(--cat-az305);}
-    .article-label.cat-plan{
-      border-color:rgba(122,242,184,.9);
-      background:radial-gradient(circle at 0 0,rgba(122,242,184,.4),rgba(5,10,30,.96));
-    }
-    .article-label.cat-plan::before{background:var(--cat-plan);}
-    .article-label.cat-az104{
-      border-color:rgba(111,211,255,.9);
-      background:radial-gradient(circle at 0 0,rgba(111,211,255,.4),rgba(5,10,30,.96));
-    }
-    .article-label.cat-az104::before{background:var(--cat-az104);}
-
-    /* TÍTULO */
-    .blog-article h2{
-      margin:2px 0 6px;
-      font-size:1.3rem;
-      line-height:1.25;
-      font-weight:900;
-      letter-spacing:.01em;
-      color:#fdfdff;
-    }
-
+    .blog-article h2{margin:0 0 6px;font-size:1.25rem;}
     .blog-meta{
       display:flex;flex-wrap:wrap;gap:8px;
-      font-size:.78rem;color:#cbd3ff;margin-bottom:8px;
+      font-size:.8rem;color:#cbd3ff;margin-bottom:8px;
     }
-    .blog-meta time{opacity:.95;}
-    .blog-meta .sep{opacity:.45;}
+    .blog-meta time{opacity:.9;}
+    .blog-meta .sep{opacity:.5;}
     .blog-meta-tag{
-      padding:3px 7px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.25);
-      font-weight:800;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;
-      background:rgba(8,14,40,.9);
-      color:#f5f6ff;
+      padding:3px 7px;border-radius:999px;border:1px solid rgba(255,255,255,.2);
+      font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;
     }
-
-    .blog-article p{margin:6px 0;font-size:.92rem;color:var(--muted);}
-    .blog-article p.excerpt{
-      font-size:.9rem;
-    }
-    .blog-article h3{
-      margin:10px 0 4px;
-      font-size:1rem;
-      color:#eef1ff;
-    }
+    .blog-article p{margin:8px 0;font-size:.95rem;color:var(--muted);}
+    .blog-article ul{margin:6px 0 8px 18px;padding:0;font-size:.95rem;color:var(--muted);}
+    .blog-article li{margin-bottom:4px;}
+    .blog-article h3{margin:12px 0 4px;font-size:1.02rem;}
     .blog-article strong{color:#e8ecff;}
 
     /* Compartir */
     .share-row{
-      margin-top:12px;
-      padding-top:10px;
+      margin-top:10px;
+      padding-top:8px;
       border-top:1px dashed rgba(255,255,255,.16);
       display:flex;
       flex-wrap:wrap;
-      gap:10px;
+      gap:8px;
       align-items:center;
       font-size:.85rem;
     }
-    .share-label{
-      font-weight:800;
-      color:#cfe1ff;
-      text-transform:uppercase;
-      letter-spacing:.09em;
-      font-size:.75rem;
-    }
-    .share-group{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
+    .share-label{font-weight:800;color:#cfe1ff;}
     .share-btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:6px;
-      padding:6px 12px;
+      width:30px;
+      height:30px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.24);
       background:rgba(11,17,40,.9);
-      font-size:.78rem;
+      font-size:14px;
       font-weight:800;
       cursor:pointer;
       box-shadow:0 4px 10px rgba(5,10,30,.35);
       transition:transform .1s ease, box-shadow .1s ease, border-color .1s ease, background .1s ease;
-    }
-    .share-btn span.icon{
-      font-size:.9rem;
-    }
-    .share-btn span.label{
-      text-transform:uppercase;
-      letter-spacing:.08em;
     }
     .share-btn:hover{
       transform:translateY(-1px);
@@ -369,44 +237,9 @@
       background:linear-gradient(180deg,#8aa0ff,#425dff);
       box-shadow:0 6px 14px rgba(80,90,240,.35);
     }
-
-    /* PAGINACIÓN */
-
-    .pagination{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top:10px;
-      gap:8px;
-      font-size:.8rem;
-      color:var(--muted);
-    }
-    .pagination-center{
-      flex:1;
-      display:flex;
-      justify-content:center;
-      gap:6px;
-      align-items:center;
-    }
-    .pagination button{
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(15,22,48,.85);
-      color:var(--ink);
-      font-weight:800;
-      font-size:.75rem;
-      padding:6px 12px;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      cursor:pointer;
-    }
-    .pagination button[disabled]{
-      opacity:.35;
-      cursor:default;
-    }
-    .pagination button:not([disabled]):hover{
-      border-color:#8aa0ff;
-    }
+    .share-x{font-size:13px;}
+    .share-li{font-size:12px;}
+    .share-wa{font-size:11px;}
 
     /* Sidebar */
     .aside-card{
@@ -415,19 +248,19 @@
       border:1px solid var(--stroke);
       padding:12px 14px 14px;
       box-shadow:0 8px 20px rgba(6,12,40,.4);
-      font-size:.9rem;
+      font-size:.92rem;
     }
     .aside-title{
       font-weight:900;
       margin:0 0 6px;
-      font-size:.95rem;
+      font-size:1rem;
       text-transform:uppercase;
     }
     .aside-sub{margin:0 0 8px;color:var(--muted);}
     .aside-list{
       margin:6px 0 0;
       padding-left:16px;
-      font-size:.88rem;
+      font-size:.9rem;
       color:var(--muted);
     }
     .aside-list li{margin-bottom:4px;}
@@ -447,14 +280,12 @@
       display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;
     }
 
-    /* FOOTER */
-
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
 
-    /* Modal (por si en el futuro quieres feedback, no se usa ahora) */
+    /* Modal feedback */
     .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);z-index:120}
     .modal.show{display:flex}
     .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
@@ -473,795 +304,1015 @@
 
     @media (max-width:720px){
       .hero-head{box-shadow:0 4px 10px rgba(5,10,30,.18) !important;}
+      .blog-article{padding:14px 12px;}
       .blog-layout{grid-template-columns:1fr;}
-      .blog-article{padding:12px;}
     }
   </style>
 </head>
 <body>
 
-<a href="#main" class="skip-link">Saltar al contenido principal</a>
 
-<header>
-  <div class="container nav">
-    <div class="brand">
-      <span class="brand-logo-pill" aria-hidden="true"></span>
-      <span>ITHUB.ES</span>
-    </div>
-    <nav class="menu" aria-label="Navegación principal">
-      <a class="link-btn" href="/">Inicio</a>
-      <a class="link-btn" href="/catalog/itcatalog.html">Simuladores</a>
-      <a class="link-btn active" href="/blog/blog.html">Blog</a>
-      <a class="link-btn" href="/content/content.html">Resúmenes</a>
-    </nav>
-    <div class="authwrap">
-      <a class="pill-btn" href="/login/login.html">Login</a>
-      <a class="pill-btn" href="/login/login.html#signup">Regístrate</a>
-    </div>
-  </div>
-</header>
 
-<main id="main" tabindex="-1">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-head">
-        <div class="hero-pill-label">
-          <span class="dot"></span>
-          <span>BLOG PARA GENTE DE SISTEMAS</span>
-        </div>
-        <h1>
-          Estrategias reales para aprobar <em>certificaciones IT</em> mientras trabajas.
-        </h1>
-        <p class="lead">
-          Consejos desde la trinchera para preparar <strong>Azure, AWS y más</strong> sin quemarte:
-          planes de estudio realistas, patrones que se repiten en los exámenes y formas de integrar
-          ITHub.es en tu día a día.
-        </p>
-        <div class="hero-meta">
-          <span class="chip">AZ-104 · AZ-305 · SAA-C03</span>
-          <span class="chip">Planes de estudio</span>
-          <span class="chip">Vida + trabajo + exámenes</span>
-        </div>
-        <div class="hero-actions">
-          <a class="btn btn-cta" href="#lista-articulos">Ver artículos recientes</a>
-          <a class="btn btn-ghost" href="/catalog/itcatalog.html">Ir a simuladores</a>
+  <header role="banner">
+    <div class="container nav">
+      <div class="brand">
+        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
+      </div>
+
+      <nav class="menu" aria-label="Navegación principal">
+        <a class="link-btn" href="/">HOME</a>
+        <a class="link-btn" href="/faqs/faqs.html">FAQS</a>
+        <a class="link-btn" href="/comunidad/colabora.html">COMUNIDAD</a>
+      </nav>
+
+      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
+        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
+
+        <div id="userArea" style="display:none;align-items:center;gap:6px">
+          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
+          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
         </div>
       </div>
     </div>
-  </section>
+  </header>
 
-  <!-- BLOQUE BLOG -->
-  <section class="blog-section" aria-labelledby="lista-articulos">
-    <div class="container">
-      <div class="blog-header-row">
-        <div class="blog-header-text">
-          <h2 id="lista-articulos" class="sec-title">Artículos del blog</h2>
-          <p class="blog-intro">
-            Usa el blog como mapa estratégico: qué estudiar primero, cómo combinar nubes
-            y cómo llegar al examen con la cabeza despejada, no saturada.
+  <main id="main" tabindex="-1">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-head">
+          <h1 id="hero-title"><span aria-hidden="true">📝</span>Blog de ITHub.es: <b>estrategias reales para tus certificaciones IT</b></h1>
+          <p class="lead">
+            Artículos escritos desde la trinchera IT para ayudarte a compaginar trabajo, estudio y vida personal
+            mientras te preparas certificaciones como <b>AZ-104</b>, <b>AZ-305</b> o <b>AWS SAA-C03</b>.
+            Menos teoría vacía y más ejemplos que podrías ver en producción.
           </p>
-        </div>
-        <div class="blog-filters" aria-label="Filtros por categoría">
-          <button class="filter-pill active" data-filter="all">Todo</button>
-          <button class="filter-pill" data-filter="estrategia">Estrategia</button>
-          <button class="filter-pill" data-filter="plan">Planes de estudio</button>
-          <button class="filter-pill" data-filter="az104">AZ-104</button>
-          <button class="filter-pill" data-filter="az305">AZ-305</button>
-          <button class="filter-pill" data-filter="saa">AWS SAA-C03</button>
-          <button class="filter-pill" data-filter="productividad">Vida + estudio</button>
+        
         </div>
       </div>
+    </section>
 
-      <div class="blog-layout">
-        <!-- COLUMNA PRINCIPAL -->
-        <div class="blog-main" id="blogMain">
-          <!-- ARTÍCULO 1: Multi-certificación -->
-          <article class="blog-article" data-category="estrategia azure aws">
-            <div class="article-inner">
-              <span class="article-label cat-estrategia">Estrategia · Multi-certificación</span>
-              <header>
-                <h2>Cómo combinar AZ-104 y AWS SAA-C03 sin volverte loco (y aprovechar ITHub.es)</h2>
-              </header>
-              <div class="blog-meta">
-                <time datetime="2025-11-14">14 noviembre 2025</time>
-                <span class="sep">·</span>
-                <span>Lectura: ~10 min</span>
-                <span class="sep">·</span>
-                <span class="blog-meta-tag">Azure + AWS</span>
-              </div>
+    <!-- CONTENIDO PRINCIPAL: artículos izquierda, sidebar derecha -->
+    <section class="blog-section" aria-labelledby="lista-articulos">
+      <div class="container">
+        <h2 id="lista-articulos" class="sec-title">Artículos del blog</h2>
+        <p class="blog-intro">
+          Usa estos artículos como complemento a los simuladores y resúmenes de ITHub.es. Están pensados para darte
+          <strong>planes de estudio realistas</strong>, <strong>patrones de arquitectura</strong> y formas de
+          <strong>organizar tu tiempo</strong> alrededor de las certificaciones cloud.
+        </p>
 
-              <p class="excerpt">
-                Preparar <strong>AZ-104</strong> y <strong>AWS SAA-C03</strong> a la vez es posible… pero no si abres diez cursos y
-                tres simuladores en paralelo. La clave está en estudiar por <strong>temas transversales</strong> (redes, identidad,
-                alta disponibilidad) y no por proveedor. Aquí verás un enfoque práctico usando ITHub.es como base.
-              </p>
+        <div class="blog-layout">
+          <!-- Columna principal -->
+          <div class="blog-main">
+            <!-- ART 1 NOV 14 -->
+            <article class="blog-article" id="articulo-multi-certificaciones">
+              <div class="article-inner">
+                <span class="article-label">Estrategia · Multi-certificación</span>
+                <header>
+                  <h2>Cómo usar ITHub.es para preparar varias certificaciones en paralelo sin volverte loco</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-11-14">14 noviembre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 9 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">Azure + AWS</span>
+                </div>
+                <p>
+                  Es cada vez más habitual querer preparar, por ejemplo, <strong>AZ-104</strong> y <strong>AWS SAA-C03</strong>
+                  en la misma temporada. La tentación es abrir cursos, simuladores y documentación de todo a la vez…
+                  y al cabo de dos semanas sentir que no dominas nada del todo.
+                </p>
+                <p>
+                  En este artículo te propongo una forma de usar ITHub.es para <strong>reutilizar lo que aprendes</strong>
+                  entre certificaciones, sin perder foco y manteniendo la motivación.
+                </p>
 
-              <h3>1. Elige una certificación “principal” y una “secundaria”</h3>
-              <p>
-                El error más común al preparar varias certificaciones cloud es intentar darles el mismo peso desde el día uno.
-                Eso suele acabar en sensación de ir siempre a medias.
-              </p>
-              <ul>
-                <li>
-                  Marca como <strong>principal</strong> la certificación que más impacto inmediato tenga en tu trabajo
-                  (por ejemplo, AZ-104 si tu rol es más de administración de Azure).
-                </li>
-                <li>
-                  La otra (por ejemplo, SAA-C03) será la <strong>“paralela”</strong>, con sesiones más cortas (1–2 veces por semana).
-                </li>
-              </ul>
-              <p>
-                En ITHub.es esto se traduce en:
-              </p>
-              <ul>
-                <li>Usar a diario el <strong>simulador y resúmenes</strong> de tu certificación principal.</li>
-                <li>
-                  Reservar bloques puntuales para la secundaria, sin convertirla en una segunda jornada de estudio.
-                </li>
-              </ul>
+                <h3>1. Decide cuál es tu certificación “principal”</h3>
+                <p>
+                  Aunque quieras aprobar varias, necesitas que una de ellas sea la <strong>prioridad clara</strong> durante
+                  las próximas 6–8 semanas. Una regla sencilla:
+                </p>
+                <ul>
+                  <li>Elige como principal la certificación que <strong>más impacto inmediato</strong> tenga en tu trabajo.</li>
+                  <li>La otra será “paralela”, con un nivel de exigencia menor (por ejemplo, solo 1–2 sesiones a la semana).</li>
+                </ul>
+                <p>
+                  En ITHub.es esto se traduce en:
+                </p>
+                <ul>
+                  <li>Usar el simulador y resúmenes de tu certificación principal casi a diario.</li>
+                  <li>Visitar el resto (por ejemplo, SAA-C03 si tu foco es AZ-104) solo algunos días concretos.</li>
+                </ul>
 
-              <h3>2. Estudia por temas, no por logos</h3>
-              <p>
-                En lugar de dedicar una semana entera solo a Azure y luego otra solo a AWS, es mucho más eficiente trabajar por
-                <strong>dominios conceptuales</strong>:
-              </p>
-              <ul>
-                <li><strong>Semana 1 · Redes:</strong> VNets, VPC, peering, VPN, ExpressRoute / Direct Connect.</li>
-                <li><strong>Semana 2 · Identidad:</strong> Azure AD, RBAC, IAM, políticas.</li>
-                <li><strong>Semana 3 · Almacenamiento:</strong> tipos de cuentas y redundancia en Azure, S3/EFS/EBS en AWS.</li>
-                <li><strong>Semana 4 · Alta disponibilidad:</strong> Zonas, grupos de disponibilidad, RDS Multi-AZ, VMSS, ALB, etc.</li>
-              </ul>
-              <p>
-                Cada día:
-              </p>
-              <ul>
-                <li>Empiezas con 30–40 minutos de la <strong>certificación principal</strong> en ITHub.es.</li>
-                <li>
-                  Cierras con 10–15 minutos de la <strong>secundaria</strong>, pero siempre del mismo tema
-                  (si hoy te toca redes, redes en las dos).
-                </li>
-              </ul>
+                <h3>2. Agrupa por temas, no por proveedor</h3>
+                <p>
+                  Una forma muy efectiva de estudiar en paralelo es organizarte por <strong>temas transversales</strong>:
+                </p>
+                <ul>
+                  <li>Semana 1: redes y conectividad (VNets / VPC, VPN, peering).</li>
+                  <li>Semana 2: identidad y acceso (Azure AD / IAM, roles, políticas).</li>
+                  <li>Semana 3: almacenamiento y bases de datos.</li>
+                </ul>
+                <p>
+                  Cada día:
+                </p>
+                <ul>
+                  <li>Empiezas con tu certificación principal (por ejemplo, AZ-104).</li>
+                  <li>Cierras la sesión con 5–10 preguntas de la “paralela” (por ejemplo, SAA-C03) sobre el mismo tema.</li>
+                </ul>
+                <p>
+                  Así tu cerebro ve <strong>la misma idea en dos nubes distintas</strong> y genera conexiones más profundas.
+                </p>
 
-              <h3>3. Cómo usar ITHub.es para reforzar ambas nubes</h3>
-              <p>
-                Aprovecha los recursos de ITHub.es como “pegamento” entre certificaciones:
-              </p>
-              <ul>
-                <li>
-                  Haz un bloque de <strong>preguntas de AZ-104</strong> sobre redes y, justo después, un bloque de
-                  <strong>SAA-C03</strong> también de redes.
-                </li>
-                <li>
-                  Anota equivalencias: “VNet ≈ VPC”, “NSG ≈ SG + NACL (a nivel conceptual)”, etc. Eso consolida la memoria
-                  a largo plazo.
-                </li>
-                <li>
-                  Usa los <strong>resúmenes por dominio</strong> para revisar en 10–15 minutos un tema antes de saltar al simulador.
-                </li>
-              </ul>
+                <h3>3. Protege un día de la semana para repaso global</h3>
+                <p>
+                  Cuando estudias varias certificaciones a la vez es fácil perder la sensación de avance. Te propongo:
+                </p>
+                <ul>
+                  <li>Reservar un día (por ejemplo, domingo) como <strong>“día de repaso cruzado”</strong>.</li>
+                  <li>Hacer 2 bloques de 25–30 preguntas: primero de tu certificación principal, luego de la paralela.</li>
+                  <li>Terminar la sesión anotando 3 ideas clave que creas que sirven para ambas nubes.</li>
+                </ul>
+                <p>
+                  No hace falta que sea una sesión maratoniana; lo importante es que veas la <strong>foto global</strong>.
+                </p>
 
-              <h3>4. Señales de que vas bien encaminado</h3>
-              <p>Vas por buen camino si:</p>
-              <ul>
-                <li>Reconoces rápidamente si una pregunta trata de <strong>coste, disponibilidad o seguridad</strong>.</li>
-                <li>
-                  Puedes explicar con tus palabras cómo harías lo mismo en la otra nube
-                  (por ejemplo, “esto en Azure lo haría así, en AWS de esta otra manera”).
-                </li>
-                <li>No necesitas mirar constantemente esquemas para recordar cómo encajan las piezas.</li>
-              </ul>
-              <p>
-                Si en cambio sientes que <strong>todo se mezcla</strong>, prueba a pausar la certificación secundaria durante
-                2–3 semanas y céntrate solo en la principal. Volverás con la cabeza más despejada.
-              </p>
+                <h3>4. Ajusta el plan cuando una certificación se acerque al examen</h3>
+                <p>
+                  A medida que se acerque la fecha del examen de tu certificación principal, tiene sentido:
+                </p>
+                <ul>
+                  <li>Aumentar el tiempo dedicado a simulacros completos de esa certificación.</li>
+                  <li>Reducir temporalmente la carga de la paralela para no saturarte.</li>
+                </ul>
+                <p>
+                  Después del examen, puedes invertir los papeles: la que era secundaria pasa a ser la principal,
+                  aprovechando todo el <strong>lenguaje y patrones</strong> que ya tienes frescos de la primera.
+                </p>
 
-              <div class="share-row" aria-label="Compartir este artículo">
-                <span class="share-label">Compartir</span>
-                <div class="share-group">
-                  <button class="share-btn" type="button">
-                    <span class="icon">𝕏</span><span class="label">X</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">in</span><span class="label">LinkedIn</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">WA</span><span class="label">WhatsApp</span>
-                  </button>
+                <h3>5. Señales de que estás yendo por buen camino</h3>
+                <p>
+                  Vas por buen camino si:
+                </p>
+                <ul>
+                  <li>Cuando lees una pregunta nueva, ves rápidamente a qué <strong>tema transversal</strong> pertenece.</li>
+                  <li>Empiezas a hacer comparaciones del tipo: “en Azure esto sería un NSG, en AWS lo haría con SG + NACL”.</li>
+                  <li>No necesitas mirar constantemente esquemas para recordar cómo encajan las piezas.</li>
+                </ul>
+                <p>
+                  Si, en cambio, sientes que <strong>todo se mezcla y te atascas</strong>, prueba a pausar durante unas semanas
+                  la certificación secundaria y darle aire a tu cabeza.
+                </p>
+
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- ARTÍCULO 2: Errores frecuentes -->
-          <article class="blog-article" data-category="errores estrategia">
-            <div class="article-inner">
-              <span class="article-label cat-errores">Errores frecuentes · Certificaciones</span>
-              <header>
-                <h2>Errores típicos al preparar certificaciones cloud (y cómo corregirlos con ITHub.es)</h2>
-              </header>
-              <div class="blog-meta">
-                <time datetime="2025-11-13">13 noviembre 2025</time>
-                <span class="sep">·</span>
-                <span>Lectura: ~9 min</span>
-                <span class="sep">·</span>
-                <span class="blog-meta-tag">Buenas prácticas</span>
-              </div>
+            <!-- ART 2 NOV 13 -->
+            <article class="blog-article" id="articulo-errores-comunes">
+              <div class="article-inner">
+                <span class="article-label">Errores frecuentes · Certificaciones</span>
+                <header>
+                  <h2>Errores que vemos al preparar certificaciones (y cómo evitarlos con ITHub.es)</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-11-13">13 noviembre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 9 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">Buenas prácticas</span>
+                </div>
+                <p>
+                  Después de hablar con muchos candidatos y ver cómo usan simuladores y resúmenes, hay una serie de
+                  errores que se repiten. La buena noticia: la mayoría se pueden evitar con pequeños ajustes de enfoque.
+                </p>
 
-              <p class="excerpt">
-                Ver vídeos, hacer simuladores y leer documentación no basta si el enfoque es incorrecto. Aquí tienes los errores
-                que más vemos en candidatos de <strong>AZ-104, AZ-305 y SAA-C03</strong>, con propuestas muy concretas para
-                corregirlos usando los recursos de ITHub.es.
-              </p>
+                <h3>1. Quedarse solo en un simulador y no tocar documentación</h3>
+                <p>
+                  Los simuladores como ITHub.es son muy útiles, pero no sustituyen a la documentación oficial.
+                  Si tu única fuente son las preguntas:
+                </p>
+                <ul>
+                  <li>Te faltará <strong>profundidad</strong> para reaccionar a variaciones de escenario.</li>
+                  <li>Te costará más entender cambios de producto o nuevas funcionalidades.</li>
+                </ul>
+                <p>
+                  Lo ideal es un ciclo: <strong>documentación → simulador → detectar huecos → volver a documentación</strong>.
+                </p>
 
-              <h3>1. Vivir solo en el simulador y olvidar la documentación</h3>
-              <p>
-                Los simuladores son geniales para entrenar, pero si son tu única fuente, tu base técnica será frágil.
-                En los exámenes reales siempre aparecen <strong>variantes de escenarios</strong> que no has visto antes.
-              </p>
-              <p>Cómo corregirlo:</p>
-              <ul>
-                <li>
-                  Sigue un ciclo: <strong>doc oficial → simulador → detectar huecos → volver a la doc</strong>.
-                </li>
-                <li>
-                  Usa los <strong>resúmenes de ITHub.es</strong> como puente entre la documentación larga y las preguntas.
-                </li>
-                <li>
-                  Cuando falles una pregunta, anota de qué parte de la documentación sale la respuesta.
-                </li>
-              </ul>
+                <h3>2. Obsesionarse con la nota y no con el razonamiento</h3>
+                <p>
+                  Subir del 60% al 75% en un simulador está bien, pero más importante que el número es:
+                  <strong>¿sabes por qué has subido?</strong>
+                </p>
+                <ul>
+                  <li>Si has subido por memorización, el efecto no se traslada al examen.</li>
+                  <li>Si has subido porque entiendes mejor, por ejemplo, GZRS vs LRS o cuándo usar Front Door, entonces sí.</li>
+                </ul>
+                <p>
+                  Intenta que cada sesión de práctica deje al menos 1–2 <strong>aprendizajes claros anotados</strong>.
+                </p>
 
-              <h3>2. Obsesionarse con el porcentaje y no con el razonamiento</h3>
-              <p>
-                Subir del 60% al 80% en el simulador puede ser engañoso si solo recuerdas la posición de las respuestas.
-                El objetivo es que seas capaz de explicar por qué una opción es mejor que las demás.
-              </p>
-              <p>Reenfoca así cada sesión:</p>
-              <ul>
-                <li>Por cada pregunta, pregúntate: <strong>“¿qué concepto está probando realmente?”</strong>.</li>
-                <li>
-                  Intenta justificar por qué <strong>descartas</strong> al menos una de las opciones incorrectas.
-                </li>
-                <li>
-                  Al terminar, saca 2–3 ideas clave (por ejemplo: “cuándo usar GZRS vs LRS” o “cuándo conviene RDS Multi-AZ”).
-                </li>
-              </ul>
+                <h3>3. Ignorar dominios que “no gustan”</h3>
+                <p>
+                  Siempre hay temas que nos apetecen menos: costes, gobierno, algunas cosas de identidad. El problema
+                  es que el examen <strong>no se adapta a nuestras preferencias</strong>.
+                </p>
+                <ul>
+                  <li>Identifica desde pronto qué dominios no te atraen y planifica bloques cortos específicos.</li>
+                  <li>Usa resúmenes y cheatsheets para tener algo “digesto” antes de lanzarte a la documentación larga.</li>
+                </ul>
 
-              <h3>3. Ignorar temas que no gustan (costes, gobierno, identidad…)</h3>
-              <p>
-                En casi todos los exámenes cloud hay un bloque que “da pereza” (costes, compliance, gobierno, identidad…).
-                Si lo vas posponiendo, acabará pasando factura en el examen.
-              </p>
-              <p>Qué hacer:</p>
-              <ul>
-                <li>
-                  Identifica desde el principio los dominios que te cuestan y márcalos en el <strong>exam guide</strong>.
-                </li>
-                <li>
-                  Dedica bloques cortos pero frecuentes (20–25 minutos) solo a esos temas.
-                </li>
-                <li>
-                  Apóyate en resúmenes y esquemas: te ahorran energía mental antes de saltar al simulador.
-                </li>
-              </ul>
+                <h3>4. No tener un plan de repaso para la última semana</h3>
+                <p>
+                  A muchos candidatos la última semana les pilla apagando fuegos. Un plan mínimo podría ser:
+                </p>
+                <ul>
+                  <li>Dos simulacros completos repartidos en la semana.</li>
+                  <li>Repaso de las notas que has ido generando al practicar.</li>
+                  <li>Lectura rápida de resúmenes de los dominios más pesados.</li>
+                </ul>
+                <p>
+                  ITHub.es puede ayudarte si usas conscientemente el <strong>ranking y tu historial</strong> para ver
+                  dónde deberías poner las últimas energías antes del examen.
+                </p>
 
-              <h3>4. Dejar la última semana al azar</h3>
-              <p>
-                La última semana antes del examen no es para aprenderlo todo desde cero, sino para
-                <strong>cerrar flecos y ganar confianza</strong>.
-              </p>
-              <ul>
-                <li>Planifica 1–2 simulacros completos (aunque no sean de 100 preguntas).</li>
-                <li>
-                  Revisa tus notas y marca los conceptos recurrentes que siguen generando dudas.
-                </li>
-                <li>
-                  Recupera los resúmenes de ITHub.es de tus dominios más flojos y repásalos en bloques pequeños.
-                </li>
-              </ul>
-
-              <h3>5. Estudiar “a ratos sueltos” sin estructura</h3>
-              <p>
-                Abrir el simulador cuando tienes un hueco y hacer 5 preguntas “a lo loco” está bien para mantener el contacto,
-                pero no puede ser la base de tu preparación.
-              </p>
-              <p>Da un poco de estructura al caos:</p>
-              <ul>
-                <li>
-                  Decide cuántas semanas vas a dedicar a la certificación y reparte los <strong>dominios clave</strong> por semana.
-                </li>
-                <li>
-                  Mezcla teoría + práctica: 20–30 minutos de contenido, 20–30 minutos de simulador.
-                </li>
-                <li>
-                  Reserva un día a la semana como <strong>“día de repaso”</strong>, donde solo revisas errores y notas.
-                </li>
-              </ul>
-
-              <div class="share-row" aria-label="Compartir este artículo">
-                <span class="share-label">Compartir</span>
-                <div class="share-group">
-                  <button class="share-btn" type="button">
-                    <span class="icon">𝕏</span><span class="label">X</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">in</span><span class="label">LinkedIn</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">WA</span><span class="label">WhatsApp</span>
-                  </button>
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- ARTÍCULO 3: Vida + estudio -->
-          <article class="blog-article" data-category="productividad vida estudio">
-            <div class="article-inner">
-              <span class="article-label cat-productividad">Productividad · Vida + estudio</span>
-              <header>
-                <h2>Cómo compaginar trabajo, familia y certificaciones cloud sin quemarte</h2>
-              </header>
-              <div class="blog-meta">
-                <time datetime="2025-11-09">9 noviembre 2025</time>
-                <span class="sep">·</span>
-                <span>Lectura: ~8 min</span>
-                <span class="sep">·</span>
-                <span class="blog-meta-tag">Gestión del tiempo</span>
-              </div>
+            <!-- ART 3 NOV 09 -->
+            <article class="blog-article" id="articulo-equilibrio-vida-estudio">
+              <div class="article-inner">
+                <span class="article-label">Productividad · Vida + estudio</span>
+                <header>
+                  <h2>Compaginar trabajo, familia y certificaciones cloud sin quemarte</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-11-09">9 noviembre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 8 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">Gestión del tiempo</span>
+                </div>
+                <p>
+                  Preparar una certificación mientras trabajas a jornada completa no es solo un reto técnico,
+                  es un reto de <strong>energía y gestión de expectativas</strong>. Aquí no vamos a descubrirte
+                  la productividad perfecta, pero sí a compartir ideas que hemos visto funcionar.
+                </p>
 
-              <p class="excerpt">
-                Preparar <strong>AZ-104, AZ-305 o SAA-C03</strong> mientras trabajas a jornada completa no es solo un reto técnico;
-                es un reto de energía, prioridades y negociación con tu entorno. Aquí tienes ideas realistas para no abandonar
-                a mitad de camino.
-              </p>
+                <h3>1. Cambia “tengo que estudiar” por “reservo X bloques concretos”</h3>
+                <p>
+                  “Tengo que estudiar” es una frase enorme y poco accionable. Mejora muchísimo cuando se convierte en:
+                </p>
+                <ul>
+                  <li>“Lunes, miércoles y viernes, de 21:15 a 22:15, hago preguntas de simulador”.</li>
+                  <li>“Sábados por la mañana, 90 minutos de teoría + laboratorios”.</li>
+                </ul>
+                <p>
+                  No necesitas bloques gigantes, necesitas <strong>bloques protegidos</strong> donde no caigas en correo,
+                  móvil o Netflix al primer minuto.
+                </p>
 
-              <h3>1. Cambia “tengo que estudiar” por bloques concretos</h3>
-              <p>
-                “Tengo que estudiar” es una frase que da culpa pero no te dice qué hacer hoy. Funciona mucho mejor algo como:
-              </p>
-              <ul>
-                <li>“Lunes, miércoles y viernes de 21:15 a 22:15: simulador de AZ-104”.</li>
-                <li>“Sábados por la mañana: 90 minutos de teoría + laboratorios”</li>
-              </ul>
-              <p>
-                No se trata de estudiar 4 horas al día, sino de tener <strong>huecos protegidos</strong> donde tu cerebro sabe
-                que toca certificación, no correo ni redes sociales.
-              </p>
+                <h3>2. Negocia expectativas con tu entorno</h3>
+                <p>
+                  Si vives con más gente, compaginar todo sin hablarlo suele acabar en conflicto. Es mucho más sano decir:
+                </p>
+                <ul>
+                  <li>“Durante las próximas 6 semanas quiero sacar la AZ-104. Necesito 3 tardes a la semana para estudiar”.</li>
+                  <li>“Podemos pactar qué días son tuyos y cuáles míos para sacar este tiempo sin culpa”.</li>
+                </ul>
+                <p>
+                  No se trata de desaparecer de tu vida social, se trata de que tu entorno <strong>entienda el objetivo</strong>
+                  y te ayude a proteger algunos horarios.
+                </p>
 
-              <h3>2. Negocia expectativas con tu entorno</h3>
-              <p>
-                Si compartes casa, pareja o familia, es casi imposible sostener un plan de estudio si nadie sabe que lo estás
-                intentando. Es mejor decir explícitamente:
-              </p>
-              <ul>
-                <li>“Durante las próximas 6 semanas quiero sacar AZ-104. Necesito 3 tardes para estudiar”.</li>
-                <li>“Podemos pactar qué días son de estudio y cuáles de desconexión total”.</li>
-              </ul>
-              <p>
-                Cuando tu entorno entiende el objetivo (certificación, mejora profesional, aumento de sueldo) es mucho más fácil
-                que te ayuden a proteger ese tiempo.
-              </p>
+                <h3>3. Acepta que habrá semanas malas (y que eso no invalida el plan)</h3>
+                <p>
+                  Entre incidencias, proyectos y cansancio, habrá semanas en las que apenas puedas abrir el simulador.
+                  Lo importante es:
+                </p>
+                <ul>
+                  <li>No interpretar eso como “ya he fracasado”.</li>
+                  <li>Reengancharte en la semana siguiente con pequeñas victorias (por ejemplo, 10 preguntas rápidas antes de cenar).</li>
+                </ul>
+                <p>
+                  En ITHub.es estamos diseñando modos como <strong>Arena Battle</strong> precisamente para esto: sesiones
+                  ultra cortas de 1–3 preguntas que puedes encajar en huecos pequeños.
+                </p>
 
-              <h3>3. Acepta que habrá semanas malas</h3>
-              <p>
-                Guardias, incidencias, proyectos urgentes… habrá semanas en las que casi no puedas abrir el simulador.
-                Eso no invalida el plan; simplemente forma parte de él.
-              </p>
-              <ul>
-                <li>
-                  Si una semana se va al traste, no intentes “recuperar todo” a base de maratones de domingo.
-                </li>
-                <li>
-                  Plantéate la siguiente semana como un <strong>“reinicio suave”</strong> con sesiones pequeñas: por ejemplo,
-                  10–15 preguntas de ITHub.es al día.
-                </li>
-              </ul>
-
-              <h3>4. Usa modos cortos para mantener el hábito</h3>
-              <p>
-                A veces no tienes una hora seguida, pero sí 5–10 minutos. Para eso son útiles los modos de práctica rápida
-                (como <strong>Arena Battle</strong> en ITHub.es): rondas muy cortas que mantienen la cabeza conectada al temario.
-              </p>
-              <ul>
-                <li>Antes de dormir: 3–5 preguntas rápidas.</li>
-                <li>Mientras esperas un despliegue o una compilación: una ronda relámpago.</li>
-              </ul>
-
-              <h3>5. Recuerda por qué haces esto</h3>
-              <p>
-                Cuando estás en la semana 3 o 4 y llevas varios días cansado, es fácil olvidar por qué te metiste en una
-                certificación. Escríbelo de forma explícita:
-              </p>
-              <ul>
-                <li>“Quiero cambiar de puesto en 6–12 meses”.</li>
-                <li>“Quiero consolidar mis conocimientos de Azure/AWS, no solo aprobar por aprobar”.</li>
-                <li>“Quiero poder negociar un mejor salario en la próxima revisión”.</li>
-              </ul>
-              <p>
-                Tener esa razón a la vista (en una nota, en la app de tareas, en el fondo de pantalla) ayuda más de lo que parece.
-              </p>
-
-              <div class="share-row" aria-label="Compartir este artículo">
-                <span class="share-label">Compartir</span>
-                <div class="share-group">
-                  <button class="share-btn" type="button">
-                    <span class="icon">𝕏</span><span class="label">X</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">in</span><span class="label">LinkedIn</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">WA</span><span class="label">WhatsApp</span>
-                  </button>
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- ARTÍCULO 4: Checklist última semana -->
-          <article class="blog-article" data-category="checklist estrategia azure aws">
-            <div class="article-inner">
-              <span class="article-label cat-checklist">Checklist · Última semana</span>
-              <header>
-                <h2>Checklist de la última semana antes del examen (Azure y AWS)</h2>
-              </header>
-              <div class="blog-meta">
-                <time datetime="2025-11-05">5 noviembre 2025</time>
-                <span class="sep">·</span>
-                <span>Lectura: ~7 min</span>
-                <span class="sep">·</span>
-                <span class="blog-meta-tag">AZ-104 · AZ-305 · SAA-C03</span>
-              </div>
+            <!-- ART 4 NOV 05 (nuevo) -->
+            <article class="blog-article" id="articulo-checklist-ultima-semana">
+              <div class="article-inner">
+                <span class="article-label">Checklist · Última semana</span>
+                <header>
+                  <h2>Checklist de la última semana antes del examen (Azure o AWS)</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-11-05">5 noviembre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 7 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">AZ-104 · AZ-305 · SAA-C03</span>
+                </div>
+                <p>
+                  Los siete días antes del examen son especiales: ya no se trata de aprender cosas nuevas, sino de
+                  <strong>consolidar, repasar y llegar con la cabeza despejada</strong>. Esta checklist está pensada
+                  para que no olvides nada importante.
+                </p>
 
-              <p class="excerpt">
-                La última semana antes de una certificación como <strong>AZ-104, AZ-305 o SAA-C03</strong> es especial: ya no
-                se trata de aprenderlo todo, sino de consolidar, repasar con cabeza y llegar al examen descansado. Usa esta
-                checklist para no dejarte nada importante.
-              </p>
+                <h3>1. Revisa el blueprint oficial y tus notas</h3>
+                <p>
+                  Empieza la semana volviendo al <strong>exam guide oficial</strong> (Azure o AWS) y a tus notas:
+                </p>
+                <ul>
+                  <li>Marca en el blueprint los dominios donde te sientas más flojo.</li>
+                  <li>Subraya en tus notas los conceptos que todavía generan duda.</li>
+                </ul>
 
-              <h3>1. Revisar el exam guide y tus notas</h3>
-              <p>
-                Empieza por el principio: vuelve al <strong>exam guide oficial</strong> (Azure o AWS) y marca:
-              </p>
-              <ul>
-                <li>Dominios donde te sientes fuerte (verde).</li>
-                <li>Dominios donde estás “OK pero inseguro” (amarillo).</li>
-                <li>Dominios donde estás claramente débil (rojo).</li>
-              </ul>
-              <p>
-                Después, revisa tus notas y resúmenes de ITHub.es, prestando atención a tus propios marcadores:
-                subrayados, asteriscos, “ojo con esto”, etc.
-              </p>
+                <h3>2. Haz 1–2 simulacros completos</h3>
+                <p>
+                  No necesitas hacer diez exámenes de prueba. Con <strong>uno o dos simulacros bien revisados</strong>
+                  puedes detectar patrones de error:
+                </p>
+                <ul>
+                  <li>Cometes fallos por ir rápido y no leer bien.</li>
+                  <li>Te lías con un tema concreto (por ejemplo, redundancia de almacenamiento o conectividad híbrida).</li>
+                  <li>Dudas siempre que aparece un tipo de servicio (VPN vs ExpressRoute, S3 vs EFS, etc.).</li>
+                </ul>
 
-              <h3>2. Hacer 1–2 simulacros completos</h3>
-              <p>
-                No necesitas hacer diez exámenes de práctica en una semana. Con <strong>uno o dos simulacros bien revisados</strong>
-                puedes sacar muchísimo valor.
-              </p>
-              <ul>
-                <li>Haz el simulacro como si fuera el examen: sin móvil, sin pausas, con tiempo limitado.</li>
-                <li>Anota el porcentaje global, pero sobre todo tus sensaciones por dominio.</li>
-                <li>Marca las preguntas que te han generado duda, aunque las hayas acertado.</li>
-              </ul>
+                <h3>3. Bloques cortos de preguntas sobre tus puntos débiles</h3>
+                <p>
+                  Una vez detectados tus puntos débiles, dedica cada día de la semana a:
+                </p>
+                <ul>
+                  <li>Elegir 1 tema flojo (p. ej. “seguridad en la red” o “identidad”).</li>
+                  <li>Hacer 15–20 preguntas de ITHub.es sobre ese tema, con calma.</li>
+                  <li>Revisar las explicaciones y añadir notas rápidas.</li>
+                </ul>
 
-              <h3>3. Bloques diarios de refuerzo focalizado</h3>
-              <p>Cada día de la semana elige un tema a reforzar:</p>
-              <ul>
-                <li>“Hoy: redes y conectividad”.</li>
-                <li>“Mañana: identidad y acceso”.</li>
-                <li>“Pasado: alta disponibilidad y recuperación ante desastres”.</li>
-              </ul>
-              <p>
-                Usa ITHub.es para hacer 15–25 preguntas de ese tema concreto, a un ritmo tranquilo, leyendo bien las explicaciones
-                y apuntando patrones.
-              </p>
+                <h3>4. Prepara la parte logística</h3>
+                <p>
+                  Hay estrés que se puede evitar con una mínima previsión:
+                </p>
+                <ul>
+                  <li>Comprueba la <strong>hora y modalidad del examen</strong> (online / centro).</li>
+                  <li>Verifica documentación, conexión y requisitos si es online.</li>
+                  <li>Planifica a qué hora te vas a acostar el día anterior (parece obvio, pero no lo es).</li>
+                </ul>
 
-              <h3>4. Ajustar la parte logística (no lo dejes para el final)</h3>
-              <p>Revisa lo básico:</p>
-              <ul>
-                <li>Día y hora del examen (online vs centro). No des por hecho nada.</li>
-                <li>Documentación necesaria (identificación, requisitos del examen online, etc.).</li>
-                <li>Ruta hasta el centro o prueba de conexión y cámara si es remoto.</li>
-              </ul>
+                <h3>5. El día antes: repaso ligero, nada de maratones</h3>
+                <p>
+                  La tentación de estudiar hasta tarde es grande, pero suele ser contraproducente. Mejor:
+                </p>
+                <ul>
+                  <li>Repaso ligero de tus notas clave.</li>
+                  <li>Un bloque pequeño de preguntas de confianza para irte con buenas sensaciones.</li>
+                  <li>Salir a caminar, desconectar, cenar tranquilo.</li>
+                </ul>
+                <p>
+                  El objetivo de esta semana no es convertirte en otra persona, es <strong>llegar en tu mejor versión</strong>
+                  con lo que ya sabes.
+                </p>
 
-              <h3>5. El día antes: repaso ligero y descanso</h3>
-              <p>
-                La tentación de estudiar hasta la madrugada es fuerte, pero es una mala idea. El día antes céntrate en:
-              </p>
-              <ul>
-                <li>Repasar tus notas clave y los conceptos que más fallas.</li>
-                <li>Hacer un bloque pequeño de preguntas de confianza (para irte con buenas sensaciones).</li>
-                <li>Cortar el estudio un par de horas antes de dormir y hacer algo que te relaje.</li>
-              </ul>
-
-              <div class="share-row" aria-label="Compartir este artículo">
-                <span class="share-label">Compartir</span>
-                <div class="share-group">
-                  <button class="share-btn" type="button">
-                    <span class="icon">𝕏</span><span class="label">X</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">in</span><span class="label">LinkedIn</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">WA</span><span class="label">WhatsApp</span>
-                  </button>
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- ARTÍCULO 5: Patrones SAA-C03 -->
-          <article class="blog-article" data-category="saa aws">
-            <div class="article-inner">
-              <span class="article-label cat-saa">AWS SAA-C03 · Patrones</span>
-              <header>
-                <h2>Patrones que se repiten una y otra vez en AWS SAA-C03 (y cómo entrenarlos)</h2>
-              </header>
-              <div class="blog-meta">
-                <time datetime="2025-11-02">2 noviembre 2025</time>
-                <span class="sep">·</span>
-                <span>Lectura: ~9 min</span>
-                <span class="sep">·</span>
-                <span class="blog-meta-tag">SAA-C03</span>
-              </div>
+            <!-- ART 5 NOV 02 -->
+            <article class="blog-article" id="articulo-saa-patrones">
+              <div class="article-inner">
+                <span class="article-label">AWS SAA-C03 · Patrones recurrentes</span>
+                <header>
+                  <h2>Preparar AWS SAA-C03: patrones que se repiten una y otra vez</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-11-02">2 noviembre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 9 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">SAA-C03</span>
+                </div>
+                <p>
+                  En <strong>AWS SAA-C03</strong> el banco de preguntas cambia, pero los patrones que se evalúan no tanto.
+                  Si te fijas en el tipo de decisiones que se repiten, puedes llegar al examen con una especie de
+                  “plantillas mentales” que te dan mucha ventaja.
+                </p>
 
-              <p class="excerpt">
-                El banco de preguntas de <strong>AWS SAA-C03</strong> cambia, pero los <strong>patrones de arquitectura</strong>
-                que se evalúan son muy similares: alta disponibilidad, seguridad básica, coste y modernización. Si aprendes a
-                reconocerlos, llegarás con mucha más confianza al examen.
-              </p>
+                <h3>1. Alta disponibilidad con RDS, EC2 y ALB</h3>
+                <p>
+                  Muchísimas preguntas giran en torno a lo mismo: “¿cómo hago esto altamente disponible y escalable
+                  sin complicarme la vida?”. Los ingredientes estrella:
+                </p>
+                <ul>
+                  <li><strong>ALB</strong> delante de varias instancias EC2 o un Auto Scaling Group.</li>
+                  <li><strong>RDS Multi-AZ</strong> para evitar caídas por fallo de una zona.</li>
+                  <li>Uso sensato de <strong>Zonas de disponibilidad</strong> en lugar de inventos caseros.</li>
+                </ul>
+                <p>
+                  En ITHub.es verás que muchas preguntas de SAA-C03 son variaciones de este patrón con ligeros matices:
+                  lectura intensiva, latencia, tipo de base de datos, etc.
+                </p>
 
-              <h3>1. Alta disponibilidad y escalado automático</h3>
-              <p>
-                Muchísimas preguntas giran en torno a “¿cómo hago esto altamente disponible y escalable sin complicarme la vida?”.
-                Los ingredientes estrella:
-              </p>
-              <ul>
-                <li><strong>ALB</strong> delante de varias instancias EC2 o de un Auto Scaling Group.</li>
-                <li><strong>RDS Multi-AZ</strong> para evitar caídas por fallo de una zona de disponibilidad.</li>
-                <li>Uso sensato de <strong>múltiples AZ</strong> en lugar de soluciones caseras.</li>
-              </ul>
-              <p>
-                En ITHub.es verás muchas variaciones: a veces el foco está en la base de datos, otras en el tráfico HTTP/HTTPS,
-                otras en cómo distribuir carga entre regiones.
-              </p>
+                <h3>2. Seguridad básica (pero no trivial) en S3 y redes</h3>
+                <p>
+                  Otro grupo de patrones gira en torno a <strong>seguridad “sana”</strong>:
+                </p>
+                <ul>
+                  <li>Acceso a S3 desde VPC usando <strong>VPC endpoints</strong> en lugar de exponerlo al público.</li>
+                  <li>Uso de <strong>Security Groups</strong> y NACLs de manera coherente.</li>
+                  <li>Separar tráfico administrativo del de usuarios finales.</li>
+                </ul>
+                <p>
+                  De nuevo, el examen no busca que memorices reglas al detalle, sino que interiorices estos principios
+                  y los apliques cuando se combinan en un escenario un poco más complejo.
+                </p>
 
-              <h3>2. Seguridad “sana” en S3 y redes</h3>
-              <p>
-                Otro patrón recurrente: preguntas sobre cómo asegurar <strong>S3, VPC y acceso interno</strong> sin montar un
-                infierno operativo.
-              </p>
-              <ul>
-                <li>Acceso a S3 desde VPC usando <strong>VPC Endpoints</strong> en lugar de exponer el bucket a Internet.</li>
-                <li>
-                  Diferenciar el rol de <strong>Security Groups</strong> (estado, por instancia) y <strong>NACLs</strong>
-                  (sin estado, por subred).
-                </li>
-                <li>Separar tráfico administrativo del tráfico de clientes finales.</li>
-              </ul>
-              <p>
-                Cada vez que veas una pregunta de S3 o VPC en el simulador, pregúntate: “¿Qué patrón de seguridad están probando?”.
-              </p>
+                <h3>3. Coste vs. rendimiento: cuándo usar on-demand, reserved o Savings Plans</h3>
+                <p>
+                  El coste aparece en muchas preguntas de SAA-C03, y no siempre de forma explícita. Cuando se menciona
+                  estabilidad de carga o previsibilidad de uso, es una pista clara hacia:
+                </p>
+                <ul>
+                  <li><strong>Reserved Instances</strong> o <strong>Savings Plans</strong> para cargas estables.</li>
+                  <li><strong>On-demand</strong> para picos imprevisibles o pruebas.</li>
+                  <li><strong>Spot</strong> solo cuando la interrupción sea aceptable.</li>
+                </ul>
+                <p>
+                  Practica identificando qué patrón de coste encaja mejor con cada escenario que ves en el simulador.
+                </p>
 
-              <h3>3. Coste vs rendimiento: on-demand, reserved y spot</h3>
-              <p>
-                El coste aparece muchas veces de forma indirecta: te hablan de cargas estables, entornos de pruebas, picos
-                imprevisibles… y tú debes elegir el modelo de consumo adecuado.
-              </p>
-              <ul>
-                <li><strong>On-demand</strong> para cargas imprevisibles o pruebas puntuales.</li>
-                <li><strong>Reserved Instances / Savings Plans</strong> para cargas estables en el tiempo.</li>
-                <li><strong>Spot</strong> cuando las interrupciones son aceptables (batch, render, etc.).</li>
-              </ul>
+                <h3>4. Migraciones y modernización: lift &amp; shift o re-arquitecturar</h3>
+                <p>
+                  Muchas empresas llegan a AWS con sistemas heredados. El examen juega con esto:
+                </p>
+                <ul>
+                  <li>A veces la mejor opción de examen es un <strong>lift &amp; shift sensato</strong> a EC2 o RDS.</li>
+                  <li>Otras veces, la respuesta correcta pasa por <strong>modernizar</strong> hacia servicios gestionados
+                      (Lambda, Fargate, Aurora, etc.).</li>
+                </ul>
+                <p>
+                  El truco está en leer bien las <strong>restricciones</strong>: si el tiempo es muy limitado, probablemente
+                  no haya margen para re-arquitecturar todo; si el caso habla a largo plazo, la modernización suele tener sentido.
+                </p>
 
-              <h3>4. Migración vs modernización</h3>
-              <p>
-                Muchas empresas llegan a AWS con sistemas heredados. El examen juega con este contexto:
-              </p>
-              <ul>
-                <li>A veces la mejor respuesta es un <strong>lift &amp; shift sensato</strong> a EC2 o RDS.</li>
-                <li>
-                  Otras veces, la opción correcta es modernizar hacia <strong>servicios gestionados</strong> (Lambda, Fargate,
-                  Aurora, DynamoDB, etc.).
-                </li>
-              </ul>
-              <p>
-                Fíjate en palabras clave como “tiempo limitado”, “equipo pequeño” o “necesidad de cambiar poco el código” para
-                decidir cuánto margen hay para modernizar.
-              </p>
-
-              <h3>5. Cómo entrenar estos patrones con ITHub.es</h3>
-              <p>
-                No se trata solo de acertar preguntas, sino de reconocer patrones. Una forma de entrenarlo:
-              </p>
-              <ul>
-                <li>
-                  Haz bloques de 10–15 preguntas de SAA-C03 y, después, clasifícalas en una hoja:
-                  alta disponibilidad, seguridad, coste, migración, etc.
-                </li>
-                <li>
-                  Resume cada patrón en 3–4 líneas con tus propias palabras y vuelve a esas notas la semana antes del examen.
-                </li>
-                <li>
-                  Identifica tus puntos débiles (“siempre dudo con RDS vs Aurora”, “no tengo claro cuándo usar NACL”) y
-                  refuérzalos con documentación oficial.
-                </li>
-              </ul>
-
-              <div class="share-row" aria-label="Compartir este artículo">
-                <span class="share-label">Compartir</span>
-                <div class="share-group">
-                  <button class="share-btn" type="button">
-                    <span class="icon">𝕏</span><span class="label">X</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">in</span><span class="label">LinkedIn</span>
-                  </button>
-                  <button class="share-btn" type="button">
-                    <span class="icon">WA</span><span class="label">WhatsApp</span>
-                  </button>
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <!-- Paginación (5 por página, lista preparada por si añades más artículos) -->
-          <div class="pagination" aria-label="Paginación de artículos">
-            <button id="prevPage" type="button">Anterior</button>
-            <div class="pagination-center">
-              <span id="pageInfo">Página 1</span>
-            </div>
-            <button id="nextPage" type="button">Siguiente</button>
+            <!-- ART 6 OCT 29 -->
+            <article class="blog-article" id="articulo-az305-mentalidad">
+              <div class="article-inner">
+                <span class="article-label">AZ-305 · Mentalidad de arquitecto</span>
+                <header>
+                  <h2>AZ-305: cómo pensar como arquitecto en el examen (y en proyectos reales)</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-10-29">29 octubre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 9 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">AZ-305</span>
+                </div>
+                <p>
+                  La certificación <strong>AZ-305</strong> no va de recordar comandos ni wizards de portal. Va de traducir
+                  requisitos de negocio a decisiones de arquitectura en Azure. Y esa forma de pensar no solo sirve para el
+                  examen: es exactamente lo que te van a pedir en muchos proyectos reales.
+                </p>
+
+                <h3>1. Parte siempre de los requisitos, no de los servicios</h3>
+                <p>
+                  Un error clásico es empezar la solución pensando en productos: “podría meter un App Gateway, un Front Door,
+                  algo de Cosmos…”. El examen, igual que el cliente, <strong>no te pide servicios</strong>, te da requisitos:
+                </p>
+                <ul>
+                  <li>“Necesitamos alta disponibilidad entre zonas”.</li>
+                  <li>“El presupuesto es limitado”.</li>
+                  <li>“Hay datos sensibles con requisitos de residencia en la UE”.</li>
+                </ul>
+                <p>
+                  En tus prácticas, acostúmbrate a subrayar esas frases clave y a clasificarlas mentalmente en
+                  <strong>seguridad, disponibilidad, rendimiento, coste, operaciones</strong>. A partir de ahí, empieza a
+                  dibujar la solución.
+                </p>
+
+                <h3>2. Usa patrones, no recetas</h3>
+                <p>
+                  Más que memorizar arquitecturas concretas, te interesa dominar <strong>patrones</strong>:
+                </p>
+                <ul>
+                  <li><strong>Front Door + App Gateway</strong> para apps globales con enrutamiento inteligente.</li>
+                  <li><strong>Scale Sets + zonas</strong> para workloads stateless con alta disponibilidad.</li>
+                  <li><strong>Storage + backups + replicación</strong> para datos con distintos requisitos de RPO/RTO.</li>
+                </ul>
+                <p>
+                  Cada vez que veas una explicación en ITHub.es, intenta reducirla a: “este escenario es un ejemplo de
+                  <strong>patrón X</strong>”. Luego, pregúntate en qué otros contextos podrías aplicar lo mismo.
+                </p>
+
+                <h3>3. Sé explícito con el coste y la complejidad</h3>
+                <p>
+                  AZ-305 valora que seas consciente de que cada decisión tiene impacto en <strong>coste</strong> y
+                  <strong>operación</strong>.
+                </p>
+                <ul>
+                  <li>Es fácil decir “activo todas las opciones de alta disponibilidad”.</li>
+                  <li>Lo difícil es justificar cuándo <strong>no merece la pena</strong> un despliegue multi-región.</li>
+                </ul>
+                <p>
+                  En las preguntas, si hay dos opciones técnicamente válidas, la correcta suele ser la que encaja mejor
+                  con el <strong>nivel de criticidad</strong> del sistema y el presupuesto implícito del cliente.
+                </p>
+
+                <h3>4. Entrena con casos reales (aunque sean mini)</h3>
+                <p>
+                  Si ya trabajas con Azure, usa tus propios proyectos como banco de pruebas mental:
+                </p>
+                <ul>
+                  <li>Piensa cómo “convertirías” un proyecto real en una pregunta de examen.</li>
+                  <li>Identifica qué parte sería el “truco” de la pregunta (zonas, backup, identidad, costes…).</li>
+                  <li>Busca en ITHub.es preguntas que se parezcan a tu escenario y compáralas.</li>
+                </ul>
+                <p>
+                  Si no tienes proyectos propios, usa los <strong>escenarios que generamos en el contenido de AZ-305</strong>
+                  y en los resúmenes por dominio como sustituto razonable.
+                </p>
+
+                <h3>5. Acepta que no vas a saberlo todo (y decide igual)</h3>
+                <p>
+                  En el examen y en proyectos reales hay decisiones que tendrás que tomar con información incompleta.
+                  Entrena esto en los simuladores:
+                </p>
+                <ul>
+                  <li>Cuando dudes entre dos opciones, escribe por qué descartarías una de ellas.</li>
+                  <li>Piensa qué <strong>riesgo te parece más aceptable</strong>: pagar más, asumir menos disponibilidad, etc.</li>
+                </ul>
+                <p>
+                  Esa forma de justificar tus decisiones es más útil que buscar la seguridad absoluta. Y es exactamente lo
+                  que AZ-305 intenta evaluar.
+                </p>
+
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- ART 7 OCT 21 -->
+            <article class="blog-article" id="articulo-plan-az104-6-semanas">
+              <div class="article-inner">
+                <span class="article-label">Plan de estudio · AZ-104</span>
+                <header>
+                  <h2>Plan realista de 6 semanas para AZ-104 mientras trabajas a jornada completa</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-10-21">21 octubre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 10 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">Plan de estudio</span>
+                </div>
+                <p>
+                  Muchos planes de estudio asumen que puedes dedicar tres o cuatro horas diarias durante semanas.
+                  La realidad suele ser distinta: guardias, proyectos urgentes, familia, cansancio. Este plan de
+                  <strong>6 semanas</strong> para AZ-104 parte de una premisa sencilla:
+                  <strong>1–1,5 horas efectivas al día, 5 días por semana</strong>.
+                </p>
+
+                <h3>Semana 1: visión global y fundamentos</h3>
+                <p>
+                  Objetivo: entender el mapa completo del examen y no perderte en detalles demasiado pronto.
+                </p>
+                <ul>
+                  <li>Leer el <strong>exam guide oficial</strong> de AZ-104 una vez de principio a fin.</li>
+                  <li>Ver 2–3 módulos clave de Microsoft Learn (visión general de recursos, suscripciones, RBAC).</li>
+                  <li>Entrar en ITHub.es y hacer tus <strong>primeras 15–20 preguntas variadas</strong> sin obsesionarte con la nota.</li>
+                </ul>
+
+                <h3>Semana 2: redes en Azure (VNets, NSG, conectividad)</h3>
+                <p>
+                  Objetivo: que la parte de redes deje de ser un muro. Es uno de los bloques que más confusión genera.
+                </p>
+                <ul>
+                  <li>Repasa VNets, subredes, NSG, UDR y modelos de conectividad (VPN, ExpressRoute, peering).</li>
+                  <li>Haz laboratorios sencillos: crear una VNet, aislar subredes, probar un NSG que bloquee/abra tráfico.</li>
+                  <li>En ITHub.es: bloque de <strong>30–40 preguntas solo de redes</strong>, en 3–4 tandas.</li>
+                </ul>
+
+                <h3>Semana 3: identidad, RBAC y gestión</h3>
+                <p>
+                  Objetivo: entender cómo se conectan Azure AD, roles, grupos y control de acceso a recursos.
+                </p>
+                <ul>
+                  <li>Revisar conceptos de <strong>Azure AD, roles integrados, roles personalizados y PIM</strong>.</li>
+                  <li>Practicar la asignación de permisos a nivel de grupo de recursos, suscripción y recurso.</li>
+                  <li>En ITHub.es: sesiones de 10–15 preguntas centradas en identidad y RBAC.</li>
+                </ul>
+
+                <h3>Semana 4: almacenamiento y máquinas virtuales</h3>
+                <p>
+                  Objetivo: dominar las decisiones típicas de almacenamiento y compute que te pedirán en el examen.
+                </p>
+                <ul>
+                  <li>Repasar <strong>tipos de cuentas de almacenamiento</strong>, redundancia (LRS / ZRS / GRS / GZRS).</li>
+                  <li>Repasar <strong>tipos de discos</strong> y cuándo usar Standard / Premium / Ephemeral.</li>
+                  <li>Practicar escenarios de backup, snapshots y replicación.</li>
+                  <li>En ITHub.es: alternar bloques de almacenamiento y de VMs (20–30 preguntas en total).</li>
+                </ul>
+
+                <h3>Semana 5: seguridad, monitorización y gobierno</h3>
+                <p>
+                  Objetivo: unir las piezas sueltas en torno a la operación diaria de un entorno Azure.
+                </p>
+                <ul>
+                  <li>Ver o repasar materiales sobre <strong>Defender for Cloud, Azure Monitor, Log Analytics</strong>.</li>
+                  <li>Entender qué hace <strong>Azure Policy</strong> y cómo se aplica a nivel de Management Group.</li>
+                  <li>En ITHub.es: preguntas centradas en <strong>seguridad, alertas y cumplimiento</strong>.</li>
+                </ul>
+
+                <h3>Semana 6: simulacros mezclados y revisión fina</h3>
+                <p>
+                  Objetivo: pasar de “sé los conceptos” a “sé manejarme en un examen largo”.
+                </p>
+                <ul>
+                  <li>Realizar al menos <strong>dos simulacros completos</strong> mezclando dominios en ITHub.es.</li>
+                  <li>Revisar con calma los “fallos tontos” y anotar patrones (leyendo demasiado rápido, confundir zonas y regiones, etc.).</li>
+                  <li>Dejar los últimos 2–3 días para repasar tus <strong>dominios más flojos</strong> y los resúmenes.</li>
+                </ul>
+
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- ART 8 OCT 10 -->
+            <article class="blog-article" id="articulo-az104-simuladores">
+              <div class="article-inner">
+                <span class="article-label">AZ-104 · Estrategia de simuladores</span>
+                <header>
+                  <h2>Cómo usar simuladores de AZ-104 sin caer en la memorización</h2>
+                </header>
+                <div class="blog-meta">
+                  <time datetime="2025-10-10">10 octubre 2025</time>
+                  <span class="sep">·</span>
+                  <span>Lectura aproximada: 8 minutos</span>
+                  <span class="sep">·</span>
+                  <span class="blog-meta-tag">AZ-104</span>
+                </div>
+                <p>
+                  Uno de los errores más habituales al preparar <strong>AZ-104</strong> es convertir los simuladores
+                  en un “chuletario” de respuestas. Haces siempre las mismas preguntas, recuerdas qué opción era la
+                  correcta y tu porcentaje sube… pero en el examen real te cambian el contexto y te quedas bloqueado.
+                </p>
+                <p>
+                  La clave no es memorizar qué botón tocar, sino entrenar <strong>cómo piensa el examen</strong>.
+                  A continuación te dejo una forma práctica de usar los simuladores de ITHub.es para entrenar
+                  razonamiento, no memoria.
+                </p>
+
+                <h3>1. Usa el simulador después de un mínimo de estudio, no antes</h3>
+                <p>
+                  Es tentador abrir el simulador de AZ-104 el primer día “para ver cómo es el examen”. El problema es
+                  que tu cerebro aún no tiene contexto y convierte las preguntas en <em>ruido</em>.
+                </p>
+                <ul>
+                  <li>Primero, dedica al menos un par de días a revisar el <strong>exam guide oficial</strong>.</li>
+                  <li>Haz una lectura rápida de los principales servicios: VNets, NSGs, Storage, VM Scale Sets, RBAC, etc.</li>
+                  <li>A partir de ahí, empieza a mezclar teoría + simulador por dominios.</li>
+                </ul>
+
+                <h3>2. Para cada pregunta, responde en voz alta: “¿Qué están probando aquí?”</h3>
+                <p>
+                  Cada ítem de examen suele probar <strong>uno o dos conceptos clave</strong>. Antes de mirar las opciones,
+                  intenta responder mentalmente:
+                </p>
+                <ul>
+                  <li>¿Es un problema de <strong>coste, seguridad, alta disponibilidad o operaciones</strong>?</li>
+                  <li>¿Tiene pinta de ser una pregunta de <strong>RBAC, networking, backup o identidad</strong>?</li>
+                </ul>
+
+                <h3>3. Oblígate a justificar la respuesta correcta (y al menos una incorrecta)</h3>
+                <p>
+                  Cuando termines una pregunta y veas la explicación en ITHub.es:
+                </p>
+                <ul>
+                  <li>Repite con tus palabras <strong>por qué es correcta la opción elegida</strong>.</li>
+                  <li>Escoge una opción incorrecta y explica por qué <strong>no encaja</strong>.</li>
+                </ul>
+
+                <h3>4. Repasa por dominios, no solo por nota total</h3>
+                <p>
+                  La nota global te dice si vas mejorando, pero no qué dominios se te atragantan. En ITHub.es puedes
+                  filtrar por áreas y hacer bloques cortos de preguntas centrados en ese tema.
+                </p>
+
+                <h3>5. En las últimas semanas, mezcla dominios bajo presión de tiempo</h3>
+                <p>
+                  Cuando ya has pasado por casi todos los dominios, tiene sentido simular el contexto del examen:
+                </p>
+                <ul>
+                  <li>Haz sesiones de <strong>40–60 preguntas mezcladas</strong>.</li>
+                  <li>Ponte un cronómetro para aproximar la <strong>presión de tiempo</strong>.</li>
+                  <li>Marca las preguntas dudosas para revisarlas al final, igual que harás en el examen real.</li>
+                </ul>
+
+                <div class="share-row" aria-label="Compartir este artículo">
+                  <span class="share-label">Compartir:</span>
+                  <a class="share-btn share-x" aria-label="Compartir en X (Twitter)" target="_blank" rel="noopener">𝕏</a>
+                  <a class="share-btn share-li" aria-label="Compartir en LinkedIn" target="_blank" rel="noopener">in</a>
+                  <a class="share-btn share-wa" aria-label="Compartir en WhatsApp" target="_blank" rel="noopener">WA</a>
+                </div>
+              </div>
+            </article>
           </div>
+
+          <!-- Sidebar -->
+          <aside class="blog-aside" aria-label="Información de apoyo">
+            <div class="aside-card">
+              <h3 class="aside-title">Sobre este blog</h3>
+              <p class="aside-sub">
+                El blog de ITHub.es está pensado como complemento a los simuladores y resúmenes:
+                menos marketing y más <strong>estrategia aplicable</strong> para tus certificaciones.
+              </p>
+              <ul class="aside-list">
+                <li>Planes de estudio realistas mientras trabajas.</li>
+                <li>Patrones que se repiten en Azure y AWS.</li>
+                <li>Errores típicos y cómo evitarlos.</li>
+                <li>Ideas para no perder motivación en el camino.</li>
+              </ul>
+            </div>
+
+            <div class="aside-card">
+              <h3 class="aside-title">Atajos rápidos</h3>
+              <p class="aside-sub">Salta directamente al artículo que necesites hoy:</p>
+              <ul class="aside-list">
+                <li><a href="#articulo-multi-certificaciones">Multi-certificación en paralelo</a></li>
+                <li><a href="#articulo-checklist-ultima-semana">Checklist última semana</a></li>
+                <li><a href="#articulo-plan-az104-6-semanas">Plan de 6 semanas AZ-104</a></li>
+                <li><a href="#articulo-az305-mentalidad">Mentalidad arquitecto AZ-305</a></li>
+                <li><a href="#articulo-saa-patrones">Patrones SAA-C03</a></li>
+                <li><a href="#articulo-equilibrio-vida-estudio">Equilibrio vida–estudio</a></li>
+                <li><a href="#articulo-errores-comunes">Errores frecuentes al certificarte</a></li>
+              </ul>
+            </div>
+
+            <div class="aside-card">
+              <h3 class="aside-title">Temas que más tocamos</h3>
+              <p class="aside-sub">Una especie de “nube de etiquetas” para ver de qué va todo esto:</p>
+              <div class="tag-cloud">
+                <span class="tag-pill">AZ-104</span>
+                <span class="tag-pill">AZ-305</span>
+                <span class="tag-pill">AWS SAA-C03</span>
+                <span class="tag-pill">Plan de estudio</span>
+                <span class="tag-pill">Arquitectura cloud</span>
+                <span class="tag-pill">Gestión del tiempo</span>
+                <span class="tag-pill">Alta disponibilidad</span>
+                <span class="tag-pill">Costes y gobierno</span>
+              </div>
+            </div>
+
+            <div class="aside-card">
+              <h3 class="aside-title">Prepárate mejor con ITHub.es</h3>
+              <p class="aside-sub">
+                Estos artículos se apoyan en los recursos gratuitos de la web. Si quieres llevar las ideas a la práctica:
+              </p>
+              <div class="aside-cta">
+                <a class="btn small" href="/catalog/itcatalog.html">Ver simuladores</a>
+                <a class="btn small" href="/content/content.html">Ver resúmenes</a>
+              </div>
+              <p class="aside-sub" style="margin-top:10px;">
+                También puedes unirte a la <a href="/comunidad/colabora.html">comunidad</a> y ayudarnos a mejorar el contenido
+                con tus propias preguntas, revisiones o experiencias.
+              </p>
+            </div>
+
+            <div class="aside-card">
+              <h3 class="aside-title">¿Te gustaría proponer un artículo?</h3>
+              <p class="aside-sub">
+                Si echas de menos una guía concreta (por ejemplo, para otra certificación o rol), envíanos tu idea.
+              </p>
+              <button class="btn small" type="button" id="openBlogFeedbackAside">💬 Proponer tema</button>
+            </div>
+          </aside>
         </div>
+      </div>
+    </section>
+  </main>
 
-        <!-- SIDEBAR -->
-        <aside class="blog-aside" aria-label="Información adicional">
-          <div class="aside-card">
-            <h3 class="aside-title">Sobre este blog</h3>
-            <p class="aside-sub">
-              ITHub.es nace de la frustración de estudiar certificaciones con material poco práctico.
-              Aquí preferimos ejemplos reales, errores confesables y trucos que usarías en producción.
-            </p>
-            <ul class="aside-list">
-              <li>Planes de estudio pensados para gente con poco tiempo.</li>
-              <li>Patrones que se repiten en Azure y AWS.</li>
-              <li>Consejos para no perder motivación.</li>
-            </ul>
-          </div>
-
-          <div class="aside-card">
-            <h3 class="aside-title">Lecturas recomendadas</h3>
-            <ul class="aside-list">
-              <li><a href="#lista-articulos">Checklist última semana antes del examen</a></li>
-              <li><a href="#lista-articulos">Multi-certificación en paralelo</a></li>
-              <li><a href="#lista-articulos">Patrones de arquitectura en SAA-C03</a></li>
-            </ul>
-          </div>
-
-          <div class="aside-card">
-            <h3 class="aside-title">Temas habituales</h3>
-            <p class="aside-sub">Una mini nube de etiquetas:</p>
-            <div class="tag-cloud">
-              <span class="tag-pill">AZ-104</span>
-              <span class="tag-pill">AZ-305</span>
-              <span class="tag-pill">SAA-C03</span>
-              <span class="tag-pill">Alta disponibilidad</span>
-              <span class="tag-pill">Costes</span>
-              <span class="tag-pill">Vida + trabajo</span>
-            </div>
-          </div>
-
-          <div class="aside-card">
-            <h3 class="aside-title">Pon en práctica lo que leas</h3>
-            <p class="aside-sub">
-              Cada idea del blog está pensada para llevarla a los simuladores y resúmenes de la web.
-            </p>
-            <div class="aside-cta">
-              <a class="btn btn-ghost" href="/catalog/itcatalog.html">Ver simuladores</a>
-              <a class="btn btn-ghost" href="/content/content.html">Ver resúmenes</a>
-            </div>
-          </div>
-        </aside>
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHUB.ES</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
+      </div>
+      <div>
+        <div style="font-weight:800">SIMULADORES</div>
+        <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
+        <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFT AZURE AZ-305</a></div>
+        <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">AMAZON AWS SAA-C03</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">CONTENIDOS</div>
+        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
+        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
+        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">COLABORADORES</div>
+        <p style="margin:4px 0 8px;font-size:.9rem;">
+          Si quieres colaborar con preguntas, revisiones o contenido, visita
+          <a href="/comunidad/colabora.html">la página de comunidad</a>.
+        </p>
+        💬 <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
+        <div style="font-weight:800">CONTACTO</div>
+        <button id="footerContactBtn" type="button"
+                style="background:none;border:none;color:#cfe1ff;
+                       font-weight:800;display:inline-flex;align-items:center;
+                       gap:6px;cursor:pointer;padding:0;margin-top:6px;">
+          💬 <span>Contáctanos</span>
+        </button>
       </div>
     </div>
-  </section>
-</main>
+    <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+  </footer>
 
-<footer>
-  <div class="container f-grid">
-    <div>
-      <div class="brand" style="text-transform:none">
-        <span class="brand-logo-pill" aria-hidden="true"></span>
-        <span>ITHUB.ES</span>
-      </div>
-      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites contigo mismo, no con el algoritmo.</p>
-    </div>
-    <div>
-      <div style="font-weight:800">Simuladores</div>
-      <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">Microsoft Azure AZ-104</a></div>
-      <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">Microsoft Azure AZ-305</a></div>
-      <div><a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">Amazon AWS SAA-C03</a></div>
-    </div>
-    <div>
-      <div style="font-weight:800">Contenido</div>
-      <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
-      <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y gobernanza</a></div>
-      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-      <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
-    </div>
-    <div>
-      <div style="font-weight:800">Contacto</div>
-      <p style="margin:4px 0 8px;font-size:.9rem;">
-        ¿Quieres proponer un artículo, avisar de un fallo o colaborar?
+  <!-- Modal Feedback -->
+  <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
+    <div class="modal-card" role="document" tabindex="-1">
+      <h3 id="fbTitle">💬 Proponer artículo o enviar feedback</h3>
+      <p class="muted">
+        Cuéntanos qué artículo te gustaría ver (por ejemplo: “plan de estudio para otra certificación”, “más preguntas
+        sobre redes en Azure”, “guía para roles junior”, etc.) o cualquier sugerencia sobre el blog.
       </p>
-      <a href="/comunidad/colabora.html">Ir a la comunidad</a>
+      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional, para responderte)">
+      <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
+      <div id="fbStatus" class="fb-status" aria-live="polite"></div>
+      <div class="modal-actions">
+        <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
+        <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
+        <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
+      </div>
     </div>
   </div>
-</footer>
 
-<script>
-  // Paginación simple + filtros (por si añades más artículos en el futuro)
-  const pageSize = 5;
-  let currentPage = 1;
-  let currentFilter = 'all';
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-  const articles = Array.from(document.querySelectorAll('.blog-article'));
-  const prevBtn = document.getElementById('prevPage');
-  const nextBtn = document.getElementById('nextPage');
-  const pageInfo = document.getElementById('pageInfo');
-  const filterButtons = document.querySelectorAll('.filter-pill');
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function renderHeaderAuth(){
+      const u=getCurrentUser();
+      const login=document.getElementById('btnLogin');
+      const signup=document.getElementById('btnSignup');
+      const userArea=document.getElementById('userArea');
+      const nameTop=document.getElementById('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    }
+    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
+    renderHeaderAuth();
 
-  function getFilteredArticles(){
-    if(currentFilter === 'all') return articles;
-    return articles.filter(a => {
-      const cats = (a.dataset.category || '').toLowerCase();
-      return cats.includes(currentFilter.toLowerCase());
+    // Feedback (blog + footer)
+    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
+    const NOTES_ENDPOINT = `${API_BASE}/items`;
+    const fbEmail   = document.getElementById('feedbackEmail');
+    const fbText    = document.getElementById('feedbackText');
+    const fbStatus  = document.getElementById('fbStatus');
+    const btnFbSend = document.getElementById('btnSendFeedback');
+    const btnFbCancel = document.getElementById('btnCancelFeedback');
+    const btnFbOk   = document.getElementById('btnOkFeedback');
+    const footerBtn = document.getElementById('footerContactBtn');
+    const blogBtn   = document.getElementById('openBlogFeedbackAside');
+    const fbModal   = document.getElementById('feedbackModal');
+
+    function openFeedbackModal(){
+      fbEmail.value = ''; fbText.value  = '';
+      fbStatus.textContent = ''; fbStatus.className = 'fb-status';
+      btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
+      fbEmail.disabled = fbText.disabled = false; btnFbSend.disabled = false;
+      fbModal.classList.add('show');
+    }
+    footerBtn?.addEventListener('click', openFeedbackModal);
+    blogBtn?.addEventListener('click', openFeedbackModal);
+    btnFbCancel?.addEventListener('click',()=> fbModal.classList.remove('show'));
+    btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
+    fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
+
+    btnFbSend?.addEventListener('click', async ()=>{
+      const message = (fbText.value||'').trim();
+      const from    = (fbEmail.value||'').trim();
+      if(!message){
+        fbStatus.textContent='Por favor, escribe tu sugerencia o tema de artículo.';
+        fbStatus.className='fb-status err';
+        fbStatus.focus?.();
+        return;
+      }
+      fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
+      fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
+
+      const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
+      const user = getCurrentUser();
+      const note = {
+        id,
+        type:'feedback',
+        title:'Feedback blog ITHub',
+        message,
+        email: from || user?.email || null,
+        userId: user?.id || user?.email || null,
+        path: location.pathname + location.search,
+        ua: navigator.userAgent,
+        createdAt: new Date().toISOString()
+      };
+
+      const params = new URLSearchParams();
+      params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
+
+      const ctl = new AbortController(); const timeoutId = setTimeout(()=>ctl.abort(), 10000);
+      try{
+        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
+        clearTimeout(timeoutId);
+        if(!res.ok){
+          const text = await res.text().catch(()=> '');
+          throw new Error(`HTTP ${res.status} ${text}`);
+        }
+        fbStatus.textContent = '¡Gracias! Hemos recibido tu propuesta 👌';
+        fbStatus.className='fb-status ok';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+      }catch(err){
+        console.error('Error guardando feedback:', err);
+        fbStatus.textContent = 'No se pudo enviar la información. Inténtalo de nuevo en unos minutos.';
+        fbStatus.className='fb-status err';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+      }
     });
-  }
 
-  function renderPage(){
-    const filtered = getFilteredArticles();
-    const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+    // Rellenar enlaces de compartir por artículo (X, LinkedIn, WhatsApp)
+    (function(){
+      const baseUrl = 'https://www.ithub.es/blog/blog.html';
+      document.querySelectorAll('.blog-article').forEach(article => {
+        const id = article.id;
+        const titleEl = article.querySelector('h2');
+        const title = titleEl ? titleEl.textContent.trim() : document.title;
+        const url = `${baseUrl}#${id}`;
+        const encodedUrl = encodeURIComponent(url);
+        const encodedTitle = encodeURIComponent(title + ' · vía ITHub.es');
 
-    if(currentPage > totalPages) currentPage = totalPages;
-
-    // Ocultar todos
-    articles.forEach(a => a.style.display = 'none');
-
-    // Mostrar solo los de esta página
-    const start = (currentPage - 1) * pageSize;
-    const pageItems = filtered.slice(start, start + pageSize);
-    pageItems.forEach(a => a.style.display = '');
-
-    pageInfo.textContent = `Página ${currentPage} de ${totalPages}`;
-    prevBtn.disabled = currentPage === 1;
-    nextBtn.disabled = currentPage === totalPages || totalPages === 0;
-  }
-
-  prevBtn.addEventListener('click', () => {
-    if(currentPage > 1){ currentPage--; renderPage(); }
-  });
-  nextBtn.addEventListener('click', () => {
-    const totalPages = Math.ceil(getFilteredArticles().length / pageSize);
-    if(currentPage < totalPages){ currentPage++; renderPage(); }
-  });
-
-  filterButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentFilter = btn.dataset.filter || 'all';
-      currentPage = 1;
-      renderPage();
-    });
-  });
-
-  renderPage();
-</script>
-
+        article.querySelectorAll('.share-x').forEach(a => {
+          a.href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+        });
+        article.querySelectorAll('.share-li').forEach(a => {
+          a.href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+        });
+        article.querySelectorAll('.share-wa').forEach(a => {
+          a.href = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
