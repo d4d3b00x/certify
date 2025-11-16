@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>[TEST] Callback Cognito ITHub.es</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <style>
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:#0f1320;
+      color:#e8ecff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+    }
+    .box{
+      max-width:480px;
+      background:#161b2d;
+      border-radius:14px;
+      padding:20px;
+      border:1px solid #283056;
+      box-shadow:0 12px 28px rgba(6,12,40,.45);
+    }
+    .status{margin:0 0 10px;font-weight:700}
+    .log{font-size:0.85rem;color:#9ca8d9;word-break:break-all;white-space:pre-wrap}
+    code{font-size:0.85em;background:#0f1630;padding:2px 4px;border-radius:4px}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <p class="status" id="status">Procesando inicio de sesión con Cognito…</p>
+    <pre class="log" id="log"></pre>
+  </div>
+
+  <script>
+    const COGNITO_DOMAIN = 'https://eu-central-1jueeimyxa.auth.eu-central-1.amazoncognito.com';
+    const CLIENT_ID      = '6rkcg2ckni3j9g5qgt384nd54o';
+    const REDIRECT_URI   = 'https://www.ithub.es/login/cognito-callback.html';
+
+    const $ = id => document.getElementById(id);
+
+    function log(msg) {
+      console.log(msg);
+      const el = $("log");
+      el.textContent += msg + "\n";
+    }
+
+    async function exchangeCodeForTokens(code) {
+      log("Intercambiando code por tokens…");
+      const body = new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: CLIENT_ID,
+        code: code,
+        redirect_uri: REDIRECT_URI
+      });
+
+      try {
+        const resp = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body
+        });
+
+        if (!resp.ok) {
+          const txt = await resp.text();
+          $("status").textContent = "❌ Error al obtener tokens de Cognito";
+          log(`HTTP ${resp.status}:\n${txt}`);
+          return;
+        }
+
+        const tokens = await resp.json();
+        log("✅ Tokens recibidos correctamente.");
+
+        sessionStorage.setItem('idToken', tokens.id_token);
+        sessionStorage.setItem('accessToken', tokens.access_token);
+        if (tokens.refresh_token) {
+          sessionStorage.setItem('refreshToken', tokens.refresh_token);
+        }
+
+        $("status").textContent = "✅ Inicio de sesión correcto. Redirigiendo a la home…";
+        // Aquí ya estás logado. Más adelante usaremos estos tokens para tu API.
+        window.location.href = '/';
+      } catch (err) {
+        $("status").textContent = "❌ Error de red al contactar con Cognito";
+        log(err && err.message ? err.message : String(err));
+      }
+    }
+
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+
+      if (!code) {
+        $("status").textContent = "❌ No se encontró el parámetro 'code' en la URL";
+        log("URL actual: " + window.location.href);
+        return;
+      }
+
+      log("Code recibido: " + code);
+      exchangeCodeForTokens(code);
+    })();
+  </script>
+</body>
+</html>

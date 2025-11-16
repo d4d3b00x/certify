@@ -66,7 +66,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .btn.ghost{background:#0f1630}
     .btn[disabled]{opacity:.6;cursor:not-allowed}
 
-    /* Aviso de éxito (si algún día lo usamos para otro flujo) */
     .info{
       display:none;margin:0 0 10px;padding:10px 12px;border-radius:12px;text-align:left;
       background:rgba(37,184,115,.14);border:1px solid rgba(37,184,115,.35);color:#c6f4e5;font-weight:800
@@ -169,7 +168,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     // ---------- Config Cognito ----------
     const COGNITO_DOMAIN = 'https://eu-central-1jueeimyxa.auth.eu-central-1.amazoncognito.com';
     const CLIENT_ID      = '6rkcg2ckni3j9g5qgt384nd54o';
-    const REDIRECT_URI   = 'https://www.ithub.es/login/callback.html';
+    // 👇 usamos callback de pruebas separada de producción
+    const REDIRECT_URI   = 'https://www.ithub.es/login/cognito-callback.html';
     const RESPONSE_TYPE  = 'code';
     const SCOPE          = 'openid+email+profile';
 
@@ -184,7 +184,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     // ---------- LOGIN (redirige a Cognito) ----------
     $("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      // Ignoramos los campos locales y mandamos al Hosted UI
       window.location.href = buildCognitoUrl('login');
     });
 
