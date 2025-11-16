@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+ 
+  <title>XX_COGNITO. Iniciar sesión en ITHub.es — Simuladores y guías de certificación</title>
+  <meta name="description" content="Accede a tu cuenta de ITHub.es para continuar tus simuladores de examen, revisar tu progreso y guardar tus resúmenes de certificaciones Azure y AWS." />
+  <link rel="canonical" href="https://www.ithub.es/login/login.html" />
+  <meta name="robots" content="noindex,nofollow" />
+
+  <meta property="og:title" content="Inicia sesión en ITHub.es" />
+  <meta property="og:description" content="Entra en tu perfil para seguir estudiando con simuladores, contenidos y ranking de certificaciones IT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/login/login.html" />
+  <meta property="og:site_name" content="ITHub.es" />
+
+  <link rel="icon" type="image/svg+xml" 
+href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
+
+  <style>
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
+      --accent:#6c8bff;--accent-2:#3e64ff;--radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --ok:#25b873;--bad:#ff6b6b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+    a{color:#cfe1ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
+      border-bottom:1px solid var(--stroke)}
+    .wrap{max-width:960px;margin:0 auto;padding:20px}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
+    .dot{width:10px;height:10px;border-radius:50%;background:#6c8bff;box-shadow:0 0 0 6px rgba(108,139,255,.18)}
+    .menu{display:flex;gap:18px;color:var(--muted);font-weight:700}
+    .menu a{color:inherit;text-decoration:none}
+    .menu a:hover{color:#fff}
+
+    .page{max-width:960px;margin:0 auto;padding:24px 20px}
+    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+    .title{margin:0 0 6px;font-weight:900}
+    .hint{color:var(--muted);font-size:.94rem}
+    .err{color:#ffb0b0;font-weight:800;margin-top:6px;display:none}
+    .hidden{display:none !important}
+
+    .switcher{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);
+      border-radius:12px;padding:6px;width:fit-content;margin:0 auto 14px}
+    .tab{appearance:none;border:1px solid transparent;border-radius:10px;padding:8px 12px;
+      font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
+    .tab.active{background:#0f1630;border-color:#31407a;box-shadow:inset 0 0 0 1px #31407a}
+
+    .field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
+    .control{display:flex;align-items:center;gap:8px;border:1px solid var(--stroke);
+      border-radius:12px;padding:10px 12px;background:var(--surface2)}
+    .control input{border:none;outline:none;background:transparent;color:var(--ink);width:100%;font-weight:800}
+    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
+    .btn{appearance:none;border:1px solid var(--stroke);border-radius:12px;padding:12px 16px;
+      font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
+    .btn.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;box-shadow:var(--shadow)}
+    .btn.ghost{background:#0f1630}
+    .btn[disabled]{opacity:.6;cursor:not-allowed}
+
+    /* Aviso de éxito (si algún día lo usamos para otro flujo) */
+    .info{
+      display:none;margin:0 0 10px;padding:10px 12px;border-radius:12px;text-align:left;
+      background:rgba(37,184,115,.14);border:1px solid rgba(37,184,115,.35);color:#c6f4e5;font-weight:800
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><span class="dot"></span> ITHub.es</div>
+      <nav class="menu">
+        <a href="/">Home</a>
+        <a href="/index.html#simuladores">Simuladores</a>
+        <a href="/score/ranking.html">Ranking</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page">
+    <div class="switcher" id="tabBar">
+      <button class="tab active" id="tabLogin" type="button">Login</button>
+      <button class="tab" id="tabSignup" type="button">Registro</button>
+    </div>
+
+    <!-- Login -->
+    <form id="loginForm" class="card" novalidate>
+      <h2 class="title">Iniciar sesión</h2>
+      <p class="hint">
+        Serás redirigido a una página segura de Amazon Cognito para autenticarte.
+        Desde allí podrás también recuperar tu contraseña si la has olvidado.
+      </p>
+      <div class="field">
+        <label for="loginEmail"><b>Email (opcional)</b></label>
+        <div class="control">
+          <input id="loginEmail" type="email" placeholder="you@email.com">
+        </div>
+      </div>
+      <div class="field">
+        <label for="loginPass"><b>Contraseña (se pedirá de nuevo en Cognito)</b></label>
+        <div class="control">
+          <input id="loginPass" type="password" placeholder="••••••••">
+        </div>
+      </div>
+      <div id="loginErr" class="err"></div>
+      <div class="actions">
+        <button class="btn" id="goSignup" type="button">Crear cuenta</button>
+        <button class="btn primary" id="loginSubmit" type="submit">Entrar</button>
+      </div>
+    </form>
+
+    <!-- Registro -->
+    <form id="signupForm" class="card hidden" novalidate>
+      <h2 class="title">Crear cuenta</h2>
+      <p class="hint">
+        Te llevaremos a la página de registro segura de Amazon Cognito, donde podrás crear tu usuario con email y contraseña.
+      </p>
+      <div class="field">
+        <label for="signupName"><b>Nombre (opcional)</b></label>
+        <div class="control">
+          <input id="signupName" placeholder="Tu nombre">
+        </div>
+      </div>
+      <div class="field">
+        <label for="signupEmail"><b>Email</b></label>
+        <div class="control">
+          <input id="signupEmail" type="email" placeholder="you@email.com">
+        </div>
+      </div>
+      <div class="field">
+        <label for="signupPass"><b>Contraseña</b></label>
+        <div class="control">
+          <input id="signupPass" type="password" placeholder="La configurarás en Cognito">
+        </div>
+      </div>
+      <div id="signupErr" class="err"></div>
+      <div class="actions">
+        <button class="btn" id="goLogin" type="button">Ya tengo cuenta</button>
+        <button class="btn primary" id="signupSubmit" type="submit">Crear cuenta</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    // ---------- Tabs ----------
+    function showTab(which){
+      const signup = which === "signup";
+      $("tabLogin").classList.toggle("active", !signup);
+      $("tabSignup").classList.toggle("active", signup);
+      $("loginForm").classList.toggle("hidden", signup);
+      $("signupForm").classList.toggle("hidden", !signup);
+      setTimeout(()=> (signup ? $("signupEmail") : $("loginEmail")).focus(), 10);
+    }
+    $("tabLogin").onclick = () => showTab("login");
+    $("tabSignup").onclick = () => showTab("signup");
+    $("goSignup").onclick = () => showTab("signup");
+    $("goLogin").onclick = () => showTab("login");
+
+    // ---------- Config Cognito ----------
+    const COGNITO_DOMAIN = 'https://eu-central-1jueeimyxa.auth.eu-central-1.amazoncognito.com';
+    const CLIENT_ID      = '6rkcg2ckni3j9g5qgt384nd54o';
+    const REDIRECT_URI   = 'https://www.ithub.es/login/callback.html';
+    const RESPONSE_TYPE  = 'code';
+    const SCOPE          = 'openid+email+profile';
+
+    function buildCognitoUrl(path) {
+      return `${COGNITO_DOMAIN}/${path}` +
+        `?client_id=${encodeURIComponent(CLIENT_ID)}` +
+        `&response_type=${encodeURIComponent(RESPONSE_TYPE)}` +
+        `&scope=${SCOPE}` +
+        `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+    }
+
+    // ---------- LOGIN (redirige a Cognito) ----------
+    $("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      // Ignoramos los campos locales y mandamos al Hosted UI
+      window.location.href = buildCognitoUrl('login');
+    });
+
+    // ---------- REGISTRO (redirige a Cognito) ----------
+    $("signupForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      window.location.href = buildCognitoUrl('signup');
+    });
+
+    // ---------- Vista inicial ----------
+    document.addEventListener("DOMContentLoaded", () => {
+      const hash = (location.hash || "").toLowerCase();
+      const params = new URLSearchParams(location.search);
+      const view = (params.get("view") || "").toLowerCase();
+
+      const wantsSignup =
+        hash === "#signup" || hash === "#register" ||
+        view === "signup" || view === "register";
+
+      if (wantsSignup) {
+        showTab("signup");
+      } else {
+        showTab("login");
+      }
+    });
+  </script>
+</body>
+</html>
