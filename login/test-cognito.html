@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[TEST] Login Cognito</title>
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+<body style="font-family: Arial; background:#111; color:#eee; padding:40px;">
+
+  <h1>[TEST] Login con Amazon Cognito</h1>
+  <p>
+    Página de prueba muy simple para comprobar el flujo Cognito → callback.<br>
+    Si esto funciona, significa que tu User Pool y callback están bien configurados.
+  </p>
+
+  <button id="btnLogin" 
+          style="padding:10px 20px; margin-right:10px; font-size:16px;">
+    Iniciar sesión (Cognito)
+  </button>
+
+  <button id="btnSignup" 
+          style="padding:10px 20px; font-size:16px;">
+    Crear cuenta (Cognito)
+  </button>
+
+  <hr style="margin:40px 0; opacity:0.2;">
+
+  <p><strong>Callback configurado:</strong><br>
+    <code>https://www.ithub.es/login/cognito-callback.html</code>
+  </p>
+
+  <script>
+    const COGNITO_DOMAIN = "https://eu-central-1jueeimyxa.auth.eu-central-1.amazoncognito.com";
+    const CLIENT_ID = "6rkcg2ckni3j9g5qgt384nd54o";
+    const REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html";
+    const RESPONSE_TYPE = "code";
+    const SCOPE = "openid+email+profile";
+
+    function buildUrl(path) {
+      return `${COGNITO_DOMAIN}/${path}` +
+        `?client_id=${encodeURIComponent(CLIENT_ID)}` +
+        `&response_type=${encodeURIComponent(RESPONSE_TYPE)}` +
+        `&scope=${encodeURIComponent(SCOPE)}` +
+        `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+    }
+
+    document.getElementById("btnLogin").onclick = () => {
+      window.location.href = buildUrl("login");
+    };
+
+    document.getElementById("btnSignup").onclick = () => {
+      window.location.href = buildUrl("signup");
+    };
+  </script>
+
+</body>
+</html>
