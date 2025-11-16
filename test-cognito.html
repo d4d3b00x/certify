@@ -8,7 +8,7 @@
 </head>
 <body style="font-family: Arial, sans-serif; background:#0f1320; color:#e8ecff; padding:40px;">
 
-  <h1>[TEST] Login con Amazon Cognito 2</h1>
+  <h1>[TEST] Login con Amazon Cognito 3</h1>
   <p>
     Esta página es solo de pruebas. Al pulsar los botones irás a la pantalla segura de Cognito.<br/>
     Después de hacer login o registro, volverás a
@@ -38,13 +38,12 @@
   <pre id="userBox" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; min-height:80px;"></pre>
 
   <script>
-    // Misma config que en el callback
+    // ========= CONFIG COGNITO =========
     const COGNITO_DOMAIN = "https://eu-central-1ivdqjxith.auth.eu-central-1.amazoncognito.com";
-    const CLIENT_ID      = "2lj51vu8763on2skv4ntpe9al2";
+    const CLIENT_ID      = "2lj51vu87630n2skv4ntpe9al2"; // <- CORREGIDO (cero)
     const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
     const RESPONSE_TYPE  = "code";
-    // 👇 scopes separados por espacio, NO con +
-    const SCOPE          = "openid email profile";
+    const SCOPE          = "openid email profile"; // separados por espacio
 
     function buildCognitoUrl(path) {
       return `${COGNITO_DOMAIN}/${path}` +
