@@ -211,8 +211,8 @@
       <div id="panelSignup" class="hidden" aria-labelledby="signupTitle">
         <h1 id="signupTitle">Crear cuenta</h1>
         <p class="hint">
-          Crearemos tu usuario en Cognito usando tu email. Solo necesitas confirmar la cuenta
-          y, a partir de ahí, usaremos ese usuario para todos tus simuladores, ranking y quizzes.
+          Crearemos tu usuario en Cognito usando tu email y un <b>nombre público</b>. 
+          Solo necesitas confirmar la cuenta y, a partir de ahí, usaremos ese usuario para tus simuladores, ranking y quizzes.
         </p>
 
         <button class="big-btn" type="button" id="btnSignupCognito">
@@ -232,9 +232,9 @@
   // =========================
   //   CONFIG COGNITO
   // =========================
-  const COGNITO_DOMAIN = "https://eu-central-1ivdqjxith.auth.eu-central-1.amazoncognito.com";
-  const CLIENT_ID      = "2lj51vu87630n2skv4ntpe9al2"; // 👈 asegúrate de que es tu App client actual
-  const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
+  const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+  const CLIENT_ID      = "PON_AQUI_TU_CLIENT_ID"; // 👈 remplaza por el App client ID nuevo
+  const REDIRECT_URI   = "https://www.ithub.es/login/cognito-callback.html";
   const RESPONSE_TYPE  = "code";
   const SCOPE          = "openid email profile";
 
@@ -290,7 +290,6 @@
   });
 
   document.getElementById("btnForgot").addEventListener("click", () => {
-    // Hosted UI de "Forgot password"
     window.location.href = buildCognitoUrl("forgotPassword");
   });
 </script>

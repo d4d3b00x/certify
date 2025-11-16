@@ -16,9 +16,9 @@
     /* ============================================================
        CONFIG COGNITO
     ============================================================ */
-    const COGNITO_DOMAIN = "https://eu-central-1ivdqjxith.auth.eu-central-1.amazoncognito.com";
-    const CLIENT_ID      = "2lj51vu87630n2skv4ntpe9al2";
-    const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
+    const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+    const CLIENT_ID      = "PON_AQUI_TU_CLIENT_ID"; // 👈 MISMO ID QUE EN login-cog.html
+    const REDIRECT_URI   = "https://www.ithub.es/login/cognito-callback.html";
 
     const msgEl   = document.getElementById("msg");
     const debugEl = document.getElementById("debug");
@@ -97,7 +97,6 @@
           return fail("❌ Error leyendo el token recibido desde Cognito.");
         }
 
-        // 👇 NUEVO: recogemos más atributos (preferred_username, name…)
         const cognitoUser = {
           sub: payload.sub,
           email: payload.email,
@@ -111,12 +110,12 @@
 
         /* ------------------------------------------------------------
            2) Transformamos el usuario al formato que usa ITHub.es
-              - id    → sub de Cognito (estable y único)
-              - name  → preferred_username / name / fallback al email o username
+              - id    → sub de Cognito
+              - name  → preferred_username / name / email prefix / username
         ------------------------------------------------------------ */
         const displayName =
-          cognitoUser.preferred_username ||   // ✅ nuestro “nickname” principal
-          cognitoUser.name ||                 // opcionalmente, el atributo name
+          cognitoUser.preferred_username ||
+          cognitoUser.name ||
           (cognitoUser.email && cognitoUser.email.split("@")[0]) ||
           cognitoUser.username ||
           "USER";
