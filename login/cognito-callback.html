@@ -5,34 +5,33 @@
   <title>Procesando inicio de sesión...</title>
   <meta name="robots" content="noindex,nofollow" />
 </head>
+
 <body style="font-family: Arial, sans-serif; background:#0f1320; color:#e8ecff; padding:32px;">
   <h1>Procesando tu inicio de sesión...</h1>
   <p id="msg">Un momento, estamos validando tus credenciales con Amazon Cognito.</p>
 
-  <pre id="debug" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:260px;"></pre>
+  <pre id="debug" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:240px;"></pre>
 
   <script>
-    // ========= CONFIGURACIÓN COGNITO =========
+    /* ============================================================
+       CONFIG COGNITO
+    ============================================================ */
     const COGNITO_DOMAIN = "https://eu-central-1ivdqjxith.auth.eu-central-1.amazoncognito.com";
-    const CLIENT_ID      = "2lj51vu87630n2skv4ntpe9al2";
+    const CLIENT_ID      = "2lj51vu8763on2skv4ntpe9al2";
     const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
 
     const msgEl   = document.getElementById("msg");
     const debugEl = document.getElementById("debug");
 
-    function setMsg(text) {
-      msgEl.textContent = text;
-    }
-
+    function setMsg(text) { msgEl.textContent = text; }
     function logDebug(obj) {
-      try {
-        debugEl.textContent = JSON.stringify(obj, null, 2);
-      } catch {
-        debugEl.textContent = String(obj);
-      }
+      try { debugEl.textContent = JSON.stringify(obj, null, 2); }
+      catch { debugEl.textContent = String(obj); }
     }
 
-    // Helper para decodificar el payload del JWT (id_token)
+    /* ============================================================
+       DECODIFICAR ID TOKEN (JWT)
+    ============================================================ */
     function decodeJwtPayload(token) {
       try {
         const payload = token.split(".")[1];
@@ -41,57 +40,35 @@
         const json = atob(padded);
         return JSON.parse(json);
       } catch (e) {
-        console.error("Error decodificando id_token:", e);
+        console.error("Error decodificando JWT:", e);
         return null;
       }
     }
 
-    function saveCurrentUserFromPayload(payload) {
-      if (!payload || !payload.email) return;
-
-      const email = payload.email.toLowerCase();
-      const name  = payload["name"] ||
-                    payload["cognito:username"] ||
-                    (email.includes("@") ? email.split("@")[0] : "Usuario");
-
-      const currentUser = {
-        userId: email,   // usamos email como ID lógico
-        id: email,
-        email,
-        name
-      };
-
-      try {
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      } catch (e) {
-        console.warn("No se pudo guardar currentUser en localStorage:", e);
-      }
-    }
-
+    /* ============================================================
+       MAIN FLOW: Intercambio de código por tokens
+    ============================================================ */
     async function main() {
       const params = new URLSearchParams(window.location.search);
-      const code   = params.get("code");
-      const error  = params.get("error");
-      const errorDescription = params.get("error_description");
+      const code = params.get("code");
+      const error = params.get("error");
 
       if (error) {
-        setMsg("❌ Error al iniciar sesión: " + error);
-        logDebug({ error, errorDescription });
-        return;
+        return fail("❌ Error de login: " + error, { error });
       }
 
       if (!code) {
-        setMsg("No se recibió ningún código de autenticación en la URL.");
-        logDebug({ query: window.location.search });
-        return;
+        return fail("❌ No se recibió ningún código de autenticación.", {
+          query: window.location.search
+        });
       }
 
       setMsg("Intercambiando el código por tokens seguros...");
 
       try {
         const body = new URLSearchParams({
-          grant_type:   "authorization_code",
-          client_id:    CLIENT_ID,
+          grant_type: "authorization_code",
+          client_id:  CLIENT_ID,
           code,
           redirect_uri: REDIRECT_URI
         });
@@ -104,60 +81,79 @@
 
         if (!resp.ok) {
           const text = await resp.text();
-          setMsg("❌ Error al obtener los tokens de Cognito.");
-          logDebug({ status: resp.status, body: text });
-          return;
+          return fail("❌ Error al obtener los tokens de Cognito.", {
+            status: resp.status,
+            body: text
+          });
         }
 
         const tokens = await resp.json();
 
-        // Guardamos los tokens “crudos” por si los quieres usar
+        /* ------------------------------------------------------------
+           1) Procesar ID Token → Información del usuario
+        ------------------------------------------------------------ */
+        const payload = decodeJwtPayload(tokens.id_token);
+        if (!payload) {
+          return fail("❌ Error leyendo el token recibido desde Cognito.");
+        }
+
+        const cognitoUser = {
+          sub: payload.sub,
+          email: payload.email,
+          username: payload["cognito:username"],
+          email_verified: payload.email_verified
+        };
+
+        sessionStorage.setItem("cognitoUser", JSON.stringify(cognitoUser));
+
+        /* ------------------------------------------------------------
+           2) Transformamos el usuario al formato que usa ITHub.es
+              - id   → sub de Cognito (estable y único)
+              - name → prefijo del email (coolboox@gmail → "coolboox")
+              - email → email real
+        ------------------------------------------------------------ */
+        const displayName =
+          (cognitoUser.email && cognitoUser.email.split("@")[0]) ||
+          cognitoUser.username ||
+          "USER";
+
+        const ithUser = {
+          id:    cognitoUser.sub,
+          email: cognitoUser.email,
+          name:  displayName
+        };
+
         try {
-          sessionStorage.setItem("cognitoTokens", JSON.stringify(tokens));
+          localStorage.setItem("currentUser", JSON.stringify(ithUser));
         } catch (e) {
-          console.warn("No se pudieron guardar los tokens en sessionStorage:", e);
+          console.warn("⚠️ No se pudo guardar currentUser:", e);
         }
 
-        const idToken = tokens.id_token;
-        let payload = null;
+        logDebug({
+          tokens,
+          cognitoUser,
+          ithUser
+        });
 
-        if (idToken) {
-          payload = decodeJwtPayload(idToken);
-          if (payload) {
-            saveCurrentUserFromPayload(payload);
-            logDebug({
-              tokensSummary: {
-                hasIdToken: !!tokens.id_token,
-                hasAccessToken: !!tokens.access_token
-              },
-              userPayload: payload
-            });
-          } else {
-            logDebug({
-              tokensSummary: {
-                hasIdToken: !!tokens.id_token,
-                hasAccessToken: !!tokens.access_token
-              }
-            });
-          }
-        } else {
-          logDebug({
-            tokensSummary: {
-              hasIdToken: false,
-              hasAccessToken: !!tokens.access_token
-            }
-          });
-        }
+        /* ------------------------------------------------------------
+           3) Login OK → Redirigir a inicio
+        ------------------------------------------------------------ */
+        setMsg("✅ Login correcto. Redirigiendo...");
+        setTimeout(() => { window.location.href = "/"; }, 800);
 
-        setMsg("✅ Login correcto. Redirigiendo a la página principal...");
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 800);
       } catch (e) {
-        console.error(e);
-        setMsg("❌ Error inesperado procesando el inicio de sesión.");
-        logDebug({ exception: String(e) });
+        return fail("❌ Error inesperado procesando el inicio de sesión.", {
+          exception: String(e)
+        });
       }
+    }
+
+    /* ============================================================
+       ERROR HANDLER
+    ============================================================ */
+    function fail(message, debugInfo) {
+      setMsg(message);
+      logDebug(debugInfo);
     }
 
     main();
