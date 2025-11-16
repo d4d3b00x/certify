@@ -97,10 +97,13 @@
           return fail("❌ Error leyendo el token recibido desde Cognito.");
         }
 
+        // 👇 NUEVO: recogemos más atributos (preferred_username, name…)
         const cognitoUser = {
           sub: payload.sub,
           email: payload.email,
           username: payload["cognito:username"],
+          preferred_username: payload["preferred_username"],
+          name: payload["name"],
           email_verified: payload.email_verified
         };
 
@@ -108,11 +111,12 @@
 
         /* ------------------------------------------------------------
            2) Transformamos el usuario al formato que usa ITHub.es
-              - id   → sub de Cognito (estable y único)
-              - name → prefijo del email (coolboox@gmail → "coolboox")
-              - email → email real
+              - id    → sub de Cognito (estable y único)
+              - name  → preferred_username / name / fallback al email o username
         ------------------------------------------------------------ */
         const displayName =
+          cognitoUser.preferred_username ||   // ✅ nuestro “nickname” principal
+          cognitoUser.name ||                 // opcionalmente, el atributo name
           (cognitoUser.email && cognitoUser.email.split("@")[0]) ||
           cognitoUser.username ||
           "USER";
@@ -131,6 +135,7 @@
 
         logDebug({
           tokens,
+          payload,
           cognitoUser,
           ithUser
         });
