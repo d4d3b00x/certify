@@ -8,156 +8,81 @@
 
 <body style="font-family: Arial, sans-serif; background:#0f1320; color:#e8ecff; padding:32px;">
   <h1>Procesando tu inicio de sesión...</h1>
-  <p id="msg">Un momento, estamos validando tus credenciales con Amazon Cognito.</p>
+  <p id="msg">Validando con Cognito...</p>
 
   <pre id="debug" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:240px;"></pre>
 
   <script>
-    /* ============================================================
-       CONFIG COGNITO
-    ============================================================ */
     const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
-    const CLIENT_ID      = "592bh3ek4jdeg78qntt810g7vl"; // 👈 MISMO ID QUE EN login-cog.html
+    const CLIENT_ID      = "592bh3ek4jdeg78qntt810g7vl";
     const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
 
     const msgEl   = document.getElementById("msg");
     const debugEl = document.getElementById("debug");
 
-    function setMsg(text) { msgEl.textContent = text; }
-    function logDebug(obj) {
-      try { debugEl.textContent = JSON.stringify(obj, null, 2); }
-      catch { debugEl.textContent = String(obj); }
-    }
+    function setMsg(t){ msgEl.textContent = t; }
 
-    /* ============================================================
-       DECODIFICAR ID TOKEN (JWT)
-    ============================================================ */
-    function decodeJwtPayload(token) {
+    function decodeJwtPayload(token){
       try {
         const payload = token.split(".")[1];
-        const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
-        const padded = base64 + "=".repeat((4 - base64.length % 4) % 4);
-        const json = atob(padded);
-        return JSON.parse(json);
-      } catch (e) {
-        console.error("Error decodificando JWT:", e);
+        const txt = atob(payload.replace(/-/g,"+").replace(/_/g,"/"));
+        return JSON.parse(txt);
+      } catch {
         return null;
       }
     }
 
-    /* ============================================================
-       MAIN FLOW: Intercambio de código por tokens
-    ============================================================ */
-    async function main() {
+    async function main(){
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
       const error = params.get("error");
 
-      if (error) {
-        return fail("❌ Error de login: " + error, { error });
-      }
+      if (error) return fail("Error: "+error);
 
-      if (!code) {
-        return fail("❌ No se recibió ningún código de autenticación.", {
-          query: window.location.search
-        });
-      }
+      if (!code) return fail("❌ No se recibió el código de autenticación.");
 
-      setMsg("Intercambiando el código por tokens seguros...");
+      setMsg("Intercambiando código por tokens...");
 
-      try {
-        const body = new URLSearchParams({
+      const resp = await fetch(COGNITO_DOMAIN + "/oauth2/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
           grant_type: "authorization_code",
-          client_id:  CLIENT_ID,
+          client_id: CLIENT_ID,
           code,
           redirect_uri: REDIRECT_URI
-        });
+        })
+      });
 
-        const resp = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body
-        });
-
-        if (!resp.ok) {
-          const text = await resp.text();
-          return fail("❌ Error al obtener los tokens de Cognito.", {
-            status: resp.status,
-            body: text
-          });
-        }
-
-        const tokens = await resp.json();
-
-        /* ------------------------------------------------------------
-           1) Procesar ID Token → Información del usuario
-        ------------------------------------------------------------ */
-        const payload = decodeJwtPayload(tokens.id_token);
-        if (!payload) {
-          return fail("❌ Error leyendo el token recibido desde Cognito.");
-        }
-
-        const cognitoUser = {
-          sub: payload.sub,
-          email: payload.email,
-          username: payload["cognito:username"],
-          preferred_username: payload["preferred_username"],
-          name: payload["name"],
-          email_verified: payload.email_verified
-        };
-
-        sessionStorage.setItem("cognitoUser", JSON.stringify(cognitoUser));
-
-        /* ------------------------------------------------------------
-           2) Transformamos el usuario al formato que usa ITHub.es
-              - id    → sub de Cognito
-              - name  → preferred_username / name / email prefix / username
-        ------------------------------------------------------------ */
-        const displayName =
-          cognitoUser.preferred_username ||
-          cognitoUser.name ||
-          (cognitoUser.email && cognitoUser.email.split("@")[0]) ||
-          cognitoUser.username ||
-          "USER";
-
-        const ithUser = {
-          id:    cognitoUser.sub,
-          email: cognitoUser.email,
-          name:  displayName
-        };
-
-        try {
-          localStorage.setItem("currentUser", JSON.stringify(ithUser));
-        } catch (e) {
-          console.warn("⚠️ No se pudo guardar currentUser:", e);
-        }
-
-        logDebug({
-          tokens,
-          payload,
-          cognitoUser,
-          ithUser
-        });
-
-        /* ------------------------------------------------------------
-           3) Login OK → Redirigir a inicio
-        ------------------------------------------------------------ */
-        setMsg("✅ Login correcto. Redirigiendo...");
-        setTimeout(() => { window.location.href = "/"; }, 800);
-
-      } catch (e) {
-        return fail("❌ Error inesperado procesando el inicio de sesión.", {
-          exception: String(e)
+      if (!resp.ok){
+        return fail("Error al obtener tokens", {
+          status: resp.status, text: await resp.text()
         });
       }
+
+      const tokens = await resp.json();
+      const payload = decodeJwtPayload(tokens.id_token);
+
+      if (!payload) return fail("Error leyendo el ID Token");
+
+      const user = {
+        id: payload.sub,
+        email: payload.email,
+        name:
+          payload.preferred_username ??
+          payload.name ??
+          payload.email.split("@")[0]
+      };
+
+      localStorage.setItem("currentUser", JSON.stringify(user));
+
+      setMsg("Inicio de sesión correcto. Redirigiendo...");
+      setTimeout(()=> window.location.href="/", 1000);
     }
 
-    /* ============================================================
-       ERROR HANDLER
-    ============================================================ */
-    function fail(message, debugInfo) {
-      setMsg(message);
-      logDebug(debugInfo);
+    function fail(msg, dbg){
+      setMsg(msg);
+      debugEl.textContent = JSON.stringify(dbg, null, 2);
     }
 
     main();
