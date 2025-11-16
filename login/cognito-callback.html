@@ -1,107 +1,135 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <title>[TEST] Callback Cognito ITHub.es</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <title>Procesando inicio de sesión...</title>
   <meta name="robots" content="noindex,nofollow" />
-  <style>
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-      background:#0f1320;
-      color:#e8ecff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-    }
-    .box{
-      max-width:480px;
-      background:#161b2d;
-      border-radius:14px;
-      padding:20px;
-      border:1px solid #283056;
-      box-shadow:0 12px 28px rgba(6,12,40,.45);
-    }
-    .status{margin:0 0 10px;font-weight:700}
-    .log{font-size:0.85rem;color:#9ca8d9;word-break:break-all;white-space:pre-wrap}
-    code{font-size:0.85em;background:#0f1630;padding:2px 4px;border-radius:4px}
-  </style>
 </head>
-<body>
-  <div class="box">
-    <p class="status" id="status">Procesando inicio de sesión con Cognito…</p>
-    <pre class="log" id="log"></pre>
-  </div>
+<body style="font-family: Arial, sans-serif; background:#0f1320; color:#e8ecff; padding:32px;">
+  <h1>Procesando tu inicio de sesión...</h1>
+  <p id="msg">Un momento, estamos validando tus credenciales con Amazon Cognito.</p>
+
+  <pre id="debug" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:240px;"></pre>
 
   <script>
-    const COGNITO_DOMAIN = 'https://eu-central-1jueeimyxa.auth.eu-central-1.amazoncognito.com';
-    const CLIENT_ID      = '6rkcg2ckni3j9g5qgt384nd54o';
-    const REDIRECT_URI   = 'https://www.ithub.es/login/cognito-callback.html';
+    // ========= CONFIGURACIÓN COGNITO =========
+    const COGNITO_DOMAIN = "https://eu-central-1h37qvzucj.auth.eu-central-1.amazoncognito.com";
+    const CLIENT_ID      = "6s8h4go6gq4t9hk72ta36hsofb";
+    // OJO: Debe coincidir exactamente con el callback configurado en Cognito
+    const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
+    // Si más adelante sirves esta misma página bajo https://www.ithub.es/login/
+    // Cognito seguirá funcionando porque el dominio lo decide la URL donde aterriza el usuario.
 
-    const $ = id => document.getElementById(id);
+    const msgEl   = document.getElementById("msg");
+    const debugEl = document.getElementById("debug");
 
-    function log(msg) {
-      console.log(msg);
-      const el = $("log");
-      el.textContent += msg + "\n";
+    function setMsg(text) {
+      msgEl.textContent = text;
     }
 
-    async function exchangeCodeForTokens(code) {
-      log("Intercambiando code por tokens…");
-      const body = new URLSearchParams({
-        grant_type: 'authorization_code',
-        client_id: CLIENT_ID,
-        code: code,
-        redirect_uri: REDIRECT_URI
-      });
+    function logDebug(obj) {
+      try {
+        debugEl.textContent = JSON.stringify(obj, null, 2);
+      } catch {
+        debugEl.textContent = String(obj);
+      }
+    }
+
+    // Helper para decodificar el payload del JWT (id_token)
+    function decodeJwtPayload(token) {
+      try {
+        const payload = token.split(".")[1];
+        // JWT usa base64url, lo normalizamos a base64
+        const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+        const padded = base64 + "=".repeat((4 - base64.length % 4) % 4);
+        const json = atob(padded);
+        return JSON.parse(json);
+      } catch (e) {
+        console.error("Error decodificando id_token:", e);
+        return null;
+      }
+    }
+
+    async function main() {
+      const params = new URLSearchParams(window.location.search);
+      const code   = params.get("code");
+      const error  = params.get("error");
+      const errorDescription = params.get("error_description");
+
+      if (error) {
+        setMsg("❌ Error al iniciar sesión: " + error);
+        logDebug({ error, errorDescription });
+        return;
+      }
+
+      if (!code) {
+        setMsg("No se recibió ningún código de autenticación en la URL.");
+        logDebug({ query: window.location.search });
+        return;
+      }
+
+      setMsg("Intercambiando el código por tokens seguros...");
 
       try {
+        const body = new URLSearchParams({
+          grant_type:    "authorization_code",
+          client_id:     CLIENT_ID,
+          code,
+          redirect_uri:  REDIRECT_URI
+        });
+
         const resp = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body
         });
 
         if (!resp.ok) {
-          const txt = await resp.text();
-          $("status").textContent = "❌ Error al obtener tokens de Cognito";
-          log(`HTTP ${resp.status}:\n${txt}`);
+          const text = await resp.text();
+          setMsg("❌ Error al obtener los tokens de Cognito.");
+          logDebug({ status: resp.status, body: text });
           return;
         }
 
         const tokens = await resp.json();
-        log("✅ Tokens recibidos correctamente.");
+        // tokens: { id_token, access_token, refresh_token?, expires_in, token_type }
 
-        sessionStorage.setItem('idToken', tokens.id_token);
-        sessionStorage.setItem('accessToken', tokens.access_token);
-        if (tokens.refresh_token) {
-          sessionStorage.setItem('refreshToken', tokens.refresh_token);
+        // Guardamos todo el paquete de tokens
+        sessionStorage.setItem("cognitoTokens", JSON.stringify(tokens));
+
+        // Decodificamos id_token para extraer info de usuario
+        const idToken = tokens.id_token;
+        if (idToken) {
+          const payload = decodeJwtPayload(idToken);
+          if (payload) {
+            const user = {
+              sub: payload.sub,
+              email: payload.email,
+              username: payload["cognito:username"],
+              email_verified: payload.email_verified
+            };
+            sessionStorage.setItem("cognitoUser", JSON.stringify(user));
+            logDebug({ tokensSummary: { hasIdToken: !!tokens.id_token, hasAccessToken: !!tokens.access_token }, user });
+          } else {
+            logDebug({ tokensSummary: { hasIdToken: !!tokens.id_token, hasAccessToken: !!tokens.access_token } });
+          }
+        } else {
+          logDebug({ tokensSummary: { hasIdToken: false, hasAccessToken: !!tokens.access_token } });
         }
 
-        $("status").textContent = "✅ Inicio de sesión correcto. Redirigiendo a la home…";
-        // Aquí ya estás logado. Más adelante usaremos estos tokens para tu API.
-        window.location.href = '/';
-      } catch (err) {
-        $("status").textContent = "❌ Error de red al contactar con Cognito";
-        log(err && err.message ? err.message : String(err));
+        setMsg("✅ Login correcto. Redirigiendo a la página principal...");
+        // Redirige a la raíz del dominio actual (funciona en main.amplifyapp.com y en www.ithub.es)
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 800);
+      } catch (e) {
+        console.error(e);
+        setMsg("❌ Error inesperado procesando el inicio de sesión.");
+        logDebug({ exception: String(e) });
       }
     }
 
-    (function () {
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get('code');
-
-      if (!code) {
-        $("status").textContent = "❌ No se encontró el parámetro 'code' en la URL";
-        log("URL actual: " + window.location.href);
-        return;
-      }
-
-      log("Code recibido: " + code);
-      exchangeCodeForTokens(code);
-    })();
+    main();
   </script>
 </body>
 </html>

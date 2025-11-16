@@ -6,38 +6,46 @@
   <title>[TEST] Login Cognito</title>
   <meta name="robots" content="noindex,nofollow" />
 </head>
-<body style="font-family: Arial; background:#111; color:#eee; padding:40px;">
+<body style="font-family: Arial, sans-serif; background:#0f1320; color:#e8ecff; padding:40px;">
 
   <h1>[TEST] Login con Amazon Cognito</h1>
   <p>
-    Página de prueba muy simple para comprobar el flujo Cognito → callback.<br>
-    Si esto funciona, significa que tu User Pool y callback están bien configurados.
+    Esta página es solo de pruebas. Al pulsar los botones irás a la pantalla segura de Cognito.<br/>
+    Después de hacer login o registro, volverás a
+    <code>/login/cognito-callback.html</code> que guardará los tokens en <code>sessionStorage</code>.
   </p>
 
-  <button id="btnLogin" 
+  <button id="btnLogin"
           style="padding:10px 20px; margin-right:10px; font-size:16px;">
     Iniciar sesión (Cognito)
   </button>
 
-  <button id="btnSignup" 
+  <button id="btnSignup"
           style="padding:10px 20px; font-size:16px;">
-    Crear cuenta (Cognito)
+    Crear cuenta nueva (Cognito)
   </button>
 
-  <hr style="margin:40px 0; opacity:0.2;">
+  <hr style="margin:30px 0; opacity:0.3;">
 
-  <p><strong>Callback configurado:</strong><br>
-    <code>https://www.ithub.es/login/cognito-callback.html</code>
+  <h2>Comprobar usuario actual (desde sessionStorage)</h2>
+  <p>
+    Después de iniciar sesión, recarga esta página y pulsa el botón para ver los datos guardados.
   </p>
+  <button id="btnShowUser"
+          style="padding:8px 16px; font-size:14px; margin-bottom:8px;">
+    Mostrar usuario almacenado
+  </button>
+  <pre id="userBox" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; min-height:80px;"></pre>
 
   <script>
-    const COGNITO_DOMAIN = "https://eu-central-1jueeimyxa.auth.eu-central-1.amazoncognito.com";
-    const CLIENT_ID = "6rkcg2ckni3j9g5qgt384nd54o";
-const REDIRECT_URI = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
-    const RESPONSE_TYPE = "code";
-    const SCOPE = "openid+email+profile";
+    // Misma config que en el callback
+    const COGNITO_DOMAIN = "https://eu-central-1h37qvzucj.auth.eu-central-1.amazoncognito.com";
+    const CLIENT_ID      = "6s8h4go6gq4t9hk72ta36hsofb";
+    const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
+    const RESPONSE_TYPE  = "code";
+    const SCOPE          = "openid+email+profile";
 
-    function buildUrl(path) {
+    function buildCognitoUrl(path) {
       return `${COGNITO_DOMAIN}/${path}` +
         `?client_id=${encodeURIComponent(CLIENT_ID)}` +
         `&response_type=${encodeURIComponent(RESPONSE_TYPE)}` +
@@ -46,13 +54,23 @@ const REDIRECT_URI = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-ca
     }
 
     document.getElementById("btnLogin").onclick = () => {
-      window.location.href = buildUrl("login");
+      window.location.href = buildCognitoUrl("login");
     };
 
     document.getElementById("btnSignup").onclick = () => {
-      window.location.href = buildUrl("signup");
+      window.location.href = buildCognitoUrl("signup");
+    };
+
+    document.getElementById("btnShowUser").onclick = () => {
+      const box = document.getElementById("userBox");
+      try {
+        const tokens = JSON.parse(sessionStorage.getItem("cognitoTokens") || "null");
+        const user   = JSON.parse(sessionStorage.getItem("cognitoUser")   || "null");
+        box.textContent = JSON.stringify({ tokensSummary: tokens ? { hasIdToken: !!tokens.id_token, hasAccessToken: !!tokens.access_token } : null, user }, null, 2);
+      } catch (e) {
+        box.textContent = "Error leyendo datos: " + e;
+      }
     };
   </script>
-
 </body>
 </html>
