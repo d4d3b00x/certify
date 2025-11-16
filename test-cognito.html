@@ -43,15 +43,16 @@
     const CLIENT_ID      = "6s8h4go6gq4t9hk72ta36hsofb";
     const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
     const RESPONSE_TYPE  = "code";
-    const SCOPE          = "openid+email+profile";
+    // 👇 scopes separados por espacio, NO con +
+    const SCOPE          = "openid email profile";
 
-   function buildCognitoUrl(path) {
-  return `${COGNITO_DOMAIN}/${path}` +
-    `?client_id=${encodeURIComponent(CLIENT_ID)}` +
-    `&response_type=${encodeURIComponent(RESPONSE_TYPE)}` +
-    `&scope=${encodeURIComponent(SCOPE)}` +
-    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
-}
+    function buildCognitoUrl(path) {
+      return `${COGNITO_DOMAIN}/${path}` +
+        `?client_id=${encodeURIComponent(CLIENT_ID)}` +
+        `&response_type=${encodeURIComponent(RESPONSE_TYPE)}` +
+        `&scope=${encodeURIComponent(SCOPE)}` +
+        `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+    }
 
     document.getElementById("btnLogin").onclick = () => {
       window.location.href = buildCognitoUrl("login");
@@ -66,7 +67,14 @@
       try {
         const tokens = JSON.parse(sessionStorage.getItem("cognitoTokens") || "null");
         const user   = JSON.parse(sessionStorage.getItem("cognitoUser")   || "null");
-        box.textContent = JSON.stringify({ tokensSummary: tokens ? { hasIdToken: !!tokens.id_token, hasAccessToken: !!tokens.access_token } : null, user }, null, 2);
+        box.textContent = JSON.stringify(
+          {
+            tokensSummary: tokens ? { hasIdToken: !!tokens.id_token, hasAccessToken: !!tokens.access_token } : null,
+            user
+          },
+          null,
+          2
+        );
       } catch (e) {
         box.textContent = "Error leyendo datos: " + e;
       }

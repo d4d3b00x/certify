@@ -13,10 +13,9 @@
 
   <script>
     // ========= CONFIGURACIÓN COGNITO =========
-  const COGNITO_DOMAIN = "https://eu-central-1h37qvzucj.auth.eu-central-1.amazoncognito.com";
-const CLIENT_ID      = "6s8h4go6gq4t9hk72ta36hsofb";
-const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
-
+    const COGNITO_DOMAIN = "https://eu-central-1h37qvzucj.auth.eu-central-1.amazoncognito.com";
+    const CLIENT_ID      = "6s8h4go6gq4t9hk72ta36hsofb";
+    const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
 
     const msgEl   = document.getElementById("msg");
     const debugEl = document.getElementById("debug");
@@ -37,7 +36,6 @@ const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-
     function decodeJwtPayload(token) {
       try {
         const payload = token.split(".")[1];
-        // JWT usa base64url, lo normalizamos a base64
         const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
         const padded = base64 + "=".repeat((4 - base64.length % 4) % 4);
         const json = atob(padded);
@@ -90,12 +88,9 @@ const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-
         }
 
         const tokens = await resp.json();
-        // tokens: { id_token, access_token, refresh_token?, expires_in, token_type }
 
-        // Guardamos todo el paquete de tokens
         sessionStorage.setItem("cognitoTokens", JSON.stringify(tokens));
 
-        // Decodificamos id_token para extraer info de usuario
         const idToken = tokens.id_token;
         if (idToken) {
           const payload = decodeJwtPayload(idToken);
@@ -107,16 +102,31 @@ const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-
               email_verified: payload.email_verified
             };
             sessionStorage.setItem("cognitoUser", JSON.stringify(user));
-            logDebug({ tokensSummary: { hasIdToken: !!tokens.id_token, hasAccessToken: !!tokens.access_token }, user });
+            logDebug({
+              tokensSummary: {
+                hasIdToken: !!tokens.id_token,
+                hasAccessToken: !!tokens.access_token
+              },
+              user
+            });
           } else {
-            logDebug({ tokensSummary: { hasIdToken: !!tokens.id_token, hasAccessToken: !!tokens.access_token } });
+            logDebug({
+              tokensSummary: {
+                hasIdToken: !!tokens.id_token,
+                hasAccessToken: !!tokens.access_token
+              }
+            });
           }
         } else {
-          logDebug({ tokensSummary: { hasIdToken: false, hasAccessToken: !!tokens.access_token } });
+          logDebug({
+            tokensSummary: {
+              hasIdToken: false,
+              hasAccessToken: !!tokens.access_token
+            }
+          });
         }
 
         setMsg("✅ Login correcto. Redirigiendo a la página principal...");
-        // Redirige a la raíz del dominio actual (funciona en main.amplifyapp.com y en www.ithub.es)
         setTimeout(() => {
           window.location.href = "/";
         }, 800);
