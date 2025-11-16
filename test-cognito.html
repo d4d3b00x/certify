@@ -39,19 +39,19 @@
 
   <script>
     // Misma config que en el callback
-    const COGNITO_DOMAIN = "https://eu-central-1h37qvzucj.auth.eu-central-1.amazoncognito.com";
+    const COGNITO_DOMAIN = "https://eu-central-1h37qvzucj.auth.eu-central-1.amazoncognito.com/";
     const CLIENT_ID      = "6s8h4go6gq4t9hk72ta36hsofb";
     const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
     const RESPONSE_TYPE  = "code";
     const SCOPE          = "openid+email+profile";
 
-    function buildCognitoUrl(path) {
-      return `${COGNITO_DOMAIN}/${path}` +
-        `?client_id=${encodeURIComponent(CLIENT_ID)}` +
-        `&response_type=${encodeURIComponent(RESPONSE_TYPE)}` +
-        `&scope=${encodeURIComponent(SCOPE)}` +
-        `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
-    }
+   function buildCognitoUrl(path) {
+  return `${COGNITO_DOMAIN}/${path}` +
+    `?client_id=${encodeURIComponent(CLIENT_ID)}` +
+    `&response_type=${encodeURIComponent(RESPONSE_TYPE)}` +
+    `&scope=${encodeURIComponent(SCOPE)}` +
+    `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+}
 
     document.getElementById("btnLogin").onclick = () => {
       window.location.href = buildCognitoUrl("login");
