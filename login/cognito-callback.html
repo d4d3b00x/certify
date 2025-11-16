@@ -9,12 +9,12 @@
   <h1>Procesando tu inicio de sesión...</h1>
   <p id="msg">Un momento, estamos validando tus credenciales con Amazon Cognito.</p>
 
-  <pre id="debug" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:240px;"></pre>
+  <pre id="debug" style="background:#161b2d; color:#9ca8d9; padding:12px; border-radius:8px; font-size:12px; overflow:auto; max-height:260px;"></pre>
 
   <script>
     // ========= CONFIGURACIÓN COGNITO =========
     const COGNITO_DOMAIN = "https://eu-central-1ivdqjxith.auth.eu-central-1.amazoncognito.com";
-    const CLIENT_ID      = "2lj51vu87630n2skv4ntpe9al2"; // <- CORREGIDO
+    const CLIENT_ID      = "2lj51vu8763on2skv4ntpe9al2";
     const REDIRECT_URI   = "https://main.drlgxq3ev7tby.amplifyapp.com/login/cognito-callback.html";
 
     const msgEl   = document.getElementById("msg");
@@ -32,6 +32,7 @@
       }
     }
 
+    // Helper para decodificar el payload del JWT (id_token)
     function decodeJwtPayload(token) {
       try {
         const payload = token.split(".")[1];
@@ -42,6 +43,28 @@
       } catch (e) {
         console.error("Error decodificando id_token:", e);
         return null;
+      }
+    }
+
+    function saveCurrentUserFromPayload(payload) {
+      if (!payload || !payload.email) return;
+
+      const email = payload.email.toLowerCase();
+      const name  = payload["name"] ||
+                    payload["cognito:username"] ||
+                    (email.includes("@") ? email.split("@")[0] : "Usuario");
+
+      const currentUser = {
+        userId: email,   // usamos email como ID lógico
+        id: email,
+        email,
+        name
+      };
+
+      try {
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      } catch (e) {
+        console.warn("No se pudo guardar currentUser en localStorage:", e);
       }
     }
 
@@ -67,10 +90,10 @@
 
       try {
         const body = new URLSearchParams({
-          grant_type:    "authorization_code",
-          client_id:     CLIENT_ID,
+          grant_type:   "authorization_code",
+          client_id:    CLIENT_ID,
           code,
-          redirect_uri:  REDIRECT_URI
+          redirect_uri: REDIRECT_URI
         });
 
         const resp = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
@@ -88,25 +111,26 @@
 
         const tokens = await resp.json();
 
-        sessionStorage.setItem("cognitoTokens", JSON.stringify(tokens));
+        // Guardamos los tokens “crudos” por si los quieres usar
+        try {
+          sessionStorage.setItem("cognitoTokens", JSON.stringify(tokens));
+        } catch (e) {
+          console.warn("No se pudieron guardar los tokens en sessionStorage:", e);
+        }
 
         const idToken = tokens.id_token;
+        let payload = null;
+
         if (idToken) {
-          const payload = decodeJwtPayload(idToken);
+          payload = decodeJwtPayload(idToken);
           if (payload) {
-            const user = {
-              sub: payload.sub,
-              email: payload.email,
-              username: payload["cognito:username"],
-              email_verified: payload.email_verified
-            };
-            sessionStorage.setItem("cognitoUser", JSON.stringify(user));
+            saveCurrentUserFromPayload(payload);
             logDebug({
               tokensSummary: {
                 hasIdToken: !!tokens.id_token,
                 hasAccessToken: !!tokens.access_token
               },
-              user
+              userPayload: payload
             });
           } else {
             logDebug({
