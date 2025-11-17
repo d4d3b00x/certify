@@ -319,6 +319,30 @@ function shuffle(arr){
   return arr;
 }
 
+/* ================ JWT + apiFetch ================= */
+function getIdToken() {
+  try {
+    return localStorage.getItem("arenaIdToken") || null;
+  } catch {
+    return null;
+  }
+}
+
+async function apiFetch(url, options = {}) {
+  const opts = { ...options };
+  opts.headers = { ...(opts.headers || {}) };
+
+  const token = getIdToken();
+  if (token) {
+    opts.headers["Authorization"] = "Bearer " + token;
+  }
+
+  if (!("mode" in opts))  opts.mode  = "cors";
+  if (!("cache" in opts)) opts.cache = "no-store";
+
+  return fetch(url, opts);
+}
+
 /* ================= Login / identidad ================= */
 function getPortalUser(){ try{ return JSON.parse(localStorage.getItem('currentUser')||'null'); }catch{return null;} }
 function isLocked(){ const u=getPortalUser(); return !(u && (u.email||u.userId||u.id)); }
@@ -400,8 +424,16 @@ function renderLeaderboard(items){
   }
 }
 async function fetchLeaderboardAndRender(){
-  try{ const res=await fetch(`${API_BASE}/leaderboard?limit=20`,{mode:"cors",cache:"no-store"}); if(!res.ok) throw 0; const data=await res.json(); renderLeaderboard(data.items||data); }
-  catch{ rlist.innerHTML=''; rlist.appendChild(renderMyRow()); }
+  try{
+    const res = await apiFetch(`${API_BASE}/leaderboard?limit=20`);
+    if (!res.ok) throw 0;
+    const data = await res.json();
+    renderLeaderboard(data.items || data);
+  } catch (err) {
+    console.warn("leaderboard fail", err);
+    rlist.innerHTML='';
+    rlist.appendChild(renderMyRow());
+  }
 }
 
 /* ================= Historial (solo últimas 5) ================= */
@@ -464,7 +496,6 @@ async function loadQuestions(certValues,bucketKey,limit=400){
           const rawOpts = it.options.map(o => (o && typeof o === "object" && "text" in o) ? o.text : o);
           let okIndex = it.options.findIndex(o => o && typeof o === "object" && o.is_correct === true);
           if (okIndex < 0) okIndex = 0;
-          // barajar y ajustar correcto
           const paired = rawOpts.map((v,i)=>({t:safeStr(v), ok:(i===okIndex)}));
           shuffle(paired);
           const opts = paired.map(p=>p.t);
@@ -495,7 +526,7 @@ function groupIntoMissions(bucketKey){
 
   const missions=[]; let i=0; const rank={facil:1,medio:2,dificil:3};
   while(i<src.length){
-    const len=Math.min(1+Math.floor(Math.random()*3), src.length-i);
+    const len=Math.min(1+Math.floor(Math.random()*(3)), src.length-i);
     const qs=src.slice(i,i+len); i+=len;
     const diff=qs.map(q=>q.diff).sort((a,b)=>rank[b]-rank[a])[0]||"medio";
     const xp=missionXP(diff, qs.length);
@@ -506,14 +537,13 @@ function groupIntoMissions(bucketKey){
       diff,
       xp,
       len:qs.length,
-      // FIX: usar el texto real de la pregunta y no el objeto completo
       qs:qs.map(q=>({
         id:q.id,
         qid:q.qid,
         title:q.title,
-        question:q.q.q,            // <— texto
-        opts:q.q.opts,             // <— opciones
-        ok:q.q.ok                  // <— índice correcto
+        question:q.q.q,
+        opts:q.q.opts,
+        ok:q.q.ok
       }))
     });
   }
@@ -617,7 +647,6 @@ async function onMissionWin(){
   flyToMe(`+${activeMission.xp} XP`, card);
   setTimeout(()=> removeCard(card,true),1100);
 
-  // Bonus semanal +120 XP cuando alcanzas 30/30
   if(weekly>=WEEKLY_MAX){
     await apiPostXP(120); await syncBadges();
     setTimeout(()=>showCongrats(),500);
