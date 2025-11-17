@@ -573,6 +573,31 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   color: #cfe1ff;
   opacity: 0.7;
 }
+
+/* Primer item: CATALOGO GLOBAL (un poco separado del resto) */
+.menu-group .submenu a.submenu-global{
+  margin-bottom:6px;
+}
+
+/* Ítem inferior: RANKING GLOBAL con icono y separador arriba */
+.menu-group .submenu a.submenu-bottom{
+  margin-top:6px;
+  padding:6px 8px;
+  font-size:0.8rem;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  opacity:0.95;
+}
+
+.submenu-bottom-icon{
+  font-size:1rem;
+  display:inline-block;
+  transform:translateY(0.5px);
+}
+
   </style>
 </head>
 <body>
@@ -593,6 +618,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <span class="caret" aria-hidden="true">▾</span>
         </button>
         <div class="submenu">
+
+          <!-- NUEVO: CATALOGO GLOBAL -->
+          <a class="submenu-mainlink submenu-global" href="/catalog/itcatalog.html">
+            CATALOGO GLOBAL
+          </a>
+
+          <span class="submenu-title">AZURE</span>
           <a class="submenu-mainlink" href="/certification/microsoft-azure/az-104/index.html">
             PORTADA AZURE
           </a>
@@ -603,11 +635,18 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             AZ-305 ARCHITECT
           </a>
 
+          <span class="submenu-title">AWS</span>
           <a class="submenu-mainlink" href="/certification/amazon aws/index.html">
             PORTADA AWS
           </a>
           <a class="submenu-child" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">
             SAA-C03 ARCHITECT
+          </a>
+
+          <!-- NUEVO: RANKING GLOBAL -->
+          <a class="submenu-bottom" href="/score/ranking.html">
+            <span class="submenu-bottom-icon" aria-hidden="true">🏆</span>
+            <span>RANKING GLOBAL</span>
           </a>
         </div>
       </div>
