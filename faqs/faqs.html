@@ -263,7 +263,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             la comunidad de colaboradores y cómo usar ITHub.es para preparar certificaciones como <b>AZ-104</b>,
             <b>AZ-305</b> o <b>AWS SAA-C03</b>.
           </p>
-         
         </div>
       </div>
     </section>
@@ -462,6 +461,102 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
                   necesitas crear una cuenta gratuita e iniciar sesión desde el botón
                   <b>“LOGIN / REGÍSTRATE”</b> del menú superior.
                 </p>
+                <p>
+                  El sistema de login/registro está construido sobre <b>Amazon Cognito</b>, un servicio gestionado de
+                  identidad de AWS usado en entornos productivos. Esto nos permite gestionar tus credenciales de forma
+                  segura sin almacenar contraseñas en la propia web de ITHub.es.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">¿Es seguro el login? ¿Por qué recibo códigos de verificación?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Sí. Para el login, registro y recuperación de cuenta usamos <b>Amazon Cognito</b> sobre AWS. Es un
+                  servicio gestionado de identidad que se encarga de:
+                </p>
+                <ul>
+                  <li>Guardar tus credenciales de forma segura.</li>
+                  <li>Enviar <b>códigos de verificación por email o SMS</b> cuando creas una cuenta o cambias la contraseña.</li>
+                  <li>Gestionar diferentes flujos de autenticación (login normal, registro, recuperación de contraseña).</li>
+                </ul>
+                <p>
+                  Es normal que durante estos procesos:
+                </p>
+                <ul>
+                  <li>Te lleguen correos con un <b>código de verificación</b> que debes introducir en la pantalla.</li>
+                  <li>Veas <b>pantallas ligeramente distintas</b> (por ejemplo, “verifica tu email”, “introduce el nuevo password”, etc.).</li>
+                </ul>
+                <p>
+                  Mientras accedas desde los enlaces oficiales de <b>ITHub.es</b> y de nuestras páginas de login,
+                  puedes completar el proceso con tranquilidad. Si algo te genera dudas, puedes escribirnos desde el
+                  formulario de contacto del pie de página.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">He olvidado mi contraseña, ¿cómo la recupero?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  En la página de <a href="/login/login.html">login</a> tienes la opción de <b>“¿Has olvidado tu contraseña?”</b>.
+                  El flujo es:
+                </p>
+                <ul>
+                  <li>Introduces el <b>correo con el que te registraste</b>.</li>
+                  <li>Amazon Cognito envía un <b>código de verificación</b> a ese correo.</li>
+                  <li>Vuelves a la pantalla de recuperación, introduces el código y eliges una <b>nueva contraseña</b>.</li>
+                </ul>
+                <p>
+                  Ten en cuenta:
+                </p>
+                <ul>
+                  <li>El correo puede tardar unos minutos y, a veces, caer en la carpeta de <b>spam</b> o “Promociones”.</li>
+                  <li>Si pides varios códigos seguidos, solo el último será válido.</li>
+                </ul>
+                <p>
+                  Si después de unos minutos no recibes el código o algo no encaja con estas instrucciones, avísanos a
+                  través del formulario de contacto indicando el email con el que te registraste.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="faq-item">
+            <details>
+              <summary>
+                <span class="faq-question">Veo pantallas diferentes al registrarme o entrar, ¿es normal?</span>
+                <span class="faq-toggle">+</span>
+              </summary>
+              <div class="faq-answer">
+                <p>
+                  Sí. El flujo de autenticación puede mostrarte <b>pantallas distintas</b> según lo que estés haciendo:
+                </p>
+                <ul>
+                  <li>Login normal con email/contraseña.</li>
+                  <li>Primera vez que te registras y debes <b>verificar el correo</b>.</li>
+                  <li>Recuperación de contraseña con <b>código de verificación</b>.</li>
+                </ul>
+                <p>
+                  Todas estas vistas forman parte del mismo sistema de autenticación basado en Amazon Cognito, aunque
+                  puedan tener mensajes o layouts ligeramente diferentes.
+                </p>
+                <p>
+                  Mientras sigas los enlaces de <b>ITHub.es</b> y veas la URL esperada en el navegador, el proceso es legítimo.
+                  Si aún así te genera inseguridad, puedes cerrar la pestaña y volver a acceder desde el menú de
+                  <b>“LOGIN / REGÍSTRATE”</b> en la web para asegurarte de que estás en la ruta correcta.
+                </p>
               </div>
             </details>
           </div>
@@ -512,25 +607,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
               </div>
             </details>
           </div>
-
-          <!--<div class="faq-item">
-            <details>
-              <summary>
-                <span class="faq-question">He olvidado mi contraseña, ¿cómo la recupero?</span>
-                <span class="faq-toggle">+</span>
-              </summary>
-              <div class="faq-answer">
-                <p>
-                  En la página de <a href="/login/login.html">login</a> verás la opción de <b>recuperar tu contraseña</b>.
-                  Introduce el correo con el que te registraste y sigue las instrucciones que te enviemos.
-                </p>
-                <p>
-                  Si tienes problemas o no recibes el correo de recuperación, escríbenos usando el formulario de
-                  feedback del pie de página indicando el email con el que te registraste.
-                </p>
-              </div>
-            </details>
-          </div>-->
 
           <div class="faq-item">
             <details>
