@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Debug JWT Cognito + API</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#0b0f1e;color:#e8edff;padding:20px}
+    button{margin:6px 0;padding:8px 12px;border-radius:8px;border:1px solid #3a4bff;background:#202a5c;color:#fff;font-weight:600;cursor:pointer}
+    button:hover{background:#313d80}
+    pre{background:#11152b;border-radius:8px;padding:10px;white-space:pre-wrap;word-break:break-all}
+    .small{font-size:0.85rem;color:#9fb2ff}
+    input,textarea{width:100%;max-width:100%;box-sizing:border-box;margin:4px 0;padding:6px;border-radius:6px;border:1px solid #39406a;background:#090d1e;color:#e8edff}
+  </style>
+</head>
+<body>
+
+  <h1>Debug JWT Cognito + API</h1>
+  <p class="small">
+    1️⃣ Primero, inicia sesión en tu portal normalmente.<br>
+    2️⃣ Luego abre esta página (mismo dominio) y pulsa “Buscar token en storage”.
+  </p>
+
+  <h2>1. Buscar token de Cognito en local/sessionStorage</h2>
+  <button id="btnFind">🔎 Buscar token en storage</button>
+  <pre id="tokenInfo">[sin buscar]</pre>
+
+  <h3>Token detectado / pegado</h3>
+  <p class="small">Si no se encuentra nada, puedes pegar aquí un token que saques desde DevTools.</p>
+  <textarea id="manualToken" rows="4" placeholder="eyJraWQiOiJ..."></textarea>
+
+  <h2>2. Probar llamada a la API con/ sin token</h2>
+  <p class="small">
+    Endpoint: <code>https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=10</code>
+  </p>
+  <button id="btnNoAuth">🚫 Llamar SIN Authorization</button>
+  <button id="btnWithAuth">✅ Llamar CON Authorization (auto/manual)</button>
+
+  <pre id="apiResult">[sin llamadas]</pre>
+
+<script>
+const API_URL = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=10";
+
+const $ = s => document.querySelector(s);
+const tokenInfo = $("#tokenInfo");
+const manualToken = $("#manualToken");
+const apiResult = $("#apiResult");
+
+/** Busca idToken típico de Cognito en localStorage/sessionStorage */
+function findCognitoIdTokenFromStorage() {
+  const locations = [window.localStorage, window.sessionStorage];
+  const found = [];
+  try {
+    for (const store of locations) {
+      if (!store) continue;
+      for (let i = 0; i < store.length; i++) {
+        const key = store.key(i);
+        if (!key) continue;
+        if (key.indexOf("CognitoIdentityServiceProvider") === 0 && key.endsWith(".idToken")) {
+          const val = store.getItem(key);
+          if (val && val.startsWith("ey")) {
+            found.push({key, value: val});
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Error leyendo storage:", e);
+  }
+  return found;
+}
+
+function prettyShortToken(t) {
+  if (!t) return "(vacío)";
+  if (t.length <= 30) return t;
+  return t.slice(0, 40) + " … " + t.slice(-20);
+}
+
+$("#btnFind").onclick = () => {
+  const tokens = findCognitoIdTokenFromStorage();
+  if (!tokens.length) {
+    tokenInfo.textContent = "No se ha encontrado ningún idToken de Cognito en localStorage/sessionStorage.\n" +
+      "Es posible que el login esté en otro dominio/origen o que todavía no te hayas autenticado.";
+    return;
+  }
+  let out = "Tokens encontrados:\n\n";
+  tokens.forEach((t, idx) => {
+    out += `#${idx+1}\nkey: ${t.key}\nvalue (corto): ${prettyShortToken(t.value)}\n\n`;
+  });
+  tokenInfo.textContent = out;
+  // Por comodidad, dejamos el primero en el textarea
+  manualToken.value = tokens[0].value;
+};
+
+/** Llamada a la API sin header Authorization */
+$("#btnNoAuth").onclick = async () => {
+  apiResult.textContent = "Llamando SIN Authorization...\n";
+  try {
+    const res = await fetch(API_URL, { method: "GET" });
+    const text = await res.text();
+    apiResult.textContent = `Status: ${res.status}\n\n${text}`;
+  } catch (e) {
+    apiResult.textContent = "ERROR de red: " + e;
+  }
+};
+
+/** Llamada a la API con Authorization: Bearer <token> */
+$("#btnWithAuth").onclick = async () => {
+  const token = manualToken.value.trim();
+  if (!token) {
+    apiResult.textContent = "No hay token en el textarea. Primero pulsa 'Buscar token' o pega uno a mano.";
+    return;
+  }
+  apiResult.textContent = "Llamando CON Authorization...\n";
+  try {
+    const res = await fetch(API_URL, {
+      method: "GET",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const text = await res.text();
+    apiResult.textContent = `Status: ${res.status}\n\n${text}`;
+  } catch (e) {
+    apiResult.textContent = "ERROR de red: " + e;
+  }
+};
+</script>
+</body>
+</html>
