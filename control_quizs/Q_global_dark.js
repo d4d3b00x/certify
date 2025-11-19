@@ -1,16 +1,19 @@
-/* ===================== Google Analytics (opcional) ===================== */
+/* ===================== Google Analytics (eventos quiz) ===================== */
+/* 
+   IMPORTANTE:
+   - La página que incluye este .js ya tiene el snippet oficial de GA4.
+   - Aquí solo definimos una función segura para disparar eventos.
+*/
 (function () {
-  try {
-    const s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK";
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { window.dataLayer.push(arguments); }
-    window.gtag = gtag;
-    gtag("js", new Date());
-    gtag("config", "G-DYZ3GCXHEK");
-  } catch {}
+  window.quizTrack = function (eventName, params) {
+    try {
+      if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, params || {});
+      }
+    } catch (e) {
+      // silencioso: no rompemos el quiz si GA falla
+    }
+  };
 })();
 
 /* ====================================================================== */
@@ -220,30 +223,45 @@ function extractDomainFromRecord(it){
   if (it.category){ const m = String(it.category).match(/(?:^|\s)(?:domain|dominio)\s*:?\s*(\d+)/i); if (m) return `D${m[1]}`; }
   return null;
 }
+
 async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searchQ=""}){
-  const target=Math.max(count*overfetch, count);
-  const all=[]; let lastKey=null; const seen=new Set(); const pageLimit=200;
-  const onlyDn=(domainTags||[]).map(normalizeDomainTag).filter(Boolean).join(',');
-  for(let guard=0; guard<25 && all.length<target; guard++){
-    const params=new URLSearchParams({exam:String(exam),limit:String(pageLimit)});
-    if(searchQ) params.set('q',searchQ);
-    if(onlyDn){ params.set('domains',onlyDn); params.set('domain',onlyDn); }
-    params.set('count',String(count));
-    if(lastKey) params.set('lastKey', JSON.stringify(lastKey));
-    const res=await fetch(`${API_URL}/questions?${params.toString()}`,{headers:{Accept:'application/json'}});
-    const txt=await res.text();
-    if(!res.ok) throw new Error(`GET /questions ${res.status}: ${txt}`);
-    let data; try{data=JSON.parse(txt);}catch{ throw new Error('Respuesta no JSON'); }
-    const items=Array.isArray(data.items)?data.items:[];
-    for(const it of items){
-      const qid=it.questionId || `${it.exam||''}:${it.question||''}`;
-      if(!seen.has(qid)){ seen.add(qid); all.push(it); if(all.length>=target) break; }
+  const target = Math.max(count * overfetch, count);
+  const all = [];
+  const seen = new Set();          // <-- ESTA LÍNEA ES LA QUE FALTABA
+  let lastKey = null;
+  const pageLimit = 200;
+  const onlyDn = (domainTags || []).map(normalizeDomainTag).filter(Boolean).join(',');
+
+  for (let guard = 0; guard < 25 && all.length < target; guard++) {
+    const params = new URLSearchParams({ exam: String(exam), limit: String(pageLimit) });
+    if (searchQ) params.set('q', searchQ);
+    if (onlyDn) { params.set('domains', onlyDn); params.set('domain', onlyDn); }
+    params.set('count', String(count));
+    if (lastKey) params.set('lastKey', JSON.stringify(lastKey));
+
+    const res = await fetch(`${API_URL}/questions?${params.toString()}`, { headers:{ Accept:'application/json' }});
+    const txt = await res.text();
+    if (!res.ok) throw new Error(`GET /questions ${res.status}: ${txt}`);
+
+    let data;
+    try { data = JSON.parse(txt); }
+    catch { throw new Error('Respuesta no JSON'); }
+
+    const items = Array.isArray(data.items) ? data.items : [];
+    for (const it of items) {
+      const qid = it.questionId || `${it.exam || ''}:${it.question || ''}`;
+      if (!seen.has(qid)) {
+        seen.add(qid);
+        all.push(it);
+        if (all.length >= target) break;
+      }
     }
-    lastKey=data.lastEvaluatedKey||null;
-    if(!lastKey) break;
+    lastKey = data.lastEvaluatedKey || null;
+    if (!lastKey) break;
   }
-  return all.slice(0,target);
+  return all.slice(0, target);
 }
+
 
 /* ===================== Transform + Dedupe ===================== */
 function transformQuestions(items){
@@ -422,6 +440,18 @@ async function start(quizId="aws-saa-c03", overrides={}){
     S.qs = filtered; S.idx=0; S.answers={}; S.marked={}; S.markTimes={};
     S.startedAt = Date.now(); S.elapsedSec=0; S.timeLimit=0;
     S.sessionId = uuid();
+
+    // EVENTO GA: inicio de quiz
+    if (typeof window.quizTrack === "function") {
+      window.quizTrack("quiz_start", {
+        quiz_id: S.quizId,
+        exam: exam,
+        mode: S.mode,
+        question_count: S.qs.length,
+        domains: tags.length ? tags.join(",") : "(all)",
+        session_id: S.sessionId
+      });
+    }
 
     applyTheme(quizId);
     S._afterRenderScroll = 'question';
@@ -623,12 +653,56 @@ function hasPendingMarked(){
 function onSelect(i){
   if(typeof S.answers[S.idx]!=='undefined') return;
   S.answers[S.idx]=i;
+
+  // EVENTO GA: respuesta a una pregunta
+  try {
+    if (typeof window.quizTrack === "function") {
+      const q = S.qs[S.idx] || {};
+      const isCorrect =
+        typeof q._correct === "number" ? q._correct === i : null;
+
+      window.quizTrack("quiz_answer", {
+        quiz_id: S.quizId,
+        session_id: S.sessionId,
+        question_index: S.idx + 1,
+        question_id: q.questionId || "",
+        answer_index: i,
+        is_correct: isCorrect,
+        elapsed_sec: S.elapsedSec
+      });
+    }
+  } catch (e) {
+    // silencioso
+  }
+
   S._afterRenderScroll='question';
   renderQuiz();
 }
 function doPause(){
-  if (S.timerId) { stopTimer(); toast('⏸️ Pausado', 1200); }
-  else { startTimer(); toast('▶️ Reanudado', 1200); }
+  if (S.timerId) {
+    stopTimer();
+    toast('⏸️ Pausado', 1200);
+    // EVENTO GA: pausa
+    if (typeof window.quizTrack === "function") {
+      window.quizTrack("quiz_pause", {
+        quiz_id: S.quizId,
+        session_id: S.sessionId,
+        elapsed_sec: S.elapsedSec
+      });
+    }
+  }
+  else {
+    startTimer();
+    toast('▶️ Reanudado', 1200);
+    // EVENTO GA: reanuda
+    if (typeof window.quizTrack === "function") {
+      window.quizTrack("quiz_resume", {
+        quiz_id: S.quizId,
+        session_id: S.sessionId,
+        elapsed_sec: S.elapsedSec
+      });
+    }
+  }
 }
 
 /* ===================== Sesión completa → /progress ===================== */
@@ -744,6 +818,18 @@ async function finish(){
     total, correct, pct,
     durationSec: S.startedAt ? Math.round((Date.now()-S.startedAt)/1000) : S.elapsedSec||0
   };
+
+  // EVENTO GA: finalización del quiz
+  if (typeof window.quizTrack === "function") {
+    window.quizTrack("quiz_finish", {
+      quiz_id: S.quizId,
+      session_id: S.sessionId,
+      total: total,
+      correct: correct,
+      pct: pct,
+      duration_sec: resultPayload.durationSec
+    });
+  }
 
   // Guardar (esperamos un corto máximo y luego redirigimos sí o sí)
   await Promise.race([
