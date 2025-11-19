@@ -530,6 +530,237 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       .article-label{font-size:.74rem;letter-spacing:.12em;}
       .hero-cats{margin-top:8px;}
     }
+
+
+/* ─────────────────────────────────────────────
+   Rediseño zona blog: más contraste, menos brillos
+   (puedes pegar esto al final del <style>)
+   ──────────────────────────────────────────── */
+
+.blog-section{
+  padding:32px 0 44px;
+}
+
+.blog-layout{
+  gap:22px;
+}
+
+.blog-main{
+  gap:22px;
+}
+
+/* Tarjetas de artículo: fondo mate + barra lateral de acento */
+.blog-article{
+  background:linear-gradient(135deg,#141827,#11141f);
+  border-radius:18px;
+  border:1px solid rgba(78,93,148,.9);
+  padding:18px 20px 16px;
+  box-shadow:0 12px 26px rgba(0,0,0,.75);
+  position:relative;
+  overflow:hidden;
+  transition:
+    transform .14s ease-out,
+    box-shadow .14s ease-out,
+    border-color .14s ease-out,
+    background .14s ease-out;
+}
+
+/* Quitamos el borde brillante anterior */
+.blog-article::before{
+  content:none;
+}
+
+/* Nueva barra discreta a la izquierda de cada post */
+.blog-article::after{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  background:#6c8bff;
+  opacity:.7;
+}
+
+/* Hover suave: sin brillos, solo un pelín de relieve */
+.blog-article:hover{
+  transform:translateY(-2px);
+  border-color:#9da9ff;
+  box-shadow:0 18px 34px rgba(0,0,0,.9);
+  background:linear-gradient(135deg,#171c2b,#131722);
+}
+
+/* Cabecera del artículo: más aire */
+.article-header{
+  margin-bottom:10px;
+  gap:8px;
+}
+
+/* Etiqueta/categoría: pill clara, sin glow */
+.article-label{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:3px 11px;
+  border-radius:999px;
+  background:#101523;
+  border:1px solid rgba(141,157,214,.9);
+  font-size:.78rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:#dde5ff;
+  box-shadow:none;
+}
+
+/* Marcador delante de la categoría, sin brillo */
+.article-label::before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:#6c8bff;
+  filter:none;
+}
+
+/* Titular del post: más grande y limpio */
+.blog-article h2{
+  margin:0;
+  margin-top:4px;
+  font-size:1.45rem;
+  line-height:1.25;
+  font-weight:900;
+  letter-spacing:.02em;
+  color:#fdfbff;
+  text-shadow:none;
+}
+
+/* Meta: fecha, lectura, chip de categoría */
+.blog-meta{
+  margin-top:8px;
+  margin-bottom:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  font-size:.83rem;
+  color:#9ca8d9;
+  opacity:1;
+}
+
+.blog-meta time{
+  font-weight:700;
+  opacity:.95;
+}
+
+.blog-meta .sep{
+  opacity:.35;
+}
+
+/* Chip de categoría/meta: mate y legible */
+.blog-meta-tag{
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid rgba(148,164,237,.9);
+  font-weight:800;
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  background:#222842;
+  color:#e3ebff;
+  box-shadow:none;
+}
+
+/* Neutralizamos los antiguos degradados por índice */
+.blog-article:nth-of-type(2) .blog-meta-tag,
+.blog-article:nth-of-type(3) .blog-meta-tag{
+  background:#222842;
+  box-shadow:none;
+}
+
+/* Texto del artículo un poco más contrastado */
+.blog-article p{
+  margin:8px 0;
+  font-size:.96rem;
+  color:#d7dfff;
+}
+
+.blog-article ul{
+  color:#c7d3ff;
+}
+
+.blog-article h3{
+  margin:14px 0 6px;
+  font-size:1.02rem;
+  color:#f4f1ff;
+}
+
+/* Fila de compartir: más limpia */
+.share-row{
+  margin-top:18px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.06);
+  gap:10px;
+}
+
+.share-label{
+  font-weight:800;
+  color:#cfe1ff;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-size:.68rem;
+}
+
+/* Botones de compartir: sin glow ni degradados fuertes */
+.share-btn{
+  width:32px;
+  height:32px;
+  border-radius:999px;
+  border:1px solid rgba(148,164,237,.8);
+  background:#15192a;
+  font-size:13px;
+  font-weight:800;
+  box-shadow:none;
+  transition:
+    transform .1s ease,
+    border-color .1s ease,
+    background .1s ease,
+    box-shadow .1s ease;
+}
+
+.share-btn:hover{
+  transform:translateY(-1px);
+  border-color:#c7d2ff;
+  background:#1f2437;
+  box-shadow:0 0 0 1px rgba(148,164,237,.45);
+}
+
+/* Ajustes responsive específicos para el nuevo diseño */
+@media (max-width:720px){
+  .blog-section{
+    padding-top:20px;
+  }
+
+  .blog-main{
+    gap:16px;
+  }
+
+  .blog-article{
+    padding:14px 14px 13px;
+    border-radius:16px;
+  }
+
+  .blog-article h2{
+    font-size:1.22rem;
+  }
+
+  .article-label{
+    font-size:.72rem;
+    letter-spacing:.12em;
+    padding:3px 9px;
+  }
+}
+
+
   </style>
 </head>
 <body>
