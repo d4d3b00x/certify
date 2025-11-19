@@ -657,7 +657,7 @@
         <div class="report-card">
           <div class="header">
             <div>
-              <h1 id="hTitle">IThub.es Revisión de Resultado del Quiz</h1>
+              <h1 id="hTitle">Quiz Report</h1>
               <div class="meta">
                 <span class="badge" id="hUser">—</span>
                 <span class="badge" id="hQuiz">—</span>
@@ -665,13 +665,16 @@
                 <span class="badge" id="hState">—</span>
               </div>
             </div>
-            
+            <div class="actions">
+              <button id="btnPrint" class="btn">🖨️ <span>Imprimir</span></button>
+              <button id="btnDownload" class="btn primary">⬇️ <span>Descargar JSON</span></button>
+            </div>
           </div>
 
           <div class="grid">
             <!-- Izquierda -->
             <aside class="side-card">
-              <h2>Resumen del Exámen</h2>
+              <h2>Resumen</h2>
 
               <div class="score-ring">
                 <div class="score-ring-inner">
@@ -729,6 +732,9 @@
             </section>
           </div>
 
+          <div id="fallbackMsg" class="small" hidden style="margin-top:12px;opacity:.8">
+            ⚠️ Esta sesión no contiene <code>questions</code>. El informe se reconstruyó con <code>questionBank</code> y <code>answerItems</code>.
+          </div>
         </div>
       </div>
     </div>
