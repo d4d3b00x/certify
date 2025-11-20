@@ -982,24 +982,25 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     if (btnLogout){
       btnLogout.onclick = (e) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        // Limpiamos info local
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('arenaIdToken');  // opcional si lo usas
+      // Limpiamos info local
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('arenaIdToken');  // opcional
 
-        renderHeaderAuth();
-        if (typeof renderSims === 'function') renderSims();
+      renderHeaderAuth();
+      if (typeof renderSims === 'function') renderSims();
 
-        // Redirección al logout de Cognito para cerrar sesión del Hosted UI
-        const logoutParams = new URLSearchParams({
-          client_id:  COGNITO_CLIENT_ID,
-          logout_uri: window.location.origin + "/"  // al terminar, vuelve a la home
-        });
+      // Redirección al logout de Cognito
+      const logoutParams = new URLSearchParams({
+        client_id:  COGNITO_CLIENT_ID,
+        logout_uri: window.location.origin + "/"  // https://www.ithub.es/
+      });
 
-        window.location.href = `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
-      };
-    }
+      window.location.href =
+        `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
+  };
+}
   }
 
   // ======== SIMULADORES ========
