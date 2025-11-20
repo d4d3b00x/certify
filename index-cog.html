@@ -998,7 +998,24 @@ function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
       if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
       else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); renderSims(); });
+   
+document.getElementById('btnLogout')?.addEventListener('click', () => {
+  // Limpiamos info local
+  localStorage.removeItem('currentUser');
+  localStorage.removeItem('arenaIdToken');  // opcional si lo usas
+  renderHeaderAuth();
+  renderSims();
+
+  // Redirección al logout de Cognito para cerrar sesión del Hosted UI
+  const logoutParams = new URLSearchParams({
+    client_id:  COGNITO_CLIENT_ID,
+    logout_uri: window.location.origin + "/"  // al terminar, vuelve a la home
+  });
+
+  window.location.href = `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
+});
+
+
     renderHeaderAuth();
 
 
