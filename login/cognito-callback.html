@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Procesando inicio de sesión....</title>
+  <title>Procesando inicio de sesión...</title>
   <meta name="robots" content="noindex,nofollow" />
 </head>
 
@@ -78,8 +78,8 @@
 
       localStorage.setItem("currentUser", JSON.stringify(user));
 
-      //setMsg("Inicio de sesión correcto. Redirigiendo...");
-      //setTimeout(()=> window.location.href="/", 1000);
+      setMsg("Inicio de sesión correcto. Redirigiendo...");
+      setTimeout(()=> window.location.href="/", 1000);
     }
 
     function fail(msg, dbg){
