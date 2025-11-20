@@ -629,9 +629,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <a class="link-btn" href="/blog/blog.html">BLOG</a>
     </nav>
 
-    <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-      <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
-      <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
+<div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+  <a id="btnLogin"  class="pill-btn" href="#">LOGIN</a>
+  <a id="btnSignup" class="pill-btn" href="#">REGÍSTRATE</a>
 
       <div id="userArea" style="display:none;align-items:center;gap:6px">
         <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
@@ -973,6 +973,21 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
+// === Cognito config (mismos valores que en jwt-lab / cognito-callback) ===
+const COGNITO_DOMAIN      = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+const COGNITO_CLIENT_ID   = "592bh3ek4jdeg78qntt810g7vl";
+const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; // OJO: debe coincidir con el app client
+
+function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
+  const params = new URLSearchParams({
+    client_id:     COGNITO_CLIENT_ID,
+    redirect_uri:  COGNITO_REDIRECT_URI,
+    response_type: "code",
+    scope:         "email openid profile"
+  });
+  return `${COGNITO_DOMAIN}/${path}?${params.toString()}`;
+}
+
     function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
     function renderHeaderAuth(){
       const u=getCurrentUser();
@@ -985,6 +1000,28 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
     document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); renderSims(); });
     renderHeaderAuth();
+
+
+// === Botones de LOGIN / REGISTRO usando Cognito Hosted UI ===
+const btnLogin  = document.getElementById('btnLogin');
+const btnSignup = document.getElementById('btnSignup');
+
+if (btnLogin) {
+  btnLogin.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Hosted UI en modo login
+    window.location.href = buildCognitoAuthUrl("login");
+  });
+}
+
+if (btnSignup) {
+  btnSignup.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Hosted UI en modo signup (pestaña de registro)
+    window.location.href = buildCognitoAuthUrl("signup");
+  });
+}
+
 
     const CATALOG = [
       { id:'AZ-104', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Administrator Associate', quiz:'az-104',
