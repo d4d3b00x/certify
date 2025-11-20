@@ -911,285 +911,319 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
-// === Cognito config (mismos valores que en jwt-lab / cognito-callback) ===
-const COGNITO_DOMAIN      = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
-const COGNITO_CLIENT_ID   = "592bh3ek4jdeg78qntt810g7vl";
-const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; // OJO: debe coincidir con el app client
+ // === Cognito config (mismos valores que en jwt-lab / cognito-callback) ===
+  const COGNITO_DOMAIN       = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+  const COGNITO_CLIENT_ID    = "592bh3ek4jdeg78qntt810g7vl";
+  const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; // OJO: debe coincidir con el app client
 
-function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
-  const params = new URLSearchParams({
-    client_id:     COGNITO_CLIENT_ID,
-    redirect_uri:  COGNITO_REDIRECT_URI,
-    response_type: "code",
-    scope:         "email openid profile"
-  });
-  return `${COGNITO_DOMAIN}/${path}?${params.toString()}`;
-}
-
-    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-    function renderHeaderAuth(){
-      const u=getCurrentUser();
-      const login=document.getElementById('btnLogin');
-      const signup=document.getElementById('btnSignup');
-      const userArea=document.getElementById('userArea');
-      const nameTop=document.getElementById('userNameTop');
-      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
-    }
-   
-document.getElementById('btnLogout')?.addEventListener('click', () => {
-  // Limpiamos info local
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('arenaIdToken');  // opcional si lo usas
-  renderHeaderAuth();
-  renderSims();
-
-  // Redirección al logout de Cognito para cerrar sesión del Hosted UI
-  const logoutParams = new URLSearchParams({
-    client_id:  COGNITO_CLIENT_ID,
-    logout_uri: window.location.origin + "/"  // al terminar, vuelve a la home
-  });
-
-  window.location.href = `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
-});
-
-
-    renderHeaderAuth();
-
-
-// === Botones de LOGIN / REGISTRO usando Cognito Hosted UI ===
-const btnLogin  = document.getElementById('btnLogin');
-const btnSignup = document.getElementById('btnSignup');
-
-if (btnLogin) {
-  btnLogin.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Hosted UI en modo login
-    window.location.href = buildCognitoAuthUrl("login");
-  });
-}
-
-if (btnSignup) {
-  btnSignup.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Hosted UI en modo signup (pestaña de registro)
-    window.location.href = buildCognitoAuthUrl("signup");
-  });
-}
-
-
-    const CATALOG = [
-      { id:'AZ-104', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Administrator Associate', quiz:'az-104',
-        startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html', providerClass:'prov-azure', simClass:'sim-azure',
-        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:650 },
-      { id:'SAA-C03', provider:'AMAZON AWS (ESPAÑOL)', title:'Solutions Architect Associate', quiz:'aws-saa-c03',
-        startUrl:'/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html', providerClass:'prov-aws', simClass:'sim-aws',
-        accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))', q:720 },
-      { id:'AZ-305', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Architect Expert', quiz:'az-305',
-        startUrl:'/certification/microsoft-azure/az-305/lz-azure-az-305.html', providerClass:'prov-azure', simClass:'sim-azure',
-        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:580 }
-    ];
-    const simGrid=document.getElementById('simGrid');
-
-    function renderSims(){
-      simGrid.innerHTML='';
-      const authed = !!getCurrentUser();
-      CATALOG.forEach(c=>{
-        const el=document.createElement('article'); el.className=`sim-card ${c.simClass}`; el.setAttribute('role','listitem');
-        const startLabel = authed ? '▶ Certificación' : '🔒 Login to Start';
-        const startHref  = authed ? c.startUrl : '/login/login.html';
-        const loginMsg = authed ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
-        el.innerHTML=`
-          <span class="accent" style="background:${c.accent}" aria-hidden="true"></span>
-          <div class="prov-pill ${c.providerClass}">${c.provider}</div>
-          <div class="sim-title">${c.id} ${c.title}</div>
-          <div class="sim-badges">
-            <span class="sim-badge">+${c.q} preguntas</span>
-            <span class="sim-badge">Mixto</span>
-            <span class="sim-badge">Explicadas</span>
-          </div>
-          <div class="btns-row" aria-label="Acciones de simulador ${c.id}">
-            <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}">🏆 Ranking</a>
-            <a class="cta-btn start-btn" data-href="${c.startUrl}" href="${startHref}">${startLabel}</a>
-          </div>
-          ${loginMsg}
-        `;
-        simGrid.appendChild(el);
-      });
-    }
-    renderSims();
-
-    document.addEventListener('click', e=>{
-      const b=e.target.closest('.start-btn'); if(!b) return;
-      if(!!getCurrentUser()){
-        const url=b.dataset.href || b.getAttribute('href'); location.href = url;
-      }else{ location.href='/login/login.html'; }
-      e.preventDefault();
+  function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
+    const params = new URLSearchParams({
+      client_id:     COGNITO_CLIENT_ID,
+      redirect_uri:  COGNITO_REDIRECT_URI,
+      response_type: "code",
+      scope:         "email openid profile"
     });
+    return `${COGNITO_DOMAIN}/${path}?${params.toString()}`;
+  }
 
-    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
-    const NOTES_ENDPOINT = `${API_BASE}/items`;
-    const fbEmail   = document.getElementById('feedbackEmail');
-    const fbText    = document.getElementById('feedbackText');
-    const fbStatus  = document.getElementById('fbStatus');
-    const btnFbSend = document.getElementById('btnSendFeedback');
-    const btnFbCancel = document.getElementById('btnCancelFeedback');
-    const btnFbOk   = document.getElementById('btnOkFeedback');
-    const footerBtn = document.getElementById('footerContactBtn');
-    const fbModal   = document.getElementById('feedbackModal');
+  function getCurrentUser(){
+    try { return JSON.parse(localStorage.getItem("currentUser") || "null"); }
+    catch { return null; }
+  }
 
-    function openFeedbackModal(){
-      fbEmail.value = ''; fbText.value  = '';
-      fbStatus.textContent = ''; fbStatus.className = 'fb-status';
-      btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
-      fbEmail.disabled = fbText.disabled = false; btnFbSend.disabled = false;
-      fbModal.classList.add('show');
-    }
-    footerBtn?.addEventListener('click', openFeedbackModal);
-    btnFbCancel?.addEventListener('click',()=> fbModal.classList.remove('show'));
-    btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
-    fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
+  function renderHeaderAuth(){
+    const u        = getCurrentUser();
+    const login    = document.getElementById('btnLogin');
+    const signup   = document.getElementById('btnSignup');
+    const userArea = document.getElementById('userArea');
+    const nameTop  = document.getElementById('userNameTop');
 
-    btnFbSend?.addEventListener('click', async ()=>{
-      const message = (fbText.value||'').trim();
-      const from    = (fbEmail.value||'').trim();
-      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; fbStatus.focus?.(); return; }
-      fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
-      fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
+    // Si el header aún no está cargado, salimos sin hacer nada
+    if (!login || !signup) return;
 
-      const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
-      const user = getCurrentUser();
-      const note = { id, type:'feedback', title:'Feedback web ITHub', message, email: from || user?.email || null,
-                     userId: user?.id || user?.email || null, path: location.pathname + location.search,
-                     ua: navigator.userAgent, createdAt: new Date().toISOString() };
+    if (u){
+      login.style.display  = 'none';
+      signup.style.display = 'none';
 
-      const params = new URLSearchParams();
-      params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
-
-      const ctl = new AbortController(); const timeoutId = setTimeout(()=>ctl.abort(), 10000);
-      try{
-        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
-        clearTimeout(timeoutId);
-        if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
-        fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
-        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
-        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
-      }catch(err){
-        console.error('Error guardando feedback:', err);
-        fbStatus.textContent = 'No se pudo enviar la info. :('; fbStatus.className='fb-status err';
-        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
-        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
-      }
-    });
-
-    (function(){
-      const track = document.getElementById('gTrack');
-      if(!track) return;
-      const prev  = document.getElementById('gPrev');
-      const next  = document.getElementById('gNext');
-      const indicator = document.getElementById('gIndicator');
-
-      function columnStride(){
-        const first = track.querySelector('.g-card');
-        if(!first) return 320;
-        const rect = first.getBoundingClientRect();
-        const gap  = parseFloat(getComputedStyle(track).gap || '12');
-        return Math.ceil(rect.width + gap);
-      }
-
-      function totalCols(){
-        const perCol = 2;
-        return Math.ceil(track.children.length / perCol);
-      }
-
-      function updateIndicator(){
-        const stride = columnStride();
-        const cols = totalCols();
-        const col = Math.max(1, Math.min(cols, Math.round(track.scrollLeft / stride) + 1));
-        const first = (col - 1) * 2 + 1;
-        const last  = Math.min(first + 1, track.children.length);
-        if(indicator){
-          indicator.textContent = `${first}–${last} / ${track.children.length}`;
+      if (userArea){
+        userArea.style.display = 'flex';
+        if (nameTop){
+          nameTop.textContent = (u.name || u.email || 'USER').toUpperCase();
         }
       }
-
-      function updateArrows(){
-        const max = track.scrollWidth - track.clientWidth - 2;
-        prev.disabled = track.scrollLeft <= 0;
-        next.disabled = track.scrollLeft >= max;
-        updateIndicator();
+    } else {
+      login.style.display  = 'inline-flex';
+      signup.style.display = 'inline-flex';
+      if (userArea){
+        userArea.style.display = 'none';
       }
+    }
+  }
 
-      function scrollCols(dir){
-        track.scrollBy({ left: dir * columnStride(), behavior:'smooth' });
+  // Engancha eventos de LOGIN / REGISTRO / LOGOUT
+  function attachHeaderEvents(){
+    const btnLogin   = document.getElementById('btnLogin');
+    const btnSignup  = document.getElementById('btnSignup');
+    const btnLogout  = document.getElementById('btnLogout');
+
+    if (btnLogin){
+      btnLogin.onclick = (e) => {
+        e.preventDefault();
+        window.location.href = buildCognitoAuthUrl("login");
+      };
+    }
+
+    if (btnSignup){
+      btnSignup.onclick = (e) => {
+        e.preventDefault();
+        window.location.href = buildCognitoAuthUrl("signup");
+      };
+    }
+
+    if (btnLogout){
+      btnLogout.onclick = (e) => {
+        e.preventDefault();
+
+        // Limpiamos info local
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('arenaIdToken');  // opcional si lo usas
+
+        renderHeaderAuth();
+        if (typeof renderSims === 'function') renderSims();
+
+        // Redirección al logout de Cognito para cerrar sesión del Hosted UI
+        const logoutParams = new URLSearchParams({
+          client_id:  COGNITO_CLIENT_ID,
+          logout_uri: window.location.origin + "/"  // al terminar, vuelve a la home
+        });
+
+        window.location.href = `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
+      };
+    }
+  }
+
+  // ======== SIMULADORES ========
+  const CATALOG = [
+    { id:'AZ-104', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Administrator Associate', quiz:'az-104',
+      startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html', providerClass:'prov-azure', simClass:'sim-azure',
+      accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:650 },
+    { id:'SAA-C03', provider:'AMAZON AWS (ESPAÑOL)', title:'Solutions Architect Associate', quiz:'aws-saa-c03',
+      startUrl:'/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html', providerClass:'prov-aws', simClass:'sim-aws',
+      accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))', q:720 },
+    { id:'AZ-305', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Architect Expert', quiz:'az-305',
+      startUrl:'/certification/microsoft-azure/az-305/lz-azure-az-305.html', providerClass:'prov-azure', simClass:'sim-azure',
+      accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:580 }
+  ];
+
+  const simGrid = document.getElementById('simGrid');
+
+  function renderSims(){
+    if (!simGrid) return;
+    simGrid.innerHTML='';
+    const authed = !!getCurrentUser();
+    CATALOG.forEach(c=>{
+      const el=document.createElement('article'); el.className=`sim-card ${c.simClass}`; el.setAttribute('role','listitem');
+      const startLabel = authed ? '▶ Certificación' : '🔒 Login to Start';
+      const startHref  = authed ? c.startUrl : '/login/login.html';
+      const loginMsg = authed ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
+      el.innerHTML=`
+        <span class="accent" style="background:${c.accent}" aria-hidden="true"></span>
+        <div class="prov-pill ${c.providerClass}">${c.provider}</div>
+        <div class="sim-title">${c.id} ${c.title}</div>
+        <div class="sim-badges">
+          <span class="sim-badge">+${c.q} preguntas</span>
+          <span class="sim-badge">Mixto</span>
+          <span class="sim-badge">Explicadas</span>
+        </div>
+        <div class="btns-row" aria-label="Acciones de simulador ${c.id}">
+          <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}">🏆 Ranking</a>
+          <a class="cta-btn start-btn" data-href="${c.startUrl}" href="${startHref}">${startLabel}</a>
+        </div>
+        ${loginMsg}
+      `;
+      simGrid.appendChild(el);
+    });
+  }
+
+  renderSims();
+
+  document.addEventListener('click', e=>{
+    const b=e.target.closest('.start-btn'); if(!b) return;
+    if(!!getCurrentUser()){
+      const url=b.dataset.href || b.getAttribute('href'); location.href = url;
+    }else{
+      location.href='/login/login.html';
+    }
+    e.preventDefault();
+  });
+
+  // ======== FEEDBACK / RESTO DEL SCRIPT ========
+  const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
+  const NOTES_ENDPOINT = `${API_BASE}/items`;
+  const fbEmail   = document.getElementById('feedbackEmail');
+  const fbText    = document.getElementById('feedbackText');
+  const fbStatus  = document.getElementById('fbStatus');
+  const btnFbSend = document.getElementById('btnSendFeedback');
+  const btnFbCancel = document.getElementById('btnCancelFeedback');
+  const btnFbOk   = document.getElementById('btnOkFeedback');
+  const footerBtn = document.getElementById('footerContactBtn');
+  const fbModal   = document.getElementById('feedbackModal');
+
+  function openFeedbackModal(){
+    fbEmail.value = ''; fbText.value  = '';
+    fbStatus.textContent = ''; fbStatus.className = 'fb-status';
+    btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
+    fbEmail.disabled = fbText.disabled = false; btnFbSend.disabled = false;
+    fbModal.classList.add('show');
+  }
+  footerBtn?.addEventListener('click', openFeedbackModal);
+  btnFbCancel?.addEventListener('click',()=> fbModal.classList.remove('show'));
+  btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
+  fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
+
+  btnFbSend?.addEventListener('click', async ()=>{
+    const message = (fbText.value||'').trim();
+    const from    = (fbEmail.value||'').trim();
+    if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; fbStatus.focus?.(); return; }
+    fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
+    fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
+
+    const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
+    const user = getCurrentUser();
+    const note = { id, type:'feedback', title:'Feedback web ITHub', message, email: from || user?.email || null,
+                  userId: user?.id || user?.email || null, path: location.pathname + location.search,
+                  ua: navigator.userAgent, createdAt: new Date().toISOString() };
+
+    const params = new URLSearchParams();
+    params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
+
+    const ctl = new AbortController(); const timeoutId = setTimeout(()=>ctl.abort(), 10000);
+    try{
+      const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
+      clearTimeout(timeoutId);
+      if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
+      fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
+      btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+      fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+    }catch(err){
+      console.error('Error guardando feedback:', err);
+      fbStatus.textContent = 'No se pudo enviar la info. :('; fbStatus.className='fb-status err';
+      btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+      fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+    }
+  });
+
+  // Carrusel y submenús (igual que tenías)
+  (function(){
+    const track = document.getElementById('gTrack');
+    if(!track) return;
+    const prev  = document.getElementById('gPrev');
+    const next  = document.getElementById('gNext');
+    const indicator = document.getElementById('gIndicator');
+
+    function columnStride(){
+      const first = track.querySelector('.g-card');
+      if(!first) return 320;
+      const rect = first.getBoundingClientRect();
+      const gap  = parseFloat(getComputedStyle(track).gap || '12');
+      return Math.ceil(rect.width + gap);
+    }
+
+    function totalCols(){
+      const perCol = 2;
+      return Math.ceil(track.children.length / perCol);
+    }
+
+    function updateIndicator(){
+      const stride = columnStride();
+      const cols = totalCols();
+      const col = Math.max(1, Math.min(cols, Math.round(track.scrollLeft / stride) + 1));
+      const first = (col - 1) * 2 + 1;
+      const last  = Math.min(first + 1, track.children.length);
+      if(indicator){
+        indicator.textContent = `${first}–${last} / ${track.children.length}`;
       }
+    }
 
-      prev?.addEventListener('click', ()=> scrollCols(-1));
-      next?.addEventListener('click', ()=> scrollCols(1));
-      track.addEventListener('scroll', updateArrows);
-      window.addEventListener('resize', updateArrows);
-      updateArrows();
+    function updateArrows(){
+      const max = track.scrollWidth - track.clientWidth - 2;
+      prev.disabled = track.scrollLeft <= 0;
+      next.disabled = track.scrollLeft >= max;
+      updateIndicator();
+    }
 
-      track.addEventListener('keydown', (e)=>{
-        if(e.key === 'ArrowRight'){ e.preventDefault(); scrollCols(1); }
-        if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
+    function scrollCols(dir){
+      track.scrollBy({ left: dir * columnStride(), behavior:'smooth' });
+    }
+
+    prev?.addEventListener('click', ()=> scrollCols(-1));
+    next?.addEventListener('click', ()=> scrollCols(1));
+    track.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
+
+    track.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight'){ e.preventDefault(); scrollCols(1); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
+    });
+  })();
+
+  (function(){
+    const triggers = document.querySelectorAll('.has-sub-trigger');
+    if (!triggers.length) return;
+
+    function closeAll(exceptSubmenu){
+      document.querySelectorAll('.menu-group .submenu.open').forEach(sm => {
+        if (sm !== exceptSubmenu) sm.classList.remove('open');
       });
-    })();
-
-    (function(){
-      const triggers = document.querySelectorAll('.has-sub-trigger');
-      if (!triggers.length) return;
-
-      function closeAll(exceptSubmenu){
-        document.querySelectorAll('.menu-group .submenu.open').forEach(sm => {
-          if (sm !== exceptSubmenu) sm.classList.remove('open');
-        });
-        document.querySelectorAll('.has-sub-trigger[aria-expanded="true"]').forEach(btn => {
-          const group = btn.closest('.menu-group');
-          const sm = group && group.querySelector('.submenu');
-          if (!exceptSubmenu || sm !== exceptSubmenu){
-            btn.setAttribute('aria-expanded','false');
-          }
-        });
-      }
-
-      triggers.forEach(trigger => {
-        trigger.setAttribute('aria-expanded','false');
-
-        trigger.addEventListener('click', function(e){
-          const isMobile = window.innerWidth <= 720;
-          if (!isMobile) return;
-
-          e.preventDefault();
-
-          const group = trigger.closest('.menu-group');
-          const submenu = group && group.querySelector('.submenu');
-          if (!submenu) return;
-
-          const isOpen = submenu.classList.contains('open');
-
-          if (isOpen){
-            submenu.classList.remove('open');
-            trigger.setAttribute('aria-expanded','false');
-          } else {
-            closeAll(submenu);
-            submenu.classList.add('open');
-            trigger.setAttribute('aria-expanded','true');
-          }
-        });
+      document.querySelectorAll('.has-sub-trigger[aria-expanded="true"]').forEach(btn => {
+        const group = btn.closest('.menu-group');
+        const sm = group && group.querySelector('.submenu');
+        if (!exceptSubmenu || sm !== exceptSubmenu){
+          btn.setAttribute('aria-expanded','false');
+        }
       });
-    })();
+    }
 
-  </script>
+    triggers.forEach(trigger => {
+      trigger.setAttribute('aria-expanded','false');
+
+      trigger.addEventListener('click', function(e){
+        const isMobile = window.innerWidth <= 720;
+        if (!isMobile) return;
+
+        e.preventDefault();
+
+        const group = trigger.closest('.menu-group');
+        const submenu = group && group.querySelector('.submenu');
+        if (!submenu) return;
+
+        const isOpen = submenu.classList.contains('open');
+
+        if (isOpen){
+          submenu.classList.remove('open');
+          trigger.setAttribute('aria-expanded','false');
+        } else {
+          closeAll(submenu);
+          submenu.classList.add('open');
+          trigger.setAttribute('aria-expanded','true');
+        }
+      });
+    });
+  })();
+</script>
 
 <script>
   fetch('/includes/header.html')
     .then(r => r.text())
     .then(html => {
       document.getElementById('site-header').innerHTML = html;
+      // Ahora que el header ya está en el DOM:
       renderHeaderAuth();
-      initSubmenus();
       attachHeaderEvents();
+      if (typeof initSubmenus === 'function') {
+        initSubmenus();
+      }
     });
 </script>
 
