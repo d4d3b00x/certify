@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es">
 <head>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYZ3GCXHEK"></script>
   <script>
@@ -24,11 +25,8 @@
   <meta property="og:url" content="https://www.ithub.es/" />
   <meta property="og:site_name" content="ITHub.es" />
 
-  <link
-    rel="icon"
-    type="image/svg+xml"
-    href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>"
-  />
+  <link rel="icon" type="image/svg+xml" 
+href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
   <style>
     :root{
@@ -40,16 +38,13 @@
       --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
       --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
       --cta-purple:linear-gradient(180deg,#6c8bff,#3e64ff);
-      --ok:#3ad97a;
-      --warn:#ffd66b;
-      --bad:#ff6b6b;
+      --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
       --glow-azure: 0 0 0 1px rgba(0,120,212,.35), 0 8px 22px rgba(0,120,212,.18);
-      --glow-aws: 0 0 0 1px rgba(255,153,0,.28), 0 8px 22px rgba(255,153,0,.16);
-      --glow-gcp: 0 0 0 1px rgba(66,133,244,.32), 0 8px 22px rgba(66,133,244,.18);
+      --glow-aws:   0 0 0 1px rgba(255,153,0,.28), 0 8px 22px rgba(255,153,0,.16);
+      --glow-gcp:   0 0 0 1px rgba(66,133,244,.32), 0 8px 22px rgba(66,133,244,.18);
     }
 
     *{box-sizing:border-box}
-
     body{
       margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
       color:var(--ink);
@@ -59,400 +54,176 @@
         var(--bg);
       line-height:1.6;overflow-x:hidden;
     }
-
     a{color:inherit;text-decoration:none}
-
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    .skip-link{
-      position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
-    }
-    .skip-link:focus{
-      position:fixed;left:12px;top:12px;background:#fff;color:#111;
-      padding:10px 14px;border-radius:10px;z-index:9999;
-    }
-
-    :focus-visible{
-      outline:3px solid #9cc2ff;
-      outline-offset:3px;
-      border-radius:10px;
-    }
-
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{position:fixed;left:12px;top:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;z-index:9999;}
+    :focus-visible{outline:3px solid #9cc2ff;outline-offset:3px;border-radius:10px;}
     @media (prefers-reduced-motion: reduce){
-      *{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        transition-duration:.01ms !important;
-        scroll-behavior:auto !important
-      }
+      *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
 
-    header{
-      position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
-      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
-      border-bottom:1px solid var(--stroke)
-    }
-
-    .nav{
-      height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px
-    }
-
-    .brand{
-      display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase
-    }
-
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
+    
+    
+      nav.menu{
+        display:flex;
+        gap:12px;
+        color:var(--muted);
+        font-weight:800;
+        align-items:center;
+        text-transform:uppercase;
+      }
 
-    nav.menu{
-      display:flex;
-      gap:12px;
-      color:var(--muted);
-      font-weight:800;
-      align-items:center;
-      text-transform:uppercase;
-    }
+     nav.menu .link-btn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-width:110px;
+        min-height:44px;
+        height:40px;
+        padding:0 12px;
+        border-radius:10px;
+        border:1px solid transparent;
+        font-weight:900;
+        letter-spacing:.8px;
+        background:none;
+        cursor:pointer;
+        font-family:inherit;
+        color:inherit;
+        text-decoration:none;
+        line-height:1;
+      }
 
-    nav.menu .link-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:110px;
-      min-height:44px;
-      height:40px;
-      padding:0 12px;
-      border-radius:10px;
-      border:1px solid transparent;
-      font-weight:900;
-      letter-spacing:.8px;
-      background:none;
-      cursor:pointer;
-      font-family:inherit;
-      color:inherit;
-      text-decoration:none;
-      line-height:1;
-    }
+      nav.menu .link-btn:hover{
+        border-color:#2a3150;
+        color:var(--ink);
+      }
 
-    nav.menu .link-btn:hover{
-      border-color:#2a3150;
-      color:var(--ink);
-    }
 
-    .authwrap{
-      display:flex;align-items:center;gap:6px;background:var(--pill-bg);
-      border:1px solid var(--pill-ring);
-      border-radius:999px;
-      padding:4px;
-      box-shadow:0 6px 18px rgba(5,10,30,.35);
-      max-height:44px;
-    }
-
-    .hello{
-      display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;
-      padding:4px 8px;font-size:12px
-    }
-
-    .pill-btn{
-      display:inline-flex;align-items:center;justify-content:center;min-width:88px;
-      min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;
-      background:var(--pill-btn-bg);
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;transition:transform .08s, background .12s;
-      font-size:13px;text-transform:uppercase;letter-spacing:1px;
-    }
-
-    .pill-btn:hover{
-      background:var(--pill-btn-bg-hover);
-      transform:translateY(-1px)
-    }
-
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;min-height:44px;
-      height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);
-      background:transparent;color:var(--ink);font-weight:900;cursor:pointer;
-      text-transform:uppercase;letter-spacing:.8px;
-    }
-
+    .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
+      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
+    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s; font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+    .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;letter-spacing:.8px;}
     .btn:hover{border-color:#3a4580}
-
-    .btn.small{
-      min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px
-    }
+    .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
 
     @media (max-width:720px){
-      nav.menu{gap:8px}
-      nav.menu .link-btn{min-width:90px;height:36px}
-      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}
-      .btn{height:36px}.hello{display:none}
+    nav.menu{gap:8px} nav.menu .link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
     }
 
     .hero{padding:16px 0 4px;text-align:center}
-
     .hero-head{
       display:inline-block;width:100%;
       background:linear-gradient(180deg,#12183a,#0f1531);
       border:1px solid rgba(255,255,255,.08);
       border-radius:18px;
       padding:14px 16px;
-      box-shadow:0 10px 24px rgba(80,90,240,.18),
-                 0 0 0 1px rgba(108,139,255,.22) inset;
+      box-shadow:0 10px 24px rgba(80,90,240,.18), 0 0 0 1px rgba(108,139,255,.22) inset;
       position:relative;
     }
-
     .hero-head::after{
       content:"";
-      position:absolute;
-      inset:-1px;
-      border-radius:18px;
-      pointer-events:none;
+      position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
       background:linear-gradient(135deg,rgba(108,139,255,.55),rgba(255,153,0,.25));
       -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      padding:1px;
-      opacity:.55;
+      -webkit-mask-composite:xor; mask-composite:exclude; padding:1px; opacity:.55;
     }
-
-    .hero h1{
-      margin:0 0 6px;font-size:clamp(1.8rem,4.4vw,3rem);line-height:1.15;
-      font-weight:900;letter-spacing:.2px
-    }
-
+    .hero h1{margin:0 0 6px;font-size:clamp(1.8rem,4.4vw,3rem);line-height:1.15;font-weight:900;letter-spacing:.2px}
     .lead{color:var(--muted);max-width:860px;margin:0 auto;font-size:1rem}
-
-    .hero-actions{
-      display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px
-    }
+    .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
     section{padding:24px 0}
-
     .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
-
     .muted{color:var(--muted);font-size:.95rem}
 
     .grid{display:grid;gap:14px;margin-top:12px}
-
     @media(min-width:820px){.grid{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1140px){.grid{grid-template-columns:repeat(3,1fr)}}
-
-    .sim-card{
-      position:relative;background:linear-gradient(180deg,#111937,#0f1633);
-      border:1px solid transparent;border-radius:18px;padding:16px;
-      box-shadow:var(--shadow);display:flex;flex-direction:column;
-      align-items:center;gap:10px;text-align:center;overflow:hidden;
-    }
-
+    .sim-card{position:relative;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid transparent;border-radius:18px;padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;overflow:hidden;}
     .sim-card .accent{position:absolute;top:0;left:0;right:0;height:4px;opacity:.9;}
-
-    .sim-card.sim-azure{
-      box-shadow:0 0 0 1px rgba(0,120,212,.45) inset,
-                 0 10px 26px rgba(0,120,212,.10),
-                 var(--shadow);
-    }
-
-    .sim-card.sim-aws{
-      box-shadow:0 0 0 1px rgba(255,153,0,.35) inset,
-                 0 10px 26px rgba(255,153,0,.10),
-                 var(--shadow);
-    }
-
-    .prov-pill{
-      display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;
-      border-radius:999px;font-weight:900;letter-spacing:.6px;
-      border:1px solid rgba(255,255,255,.15);
-      text-transform:uppercase
-    }
-
+    .sim-card.sim-azure{ box-shadow:0 0 0 1px rgba(0,120,212,.45) inset, 0 10px 26px rgba(0,120,212,.10), var(--shadow); }
+    .sim-card.sim-aws{   box-shadow:0 0 0 1px rgba(255,153,0,.35) inset, 0 10px 26px rgba(255,153,0,.10), var(--shadow); }
+    .prov-pill{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;font-weight:900;letter-spacing:.6px;border:1px solid rgba(255,255,255,.15); text-transform:uppercase}
     .prov-azure{background:rgba(0,120,212,.16);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
     .prov-aws{background:rgba(255,153,0,.18);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
-
     .sim-title{font-weight:900;font-size:1.05rem}
-
-    .sim-badges{
-      display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:2px
-    }
-
-    .sim-badge{
-      padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);
-      font-weight:800;font-size:.72rem;color:#cfe1ff;background:rgba(108,139,255,.12)
-    }
-
-    .btns-row{
-      display:flex;gap:12px;flex-wrap:wrap;justify-content:center
-    }
-
-    .cta-btn{
-      display:inline-flex;align-items:center;gap:8px;justify-content:center;
-      padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);
-      color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);
-      min-height:44px;letter-spacing:.8px;
-    }
-
+    .sim-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:2px}
+    .sim-badge{padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-weight:800;font-size:.72rem;color:#cfe1ff;background:rgba(108,139,255,.12)}
+    .btns-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);min-height:44px;letter-spacing:.8px;}
     .cta-btn[aria-disabled="true"]{opacity:.65;cursor:not-allowed;filter:grayscale(.35)}
-
-    .grid{ gap:10px; }
-    .sim-card{ padding:14px; border-radius:16px; gap:10px; }
-    .prov-pill{ padding:6px 12px; font-size:12px; }
-    .sim-title{ font-size:.98rem; }
+    .grid{ gap:10px; } .sim-card{ padding:14px; border-radius:16px; gap:10px; }
+    .prov-pill{ padding:6px 12px; font-size:12px; } .sim-title{ font-size:.98rem; }
 
     .vendor-grid{display:grid;gap:14px;margin-top:12px}
     @media(min-width:820px){.vendor-grid{grid-template-columns:repeat(2,1fr)}}
-
     .vendor-card .v-title{font-size:1.2rem;font-weight:900}
     .vendor-card p{margin:0;color:var(--muted);max-width:560px}
-
-    .vendor-azure .accent{
-      background:linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))
-    }
-
-    .vendor-aws .accent{
-      background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))
-    }
+    .vendor-azure .accent{background:linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))}
+    .vendor-aws .accent{background:linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))}
 
     .hook { padding: 12px 0 8px; }
     .hook .sec-title { font-size: clamp(1.45rem, 3.1vw, 2rem); }
     .hook-sub { color: var(--muted); margin: 4px 0 8px; font-size: .98rem; max-width: 860px; }
-
-    .hook-badges{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:8px 0 10px;
-    }
-
+    .hook-badges{ display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 10px; }
     .hook-badges span{
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(108,139,255,.12);
-      border:1px solid rgba(108,139,255,.35);
-      color:#cfe1ff;
-      font-weight:800;
-      font-size:.82rem;
+      padding:6px 10px; border-radius:999px; background:rgba(108,139,255,.12);
+      border:1px solid rgba(108,139,255,.35); color:#cfe1ff; font-weight:800; font-size:.82rem;
     }
-
-    .pitch-grid{
-      display:grid;
-      gap:12px;
-      margin-top:8px;
-    }
-
-    @media(min-width:820px){
-      .pitch-grid{
-        grid-template-columns:repeat(4,1fr);
-      }
-    }
-
-    .pitch-card{
-      background:var(--surface);
-      border:1px solid var(--stroke);
-      border-radius:14px;
-      padding:14px;
-      min-height:140px;
-    }
-
-    .p-head{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:6px;
-    }
-
-    .p-ico{
-      width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
-      background:linear-gradient(180deg,#8aa0ff,#425dff);
-      box-shadow:0 6px 14px rgba(80,90,240,.25);
-      font-size:20px;
-      flex:0 0 36px;
-    }
-
-    .pitch-card h3{
-      margin:0;
-      font-size:1.02rem;
-    }
-
-    .pitch-card p{
-      margin:6px 0 0;
-      color:var(--muted);
-    }
-
-    .hook-ctas{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:12px;
-    }
-
-    .hook-ctas .big{
-      min-height:48px;
-      padding:0 18px;
-      font-size:.98rem;
-    }
-
-    .pill-btn.big{
-      background:linear-gradient(180deg,#7a67ff,#5f48ff);
-      border:1px solid #3b2fff44;
-    }
-
-    .pill-btn.big:hover{
-      background:linear-gradient(180deg,#8a78ff,#6b54ff);
-      transform:translateY(-1px);
-    }
+    .pitch-grid{ display:grid; gap:12px; margin-top:8px; }
+    @media(min-width:820px){ .pitch-grid{ grid-template-columns:repeat(4,1fr); } }
+    .pitch-card{ background:var(--surface); border:1px solid var(--stroke); border-radius:14px; padding:14px; min-height:140px; }
+    .p-head{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+    .p-ico{ width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 6px 14px rgba(80,90,240,.25); font-size:20px; flex:0 0 36px; }
+    .pitch-card h3{ margin:0; font-size:1.02rem; }
+    .pitch-card p{ margin:6px 0 0; color:var(--muted); }
+    .hook-ctas{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .hook-ctas .big{ min-height:48px; padding:0 18px; font-size:.98rem; }
+    .pill-btn.big{ background:linear-gradient(180deg,#7a67ff,#5f48ff); border:1px solid #3b2fff44; }
+    .pill-btn.big:hover{ background:linear-gradient(180deg,#8a78ff,#6b54ff); transform:translateY(-1px); }
 
     /* === NUEVA ZONA: Aprende · Practica · Compite === */
     .bridge-section{padding-top:10px;}
-
     .bridge{
       position:relative;
-      display:grid;
-      grid-template-columns:.95fr 1.05fr;
+      display:grid; grid-template-columns:.95fr 1.05fr;
       gap:0;
-      border-radius:18px;
-      overflow:hidden;
+      border-radius:18px; overflow:hidden;
       background:linear-gradient(180deg,#12183a,#0f1531);
       border:1px solid rgba(255,255,255,.08);
-      box-shadow:0 14px 30px rgba(6,12,40,.45),
-                 0 0 0 1px rgba(108,139,255,.18) inset;
+      box-shadow:0 14px 30px rgba(6,12,40,.45), 0 0 0 1px rgba(108,139,255,.18) inset;
       isolation:isolate;
     }
-
     .bridge::after{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      border-radius:18px;
-      pointer-events:none;
+      content:""; position:absolute; inset:-1px; border-radius:18px; pointer-events:none;
       background:linear-gradient(135deg,rgba(108,139,255,.55),rgba(255,153,0,.30));
       -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      padding:1px;
-      opacity:.6;
+      -webkit-mask-composite:xor; mask-composite:exclude; padding:1px; opacity:.6;
     }
-
     .bridge .left{padding:20px 18px 18px 18px}
     .bridge .right{padding:18px;background:var(--surface2);position:relative;display:flex;align-items:center;min-height:260px}
-
     .bridge .right::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      opacity:.35;
+      content:""; position:absolute; inset:0; pointer-events:none; opacity:.35;
       background:
         radial-gradient(480px 240px at 10% -20%, rgba(0,120,212,.25), transparent 60%),
         radial-gradient(380px 220px at 120% 120%, rgba(255,153,0,.22), transparent 60%);
     }
-
     .bridge .tag{
       display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;
       background:rgba(255,153,0,.12);border:1px solid rgba(255,153,0,.3);color:#ffd7a0;font-weight:800
     }
-
     .bridge h2{margin:10px 0 6px;font-size:clamp(1.35rem,2.8vw,2rem);line-height:1.15}
     .bridge p{margin:0;color:var(--muted)}
-
     .bridge .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-
     .note{font-size:.85rem;color:#cfe1ff;opacity:.9;margin-top:6px;font-weight:800}
 
     /* 3 cajitas alineadas + signos entre ellas */
@@ -476,21 +247,13 @@
     .step{
       background:linear-gradient(180deg,#141b3a,#101631);
       border:1px solid rgba(255,255,255,.08);
-      border-radius:14px;
-      padding:12px;
-      min-height:132px;
+      border-radius:14px; padding:12px; min-height:132px;
       box-shadow:0 10px 24px rgba(5,10,30,.28);
     }
-
     .s-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-
-    .s-ico{
-      width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
-      background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 6px 14px rgba(80,90,240,.25);font-weight:900
-    }
-
+    .s-ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+      background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 6px 14px rgba(80,90,240,.25);font-weight:900}
     .step h3{margin:0;font-size:1rem}
-
     .step p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
 
     /* Operadores + y = entre cajas */
@@ -512,22 +275,17 @@
     @media(max-width:820px){
       .bridge{grid-template-columns:1fr}
       .flow{grid-template-columns:1fr;gap:10px}
+
       .flow.equation{
         flex-direction:column;
         align-items:stretch;
       }
     }
 
-    footer{
-      border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;
-      background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))
-    }
-
+    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
-
-    footer a{color:#cfe1ff}
-    footer a:hover{text-decoration:underline}
+    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
 
     .hero .btn {
       background: linear-gradient(180deg, #e423b3, #d8abda);
@@ -549,122 +307,72 @@
     /* Glosario (escritorio: grid 2 filas) */
     .glossary{padding-top:12px;}
     .g-wrap{position:relative}
-
     .g-track{
       display:grid;
       grid-auto-flow:column;
       grid-template-rows:repeat(2,1fr);
       gap:12px;
-      overflow-x:auto;
-      scroll-behavior:smooth;
+      overflow-x:auto; scroll-behavior:smooth;
       padding:6px 6px 4px;
-      scrollbar-width:thin;
-      scrollbar-color:#3a4580 transparent;
+      scrollbar-width:thin; scrollbar-color:#3a4580 transparent;
     }
-
     .g-track::-webkit-scrollbar{height:8px}
     .g-track::-webkit-scrollbar-thumb{background:#3a4580;border-radius:999px}
 
     .g-card{
-      min-width: 280px;
-      max-width: 320px;
+      min-width: 280px; max-width: 320px;
       background:linear-gradient(180deg,#12183a,#0f1531);
-      border-radius:16px;
-      padding:14px;
-      border:1px solid rgba(255,255,255,.08);
-      position:relative;
-      box-shadow: var(--shadow);
+      border-radius:16px; padding:14px; border:1px solid rgba(255,255,255,.08);
+      position:relative; box-shadow: var(--shadow);
       transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, filter .14s ease;
       outline:0;
     }
-
-    .g-card:hover, .g-card:focus-visible{
-      transform:translateY(-3px) scale(1.01);
-    }
-
+    .g-card:hover, .g-card:focus-visible{ transform:translateY(-3px) scale(1.01); }
     .g-card.azure{ box-shadow: var(--glow-azure); }
     .g-card.aws{ box-shadow: var(--glow-aws); }
     .g-card.gcp{ box-shadow: var(--glow-gcp); }
-
-    .g-card .accent{
-      position:absolute;inset:0;border-radius:16px;
-      padding:1px;
-      background:linear-gradient(135deg,rgba(108,139,255,.7),rgba(255,153,0,.35));
+    .g-card .accent{position:absolute;inset:0;border-radius:16px;
+      padding:1px; background:linear-gradient(135deg,rgba(108,139,255,.7),rgba(255,153,0,.35));
       -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor;
-      mask-composite:exclude;
-      pointer-events:none;
-      opacity:.55;
+      -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; opacity:.55;
     }
-
     .g-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-
-    .g-ico{
-      width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
-      background:linear-gradient(180deg,#8aa0ff,#425dff);
-      box-shadow:0 6px 14px rgba(80,90,240,.25)
-    }
-
+    .g-ico{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
+      background:linear-gradient(180deg,#8aa0ff,#425dff); box-shadow:0 6px 14px rgba(80,90,240,.25)}
     .g-title{font-weight:900;font-size:1.02rem}
-
     .g-desc{margin:6px 0 0;color:var(--muted);font-size:.95rem;line-height:1.35}
-
     .g-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-
-    .g-tag{
-      padding:4px 8px;border-radius:999px;font-weight:900;font-size:.72rem;
-      letter-spacing:.2px;border:1px solid rgba(255,255,255,.14)
-    }
-
+    .g-tag{padding:4px 8px;border-radius:999px;font-weight:900;font-size:.72rem;letter-spacing:.2px;border:1px solid rgba(255,255,255,.14)}
     .tag-az{background:rgba(0,120,212,.14);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
     .tag-aws{background:rgba(255,153,0,.14);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
     .tag-gcp{background:rgba(66,133,244,.14);color:#d7e5ff;border-color:rgba(66,133,244,.35)}
 
-    .g-arrows{
-      display:flex;gap:8px;justify-content:flex-end;margin:8px 2px 0;
-      align-items:center;flex-wrap:wrap
-    }
-
+    .g-arrows{display:flex;gap:8px;justify-content:flex-end;margin:8px 2px 0;align-items:center;flex-wrap:wrap}
     .g-arrow{
-      appearance:none;border:1px solid var(--stroke);
-      background:linear-gradient(180deg,#1b2142,#161b34);
-      color:#cbd3ff;border-radius:12px;min-width:44px;min-height:38px;
-      cursor:pointer;font-weight:900;
+      appearance:none;border:1px solid var(--stroke);background:linear-gradient(180deg,#1b2142,#161b34);
+      color:#cbd3ff;border-radius:12px;min-width:44px;min-height:38px;cursor:pointer;font-weight:900;
       display:inline-grid;place-items:center;box-shadow:0 6px 14px rgba(5,10,30,.25);
       transition:transform .08s ease,border-color .12s ease, background .12s ease;
     }
-
     .g-arrow:hover{transform:translateY(-1px);border-color:#3a4580}
     .g-arrow[disabled]{opacity:.45;cursor:not-allowed;transform:none}
     .g-arrow svg{width:20px;height:20px}
 
     .g-meta{display:flex;align-items:center;gap:10px;margin-left:auto}
-
-    .g-indicator{
-      font-weight:800;color:#cfe1ff;background:rgba(108,139,255,.12);
-      border:1px solid rgba(108,139,255,.35);padding:6px 10px;border-radius:999px;
-      font-size:.85rem
-    }
+    .g-indicator{font-weight:800;color:#cfe1ff;background:rgba(108,139,255,.12);border:1px solid rgba(108,139,255,.35);padding:6px 10px;border-radius:999px;font-size:.85rem}
 
     @media (max-width: 720px){
       .g-arrows{
-        position: sticky;
-        top: 8px;
-        z-index: 5;
-        justify-content: center;
-        gap: 12px;
-        margin: 8px 0 6px;
+        position: sticky; top: 8px; z-index: 5;
+        justify-content: center; gap: 12px; margin: 8px 0 6px;
       }
-      .g-arrow{
-        min-width: 48px;
-        min-height: 44px;
-      }
+      .g-arrow{ min-width: 48px; min-height: 44px; }
+
       .g-track{
         display: flex !important;
         gap: 12px;
         padding: 6px 8px 12px;
-        overflow-x: auto;
-        overflow-y: hidden;
+        overflow-x: auto; overflow-y: hidden;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
@@ -682,959 +390,859 @@
     }
 
     /* MODALES (feedback) */
-    .modal{
-      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-      padding:16px;background:rgba(0,0,0,.55);z-index:120
-    }
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);z-index:120}
     .modal.show{display:flex}
-
-    .modal-card{
-      width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);
-      border-radius:14px;padding:18px;box-shadow:var(--shadow)
-    }
-
+    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
     .modal-card h3{margin:0 0 10px;font-size:1.2rem}
     .modal-card p{margin:0 0 8px}
-
     .modal-card input,.modal-card textarea,.modal-card select{
-      width:100%;display:block;margin-top:8px;border:1px solid var(--stroke);
-      border-radius:10px;
+      width:100%;display:block;margin-top:8px;border:1px solid var(--stroke);border-radius:10px;
       background:var(--surface2);color:var(--ink);padding:10px;font-weight:700
     }
-
     .modal-card textarea{min-height:120px;resize:vertical}
-
-    .modal-actions{
-      display:flex;gap:8px;justify-content:flex-end;margin-top:12px
-    }
-
+    .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
     .fb-status{margin-top:8px;font-weight:800}
     .fb-status.ok{color:var(--ok)}
     .fb-status.err{color:var(--bad)}
     .fb-status.info{color:var(--muted)}
 
     @media (max-width:720px){
-      .sim-card, .g-card, .cta-btn, .hero-head, .p-ico{
+      .sim-card,
+      .g-card,
+      .cta-btn,
+      .hero-head,
+      .p-ico{
         box-shadow:0 4px 10px rgba(5,10,30,.18) !important;
       }
     }
 
-    /* === NAV DESPLEGABLE (Ejemplo 1) === */
-    .menu-has-sub { gap: 6px; }
-    .menu-group { position: relative; display: flex; align-items: center; }
 
-    .has-sub-trigger { position: relative; padding-right: 18px; }
-    .has-sub-trigger .caret { font-size: 0.7rem; opacity: 0.7; margin-left: 4px; }
+/* === NAV DESPLEGABLE (Ejemplo 1) === */
 
-    .menu-group .submenu {
-      position: absolute;
-      top: 110%;
-      left: 0;
-      min-width: 220px;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(180deg, #141b3a, #101631);
-      box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      z-index: 60;
-    }
+.menu-has-sub {
+  gap: 6px;
+}
 
-    .menu-group .submenu a {
-      display: block;
-      padding: 4px 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: none;
-      letter-spacing: 0;
-    }
+.menu-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-    .menu-group .submenu a:hover {
-      background: rgba(108, 139, 255, 0.18);
-      color: var(--ink);
-      border-radius: 8px;
-    }
+.has-sub-trigger {
+  position: relative;
+  padding-right: 18px;
+}
 
-    .submenu-title {
-      margin-top: 4px;
-      margin-bottom: 2px;
-      padding: 2px 8px 2px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #cfe1ff;
-      opacity: 0.7;
-    }
+.has-sub-trigger .caret {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-left: 4px;
+}
 
-    .submenu.open { display: flex; }
+.menu-group .submenu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  min-width: 220px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #141b3a, #101631);
+  box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 60;
+}
 
-    @media (min-width: 721px) {
-      .menu-group:hover > .submenu,
-      .menu-group:focus-within > .submenu {
-        display: flex;
-      }
-    }
+.menu-group .submenu a {
+  display: block;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
 
-    @media (max-width: 720px) {
-      .menu { flex-wrap: wrap; }
-      .menu-group { flex-direction: column; align-items: flex-start; }
+.menu-group .submenu a:hover {
+  background: rgba(108, 139, 255, 0.18);
+  color: var(--ink);
+  border-radius: 8px;
+}
 
-      .menu-group .submenu {
-        position: static;
-        margin-top: 4px;
-        width: 100%;
-        box-shadow: 0 6px 16px rgba(5,10,30,.35);
-        display: none;
-      }
+.submenu-title {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding: 2px 8px 2px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #cfe1ff;
+  opacity: 0.7;
+}
 
-      .menu-group .submenu.open { display: flex; }
-    }
+.submenu.open {
+  display: flex;
+}
 
-    .menu-group .submenu a,
-    .menu-group .submenu .submenu-title {
-      text-transform: uppercase;
-    }
+@media (min-width: 721px) {
+  .menu-group:hover > .submenu,
+  .menu-group:focus-within > .submenu {
+    display: flex;
+  }
+}
 
-    .menu-group .submenu a {
-      display: block;
-      padding: 4px 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-    }
+@media (max-width: 720px) {
+  .menu {
+    flex-wrap: wrap;
+  }
 
-    .menu-group .submenu a.submenu-mainlink {
-      margin-top: 4px;
-      margin-bottom: 2px;
-      padding: 6px 8px;
-      font-size: 0.82rem;
-      font-weight: 900;
-      color: var(--ink);
-      border-radius: 8px;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(108,139,255,.35), transparent 55%),
-        linear-gradient(180deg, #151b31, #11172b);
-      box-shadow: 0 6px 16px rgba(5,10,30,.45);
-    }
+  .menu-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .menu-group .submenu a.submenu-mainlink:hover {
-      background:
-        radial-gradient(circle at 0% 0%, rgba(108,139,255,.5), transparent 60%),
-        linear-gradient(180deg, #1a2140, #131a33);
-      color: #ffffff;
-    }
+  .menu-group .submenu {
+    position: static;
+    margin-top: 4px;
+    width: 100%;
+    box-shadow: 0 6px 16px rgba(5,10,30,.35);
+    display: none;
+  }
 
-    .menu-group .submenu a.submenu-child {
-      padding-left: 22px;
-      font-size: 0.78rem;
-      opacity: 0.9;
-    }
+  .menu-group .submenu.open {
+    display: flex;
+  }
+}
 
-    .menu-group .submenu a:hover {
-      background: rgba(108, 139, 255, 0.18);
-      color: var(--ink);
-      border-radius: 8px;
-    }
+.menu-group .submenu a,
+.menu-group .submenu .submenu-title {
+  text-transform: uppercase;
+}
 
-    .submenu-title {
-      margin-top: 6px;
-      margin-bottom: 2px;
-      padding: 2px 8px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #cfe1ff;
-      opacity: 0.7;
-    }
+.menu-group .submenu a {
+  display: block;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
 
-    /* Primer item: CATALOGO GLOBAL (un poco separado del resto) */
-    .menu-group .submenu a.submenu-global{
-      margin-bottom:6px;
-    }
+.menu-group .submenu a.submenu-mainlink {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: var(--ink);
+  border-radius: 8px;
+  background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.35), transparent 55%),
+              linear-gradient(180deg, #151b31, #11172b);
+  box-shadow: 0 6px 16px rgba(5,10,30,.45);
+}
 
-    /* Ítem inferior: RANKING GLOBAL con icono y separador arriba */
-    .menu-group .submenu a.submenu-bottom{
-      margin-top:6px;
-      padding:6px 8px;
-      font-size:0.8rem;
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      border-top:1px solid rgba(255,255,255,0.08);
-      opacity:0.95;
-    }
+.menu-group .submenu a.submenu-mainlink:hover {
+  background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.5), transparent 60%),
+              linear-gradient(180deg, #1a2140, #131a33);
+  color: #ffffff;
+}
 
-    .submenu-bottom-icon{
-      font-size:1rem;
-      display:inline-block;
-      transform:translateY(0.5px);
-    }
+.menu-group .submenu a.submenu-child {
+  padding-left: 22px;
+  font-size: 0.78rem;
+  opacity: 0.9;
+}
+
+.menu-group .submenu a:hover {
+  background: rgba(108, 139, 255, 0.18);
+  color: var(--ink);
+  border-radius: 8px;
+}
+
+.submenu-title {
+  margin-top: 6px;
+  margin-bottom: 2px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #cfe1ff;
+  opacity: 0.7;
+}
   </style>
 </head>
 <body>
- <!-- Aquí se inyectará el header común -->
-  <div id="site-header"></div>
+  
 
-<main id="main" tabindex="-1">
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="container">
-      <div class="hero-head">
-        <h1 id="hero-title"><span aria-hidden="true">🎮</span>Aprende y practica para <b>aprobar tus certificaciones IT</b> y avanzar en tu carrera.</h1>
-        <p class="lead">Simuladores realistas + resúmenes por dominio. Practica lo que más cae y mide tu progreso hasta aprobar.</p>
-      </div>
+ <header role="banner">
+  <div class="container nav">
+    <div class="brand">
+      <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
     </div>
-  </section>
 
-  <section class="hook" aria-labelledby="hook-title">
-    <div class="container">
-      <h2 id="hook-title" class="sec-title">Certifícate y gana competitividad </h2>
+    <nav class="menu menu-has-sub" aria-label="Navegación principal">
 
-      <div class="hook-badges" aria-hidden="true">
-        <span>+3.000 preguntas</span><span>Resúmenes por dominio</span><span>Enlaces oficiales</span><span>Ranking e insignias</span>
-      </div>
-
-      <div class="pitch-grid" role="list">
-        <article class="pitch-card" role="listitem">
-          <div class="p-head"><div class="p-ico">🎯</div><h3>Preguntas enfocadas</h3></div>
-          <p>Simuladores para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b>.</p>
-        </article>
-
-        <article class="pitch-card" role="listitem">
-          <div class="p-head"><div class="p-ico">🧠</div><h3>Resúmenes accionables</h3></div>
-          <p>Hojas de trucos y resúmenes aplicables al trabajo.</p>
-        </article>
-
-        <article class="pitch-card" role="listitem">
-          <div class="p-head"><div class="p-ico">🔗</div><h3>Explicaciones fiables</h3></div>
-          <p>Rationale + documentación oficial en cada respuesta.</p>
-        </article>
-
-        <article class="pitch-card" role="listitem">
-          <div class="p-head"><div class="p-ico">💼</div><h3>Demuestra progreso</h3></div>
-          <p>Certifícate, suma puntos en ranking y demuestra progreso.</p>
-        </article>
-      </div>
-
-      <div class="hook-ctas" role="group" aria-label="Acciones destacadas">
-      </div>
-    </div>
-  </section>
-
-  <!-- === SECCIÓN: Aprende · Practica · Compite (ajustada) === -->
-  <section class="bridge-section" aria-labelledby="bridge-title">
-    <div class="container">
-      <div class="bridge" role="region" aria-labelledby="bridge-title">
-        <div class="left">
-          <span class="tag" id="bridge-title">ENTRENA TU CERTIFICACIÓN</span>
-          <p class="muted">
-            <br>Empieza con los <b>simuladores</b> para aprender cada dominio del examen con <b>explicaciones</b> y enlaces oficiales.
-            Estamos preparando el juego <b>Arena Battle</b>: <b>quizzes relámpago</b> para ganar agilidad.
-          </p>
-
-          <div class="cta-row" role="group" aria-label="Acciones de entrenamiento">
-            <a class="btn" href="/catalog/itcatalog.html">VER SIMULADORES</a>
-          </div>
-        </div>
-
-        <div class="right" aria-label="Cómo se complementan">
-          <div class="flow equation" aria-label="Simulación más Gamificación es igual a Certificación">
-            <div class="step">
-              <div class="s-head"><div class="s-ico">📘</div><h3>Simulación</h3></div>
-              <p>Simulador de examen para práctica con <b>explicaciones</b> y enlaces oficiales.</p>
-            </div>
-
-            <div class="flow-op" aria-hidden="true">+</div>
-
-            <div class="step">
-              <div class="s-head"><div class="s-ico">⚡</div><h3>Gamificación</h3></div>
-              <p>Quizzes rápidos centrados en ganar agilidad y consolidar conceptos en Arena Battle.</p>
-            </div>
-
-            <div class="flow-op" aria-hidden="true">=</div>
-
-            <div class="step">
-              <div class="s-head"><div class="s-ico">🎓</div><h3>Certificación</h3></div>
-              <p>Llega al examen con <b>confianza</b>, ritmo y control de tus puntos débiles.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- === /SECCIÓN === -->
-
-  <section aria-labelledby="fab-title">
-    <div class="container">
-      <div id="fab-title" class="sec-title">CATÁLOGO DE CERTIFICACIONES</div>
-
-      <div class="vendor-grid">
-        <article class="sim-card sim-azure vendor-card vendor-azure">
-          <span class="accent" aria-hidden="true"></span>
-          <div class="prov-pill prov-azure">MICROSOFT AZURE</div>
-          <div class="v-title">Explora las certificaciones de Azure</div>
-          <p>Rutas y guías de estudio CLOUD de Microsoft</p>
-
-          <div class="btns-row" aria-label="Acciones Microsoft Azure">
-            <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
-            <a class="btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a>
-            <a class="btn" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a>
-          </div>
-        </article>
-
-        <article class="sim-card sim-aws vendor-card vendor-aws">
-          <span class="accent" aria-hidden="true"></span>
-          <div class="prov-pill prov-aws">AMAZON AWS</div>
-          <div class="v-title">Explora las certificaciones de AWS</div>
-          <p>Rutas y guías de estudio CLOUD de Amazon</p>
-
-          <div class="btns-row" aria-label="Acciones Amazon AWS">
-            <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
-            <a class="btn" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Glosario → CARRUSEL -->
-  <section class="glossary" aria-labelledby="g-title">
-    <div class="container">
-      <h2 id="g-title" class="sec-title">Carrusel de Conceptos a Examen</h2>
-
-      <div class="g-arrows" role="group" aria-label="Navegación del glosario">
-        <button class="g-arrow" id="gPrev" aria-label="Anterior" aria-controls="gTrack">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      <!-- 1. CERTIFICACIONES -->
+      <div class="menu-group">
+        <button type="button" class="link-btn has-sub-trigger">
+          CERTIFICACIONES
+          <span class="caret" aria-hidden="true">▾</span>
         </button>
-        <button class="g-arrow" id="gNext" aria-label="Siguiente" aria-controls="gTrack">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
-        </button>
+        <div class="submenu">
+          <a class="submenu-mainlink" href="/certification/microsoft-azure/az-104/index.html">
+            PORTADA AZURE
+          </a>
+          <a class="submenu-child" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">
+            AZ-104 ADMINISTRATOR
+          </a>
+          <a class="submenu-child" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">
+            AZ-305 ARCHITECT
+          </a>
 
-        <div class="g-meta">
-          <div class="g-indicator" id="gIndicator" aria-live="polite">1–2 / 20</div>
+          <a class="submenu-mainlink" href="/certification/amazon aws/index.html">
+            PORTADA AWS
+          </a>
+          <a class="submenu-child" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">
+            SAA-C03 ARCHITECT
+          </a>
         </div>
       </div>
 
-      <div class="g-wrap">
-        <div class="g-track" id="gTrack" tabindex="0" role="list" aria-label="Carrusel de términos del glosario (dos filas)">
-
-          <!-- tarjetas del glosario (1–20) -->
-          <!-- 1 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🌐</div><div class="g-title">Azure Front Door</div></div>
-            <p class="g-desc">CDN + WAF global (L7) con terminación TLS y enrutamiento al punto más cercano para apps multi-región.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
-          </article>
-
-          <!-- 2 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">GZRS</div></div>
-            <p class="g-desc">Geo-Zone-Redundant Storage: resiliencia a nivel de zona y réplica geográfica para máxima durabilidad.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-          </article>
-
-          <!-- 3 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">📣</div><div class="g-title">SNS Fanout</div></div>
-            <p class="g-desc">Patrón pub/sub para distribuir eventos a múltiples consumidores (SQS, Lambda, HTTPS) de forma desacoplada.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 4 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🛡️</div><div class="g-title">Azure Bastion</div></div>
-            <p class="g-desc">Accede por RDP/SSH desde el navegador sin exponer IP pública ni abrir 22/3389. Menor superficie de ataque.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-          </article>
-
-          <!-- 5 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🌀</div><div class="g-title">VM Scale Sets</div></div>
-            <p class="g-desc">Escala grupos de VMs con zonas, actualizaciones orquestadas y autoescalado por métricas para mantener SLA.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-          </article>
-
-          <!-- 6 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">📏</div><div class="g-title">Azure Policy</div></div>
-            <p class="g-desc">Gobernanza declarativa con efectos audit/deny; aplica estándares a nivel de Management Group y suscripciones.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
-          </article>
-
-          <!-- 7 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🌍</div><div class="g-title">Cosmos DB</div></div>
-            <p class="g-desc">Base NoSQL distribuida globalmente con latencia de un dígito, APIs múltiples y replicación multi-región.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-          </article>
-
-          <!-- 8 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🔁</div><div class="g-title">Azure Site Recovery</div></div>
-            <p class="g-desc">Orquesta DR para VMs con RPO de minutos y pruebas no disruptivas. Failover y failback guiados.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-          </article>
-
-          <!-- 9 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🧭</div><div class="g-title">Gateway VPC Endpoint</div></div>
-            <p class="g-desc">Acceso a S3/DynamoDB desde la VPC sin Internet Gateway ni NAT. Más seguro y económico.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 10 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🚀</div><div class="g-title">CloudFront</div></div>
-            <p class="g-desc">CDN global con TLS, caché y protección integrada (Shield/WAF). Orígenes S3/ALB/EC2.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 11 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">⚡</div><div class="g-title">DynamoDB</div></div>
-            <p class="g-desc">NoSQL serverless con On-Demand/Provisioned, Streams y Global Tables para replicación multi-región.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 12 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🏛️</div><div class="g-title">RDS Multi-AZ</div></div>
-            <p class="g-desc">Replica sincrónica a standby en otra zona y failover automático para mejorar disponibilidad.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 13 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">S3 Glacier</div></div>
-            <p class="g-desc">Archivado de bajo coste con ciclos de vida y tiempos de recuperación configurables.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 14 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">📶</div><div class="g-title">Kinesis Data Streams</div></div>
-            <p class="g-desc">Ingesta en tiempo real con orden por shard, múltiples consumidores y retención configurable.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 15 -->
-          <article class="g-card aws" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">💸</div><div class="g-title">Savings Plans</div></div>
-            <p class="g-desc">Compromiso de gasto que reduce costes de compute manteniendo flexibilidad de familia, tamaño y región.</p>
-            <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
-          </article>
-
-          <!-- 16 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🧱</div><div class="g-title">Application Gateway (WAF)</div></div>
-            <p class="g-desc">Balanceo L7 con WAF administrado, rutas por host/path y TLS end-to-end. Integrable con AKS.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-          </article>
-
-          <!-- 17 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🔐</div><div class="g-title">Key Vault (HSM)</div></div>
-            <p class="g-desc">Gestión de claves, secretos y certificados con protección HSM, soft-delete y purge protection.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
-          </article>
-
-          <!-- 18 -->
-          <article class="g-card azure" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🗂️</div><div class="g-title">Azure Files</div></div>
-            <p class="g-desc">SMB gestionado con AD/ACLs y snapshots. Ideal para lift & shift y perfiles de usuario.</p>
-            <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
-          </article>
-
-          <!-- 19 -->
-          <article class="g-card gcp" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🧮</div><div class="g-title">BigQuery</div></div>
-            <p class="g-desc">Data warehouse serverless; consulta petabytes con SQL y separación compute/almacenamiento.</p>
-            <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
-          </article>
-
-          <!-- 20 -->
-          <article class="g-card gcp" role="listitem" tabindex="0">
-            <span class="accent" aria-hidden="true"></span>
-            <div class="g-head"><div class="g-ico">🐳</div><div class="g-title">Cloud Run</div></div>
-            <p class="g-desc">Contenedores serverless con escalado a cero y facturación por solicitud. Integración con Pub/Sub y VPC.</p>
-            <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
-          </article>
-
+      <!-- 2. COMUNIDAD -->
+      <div class="menu-group">
+        <button type="button" class="link-btn has-sub-trigger">
+          COMUNIDAD
+          <span class="caret" aria-hidden="true">▾</span>
+        </button>
+        <div class="submenu">
+          <a href="/who/acercade.html">NOSOTROS</a>
+          <a href="/faqs/faqs.html">FAQS</a>
+          <a href="/comunidad/colabora.html">COLABORA</a>
         </div>
+      </div>
+
+      <!-- 3. BLOG -->
+      <a class="link-btn" href="/blog/blog.html">BLOG</a>
+    </nav>
+
+<div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
+  <a id="btnLogin"  class="pill-btn" href="#">LOGIN</a>
+  <a id="btnSignup" class="pill-btn" href="#">REGÍSTRATE</a>
+
+      <div id="userArea" style="display:none;align-items:center;gap:6px">
+        <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
+        <a class="pill-btn" href="/user/profile.html">PERFIL</a>
+        <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
       </div>
     </div>
-  </section>
+  </div>
+</header>
 
-<section id="simuladores" aria-labelledby="sim-title">
+  <main id="main" tabindex="-1">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-head">
+          <h1 id="hero-title"><span aria-hidden="true">🎮</span>Aprende y practica para <b>aprobar tus certificaciones IT</b> y avanzar en tu carrera.</h1>
+          <p class="lead">Simuladores realistas + resúmenes por dominio. Practica lo que más cae y mide tu progreso hasta aprobar.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hook" aria-labelledby="hook-title">
+      <div class="container">
+        <h2 id="hook-title" class="sec-title">Certifícate y gana competitividad </h2>
+        <div class="hook-badges" aria-hidden="true">
+          <span>+3.000 preguntas</span><span>Resúmenes por dominio</span><span>Enlaces oficiales</span><span>Ranking e insignias</span>
+        </div>
+        <div class="pitch-grid" role="list">
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🎯</div><h3>Preguntas enfocadas</h3></div><p>Simuladores para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b>.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🧠</div><h3>Resúmenes accionables</h3></div><p>Hojas de trucos y resúmenes aplicables al trabajo.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🔗</div><h3>Explicaciones fiables</h3></div><p>Rationale + documentación oficial en cada respuesta.</p></article>
+          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">💼</div><h3>Demuestra progreso</h3></div><p>Certifícate, suma puntos en ranking y demuestra progreso.</p></article>
+        </div>
+        <div class="hook-ctas" role="group" aria-label="Acciones destacadas">
+        </div>
+      </div>
+    </section>
+
+    <!-- === SECCIÓN: Aprende · Practica · Compite (ajustada) === -->
+    <section class="bridge-section" aria-labelledby="bridge-title">
+      <div class="container">
+        <div class="bridge" role="region" aria-labelledby="bridge-title">
+          <div class="left">
+            <span class="tag" id="bridge-title">ENTRENA TU CERTIFICACIÓN</span>
+            <p class="muted">
+              <br>Empieza con los <b>simuladores</b> para aprender cada dominio del examen con <b>explicaciones</b> y enlaces oficiales.
+              Estamos preparando el juego <b>Arena Battle</b>: <b>quizzes relámpago</b>  para ganar agilidad.
+            </p>
+            <div class="cta-row" role="group" aria-label="Acciones de entrenamiento">
+              
+              <a class="btn" href="/catalog/itcatalog.html">VER SIMULADORES</a>
+            </div>
+          </div>
+          <div class="right" aria-label="Cómo se complementan">
+            <div class="flow equation" aria-label="Simulación más Gamificación es igual a Certificación">
+              <div class="step">
+                <div class="s-head"><div class="s-ico">📘</div><h3>Simulación</h3></div>
+                <p>Simulador de examen para práctica con <b>explicaciones</b> y enlaces oficiales.</p>
+              </div>
+
+              <div class="flow-op" aria-hidden="true">+</div>
+
+              <div class="step">
+                <div class="s-head"><div class="s-ico">⚡</div><h3>Gamificación</h3></div>
+                <p>Quizzes rápidos centrados en ganar agilidad y consolidar conceptos en Arena Battle.</p>
+              </div>
+
+              <div class="flow-op" aria-hidden="true">=</div>
+
+              <div class="step">
+                <div class="s-head"><div class="s-ico">🎓</div><h3>Certificación</h3></div>
+                <p>Llega al examen con <b>confianza</b>, ritmo y control de tus puntos débiles.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- === /SECCIÓN === -->
+
+    <section aria-labelledby="fab-title">
+      <div class="container">
+        <div id="fab-title" class="sec-title">CATÁLOGO DE CERTIFICACIONES</div>
+        <div class="vendor-grid">
+          <article class="sim-card sim-azure vendor-card vendor-azure">
+            <span class="accent" aria-hidden="true"></span>
+            <div class="prov-pill prov-azure">MICROSOFT AZURE</div>
+            <div class="v-title">Explora las certificaciones de Azure</div>
+            <p>Rutas y guías de estudio CLOUD de Microsoft</p>
+            <div class="btns-row" aria-label="Acciones Microsoft Azure">
+              <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
+              <a class="btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a>
+              <a class="btn" href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">AZ-305</a>
+            </div>
+          </article>
+
+          <article class="sim-card sim-aws vendor-card vendor-aws">
+            <span class="accent" aria-hidden="true"></span>
+            <div class="prov-pill prov-aws">AMAZON AWS</div>
+            <div class="v-title">Explora las certificaciones de AWS</div>
+            <p>Rutas y guías de estudio CLOUD de Amazon</p>
+            <div class="btns-row" aria-label="Acciones Amazon AWS">
+              <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
+              <a class="btn" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glosario → CARRUSEL -->
+    <section class="glossary" aria-labelledby="g-title">
+      <div class="container">
+        <h2 id="g-title" class="sec-title">Carrusel de Conceptos a Examen</h2>
+
+        <div class="g-arrows" role="group" aria-label="Navegación del glosario">
+          <button class="g-arrow" id="gPrev" aria-label="Anterior" aria-controls="gTrack">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <button class="g-arrow" id="gNext" aria-label="Siguiente" aria-controls="gTrack">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
+          </button>
+
+          <div class="g-meta">
+            <div class="g-indicator" id="gIndicator" aria-live="polite">1–2 / 20</div>
+          </div>
+        </div>
+
+        <div class="g-wrap">
+          <div class="g-track" id="gTrack" tabindex="0" role="list" aria-label="Carrusel de términos del glosario (dos filas)">
+            <!-- tarjetas del glosario (1–20) -->
+            <!-- 1 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌐</div><div class="g-title">Azure Front Door</div></div>
+              <p class="g-desc">CDN + WAF global (L7) con terminación TLS y enrutamiento al punto más cercano para apps multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 2 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">GZRS</div></div>
+              <p class="g-desc">Geo-Zone-Redundant Storage: resiliencia a nivel de zona y réplica geográfica para máxima durabilidad.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 3 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📣</div><div class="g-title">SNS Fanout</div></div>
+              <p class="g-desc">Patrón pub/sub para distribuir eventos a múltiples consumidores (SQS, Lambda, HTTPS) de forma desacoplada.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 4 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🛡️</div><div class="g-title">Azure Bastion</div></div>
+              <p class="g-desc">Accede por RDP/SSH desde el navegador sin exponer IP pública ni abrir 22/3389. Menor superficie de ataque.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 5 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌀</div><div class="g-title">VM Scale Sets</div></div>
+              <p class="g-desc">Escala grupos de VMs con zonas, actualizaciones orquestadas y autoescalado por métricas para mantener SLA.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 6 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📏</div><div class="g-title">Azure Policy</div></div>
+              <p class="g-desc">Gobernanza declarativa con efectos audit/deny; aplica estándares a nivel de Management Group y suscripciones.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 7 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌍</div><div class="g-title">Cosmos DB</div></div>
+              <p class="g-desc">Base NoSQL distribuida globalmente con latencia de un dígito, APIs múltiples y replicación multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 8 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🔁</div><div class="g-title">Azure Site Recovery</div></div>
+              <p class="g-desc">Orquesta DR para VMs con RPO de minutos y pruebas no disruptivas. Failover y failback guiados.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 9 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧭</div><div class="g-title">Gateway VPC Endpoint</div></div>
+              <p class="g-desc">Acceso a S3/DynamoDB desde la VPC sin Internet Gateway ni NAT. Más seguro y económico.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 10 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🚀</div><div class="g-title">CloudFront</div></div>
+              <p class="g-desc">CDN global con TLS, caché y protección integrada (Shield/WAF). Orígenes S3/ALB/EC2.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 11 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">⚡</div><div class="g-title">DynamoDB</div></div>
+              <p class="g-desc">NoSQL serverless con On-Demand/Provisioned, Streams y Global Tables para replicación multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 12 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🏛️</div><div class="g-title">RDS Multi-AZ</div></div>
+              <p class="g-desc">Replica sincrónica a standby en otra zona y failover automático para mejorar disponibilidad.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 13 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">S3 Glacier</div></div>
+              <p class="g-desc">Archivado de bajo coste con ciclos de vida y tiempos de recuperación configurables.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 14 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📶</div><div class="g-title">Kinesis Data Streams</div></div>
+              <p class="g-desc">Ingesta en tiempo real con orden por shard, múltiples consumidores y retención configurable.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 15 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">💸</div><div class="g-title">Savings Plans</div></div>
+              <p class="g-desc">Compromiso de gasto que reduce costes de compute manteniendo flexibilidad de familia, tamaño y región.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 16 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧱</div><div class="g-title">Application Gateway (WAF)</div></div>
+              <p class="g-desc">Balanceo L7 con WAF administrado, rutas por host/path y TLS end-to-end. Integrable con AKS.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 17 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🔐</div><div class="g-title">Key Vault (HSM)</div></div>
+              <p class="g-desc">Gestión de claves, secretos y certificados con protección HSM, soft-delete y purge protection.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 18 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🗂️</div><div class="g-title">Azure Files</div></div>
+              <p class="g-desc">SMB gestionado con AD/ACLs y snapshots. Ideal para lift & shift y perfiles de usuario.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 19 -->
+            <article class="g-card gcp" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧮</div><div class="g-title">BigQuery</div></div>
+              <p class="g-desc">Data warehouse serverless; consulta petabytes con SQL y separación compute/almacenamiento.</p>
+              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
+            </article>
+            <!-- 20 -->
+            <article class="g-card gcp" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🐳</div><div class="g-title">Cloud Run</div></div>
+              <p class="g-desc">Contenedores serverless con escalado a cero y facturación por solicitud. Integración con Pub/Sub y VPC.</p>
+              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="simuladores" aria-labelledby="sim-title">
       <div class="container">
         <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
         <div class="muted">Modo de examen en desarrollo y más simuladores pronto</div>
         <div class="grid" id="simGrid" role="list"></div>
       </div>
     </section>
-  
-</main>
+  </main>
 
-<footer role="contentinfo">
-  <div class="container f-grid">
-    <div>
-      <div class="brand" style="text-transform:none">
-        <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
-        <span>ITHUB.ES</span>
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHUB.ES</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
       </div>
-      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
-    </div>
-
-    <div>
-      <div style="font-weight:800">COMUNIDAD</div>
-      <div><a href="/faqs/faqs.html">FAQS</a></div>
-      <div><a href="/who/acercade.html">NOSOTROS</a></div>
-      <div><a href="/comunidad/colabora.html">COLABORA</a></div>
-    </div>
-
-    <div>
-      <div style="font-weight:800">CONTENIDOS</div>
-      <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
-      <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
-      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-      <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
-    </div>
-
-    <div>
-      <div style="font-weight:800">SPONSOR</div>
-      <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
-
-      <div style="font-weight:800">CONTACTO</div>
-      <!-- NUEVO BLOQUE: nubecita + LinkedIn -->
-      <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
-        <!-- Nubecita que abre el modal (sin texto) -->
-        <button
-          id="footerContactBtn"
-          type="button"
-          aria-label="Enviar mensaje desde la web"
-          style="background:none;border:none;color:#cfe1ff;font-weight:800;display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:0;">
-          💬
+      <div>
+        <div style="font-weight:800">COMUNIDAD</div>
+        <div><a href="/faqs/faqs.html">FAQS</a></div>
+        <div><a href="/who/acercade.html">NOSOTROS</a></div>
+         <div><a href="/comunidad/colabora.html">COLABORA</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">CONTENIDOS</div>
+        
+        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
+        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
+        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+      </div>
+      <div>
+        <div style="font-weight:800">SPONSOR</div>
+        💬 <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
+        <div style="font-weight:800">CONTACTO</div>
+        <button id="footerContactBtn" type="button"
+                style="background:none;border:none;color:#cfe1ff;
+                       font-weight:800;display:inline-flex;align-items:center;
+                       gap:6px;cursor:pointer;padding:0;margin-top:6px;">
+          💬 <span>Contáctanos</span>
         </button>
+      </div>
+    </div>
+    <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
+  </footer>
 
-        <!-- Icono LinkedIn -->
-        <a
-          href="https://www.linkedin.com/in/certificacionesithub"
-          target="_blank"
-          rel="noopener"
-          aria-label="Perfil de LinkedIn de Certificaciones ITHub.es"
-          style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;border:1px solid #3a4580;background:#0f1320;color:#cfe1ff;font-size:15px;font-weight:900;text-decoration:none;">
-          in
-        </a>
+  <!-- Modal Feedback -->
+  <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
+    <div class="modal-card" role="document" tabindex="-1">
+      <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
+      <p class="muted">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
+      <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
+      <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
+      <div id="fbStatus" class="fb-status" aria-live="polite"></div>
+      <div class="modal-actions">
+        <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
+        <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
+        <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
       </div>
     </div>
   </div>
 
-  <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
-</footer>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-<!-- Modal Feedback -->
-<div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
-  <div class="modal-card" role="document" tabindex="-1">
-    <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
-    <p class="muted">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
+// === Cognito config (mismos valores que en jwt-lab / cognito-callback) ===
+const COGNITO_DOMAIN      = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+const COGNITO_CLIENT_ID   = "592bh3ek4jdeg78qntt810g7vl";
+const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; // OJO: debe coincidir con el app client
 
-    <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)">
-    <textarea id="feedbackText" placeholder="Escribe aquí tu sugerencia…"></textarea>
-
-    <div id="fbStatus" class="fb-status" aria-live="polite"></div>
-
-    <div class="modal-actions">
-      <button class="btn" id="btnCancelFeedback" type="button">CANCELAR</button>
-      <button class="pill-btn" id="btnSendFeedback" type="button">ENVIAR</button>
-      <button class="pill-btn" id="btnOkFeedback" type="button" style="display:none">ACEPTAR</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Año en el footer
-  document.getElementById('y').textContent = new Date().getFullYear();
-
-  // ===================== Auth header =====================
-  function getCurrentUser(){
-    try{
-      return JSON.parse(localStorage.getItem("currentUser")||"null");
-    }catch{
-      return null;
-    }
-  }
-
- function renderHeaderAuth(){
-  const u = getCurrentUser();
-  const login = document.getElementById('btnLogin');
-  const signup = document.getElementById('btnSignup');
-  const userArea = document.getElementById('userArea');
-  const nameTop = document.getElementById('userNameTop');
-
-  // Si todavía no existe el header, no hacemos nada
-  if (!login || !signup || !userArea || !nameTop) return;
-
-  if (u){
-    login.style.display = 'none';
-    signup.style.display = 'none';
-    userArea.style.display = 'flex';
-    nameTop.textContent = (u.name || u.email || 'USER').toUpperCase();
-  } else {
-    login.style.display = 'inline-flex';
-    signup.style.display = 'inline-flex';
-    userArea.style.display = 'none';
-  }
+function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
+  const params = new URLSearchParams({
+    client_id:     COGNITO_CLIENT_ID,
+    redirect_uri:  COGNITO_REDIRECT_URI,
+    response_type: "code",
+    scope:         "email openid profile"
+  });
+  return `${COGNITO_DOMAIN}/${path}?${params.toString()}`;
 }
 
-  document.getElementById('btnLogout')?.addEventListener('click', ()=>{
-    localStorage.removeItem('currentUser');
-    renderHeaderAuth();
-    renderSims();
-  });
-
-  renderHeaderAuth();
-
-  // ===================== Catálogo de simuladores =====================
-  const CATALOG = [
-    {
-      id:'AZ-104',
-      provider:'MICROSOFT AZURE (ESPAÑOL)',
-      title:'Administrator Associate',
-      quiz:'az-104',
-      startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html',
-      providerClass:'prov-azure',
-      simClass:'sim-azure',
-      accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))',
-      q:650
-    },
-    {
-      id:'SAA-C03',
-      provider:'AMAZON AWS (ESPAÑOL)',
-      title:'Solutions Architect Associate',
-      quiz:'aws-saa-c03',
-      startUrl:'/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html',
-      providerClass:'prov-aws',
-      simClass:'sim-aws',
-      accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))',
-      q:720
-    },
-    {
-      id:'AZ-305',
-      provider:'MICROSOFT AZURE (ESPAÑOL)',
-      title:'Architect Expert',
-      quiz:'az-305',
-      startUrl:'/certification/microsoft-azure/az-305/lz-azure-az-305.html',
-      providerClass:'prov-azure',
-      simClass:'sim-azure',
-      accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))',
-      q:580
+    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function renderHeaderAuth(){
+      const u=getCurrentUser();
+      const login=document.getElementById('btnLogin');
+      const signup=document.getElementById('btnSignup');
+      const userArea=document.getElementById('userArea');
+      const nameTop=document.getElementById('userNameTop');
+      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
+      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
     }
-  ];
-
-  const simGrid = document.getElementById('simGrid');
-
-  function renderSims(){
-    simGrid.innerHTML = '';
-    const authed = !!getCurrentUser();
-
-    CATALOG.forEach(c=>{
-      const el = document.createElement('article');
-      el.className = 'sim-card ' + c.simClass;
-      el.setAttribute('role','listitem');
-
-      const startLabel = authed ? '▶ Certificación' : '🔒 Login to Start';
-      const startHref = authed ? c.startUrl : '/login/login.html';
-
-      let loginMsg = '';
-      if(!authed){
-        loginMsg = '<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>';
-      }
-
-      el.innerHTML =
-        '<span class="accent" style="background:'+c.accent+'" aria-hidden="true"></span>' +
-        '<div class="prov-pill '+c.providerClass+'">'+c.provider+'</div>' +
-        '<div class="sim-title">'+c.id+' '+c.title+'</div>' +
-        '<div class="sim-badges">' +
-          '<span class="sim-badge">+'+c.q+' preguntas</span>' +
-          '<span class="sim-badge">Mixto</span>' +
-          '<span class="sim-badge">Explicadas</span>' +
-        '</div>' +
-        '<div class="btns-row" aria-label="Acciones de simulador '+c.id+'">' +
-          '<a class="cta-btn" href="/score/ranking.html?quiz='+encodeURIComponent(c.quiz)+'">🏆 Ranking</a>' +
-          '<a class="cta-btn start-btn" data-href="'+c.startUrl+'" href="'+startHref+'">'+startLabel+'</a>' +
-        '</div>' +
-        loginMsg;
-
-      simGrid.appendChild(el);
-    });
-  }
-
+   
+document.getElementById('btnLogout')?.addEventListener('click', () => {
+  // Limpiamos info local
+  localStorage.removeItem('currentUser');
+  localStorage.removeItem('arenaIdToken');  // opcional si lo usas
+  renderHeaderAuth();
   renderSims();
 
-  document.addEventListener('click', e=>{
-    const b = e.target.closest('.start-btn');
-    if(!b) return;
+  // Redirección al logout de Cognito para cerrar sesión del Hosted UI
+  const logoutParams = new URLSearchParams({
+    client_id:  COGNITO_CLIENT_ID,
+    logout_uri: window.location.origin + "/"  // al terminar, vuelve a la home
+  });
 
-    if(!!getCurrentUser()){
-      const url = b.dataset.href || b.getAttribute('href');
-      if(url) location.href = url;
-    } else {
-      location.href = '/login/login.html';
-    }
+  window.location.href = `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
+});
+
+
+    renderHeaderAuth();
+
+
+// === Botones de LOGIN / REGISTRO usando Cognito Hosted UI ===
+const btnLogin  = document.getElementById('btnLogin');
+const btnSignup = document.getElementById('btnSignup');
+
+if (btnLogin) {
+  btnLogin.addEventListener('click', (e) => {
     e.preventDefault();
+    // Hosted UI en modo login
+    window.location.href = buildCognitoAuthUrl("login");
   });
+}
 
-  // ===================== Feedback / contacto =====================
-  const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
-  const NOTES_ENDPOINT = API_BASE + '/items';
-
-  const fbEmail = document.getElementById('feedbackEmail');
-  const fbText = document.getElementById('feedbackText');
-  const fbStatus = document.getElementById('fbStatus');
-  const btnFbSend = document.getElementById('btnSendFeedback');
-  const btnFbCancel = document.getElementById('btnCancelFeedback');
-  const btnFbOk = document.getElementById('btnOkFeedback');
-  const footerBtn = document.getElementById('footerContactBtn');
-  const fbModal = document.getElementById('feedbackModal');
-
-  function openFeedbackModal(){
-    fbEmail.value = '';
-    fbText.value = '';
-    fbStatus.textContent = '';
-    fbStatus.className = 'fb-status';
-    btnFbSend.style.display = '';
-    btnFbCancel.style.display = '';
-    btnFbOk.style.display = 'none';
-    fbEmail.disabled = false;
-    fbText.disabled = false;
-    btnFbSend.disabled = false;
-    fbModal.classList.add('show');
-  }
-
-  footerBtn?.addEventListener('click', openFeedbackModal);
-  btnFbCancel?.addEventListener('click', ()=> fbModal.classList.remove('show'));
-  btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
-
-  fbModal?.addEventListener('click', e=>{
-    if(e.target === fbModal) fbModal.classList.remove('show');
+if (btnSignup) {
+  btnSignup.addEventListener('click', (e) => {
+    e.preventDefault();
+    // Hosted UI en modo signup (pestaña de registro)
+    window.location.href = buildCognitoAuthUrl("signup");
   });
+}
 
-  btnFbSend?.addEventListener('click', async ()=>{
-    const message = (fbText.value || '').trim();
-    const from = (fbEmail.value || '').trim();
 
-    if(!message){
-      fbStatus.textContent = 'Por favor, escribe tu sugerencia.';
-      fbStatus.className = 'fb-status err';
-      fbStatus.focus?.();
-      return;
-    }
+    const CATALOG = [
+      { id:'AZ-104', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Administrator Associate', quiz:'az-104',
+        startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html', providerClass:'prov-azure', simClass:'sim-azure',
+        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:650 },
+      { id:'SAA-C03', provider:'AMAZON AWS (ESPAÑOL)', title:'Solutions Architect Associate', quiz:'aws-saa-c03',
+        startUrl:'/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html', providerClass:'prov-aws', simClass:'sim-aws',
+        accent:'linear-gradient(90deg, rgba(255,153,0,.85), rgba(255,153,0,.35))', q:720 },
+      { id:'AZ-305', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Architect Expert', quiz:'az-305',
+        startUrl:'/certification/microsoft-azure/az-305/lz-azure-az-305.html', providerClass:'prov-azure', simClass:'sim-azure',
+        accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:580 }
+    ];
+    const simGrid=document.getElementById('simGrid');
 
-    fbEmail.disabled = true;
-    fbText.disabled = true;
-    btnFbSend.disabled = true;
-
-    fbStatus.textContent = 'Enviando…';
-    fbStatus.className = 'fb-status info';
-
-    const id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
-    const user = getCurrentUser();
-
-    const note = {
-      id,
-      type:'feedback',
-      title:'Feedback web ITHub',
-      message,
-      email: from || (user && user.email) || null,
-      userId: (user && (user.id || user.email)) || null,
-      path: location.pathname + location.search,
-      ua: navigator.userAgent,
-      createdAt: new Date().toISOString()
-    };
-
-    const params = new URLSearchParams();
-    params.set('table','notes');
-    params.set('id', id);
-    params.set('content', JSON.stringify(note));
-
-    const ctl = new AbortController();
-    const timeoutId = setTimeout(()=>ctl.abort(), 10000);
-
-    try{
-      const res = await fetch(NOTES_ENDPOINT, {
-        method:'POST',
-        body:params,
-        signal:ctl.signal
+    function renderSims(){
+      simGrid.innerHTML='';
+      const authed = !!getCurrentUser();
+      CATALOG.forEach(c=>{
+        const el=document.createElement('article'); el.className=`sim-card ${c.simClass}`; el.setAttribute('role','listitem');
+        const startLabel = authed ? '▶ Certificación' : '🔒 Login to Start';
+        const startHref  = authed ? c.startUrl : '/login/login.html';
+        const loginMsg = authed ? '' : `<div class="muted login-msg">Inicia sesión para comenzar este simulador.</div>`;
+        el.innerHTML=`
+          <span class="accent" style="background:${c.accent}" aria-hidden="true"></span>
+          <div class="prov-pill ${c.providerClass}">${c.provider}</div>
+          <div class="sim-title">${c.id} ${c.title}</div>
+          <div class="sim-badges">
+            <span class="sim-badge">+${c.q} preguntas</span>
+            <span class="sim-badge">Mixto</span>
+            <span class="sim-badge">Explicadas</span>
+          </div>
+          <div class="btns-row" aria-label="Acciones de simulador ${c.id}">
+            <a class="cta-btn" href="/score/ranking.html?quiz=${c.quiz}">🏆 Ranking</a>
+            <a class="cta-btn start-btn" data-href="${c.startUrl}" href="${startHref}">${startLabel}</a>
+          </div>
+          ${loginMsg}
+        `;
+        simGrid.appendChild(el);
       });
-      clearTimeout(timeoutId);
-
-      if(!res.ok){
-        const text = await res.text().catch(()=> '');
-        throw new Error('HTTP '+res.status+' '+text);
-      }
-
-      fbStatus.textContent = '¡Gracias! Mensaje recibido 👌';
-      fbStatus.className = 'fb-status ok';
-      btnFbSend.style.display = 'none';
-      btnFbCancel.style.display = 'none';
-      btnFbOk.style.display = '';
-      fbStatus.setAttribute('tabindex','-1');
-      fbStatus.focus();
-    }catch(err){
-      console.error('Error guardando feedback:', err);
-      fbStatus.textContent = 'No se pudo enviar la info. :(';
-      fbStatus.className = 'fb-status err';
-      btnFbSend.style.display = 'none';
-      btnFbCancel.style.display = 'none';
-      btnFbOk.style.display = '';
-      fbStatus.setAttribute('tabindex','-1');
-      fbStatus.focus();
     }
-  });
+    renderSims();
 
-  // ===================== Glosario carrusel =====================
-  (function(){
-    const track = document.getElementById('gTrack');
-    if(!track) return;
+    document.addEventListener('click', e=>{
+      const b=e.target.closest('.start-btn'); if(!b) return;
+      if(!!getCurrentUser()){
+        const url=b.dataset.href || b.getAttribute('href'); location.href = url;
+      }else{ location.href='/login/login.html'; }
+      e.preventDefault();
+    });
 
-    const prev = document.getElementById('gPrev');
-    const next = document.getElementById('gNext');
-    const indicator = document.getElementById('gIndicator');
-    const total = track.children.length;
+    const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
+    const NOTES_ENDPOINT = `${API_BASE}/items`;
+    const fbEmail   = document.getElementById('feedbackEmail');
+    const fbText    = document.getElementById('feedbackText');
+    const fbStatus  = document.getElementById('fbStatus');
+    const btnFbSend = document.getElementById('btnSendFeedback');
+    const btnFbCancel = document.getElementById('btnCancelFeedback');
+    const btnFbOk   = document.getElementById('btnOkFeedback');
+    const footerBtn = document.getElementById('footerContactBtn');
+    const fbModal   = document.getElementById('feedbackModal');
 
-    function columnStride(){
-      const first = track.querySelector('.g-card');
-      if(!first) return 320;
-      const rect = first.getBoundingClientRect();
-      const gap = parseFloat((getComputedStyle(track).gap || '12').split('px')[0]);
-      return Math.ceil(rect.width + gap);
+    function openFeedbackModal(){
+      fbEmail.value = ''; fbText.value  = '';
+      fbStatus.textContent = ''; fbStatus.className = 'fb-status';
+      btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
+      fbEmail.disabled = fbText.disabled = false; btnFbSend.disabled = false;
+      fbModal.classList.add('show');
     }
+    footerBtn?.addEventListener('click', openFeedbackModal);
+    btnFbCancel?.addEventListener('click',()=> fbModal.classList.remove('show'));
+    btnFbOk?.addEventListener('click', ()=> fbModal.classList.remove('show'));
+    fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
 
-    function totalCols(){
-      const perCol = 2;
-      return Math.ceil(total / perCol);
-    }
+    btnFbSend?.addEventListener('click', async ()=>{
+      const message = (fbText.value||'').trim();
+      const from    = (fbEmail.value||'').trim();
+      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; fbStatus.focus?.(); return; }
+      fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
+      fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
 
-    function updateIndicator(){
-      const stride = columnStride();
-      const cols = totalCols();
-      const col = Math.max(1, Math.min(cols, Math.round(track.scrollLeft / stride) + 1));
-      const first = (col - 1) * 2 + 1;
-      const last = Math.min(first + 1, total);
-      if(indicator){
-        indicator.textContent = first + '–' + last + ' / ' + total;
-      }
-    }
+      const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
+      const user = getCurrentUser();
+      const note = { id, type:'feedback', title:'Feedback web ITHub', message, email: from || user?.email || null,
+                     userId: user?.id || user?.email || null, path: location.pathname + location.search,
+                     ua: navigator.userAgent, createdAt: new Date().toISOString() };
 
-    function updateArrows(){
-      const max = track.scrollWidth - track.clientWidth - 2;
-      prev.disabled = track.scrollLeft <= 0;
-      next.disabled = track.scrollLeft >= max;
-      updateIndicator();
-    }
+      const params = new URLSearchParams();
+      params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
 
-    function scrollCols(dir){
-      track.scrollBy({ left: dir * columnStride(), behavior:'smooth' });
-    }
-
-    prev?.addEventListener('click', ()=> scrollCols(-1));
-    next?.addEventListener('click', ()=> scrollCols(1));
-    track.addEventListener('scroll', updateArrows);
-    window.addEventListener('resize', updateArrows);
-    updateArrows();
-
-    track.addEventListener('keydown', (e)=>{
-      if(e.key === 'ArrowRight'){
-        e.preventDefault();
-        scrollCols(1);
-      }
-      if(e.key === 'ArrowLeft'){
-        e.preventDefault();
-        scrollCols(-1);
+      const ctl = new AbortController(); const timeoutId = setTimeout(()=>ctl.abort(), 10000);
+      try{
+        const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
+        clearTimeout(timeoutId);
+        if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
+        fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
+      }catch(err){
+        console.error('Error guardando feedback:', err);
+        fbStatus.textContent = 'No se pudo enviar la info. :('; fbStatus.className='fb-status err';
+        btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
+        fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
       }
     });
-  })();
 
-  // ===================== Menú con submenús (mobile) =====================
-  (function(){
-    const triggers = document.querySelectorAll('.has-sub-trigger');
-    if (!triggers.length) return;
+    (function(){
+      const track = document.getElementById('gTrack');
+      if(!track) return;
+      const prev  = document.getElementById('gPrev');
+      const next  = document.getElementById('gNext');
+      const indicator = document.getElementById('gIndicator');
 
-    function closeAll(exceptSubmenu){
-      document.querySelectorAll('.menu-group .submenu.open').forEach(sm => {
-        if (sm !== exceptSubmenu) sm.classList.remove('open');
-      });
+      function columnStride(){
+        const first = track.querySelector('.g-card');
+        if(!first) return 320;
+        const rect = first.getBoundingClientRect();
+        const gap  = parseFloat(getComputedStyle(track).gap || '12');
+        return Math.ceil(rect.width + gap);
+      }
 
-      document.querySelectorAll('.has-sub-trigger[aria-expanded="true"]').forEach(btn => {
-        const group = btn.closest('.menu-group');
-        const sm = group && group.querySelector('.submenu');
-        if (!exceptSubmenu || sm !== exceptSubmenu){
-          btn.setAttribute('aria-expanded','false');
+      function totalCols(){
+        const perCol = 2;
+        return Math.ceil(track.children.length / perCol);
+      }
+
+      function updateIndicator(){
+        const stride = columnStride();
+        const cols = totalCols();
+        const col = Math.max(1, Math.min(cols, Math.round(track.scrollLeft / stride) + 1));
+        const first = (col - 1) * 2 + 1;
+        const last  = Math.min(first + 1, track.children.length);
+        if(indicator){
+          indicator.textContent = `${first}–${last} / ${track.children.length}`;
         }
+      }
+
+      function updateArrows(){
+        const max = track.scrollWidth - track.clientWidth - 2;
+        prev.disabled = track.scrollLeft <= 0;
+        next.disabled = track.scrollLeft >= max;
+        updateIndicator();
+      }
+
+      function scrollCols(dir){
+        track.scrollBy({ left: dir * columnStride(), behavior:'smooth' });
+      }
+
+      prev?.addEventListener('click', ()=> scrollCols(-1));
+      next?.addEventListener('click', ()=> scrollCols(1));
+      track.addEventListener('scroll', updateArrows);
+      window.addEventListener('resize', updateArrows);
+      updateArrows();
+
+      track.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowRight'){ e.preventDefault(); scrollCols(1); }
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
       });
-    }
+    })();
 
-    triggers.forEach(trigger => {
-      trigger.setAttribute('aria-expanded','false');
+    (function(){
+      const triggers = document.querySelectorAll('.has-sub-trigger');
+      if (!triggers.length) return;
 
-      trigger.addEventListener('click', function(e){
-        const isMobile = window.innerWidth <= 720;
-        if (!isMobile) return;
+      function closeAll(exceptSubmenu){
+        document.querySelectorAll('.menu-group .submenu.open').forEach(sm => {
+          if (sm !== exceptSubmenu) sm.classList.remove('open');
+        });
+        document.querySelectorAll('.has-sub-trigger[aria-expanded="true"]').forEach(btn => {
+          const group = btn.closest('.menu-group');
+          const sm = group && group.querySelector('.submenu');
+          if (!exceptSubmenu || sm !== exceptSubmenu){
+            btn.setAttribute('aria-expanded','false');
+          }
+        });
+      }
 
-        e.preventDefault();
-        const group = trigger.closest('.menu-group');
-        const submenu = group && group.querySelector('.submenu');
-        if (!submenu) return;
+      triggers.forEach(trigger => {
+        trigger.setAttribute('aria-expanded','false');
 
-        const isOpen = submenu.classList.contains('open');
+        trigger.addEventListener('click', function(e){
+          const isMobile = window.innerWidth <= 720;
+          if (!isMobile) return;
 
-        if (isOpen){
-          submenu.classList.remove('open');
-          trigger.setAttribute('aria-expanded','false');
-        } else {
-          closeAll(submenu);
-          submenu.classList.add('open');
-          trigger.setAttribute('aria-expanded','true');
-        }
+          e.preventDefault();
+
+          const group = trigger.closest('.menu-group');
+          const submenu = group && group.querySelector('.submenu');
+          if (!submenu) return;
+
+          const isOpen = submenu.classList.contains('open');
+
+          if (isOpen){
+            submenu.classList.remove('open');
+            trigger.setAttribute('aria-expanded','false');
+          } else {
+            closeAll(submenu);
+            submenu.classList.add('open');
+            trigger.setAttribute('aria-expanded','true');
+          }
+        });
       });
-    });
-  })();
-</script>
+    })();
 
-<script>
-  fetch('/includes/header.html')
-    .then(r => r.text())
-    .then(html => {
-      document.getElementById('site-header').innerHTML = html;
-      renderHeaderAuth();
-      initSubmenus();
-      attachHeaderEvents();
-    });
-</script>
+  </script>
 
 </body>
 </html>

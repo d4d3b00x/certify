@@ -3,252 +3,293 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
- 
 
-  <title>Iniciar sesión en ITHub.es — Simuladores y guías de certificación</title>
-<meta name="description" content="Accede a tu cuenta de ITHub.es para continuar tus simuladores de examen, revisar tu progreso y guardar tus resúmenes de certificaciones Azure y AWS." />
-<link rel="canonical" href="https://www.ithub.es/login/login.html" />
-<meta name="robots" content="noindex,nofollow" />
+  <title>Login · ITHub.es</title>
+  <meta name="description" content="Inicia sesión o regístrate en ITHub.es usando Amazon Cognito para guardar tu progreso y resultados de exámenes." />
+  <meta name="robots" content="noindex,nofollow" />
 
-<meta property="og:title" content="Inicia sesión en ITHub.es" />
-<meta property="og:description" content="Entra en tu perfil para seguir estudiando con simuladores, contenidos y ranking de certificaciones IT." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.ithub.es/login/login.html" />
-<meta property="og:site_name" content="ITHub.es" />
-
-    <link rel="icon" type="image/svg+xml" 
-href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
-
+  <link rel="icon" type="image/svg+xml" 
+    href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
   <style>
     :root{
-      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;
-      --accent:#6c8bff;--accent-2:#3e64ff;--radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
-      --ok:#25b873;--bad:#ff6b6b;
+      --bg:#0f1320;--surface:#151a30;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --stroke:#283056;--accent:#6c8bff;--accent-2:#3e64ff;
+      --radius:18px;--shadow:0 18px 40px rgba(6,12,40,.65);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6}
+    body{
+      margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(900px 420px at 90% -10%,rgba(255,153,0,.12),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.12),transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      line-height:1.6;
+    }
     a{color:#cfe1ff;text-decoration:none}
     a:hover{text-decoration:underline}
 
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
-      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
-      border-bottom:1px solid var(--stroke)}
-    .wrap{max-width:960px;margin:0 auto;padding:20px}
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900}
-    .dot{width:10px;height:10px;border-radius:50%;background:#6c8bff;box-shadow:0 0 0 6px rgba(108,139,255,.18)}
-    .menu{display:flex;gap:18px;color:var(--muted);font-weight:700}
-    .menu a{color:inherit;text-decoration:none}
-    .menu a:hover{color:#fff}
+    header{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));
+      border-bottom:1px solid var(--stroke);
+    }
+    .wrap{max-width:960px;margin:0 auto;padding:18px 20px;}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.05rem;}
+    .brand-pill{
+      width:36px;height:36px;border-radius:999px;
+      background:linear-gradient(180deg,#8aa0ff,#425dff);
+      box-shadow:0 0 0 6px rgba(108,139,255,.22);
+    }
+    .menu{display:flex;gap:16px;font-size:.9rem;color:var(--muted);font-weight:700;}
+    .menu a{color:inherit;text-decoration:none;text-transform:uppercase;letter-spacing:.08em;}
+    .menu a:hover{color:#fff;}
 
-    .page{max-width:960px;margin:0 auto;padding:24px 20px}
-    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);
-      border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
-    .title{margin:0 0 6px;font-weight:900}
-    .hint{color:var(--muted);font-size:.94rem}
-    .err{color:#ffb0b0;font-weight:800;margin-top:6px;display:none}
-    .hidden{display:none !important}
+    .page{max-width:960px;margin:0 auto;padding:26px 20px 32px;}
+    .card{
+      background:radial-gradient(circle at 0% 0%,rgba(108,139,255,.35),transparent 50%),
+                 radial-gradient(circle at 100% 100%,rgba(255,153,0,.26),transparent 55%),
+                 linear-gradient(180deg,#111937,#0f1531);
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.05);
+      box-shadow:var(--shadow);
+      padding:26px 20px 24px;
+    }
 
-    .switcher{display:flex;gap:8px;background:var(--surface2);border:1px solid var(--stroke);
-      border-radius:12px;padding:6px;width:fit-content;margin:0 auto 14px}
-    .tab{appearance:none;border:1px solid transparent;border-radius:10px;padding:8px 12px;
-      font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
-    .tab.active{background:#0f1630;border-color:#31407a;box-shadow:inset 0 0 0 1px #31407a}
+    .card-inner{ max-width:780px;margin:0 auto; }
 
-    .field{display:flex;flex-direction:column;gap:6px;margin:12px 0}
-    .control{display:flex;align-items:center;gap:8px;border:1px solid var(--stroke);
-      border-radius:12px;padding:10px 12px;background:var(--surface2)}
-    .control input{border:none;outline:none;background:transparent;color:var(--ink);width:100%;font-weight:800}
-    .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
-    .btn{appearance:none;border:1px solid var(--stroke);border-radius:12px;padding:12px 16px;
-      font-weight:900;cursor:pointer;background:transparent;color:var(--ink)}
-    .btn.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#fff;border-color:transparent;box-shadow:var(--shadow)}
-    .btn.ghost{background:#0f1630}
-    .btn[disabled]{opacity:.6;cursor:not-allowed}
+    .tabs{
+      display:inline-flex;
+      padding:5px;
+      border-radius:999px;
+      background:rgba(21,27,51,.9);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 24px rgba(5,10,30,.55);
+    }
+    .tab-btn{
+      appearance:none;
+      border:none;
+      background:transparent;
+      color:var(--muted);
+      font-weight:800;
+      font-size:.92rem;
+      padding:8px 18px;
+      border-radius:999px;
+      cursor:pointer;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      min-width:120px;
+    }
+    .tab-btn.active{
+      background:linear-gradient(180deg,#ffffff,#cfd6ff);
+      color:#141833;
+      box-shadow:0 10px 22px rgba(0,0,0,.45);
+    }
 
-    /* Aviso de éxito en login */
-    .info{
-      display:none;margin:0 0 10px;padding:10px 12px;border-radius:12px;text-align:left;
-      background:rgba(37,184,115,.14);border:1px solid rgba(37,184,115,.35);color:#c6f4e5;font-weight:800
+    h1{
+      margin:18px 0 6px;
+      font-size:1.8rem;
+      font-weight:900;
+    }
+    .hint{color:var(--muted);margin:0 0 18px;font-size:.98rem;max-width:720px;}
+
+    .big-btn{
+      width:100%;
+      margin-top:12px;
+      border-radius:999px;
+      padding:16px 18px;
+      border:none;
+      cursor:pointer;
+      font-size:1rem;
+      font-weight:900;
+      text-align:center;
+      background:linear-gradient(180deg,#6c8bff,#3e64ff);
+      color:#fff;
+      box-shadow:0 16px 40px rgba(80,90,240,.45);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .big-btn span.emoji{font-size:1.2rem;}
+    .big-btn:hover{
+      background:linear-gradient(180deg,#7a96ff,#4b71ff);
+      transform:translateY(-1px);
+    }
+
+    .secondary-btn{
+      margin-top:18px;
+      width:100%;
+      border-radius:999px;
+      padding:12px 16px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(12,16,35,.85);
+      color:#cfe1ff;
+      font-weight:800;
+      cursor:pointer;
+      text-align:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+    }
+    .secondary-btn:hover{
+      border-color:#3a4680;
+      background:rgba(17,23,52,.95);
+    }
+
+    .foot-note{
+      margin-top:14px;
+      font-size:.85rem;
+      color:var(--muted);
+    }
+
+    .hidden{display:none !important;}
+
+    @media (max-width:680px){
+      .card{padding:20px 16px;}
+      .tabs{width:100%;justify-content:space-between;}
+      .tab-btn{flex:1;min-width:auto;padding:8px 12px;font-size:.85rem;}
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <div class="brand"><span class="dot"></span> ITHub.es</div>
-      <nav class="menu">
-        <a href="/">Home</a>
-        <a href="/index.html#simuladores">Simuladores</a>
-             <a href="/score/ranking.html">Ranking</a>
-      </nav>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <span class="brand-pill" aria-hidden="true"></span>
+      <span>ITHub.es</span>
     </div>
-  </header>
-
-  <div class="page">
-    <div class="switcher" id="tabBar">
-      <button class="tab active" id="tabLogin" type="button">Login</button>
-      <button class="tab" id="tabSignup" type="button">Registro</button>
-    </div>
-
-    <!-- Login -->
-    <form id="loginForm" class="card" novalidate>
-      <h2 class="title">Iniciar sesión</h2>
-      <div id="loginOk" class="info">✅ Cuenta creada correctamente. Ahora inicia sesión.</div>
-      <p class="hint">Introduce tus credenciales para continuar.</p>
-      <div class="field">
-        <label for="loginEmail"><b>Email</b></label>
-        <div class="control"><input id="loginEmail" type="email" required placeholder="you@email.com"></div>
-      </div>
-      <div class="field">
-        <label for="loginPass"><b>Contraseña</b></label>
-        <div class="control"><input id="loginPass" type="password" required placeholder="••••••••"></div>
-      </div>
-      <div id="loginErr" class="err"></div>
-      <div class="actions">
-        <button class="btn" id="goSignup" type="button">Crear cuenta</button>
-        <button class="btn primary" id="loginSubmit" type="submit">Entrar</button>
-      </div>
-    </form>
-
-    <!-- Registro -->
-    <form id="signupForm" class="card hidden" novalidate>
-      <h2 class="title">Crear cuenta</h2>
-      <p class="hint">Rellena tus datos y estarás listo.</p>
-      <div class="field">
-        <label for="signupName"><b>Nombre</b></label>
-        <div class="control"><input id="signupName" required placeholder="Tu nombre"></div>
-      </div>
-      <div class="field">
-        <label for="signupEmail"><b>Email</b></label>
-        <div class="control"><input id="signupEmail" type="email" required placeholder="you@email.com"></div>
-      </div>
-      <div class="field">
-        <label for="signupPass"><b>Contraseña</b></label>
-        <div class="control"><input id="signupPass" type="password" required minlength="6" placeholder="Mínimo 6 caracteres"></div>
-      </div>
-      <div id="signupErr" class="err"></div>
-      <div class="actions">
-        <button class="btn" id="goLogin" type="button">Ya tengo cuenta</button>
-        <button class="btn primary" id="signupSubmit" type="submit">Crear cuenta</button>
-      </div>
-    </form>
+    <nav class="menu" aria-label="Navegación principal">
+      <a href="/">Home</a>
+      <a href="/index.html#simuladores">Simuladores</a>
+      <a href="/score/ranking.html">Ranking</a>
+    </nav>
   </div>
+</header>
 
-  <script>
-    const API_URL="https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-    const AUTH_KEY="currentUser";
-    const $=id=>document.getElementById(id);
+<main class="page">
+  <section class="card" aria-labelledby="loginTitle">
+    <div class="card-inner">
+      <div class="tabs" role="tablist" aria-label="Cambiar entre login y registro">
+        <button id="tabLogin"  class="tab-btn active" role="tab" aria-selected="true">Login</button>
+        <button id="tabSignup" class="tab-btn"         role="tab" aria-selected="false">Registro</button>
+      </div>
 
-    // ---------- Tabs ----------
-    function showTab(which){
-      const signup = which === "signup";
-      $("tabLogin").classList.toggle("active", !signup);
-      $("tabSignup").classList.toggle("active", signup);
-      $("loginForm").classList.toggle("hidden", signup);
-      $("signupForm").classList.toggle("hidden", !signup);
-      setTimeout(()=> (signup ? $("signupName") : $("loginEmail")).focus(), 10);
-    }
-    $("tabLogin").onclick=()=>showTab("login");
-    $("tabSignup").onclick=()=>showTab("signup");
-    $("goSignup").onclick=()=>showTab("signup");
-    $("goLogin").onclick=()=>showTab("login");
+      <!-- CONTENIDO LOGIN -->
+      <div id="panelLogin">
+        <h1 id="loginTitle">Iniciar sesión</h1>
+        <p class="hint">
+          Te llevaremos a una página segura de Amazon Cognito para validar tu email.
+          Al volver, tu sesión quedará iniciada en ITHub.es y podrás guardar resultados, ranking y progreso.
+        </p>
 
-    // ---------- Helpers ----------
-    function showError(id,msg){ const el=$(id); el.textContent=msg; el.style.display="block"; }
-    function hideError(id){ const el=$(id); el.style.display="none"; el.textContent=""; }
+        <button class="big-btn" type="button" id="btnLoginCognito">
+          <span class="emoji">👉</span>
+          <span>Continuar con tu cuenta</span>
+        </button>
 
-    function setCurrentUser(user){
-      try{ localStorage.setItem(AUTH_KEY, JSON.stringify(user)); }catch{}
-    }
+        <button class="secondary-btn" type="button" id="btnForgot">
+          <span>He olvidado mi contraseña</span>
+        </button>
 
-    // ---------- LOGIN ----------
-    $("loginForm").addEventListener("submit", async (e)=>{
-      e.preventDefault();
-      hideError("loginErr");
-      const email=$("loginEmail").value.trim().toLowerCase();
-      const password=$("loginPass").value;
-      const btn=$("loginSubmit");
-      if(!email||!password){ return showError("loginErr","Completa todos los campos."); }
-      btn.disabled=true;
-      try{
-        const resp=await fetch(`${API_URL}/login`,{
-          method:"POST",
-          headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-          body:new URLSearchParams({email,password})
-        });
-        let data=null; try{ data=await resp.json(); }catch{}
-        if(resp.ok){
-          const user = data?.user || { email, name: data?.name || "Usuario" };
-          setCurrentUser(user);
-          location.assign("/"); // portada: ya te verá como logueado
-        }else{
-          showError("loginErr", (data && (data.error||data.message)) || `Error al iniciar sesión (HTTP ${resp.status})`);
-        }
-      }catch(err){
-        showError("loginErr","Error de red");
-      }finally{
-        btn.disabled=false;
-      }
-    });
+        <p class="foot-note">
+          ¿Nuevo por aquí? Cambia a la pestaña <strong>Registro</strong> para crear tu cuenta.
+        </p>
+      </div>
 
-    // ---------- REGISTRO ----------
-    $("signupForm").addEventListener("submit", async (e)=>{
-      e.preventDefault();
-      hideError("signupErr");
-      const name=$("signupName").value.trim();
-      const email=$("signupEmail").value.trim().toLowerCase();
-      const password=$("signupPass").value;
-      const btn=$("signupSubmit");
-      if(!name||!email||!password){ return showError("signupErr","Completa todos los campos."); }
-      btn.disabled=true;
+      <!-- CONTENIDO REGISTRO -->
+      <div id="panelSignup" class="hidden" aria-labelledby="signupTitle">
+        <h1 id="signupTitle">Crear cuenta</h1>
+        <p class="hint">
+          Crearemos tu usuario en Cognito usando tu email y un <b>nombre público</b>. 
+          Solo necesitas confirmar la cuenta y, a partir de ahí, usaremos ese usuario para tus simuladores, ranking y quizzes.
+        </p>
 
-      try{
-        const resp=await fetch(`${API_URL}/signup`,{
-          method:"POST",
-          headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-          body:new URLSearchParams({name,email,password})
-        });
+        <button class="big-btn" type="button" id="btnSignupCognito">
+          <span class="emoji">✨</span>
+          <span>Crear mi cuenta en Cognito</span>
+        </button>
 
-        if(resp.status>=200 && resp.status<300){
-          // ✅ Sin temporizadores ni redirecciones:
-          // Cambiamos a pestaña Login, mostramos aviso y pre-rellenamos el email
-          showTab("login");
-          const ok=$("loginOk");
-          ok.style.display="block";
-          $("loginEmail").value = email;
-          $("loginPass").value = "";
-          $("loginPass").focus();
-        }else{
-          let data=null; try{ data=await resp.json(); }catch{}
-          showError("signupErr",(data && (data.error||data.message)) || `Error al crear la cuenta (HTTP ${resp.status})`);
-        }
-      }catch(err){
-        showError("signupErr","Error de red");
-      }finally{
-        btn.disabled=false;
-      }
-    });
+        <p class="foot-note">
+          Ya tengo usuario: vuelve a la pestaña <strong>Login</strong> para iniciar sesión.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
 
-// ---------- Vista inicial ----------
-document.addEventListener("DOMContentLoaded", ()=>{
-  // Normalizamos hash o parámetro
-  const hash = (location.hash || "").toLowerCase();
-  const params = new URLSearchParams(location.search);
-  const view = (params.get("view") || "").toLowerCase();
+<script>
+  // =========================
+  //   CONFIG COGNITO (DELUXE)
+  // =========================
 
-  const wantsSignup =
-    hash === "#signup" || hash === "#register" ||
-    view === "signup" || view === "register";
+  const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
 
-  if (wantsSignup) {
-    showTab("signup");
-  } else {
-    showTab("login");
+  // Mismos parámetros que tu enlace que sí funciona
+  const COGNITO_QUERY =
+    "client_id=592bh3ek4jdeg78qntt810g7vl" +
+    "&redirect_uri=" +
+    "https://www.ithub.es%2Flogin%2Fcognito-callback.html" +
+    "&response_type=code" +
+    "&scope=email+openid+profile";
+
+  const COGNITO_LOGIN_URL   = `${COGNITO_DOMAIN}/login?${COGNITO_QUERY}`;
+  const COGNITO_SIGNUP_URL  = `${COGNITO_DOMAIN}/signup?${COGNITO_QUERY}`;
+  const COGNITO_FORGOT_URL  = `${COGNITO_DOMAIN}/forgotPassword?${COGNITO_QUERY}`;
+
+  // =========================
+  //   TABS
+  // =========================
+  const tabLogin   = document.getElementById("tabLogin");
+  const tabSignup  = document.getElementById("tabSignup");
+  const panelLogin = document.getElementById("panelLogin");
+  const panelSignup= document.getElementById("panelSignup");
+
+  function showTab(which){
+    const isSignup = which === "signup";
+    tabLogin.classList.toggle("active", !isSignup);
+    tabSignup.classList.toggle("active", isSignup);
+    tabLogin.setAttribute("aria-selected", String(!isSignup));
+    tabSignup.setAttribute("aria-selected", String(isSignup));
+    panelLogin.classList.toggle("hidden", isSignup);
+    panelSignup.classList.toggle("hidden", !isSignup);
   }
-});
-  </script>
+
+  tabLogin.addEventListener("click", () => showTab("login"));
+  tabSignup.addEventListener("click", () => showTab("signup"));
+
+  // soportar /login/login-cog.html#signup o ?view=signup
+  document.addEventListener("DOMContentLoaded", () => {
+    const hash = (location.hash || "").toLowerCase();
+    const params = new URLSearchParams(location.search);
+    const view = (params.get("view") || "").toLowerCase();
+    const wantsSignup = hash === "#signup" || view === "signup" || view === "register";
+    showTab(wantsSignup ? "signup" : "login");
+  });
+
+  // =========================
+  //   ACCIONES COGNITO
+  // =========================
+  document.getElementById("btnLoginCognito").addEventListener("click", () => {
+    window.location.href = COGNITO_LOGIN_URL;
+  });
+
+  document.getElementById("btnSignupCognito").addEventListener("click", () => {
+    window.location.href = COGNITO_SIGNUP_URL;
+  });
+
+  document.getElementById("btnForgot").addEventListener("click", () => {
+    window.location.href = COGNITO_FORGOT_URL;
+  });
+</script>
+
 </body>
 </html>
