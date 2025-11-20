@@ -353,31 +353,18 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 <body>
   
 
-  <header role="banner">
-    <div class="container nav">
-      <div class="brand">
-        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-      </div>
-
-      <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="/">INICIO</a>
-        <a class="link-btn" href="/catalog/itcatalog.html">CATÁLOGOS</a>
-        <a class="link-btn" href="/content/content.html">RESÚMENES</a>
-        <a class="link-btn" href="/score/ranking.html">RANKING</a>
-      </nav>
-
-      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
-
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-        </div>
-      </div>
-    </div>
-  </header>
+     <!-- Aquí se inyectará el header común -->
+  <div id="site-header"></div>
+  <script>
+  fetch('/includes/header.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('site-header').innerHTML = html;
+      renderHeaderAuth();
+      initSubmenus();
+      attachHeaderEvents();
+    });
+</script>
 
   <main id="main" tabindex="-1">
     <!-- HERO QUIÉNES SOMOS -->
