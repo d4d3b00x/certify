@@ -1189,13 +1189,14 @@
     </div>
   </section>
 
-  <section id="simuladores" aria-labelledby="sim-title">
-    <div class="container">
-      <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
-      <div class="muted">Modo de examen en desarrollo y más simuladores pronto</div>
-      <div class="grid" id="simGrid" role="list"></div>
-    </div>
-  </section>
+<section id="simuladores" aria-labelledby="sim-title">
+      <div class="container">
+        <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
+        <div class="muted">Modo de examen en desarrollo y más simuladores pronto</div>
+        <div class="grid" id="simGrid" role="list"></div>
+      </div>
+    </section>
+  
 </main>
 
 <footer role="contentinfo">
@@ -1287,26 +1288,27 @@
     }
   }
 
-  function renderHeaderAuth(){
-    const u = getCurrentUser();
-    const login = document.getElementById('btnLogin');
-    const signup = document.getElementById('btnSignup');
-    const userArea = document.getElementById('userArea');
-    const nameTop = document.getElementById('userNameTop');
+ function renderHeaderAuth(){
+  const u = getCurrentUser();
+  const login = document.getElementById('btnLogin');
+  const signup = document.getElementById('btnSignup');
+  const userArea = document.getElementById('userArea');
+  const nameTop = document.getElementById('userNameTop');
 
-    if(u){
-      login.style.display = 'inline-flex';
-      signup.style.display = 'inline-flex';
-      login.style.display = 'none';
-      signup.style.display = 'none';
-      userArea.style.display = 'flex';
-      nameTop.textContent = (u.name || u.email || 'USER').toUpperCase();
-    } else {
-      login.style.display = 'inline-flex';
-      signup.style.display = 'inline-flex';
-      userArea.style.display = 'none';
-    }
+  // Si todavía no existe el header, no hacemos nada
+  if (!login || !signup || !userArea || !nameTop) return;
+
+  if (u){
+    login.style.display = 'none';
+    signup.style.display = 'none';
+    userArea.style.display = 'flex';
+    nameTop.textContent = (u.name || u.email || 'USER').toUpperCase();
+  } else {
+    login.style.display = 'inline-flex';
+    signup.style.display = 'inline-flex';
+    userArea.style.display = 'none';
   }
+}
 
   document.getElementById('btnLogout')?.addEventListener('click', ()=>{
     localStorage.removeItem('currentUser');
