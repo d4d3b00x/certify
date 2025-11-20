@@ -63,6 +63,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
 
+    /* Header base (el HTML real viene de /includes/header.html) */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.9),rgba(15,19,32,.6));
       border-bottom:1px solid rgba(62,78,138,.85);
@@ -534,7 +535,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
 /* ─────────────────────────────────────────────
    Rediseño zona blog: más contraste, menos brillos
-   (puedes pegar esto al final del <style>)
    ──────────────────────────────────────────── */
 
 .blog-section{
@@ -760,35 +760,169 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   }
 }
 
+/* === NAV DESPLEGABLE del header compartido === */
+.menu-has-sub { gap: 6px; }
+.menu-group { position: relative; display: flex; align-items: center; }
 
+.has-sub-trigger { position: relative; padding-right: 18px; }
+.has-sub-trigger .caret { font-size: 0.7rem; opacity: 0.7; margin-left: 4px; }
+
+.menu-group .submenu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  min-width: 220px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, #141b3a, #101631);
+  box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 60;
+}
+
+.menu-group .submenu a {
+  display: block;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.menu-group .submenu a:hover {
+  background: rgba(108, 139, 255, 0.18);
+  color: var(--ink);
+  border-radius: 8px;
+}
+
+.submenu-title {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding: 2px 8px 2px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #cfe1ff;
+  opacity: 0.7;
+}
+
+.submenu.open { display: flex; }
+
+@media (min-width: 721px) {
+  .menu-group:hover > .submenu,
+  .menu-group:focus-within > .submenu {
+    display: flex;
+  }
+}
+
+@media (max-width: 720px) {
+  .menu { flex-wrap: wrap; }
+  .menu-group { flex-direction: column; align-items: flex-start; }
+
+  .menu-group .submenu {
+    position: static;
+    margin-top: 4px;
+    width: 100%;
+    box-shadow: 0 6px 16px rgba(5,10,30,.35);
+    display: none;
+  }
+
+  .menu-group .submenu.open { display: flex; }
+}
+
+.menu-group .submenu a,
+.menu-group .submenu .submenu-title {
+  text-transform: uppercase;
+}
+
+.menu-group .submenu a {
+  display: block;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.menu-group .submenu a.submenu-mainlink {
+  margin-top: 4px;
+  margin-bottom: 2px;
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: var(--ink);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(108,139,255,.35), transparent 55%),
+    linear-gradient(180deg, #151b31, #11172b);
+  box-shadow: 0 6px 16px rgba(5,10,30,.45);
+}
+
+.menu-group .submenu a.submenu-mainlink:hover {
+  background:
+    radial-gradient(circle at 0% 0%, rgba(108,139,255,.5), transparent 60%),
+    linear-gradient(180deg, #1a2140, #131a33);
+  color: #ffffff;
+}
+
+.menu-group .submenu a.submenu-child {
+  padding-left: 22px;
+  font-size: 0.78rem;
+  opacity: 0.9;
+}
+
+.menu-group .submenu a:hover {
+  background: rgba(108, 139, 255, 0.18);
+  color: var(--ink);
+  border-radius: 8px;
+}
+
+.submenu-title {
+  margin-top: 6px;
+  margin-bottom: 2px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #cfe1ff;
+  opacity: 0.7;
+}
+
+/* Primer item: CATALOGO GLOBAL (un poco separado del resto) */
+.menu-group .submenu a.submenu-global{
+  margin-bottom:6px;
+}
+
+/* Ítem inferior: RANKING GLOBAL con icono y separador arriba */
+.menu-group .submenu a.submenu-bottom{
+  margin-top:6px;
+  padding:6px 8px;
+  font-size:0.8rem;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  opacity:0.95;
+}
+
+.submenu-bottom-icon{
+  font-size:1rem;
+  display:inline-block;
+  transform:translateY(0.5px);
+}
   </style>
 </head>
 <body>
 
-  <header role="banner">
-    <div class="container nav">
-      <div class="brand">
-        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-      </div>
-
-      <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="/">HOME</a>
-        <a class="link-btn" href="/faqs/faqs.html">FAQS</a>
-        <a class="link-btn" href="/comunidad/colabora.html">COMUNIDAD</a>
-      </nav>
-
-      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
-
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <a class="skip-link" href="#main">Saltar al contenido principal</a>
+  <!-- Aquí se inyectará el header común -->
+  <div id="site-header"></div>
 
   <main id="main" tabindex="-1">
     <!-- HERO -->
@@ -801,8 +935,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             mientras te preparas certificaciones como <b>AZ-104</b>, <b>AZ-305</b> o <b>AWS SAA-C03</b>.
             Menos teoría vacía y más ejemplos que podrías ver en producción.
           </p>
-
-        
         </div>
       </div>
     </section>
@@ -810,8 +942,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     <!-- CONTENIDO PRINCIPAL: artículos izquierda, sidebar derecha -->
     <section class="blog-section" aria-labelledby="lista-articulos">
       <div class="container">
-        
-
         <div class="blog-layout">
           <!-- Columna principal -->
           <div class="blog-main">
@@ -1664,22 +1794,118 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   </div>
 
   <script>
+    // Año en footer
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-    function renderHeaderAuth(){
-      const u=getCurrentUser();
-      const login=document.getElementById('btnLogin');
-      const signup=document.getElementById('btnSignup');
-      const userArea=document.getElementById('userArea');
-      const nameTop=document.getElementById('userNameTop');
-      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    // ======= Auth & header helpers =======
+    function getCurrentUser(){
+      try{
+        return JSON.parse(localStorage.getItem("currentUser")||"null");
+      }catch{
+        return null;
+      }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
-    renderHeaderAuth();
 
-    // Feedback (blog + footer)
+    function renderHeaderAuth(){
+      const u = getCurrentUser();
+      const login   = document.getElementById('btnLogin');
+      const signup  = document.getElementById('btnSignup');
+      const userArea= document.getElementById('userArea');
+      const nameTop = document.getElementById('userNameTop');
+
+      // Si todavía no se ha inyectado el header, salimos
+      if(!login || !signup || !userArea || !nameTop) return;
+
+      if(u){
+        login.style.display  = 'none';
+        signup.style.display = 'none';
+        userArea.style.display = 'flex';
+        nameTop.textContent = (u.name || u.email || 'USER').toUpperCase();
+      }else{
+        login.style.display  = 'inline-flex';
+        signup.style.display = 'inline-flex';
+        userArea.style.display = 'none';
+      }
+    }
+
+    function attachHeaderEvents(){
+      const btnLogout = document.getElementById('btnLogout');
+      if(btnLogout){
+        btnLogout.addEventListener('click', ()=>{
+          localStorage.removeItem('currentUser');
+          renderHeaderAuth();
+        });
+      }
+    }
+
+    // Menú desplegable del header compartido
+    function initSubmenus(){
+      const triggers = document.querySelectorAll('.has-sub-trigger');
+      if (!triggers.length) return;
+
+      function closeAll(exceptSubmenu){
+        document.querySelectorAll('.menu-group .submenu.open').forEach(sm => {
+          if (sm !== exceptSubmenu) sm.classList.remove('open');
+        });
+
+        document.querySelectorAll('.has-sub-trigger[aria-expanded="true"]').forEach(btn => {
+          const group = btn.closest('.menu-group');
+          const sm = group && group.querySelector('.submenu');
+          if (!exceptSubmenu || sm !== exceptSubmenu){
+            btn.setAttribute('aria-expanded','false');
+          }
+        });
+      }
+
+      triggers.forEach(trigger => {
+        trigger.setAttribute('aria-expanded','false');
+
+        trigger.addEventListener('click', function(e){
+          const isMobile = window.innerWidth <= 720;
+          if (!isMobile) return;
+
+          e.preventDefault();
+          const group = trigger.closest('.menu-group');
+          const submenu = group && group.querySelector('.submenu');
+          if (!submenu) return;
+
+          const isOpen = submenu.classList.contains('open');
+
+          if (isOpen){
+            submenu.classList.remove('open');
+            trigger.setAttribute('aria-expanded','false');
+          } else {
+            closeAll(submenu);
+            submenu.classList.add('open');
+            trigger.setAttribute('aria-expanded','true');
+          }
+        });
+      });
+    }
+
+    // Cargar header desde /includes/header.html
+    (function loadHeader(){
+      const container = document.getElementById('site-header');
+      if(!container) return;
+
+      fetch('/includes/header.html')
+        .then(r => {
+          if(!r.ok) throw new Error('No se pudo cargar el header');
+          return r.text();
+        })
+        .then(html => {
+          container.innerHTML = html;
+          // Una vez inyectado, activamos auth + menús
+          renderHeaderAuth();
+          initSubmenus();
+          attachHeaderEvents();
+        })
+        .catch(err => {
+          console.error('Error cargando header:', err);
+        });
+    })();
+
+    // ======= Feedback (blog + footer) =======
     const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
     const NOTES_ENDPOINT = `${API_BASE}/items`;
     const fbEmail   = document.getElementById('feedbackEmail');

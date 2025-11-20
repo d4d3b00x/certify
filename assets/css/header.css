@@ -1,0 +1,365 @@
+/* ===========================
+   Estilos globales del header
+   =========================== */
+
+/* Contenedor genérico (mismo patrón que en la home) */
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 20px;
+}
+
+/* Barra fija superior */
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
+  border-bottom:1px solid var(--stroke);
+  box-shadow:0 14px 30px rgba(0,0,0,.55);
+}
+
+/* Layout header */
+.nav{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+/* Marca / logo */
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+}
+
+.brand img.site-logo{
+  height:42px;
+  width:auto;
+  display:block;
+}
+
+/* ===========================
+   Menú principal
+   =========================== */
+
+nav.menu{
+  display:flex;
+  gap:12px;
+  color:var(--muted);          /* tono lavanda por defecto */
+  font-weight:800;
+  align-items:center;
+  text-transform:uppercase;
+}
+
+.menu-has-sub{
+  gap:6px;
+}
+
+/* Botones de menú (links y botones) */
+nav.menu .link-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  min-width:110px;
+  min-height:44px;
+  height:40px;
+  padding:0 12px;
+
+  border-radius:10px;
+  border:1px solid transparent;
+
+  font-weight:900;
+  letter-spacing:.8px;
+  font-size:.78rem;
+  text-transform:uppercase;
+
+  position:relative;
+  overflow:hidden;
+
+  color:inherit; /* hereda var(--muted) del nav */
+  background:radial-gradient(circle at top,
+            rgba(108,139,255,.22), transparent 55%);
+
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  background-clip:padding-box;
+}
+
+/* Hover / estado activo */
+nav.menu .link-btn:hover{
+  border-color:#3b4cff;
+  color:var(--ink);
+  box-shadow:0 0 14px rgba(108,139,255,.4);
+}
+
+nav.menu .link-btn.active{
+  border-color:#3b4cff;
+  color:#fff;
+  background:radial-gradient(circle at top,
+              rgba(108,139,255,.32), transparent 65%);
+  box-shadow:0 0 18px rgba(108,139,255,.55);
+}
+
+/* ===========================
+   Submenús desplegables
+   =========================== */
+
+.menu-group{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+
+/* Botón que abre el submenú */
+.has-sub-trigger{
+  position:relative;
+  padding-right:18px;
+}
+
+/* Flechita ▼ */
+.has-sub-trigger .caret{
+  font-size:.7rem;
+  opacity:.7;
+  margin-left:4px;
+}
+
+/* Contenedor del submenú */
+.menu-group .submenu{
+  position:absolute;
+  top:110%;
+  left:0;
+  min-width:220px;
+
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.08);
+  background:linear-gradient(180deg,#141b3a,#101631);
+  box-shadow:0 14px 28px rgba(5,10,30,.55);
+
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  z-index:60;
+}
+
+/* Items del submenú */
+.menu-group .submenu a,
+.menu-group .submenu .submenu-title{
+  text-transform:uppercase;
+}
+
+.menu-group .submenu a{
+  display:block;
+  padding:4px 8px;
+  font-size:.8rem;
+  font-weight:700;
+  color:var(--muted);
+  letter-spacing:.06em;
+}
+
+/* Enlaces principales dentro del submenú */
+.menu-group .submenu a.submenu-mainlink{
+  margin-top:4px;
+  margin-bottom:2px;
+  padding:6px 8px;
+  font-size:.82rem;
+  font-weight:900;
+  color:var(--ink);
+  border-radius:8px;
+  background:
+    radial-gradient(circle at 0% 0%,rgba(108,139,255,.35),transparent 55%),
+    linear-gradient(180deg,#151b31,#11172b);
+  box-shadow:0 6px 16px rgba(5,10,30,.45);
+}
+
+/* Primer item (CATALOGO GLOBAL) un poco separado */
+.menu-group .submenu a.submenu-global{
+  margin-bottom:6px;
+}
+
+/* Enlaces “hijos” con sangría */
+.menu-group .submenu a.submenu-child{
+  padding-left:22px;
+  font-size:.78rem;
+  opacity:.9;
+}
+
+/* Item inferior tipo RANKING GLOBAL */
+.menu-group .submenu a.submenu-bottom{
+  margin-top:6px;
+  padding:6px 8px;
+  font-size:.8rem;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border-top:1px solid rgba(255,255,255,.08);
+  opacity:.95;
+}
+
+.submenu-bottom-icon{
+  font-size:1rem;
+  display:inline-block;
+  transform:translateY(.5px);
+}
+
+/* Hover en cualquier item */
+.menu-group .submenu a:hover{
+  background:rgba(108,139,255,.18);
+  color:var(--ink);
+  border-radius:8px;
+}
+
+/* Pequeño título dentro del submenú (si lo usas) */
+.submenu-title{
+  margin-top:6px;
+  margin-bottom:2px;
+  padding:2px 8px;
+  font-size:.78rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  color:#cfe1ff;
+  opacity:.7;
+}
+
+/* Clase para abrir submenú (modo móvil) */
+.submenu.open{
+  display:flex;
+}
+
+/* En escritorio: abrir al pasar el ratón / foco */
+@media (min-width:721px){
+  .menu-group:hover > .submenu,
+  .menu-group:focus-within > .submenu{
+    display:flex;
+  }
+}
+
+/* En móvil: el submenú se despliega debajo, controlado por JS */
+@media (max-width:720px){
+  nav.menu{
+    flex-wrap:wrap;
+  }
+
+  .menu-group{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .menu-group .submenu{
+    position:static;
+    margin-top:4px;
+    width:100%;
+    box-shadow:0 6px 16px rgba(5,10,30,.35);
+    display:none;
+  }
+
+  .menu-group .submenu.open{
+    display:flex;
+  }
+}
+
+/* ===========================
+   Bloque de login / usuario
+   =========================== */
+
+.authwrap{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:var(--pill-bg);
+  border:1px solid var(--pill-ring);
+  border-radius:999px;
+  padding:4px 6px;
+  box-shadow:0 6px 18px rgba(5,10,30,.55);
+  max-height:44px;
+}
+
+.hello{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:#cbd3ff;
+  font-weight:800;
+  padding:4px 8px;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+/* Botones “pill” LOGIN / SIGNUP / PERFIL / LOGOUT */
+.pill-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:88px;
+  min-height:44px;
+  height:34px;
+  padding:0 12px;
+
+  border-radius:999px;
+  border:1px solid #3b2fff44;
+
+  background:var(--pill-btn-bg);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+
+  transition:transform .08s, background .12s, box-shadow .12s;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+
+  box-shadow:0 0 14px rgba(108,139,255,.55);
+}
+
+.pill-btn:hover{
+  background:var(--pill-btn-bg-hover);
+  transform:translateY(-1px);
+  box-shadow:0 0 18px rgba(108,139,255,.85);
+}
+
+/* ===========================
+   Ajustes responsive header
+   =========================== */
+
+@media (max-width:720px){
+  .nav{
+    gap:6px;
+  }
+
+  nav.menu{
+    gap:8px;
+  }
+
+  nav.menu .link-btn{
+    min-width:90px;
+    height:36px;
+    font-size:.7rem;
+  }
+
+  .authwrap{
+    gap:4px;
+    padding:3px 4px;
+  }
+
+  .pill-btn{
+    min-width:80px;
+    height:32px;
+    padding:0 8px;
+    font-size:.7rem;
+  }
+
+  .hello{
+    display:none;
+  }
+}

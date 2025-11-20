@@ -29,6 +29,8 @@
   <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
+<link rel="stylesheet" href="/assets/css/header.css">
+
   <style>
     :root{
       --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#aebaf0;
@@ -42,6 +44,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
     }
 
+
+    
     *{box-sizing:border-box}
     body{
       margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
@@ -223,35 +227,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
     }
   </style>
+
+
+
 </head>
 <body>
 
-  <header role="banner">
-    <div class="container nav">
-      <div class="brand">
-        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-      </div>
-
-      <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="/">HOME</a>
-
-        <a class="link-btn" href="/blog/blog.html">BLOG</a>
-
-        <a class="link-btn" href="/comunidad/colabora.html">COMUNIDAD</a>
-      </nav>
-
-      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup">REGÍSTRATE</a>
-
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <div id="site-header"></div>
 
   <main id="main" tabindex="-1">
     <section class="hero" aria-labelledby="hero-title">
@@ -1100,5 +1082,18 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
     });
   </script>
+
+<script>
+  fetch('/includes/header.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('site-header').innerHTML = html;
+      renderHeaderAuth();
+      initSubmenus();
+      attachHeaderEvents();
+    });
+</script>
+
+
 </body>
 </html>
