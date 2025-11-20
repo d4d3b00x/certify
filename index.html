@@ -908,76 +908,99 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     </div>
   </div>
 
-  <script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('y').textContent = new Date().getFullYear();
 
-// === Cognito config (mismos valores que en jwt-lab / cognito-callback) ===
-const COGNITO_DOMAIN      = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
-const COGNITO_CLIENT_ID   = "592bh3ek4jdeg78qntt810g7vl";
-const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; // OJO: debe coincidir con el app client
+    // === Cognito config (mismos valores que en jwt-lab / cognito-callback) ===
+    const COGNITO_DOMAIN       = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+    const COGNITO_CLIENT_ID    = "592bh3ek4jdeg78qntt810g7vl";
+    const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; // OJO: debe coincidir con el app client
 
-function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
-  const params = new URLSearchParams({
-    client_id:     COGNITO_CLIENT_ID,
-    redirect_uri:  COGNITO_REDIRECT_URI,
-    response_type: "code",
-    scope:         "email openid profile"
-  });
-  return `${COGNITO_DOMAIN}/${path}?${params.toString()}`;
-}
-
-    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-    function renderHeaderAuth(){
-      const u=getCurrentUser();
-      const login=document.getElementById('btnLogin');
-      const signup=document.getElementById('btnSignup');
-      const userArea=document.getElementById('userArea');
-      const nameTop=document.getElementById('userNameTop');
-      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
+      const params = new URLSearchParams({
+        client_id:     COGNITO_CLIENT_ID,
+        redirect_uri:  COGNITO_REDIRECT_URI,
+        response_type: "code",
+        scope:         "email openid profile"
+      });
+      return `${COGNITO_DOMAIN}/${path}?${params.toString()}`;
     }
-   
-document.getElementById('btnLogout')?.addEventListener('click', () => {
-  // Limpiamos info local
-  localStorage.removeItem('currentUser');
-  localStorage.removeItem('arenaIdToken');  // opcional si lo usas
-  renderHeaderAuth();
-  renderSims();
 
-  // Redirección al logout de Cognito para cerrar sesión del Hosted UI
-  const logoutParams = new URLSearchParams({
-    client_id:  COGNITO_CLIENT_ID,
-    logout_uri: window.location.origin + "/"  // al terminar, vuelve a la home
-  });
+    function getCurrentUser() {
+      try {
+        return JSON.parse(localStorage.getItem("currentUser") || "null");
+      } catch {
+        return null;
+      }
+    }
 
-  window.location.href = `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
-});
+    function renderHeaderAuth(){
+      const u        = getCurrentUser();
+      const login    = document.getElementById('btnLogin');
+      const signup   = document.getElementById('btnSignup');
+      const userArea = document.getElementById('userArea');
+      const nameTop  = document.getElementById('userNameTop');
 
+      if (!login || !signup || !userArea || !nameTop) return;
 
-    renderHeaderAuth();
+      if (u){
+        login.style.display    = 'none';
+        signup.style.display   = 'none';
+        userArea.style.display = 'flex';
+        nameTop.textContent    = (u.name || u.email || 'USER').toUpperCase();
+      } else {
+        login.style.display    = 'inline-flex';
+        signup.style.display   = 'inline-flex';
+        userArea.style.display = 'none';
+      }
+    }
 
+    // Engancha eventos de LOGIN / SIGNUP / LOGOUT
+    function attachAuthHandlers() {
+      const btnLogin  = document.getElementById('btnLogin');
+      const btnSignup = document.getElementById('btnSignup');
+      const btnLogout = document.getElementById('btnLogout');
 
-// === Botones de LOGIN / REGISTRO usando Cognito Hosted UI ===
-const btnLogin  = document.getElementById('btnLogin');
-const btnSignup = document.getElementById('btnSignup');
+      // Evitar doble binding si se llama varias veces
+      if (btnLogin && !btnLogin.dataset.bound) {
+        btnLogin.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = buildCognitoAuthUrl("login");
+        });
+        btnLogin.dataset.bound = "1";
+      }
 
-if (btnLogin) {
-  btnLogin.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Hosted UI en modo login
-    window.location.href = buildCognitoAuthUrl("login");
-  });
-}
+      if (btnSignup && !btnSignup.dataset.bound) {
+        btnSignup.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = buildCognitoAuthUrl("signup");
+        });
+        btnSignup.dataset.bound = "1";
+      }
 
-if (btnSignup) {
-  btnSignup.addEventListener('click', (e) => {
-    e.preventDefault();
-    // Hosted UI en modo signup (pestaña de registro)
-    window.location.href = buildCognitoAuthUrl("signup");
-  });
-}
+      if (btnLogout && !btnLogout.dataset.bound) {
+        btnLogout.addEventListener('click', () => {
+          // Limpiamos info local
+          localStorage.removeItem('currentUser');
+          localStorage.removeItem('arenaIdToken');  // opcional si lo usas
 
+          renderHeaderAuth();
+          renderSims();
 
+          // Redirección al logout de Cognito para cerrar sesión del Hosted UI
+          const logoutParams = new URLSearchParams({
+            client_id:  COGNITO_CLIENT_ID,
+            logout_uri: window.location.origin + "/"  // al terminar, vuelve a la home
+          });
+
+          window.location.href = `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
+        });
+        btnLogout.dataset.bound = "1";
+      }
+    }
+
+    // ======== SIMULADORES ========
     const CATALOG = [
       { id:'AZ-104', provider:'MICROSOFT AZURE (ESPAÑOL)', title:'Administrator Associate', quiz:'az-104',
         startUrl:'/certification/microsoft-azure/az-104/lz-azure-az-104.html', providerClass:'prov-azure', simClass:'sim-azure',
@@ -989,9 +1012,11 @@ if (btnSignup) {
         startUrl:'/certification/microsoft-azure/az-305/lz-azure-az-305.html', providerClass:'prov-azure', simClass:'sim-azure',
         accent:'linear-gradient(90deg, rgba(0,120,212,.85), rgba(0,120,212,.35))', q:580 }
     ];
-    const simGrid=document.getElementById('simGrid');
+
+    const simGrid = document.getElementById('simGrid');
 
     function renderSims(){
+      if (!simGrid) return;
       simGrid.innerHTML='';
       const authed = !!getCurrentUser();
       CATALOG.forEach(c=>{
@@ -1017,16 +1042,22 @@ if (btnSignup) {
         simGrid.appendChild(el);
       });
     }
+
+    renderHeaderAuth();
     renderSims();
+    attachAuthHandlers();
 
     document.addEventListener('click', e=>{
       const b=e.target.closest('.start-btn'); if(!b) return;
       if(!!getCurrentUser()){
         const url=b.dataset.href || b.getAttribute('href'); location.href = url;
-      }else{ location.href='/login/login.html'; }
+      }else{
+        location.href='/login/login.html';
+      }
       e.preventDefault();
     });
 
+    // ======== FEEDBACK / NOTAS ========
     const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
     const NOTES_ENDPOINT = `${API_BASE}/items`;
     const fbEmail   = document.getElementById('feedbackEmail');
@@ -1039,6 +1070,7 @@ if (btnSignup) {
     const fbModal   = document.getElementById('feedbackModal');
 
     function openFeedbackModal(){
+      if (!fbEmail || !fbText || !fbStatus || !btnFbSend || !btnFbCancel || !btnFbOk || !fbModal) return;
       fbEmail.value = ''; fbText.value  = '';
       fbStatus.textContent = ''; fbStatus.className = 'fb-status';
       btnFbSend.style.display=''; btnFbCancel.style.display=''; btnFbOk.style.display='none';
@@ -1051,17 +1083,29 @@ if (btnSignup) {
     fbModal?.addEventListener('click',e=>{ if(e.target===fbModal) fbModal.classList.remove('show'); });
 
     btnFbSend?.addEventListener('click', async ()=>{
+      if (!fbEmail || !fbText || !fbStatus || !btnFbSend || !btnFbCancel || !btnFbOk) return;
+
       const message = (fbText.value||'').trim();
       const from    = (fbEmail.value||'').trim();
-      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; fbStatus.focus?.(); return; }
+      if(!message){
+        fbStatus.textContent='Por favor, escribe tu sugerencia.';
+        fbStatus.className='fb-status err';
+        fbStatus.focus?.();
+        return;
+      }
       fbEmail.disabled = fbText.disabled = true; btnFbSend.disabled = true;
       fbStatus.textContent = 'Enviando…'; fbStatus.className = 'fb-status info';
 
       const id = (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('note_' + Date.now());
       const user = getCurrentUser();
-      const note = { id, type:'feedback', title:'Feedback web ITHub', message, email: from || user?.email || null,
-                     userId: user?.id || user?.email || null, path: location.pathname + location.search,
-                     ua: navigator.userAgent, createdAt: new Date().toISOString() };
+      const note = {
+        id, type:'feedback', title:'Feedback web ITHub', message,
+        email: from || user?.email || null,
+        userId: user?.id || user?.email || null,
+        path: location.pathname + location.search,
+        ua: navigator.userAgent,
+        createdAt: new Date().toISOString()
+      };
 
       const params = new URLSearchParams();
       params.set('table','notes'); params.set('id', id); params.set('content', JSON.stringify(note));
@@ -1070,7 +1114,9 @@ if (btnSignup) {
       try{
         const res = await fetch(NOTES_ENDPOINT, { method:'POST', body:params, signal:ctl.signal });
         clearTimeout(timeoutId);
-        if(!res.ok){ const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`); }
+        if(!res.ok){
+          const text = await res.text().catch(()=> ''); throw new Error(`HTTP ${res.status} ${text}`);
+        }
         fbStatus.textContent = '¡Gracias! Mensaje recibido 👌'; fbStatus.className='fb-status ok';
         btnFbSend.style.display='none'; btnFbCancel.style.display='none'; btnFbOk.style.display='';
         fbStatus.setAttribute('tabindex','-1'); fbStatus.focus();
@@ -1082,6 +1128,7 @@ if (btnSignup) {
       }
     });
 
+    // ======== CARRUSEL ========
     (function(){
       const track = document.getElementById('gTrack');
       if(!track) return;
@@ -1132,10 +1179,11 @@ if (btnSignup) {
 
       track.addEventListener('keydown', (e)=>{
         if(e.key === 'ArrowRight'){ e.preventDefault(); scrollCols(1); }
-        if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(1); }
       });
     })();
 
+    // ======== SUBMENÚ MÓVIL ========
     (function(){
       const triggers = document.querySelectorAll('.has-sub-trigger');
       if (!triggers.length) return;
@@ -1180,7 +1228,9 @@ if (btnSignup) {
       });
     })();
 
-  </script>
+  });
+</script>
+
 
 <script>
   fetch('/includes/header.html')
