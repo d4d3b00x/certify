@@ -60,6 +60,21 @@
       margin-left:8px;
       font-size:13px;
     }
+    /* Tabla de auto-scan */
+    table.scan {
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+      margin-top:8px;
+    }
+    table.scan th, table.scan td{
+      border:1px solid #202642;
+      padding:4px 6px;
+      text-align:left;
+    }
+    table.scan th{
+      background:#151b33;
+    }
   </style>
 </head>
 <body>
@@ -81,7 +96,7 @@
 /* ================== CONFIG ================== */
 
 // Cognito (los mismos valores que en tu callback actual)
-const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazonaws.com";
 const CLIENT_ID      = "592bh3ek4jdeg78qntt810g7vl";
 
 // ESTA página como redirect_uri (debe estar en Allowed callback URLs)
@@ -164,7 +179,7 @@ function getStoredToken(){
   return t;
 }
 
-// Pinta el estado al lado del botón
+// Pinta el estado al lado del botón manual
 function setStatus(elementId, status) {
   const el = document.getElementById(elementId);
   if (!el) return;
@@ -180,9 +195,9 @@ function setStatus(elementId, status) {
   }
 }
 
-// Llama a la API y actualiza el status + log
+// Llamada manual desde botón (opcionalmente con token)
 async function callApi(url, token, description, statusElementId){
-  log(`→ GET ${url} [${description}] con Authorization: Bearer <token>`);
+  log(`→ GET ${url} [${description}]` + (token ? " con Authorization: Bearer <token>" : " SIN Authorization"));
 
   try {
     const headers = token ? { "Authorization": "Bearer " + token } : {};
@@ -202,6 +217,163 @@ async function callApi(url, token, description, statusElementId){
     log(`✖ Error llamando a ${description}: ${e.message}`);
     setStatus(statusElementId, "ko");
   }
+}
+
+/* ====== AUTO-SCAN DE RUTAS (tabla) ====== */
+
+function runAutoScan(idToken){
+  const autoDiv = document.createElement("div");
+  autoDiv.innerHTML = `
+    <h2>4️⃣ Estado de rutas</h2>
+    <p class="small">
+      Se prueba cada endpoint primero <b>sin token</b> y, si responde 401/403, también <b>con token</b>.
+      La conclusión (pública/protegida) es orientativa; el detalle exacto está en el log.
+    </p>
+    <table class="scan">
+      <thead>
+        <tr>
+          <th>Ruta</th>
+          <th>URL</th>
+          <th>Sin token</th>
+          <th>Con token</th>
+          <th>Conclusión</th>
+        </tr>
+      </thead>
+      <tbody id="scanBody">
+      </tbody>
+    </table>
+  `;
+  step3El.appendChild(autoDiv);
+
+  const tbody = autoDiv.querySelector("#scanBody");
+
+  const endpoints = [
+    {
+      id: "leaderboard",
+      label: "/arena/leaderboard",
+      url: "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=1"
+    },
+    {
+      id: "questions",
+      label: "/questions",
+      url: `${API_QUESTIONS_BASE}?exam=SAA-C03-ES&limit=1`
+    },
+    {
+      id: "progress",
+      label: "/progress",
+      url: `${API_PROGRESS}?sessionId=SCAN_TEST`
+    },
+    {
+      id: "progressByUser",
+      label: "/progress/by-user",
+      url: `${API_PROGRESS_BY_USER}?userId=SCAN_USER&quizId=SCAN_QUIZ`
+    },
+    {
+      id: "results",
+      label: "/results",
+      url: `${API_RESULTS}?quizId=SCAN_QUIZ&track=architect&mode=exam&limit=1`
+    }
+  ];
+
+  // Crear filas iniciales
+  for (const ep of endpoints){
+    const tr = document.createElement("tr");
+    tr.id = "scan-row-" + ep.id;
+    tr.innerHTML = `
+      <td>${ep.label}</td>
+      <td><code>${ep.url}</code></td>
+      <td id="scan-no-${ep.id}">…</td>
+      <td id="scan-auth-${ep.id}">–</td>
+      <td id="scan-res-${ep.id}">Comprobando…</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  // Lanzar las pruebas secuencialmente
+  (async () => {
+    for (const ep of endpoints){
+      await probeEndpoint(ep, idToken);
+    }
+  })();
+}
+
+async function probeEndpoint(ep, idToken){
+  const cellNo   = document.getElementById("scan-no-" + ep.id);
+  const cellAuth = document.getElementById("scan-auth-" + ep.id);
+  const cellRes  = document.getElementById("scan-res-" + ep.id);
+
+  let noStatus = null;
+  let authStatus = null;
+
+  // 1) SIN token
+  try {
+    log(`(SCAN) → GET ${ep.url} [${ep.label}] SIN Authorization`);
+    const res = await fetch(ep.url, { method:"GET" });
+    noStatus = res.status;
+    cellNo.textContent = res.status;
+    const text = await res.text();
+    log(`(SCAN) ← ${ep.label} SIN token status ${res.status}`);
+    log(text);
+  } catch (e){
+    noStatus = 0;
+    cellNo.textContent = "ERR";
+    log(`(SCAN) ✖ Error SIN token en ${ep.label}: ${e.message}`);
+  }
+
+  // 2) Si responde 401/403, probamos CON token
+  if (noStatus === 401 || noStatus === 403){
+    if (idToken){
+      try {
+        log(`(SCAN) → GET ${ep.url} [${ep.label}] con Authorization`);
+        const res2 = await fetch(ep.url, {
+          method:"GET",
+          headers:{ "Authorization":"Bearer "+idToken }
+        });
+        authStatus = res2.status;
+        cellAuth.textContent = res2.status;
+        const text2 = await res2.text();
+        log(`(SCAN) ← ${ep.label} CON token status ${res2.status}`);
+        log(text2);
+      } catch (e){
+        authStatus = 0;
+        cellAuth.textContent = "ERR";
+        log(`(SCAN) ✖ Error CON token en ${ep.label}: ${e.message}`);
+      }
+    } else {
+      cellAuth.textContent = "n/a";
+    }
+  } else {
+    cellAuth.textContent = "n/a";
+  }
+
+  // 3) Conclusión
+  let resultText = "";
+  let color = "";
+
+  if (noStatus === 401 || noStatus === 403){
+    if (authStatus && authStatus >=200 && authStatus < 300){
+      resultText = "✅ Protegida (OK con token)";
+      color = "#5af59b";
+    } else if (authStatus === 0 || authStatus === null){
+      resultText = "⚠️ Prob. protegida (401/403 sin token, error con token)";
+      color = "#ffb15a";
+    } else if (authStatus === 401 || authStatus === 403){
+      resultText = "⚠️ Protegida pero KO incluso con token";
+      color = "#ffb15a";
+    } else {
+      resultText = `⚠️ Protegida (sin token 401/403, con token ${authStatus})`;
+      color = "#ffb15a";
+    }
+  } else if (noStatus === 0){
+    resultText = "❌ Error de red / CORS (ver log)";
+    color = "#ff7b7b";
+  } else {
+    resultText = "❌ Pública (no exige token: sin token ≠ 401/403)";
+    color = "#ff7b7b";
+  }
+
+  cellRes.textContent = resultText;
+  cellRes.style.color = color;
 }
 
 /* ================== RENDER AUTH ================== */
@@ -260,7 +432,12 @@ async function renderWithCode(code){
     }
 
     step2El.innerHTML = html;
+
+    // 3️⃣ Botones manuales
     renderApiTests();
+
+    // 4️⃣ Auto-scan en tabla
+    runAutoScan(idToken);
 
   } catch(e){
     console.error(e);
@@ -268,7 +445,7 @@ async function renderWithCode(code){
   }
 }
 
-/* ================== RENDER PRUEBAS DE API ================== */
+/* ================== RENDER PRUEBAS MANUALES ================== */
 
 function renderApiTests(){
   step3El.innerHTML = `
@@ -323,12 +500,11 @@ function renderApiTests(){
 
   document.getElementById("btnQuestions").onclick = async () => {
     setStatus("statusQuestions", "");
-    const token = getStoredToken();
-    if (!token) return;
+    // ahora mismo /questions está pública → sin token
     const exam  = document.getElementById("qExam").value.trim();
     const limit = document.getElementById("qLimit").value || "10";
     const url   = `${API_QUESTIONS_BASE}?exam=${encodeURIComponent(exam)}&limit=${encodeURIComponent(limit)}`;
-    await callApi(url, token, "/questions", "statusQuestions");
+    await callApi(url, null, "/questions", "statusQuestions");
   };
 
   document.getElementById("btnProgress").onclick = async () => {
