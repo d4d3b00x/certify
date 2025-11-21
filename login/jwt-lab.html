@@ -94,7 +94,7 @@ const THIS_URL      = "https://www.ithub.es/login/jwt-lab.html";
 
 // APIs que queremos probar (ajusta si alguna tiene otro host / stage)
 const API_LEADERBOARD       = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=10";
-const API_QUESTIONS_BASE    = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/questions";
+const API_QUESTIONS_BASE    = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/questions";
 const API_PROGRESS          = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/progress";
 const API_PROGRESS_BY_USER  = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/progress/by-user";
 const API_RESULTS           = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/results";
@@ -275,7 +275,7 @@ function renderApiTests(){
       <div>
         <b>/questions</b><span class="pill">banco de preguntas</span>
       </div>
-      <label>Exam <input id="qExam" value="SAA-C03-ES" /></label>
+      <label>Exam <input id="qExam" value="SAA-C03" /></label>
       <label>Limit <input id="qLimit" value="10" type="number" min="1" max="200" /></label>
       <button id="btnQuestions">Probar /questions</button>
     </div>
