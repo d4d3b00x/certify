@@ -78,7 +78,7 @@
   </style>
 </head>
 <body>
-  <h1>JWT Lab · ITHub.es 11.12</h1>
+  <h1>JWT Lab · ITHub.es</h1>
   <p class="small">
     Laboratorio para probar login con <b>AWS Cognito</b> y varias <b>APIs protegidas</b> con el mismo <code>id_token</code>.
   </p>
@@ -95,11 +95,8 @@
 <script>
 /* ================== CONFIG ================== */
 
-// Cognito (los mismos valores que en tu callback actual)
+// Cognito (mismo User Pool / App client que ya usas)
 const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
-
-
-
 const CLIENT_ID      = "592bh3ek4jdeg78qntt810g7vl";
 
 // ESTA página como redirect_uri (debe estar en Allowed callback URLs)
@@ -111,6 +108,14 @@ const API_QUESTIONS_BASE    = "https://uougu1cm26.execute-api.eu-central-1.amazo
 const API_PROGRESS          = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/progress";
 const API_PROGRESS_BY_USER  = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/progress/by-user";
 const API_RESULTS           = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/results";
+const API_ITEMS             = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/items";
+
+// Las /secure/... las irás creando poco a poco en API Gateway
+const API_SECURE_QUESTIONS   = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/secure/questions";
+const API_SECURE_PROGRESS    = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/secure/progress";
+const API_SECURE_PROGRESS_BY = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/secure/progress/by-user";
+const API_SECURE_RESULTS     = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/secure/results";
+const API_SECURE_ITEMS       = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/secure/items";
 
 const logEl   = document.getElementById("log");
 const step1El = document.getElementById("step1");
@@ -227,10 +232,10 @@ async function callApi(url, token, description, statusElementId){
 function runAutoScan(idToken){
   const autoDiv = document.createElement("div");
   autoDiv.innerHTML = `
-    <h2>4️⃣ Estado de rutas</h2>
+    <h2>4️⃣ Estado de rutas (públicas vs /secure)</h2>
     <p class="small">
       Se prueba cada endpoint primero <b>sin token</b> y, si responde 401/403, también <b>con token</b>.
-      La conclusión (pública/protegida) es orientativa; el detalle exacto está en el log.
+      Las /secure/... pueden fallar al principio (404) hasta que las vayas creando en API Gateway.
     </p>
     <table class="scan">
       <thead>
@@ -251,15 +256,22 @@ function runAutoScan(idToken){
   const tbody = autoDiv.querySelector("#scanBody");
 
   const endpoints = [
+    // API ya securizada de ranking
     {
       id: "leaderboard",
       label: "/arena/leaderboard",
       url: "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=1"
     },
+    // Rutas actuales
     {
       id: "questions",
       label: "/questions",
       url: `${API_QUESTIONS_BASE}?exam=SAA-C03-ES&limit=1`
+    },
+    {
+      id: "secureQuestions",
+      label: "/secure/questions",
+      url: `${API_SECURE_QUESTIONS}?exam=SAA-C03-ES&limit=1`
     },
     {
       id: "progress",
@@ -267,14 +279,39 @@ function runAutoScan(idToken){
       url: `${API_PROGRESS}?sessionId=SCAN_TEST`
     },
     {
+      id: "secureProgress",
+      label: "/secure/progress",
+      url: `${API_SECURE_PROGRESS}?sessionId=SCAN_TEST`
+    },
+    {
       id: "progressByUser",
       label: "/progress/by-user",
       url: `${API_PROGRESS_BY_USER}?userId=SCAN_USER&quizId=SCAN_QUIZ`
     },
     {
+      id: "secureProgressByUser",
+      label: "/secure/progress/by-user",
+      url: `${API_SECURE_PROGRESS_BY}?userId=SCAN_USER&quizId=SCAN_QUIZ`
+    },
+    {
       id: "results",
       label: "/results",
       url: `${API_RESULTS}?quizId=SCAN_QUIZ&track=architect&mode=exam&limit=1`
+    },
+    {
+      id: "secureResults",
+      label: "/secure/results",
+      url: `${API_SECURE_RESULTS}?quizId=SCAN_QUIZ&track=architect&mode=exam&limit=1`
+    },
+    {
+      id: "items",
+      label: "/items",
+      url: `${API_ITEMS}?limit=1`
+    },
+    {
+      id: "secureItems",
+      label: "/secure/items",
+      url: `${API_SECURE_ITEMS}?limit=1`
     }
   ];
 
@@ -349,7 +386,7 @@ async function probeEndpoint(ep, idToken){
     cellAuth.textContent = "n/a";
   }
 
-  // 3) Conclusión
+  // 3) Conclusión (simplificada)
   let resultText = "";
   let color = "";
 
@@ -358,17 +395,14 @@ async function probeEndpoint(ep, idToken){
       resultText = "✅ Protegida (OK con token)";
       color = "#5af59b";
     } else if (authStatus === 0 || authStatus === null){
-      resultText = "⚠️ Prob. protegida (401/403 sin token, error con token)";
-      color = "#ffb15a";
-    } else if (authStatus === 401 || authStatus === 403){
-      resultText = "⚠️ Protegida pero KO incluso con token";
+      resultText = "⚠️ Protegida (401/403 sin token, error con token)";
       color = "#ffb15a";
     } else {
       resultText = `⚠️ Protegida (sin token 401/403, con token ${authStatus})`;
       color = "#ffb15a";
     }
   } else if (noStatus === 0){
-    resultText = "❌ Error de red / CORS (ver log)";
+    resultText = "❌ Error de red / CORS / 404 (ver log)";
     color = "#ff7b7b";
   } else {
     resultText = "❌ Pública (no exige token: sin token ≠ 401/403)";
@@ -503,7 +537,7 @@ function renderApiTests(){
 
   document.getElementById("btnQuestions").onclick = async () => {
     setStatus("statusQuestions", "");
-    // ahora mismo /questions está pública → sin token
+    // /questions está pública → de momento SIN token
     const exam  = document.getElementById("qExam").value.trim();
     const limit = document.getElementById("qLimit").value || "10";
     const url   = `${API_QUESTIONS_BASE}?exam=${encodeURIComponent(exam)}&limit=${encodeURIComponent(limit)}`;
