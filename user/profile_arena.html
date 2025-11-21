@@ -14,19 +14,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
   <title>Perfil de usuario — Progreso y logros | ITHub.es</title>
-<meta name="description" content="Revisa tu perfil en ITHub.es: progreso en simuladores, estadísticas de examen, logros, XP y posición en el ranking de certificaciones Azure y AWS." />
-<link rel="canonical" href="https://www.ithub.es/user/profile.html" />
-<meta name="robots" content="noindex,nofollow" />
+  <meta name="description" content="Revisa tu perfil en ITHub.es: progreso en simuladores, estadísticas de examen, logros, XP y posición en el ranking de certificaciones Azure y AWS." />
+  <link rel="canonical" href="https://www.ithub.es/user/profile.html" />
+  <meta name="robots" content="noindex,nofollow" />
 
-<meta property="og:title" content="Perfil de usuario en ITHub.es" />
-<meta property="og:description" content="Consulta tu progreso y logros en los simuladores de certificación IT." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.ithub.es/user/profile.html" />
-<meta property="og:site_name" content="ITHub.es" />
+  <meta property="og:title" content="Perfil de usuario en ITHub.es" />
+  <meta property="og:description" content="Consulta tu progreso y logros en los simuladores de certificación IT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/user/profile.html" />
+  <meta property="og:site_name" content="ITHub.es" />
 
-    <link rel="icon" type="image/svg+xml" 
-href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
-
+  <link rel="icon" type="image/svg+xml" 
+        href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
   <style>
     :root{
@@ -52,7 +51,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     .wrap{max-width:1200px;margin:0 auto;padding:20px;width:100%}
 
-    /* ====== HEADER (del código proporcionado) ====== */
+    /* ====== HEADER ====== */
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
     header[role="banner"]{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
@@ -179,7 +178,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 </head>
 <body>
 
-  <!-- ===== HEADER (del código proporcionado) ===== -->
+  <!-- ===== HEADER ===== -->
   <header role="banner">
     <div class="container nav">
       <div class="brand">
@@ -277,7 +276,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <!-- ===== Columna derecha ===== -->
       <div class="col-right">
 
-        <!-- 1) ÚLTIMOS EXÁMENES (primero) -->
+        <!-- 1) ÚLTIMOS EXÁMENES -->
         <article class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
             <h3 style="margin:0;font-weight:900">📘 TUS ÚLTIMOS EXÁMENES</h3>
@@ -337,7 +336,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           </div>
         </article>
 
-        <!-- 4) PREGUNTAS MARCADAS (último) -->
+        <!-- 4) PREGUNTAS MARCADAS -->
         <article class="card">
           <h3 style="margin:0 0 10px;font-weight:900;">TUS PREGUNTAS MARCADAS (EN DESARROLLO)</h3>
           <div id="markedWrap" class="table-wrap">
@@ -373,11 +372,21 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
   <script>
     /* ===== Constantes base ===== */
-    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com"; // resultados globales
+    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
     const ARENA_API_BASE = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena";
     const AUTH_KEY = "currentUser";
     const GOAL_KEY = "weeklyGoal";
     const LOGIN_URL = "/login/login.html";
+
+    // RUTA SEGURA + token Cognito
+    const RESULTS_PATH_SECURE = "/secure/results";
+    function getArenaIdToken(){
+      try{
+        return localStorage.getItem("arenaIdToken") || "";
+      }catch{
+        return "";
+      }
+    }
 
     /* ===== Utilidades ===== */
     const byId = id => document.getElementById(id);
@@ -389,15 +398,22 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
     function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
     const initialsOf = (name)=>{ const s=(name||"").trim(); if(!s) return "👤"; const parts=s.split(/\s+/).slice(0,2); return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤"; };
+    const norm = s => (s||"").toString().trim().toLowerCase();
 
     function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
-    function getUserAny(){ let u=getUser(); if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} } return u; }
+    function getUserAny(){ 
+      let u = getUser(); 
+      if(!u){ 
+        try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} 
+      } 
+      return u; 
+    }
     function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); }
 
     const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
     const setGoal = (n)=> localStorage.setItem(GOAL_KEY, String(Math.max(1,toInt(n))));
 
-    /* ===== Header auth (del código proporcionado, adaptado) ===== */
+    /* ===== Header auth ===== */
     function getCurrentUser(){ return getUserAny(); }
     function renderHeaderAuth(){
       const u=getCurrentUser();
@@ -405,10 +421,27 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       const signup=byId('btnSignup');
       const userArea=byId('userArea');
       const nameTop=byId('userNameTop');
-      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+      if(u){ 
+        login.style.display='none'; 
+        signup.style.display='none'; 
+        userArea.style.display='flex'; 
+        nameTop.textContent=(u.name||u.displayName||u.userName||u.email||'USER').toUpperCase(); 
+      }
+      else{ 
+        login.style.display='inline-flex'; 
+        signup.style.display='inline-flex'; 
+        userArea.style.display='none'; 
+      }
     }
-    byId('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem(AUTH_KEY); renderHeaderAuth(); location.href = LOGIN_URL; });
+    byId('btnLogout')?.addEventListener('click', ()=>{
+      try{
+        localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem("certify_user");
+        localStorage.removeItem("arenaIdToken");
+      }catch{}
+      renderHeaderAuth();
+      location.href = LOGIN_URL;
+    });
 
     /* ===== Authbar local ===== */
     function renderAuthBar(){
@@ -427,7 +460,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
     }
 
-    /* ===== Perfil ===== */
+    /* ===== Perfil (nombre/email desde Cognito via currentUser) ===== */
     function renderProfileForm(){
       const u = getUserAny() || {};
       byId("userNameTxt").textContent = u.name || u.displayName || u.userName || "—";
@@ -455,11 +488,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           const merged = {...u, ...data};
           setUser(merged);
           renderHeaderAuth();
+          renderProfileForm();
         }
       }catch{}
     }
 
-    /* ===== Ranking Exámenes ===== */
+    /* ===== Ranking Exámenes (usa /secure/results) ===== */
     const QUIZZES = ["az-104","az-305","aws-saa-c03"];
     const pick = v => (typeof v === "string" ? v.trim() : "");
     const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
@@ -477,10 +511,28 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       const prog = Math.max(0, Math.min(100, Math.floor((xp%150)/150*100)));
       return {lvl, prog};
     }
+
+    // /secure/results con Authorization: Bearer <id_token>
     async function fetchAllResults(limit=3000){
-      const r = await fetch(`${API_BASE}/results?limit=${limit}`, {mode:"cors",cache:"no-store"});
-      const data = await r.json();
+      const token = getArenaIdToken();
+      if (!token) throw new Error("No id_token de Cognito (arenaIdToken) en localStorage");
+
+      const url = `${API_BASE}${RESULTS_PATH_SECURE}?limit=${limit}`;
+      const r = await fetch(url, {
+        mode:"cors",
+        cache:"no-store",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+
+      const text = await r.text();
+      let data;
+      try { data = JSON.parse(text); }
+      catch { throw new Error(`Respuesta no JSON desde /secure/results: ${text}`); }
+
       if(!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+
       const items = Array.isArray(data.items)? data.items: [];
       return items.map(x=>({
         userId: x.userId || "(unknown)",
@@ -488,11 +540,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         quizId: (x.quizId || "-").toLowerCase(),
         correct: Number(x.correct)||0,
         total: Number(x.total)||0,
-        pct: Number(x.pct||0),
+        pct: Number(x.pct)||0,
         durationSec: Number(x.durationSec)||0,
         ts: x.ts || null
       })).filter(r=> QUIZZES.includes(r.quizId));
     }
+
     function aggregateGlobal(rows){
       const byUser=new Map();
       rows.forEach(r=>{
@@ -601,125 +654,136 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
     }
 
-// ===== Arena =====
-function getArenaIdentity(){
-  let uid = localStorage.getItem('arenaUserId');
-  let name = localStorage.getItem('arenaUserName');
-  const u = getUserAny() || {};
-  if(!uid)  uid  = (u.userId || u.id || '').toString();
-  if(!name) name = (u.name || u.displayName || u.userName || 'guest').toString();
-  return { uid, name };
-}
-
-async function fetchArenaRank(uid){
-  try{
-    const r = await fetch(`${ARENA_API_BASE}/leaderboard?limit=2000`, {mode:"cors",cache:"no-store"});
-    if(!r.ok) throw new Error("leaderboard");
-    const data = await r.json();
-    const items = Array.isArray(data.items) ? data.items : data;
-    const idx = items.findIndex(x => (x.userId||'') === uid);
-    if(idx >= 0) return { rank: idx+1, total: items.length };
-    return { rank: null, total: items.length||0 };
-  }catch(_){
-    return { rank: null, total: 0 };
-  }
-}
-
-async function fetchArenaStats(){
-  const { uid, name } = getArenaIdentity();
-  if(!uid){
-    return { level:0, xp:0, xpForNext:1000, correct:0, wrong:0, rank:null, total:0 };
-  }
-
-  let level = 0, xp = 0, xpForNext = 1000, correct = 0, wrong = 0;
-
-  try{
-    const url = `${ARENA_API_BASE}/user/me?userId=${encodeURIComponent(uid)}&name=${encodeURIComponent(name||'guest')}`;
-    const r = await fetch(url, {mode:"cors",cache:"no-store"});
-    if(r.ok){
-      const me = await r.json();
-
-      // XP/Nivel (Arena usa 1000 XP por nivel)
-      xp = Number(me.xp || 0);
-      level = (me.level != null) ? Number(me.level) : Math.floor(xp/1000);
-      if(!Number.isFinite(level)) level = 0;
-      xpForNext = 1000;
-
-      // Aciertos y fallos
-      correct = Number(me.count_ok ?? me.ok ?? me.correct ?? 0);
-      wrong   = Number(me.count_ko ?? me.ko ?? me.wrong   ?? 0);
+    // ===== Arena =====
+    function getArenaIdentity(){
+      let uid = localStorage.getItem('arenaUserId');
+      let name = localStorage.getItem('arenaUserName');
+      const u = getUserAny() || {};
+      if(!uid)  uid  = (u.userId || u.id || '').toString();
+      if(!name) name = (u.name || u.displayName || u.userName || 'guest').toString();
+      return { uid, name };
     }
-  }catch(e){
-    console.warn('Arena /user/me error', e);
-  }
 
-  // Fallbacks si no vinieran
-  if ((correct|0) === 0 && (wrong|0) === 0){
-    const statUrls = [
-      `${ARENA_API_BASE}/stats?userId=${encodeURIComponent(uid)}`,
-      `${ARENA_API_BASE}/user/stats?userId=${encodeURIComponent(uid)}`,
-      `${ARENA_API_BASE}/arena/stats?userId=${encodeURIComponent(uid)}`
-    ];
-    for(const su of statUrls){
+    async function fetchArenaRank(uid){
       try{
-        const rs = await fetch(su, {mode:"cors",cache:"no-store"});
-        if(rs.ok){
-          const data = await rs.json();
-          correct = Number(data.correct || data.right || data.ok || 0);
-          wrong   = Number(data.wrong   || data.fail  || data.ko || 0);
-          break;
-        }
-      }catch{}
+        const r = await fetch(`${ARENA_API_BASE}/leaderboard?limit=2000`, {mode:"cors",cache:"no-store"});
+        if(!r.ok) throw new Error("leaderboard");
+        const data = await r.json();
+        const items = Array.isArray(data.items) ? data.items : data;
+        const idx = items.findIndex(x => (x.userId||'') === uid);
+        if(idx >= 0) return { rank: idx+1, total: items.length };
+        return { rank: null, total: items.length||0 };
+      }catch(_){
+        return { rank: null, total: 0 };
+      }
     }
-  }
 
-  const { rank, total } = await fetchArenaRank(uid);
+    async function fetchArenaStats(){
+      const { uid, name } = getArenaIdentity();
+      if(!uid){
+        return { level:0, xp:0, xpForNext:1000, correct:0, wrong:0, rank:null, total:0 };
+      }
 
-  return { level, xp, xpForNext, correct, wrong, rank, total };
-}
+      let level = 0, xp = 0, xpForNext = 1000, correct = 0, wrong = 0;
 
-function renderArena(stats){
-  // ⚠️ No usar "|| 1" para permitir nivel 0
-  const lvl  = Number.isFinite(Number(stats.level)) ? Number(stats.level) : 0;
-  const xp   = Number.isFinite(Number(stats.xp)) ? Number(stats.xp) : 0;
-  const next = Math.max(1, Number(stats.xpForNext)||1000);
-  const pct  = Math.max(0, Math.min(100, Math.round((xp % next) / next * 100)));
+      try{
+        const url = `${ARENA_API_BASE}/user/me?userId=${encodeURIComponent(uid)}&name=${encodeURIComponent(name||'guest')}`;
+        const r = await fetch(url, {mode:"cors",cache:"no-store"});
+        if(r.ok){
+          const me = await r.json();
 
-  document.getElementById('arenaLevel').textContent = `Lv ${lvl}`;
-  document.getElementById('arenaXp').textContent    = String(xp);
-  document.getElementById('arenaXpBar').style.width = pct + '%';
+          xp = Number(me.xp || 0);
+          level = (me.level != null) ? Number(me.level) : Math.floor(xp/1000);
+          if(!Number.isFinite(level)) level = 0;
+          xpForNext = 1000;
 
-  const rankBox = document.getElementById('arenaRank');
-  if (stats.rank && stats.total){
-    rankBox.textContent = `#${stats.rank} / ${stats.total}`;
-  } else if (stats.total) {
-    rankBox.textContent = `— / ${stats.total}`;
-  } else {
-    rankBox.textContent = '—';
-  }
+          correct = Number(me.count_ok ?? me.ok ?? me.correct ?? 0);
+          wrong   = Number(me.count_ko ?? me.ko ?? me.wrong   ?? 0);
+        }
+      }catch(e){
+        console.warn('Arena /user/me error', e);
+      }
 
-  document.getElementById('arenaCorrect').textContent = String(Number(stats.correct)||0);
-  document.getElementById('arenaWrong').textContent   = String(Number(stats.wrong)||0);
-}
+      if ((correct|0) === 0 && (wrong|0) === 0){
+        const statUrls = [
+          `${ARENA_API_BASE}/stats?userId=${encodeURIComponent(uid)}`,
+          `${ARENA_API_BASE}/user/stats?userId=${encodeURIComponent(uid)}`,
+          `${ARENA_API_BASE}/arena/stats?userId=${encodeURIComponent(uid)}`
+        ];
+        for(const su of statUrls){
+          try{
+            const rs = await fetch(su, {mode:"cors",cache:"no-store"});
+            if(rs.ok){
+              const data = await rs.json();
+              correct = Number(data.correct || data.right || data.ok || 0);
+              wrong   = Number(data.wrong   || data.fail  || data.ko || 0);
+              break;
+            }
+          }catch{}
+        }
+      }
 
-    /* ===== Resultados propios ===== */
+      const { rank, total } = await fetchArenaRank(uid);
+
+      return { level, xp, xpForNext, correct, wrong, rank, total };
+    }
+
+    function renderArena(stats){
+      const lvl  = Number.isFinite(Number(stats.level)) ? Number(stats.level) : 0;
+      const xp   = Number.isFinite(Number(stats.xp)) ? Number(stats.xp) : 0;
+      const next = Math.max(1, Number(stats.xpForNext)||1000);
+      const pct  = Math.max(0, Math.min(100, Math.round((xp % next) / next * 100)));
+
+      document.getElementById('arenaLevel').textContent = `Lv ${lvl}`;
+      document.getElementById('arenaXp').textContent    = String(xp);
+      document.getElementById('arenaXpBar').style.width = pct + '%';
+
+      const rankBox = document.getElementById('arenaRank');
+      if (stats.rank && stats.total){
+        rankBox.textContent = `#${stats.rank} / ${stats.total}`;
+      } else if (stats.total) {
+        rankBox.textContent = `— / ${stats.total}`;
+      } else {
+        rankBox.textContent = '—';
+      }
+
+      document.getElementById('arenaCorrect').textContent = String(Number(stats.correct)||0);
+      document.getElementById('arenaWrong').textContent   = String(Number(stats.wrong)||0);
+    }
+
+    /* ===== Resultados propios (usa /secure/results) ===== */
     async function fetchMyResults(limit=500){
       const u = getUserAny(); if (!u) return [];
       const uid = (u.userId || u.id || "").toString();
-      const uemail = (u.email||'').toLowerCase();
+      const uemail = norm(u.email);
+
+      const token = getArenaIdToken();
+      if (!token) throw new Error("No id_token de Cognito (arenaIdToken) para /secure/results");
 
       const qs = new URLSearchParams({ limit: String(limit) });
       if (uid) qs.set("userId", uid);
       if (uemail) qs.set("email", uemail);
 
-      const res = await fetch(`${API_BASE}/results?${qs.toString()}`, {mode:"cors",cache:"no-store"});
-      const data = await res.json();
+      const url = `${API_BASE}${RESULTS_PATH_SECURE}?${qs.toString()}`;
+      const res = await fetch(url, {
+        mode:"cors",
+        cache:"no-store",
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); }
+      catch { throw new Error(`Respuesta no JSON desde /secure/results: ${text}`); }
+
       if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
       const items = Array.isArray(data.items) ? data.items : [];
       const isMine = (x) => {
         const xid = (x.userId || x.id || x?.user?.id || "").toString();
-        const xemail = (x.email || x.userEmail || x?.user?.email || x?.profile?.email || '').toLowerCase();
+        const xemail = norm(x.email || x.userEmail || x?.user?.email || x?.profile?.email);
         return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
       };
       const mine = items.filter(isMine);
@@ -926,7 +990,14 @@ function renderArena(stats){
 
     /* ===== Eventos ===== */
     byId("btnHome").onclick = ()=>{ location.href = "/"; };
-    byId("btnLogoutLocal").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = LOGIN_URL; };
+    byId("btnLogoutLocal").onclick = ()=>{
+      try{
+        localStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem("certify_user");
+        localStorage.removeItem("arenaIdToken");
+      }catch{}
+      location.href = LOGIN_URL;
+    };
     byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
     byId("btnSaveGoal").onclick = ()=>{
       const val = Math.max(1, Number(byId("weeklyGoal").value)||1);
@@ -976,17 +1047,18 @@ function renderArena(stats){
 
       renderHeaderAuth();
       renderAuthBar();
-      loadRemoteMe();
       renderProfile();
+      renderProfileForm();
       renderGoalUI();
+      loadRemoteMe();
 
       // Arena
       try{
         const arena = await fetchArenaStats();
-          renderArena(arena||{level:0,xp:0,xpForNext:1000,correct:0,wrong:0});
+        renderArena(arena||{level:0,xp:0,xpForNext:1000,correct:0,wrong:0});
       }catch(e){ console.warn('Arena render failed', e); }
 
-      // Tus últimos exámenes
+      // Tus últimos exámenes (desde /secure/results)
       try{
         const rows = await fetchMyResults(500);
         window.__myRows = rows;
