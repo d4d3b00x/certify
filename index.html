@@ -960,48 +960,25 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
   }
 
-  // Engancha eventos de LOGIN / REGISTRO / LOGOUT
+  // Engancha eventos de LOGOUT (igual que en blog.html)
   function attachHeaderEvents(){
-    const btnLogin   = document.getElementById('btnLogin');
-    const btnSignup  = document.getElementById('btnSignup');
-    const btnLogout  = document.getElementById('btnLogout');
-
-    if (btnLogin){
-      btnLogin.onclick = (e) => {
-        e.preventDefault();
-        window.location.href = buildCognitoAuthUrl("login");
-      };
-    }
-
-    if (btnSignup){
-      btnSignup.onclick = (e) => {
-        e.preventDefault();
-        window.location.href = buildCognitoAuthUrl("signup");
-      };
-    }
+    const btnLogout = document.getElementById('btnLogout');
 
     if (btnLogout){
-      btnLogout.onclick = (e) => {
-      e.preventDefault();
+      btnLogout.addEventListener('click', (e) => {
+        e.preventDefault();
 
-      // Limpiamos info local
-      localStorage.removeItem('currentUser');
-      localStorage.removeItem('arenaIdToken');  // opcional
+        // Limpiamos info local
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('arenaIdToken'); // opcional
 
-      renderHeaderAuth();
-      if (typeof renderSims === 'function') renderSims();
-
-      // Redirección al logout de Cognito
-      const logoutParams = new URLSearchParams({
-        client_id:  COGNITO_CLIENT_ID,
-        logout_uri: window.location.origin + "/"  // https://www.ithub.es/
+        renderHeaderAuth();
+        if (typeof renderSims === 'function') renderSims();
       });
-
-      window.location.href =
-        `${COGNITO_DOMAIN}/logout?${logoutParams.toString()}`;
-  };
-}
+    }
   }
+
+
 
   // ======== SIMULADORES ========
   const CATALOG = [
