@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>JWT Lab · ITHub.es</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{
+      margin:0;padding:20px;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:#0b0f1e;color:#e8edff;
+    }
+    h1{margin-top:0}
+    button{
+      padding:8px 14px;
+      border-radius:8px;
+      border:1px solid #3a4bff;
+      background:#202a5c;
+      color:#fff;
+      font-weight:600;
+      cursor:pointer;
+      margin:4px 0;
+    }
+    button:hover{background:#313d80}
+    pre{
+      background:#11152b;
+      border-radius:8px;
+      padding:10px;
+      white-space:pre-wrap;
+      word-break:break-all;
+    }
+    .small{font-size:.9rem;color:#9fb2ff}
+    .ok{color:#3be180}
+    .err{color:#ff7d7d}
+  </style>
+</head>
+<body>
+<h1>JWT Lab · Cognito + API protegida</h1>
+
+<p class="small">
+  Este laboratorio sirve solo para probar que podemos:<br>
+  1️⃣ Obtener un <b>id_token</b> de Cognito usando <code>response_type=code</code>.<br>
+  2️⃣ Guardarlo en <code>localStorage</code>.<br>
+  3️⃣ Llamar a la API protegida <code>/arena/leaderboard</code> con <code>Authorization: Bearer &lt;token&gt;</code>.
+</p>
+
+<div id="step1"></div>
+<div id="step2"></div>
+<div id="step3"></div>
+
+<pre id="log">[log vacío]</pre>
+
+<script>
+const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
+const CLIENT_ID      = "592bh3ek4jdeg78qntt810g7vl";
+
+// ESTA página como redirect_uri:
+const THIS_URL = "https://www.ithub.es/login/jwt-lab.html";
+
+// API protegida de prueba
+const API_URL  = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=10";
+
+const logEl   = document.getElementById("log");
+const step1El = document.getElementById("step1");
+const step2El = document.getElementById("step2");
+const step3El = document.getElementById("step3");
+
+function log(msg){
+  console.log(msg);
+  logEl.textContent += msg + "\n";
+}
+
+// Construye la URL de login con response_type=code
+function buildLoginUrl(){
+  const params = new URLSearchParams({
+    client_id: CLIENT_ID,
+    redirect_uri: THIS_URL,
+    response_type: "code",
+    scope: "email openid profile"
+  });
+  return `${COGNITO_DOMAIN}/login?${params.toString()}`;
+}
+
+// Intercambia el "code" por tokens en /oauth2/token
+async function exchangeCodeForTokens(code){
+  const body = new URLSearchParams({
+    grant_type: "authorization_code",
+    client_id:  CLIENT_ID,
+    code:       code,
+    redirect_uri: THIS_URL
+  });
+
+  log("→ POST /oauth2/token con code=" + code);
+
+  const res = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: body.toString()
+  });
+
+  const text = await res.text();
+  log("← /oauth2/token status " + res.status);
+  log(text);
+
+  if (!res.ok) {
+    throw new Error("Fallo al intercambiar code: " + res.status);
+  }
+
+  let data;
+  try { data = JSON.parse(text); } catch(e){ throw new Error("Respuesta no JSON: " + text); }
+  return data; // { id_token, access_token, refresh_token, token_type, expires_in, ... }
+}
+
+// Llama a la API protegida con Authorization: Bearer <id_token>
+async function callApiWithToken(token){
+  log("→ GET " + API_URL + " con Authorization: Bearer <token>");
+  const res = await fetch(API_URL, {
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer " + token
+    }
+  });
+  const text = await res.text();
+  log("← API status " + res.status);
+  log(text);
+  return { status: res.status, body: text };
+}
+
+// Render paso 1: botón de login
+function renderStep1NoCode(){
+  step1El.innerHTML = "";
+  const btn = document.createElement("button");
+  btn.textContent = "1️⃣ Ir a Cognito (response_type=code)";
+  btn.onclick = () => {
+    const url = buildLoginUrl();
+    log("Redirigiendo a Cognito: " + url);
+    window.location.href = url;
+  };
+  step1El.appendChild(btn);
+  step2El.innerHTML = "";
+  step3El.innerHTML = "";
+}
+
+// Render cuando hay ?code=...
+async function renderWithCode(code){
+  step1El.innerHTML = `<p class="small ok">Code recibido: <code>${code}</code></p>`;
+  step2El.innerHTML = `<p class="small">2️⃣ Intercambiando <b>code</b> por tokens en <code>/oauth2/token</code>...</p>`;
+  try {
+    const tokens = await exchangeCodeForTokens(code);
+    const idToken = tokens.id_token;
+    if (!idToken) {
+      step2El.innerHTML += `<p class="small err">No se encontró <code>id_token</code> en la respuesta.</p>`;
+      return;
+    }
+
+    // Guardamos una copia en localStorage para usarlo luego desde otros frontends si quieres
+    localStorage.setItem("arenaIdToken", idToken);
+
+    const short = idToken.slice(0,40) + " … " + idToken.slice(-20);
+    step2El.innerHTML += `<p class="small ok">id_token recibido y guardado en <code>localStorage["arenaIdToken"]</code>:</p><pre>${short}</pre>`;
+
+    step3El.innerHTML = `<p class="small">3️⃣ Llamando a la API protegida con ese token...</p>`;
+
+    const { status, body } = await callApiWithToken(idToken);
+    if (status === 200) {
+      step3El.innerHTML += `<p class="small ok">✅ API respondió 200 OK. La protección con Cognito funciona.</p><pre>${body}</pre>`;
+    } else {
+      step3El.innerHTML += `<p class="small err">⚠️ API respondió status ${status}. Revisa el authorizer / client / scopes.</p><pre>${body}</pre>`;
+    }
+  } catch(e){
+    console.error(e);
+    step2El.innerHTML += `<p class="small err">Error: ${e.message}</p>`;
+  }
+}
+
+// ========== INIT ==========
+(function init(){
+  log("[JWT LAB] Inicio");
+  const url = new URL(window.location.href);
+  const code = url.searchParams.get("code");
+
+  if (!code) {
+    log("No hay ?code= en la URL. Mostrando botón de login.");
+    renderStep1NoCode();
+  } else {
+    log("Code encontrado en la URL: " + code);
+    renderWithCode(code);
+  }
+})();
+</script>
+</body>
+</html>
