@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ranking global de simuladores · Certificaciones IT | ITHub.es</title>
+  <title>Ranking global de simuladores. Certificaciones IT | ITHub.es</title>
   <meta name="description" content="Consulta el ranking global de jugadores en los simuladores de certificaciones IT de ITHub.es. Compara tu puntuación, sube de nivel y mide tu progreso frente a otros candidatos." />
   <link rel="canonical" href="https://www.ithub.es/score/ranking.html" />
   <meta name="robots" content="index,follow" />
@@ -14,12 +14,11 @@
   <meta property="og:url" content="https://www.ithub.es/score/ranking.html" />
   <meta property="og:site_name" content="ITHub.es" />
 
-    <link rel="icon" type="image/svg+xml" 
-href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
-
-
+  <link rel="icon" type="image/svg+xml" 
+        href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --ink:#e8ecff; --muted:#9ca8d9;
@@ -36,8 +35,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     body{
       font-family:"Roboto Condensed","Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Helvetica Neue",sans-serif;
       font-weight:400;color:var(--ink);
-      font-size:17px;            /* ↑ tamaño base */
-      line-height:1.45;          /* un poco más de aire */
+      font-size:17px;
+      line-height:1.45;
       background:
         radial-gradient(900px 420px at 90% -10%,var(--grad1),transparent 60%),
         radial-gradient(800px 400px at 10% 0%,var(--grad2),transparent 60%),
@@ -111,8 +110,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     /* ===== Tabla ===== */
     .table-wrap{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;box-shadow:var(--shadow);padding:10px;overflow-x:auto}
     table{width:100%;min-width:820px;border-collapse:collapse}
-    thead th{background:var(--surface2);color:var(--ink);font-weight:700;text-align:center;padding:10px 8px;border-bottom:1px solid var(--stroke);font-size:1rem}  /* ↑ */
-    tbody td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--stroke);background:var(--surface);color:var(--ink);font-size:1rem}  /* ↑ */
+    thead th{background:var(--surface2);color:var(--ink);font-weight:700;text-align:center;padding:10px 8px;border-bottom:1px solid var(--stroke);font-size:1rem}
+    tbody td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--stroke);background:var(--surface);color:var(--ink);font-size:1rem}
     tbody tr:nth-child(even) td{background:var(--chip2)}
     tbody tr:hover td{background:var(--chip)}
 
@@ -132,8 +131,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .avatar{width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#7b8cff,#4c66ff);font-weight:600;font-size:.8rem;color:#fff;display:flex;align-items:center;justify-content:center}
     .name-strong{
       font-weight:700;
-      font-size:1.05rem;       /* ↑ un poco */
-      text-transform:uppercase;/* ← nombres en MAYÚSCULAS */
+      font-size:1.05rem;
+      text-transform:uppercase;
       letter-spacing:.02em;
     }
     .name-gold{color:var(--gold)} .name-silver{color:var(--silver)} .name-bronze{color:var(--bronze)}
@@ -166,6 +165,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .footsmall{color:var(--muted);margin-top:8px}
   </style>
 </head>
+
 <body>
   <!-- Header -->
   <header>
@@ -329,8 +329,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     })();
 
     /* ======= API / Config ======= */
-    const API_BASE="https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-    const QUIZZES=["az-104","az-305","aws-saa-c03"];
+    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+    const QUIZZES  = ["az-104","az-305","aws-saa-c03"];
+
+    // Nueva ruta securizada de resultados
+    const RESULTS_PATH_SECURE = "/secure/results";
 
     /* ======= Utils ======= */
     const toInt=v=>Number.isFinite(Number(v))?(Number(v)|0):0;
@@ -338,6 +341,15 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const getName=x=>pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
     const fmtDate=iso=>{ if(!iso) return "—"; try{ return new Date(iso).toLocaleDateString([], {year:'numeric',month:'short',day:'2-digit'});}catch{return iso;} };
     function weekKey(d){const dt=new Date(d);const onejan=new Date(dt.getFullYear(),0,1);const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7);return`${dt.getFullYear()}-W${String(week).padStart(2,'0')}`;}
+
+    // Leer id_token guardado por el flujo de login Cognito
+    function getArenaIdToken(){
+      try {
+        return localStorage.getItem("arenaIdToken") || "";
+      } catch {
+        return "";
+      }
+    }
 
     function pointsForAttempt(r){
       const correct=toInt(r.correct), total=toInt(r.total), dur=toInt(r.durationSec);
@@ -519,9 +531,35 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       node.innerHTML = 'Cargando…';
       try{
         if (!CACHE){
-          const res = await fetch(`${API_BASE}/results?limit=3000`, {mode:"cors", cache:"no-store"});
-          const data = await res.json();
-          if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+          // Leer token de Cognito
+          const token = getArenaIdToken();
+          if (!token){
+            node.innerHTML = '<p style="color:var(--muted)">Necesitas iniciar sesión para ver el ranking (no se encontró id_token de Cognito).</p>';
+            return;
+          }
+
+          // Llamar a la ruta securizada /secure/results con Authorization: Bearer
+          const url = `${API_BASE}${RESULTS_PATH_SECURE}?limit=3000`;
+          const res = await fetch(url, {
+            method: "GET",
+            mode: "cors",
+            cache: "no-store",
+            headers: {
+              "Authorization": "Bearer " + token
+            }
+          });
+
+          const text = await res.text();
+          let data;
+          try { data = JSON.parse(text); }
+          catch(e){
+            throw new Error(`Respuesta no JSON desde /secure/results: ${text}`);
+          }
+
+          if (!res.ok) {
+            throw new Error(data.error || `HTTP ${res.status}`);
+          }
+
           const items = Array.isArray(data.items) ? data.items : [];
           CACHE = items.map(x=>({
             userId: x.userId || "(unknown)",
@@ -553,7 +591,5 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       syncTabs(); writeParams(); render();
     })();
   </script>
-
-  
 </body>
 </html>
