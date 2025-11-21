@@ -531,14 +531,14 @@
       node.innerHTML = 'Cargando…';
       try{
         if (!CACHE){
-          // Leer token de Cognito
+          
           const token = getArenaIdToken();
           if (!token){
-            node.innerHTML = '<p style="color:var(--muted)">Necesitas iniciar sesión para ver el ranking (no se encontró id_token de Cognito).</p>';
+            node.innerHTML = '<p style="color:var(--muted)">Necesitas iniciar sesión para ver el ranking.</p>';
             return;
           }
 
-          // Llamar a la ruta securizada /secure/results con Authorization: Bearer
+          
           const url = `${API_BASE}${RESULTS_PATH_SECURE}?limit=3000`;
           const res = await fetch(url, {
             method: "GET",
