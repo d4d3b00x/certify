@@ -64,17 +64,9 @@
     Laboratorio para probar login con <b>AWS Cognito</b> y varias <b>APIs protegidas</b> con el mismo <code>id_token</code>.
   </p>
 
-  <section id="step1">
-    <!-- Aquí se pinta el botón de login o info del code -->
-  </section>
-
-  <section id="step2">
-    <!-- Aquí se pintan los tokens / payload decodificada -->
-  </section>
-
-  <section id="step3">
-    <!-- Aquí se pintan los botones de pruebas de API -->
-  </section>
+  <section id="step1"></section>
+  <section id="step2"></section>
+  <section id="step3"></section>
 
   <section>
     <h2>Log</h2>
@@ -84,20 +76,23 @@
 <script>
 /* ================== CONFIG ================== */
 
-// Cognito (los mismos valores que en tu callback)
+// Cognito (los mismos valores que en tu callback actual)
 const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
 const CLIENT_ID      = "592bh3ek4jdeg78qntt810g7vl";
 
 // ESTA página como redirect_uri
-// ⚠️ Asegúrate de que está en la lista de "Allowed callback URLs" del App Client
+// ⚠️ Debe estar en Allowed callback URLs del App client
 const THIS_URL      = "https://www.ithub.es/login/jwt-lab.html";
 
-// APIs que queremos probar (ajusta si alguna tiene otro host / stage)
+// APIs que queremos probar
 const API_LEADERBOARD       = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=10";
+// Preguntas: tu otra API
 const API_QUESTIONS_BASE    = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/questions";
-const API_PROGRESS          = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/progress";
-const API_PROGRESS_BY_USER  = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/progress/by-user";
-const API_RESULTS           = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/results";
+
+// (Si más adelante creas /secure/... cambia estas URLs a las rutas secure)
+const API_PROGRESS          = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/progress";
+const API_PROGRESS_BY_USER  = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/progress/by-user";
+const API_RESULTS           = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/results";
 
 const logEl   = document.getElementById("log");
 const step1El = document.getElementById("step1");
@@ -109,6 +104,7 @@ const step3El = document.getElementById("step3");
 function log(msg){
   console.log(msg);
   logEl.textContent += msg + "\n";
+  logEl.scrollTop = logEl.scrollHeight;
 }
 
 function decodeJwt(token){
@@ -122,7 +118,6 @@ function decodeJwt(token){
   }
 }
 
-// Construye la URL de login con response_type=code
 function buildLoginUrl(){
   const params = new URLSearchParams({
     client_id: CLIENT_ID,
@@ -133,7 +128,6 @@ function buildLoginUrl(){
   return `${COGNITO_DOMAIN}/login?${params.toString()}`;
 }
 
-// Intercambia el "code" por tokens en /oauth2/token
 async function exchangeCodeForTokens(code){
   const body = new URLSearchParams({
     grant_type: "authorization_code",
@@ -146,9 +140,7 @@ async function exchangeCodeForTokens(code){
 
   const res = await fetch(`${COGNITO_DOMAIN}/oauth2/token`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: body.toString()
   });
 
@@ -156,13 +148,11 @@ async function exchangeCodeForTokens(code){
   log("← /oauth2/token status " + res.status);
   log(text);
 
-  if (!res.ok) {
-    throw new Error("Fallo al intercambiar code: " + res.status);
-  }
+  if (!res.ok) throw new Error("Fallo al intercambiar code: " + res.status);
 
   let data;
   try { data = JSON.parse(text); } catch(e){ throw new Error("Respuesta no JSON: " + text); }
-  return data; // { id_token, access_token, ... }
+  return data;
 }
 
 function getStoredToken(){
@@ -174,25 +164,24 @@ function getStoredToken(){
   return t;
 }
 
-// Llama a la API protegida con Authorization: Bearer <id_token>
 async function callApi(url, token, description){
   log(`→ GET ${url} [${description}] con Authorization: Bearer <token>`);
-  const res = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Authorization": "Bearer " + token
-    }
-  });
-  const text = await res.text();
-  log(`← ${description} status ${res.status}`);
-  log(text);
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const text = await res.text();
+    log(`← ${description} status ${res.status}`);
+    log(text);
+  } catch (e) {
+    log(`✖ Error llamando a ${description}: ${e.message}`);
+  }
 }
 
 /* ================== RENDER AUTH ================== */
 
-// Paso 1: botón de login
 function renderStep1NoCode(){
-  step1El.innerHTML = "";
   step1El.innerHTML = `
     <h2>1️⃣ Login en Cognito</h2>
     <p class="small">Pulsa el botón para ir al Hosted UI con <code>response_type=code</code>.</p>
@@ -210,7 +199,6 @@ function renderStep1NoCode(){
   step3El.innerHTML = "";
 }
 
-// Paso 2: hay ?code=...
 async function renderWithCode(code){
   step1El.innerHTML = `
     <h2>1️⃣ Login completado</h2>
@@ -226,11 +214,10 @@ async function renderWithCode(code){
       return;
     }
 
-    // Guardar en localStorage para otros frontends
     localStorage.setItem("arenaIdToken", idToken);
 
     const decoded = decodeJwt(idToken);
-    const short = idToken.slice(0, 40) + " … " + idToken.slice(-20);
+    const short = idToken.slice(0,40) + " … " + idToken.slice(-20);
 
     let html = `
       <h2>2️⃣ Tokens recibidos</h2>
@@ -248,8 +235,6 @@ async function renderWithCode(code){
     }
 
     step2El.innerHTML = html;
-
-    // Render de pruebas de API
     renderApiTests();
 
   } catch(e){
@@ -265,42 +250,32 @@ function renderApiTests(){
     <h2>3️⃣ Pruebas de API protegida</h2>
 
     <div style="margin-bottom:16px;">
-      <div>
-        <b>/arena/leaderboard</b><span class="pill">ranking</span>
-      </div>
+      <div><b>/arena/leaderboard</b><span class="pill">ranking</span></div>
       <button id="btnLeaderboard">Probar leaderboard</button>
     </div>
 
     <div style="margin-bottom:16px;">
-      <div>
-        <b>/questions</b><span class="pill">banco de preguntas</span>
-      </div>
-      <label>Exam <input id="qExam" value="SAA-C03" /></label>
+      <div><b>/questions</b><span class="pill">banco de preguntas</span></div>
+      <label>Exam <input id="qExam" value="SAA-C03-ES" /></label>
       <label>Limit <input id="qLimit" value="10" type="number" min="1" max="200" /></label>
       <button id="btnQuestions">Probar /questions</button>
     </div>
 
     <div style="margin-bottom:16px;">
-      <div>
-        <b>/progress</b><span class="pill">GET por sessionId</span>
-      </div>
+      <div><b>/progress</b><span class="pill">GET por sessionId</span></div>
       <label>sessionId <input id="pSession" placeholder="SID-123..." /></label>
       <button id="btnProgress">Probar /progress?sessionId=...</button>
     </div>
 
     <div style="margin-bottom:16px;">
-      <div>
-        <b>/progress/by-user</b><span class="pill">histórico usuario</span>
-      </div>
+      <div><b>/progress/by-user</b><span class="pill">histórico usuario</span></div>
       <label>userId <input id="pUser" placeholder="userId..." /></label>
       <label>quizId <input id="pQuiz" placeholder="AZ-305-ES" /></label>
       <button id="btnProgressUser">Probar /progress/by-user</button>
     </div>
 
     <div style="margin-bottom:8px;">
-      <div>
-        <b>/results</b><span class="pill">ranking bruto</span>
-      </div>
+      <div><b>/results</b><span class="pill">ranking bruto</span></div>
       <label>quizId <input id="rQuiz" placeholder="AZ-305-ES" /></label>
       <label>track <input id="rTrack" value="architect" /></label>
       <label>mode <input id="rMode" value="exam" /></label>
@@ -309,14 +284,15 @@ function renderApiTests(){
     </div>
   `;
 
-  // Listeners
   document.getElementById("btnLeaderboard").onclick = async () => {
+    log("Click en Probar leaderboard");
     const token = getStoredToken();
     if (!token) return;
     await callApi(API_LEADERBOARD, token, "/arena/leaderboard");
   };
 
   document.getElementById("btnQuestions").onclick = async () => {
+    log("Click en Probar /questions");
     const token = getStoredToken();
     if (!token) return;
     const exam  = document.getElementById("qExam").value.trim();
@@ -326,6 +302,7 @@ function renderApiTests(){
   };
 
   document.getElementById("btnProgress").onclick = async () => {
+    log("Click en Probar /progress");
     const token = getStoredToken();
     if (!token) return;
     const sid = document.getElementById("pSession").value.trim();
@@ -335,6 +312,7 @@ function renderApiTests(){
   };
 
   document.getElementById("btnProgressUser").onclick = async () => {
+    log("Click en Probar /progress/by-user");
     const token = getStoredToken();
     if (!token) return;
     const userId = document.getElementById("pUser").value.trim();
@@ -345,6 +323,7 @@ function renderApiTests(){
   };
 
   document.getElementById("btnResults").onclick = async () => {
+    log("Click en Probar /results");
     const token = getStoredToken();
     if (!token) return;
     const quizId = document.getElementById("rQuiz").value.trim();
