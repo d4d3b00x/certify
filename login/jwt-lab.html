@@ -56,6 +56,10 @@
       margin-left:6px;
       opacity:.9;
     }
+    .status-pill{
+      margin-left:8px;
+      font-size:13px;
+    }
   </style>
 </head>
 <body>
@@ -80,16 +84,12 @@
 const COGNITO_DOMAIN = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
 const CLIENT_ID      = "592bh3ek4jdeg78qntt810g7vl";
 
-// ESTA página como redirect_uri
-// ⚠️ Debe estar en Allowed callback URLs del App client
+// ESTA página como redirect_uri (debe estar en Allowed callback URLs)
 const THIS_URL      = "https://www.ithub.es/login/jwt-lab.html";
 
 // APIs que queremos probar
 const API_LEADERBOARD       = "https://7p1wyrd7j7.execute-api.eu-central-1.amazonaws.com/manual/arena/leaderboard?limit=10";
-// Preguntas: tu otra API
 const API_QUESTIONS_BASE    = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/questions";
-
-// (Si más adelante creas /secure/... cambia estas URLs a las rutas secure)
 const API_PROGRESS          = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/progress";
 const API_PROGRESS_BY_USER  = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/progress/by-user";
 const API_RESULTS           = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com/results";
@@ -164,18 +164,43 @@ function getStoredToken(){
   return t;
 }
 
-async function callApi(url, token, description){
+// Pinta el estado al lado del botón
+function setStatus(elementId, status) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  if (status === "ok") {
+    el.innerHTML = "🟢 OK";
+    el.style.color = "#5af59b";
+  } else if (status === "ko") {
+    el.innerHTML = "🔴 KO";
+    el.style.color = "#ff7b7b";
+  } else {
+    el.innerHTML = "";
+  }
+}
+
+// Llama a la API y actualiza el status + log
+async function callApi(url, token, description, statusElementId){
   log(`→ GET ${url} [${description}] con Authorization: Bearer <token>`);
+
   try {
-    const res = await fetch(url, {
-      method: "GET",
-      headers: { "Authorization": "Bearer " + token }
-    });
+    const headers = token ? { "Authorization": "Bearer " + token } : {};
+    const res = await fetch(url, { method: "GET", headers });
     const text = await res.text();
+
     log(`← ${description} status ${res.status}`);
     log(text);
+
+    if (res.ok) {
+      setStatus(statusElementId, "ok");
+    } else {
+      setStatus(statusElementId, "ko");
+    }
+
   } catch (e) {
     log(`✖ Error llamando a ${description}: ${e.message}`);
+    setStatus(statusElementId, "ko");
   }
 }
 
@@ -252,6 +277,7 @@ function renderApiTests(){
     <div style="margin-bottom:16px;">
       <div><b>/arena/leaderboard</b><span class="pill">ranking</span></div>
       <button id="btnLeaderboard">Probar leaderboard</button>
+      <span id="statusLeaderboard" class="status-pill"></span>
     </div>
 
     <div style="margin-bottom:16px;">
@@ -259,12 +285,14 @@ function renderApiTests(){
       <label>Exam <input id="qExam" value="SAA-C03-ES" /></label>
       <label>Limit <input id="qLimit" value="10" type="number" min="1" max="200" /></label>
       <button id="btnQuestions">Probar /questions</button>
+      <span id="statusQuestions" class="status-pill"></span>
     </div>
 
     <div style="margin-bottom:16px;">
       <div><b>/progress</b><span class="pill">GET por sessionId</span></div>
       <label>sessionId <input id="pSession" placeholder="SID-123..." /></label>
       <button id="btnProgress">Probar /progress?sessionId=...</button>
+      <span id="statusProgress" class="status-pill"></span>
     </div>
 
     <div style="margin-bottom:16px;">
@@ -272,6 +300,7 @@ function renderApiTests(){
       <label>userId <input id="pUser" placeholder="userId..." /></label>
       <label>quizId <input id="pQuiz" placeholder="AZ-305-ES" /></label>
       <button id="btnProgressUser">Probar /progress/by-user</button>
+      <span id="statusProgressUser" class="status-pill"></span>
     </div>
 
     <div style="margin-bottom:8px;">
@@ -281,49 +310,50 @@ function renderApiTests(){
       <label>mode <input id="rMode" value="exam" /></label>
       <label>limit <input id="rLimit" type="number" value="50" /></label>
       <button id="btnResults">Probar /results</button>
+      <span id="statusResults" class="status-pill"></span>
     </div>
   `;
 
   document.getElementById("btnLeaderboard").onclick = async () => {
-    log("Click en Probar leaderboard");
+    setStatus("statusLeaderboard", "");
     const token = getStoredToken();
     if (!token) return;
-    await callApi(API_LEADERBOARD, token, "/arena/leaderboard");
+    await callApi(API_LEADERBOARD, token, "/arena/leaderboard", "statusLeaderboard");
   };
 
   document.getElementById("btnQuestions").onclick = async () => {
-    log("Click en Probar /questions");
+    setStatus("statusQuestions", "");
     const token = getStoredToken();
     if (!token) return;
     const exam  = document.getElementById("qExam").value.trim();
     const limit = document.getElementById("qLimit").value || "10";
     const url   = `${API_QUESTIONS_BASE}?exam=${encodeURIComponent(exam)}&limit=${encodeURIComponent(limit)}`;
-    await callApi(url, token, "/questions");
+    await callApi(url, token, "/questions", "statusQuestions");
   };
 
   document.getElementById("btnProgress").onclick = async () => {
-    log("Click en Probar /progress");
+    setStatus("statusProgress", "");
     const token = getStoredToken();
     if (!token) return;
     const sid = document.getElementById("pSession").value.trim();
     if (!sid){ alert("Pon un sessionId"); return; }
     const url = `${API_PROGRESS}?sessionId=${encodeURIComponent(sid)}`;
-    await callApi(url, token, "/progress");
+    await callApi(url, token, "/progress", "statusProgress");
   };
 
   document.getElementById("btnProgressUser").onclick = async () => {
-    log("Click en Probar /progress/by-user");
+    setStatus("statusProgressUser", "");
     const token = getStoredToken();
     if (!token) return;
     const userId = document.getElementById("pUser").value.trim();
     const quizId = document.getElementById("pQuiz").value.trim();
     if (!userId || !quizId){ alert("Pon userId y quizId"); return; }
     const url = `${API_PROGRESS_BY_USER}?userId=${encodeURIComponent(userId)}&quizId=${encodeURIComponent(quizId)}`;
-    await callApi(url, token, "/progress/by-user");
+    await callApi(url, token, "/progress/by-user", "statusProgressUser");
   };
 
   document.getElementById("btnResults").onclick = async () => {
-    log("Click en Probar /results");
+    setStatus("statusResults", "");
     const token = getStoredToken();
     if (!token) return;
     const quizId = document.getElementById("rQuiz").value.trim();
@@ -338,7 +368,7 @@ function renderApiTests(){
     if (limit)  params.set("limit", limit);
 
     const url = `${API_RESULTS}?${params.toString()}`;
-    await callApi(url, token, "/results");
+    await callApi(url, token, "/results", "statusResults");
   };
 }
 
