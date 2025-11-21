@@ -227,7 +227,7 @@ function extractDomainFromRecord(it){
 async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searchQ=""}){
   const target = Math.max(count * overfetch, count);
   const all = [];
-  const seen = new Set();          // <-- ESTA LÍNEA ES LA QUE FALTABA
+  const seen = new Set();
   let lastKey = null;
   const pageLimit = 200;
   const onlyDn = (domainTags || []).map(normalizeDomainTag).filter(Boolean).join(',');
@@ -239,9 +239,24 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
     params.set('count', String(count));
     if (lastKey) params.set('lastKey', JSON.stringify(lastKey));
 
-    const res = await fetch(`${API_URL}/questions?${params.toString()}`, { headers:{ Accept:'application/json' }});
+    // === NUEVO: usamos /secure/questions + Authorization si hay token ===
+    const idToken =
+      localStorage.getItem("arenaIdToken") ||
+      localStorage.getItem("idToken") ||
+      "";
+
+    const headers = { Accept: "application/json" };
+    if (idToken) {
+      headers["Authorization"] = `Bearer ${idToken}`;
+    }
+
+    const res = await fetch(`${API_URL}/secure/questions?${params.toString()}`, {
+      mode: "cors",
+      headers
+    });
+
     const txt = await res.text();
-    if (!res.ok) throw new Error(`GET /questions ${res.status}: ${txt}`);
+    if (!res.ok) throw new Error(`GET /secure/questions ${res.status}: ${txt}`);
 
     let data;
     try { data = JSON.parse(txt); }
@@ -325,6 +340,8 @@ function genResultId(r){
   const base=[r.quizId||'quiz', r.mode||'exam', r.total||0, r.correct||0, r.durationSec||0].join('|');
   const t=Math.floor(Date.now()/10000);
   return `${base}|${t}`;
+
+
 }
 async function saveResultRemoteOnce(result){
   if (S.savingResult) return { ok:false, skipped:true };
@@ -417,7 +434,7 @@ async function start(quizId="aws-saa-c03", overrides={}){
     if(__SEQ!==seq) return;
 
     let all = transformQuestions(raw);
-    all = uniqQuestions(all);                       // <-- dedupe fuerte
+    all = uniqQuestions(all);
     let filtered = filterByDomains(all, tags);
     if (tags.length && filtered.length===0){
       filtered = all;
@@ -425,7 +442,7 @@ async function start(quizId="aws-saa-c03", overrides={}){
     }
     if (filtered.length===0) throw new Error("No se encontraron preguntas para este quiz.");
 
-    filtered = uniqQuestions(filtered);             // <-- por si tras filtrar reaparece algún igual
+    filtered = uniqQuestions(filtered);
     filtered = shuffle(filtered).slice(0, Math.min(desiredCount, filtered.length)).map(q=>{
       const opts = Array.isArray(q.options)? q.options.slice(): [];
       const order = [...Array(opts.length).keys()];
