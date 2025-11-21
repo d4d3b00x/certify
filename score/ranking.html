@@ -168,7 +168,22 @@
 
 <body>
   <!-- Header -->
-    <div id="site-header"></div>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <i class="logo"></i>
+        <span>IT&nbsp;Hub</span><small>.es</small>
+      </div>
+
+      <nav class="menu" aria-label="principal">
+        <a href="/">Home</a>
+        <a href="/#simuladores">Simuladores</a>
+        <a href="/content/content.html">Contenidos</a>
+      </nav>
+
+      <div class="actions" id="navActions"></div>
+    </div>
+  </header>
 
   <main class="container wrap">
     <!-- Ranking -->
@@ -283,310 +298,317 @@
     </div>
   </footer>
 
-  <script>
-    /* ======= Cabecera: sesión ======= */
-    function getUserAny(){
-      let u=null;
-      try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
-      if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}
-      return u;
-    }
-    (function renderHeaderUser(){
-      const box=document.getElementById('navActions');
-      const u=getUserAny();
-      if(u && (u.name||u.displayName||u.userName)){
-        const name=(u.name||u.displayName||u.userName||'Usuario').toUpperCase();
-        box.innerHTML = `
-          <div class="userbox">
-            <span>🔥 <span class="name">${name}</span></span>
-            <a class="btn primary equal" href="/user/profile.html">PERFIL</a>
-            <button class="btn primary equal" id="logoutBtn">LOGOUT</button>
-          </div>`;
-        document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
-          try{ localStorage.removeItem('currentUser'); localStorage.removeItem('certify_user'); }catch{}
-          location.reload();
-        });
-      } else {
-        box.innerHTML = `
-          <a class="btn" href="/login/login.html">LOGIN</a>
-          <a class="btn primary" href="/login/login.html#signup">CREAR CUENTA</a>`;
-      }
-    })();
-
-    /* ======= API / Config ======= */
-    const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-    const QUIZZES  = ["az-104","az-305","aws-saa-c03"];
-
-    // Nueva ruta securizada de resultados
-    const RESULTS_PATH_SECURE = "/secure/results";
-
-    /* ======= Utils ======= */
-    const toInt=v=>Number.isFinite(Number(v))?(Number(v)|0):0;
-    const pick=v=>(typeof v==="string"?v.trim():"");
-    const getName=x=>pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
-    const fmtDate=iso=>{ if(!iso) return "—"; try{ return new Date(iso).toLocaleDateString([], {year:'numeric',month:'short',day:'2-digit'});}catch{return iso;} };
-    function weekKey(d){const dt=new Date(d);const onejan=new Date(dt.getFullYear(),0,1);const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7);return`${dt.getFullYear()}-W${String(week).padStart(2,'0')}`;}
-
-    // Leer id_token guardado por el flujo de login Cognito
-    function getArenaIdToken(){
-      try {
-        return localStorage.getItem("arenaIdToken") || "";
-      } catch {
-        return "";
-      }
-    }
-
-    function pointsForAttempt(r){
-      const correct=toInt(r.correct), total=toInt(r.total), dur=toInt(r.durationSec);
-      let pts=correct*5;
-      const pct=total>0?(correct/total)*100:(r.pct||0);
-      if(pct>=70) pts+=50;
-      if(total>0 && dur>0 && (dur/total)<=30) pts+=10;
-      return { pts, passed:pct>=70, pct };
-    }
-    function levelFromXP(xp){
-      const lvl=Math.max(1,Math.floor(xp/150)+1);
-      const cur=xp%150; const p=Math.max(0,Math.min(100,Math.floor((cur/150)*100)));
-      return { lvl, progress:p };
-    }
-
-    /* ======= URL helpers ======= */
-    function normalizeExam(q){
-      if(!q) return null;
-      const s=String(q).toLowerCase().replace(/\s+/g,'').replace('%20','');
-      if(s==='az104' || s==='az-104') return 'az-104';
-      if(s==='az305' || s==='az-305') return 'az-305';
-      if(s==='saa' || s==='saac03' || s==='saa-c03' || s==='aws' || s==='awssaa') return 'aws-saa-c03';
-      return QUIZZES.includes(s) ? s : null;
-    }
-    function normalizeScope(x){
-      const v=String(x||'').toLowerCase();
-      return (v==='season'||v==='week') ? v : 'global';
-    }
-    function readParams(){
-      const p=new URLSearchParams(location.search);
-      const ex=normalizeExam(p.get('quiz'));
-      const sc=normalizeScope(p.get('scope')||'global');
-      return {ex, sc};
-    }
-    function writeParams(){
-      const p=new URLSearchParams();
-      if(EXAM) p.set('quiz', EXAM);
-      if(SCOPE!=='global') p.set('scope', SCOPE);
-      const qs=p.toString();
-      const url = qs ? `${location.pathname}?${qs}` : location.pathname;
-      history.replaceState(null,'',url);
-    }
-
-    /* ======= Agregación + Insignias ======= */
-    function aggregate(rows, scope, exam){
-      const now=new Date(); const curMonth=now.getMonth(), curYear=now.getFullYear(); const wkKey=weekKey(now);
-      const byUser=new Map();
-
-      rows.forEach(r=>{
-        if(exam && r.quizId!==exam) return;
-        const d=r.ts? new Date(r.ts): null;
-        if(scope==='season' && d && (d.getMonth()!==curMonth || d.getFullYear()!==curYear)) return;
-        if(scope==='week' && d && weekKey(d)!==wkKey) return;
-
-        const {pts, passed, pct}=pointsForAttempt(r);
-        const key=(r.userId||'')+'|'+(r.userName||'');
-        if(!byUser.has(key)){
-          byUser.set(key, {userId:r.userId, userName:r.userName, xp:0, attempts:0, passed:0, last:r.ts,
-                           badges:new Set(), lastPassTs:null, streak:0,
-                           correctSum:0, totalSum:0});
-        }
-        const u=byUser.get(key);
-
-        if(passed){
-          u.passed++;
-          const t=d? d.getTime():0;
-          if(u.lastPassTs && (t-u.lastPassTs)<=1000*60*60*24*7){ u.streak++; } else { u.streak=1; }
-          u.lastPassTs=t;
-        }
-
-        u.xp += pts;
-        u.attempts++;
-        u.correctSum += Number(r.correct)||0;
-        u.totalSum += Number(r.total)||0;
-
-        if(pct===100) u.badges.add('perfect');
-        if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
-        if(passed) u.badges.add('ok');
-        u.last=r.ts||u.last;
-      });
-
-      for(const u of byUser.values()){
-        if(u.streak>=3) u.badges.add('streak');
-        if(u.attempts>=10) u.badges.add('grinder');
-        if(u.xp>=2000) u.badges.add('veteran');
-        const acc = u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
-        if(acc>=90) u.badges.add('sharp');
-      }
-
-      const list=[...byUser.values()].map(u=>{ const lvl=levelFromXP(u.xp); return {...u, lvl:lvl.lvl, prog:lvl.progress}; })
-        .sort((a,b)=>{ if(b.xp!==a.xp) return b.xp-a.xp; if(b.passed!==a.passed) return b.passed-a.passed; return String(a.userName).localeCompare(String(b.userName)); });
-      return list;
-    }
-
-    /* ======= Render ======= */
-    function medalCell(i){
-      if (i===0) return `<span class="medal gold">1</span>`;
-      if (i===1) return `<span class="medal silver">2</span>`;
-      if (i===2) return `<span class="medal bronze">3</span>`;
-      return String(i+1);
-    }
-    function nameClass(i){
-      if (i===0) return "name-strong name-gold";
-      if (i===1) return "name-strong name-silver";
-      if (i===2) return "name-strong name-bronze";
-      return "name-strong";
-    }
-    function pointsChipClass(i){ return i<3 ? "points-chip top" : "points-chip"; }
-
-    function renderBadgesSmall(set){
-      const s=new Set(set);
-      let out='<span class="ibadges">';
-      if(s.has('fast')) out+=`<span class="ibadge" title="Rápido">⚡</span>`;
-      if(s.has('perfect')) out+=`<span class="ibadge" title="Perfect">💯</span>`;
-      if(s.has('ok')) out+=`<span class="ibadge" title="Pro">✅</span>`;
-      if(s.has('streak')) out+=`<span class="ibadge" title="Racha">🔥</span>`;
-      if(s.has('grinder')) out+=`<span class="ibadge" title="Grinder">💪</span>`;
-      if(s.has('sharp')) out+=`<span class="ibadge" title="Preciso">🧠</span>`;
-      if(s.has('veteran')) out+=`<span class="ibadge" title="Veterano">🏅</span>`;
-      out+='</span>';
-      return out;
-    }
-
-    function renderBoard(list){
-      let html = `<table><thead><tr>
-        <th class="col-rank">#</th>
-        <th class="col-points">Puntos</th>
-        <th class="col-name">Quizzer</th>
-        <th class="col-num col-level">Nivel</th>
-        <th class="col-num">Aprobados</th>
-        <th class="col-num">Intentos</th>
-        <th class="col-num">Último</th>
-        <th>Insignias</th>
-      </tr></thead><tbody>`;
-
-      list.forEach((u,i)=>{
-        const initials = String(u.userName||'').trim().slice(0,2).toUpperCase() || 'QQ';
-        html += `<tr>
-          <td>${medalCell(i)}</td>
-          <td><span class="${pointsChipClass(i)}">⭐ ${u.xp}</span></td>
-          <td class="col-name">
-            <span class="namebox">
-              <span class="avatar">${initials}</span>
-              <span class="${nameClass(i)}">${(u.userName||'(no name)')}</span>
-            </span>
-          </td>
-          <td class="col-level"><span class="level">Lv ${u.lvl}<span class="bar"><i style="width:${u.prog}%"></i></span></span></td>
-          <td>${u.passed}</td>
-          <td>${u.attempts}</td>
-          <td>${u.last? fmtDate(u.last) : '—'}</td>
-          <td>${renderBadgesSmall(u.badges)}</td>
-        </tr>`;
-      });
-
-      html += `</tbody></table>`;
-      document.getElementById('board').innerHTML = html;
-    }
-
-    // ===== Estado UI / Filtros =====
-    let SCOPE='global', EXAM=null, CACHE=null;
-
-    function setScope(x){ SCOPE=x; syncTabs(); writeParams(); render(); }
-    function setExam(x){ EXAM = (EXAM === x) ? null : x; syncTabs(); writeParams(); render(); }
-    function clearExam(){ EXAM = null; syncTabs(); writeParams(); render(); }
-
-    function syncTabs(){
-      const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
-      set('tab-global', SCOPE==='global');
-      set('tab-season', SCOPE==='season');
-      set('tab-week', SCOPE==='week');
-      set('tab-all-exams', EXAM===null);
-      set('tab-az', EXAM==='az-104');
-      set('tab-az305', EXAM==='az-305');
-      set('tab-aws', EXAM==='aws-saa-c03');
-    }
-
-    async function render(){
-      const node = document.getElementById('board');
-      node.innerHTML = 'Cargando…';
-      try{
-        if (!CACHE){
-          
-          const token = getArenaIdToken();
-          if (!token){
-            node.innerHTML = '<p style="color:var(--muted)">Necesitas iniciar sesión para ver el ranking.</p>';
-            return;
-          }
-
-          
-          const url = `${API_BASE}${RESULTS_PATH_SECURE}?limit=3000`;
-          const res = await fetch(url, {
-            method: "GET",
-            mode: "cors",
-            cache: "no-store",
-            headers: {
-              "Authorization": "Bearer " + token
-            }
-          });
-
-          const text = await res.text();
-          let data;
-          try { data = JSON.parse(text); }
-          catch(e){
-            throw new Error(`Respuesta no JSON desde /secure/results: ${text}`);
-          }
-
-          if (!res.ok) {
-            throw new Error(data.error || `HTTP ${res.status}`);
-          }
-
-          const items = Array.isArray(data.items) ? data.items : [];
-          CACHE = items.map(x=>({
-            userId: x.userId || "(unknown)",
-            userName: getName(x),
-            quizId: (x.quizId || "-").toLowerCase(),
-            correct: Number(x.correct)||0,
-            total: Number(x.total)||0,
-            pct: Number(x.pct)||0,
-            durationSec: Number(x.durationSec)||0,
-            ts: x.ts || null
-          })).filter(r=> QUIZZES.includes(r.quizId));
-        }
-        const filtered = CACHE.filter(r=> !EXAM || r.quizId===EXAM);
-        const list = aggregate(filtered, SCOPE, EXAM);
-        renderBoard(list.slice(0,50));
-      }catch(e){
-        node.innerHTML = `<p style="color:var(--muted)">Error cargando API: ${e.message}</p>`;
-      }
-    }
-
-    // ===== Init =====
-    (function initFromUrl(){
-      const p=new URLSearchParams(location.search);
-      const ex=p.get('quiz'); const sc=p.get('scope');
-      const mapExam=(q)=>{ if(!q) return null; q=q.toLowerCase(); if(q==='az104')return'az-104'; if(q==='az305')return'az-305'; if(q==='aws'||q==='saa-c03')return'aws-saa-c03'; return q;};
-      const mapScope=(s)=>['season','week'].includes((s||'').toLowerCase())?(s||'global'):'global';
-      EXAM = mapExam(ex);
-      SCOPE = mapScope(sc);
-      syncTabs(); writeParams(); render();
-    })();
-  </script>
-
+  
 <script>
-  fetch('/includes/header.html')
-    .then(r => r.text())
-    .then(html => {
-      document.getElementById('site-header').innerHTML = html;
-      renderHeaderAuth();
-      initSubmenus();
-      attachHeaderEvents();
+  /* ======= Cabecera: sesión ======= */
+  function getUserAny(){
+    let u=null;
+    try{u=JSON.parse(localStorage.getItem("currentUser")||"null")}catch{}
+    if(!u){try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{}}
+    return u;
+  }
+  (function renderHeaderUser(){
+    const box=document.getElementById('navActions');
+    const u=getUserAny();
+    if(u && (u.name||u.displayName||u.userName)){
+      const name=(u.name||u.displayName||u.userName||'Usuario').toUpperCase();
+      box.innerHTML = `
+        <div class="userbox">
+          <span>🔥 <span class="name">${name}</span></span>
+          <a class="btn primary equal" href="/user/profile.html">PERFIL</a>
+          <button class="btn primary equal" id="logoutBtn">LOGOUT</button>
+        </div>`;
+      document.getElementById('logoutBtn')?.addEventListener('click', ()=>{
+        try{
+          localStorage.removeItem('currentUser');
+          localStorage.removeItem('certify_user');
+          localStorage.removeItem('arenaIdToken');
+        }catch{}
+        location.reload();
+      });
+    } else {
+      box.innerHTML = `
+        <a class="btn" href="/login/login.html">LOGIN</a>
+        <a class="btn primary" href="/login/login.html#signup">CREAR CUENTA</a>`;
+    }
+  })();
+
+  /* ======= API / Config ======= */
+  const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
+  const QUIZZES  = ["az-104","az-305","aws-saa-c03"];
+
+  // Ruta securizada
+  const RESULTS_PATH_SECURE = "/secure/results";
+
+  /* ======= Utils ======= */
+  const toInt=v=>Number.isFinite(Number(v))?(Number(v)|0):0;
+  const pick=v=>(typeof v==="string"?v.trim():"");
+  const getName=x=>pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
+  const fmtDate=iso=>{ if(!iso) return "—"; try{ return new Date(iso).toLocaleDateString([], {year:'numeric',month:'short',day:'2-digit'});}catch{return iso;} };
+  function weekKey(d){
+    const dt=new Date(d);
+    const onejan=new Date(dt.getFullYear(),0,1);
+    const week=Math.ceil((((dt-onejan)/86400000)+onejan.getDay()+1)/7);
+    return`${dt.getFullYear()}-W${String(week).padStart(2,'0')}`;
+  }
+
+  // Leer id_token guardado por Cognito (asegúrate de que tu callback lo guarda así)
+  function getArenaIdToken(){
+    try {
+      return localStorage.getItem("arenaIdToken") || "";
+    } catch {
+      return "";
+    }
+  }
+
+  function pointsForAttempt(r){
+    const correct=toInt(r.correct), total=toInt(r.total), dur=toInt(r.durationSec);
+    let pts=correct*5;
+    const pct=total>0?(correct/total)*100:(r.pct||0);
+    if(pct>=70) pts+=50;
+    if(total>0 && dur>0 && (dur/total)<=30) pts+=10;
+    return { pts, passed:pct>=70, pct };
+  }
+  function levelFromXP(xp){
+    const lvl=Math.max(1,Math.floor(xp/150)+1);
+    const cur=xp%150; const p=Math.max(0,Math.min(100,Math.floor((cur/150)*100)));
+    return { lvl, progress:p };
+  }
+
+  /* ======= URL helpers ======= */
+  function normalizeExam(q){
+    if(!q) return null;
+    const s=String(q).toLowerCase().replace(/\s+/g,'').replace('%20','');
+    if(s==='az104' || s==='az-104') return 'az-104';
+    if(s==='az305' || s==='az-305') return 'az-305';
+    if(s==='saa' || s==='saac03' || s==='saa-c03' || s==='aws' || s==='awssaa') return 'aws-saa-c03';
+    return QUIZZES.includes(s) ? s : null;
+  }
+  function normalizeScope(x){
+    const v=String(x||'').toLowerCase();
+    return (v==='season'||v==='week') ? v : 'global';
+  }
+  function writeParams(){
+    const p=new URLSearchParams();
+    if(EXAM) p.set('quiz', EXAM);
+    if(SCOPE!=='global') p.set('scope', SCOPE);
+    const qs=p.toString();
+    const url = qs ? `${location.pathname}?${qs}` : location.pathname;
+    history.replaceState(null,'',url);
+  }
+
+  /* ======= Agregación + Insignias ======= */
+  function aggregate(rows, scope, exam){
+    const now=new Date(); const curMonth=now.getMonth(), curYear=now.getFullYear(); const wkKey=weekKey(now);
+    const byUser=new Map();
+
+    rows.forEach(r=>{
+      if(exam && r.quizId!==exam) return;
+      const d=r.ts? new Date(r.ts): null;
+      if(scope==='season' && d && (d.getMonth()!==curMonth || d.getFullYear()!==curYear)) return;
+      if(scope==='week' && d && weekKey(d)!==wkKey) return;
+
+      const {pts, passed, pct}=pointsForAttempt(r);
+      const key=(r.userId||'')+'|'+(r.userName||'');
+      if(!byUser.has(key)){
+        byUser.set(key, {
+          userId:r.userId,
+          userName:r.userName,
+          xp:0, attempts:0, passed:0, last:r.ts,
+          badges:new Set(), lastPassTs:null, streak:0,
+          correctSum:0, totalSum:0
+        });
+      }
+      const u=byUser.get(key);
+
+      if(passed){
+        u.passed++;
+        const t=d? d.getTime():0;
+        if(u.lastPassTs && (t-u.lastPassTs)<=1000*60*60*24*7){ u.streak++; } else { u.streak=1; }
+        u.lastPassTs=t;
+      }
+
+      u.xp += pts;
+      u.attempts++;
+      u.correctSum += Number(r.correct)||0;
+      u.totalSum += Number(r.total)||0;
+
+      if(pct===100) u.badges.add('perfect');
+      if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
+      if(passed) u.badges.add('ok');
+      u.last=r.ts||u.last;
     });
+
+    for(const u of byUser.values()){
+      if(u.streak>=3) u.badges.add('streak');
+      if(u.attempts>=10) u.badges.add('grinder');
+      if(u.xp>=2000) u.badges.add('veteran');
+      const acc = u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
+      if(acc>=90) u.badges.add('sharp');
+    }
+
+    const list=[...byUser.values()].map(u=>{
+      const lvl=levelFromXP(u.xp);
+      return {...u, lvl:lvl.lvl, prog:lvl.progress};
+    }).sort((a,b)=>{
+      if(b.xp!==a.xp) return b.xp-a.xp;
+      if(b.passed!==a.passed) return b.passed-a.passed;
+      return String(a.userName).localeCompare(String(b.userName));
+    });
+    return list;
+  }
+
+  /* ======= Render ======= */
+  function medalCell(i){
+    if (i===0) return `<span class="medal gold">1</span>`;
+    if (i===1) return `<span class="medal silver">2</span>`;
+    if (i===2) return `<span class="medal bronze">3</span>`;
+    return String(i+1);
+  }
+  function nameClass(i){
+    if (i===0) return "name-strong name-gold";
+    if (i===1) return "name-strong name-silver";
+    if (i===2) return "name-strong name-bronze";
+    return "name-strong";
+  }
+  function pointsChipClass(i){ return i<3 ? "points-chip top" : "points-chip"; }
+
+  function renderBadgesSmall(set){
+    const s=new Set(set);
+    let out='<span class="ibadges">';
+    if(s.has('fast')) out+=`<span class="ibadge" title="Rápido">⚡</span>`;
+    if(s.has('perfect')) out+=`<span class="ibadge" title="Perfect">💯</span>`;
+    if(s.has('ok')) out+=`<span class="ibadge" title="Pro">✅</span>`;
+    if(s.has('streak')) out+=`<span class="ibadge" title="Racha">🔥</span>`;
+    if(s.has('grinder')) out+=`<span class="ibadge" title="Grinder">💪</span>`;
+    if(s.has('sharp')) out+=`<span class="ibadge" title="Preciso">🧠</span>`;
+    if(s.has('veteran')) out+=`<span class="ibadge" title="Veterano">🏅</span>`;
+    out+='</span>';
+    return out;
+  }
+
+  function renderBoard(list){
+    let html = `<table><thead><tr>
+      <th class="col-rank">#</th>
+      <th class="col-points">Puntos</th>
+      <th class="col-name">Quizzer</th>
+      <th class="col-num col-level">Nivel</th>
+      <th class="col-num">Aprobados</th>
+      <th class="col-num">Intentos</th>
+      <th class="col-num">Último</th>
+      <th>Insignias</th>
+    </tr></thead><tbody>`;
+
+    list.forEach((u,i)=>{
+      const initials = String(u.userName||'').trim().slice(0,2).toUpperCase() || 'QQ';
+      html += `<tr>
+        <td>${medalCell(i)}</td>
+        <td><span class="${pointsChipClass(i)}">⭐ ${u.xp}</span></td>
+        <td class="col-name">
+          <span class="namebox">
+            <span class="avatar">${initials}</span>
+            <span class="${nameClass(i)}">${(u.userName||'(no name)')}</span>
+          </span>
+        </td>
+        <td class="col-level"><span class="level">Lv ${u.lvl}<span class="bar"><i style="width:${u.prog}%"></i></span></span></td>
+        <td>${u.passed}</td>
+        <td>${u.attempts}</td>
+        <td>${u.last? fmtDate(u.last) : '—'}</td>
+        <td>${renderBadgesSmall(u.badges)}</td>
+      </tr>`;
+    });
+
+    html += `</tbody></table>`;
+    document.getElementById('board').innerHTML = html;
+  }
+
+  // ===== Estado UI / Filtros =====
+  let SCOPE='global', EXAM=null, CACHE=null;
+
+  function setScope(x){ SCOPE=x; syncTabs(); writeParams(); render(); }
+  function setExam(x){ EXAM = (EXAM === x) ? null : x; syncTabs(); writeParams(); render(); }
+  function clearExam(){ EXAM = null; syncTabs(); writeParams(); render(); }
+
+  function syncTabs(){
+    const set=(id,on)=>document.getElementById(id)?.setAttribute('aria-pressed', String(on));
+    set('tab-global', SCOPE==='global');
+    set('tab-season', SCOPE==='season');
+    set('tab-week', SCOPE==='week');
+    set('tab-all-exams', EXAM===null);
+    set('tab-az', EXAM==='az-104');
+    set('tab-az305', EXAM==='az-305');
+    set('tab-aws', EXAM==='aws-saa-c03');
+  }
+
+  async function render(){
+    const node = document.getElementById('board');
+    node.innerHTML = 'Cargando…';
+
+    try{
+      const token = getArenaIdToken();
+      if (!token){
+        node.innerHTML = '<p style="color:var(--muted)">Necesitas iniciar sesión con Cognito para ver el ranking protegido.</p>';
+        return;
+      }
+
+      if (!CACHE){
+        const url = `${API_BASE}${RESULTS_PATH_SECURE}?limit=3000`;
+        const res = await fetch(url, {
+          method: "GET",
+          mode: "cors",
+          cache: "no-store",
+          headers: {
+            "Authorization": "Bearer " + token
+          }
+        });
+
+        const text = await res.text();
+        let data;
+        try { data = JSON.parse(text); }
+        catch(e){
+          console.error("Respuesta no JSON desde /secure/results:", text);
+          throw new Error('Respuesta no válida desde /secure/results');
+        }
+
+        if (!res.ok) {
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+
+        const items = Array.isArray(data.items) ? data.items : [];
+        CACHE = items.map(x=>({
+          userId: x.userId || "(unknown)",
+          userName: getName(x),
+          quizId: (x.quizId || "-").toLowerCase(),
+          correct: Number(x.correct)||0,
+          total: Number(x.total)||0,
+          pct: Number(x.pct)||0,
+          durationSec: Number(x.durationSec)||0,
+          ts: x.ts || null
+        })).filter(r=> QUIZZES.includes(r.quizId));
+      }
+
+      const filtered = CACHE.filter(r=> !EXAM || r.quizId===EXAM);
+      const list = aggregate(filtered, SCOPE, EXAM);
+      renderBoard(list.slice(0,50));
+    }catch(e){
+      console.error(e);
+      node.innerHTML = `<p style="color:var(--muted)">Error cargando API: ${e.message}</p>`;
+    }
+  }
+
+  // ===== Init =====
+  (function initFromUrl(){
+    const p=new URLSearchParams(location.search);
+    const ex=p.get('quiz'); const sc=p.get('scope');
+    const mapExam=(q)=>{ if(!q) return null; q=q.toLowerCase(); if(q==='az104')return'az-104'; if(q==='az305')return'az-305'; if(q==='aws'||q==='saa-c03')return'aws-saa-c03'; return q;};
+    const mapScope=(s)=>['season','week'].includes((s||'').toLowerCase())?(s||'global'):'global';
+    EXAM = mapExam(ex);
+    SCOPE = mapScope(sc);
+    syncTabs(); writeParams(); render();
+  })();
 </script>
+
+
 
 </body>
 </html>
