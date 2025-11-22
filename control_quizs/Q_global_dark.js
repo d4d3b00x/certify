@@ -179,6 +179,33 @@ const QUIZZES = {
   .kpi-card{ background:var(--surface); border:1px solid var(--stroke); border-radius:14px; padding:14px 16px; }
   .kpi-card h4{ margin:0 0 6px 0; font-size:.9rem; color:#9ca8d9; font-weight:900; text-transform:uppercase; letter-spacing:.4px; }
   .kpi-card .n{ font-size:1.6rem; line-height:1.2; font-weight:1000; color:#fff; }
+
+  /* Indicador PASS/FAIL en vivo */
+  .live-score{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);}
+  .score-pill{border-radius:999px;padding:4px 9px;font-weight:900;font-size:.78rem;border:1px solid var(--stroke);text-transform:uppercase;letter-spacing:.04em;}
+  .score-pill.pass{background:var(--ok-bg);color:var(--ok-ink);border-color:var(--ok);}
+  .score-pill.fail{background:var(--bad-bg);color:var(--bad-ink);border-color:var(--bad);}
+
+  /* Últimos intentos */
+  .recent-results{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.84rem;color:#cbd6ff;}
+  .recent-results li{display:flex;flex-direction:column;gap:2px;padding:6px 8px;border-radius:10px;background:rgba(15,19,32,.6);border:1px solid var(--stroke);}
+  .recent-results .line-main{display:flex;justify-content:space-between;align-items:center;}
+  .recent-results .label-exam{font-weight:900;}
+  .recent-results .pct{font-weight:900;}
+  .recent-results .pct.pass{color:var(--ok);}
+  .recent-results .pct.fail{color:var(--bad);}
+  .recent-results .line-sub{font-size:.76rem;color:var(--muted);}
+
+  /* Resumen final */
+  .summary-header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:18px;}
+  .summary-circle{width:140px;height:140px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:1000;border:4px solid var(--stroke);margin-top:4px;}
+  .summary-circle.pass{border-color:var(--ok);color:var(--ok);}
+  .summary-circle.fail{border-color:var(--bad);color:var(--bad);}
+  .summary-meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:.9rem;color:var(--muted);}
+  .summary-section{margin-top:16px;}
+  .domain-table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:8px;}
+  .domain-table th,.domain-table td{border-bottom:1px solid var(--stroke);padding:6px 4px;text-align:left;}
+  .domain-table th{text-transform:uppercase;font-size:.75rem;color:var(--muted);}
   `;
   const st = document.createElement("style");
   st.innerHTML = css;
@@ -299,7 +326,6 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
     params.set('count', String(count));
     if (lastKey) params.set('lastKey', JSON.stringify(lastKey));
 
-    // usamos /secure/questions + Authorization si hay token
     const idToken =
       localStorage.getItem("arenaIdToken") ||
       localStorage.getItem("idToken") ||
@@ -490,6 +516,60 @@ function localAz305Fallback(){
   ];
 }
 
+/* ===================== STATS / HISTORIAL ===================== */
+function getQuizStats(){
+  const answered = Object.keys(S.answers).length;
+  let correct = 0;
+  for(const [i,v] of Object.entries(S.answers)){
+    const idx = +i;
+    if(S.qs[idx] && S.qs[idx]._correct === v) correct++;
+  }
+  const marked = Object.values(S.marked||{}).filter(Boolean).length;
+  const pct = answered ? Math.round((correct/answered)*100) : 0;
+  return { answered, correct, marked, pct };
+}
+
+function computeDomainStats(){
+  const stats = {};
+  S.qs.forEach((q,idx)=>{
+    const key = q.domain || q.category || 'General';
+    if(!stats[key]) stats[key] = { total:0, answered:0, correct:0 };
+    stats[key].total++;
+    const ans = S.answers[idx];
+    if(typeof ans!=='undefined'){
+      stats[key].answered++;
+      if(ans === q._correct) stats[key].correct++;
+    }
+  });
+  return stats;
+}
+
+function getRecentResults(){
+  try{
+    const raw = localStorage.getItem('quizRecentResults');
+    if(!raw) return [];
+    const arr = JSON.parse(raw);
+    return Array.isArray(arr) ? arr : [];
+  }catch{
+    return [];
+  }
+}
+function pushRecentResult(result){
+  try{
+    const list = getRecentResults();
+    list.unshift({
+      quizId: result.quizId,
+      ts: result.ts,
+      total: result.total,
+      correct: result.correct,
+      pct: result.pct,
+      durationSec: result.durationSec || 0
+    });
+    const trimmed = list.slice(0,5);
+    localStorage.setItem('quizRecentResults', JSON.stringify(trimmed));
+  }catch{}
+}
+
 /* ===================== START ===================== */
 async function start(quizId="aws-saa-c03", overrides={}){
   const seq=++__SEQ;
@@ -627,22 +707,52 @@ function showError(msg){
 /* ===================== KPIs ===================== */
 function renderKpisBelow(container){
   if(!container || !container.parentNode) return;
-  const answered = Object.keys(S.answers).length;
-  let correct = 0;
-  for(const [i,v] of Object.entries(S.answers)){
-    const idx = +i;
-    if(S.qs[idx] && S.qs[idx]._correct === v) correct++;
-  }
-  const marked = Object.values(S.marked||{}).filter(Boolean).length;
-  const pct = answered ? Math.round((correct/answered)*100) : 0;
+  const { answered, correct, marked, pct } = getQuizStats();
 
   const old = document.getElementById('kpis-under-quiz');
   if(old && old.parentNode) old.parentNode.removeChild(old);
   const host = h('section',{id:'kpis-under-quiz',class:'kpis-under-quiz'});
   host.appendChild(h('div',{class:'kpi-card',html:`<h4>Respondidas</h4><div class="n" id="kA">${answered}</div>`}));
+  host.appendChild(h('div',{class:'kpi-card',html:`<h4>Aciertos</h4><div class="n" id="kC">${correct}</div>`}));
   host.appendChild(h('div',{class:'kpi-card',html:`<h4>Aciertos %</h4><div class="n" id="kP">${pct}%</div>`}));
-  host.appendChild(h('div',{class:'kpi-card',html:`<h4>Marcadas</h4><div class="n" id="kM">${marked}</div>`}));
   container.insertAdjacentElement('afterend', host);
+}
+
+/* ===================== Render panel últimos intentos ===================== */
+function renderRecentResultsPanel(side){
+  const recent = getRecentResults();
+  if(!recent.length) return;
+  const panel = h('div',{class:'panel'});
+  panel.appendChild(h('h3',{html:'ÚLTIMOS INTENTOS'}));
+
+  const ul = h('ul',{class:'recent-results'});
+  recent.forEach(r=>{
+    const cfg = QUIZZES[r.quizId] || {};
+    const examLabel = cfg.certi || r.quizId || 'Simulador';
+    const li = h('li');
+    const lineMain = h('div',{class:'line-main'});
+    const left = h('span',{class:'label-exam',html:examLabel});
+    const pctCls = ['pct', r.pct>=70?'pass':'fail'].join(' ');
+    const right = h('span',{class:pctCls,html:`${r.pct}%`});
+    lineMain.appendChild(left);
+    lineMain.appendChild(right);
+
+    const mins = Math.round((r.durationSec||0)/60);
+    const timeStr = mins ? `${mins} min` : `${fmtTime(r.durationSec||0)} min`;
+    let dateStr='';
+    try{
+      dateStr = new Date(r.ts).toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit'});
+    }catch{
+      dateStr='';
+    }
+    const sub = h('div',{class:'line-sub',html:`${timeStr}${dateStr?` • ${dateStr}`:''}`});
+    li.appendChild(lineMain);
+    li.appendChild(sub);
+    ul.appendChild(li);
+  });
+
+  panel.appendChild(ul);
+  side.appendChild(panel);
 }
 
 /* ===================== Render principal ===================== */
@@ -708,6 +818,20 @@ function renderQuiz(){
   progress.appendChild(pcount);
   meta.appendChild(timer);
   meta.appendChild(progress);
+
+  // Indicador live PASS/FAIL (sobre preguntas contestadas)
+  const { pct, answered } = getQuizStats();
+  const live = h('div',{class:'live-score'});
+  if(!answered){
+    live.innerHTML = 'Estimación: —';
+  }else{
+    const passCut = 70;
+    const status = pct >= passCut ? 'PASS' : 'FAIL';
+    const cls = pct >= passCut ? 'score-pill pass' : 'score-pill fail';
+    live.innerHTML = `Estimación: <span class="${cls}">${pct}% · ${status}</span>`;
+  }
+  meta.appendChild(live);
+
   head.appendChild(meta);
   qCard.appendChild(head);
 
@@ -716,8 +840,8 @@ function renderQuiz(){
   if(!q){
     qCard.appendChild(h('div',{html:'No hay preguntas que mostrar.'}));
   }else{
-    const pct=Math.round((S.idx/Math.max(1,S.qs.length))*100);
-    fill.style.width=`${pct}%`;
+    const pctProg=Math.round((S.idx/Math.max(1,S.qs.length))*100);
+    fill.style.width=`${pctProg}%`;
     const domLabel = (q.category||'general') + (q.domain?` (${String(q.domain).toLowerCase()})`:``);
     qCard.appendChild(h('div',{class:'domain',html:`<i class="dot"></i><span>${domLabel}</span>`}));
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${S.idx+1}.</b> ${q.question}`}));
@@ -816,11 +940,11 @@ function renderQuiz(){
   // Sidebar
   const side=h('div',{class:'side'});
 
-  // Panel acciones (solo botón Terminar)
+  // Panel acciones (solo botón Terminar => muestra resumen)
   const pBtns=h('div',{class:'panel'});
   const actions=h('div',{class:'controls centered'});
   const btnQuit=h('button',{class:'btn lg',html:'🏁 Terminar'});
-  btnQuit.onclick=()=>{ location.href='/user/profile.html'; };
+  btnQuit.onclick=()=>{ finish(); };
   actions.appendChild(btnQuit);
   pBtns.appendChild(actions);
   side.appendChild(pBtns);
@@ -850,6 +974,9 @@ function renderQuiz(){
   });
   pList.appendChild(dots);
   side.appendChild(pList);
+
+  // Panel últimos intentos
+  renderRecentResultsPanel(side);
 
   shell.appendChild(qCard);
   shell.appendChild(side);
@@ -1007,6 +1134,94 @@ async function postSessionToProgress(payload){
   return { ok:false, error:"All progress send modes failed" };
 }
 
+/* ===================== Resumen final ===================== */
+function renderSummaryView(result){
+  const root = document.getElementById('view');
+  if(!root) return;
+  root.innerHTML = '';
+
+  const wrap = h('section',{class:'card'});
+
+  const header = h('div',{class:'summary-header'});
+  const cfg = QUIZZES[result.quizId] || QUIZZES[S.quizId] || {};
+  const titleText = cfg.certi || S.certi || 'Simulador';
+  const titleEl = h('div',{class:'title',html:titleText.toUpperCase()});
+  header.appendChild(titleEl);
+
+  const status = result.pct >= 70 ? 'PASS' : 'FAIL';
+  const circle = h('div',{class:`summary-circle ${status==='PASS'?'pass':'fail'}`});
+  circle.innerHTML = `${result.pct || 0}%`;
+  header.appendChild(circle);
+
+  const meta = h('div',{class:'summary-meta'});
+  const mins = Math.round((result.durationSec || 0)/60);
+  meta.innerHTML = `
+    <span>${result.correct}/${result.total} correctas</span>
+    <span>${mins || 1} min aprox.</span>
+    <span>${status}</span>
+  `;
+  header.appendChild(meta);
+
+  wrap.appendChild(header);
+
+  // Aciertos por dominio
+  const domStats = computeDomainStats();
+  const domKeys = Object.keys(domStats);
+  if(domKeys.length){
+    const secDom = h('section',{class:'summary-section'});
+    secDom.appendChild(h('h3',{html:'Aciertos por dominio'}));
+    const table = document.createElement('table');
+    table.className = 'domain-table';
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Dominio</th><th>Correctas</th><th>%</th></tr>';
+    table.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    domKeys.forEach(k=>{
+      const d = domStats[k];
+      const pctDom = d.answered ? Math.round((d.correct/d.answered)*100) : 0;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${k}</td><td>${d.correct}/${d.answered || d.total}</td><td>${pctDom}%</td>`;
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    secDom.appendChild(table);
+    wrap.appendChild(secDom);
+  }
+
+  // Preguntas marcadas
+  const markedIdx = Object.entries(S.marked||{})
+    .filter(([,v])=>v)
+    .map(([i])=>+i);
+  if(markedIdx.length){
+    const secMark = h('section',{class:'summary-section'});
+    secMark.appendChild(h('h3',{html:'Preguntas que marcaste'}));
+    const ul = document.createElement('ul');
+    markedIdx.forEach(idx=>{
+      const q = S.qs[idx];
+      const answered = typeof S.answers[idx]!=='undefined';
+      const li = document.createElement('li');
+      const text = (q && q.question) ? q.question : '';
+      const short = text.length > 140 ? text.slice(0,140)+'…' : text;
+      li.innerHTML = `<b>${idx+1}.</b> ${short} <small>(${answered?'respondida':'sin responder'})</small>`;
+      ul.appendChild(li);
+    });
+    secMark.appendChild(ul);
+    wrap.appendChild(secMark);
+  }
+
+  // Botones acción
+  const actions = h('div',{class:'controls centered'});
+  const btnPanel = h('button',{class:'btn lg primary',html:'Ir a mi panel'});
+  btnPanel.onclick = ()=>{ location.href = '/user/profile.html'; };
+  const btnRetry = h('button',{class:'btn lg',html:'Repetir simulador'});
+  btnRetry.onclick = ()=>{ start(S.quizId); };
+  actions.appendChild(btnPanel);
+  actions.appendChild(btnRetry);
+  wrap.appendChild(actions);
+
+  root.appendChild(wrap);
+}
+
 /* ===================== Finalizar ===================== */
 async function finish(){
   if(hasPendingMarked()){
@@ -1048,7 +1263,7 @@ async function finish(){
     });
   }
 
-  // Guardar (esperamos un corto máximo y luego redirigimos sí o sí)
+  // Guardar (intentamos pero no bloqueamos demasiado)
   await Promise.race([
     (async()=>{
       await postSessionToProgress(sessionPayload);
@@ -1057,8 +1272,9 @@ async function finish(){
     new Promise(res=>setTimeout(res, 1500))
   ]);
 
-  // Redirección inmediata tras intentar guardar
-  location.href = '/user/profile.html';
+  // Guardar en historial local y mostrar resumen (ya no redirigimos directo)
+  pushRecentResult(resultPayload);
+  renderSummaryView(resultPayload);
 }
 
 /* ===================== Hotkeys ===================== */
@@ -1069,6 +1285,9 @@ function enableHotkeys(){
   window.addEventListener('keydown', ev=>{
     const tag=(ev.target.tagName||'').toLowerCase();
     if(tag==='input'||tag==='textarea'||tag==='select'||ev.metaKey||ev.ctrlKey) return;
+
+    // Si ya está finalizado, no hacemos nada con las teclas
+    if(S.finished) return;
 
     if(ev.key==='n'||ev.key==='N'){
       ev.preventDefault();
