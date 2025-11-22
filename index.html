@@ -119,6 +119,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       .pill-btn{min-width:82px;height:32px;padding:0 10px}
       .btn{height:36px}
       .hello{display:none}
+      /* centrar botones login/perfil en móvil */
+      header .authwrap{
+        margin:8px auto 6px;
+        justify-content:center;
+        flex-wrap:wrap;
+      }
     }
 
     .hero{padding:16px 0 4px;text-align:center}
@@ -184,7 +190,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .p-ico{ width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 6px 14px rgba(80,90,240,.25); font-size:20px; flex:0 0 36px; }
     .pitch-card h3{ margin:0; font-size:1.02rem; }
     .pitch-card p{ margin:6px 0 0; color:var(--muted); }
-    .hook-ctas{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; } /* vacío */
+    .hook-ctas{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
 
     .pill-btn.big{ background:linear-gradient(180deg,#7a67ff,#5f48ff); border:1px solid #3b2fff44; }
     .pill-btn.big:hover{ background:linear-gradient(180deg,#8a78ff,#6b54ff); transform:translateY(-1px); }
@@ -295,7 +301,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .plan-table th{font-weight:800;color:#cfe1ff;background:rgba(21,27,53,.8);position:sticky;top:0}
     .plan-tag{display:inline-block;margin-top:4px;padding:2px 6px;border-radius:999px;font-size:.72rem;font-weight:800;background:rgba(108,139,255,.16);border:1px solid rgba(108,139,255,.4);color:#cfe1ff}
 
-    /* Sección SEO (sustituye al glosario) */
+    /* Sección SEO */
     .seo-section{
       padding-top:12px;
     }
@@ -644,6 +650,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     <section class="hook" aria-labelledby="hook-title">
       <div class="container">
         <h2 id="hook-title" class="sec-title">Certifícate y gana competitividad</h2>
+        <p class="hook-sub">
+          ITHub.es está pensado para que no sólo memorices preguntas, sino que <b>entiendas el temario</b> y puedas aplicarlo en tu trabajo diario.
+        </p>
         <div class="hook-badges" aria-hidden="true">
           <span>+3.000 preguntas</span><span>Resúmenes por dominio</span><span>Enlaces oficiales</span><span>Ranking e insignias</span>
         </div>
@@ -665,7 +674,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <p>Certifícate, suma puntos en el ranking y demuestra tu progreso a tu equipo.</p>
           </article>
         </div>
-        <div class="hook-ctas" role="group" aria-label="Acciones destacadas"></div>
       </div>
     </section>
 
@@ -673,6 +681,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     <section class="study-how" aria-labelledby="study-how-title">
       <div class="container">
         <h2 id="study-how-title" class="sec-title">Cómo estudiar con ITHub.es</h2>
+        <p class="study-sub">
+          No hace falta que te inventes un método desde cero. Sigue estos pasos para aprovechar al máximo los simuladores y el contenido:
+        </p>
         <div class="study-grid" role="list">
           <article class="study-card" role="listitem">
             <h3>1. Lee el resumen del dominio</h3>
@@ -755,9 +766,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
               <br>Empieza con los <b>simuladores</b> para aprender cada dominio del examen con <b>explicaciones</b> y enlaces oficiales.
               Estamos preparando el juego <b>Arena Battle</b>: <b>quizzes relámpago</b> para ganar agilidad.
             </p>
-            <div class="cta-row" role="group" aria-label="Acciones de entrenamiento">
-              <!-- sin botones extra -->
-            </div>
             <p class="note">Consejo: alterna sesiones cortas de preguntas con repasos rápidos de conceptos para fijar vocabulario.</p>
           </div>
           <div class="right" aria-label="Cómo se complementan simulación y gamificación">
@@ -786,14 +794,14 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-    <!-- Sección SEO en lugar de glosario -->
+    <!-- Sección SEO -->
     <section class="seo-section" aria-labelledby="seo-title">
       <div class="container">
         <div class="seo-inner">
           <div class="seo-header">
             <div>
               <div class="seo-tag">para qué sirve ithub.es</div>
-              <h2 id="seo-title" class="sec-title">Simuladores de exámenes IT CLOUD en español</h2>
+              <h2 id="seo-title" class="sec-title">Simuladores de exámenes IT en español para Azure y AWS</h2>
             </div>
             <div class="seo-pills" aria-hidden="true">
               <span class="seo-pill">💬 Español</span>
@@ -896,11 +904,61 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     </section>
   </main>
 
-   <!-- Inicio Footer --> 
-<link rel="stylesheet" href="/css/footer.css">
-<div id="global-footer"></div>
-<script src="/includes/footer.js"></script>
-<!-- Fin Footer --> 
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHUB.ES</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
+      </div>
+
+      <div>
+        <div style="font-weight:800">COMUNIDAD</div>
+        <div><a href="/faqs/faqs.html">FAQS</a></div>
+        <div><a href="/who/acercade.html">NOSOTROS</a></div>
+        <div><a href="/comunidad/colabora.html">COLABORA</a></div>
+      </div>
+
+      <div>
+        <div style="font-weight:800">CONTENIDOS</div>
+        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
+        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
+        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+      </div>
+
+      <div>
+        <div style="font-weight:800">SPONSOR</div>
+        <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
+
+        <div style="font-weight:800">CONTACTANOS</div>
+
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+          <button id="footerContactBtn" type="button"
+                  style="background:none;border:none;color:#cfe1ff;
+                         font-weight:800;display:inline-flex;align-items:center;
+                         cursor:pointer;padding:0;">
+            <span style="font-size:22px;line-height:1;">💬</span>
+          </button>
+
+          <a href="https://www.linkedin.com/in/certificacionesithub/"
+             target="_blank" rel="noopener"
+             aria-label="Perfil de LinkedIn de ITHub.es"
+             style="display:inline-flex;align-items:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2" />
+              <rect x="6" y="9" width="2" height="7" fill="#FFFFFF" />
+              <circle cx="7" cy="7" r="1.2" fill="#FFFFFF" />
+              <path d="M11 9h2v1h0.03C13.3 9.3 14 8.9 15 8.9c2 0 2.5 1.3 2.5 3v4.1h-2v-3.6
+                       c0-.9-.1-1.9-1.2-1.9-1.1 0-1.3.9-1.3 1.9v3.6h-2V9z" fill="#FFFFFF" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <!-- Modal Feedback -->
   <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
@@ -1091,8 +1149,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
   });
 
-  // Submenús (mobile)
-  (function(){
+  // Submenús (mobile) – ahora como función reutilizable
+  function initSubmenus(){
     const triggers = document.querySelectorAll('.has-sub-trigger');
     if (!triggers.length) return;
 
@@ -1134,7 +1192,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         }
       });
     });
-  })();
+  }
   </script>
 
   <script>
@@ -1144,9 +1202,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         document.getElementById('site-header').innerHTML = html;
         renderHeaderAuth();
         attachHeaderEvents();
-        if (typeof initSubmenus === 'function') {
-          initSubmenus();
-        }
+        // inicializa submenús una vez el header está en el DOM
+        initSubmenus();
       });
   </script>
 
