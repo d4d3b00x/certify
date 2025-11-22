@@ -456,6 +456,50 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     footer .brand{display:flex;align-items:center;gap:10px;font-weight:900}
     footer .logo-pill{display:inline-block}
     footer .container:last-child{margin-top:12px;font-size:12px}
+
+
+.exam-sections {
+  display: grid;
+  gap: 10px;
+}
+
+/* Tarjeta principal */
+.exam-card {
+  background: var(--surface2, #151b31);
+  border-radius: 14px;
+  border: 1px solid var(--stroke, #283056);
+  padding: 14px 16px;
+  color: var(--ink, #e8ecff);
+  font-family: Inter, ui-sans-serif, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  box-shadow: 0 10px 24px rgba(6, 12, 40, 0.45);
+}
+
+/* Título de la tarjeta */
+.exam-card-title {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Lista interior */
+.exam-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink, #e8ecff);
+}
+
+.exam-list li {
+  margin-bottom: 4px;
+}
+
+.exam-list b {
+  font-weight: 800;
+}
+
   </style>
 </head>
 <body>
@@ -572,26 +616,29 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           </div>
         </div>
 
-        <div class="block">
-          <h3>CONSEJOS PARA EXAMINARTE</h3>
-          <div class="muted">
-            • Practica con nuestros simuladores ≥ <b>75–80%</b> antes del examen.<br>
-            • Revisa <b>políticas de reintento</b> y <b>precio</b> de tu país antes de reservar.<br>
-            • Si ya trabajas con Azure, pasa directo a <b>AZ-104</b> o <b>AZ-305</b>.
-          </div>
-        </div>
+       <div class="exam-sections">
+  <!-- CONSEJOS PARA EXAMINARTE -->
+  <section class="exam-card">
+    <h3 class="exam-card-title">CONSEJOS PARA EXAMINARTE</h3>
+    <ul class="exam-list">
+      <li>Practica con nuestros simuladores ≥ <b>75–80%</b> antes del examen.</li>
+      <li>Revisa <b>políticas de reintento</b> y <b>precio</b> de tu país antes de reservar.</li>
+      <li>Si ya trabajas con Azure, pasa directo a <b>AZ-104</b> o <b>AZ-305</b>.</li>
+    </ul>
+  </section>
 
-        <!-- Checklist exprés (se mantiene) -->
-        <div class="block">
-          <h3>Checklist pre-examen (exprés)</h3>
-          <ul class="tight-list">
-            <li>Revisar <b>objetivos oficiales</b> del examen.</li>
-            <li>Hacer un <b>simulacro completo</b> el día anterior (timed).</li>
-            <li>Repasar <b>áreas flojas</b> (3–5 topics) y notas rápidas.</li>
-            <li>Verificar <b>documentación</b> válida para el registro.</li>
-            <li>Plan de tiempo: marca dudas y sigue avanzando.</li>
-          </ul>
-        </div>
+  <!-- Checklist pre-examen -->
+  <section class="exam-card">
+    <h3 class="exam-card-title">Checklist pre-examen</h3>
+    <ul class="exam-list">
+      <li>Revisar <b>objetivos oficiales</b> del examen.</li>
+      <li>Hacer un <b>simulacro completo</b> el día anterior (timed).</li>
+      <li>Repasar <b>áreas flojas</b> (3–5 topics) y notas rápidas.</li>
+      <li>Verificar <b>documentación</b> válida para el registro.</li>
+      <li>Plan de tiempo: marca dudas y sigue avanzando.</li>
+    </ul>
+  </section>
+</div>
 
         <div class="block">
           <h3>¿ALGUNA SUGERENCIA?</h3>
