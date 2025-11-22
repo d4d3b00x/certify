@@ -147,6 +147,30 @@ const QUIZZES = {
 
   .expl{ border:1px dashed var(--stroke); border-radius:12px; padding:12px; margin-top:12px; background:var(--surface); }
   .expl .ttl{ font-weight:900; margin-bottom:8px; }
+
+  /* Feedback compacto y explicación desplegable */
+  .expl-compact{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .expl-compact.ok{
+    border-color:var(--ok);
+    background:var(--ok-bg);
+    color:var(--ok-ink);
+  }
+  .expl-compact.bad{
+    border-color:var(--bad);
+    background:var(--bad-bg);
+    color:var(--bad-ink);
+  }
+  .expl-full{
+    margin-top:10px;
+  }
+  .expl-hidden{
+    display:none;
+  }
+
   .refs{ margin-top:10px; background:var(--surface2); border:1px solid var(--stroke);
          border-radius:12px; padding:12px; }
   .refs h4{ margin:0 0 8px; font-size:.96rem; color:#cbd6ff; font-weight:900; }
@@ -157,6 +181,7 @@ const QUIZZES = {
   .controls.centered{ justify-content:center; }
   .btn{ appearance:none; border:1px solid var(--stroke); border-radius:12px; padding:12px 16px; font-weight:900; cursor:pointer; background:transparent; color:var(--ink); }
   .btn.lg{ padding:14px 20px; font-size:1.02rem; }
+  .btn-sm{ padding:8px 12px; font-size:.88rem; }
   .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#fff; border-color:transparent; }
   .btn:disabled{ opacity:.6; filter:grayscale(.2); cursor:not-allowed; }
 
@@ -822,6 +847,7 @@ function renderQuiz(){
 
   const q=S.qs[S.idx];
   let expBox = null;
+
   if(!q){
     qCard.appendChild(h('div',{html:'No hay preguntas que mostrar.'}));
   }else{
@@ -831,6 +857,7 @@ function renderQuiz(){
     qCard.appendChild(h('div',{class:'domain',html:`<i class="dot"></i><span>${domLabel}</span>`}));
     qCard.appendChild(h('h2',{class:'quiz-question',html:`<b>${S.idx+1}.</b> ${q.question}`}));
 
+    // Opciones
     (q._options||[]).forEach((txt,i)=>{
       const chosen=S.answers[S.idx];
       const selected=chosen===i;
@@ -845,18 +872,56 @@ function renderQuiz(){
     });
 
     const chosen=S.answers[S.idx];
-    if(typeof chosen!=='undefined' && S.prefs.explanations==='after'){
-      expBox=h('div',{class:'expl'});
-      const correctLetter=String.fromCharCode(65+(q._correct ?? 0));
-      expBox.innerHTML=`<div class="ttl">Respuesta correcta: <b>${correctLetter}</b></div><div>${q.explanationRich||q.explanation||''}</div>`;
 
+    // Si ya ha respondido, mostramos feedback compacto + botón para explicación
+    if(typeof chosen!=='undefined'){
+      const isCorrect = (q._correct === chosen);
+      const correctLetter = String.fromCharCode(65 + (q._correct ?? 0));
+
+      const compactCls = ['expl','expl-compact', isCorrect ? 'ok' : 'bad'].join(' ');
+      const compact = h('div',{ class: compactCls });
+
+      const msg = isCorrect
+        ? '¡Respuesta correcta! ✅'
+        : 'Respuesta incorrecta ❌';
+
+      compact.appendChild(
+        h('div',{ class:'ttl', html: msg })
+      );
+      compact.appendChild(
+        h('div',{ html: `Respuesta correcta: <b>${correctLetter}</b>` })
+      );
+
+      const toggleBtn = h('button',{
+        class:'btn btn-sm expl-toggle',
+        html:'Ver explicación'
+      });
+      compact.appendChild(toggleBtn);
+      qCard.appendChild(compact);
+
+      // Explicación larga (desplegable)
+      expBox = h('div',{
+        class:'expl expl-full expl-hidden'
+      });
+
+      const explText = q.explanationRich || q.explanation || '';
+      expBox.appendChild(
+        h('div',{ class:'ttl', html:'Explicación detallada' })
+      );
+      expBox.appendChild(
+        h('div',{ html: explText || 'Sin explicación adicional para esta pregunta.' })
+      );
+
+      // Por qué las otras son incorrectas
       if (Array.isArray(q._perOption) && q._perOption.length === (q._options||[]).length) {
         const others = q._perOption
           .map((txt,i)=>({i,txt:stripLetterPrefix(txt)}))
           .filter(x=>x.i!==q._correct);
         if (others.length){
-          const ul = h('ul',{class:'why-list'});
-          expBox.appendChild(h('div',{class:'ttl',html:'Por qué las otras son incorrectas:'}));
+          expBox.appendChild(
+            h('div',{ class:'ttl', html:'Por qué las otras son incorrectas:' })
+          );
+          const ul = h('ul',{ class:'why-list' });
           others.forEach(({i,txt})=>{
             const li = document.createElement('li');
             const letter = String.fromCharCode(65+i);
@@ -869,7 +934,17 @@ function renderQuiz(){
 
       const linksBox = renderLinksBox(q.links);
       if(linksBox) expBox.appendChild(linksBox);
+
       qCard.appendChild(expBox);
+
+      // Toggle explicación
+      toggleBtn.onclick = () => {
+        const hidden = expBox.classList.toggle('expl-hidden'); // true si queda oculta
+        toggleBtn.innerHTML = hidden ? 'Ver explicación' : 'Ocultar explicación';
+        if (!hidden){
+          smartScrollTo(expBox, 'start');
+        }
+      };
     }
   }
 
