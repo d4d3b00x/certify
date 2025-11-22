@@ -15,42 +15,179 @@
   <meta name="theme-color" content="#0f1320" />
 
   <title>AZ-305: Simulador y guía de estudio — Azure Solutions Architect | ITHub</title>
-<meta name="description" content="Portada de la certificación AZ-305: consejos de estudio, simulador por dominios, conceptos clave y enlaces a artículos para diseñar arquitecturas seguras y resilientes en Azure." />
-<link rel="canonical" href="https://www.ithub.es/certification/microsoft-azure/az-305/lz-azure-az-305.html" />
-<meta name="robots" content="index,follow" />
+  <meta name="description" content="Portada de la certificación AZ-305: consejos de estudio, simulador por dominios, conceptos clave y enlaces a artículos para diseñar arquitecturas seguras y resilientes en Azure." />
+  <link rel="canonical" href="https://www.ithub.es/certification/microsoft-azure/az-305/lz-azure-az-305.html" />
+  <meta name="robots" content="index,follow" />
 
-<meta property="og:title" content="AZ-305: Simulador y guía de estudio — Azure Solutions Architect" />
-<meta property="og:description" content="Accede al simulador AZ-305 y a los conceptos a examen para arquitecturas de Azure: identidad, red, HA/DR, seguridad y supervisión." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.ithub.es/certification/microsoft-azure/az-305/lz-azure-az-305.html" />
-<meta property="og:site_name" content="ITHub.es" />
-    <link rel="icon" type="image/svg+xml" 
+  <meta property="og:title" content="AZ-305: Simulador y guía de estudio — Azure Solutions Architect" />
+  <meta property="og:description" content="Accede al simulador AZ-305 y a los conceptos a examen para arquitecturas de Azure: identidad, red, HA/DR, seguridad y supervisión." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/certification/microsoft-azure/az-305/lz-azure-az-305.html" />
+  <meta property="og:site_name" content="ITHub.es" />
+  <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
 
   <style>
-    :root{ --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;--stroke:#283056;--azure:#0078d4;--radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);--cta:linear-gradient(180deg,#76c7ff,#0078d4); }
+    :root{
+      --bg:#0f1320;--surface:#161b2d;--surface2:#1b2140;--ink:#e8ecff;--muted:#9ca8d9;
+      --stroke:#283056;--azure:#0078d4;--radius:14px;--shadow:0 12px 28px rgba(6,12,40,.45);
+      --cta:linear-gradient(180deg,#76c7ff,#0078d4);
+
+      /* Header global ITHub */
+      --brand:#6c8bff;
+      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
+      --pill-ring:#2a3150;
+      --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
+      --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
+    }
     *{box-sizing:border-box}
-    body{ margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; color:var(--ink); background: radial-gradient(900px 420px at 90% -10%,rgba(0,120,212,.14),transparent 60%), radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.10),transparent 60%), var(--bg); line-height:1.6;overflow-x:hidden; }
+    body{
+      margin:0;font-family:Inter,ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(900px 420px at 90% -10%,rgba(0,120,212,.14),transparent 60%),
+        radial-gradient(800px 400px at 10% 0%,rgba(0,120,212,.10),transparent 60%),
+        var(--bg);
+      line-height:1.6;overflow-x:hidden;
+    }
     a{color:inherit;text-decoration:none}
     .container{max-width:1160px;margin:0 auto;padding:0 20px}
 
-    /* HEADER */
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px); background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
+    /* HEADER (estilos usados por /includes/header.html) */
+    header{
+      position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));
+      border-bottom:1px solid var(--stroke);
+    }
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:16px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
-    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
-    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150;border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
-    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:100px;min-height:44px;height:34px;padding:0 14px;border-radius:12px;border:1px solid #0078d455;background:var(--cta); color:#0b1930; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase;}
-    .pill-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
+    nav.menu .link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
+    nav.menu .link-btn:hover{border-color:#2a3150;color:var(--ink)}
+
+    .authwrap{
+      display:flex;align-items:center;gap:6px;
+      background:var(--pill-bg);
+      border:1px solid var(--pill-ring);
+      border-radius:999px;
+      padding:4px;
+      box-shadow:0 6px 18px rgba(5,10,30,.35);
+      max-height:44px;
+    }
+    .hello{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      color:#cbd3ff;
+      font-weight:800;
+      padding:4px 8px;
+      font-size:12px;
+    }
+    .pill-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:100px;
+      min-height:44px;
+      height:34px;
+      padding:0 14px;
+      border-radius:12px;
+      border:1px solid #3b2fff44;
+      background:var(--pill-btn-bg);
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      transition:transform .08s, background .12s;
+      font-size:13px;
+      text-transform:uppercase;
+    }
+    .pill-btn:hover{
+      background:var(--pill-btn-bg-hover);
+      transform:translateY(-1px);
+    }
+    @media (max-width:720px){
+      nav.menu{gap:8px}
+      nav.menu .link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}
+      .pill-btn{min-width:82px;height:32px;padding:0 10px}
+      .hello{display:none}
+    }
+
+    /* NAV DESPLEGABLE (para submenús del header) */
+    .menu-has-sub { gap: 6px; }
+    .menu-group { position: relative; display: flex; align-items: center; }
+    .has-sub-trigger { position: relative; padding-right: 18px; }
+    .has-sub-trigger .caret { font-size: 0.7rem; opacity: 0.7; margin-left: 4px; }
+    .menu-group .submenu {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      min-width: 220px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, #141b3a, #101631);
+      box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 60;
+    }
+    .menu-group .submenu a {
+      display: block;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .menu-group .submenu a:hover {
+      background: rgba(108, 139, 255, 0.18);
+      color: var(--ink);
+      border-radius: 8px;
+    }
+    .submenu-title {
+      margin-top: 6px;
+      margin-bottom: 2px;
+      padding: 2px 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #cfe1ff;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+    .submenu.open { display: flex; }
+    @media (min-width: 721px) {
+      .menu-group:hover > .submenu,
+      .menu-group:focus-within > .submenu {
+        display: flex;
+      }
+    }
+    @media (max-width: 720px) {
+      .menu { flex-wrap: wrap; }
+      .menu-group { flex-direction: column; align-items: flex-start; }
+      .menu-group .submenu {
+        position: static;
+        margin-top: 4px;
+        width: 100%;
+        box-shadow: 0 6px 16px rgba(5,10,30,.35);
+        display: none;
+      }
+      .menu-group .submenu.open { display: flex; }
+    }
 
     /* HERO */
     .hero{padding:22px 0 8px}
-    .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:900;color:#cfe1ff;background:rgba(0,120,212,.15); border:1px solid rgba(0,120,212,.45);border-radius:999px;padding:6px 10px}
+    .hero .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;font-weight:900;color:#cfe1ff;
+      background:rgba(0,120,212,.15);
+      border:1px solid rgba(0,120,212,.45);
+      border-radius:999px;padding:6px 10px
+    }
     .hero h1{margin:10px 0 10px;font-size:clamp(1.7rem,3.8vw,2.6rem);line-height:1.2}
     .hero p{color:var(--muted);max-width:900px}
 
@@ -60,15 +197,27 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .kpi .num{font-weight:900;font-size:1.12rem}
 
     /* Tabs */
-    .tabbar{display:flex;gap:12px;margin-top:8px}
-    .tab-btn{ display:inline-flex;align-items:center;gap:10px;justify-content:center; min-height:44px;padding:10px 16px;border-radius:12px;font-weight:900;cursor:pointer; border:1px solid #2a3150;background:transparent;color:#e8ecff; }
-    .tab-btn.active{background:var(--cta);border-color:transparent;color:#0b1930;box-shadow:0 10px 22px rgba(0,120,212,.22)}
+    .tabbar{display:flex;gap:12px;margin-top:8px;flex-wrap:wrap}
+    .tab-btn{
+      display:inline-flex;align-items:center;gap:10px;justify-content:center;
+      min-height:44px;padding:10px 16px;border-radius:12px;font-weight:900;cursor:pointer;
+      border:1px solid #2a3150;background:transparent;color:#e8ecff;
+    }
+    .tab-btn.active{
+      background:var(--cta);border-color:transparent;color:#0b1930;
+      box-shadow:0 10px 22px rgba(0,120,212,.22)
+    }
 
     /* Guía de estudio (base) */
     #studyGuide{display:none;margin-top:14px}
     #studyGuide.open{display:block}
     .muted{color:var(--muted)}
-    .card{background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+    .card{
+      background:linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid var(--stroke);
+      border-radius:14px;padding:14px;
+      box-shadow:var(--shadow)
+    }
 
     /* DOMINIOS & SIMULADOR */
     .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
@@ -89,13 +238,26 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .segmented label{flex:1;text-align:center;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:800}
     .segmented input:checked + label{background:#0f1630;border:1px solid #4c66c9}
     #startBtn{background:#0078d4;color:#0b0f22;border-color:transparent;box-shadow:0 10px 24px rgba(0,120,212,.35)}
-    #startBtn.locked{ background:linear-gradient(180deg,#6fa4ff,#355ff6); color:#fff; border:1px solid rgba(71,103,220,.6); box-shadow:0 12px 26px rgba(53,95,246,.35); }
-    #startBtn.locked .lock{ display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:5px;background:linear-gradient(180deg,#ffd699,#ff9900);color:#111;font-weight:900;box-shadow:0 0 0 3px rgba(255,153,0,.18);font-size:12px; }
+    #startBtn.locked{
+      background:linear-gradient(180deg,#6fa4ff,#355ff6);
+      color:#fff;
+      border:1px solid rgba(71,103,220,.6);
+      box-shadow:0 12px 26px rgba(53,95,246,.35);
+    }
+    #startBtn.locked .lock{
+      display:inline-grid;place-items:center;width:18px;height:18px;margin-right:8px;border-radius:5px;
+      background:linear-gradient(180deg,#ffd699,#ff9900);color:#111;font-weight:900;
+      box-shadow:0 0 0 3px rgba(255,153,0,.18);font-size:12px;
+    }
 
-    #infoDom{margin-top:16px;background:linear-gradient(180deg,#111937,#0f1633);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:none}
+    #infoDom{
+      margin-top:16px;background:linear-gradient(180deg,#111937,#0f1633);
+      border:1px solid var(--stroke);border-radius:14px;padding:18px;
+      box-shadow:var(--shadow);display:none
+    }
     .info-empty{color:var(--muted);border:1px dashed var(--stroke);padding:12px;border-radius:10px;background:#0f1630}
 
-    /* Modal resultados (NUEVA) */
+    /* Modal resultados */
     .modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:120;padding:16px}
     .modal.show{display:flex}
     .modal-card{width:min(860px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
@@ -123,13 +285,18 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .btn-primary{background:var(--cta);border:1px solid #2a3150;color:#0b1930;border-radius:10px;min-height:40px;padding:0 12px;font-weight:900;cursor:pointer}
     .diag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
     @media(max-width:640px){.diag-grid{grid-template-columns:1fr}}
+
     /* FOOTER */
-    footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2));margin-top:22px}
+    footer{
+      border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;
+      background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2));margin-top:22px
+    }
     .f-grid{display:grid;gap:14px;align-items:flex-start}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
     footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
     .footer-spacer{height:1px}
-    /* Simulador (AZ-104 style) + tips */
+
+    /* Simulador (AZ-305 style) + tips */
     #simCard{
       position:relative;
       background:
@@ -138,56 +305,97 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       border:1px solid rgba(0,120,212,.45);
       box-shadow:0 0 0 1px rgba(55,149,229,.25) inset, 0 22px 40px rgba(0,0,0,.55);
     }
-    #simCard::after{ content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none; box-shadow:0 0 0 3px rgba(0,120,212,.25); }
-    #simTitle{ font-size:clamp(1.4rem,3.0vw,2.0rem); font-weight:900; line-height:1.2; letter-spacing:.2px; text-shadow:0 10px 28px rgba(0,120,212,.35); margin-bottom:6px; }
+    #simCard::after{
+      content:""; position:absolute; inset:-6px; border-radius:16px; pointer-events:none;
+      box-shadow:0 0 0 3px rgba(0,120,212,.25);
+    }
+    #simTitle{
+      font-size:clamp(1.4rem,3.0vw,2.0rem); font-weight:900; line-height:1.2;
+      letter-spacing:.2px; text-shadow:0 10px 28px rgba(0,120,212,.35); margin-bottom:6px;
+    }
     #simCard .segmented{ background:rgba(255,255,255,.04); border:1px solid #2a3b6d; padding:6px; }
-    #simCard .segmented input:checked + label{ background:linear-gradient(180deg,#164d86,#0e3570); border:1px solid rgba(0,120,212,.55); box-shadow:0 0 0 2px rgba(0,120,212,.30) inset; }
-    #simCard select{ background:#0f1b3a;color:var(--ink); border:1px solid #2a3b6d;border-radius:10px; padding:10px 12px;font-weight:800;min-width:84px; }
-    #simCard .chip-dom{ padding:10px 14px;border-radius:999px; border-color:#2a3b6d;background:transparent;color:#d6e5ff; box-shadow:0 2px 0 rgba(0,0,0,.12); }
-    #simCard .chip-dom.on{ background:rgba(0,120,212,.08); border-color:#3a62b3; box-shadow:0 0 0 2px rgba(0,120,212,.22) inset; }
+    #simCard .segmented input:checked + label{
+      background:linear-gradient(180deg,#164d86,#0e3570);
+      border:1px solid rgba(0,120,212,.55);
+      box-shadow:0 0 0 2px rgba(0,120,212,.30) inset;
+    }
+    #simCard select{
+      background:#0f1b3a;color:var(--ink);
+      border:1px solid #2a3b6d;border-radius:10px;
+      padding:10px 12px;font-weight:800;min-width:84px;
+    }
+    #simCard .chip-dom{
+      padding:10px 14px;border-radius:999px;
+      border-color:#2a3b6d;background:transparent;color:#d6e5ff;
+      box-shadow:0 2px 0 rgba(0,0,0,.12);
+    }
+    #simCard .chip-dom.on{
+      background:rgba(0,120,212,.08); border-color:#3a62b3;
+      box-shadow:0 0 0 2px rgba(0,120,212,.22) inset;
+    }
     #simCard .chip-dom .led{width:14px;height:14px;border:2px solid #6a78b4}
     #simCard .chip-dom.on .led{background:#0078d4;border-color:#0078d4}
-    #tips305 .pill{ display:inline-flex; align-items:center; gap:8px; font-size:.86rem; font-weight:900; letter-spacing:.2px; background:rgba(0,120,212,.16); border:1px solid rgba(0,120,212,.45); color:#d7e8ff; padding:6px 10px; border-radius:999px; margin:0 0 8px; }
+
+    /* Tips de estudio AZ-305 */
+    #tips305 .pill{
+      display:inline-flex; align-items:center; gap:8px; font-size:.86rem; font-weight:900;
+      letter-spacing:.2px; background:rgba(0,120,212,.16);
+      border:1px solid rgba(0,120,212,.45); color:#d7e8ff;
+      padding:6px 10px; border-radius:999px; margin:0 0 8px;
+    }
     #tips305 h2{ margin:10px 0 6px; text-transform:uppercase }
     #tips305 .lead{ color:var(--muted); margin:0 0 14px }
-    #tips305 .search{ display:flex; align-items:center; gap:10px; margin:8px 0 18px; background:linear-gradient(180deg,#0f1a35,#0c152b); border:1px solid var(--stroke); border-radius:12px; padding:10px 12px; box-shadow:var(--shadow); }
-    #tips305 .search input{ all:unset; flex:1; color:var(--ink); font-weight:700; letter-spacing:.2px; padding:6px 2px; }
+    #tips305 .search{
+      display:flex; align-items:center; gap:10px; margin:8px 0 18px;
+      background:linear-gradient(180deg,#0f1a35,#0c152b);
+      border:1px solid var(--stroke); border-radius:12px; padding:10px 12px;
+      box-shadow:var(--shadow);
+    }
+    #tips305 .search input{
+      all:unset; flex:1; color:var(--ink); font-weight:700; letter-spacing:.2px; padding:6px 2px;
+    }
     #tips305 .grid{ display:grid; gap:12px; grid-template-columns:repeat(4, minmax(180px, 1fr)); }
     @media (max-width:1024px){ #tips305 .grid{ grid-template-columns:repeat(3, 1fr);} }
     @media (max-width:760px){  #tips305 .grid{ grid-template-columns:repeat(2, 1fr);} }
     @media (max-width:520px){  #tips305 .grid{ grid-template-columns:1fr;} }
-    #tips305 .tile{ background:linear-gradient(180deg,#122046,#0f1c3b); border:1px solid var(--stroke); border-radius:14px; padding:14px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px; min-height:160px; transition:transform .12s ease, border-color .12s ease, background .12s ease; }
-    #tips305 .tile:hover{ transform:translateY(-2px); background:linear-gradient(180deg,#152650,#112042); border-color:#2f3c6e; }
-    #tips305 .tile h3{ margin:0; font-size:1.02rem; line-height:1.25; display:flex; align-items:center; gap:8px; }
-    #tips305 .dot{ width:12px;height:12px;border-radius:999px;background:linear-gradient(180deg,#7bd3ff,#1ea0ff); box-shadow:0 0 0 4px rgba(0,120,212,.18); flex:0 0 12px; }
+    #tips305 .tile{
+      background:linear-gradient(180deg,#122046,#0f1c3b);
+      border:1px solid var(--stroke); border-radius:14px;
+      padding:14px; box-shadow:var(--shadow);
+      display:flex; flex-direction:column; gap:10px; min-height:160px;
+      transition:transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    #tips305 .tile:hover{
+      transform:translateY(-2px);
+      background:linear-gradient(180deg,#152650,#112042);
+      border-color:#2f3c6e;
+    }
+    #tips305 .tile h3{
+      margin:0; font-size:1.02rem; line-height:1.25;
+      display:flex; align-items:center; gap:8px;
+    }
+    #tips305 .dot{
+      width:12px;height:12px;border-radius:999px;
+      background:linear-gradient(180deg,#7bd3ff,#1ea0ff);
+      box-shadow:0 0 0 4px rgba(0,120,212,.18); flex:0 0 12px;
+    }
     #tips305 .tile p{ margin:0; color:var(--muted) }
-    #tips305 .btn{ margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:6px; min-height:34px; padding:0 12px; border-radius:10px; border:1px solid #3b2fff44; background:linear-gradient(180deg,#6c8bff,#3e64ff); color:#fff; font-weight:900; text-decoration:none; filter:saturate(1); transition:filter .12s ease, transform .08s ease; }
+    #tips305 .btn{
+      margin-top:auto; align-self:flex-start; display:inline-flex; align-items:center; gap:6px;
+      min-height:34px; padding:0 12px; border-radius:10px;
+      border:1px solid #3b2fff44;
+      background:linear-gradient(180deg,#6c8bff,#3e64ff);
+      color:#fff; font-weight:900; text-decoration:none;
+      filter:saturate(1); transition:filter .12s ease, transform .08s ease;
+    }
     #tips305 .btn:hover{ filter:brightness(1.06); transform:translateY(-1px) }
     .hidden{ display:none !important; }
   </style>
 </head>
 <body>
-  <header role="banner">
-    <div class="container nav">
-      <div class="brand">
-        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-      </div>
-      <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="/">HOME</a>
-        <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
-        <a class="link-btn" href="/score/ranking.html">RANKING</a>
-      </nav>
-      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html" role="button" style="background:linear-gradient(180deg,#ffcf6a,#ff9900);color:#111">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button" style="background:linear-gradient(180deg,#ffcf6a,#ff9900);color:#111">LOGOUT</button>
-        </div>
-      </div>
-    </div>
-  </header>
+
+  <!-- Header común inyectado -->
+  <div id="site-header"></div>
 
   <main id="main">
     <!-- HERO -->
@@ -203,67 +411,68 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <button id="tabGuide" class="tab-btn" role="tab" aria-selected="false" aria-controls="studyGuide">📘 CONCEPTOS A EXAMEN</button>
         </div>
 
-<!-- ===== GUÍA DE ESTUDIO (incrustada) ===== -->
-<section id="studyGuide" aria-label="Guía de estudio AZ-305" role="tabpanel" aria-labelledby="tabGuide">
-  <div id="tips305" class="container" style="padding:0">
-    <div class="pill">TIPS DE ESTUDIO · AZ-305</div>
-    <h2 style="margin:6px 0 8px">Explora conceptos clave y abre los artículos al instante</h2>
-    <p class="lead">Pasa el ratón para ver el tip y usa el buscador para filtrar. Cada tarjeta abre un artículo de referencia del dominio AZ-305.</p>
+        <!-- ===== GUÍA DE ESTUDIO (incrustada) ===== -->
+        <section id="studyGuide" aria-label="Guía de estudio AZ-305" role="tabpanel" aria-labelledby="tabGuide">
+          <div id="tips305" class="container" style="padding:0">
+            <div class="pill">TIPS DE ESTUDIO · AZ-305</div>
+            <h2 style="margin:6px 0 8px">Explora conceptos clave y abre los artículos al instante</h2>
+            <p class="lead">Pasa el ratón para ver el tip y usa el buscador para filtrar. Cada tarjeta abre un artículo de referencia del dominio AZ-305.</p>
 
-    <label class="search" aria-label="Buscar conceptos">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M21 21l-4.2-4.2M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
-              stroke="#9fb2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <input id="tipsSearch" type="search" placeholder="Buscar (ej: RBAC, Storage, VPN, DR, Zero Trust)">
-    </label>
+            <label class="search" aria-label="Buscar conceptos">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M21 21l-4.2-4.2M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"
+                      stroke="#9fb2ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <input id="tipsSearch" type="search" placeholder="Buscar (ej: RBAC, Storage, VPN, DR, Zero Trust)">
+            </label>
 
-    <section id="tipsGrid" class="grid" aria-label="Lista de tips">
-      <!-- ====== D1 · Gobierno / Identidad / Monitorización ====== -->
-      <article class="tile" data-tags="landing zone governance policy mg caf identidad subscription">
-        <h3><span class="dot" aria-hidden="true"></span> Landing Zone</h3>
-        <p>CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura base de red.</p>
-        <a class="btn" href="/content/azure-landing-zone.html">Leer →</a>
-      </article>
+            <section id="tipsGrid" class="grid" aria-label="Lista de tips">
+              <!-- D1 · Gobierno / Identidad / Monitorización -->
+              <article class="tile" data-tags="landing zone governance policy mg caf identidad subscription">
+                <h3><span class="dot" aria-hidden="true"></span> Landing Zone</h3>
+                <p>CAF, Management Groups, suscripciones, Policy-as-Code, identidad y arquitectura base de red.</p>
+                <a class="btn" href="/content/azure-landing-zone.html">Leer →</a>
+              </article>
 
-      <!-- ====== D2 · Conectividad híbrida ====== -->
-      <article class="tile" data-tags="hybrid connectivity vpn expressroute private link dns spoke hub bgp">
-        <h3><span class="dot" aria-hidden="true"></span> Conectividad híbrida</h3>
-        <p>VPN/ER, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones HUB/SPOKE/vWAN.</p>
-        <a class="btn" href="/content/azure-hybrid-connectivity-az305.html">Leer →</a>
-      </article>
+              <!-- D2 · Conectividad híbrida -->
+              <article class="tile" data-tags="hybrid connectivity vpn expressroute private link dns spoke hub bgp">
+                <h3><span class="dot" aria-hidden="true"></span> Conectividad híbrida</h3>
+                <p>VPN/ER, BGP, Private Link/Endpoints, DNS privado, seguridad y patrones HUB/SPOKE/vWAN.</p>
+                <a class="btn" href="/content/azure-hybrid-connectivity-az305.html">Leer →</a>
+              </article>
 
-      <!-- ====== D4 · Arquitectura de red ====== -->
-      <article class="tile" data-tags="network arquitectura vnet firewall waf frontdoor appgw dns segmentación">
-        <h3><span class="dot" aria-hidden="true"></span> Arquitectura de red</h3>
-        <p>vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial.</p>
-        <a class="btn" href="/content/azure-network-architecture-az305.html">Leer →</a>
-      </article>
+              <!-- D4 · Arquitectura de red -->
+              <article class="tile" data-tags="network arquitectura vnet firewall waf frontdoor appgw dns segmentación">
+                <h3><span class="dot" aria-hidden="true"></span> Arquitectura de red</h3>
+                <p>vWAN vs Hub-Spoke, salida inspeccionada, Front Door/AppGW, segmentación y DNS empresarial.</p>
+                <a class="btn" href="/content/azure-network-architecture-az305.html">Leer →</a>
+              </article>
 
-      <!-- ====== D3 · Continuidad de negocio ====== -->
-      <article class="tile" data-tags="ha dr continuidad negocio asr geo replicacion zonas failover multi region">
-        <h3><span class="dot" aria-hidden="true"></span> Alta disponibilidad y DR</h3>
-        <p>Pares regionales, zonas, ASR, geo-replicación y estrategias de failover multi-región.</p>
-        <a class="btn" href="/content/azure-ha-dr-az305.html">Leer →</a>
-      </article>
+              <!-- D3 · Continuidad de negocio -->
+              <article class="tile" data-tags="ha dr continuidad negocio asr geo replicacion zonas failover multi region">
+                <h3><span class="dot" aria-hidden="true"></span> Alta disponibilidad y DR</h3>
+                <p>Pares regionales, zonas, ASR, geo-replicación y estrategias de failover multi-región.</p>
+                <a class="btn" href="/content/azure-ha-dr-az305.html">Leer →</a>
+              </article>
 
-      <!-- ====== NUEVO · Seguridad y Zero Trust ====== -->
-      <article class="tile" data-tags="seguridad zero trust entra rbac pim mfa conditional access nsg waf firewall defender">
-        <h3><span class="dot" aria-hidden="true"></span> Seguridad y Zero Trust</h3>
-        <p>Zero Trust, PIM/MFA/CA, NSG/Firewall/WAF, Defender y protección integral de identidades y redes.</p>
-        <a class="btn" href="/content/azure-security-zero-trust-az305.html">Leer →</a>
-      </article>
+              <!-- Seguridad y Zero Trust -->
+              <article class="tile" data-tags="seguridad zero trust entra rbac pim mfa conditional access nsg waf firewall defender">
+                <h3><span class="dot" aria-hidden="true"></span> Seguridad y Zero Trust</h3>
+                <p>Zero Trust, PIM/MFA/CA, NSG/Firewall/WAF, Defender y protección integral de identidades y redes.</p>
+                <a class="btn" href="/content/azure-security-zero-trust-az305.html">Leer →</a>
+              </article>
 
-      <!-- ====== NUEVO · Supervisión y resiliencia ====== -->
-      <article class="tile" data-tags="monitoring observabilidad azure monitor log analytics workbooks alerts autoscale resiliencia">
-        <h3><span class="dot" aria-hidden="true"></span> Supervisión y resiliencia</h3>
-        <p>Azure Monitor, Log Analytics, alertas, autoscale y patrones de continuidad operativa.</p>
-        <a class="btn" href="/content/azure-architecture-monitoring-az305.html">Leer →</a>
-      </article>
+              <!-- Supervisión y resiliencia -->
+              <article class="tile" data-tags="monitoring observabilidad azure monitor log analytics workbooks alerts autoscale resiliencia">
+                <h3><span class="dot" aria-hidden="true"></span> Supervisión y resiliencia</h3>
+                <p>Azure Monitor, Log Analytics, alertas, autoscale y patrones de continuidad operativa.</p>
+                <a class="btn" href="/content/azure-architecture-monitoring-az305.html">Leer →</a>
+              </article>
+            </section>
+          </div>
+        </section>
+      </div>
     </section>
-  </div>
-</section>
-
 
     <!-- ===== DOMINIOS & SIMULADOR ===== -->
     <section id="domsim" role="tabpanel" aria-labelledby="tabSim">
@@ -297,10 +506,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             </div>
 
             <div class="field" style="margin-top:10px">
-             <label>Preguntas</label>
-             <select id="qCount" style="border:1px solid var(--stroke);border-radius:10px;padding:8px 10px;background:var(--surface2);color:var(--ink)">
-              <option>5</option><option>10</option><option>15</option><option>30</option><option>65</option>
-            </select>
+              <label>Preguntas</label>
+              <select id="qCount" style="border:1px solid var(--stroke);border-radius:10px;padding:8px 10px;background:var(--surface2);color:var(--ink)">
+                <option>5</option><option>10</option><option>15</option><option>30</option><option>65</option>
+              </select>
             </div>
 
             <div class="field" style="margin-top:10px">
@@ -332,7 +541,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     </section>
   </main>
 
-    <!-- Pie -->
+  <!-- Pie -->
   <footer role="contentinfo">
     <div class="container f-grid">
       <div>
@@ -342,7 +551,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT  mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
-        <div>
+      <div>
         <div style="font-weight:800">SIMULADORES</div>
         <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
         <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFTAZURE AZ-305</a></div>
@@ -371,7 +580,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
   </footer>
 
-  <!-- Modal resultados (NUEVA) -->
+  <!-- Modal resultados -->
   <div class="modal" id="quizResultModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="resTitle">
     <div class="modal-card">
       <div class="res-head">
@@ -414,25 +623,49 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     document.getElementById('y').textContent = new Date().getFullYear();
 
     /* ===== AUTH helpers ===== */
-    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
+    function getCurrentUser(){
+      try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }
+      catch{ return null; }
+    }
     function isLoggedIn(){ return !!getCurrentUser(); }
 
-    /* ===== AUTH header ===== */
+    /* ===== AUTH header (para header común) ===== */
     function renderHeaderAuth(){
-      const u=getCurrentUser();
-      const login=document.getElementById('btnLogin');
-      const signup=document.getElementById('btnSignup');
-      const userArea=document.getElementById('userArea');
-      const nameTop=document.getElementById('userNameTop');
-      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+      const u = getCurrentUser();
+      const login   = document.getElementById('btnLogin');
+      const signup  = document.getElementById('btnSignup');
+      const userArea= document.getElementById('userArea');
+      const nameTop = document.getElementById('userNameTop');
+
+      // Si el header aún no está inyectado, no hacemos nada
+      if(!login || !signup) return;
+
+      if(u){
+        login.style.display='none';
+        signup.style.display='none';
+        if(userArea){
+          userArea.style.display='flex';
+          if(nameTop){
+            nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+          }
+        }
+      }else{
+        login.style.display='inline-flex';
+        signup.style.display='inline-flex';
+        if(userArea){ userArea.style.display='none'; }
+      }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{
-      localStorage.removeItem('currentUser');
-      renderHeaderAuth();
-      renderStartButton();
-    });
-    renderHeaderAuth();
+
+    function localLogoutHook(){
+      const btnLogout = document.getElementById('btnLogout');
+      if(btnLogout){
+        btnLogout.addEventListener('click', ()=>{
+          localStorage.removeItem('currentUser');
+          renderHeaderAuth();
+          renderStartButton();
+        });
+      }
+    }
 
     /* ===== Tabs ===== */
     const tabSim   = document.getElementById('tabSim');
@@ -544,7 +777,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       infoTitle.textContent = `${domainCode} — Notas`;
       infoDom.style.display = 'block';
       infoContent.innerHTML = `<div class="info-empty">Cargando notas…</div>`;
-      if(!file){ infoContent.innerHTML = `<div class="info-empty">No hay archivo de notas asignado para <b>${domainCode}</b>.</div>`; return; }
+      if(!file){
+        infoContent.innerHTML = `<div class="info-empty">No hay archivo de notas asignado para <b>${domainCode}</b>.</div>`;
+        return;
+      }
       try{
         const res = await fetch(file, {cache:'no-store'});
         const html = await res.text();
@@ -577,12 +813,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     // Simulador
     let quizActive = false;
-    const header = document.querySelector('header');
+    const headerEl = document.querySelector('header');
 
     function smoothScrollTo(el){
       if(!el) return;
       const rect = el.getBoundingClientRect();
-      const offset = (header?header.offsetHeight:0)+10;
+      const offset = (headerEl?headerEl.offsetHeight:0)+10;
       const top = rect.top + window.scrollY - offset;
       window.scrollTo({ top, behavior:'smooth' });
     }
@@ -612,7 +848,9 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         if (engineReady()) return resolve(true);
         const start = performance.now();
         const id = setInterval(()=>{
-          if (engineReady() || performance.now()-start>timeout){ clearInterval(id); resolve(engineReady()); }
+          if (engineReady() || performance.now()-start>timeout){
+            clearInterval(id); resolve(engineReady());
+          }
         }, 50);
       });
     }
@@ -621,16 +859,21 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     window.addEventListener('quiz:ended',   ()=>{ setQuizActive(false); });
 
     startBtn.addEventListener('click', async ()=>{
-      if (startBtn.dataset.locked === "true"){ window.location.href = '/login/login.html'; return; }
+      if (startBtn.dataset.locked === "true"){
+        window.location.href = '/login/login.html';
+        return;
+      }
       if (quizActive) return;
       if (infoDom.style.display !== 'none') { infoDom.style.display='none'; }
 
-      // ignorar selección de dominios => TODOS
       const count = parseInt(qCount.value,10) || 65;
-      const tags = undefined;
+      const tags = undefined; // todos los dominios
 
       const ok = await waitForEngine(6000);
-      if(!ok){ alert('Motor de simulador no cargado. Actualiza la página.'); return; }
+      if(!ok){
+        alert('Motor de simulador no cargado. Actualiza la página.');
+        return;
+      }
 
       if(typeof window.start === 'function'){
         setQuizActive(true);
@@ -648,7 +891,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       }
     });
 
-    /* ===== Nueva MODAL de resultados ===== */
+    /* ===== Modal de resultados ===== */
     const qrModal = document.getElementById('quizResultModal');
     const qrClose = document.getElementById('qrClose');
     const resBody = document.getElementById('resBody');
@@ -662,12 +905,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     function barCls(p){ return p<50?'bar-bad':(p<75?'bar-warn':'bar-ok'); }
 
     function renderMetrics(data){
-      // Agregados robustos
       const byDom = data?.byDomain || {};
       let tot = Number(data?.total || 0);
       let correct = Number(data?.correct || 0);
 
-      // Si no vienen, intenta inferirlos
       if (!tot || !correct){
         let c=0,t=0;
         Object.values(byDom).forEach(d=>{ c += Number(d.correct||0); t += Number(d.total||0); });
@@ -675,15 +916,18 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         if(!correct) correct = c;
       }
       const wrong = Math.max(0, tot - correct);
-      const score = Number(data?.score ?? correct); // si el motor usa puntos=aciertos, esto cuadra
+      const score = Number(data?.score ?? correct);
       const percent = pct(correct, tot);
 
-      // Badge (umbral configurable)
       const PASS_THRESHOLD = 70;
-      if(percent >= PASS_THRESHOLD){ resBadgePass.style.display='inline-flex'; resBadgeFail.style.display='none'; }
-      else{ resBadgePass.style.display='none'; resBadgeFail.style.display='inline-flex'; }
+      if(percent >= PASS_THRESHOLD){
+        resBadgePass.style.display='inline-flex';
+        resBadgeFail.style.display='none';
+      }else{
+        resBadgePass.style.display='none';
+        resBadgeFail.style.display='inline-flex';
+      }
 
-      // Métricas
       resMetrics.innerHTML = `
         <div class="metric"><b>Puntuación</b><div class="big">${score}</div></div>
         <div class="metric"><b>Aciertos</b><div class="big">${correct}</div></div>
@@ -691,7 +935,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         <div class="metric"><b>Precisión</b><div class="big">${percent}%</div></div>
       `;
 
-      // Tabla por dominio
       resBody.innerHTML = '';
       if (byDom && Object.keys(byDom).length){
         Object.entries(byDom).forEach(([code,info])=>{
@@ -723,18 +966,58 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       qrModal.setAttribute('aria-hidden','false');
     }
 
-    qrClose.addEventListener('click', ()=>{ qrModal.classList.remove('show'); qrModal.setAttribute('aria-hidden','true'); });
-    qrModal.addEventListener('click', (e)=>{ if(e.target===qrModal){ qrModal.classList.remove('show'); qrModal.setAttribute('aria-hidden','true'); } });
-
-    btnRetry.addEventListener('click', ()=>{ qrModal.classList.remove('show'); qrModal.setAttribute('aria-hidden','true'); window.scrollTo({top:0,behavior:'smooth'}); });
-    btnReview.addEventListener('click', ()=>{
-      if (typeof window.review === 'function'){ try{ window.review(); }catch{} }
-      else { alert('Revisión no disponible en este modo.'); }
+    qrClose.addEventListener('click', ()=>{
+      qrModal.classList.remove('show');
+      qrModal.setAttribute('aria-hidden','true');
+    });
+    qrModal.addEventListener('click', (e)=>{
+      if(e.target===qrModal){
+        qrModal.classList.remove('show');
+        qrModal.setAttribute('aria-hidden','true');
+      }
     });
 
-    // Exponer para el motor
+    btnRetry.addEventListener('click', ()=>{
+      qrModal.classList.remove('show');
+      qrModal.setAttribute('aria-hidden','true');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+    btnReview.addEventListener('click', ()=>{
+      if (typeof window.review === 'function'){
+        try{ window.review(); }catch{}
+      }else{
+        alert('Revisión no disponible en este modo.');
+      }
+    });
+
     window.quizResults = showResultsModal;
     window.addEventListener('quiz:results', (e)=> showResultsModal(e.detail||{}));
+  </script>
+
+  <script>
+    // Cargar header común desde includes/header.html
+    fetch('/includes/header.html')
+      .then(r => r.text())
+      .then(html => {
+        const container = document.getElementById('site-header');
+        if(!container) return;
+        container.innerHTML = html;
+
+        // Estado de sesión en cabecera
+        renderHeaderAuth();
+        localLogoutHook();
+
+        // Funciones globales del header (si existen)
+        if (typeof attachHeaderEvents === 'function') {
+          attachHeaderEvents();
+        }
+        if (typeof initSubmenus === 'function') {
+          initSubmenus();
+        }
+      })
+      .catch(err => {
+        console.error('No se pudo cargar el header común:', err);
+      });
   </script>
 </body>
 </html>

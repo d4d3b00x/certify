@@ -174,17 +174,11 @@ const QUIZZES = {
           padding:10px 14px; border-radius:10px; box-shadow:0 10px 24px rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:opacity .2s; z-index:99999; }
   .toast.show{ opacity:1; }
 
-  .kpis-under-quiz{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:16px; }
+  .kpis-under-quiz{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:14px; }
   @media (max-width:700px){ .kpis-under-quiz{ grid-template-columns:1fr; } }
   .kpi-card{ background:var(--surface); border:1px solid var(--stroke); border-radius:14px; padding:14px 16px; }
   .kpi-card h4{ margin:0 0 6px 0; font-size:.9rem; color:#9ca8d9; font-weight:900; text-transform:uppercase; letter-spacing:.4px; }
   .kpi-card .n{ font-size:1.6rem; line-height:1.2; font-weight:1000; color:#fff; }
-
-  /* Indicador PASS/FAIL en vivo */
-  .live-score{display:flex;align-items:center;gap:6px;font-size:.85rem;color:var(--muted);}
-  .score-pill{border-radius:999px;padding:4px 9px;font-weight:900;font-size:.78rem;border:1px solid var(--stroke);text-transform:uppercase;letter-spacing:.04em;}
-  .score-pill.pass{background:var(--ok-bg);color:var(--ok-ink);border-color:var(--ok);}
-  .score-pill.fail{background:var(--bad-bg);color:var(--bad-ink);border-color:var(--bad);}
 
   /* Últimos intentos */
   .recent-results{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:.84rem;color:#cbd6ff;}
@@ -707,7 +701,7 @@ function showError(msg){
 /* ===================== KPIs ===================== */
 function renderKpisBelow(container){
   if(!container || !container.parentNode) return;
-  const { answered, correct, marked, pct } = getQuizStats();
+  const { answered, correct, pct } = getQuizStats();
 
   const old = document.getElementById('kpis-under-quiz');
   if(old && old.parentNode) old.parentNode.removeChild(old);
@@ -818,22 +812,11 @@ function renderQuiz(){
   progress.appendChild(pcount);
   meta.appendChild(timer);
   meta.appendChild(progress);
-
-  // Indicador live PASS/FAIL (sobre preguntas contestadas)
-  const { pct, answered } = getQuizStats();
-  const live = h('div',{class:'live-score'});
-  if(!answered){
-    live.innerHTML = 'Estimación: —';
-  }else{
-    const passCut = 70;
-    const status = pct >= passCut ? 'PASS' : 'FAIL';
-    const cls = pct >= passCut ? 'score-pill pass' : 'score-pill fail';
-    live.innerHTML = `Estimación: <span class="${cls}">${pct}% · ${status}</span>`;
-  }
-  meta.appendChild(live);
-
   head.appendChild(meta);
   qCard.appendChild(head);
+
+  // KPIs justo debajo de la cabecera
+  renderKpisBelow(head);
 
   const q=S.qs[S.idx];
   let expBox = null;
@@ -890,7 +873,7 @@ function renderQuiz(){
 
   // Controles (debajo de la pregunta)
   const ctr=h('div',{class:'controls'});
-  const back=h('button',{class:'btn',html:`← Atrás <span class="keycap">B</span>`});
+  const back=h('button',{class:'btn',html:'← Atrás (B)'});
   back.disabled=S.idx===0;
   back.onclick=()=>{
     S.idx=Math.max(0,S.idx-1);
@@ -898,7 +881,8 @@ function renderQuiz(){
     renderQuiz();
   };
 
-  const mark=h('button',{class:'btn',html:`${S.marked[S.idx]?'Quitar marca':'Marcar'} <span class="keycap">M</span>`});
+  const markLabel = S.marked[S.idx] ? 'Quitar marca (M)' : 'Marcar (M)';
+  const mark=h('button',{class:'btn',html:markLabel});
   mark.onclick=()=>{
     S.marked[S.idx]=!S.marked[S.idx];
     if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString();
@@ -907,9 +891,7 @@ function renderQuiz(){
   };
 
   const isLast = S.idx===S.qs.length-1;
-  const nextLabel = isLast
-    ? `Finalizar <span class="keycap">N</span>`
-    : `Siguiente <span class="keycap">N</span>`;
+  const nextLabel = isLast ? 'Finalizar (N)' : 'Siguiente (N)';
   const next=h('button',{class:'btn primary',html:nextLabel});
 
   if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
@@ -940,15 +922,6 @@ function renderQuiz(){
   // Sidebar
   const side=h('div',{class:'side'});
 
-  // Panel acciones (solo botón Terminar => muestra resumen)
-  const pBtns=h('div',{class:'panel'});
-  const actions=h('div',{class:'controls centered'});
-  const btnQuit=h('button',{class:'btn lg',html:'🏁 Terminar'});
-  btnQuit.onclick=()=>{ finish(); };
-  actions.appendChild(btnQuit);
-  pBtns.appendChild(actions);
-  side.appendChild(pBtns);
-
   // Panel lista de preguntas
   const pList=h('div',{class:'panel'});
   pList.appendChild(h('h3',{html:'LISTA DE PREGUNTAS'}));
@@ -975,6 +948,15 @@ function renderQuiz(){
   pList.appendChild(dots);
   side.appendChild(pList);
 
+  // Panel acciones (Terminar) ahora debajo de la lista
+  const pBtns=h('div',{class:'panel'});
+  const actions=h('div',{class:'controls centered'});
+  const btnQuit=h('button',{class:'btn lg',html:'🏁 Terminar'});
+  btnQuit.onclick=()=>{ finish(); };
+  actions.appendChild(btnQuit);
+  pBtns.appendChild(actions);
+  side.appendChild(pBtns);
+
   // Panel últimos intentos
   renderRecentResultsPanel(side);
 
@@ -983,7 +965,6 @@ function renderQuiz(){
   wrap.appendChild(shell);
   root.appendChild(wrap);
 
-  renderKpisBelow(wrap);
   enableHotkeys();
 
   if (S._afterRenderScroll === 'explanation') smartScrollTo(expBox || ctr, 'start');
@@ -1272,7 +1253,7 @@ async function finish(){
     new Promise(res=>setTimeout(res, 1500))
   ]);
 
-  // Guardar en historial local y mostrar resumen (ya no redirigimos directo)
+  // Guardar en historial local y mostrar resumen
   pushRecentResult(resultPayload);
   renderSummaryView(resultPayload);
 }
@@ -1286,7 +1267,6 @@ function enableHotkeys(){
     const tag=(ev.target.tagName||'').toLowerCase();
     if(tag==='input'||tag==='textarea'||tag==='select'||ev.metaKey||ev.ctrlKey) return;
 
-    // Si ya está finalizado, no hacemos nada con las teclas
     if(S.finished) return;
 
     if(ev.key==='n'||ev.key==='N'){

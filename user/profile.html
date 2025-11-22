@@ -15,17 +15,17 @@
   
 
   <title>Perfil de usuario — Progreso y logros | ITHub.es</title>
-<meta name="description" content="Revisa tu perfil en ITHub.es: progreso en simuladores, estadísticas de examen, logros, XP y posición en el ranking de certificaciones Azure y AWS." />
-<link rel="canonical" href="https://www.ithub.es/user/profile.html" />
-<meta name="robots" content="noindex,nofollow" />
+  <meta name="description" content="Revisa tu perfil en ITHub.es: progreso en simuladores, estadísticas de examen, logros, XP y posición en el ranking de certificaciones Azure y AWS." />
+  <link rel="canonical" href="https://www.ithub.es/user/profile.html" />
+  <meta name="robots" content="noindex,nofollow" />
 
-<meta property="og:title" content="Perfil de usuario en ITHub.es" />
-<meta property="og:description" content="Consulta tu progreso y logros en los simuladores de certificación IT." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.ithub.es/user/profile.html" />
-<meta property="og:site_name" content="ITHub.es" />
+  <meta property="og:title" content="Perfil de usuario en ITHub.es" />
+  <meta property="og:description" content="Consulta tu progreso y logros en los simuladores de certificación IT." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/user/profile.html" />
+  <meta property="og:site_name" content="ITHub.es" />
 
-    <link rel="icon" type="image/svg+xml" 
+  <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
 
@@ -167,17 +167,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .foot .muted{color:#9ca8d9}
 
     /* Quitar subrayado de la lupa (en todas sus pseudo-clases) */
-a.review-icon,
-a.review-icon:link,
-a.review-icon:visited,
-a.review-icon:hover,
-a.review-icon:active{
-  text-decoration: none !important;
-  border: 0 !important;
-  outline: none;
-  display: inline-block; /* opcional, para evitar artefactos de línea base */
-  line-height: 1;
-}
+    a.review-icon,
+    a.review-icon:link,
+    a.review-icon:visited,
+    a.review-icon:hover,
+    a.review-icon:active{
+      text-decoration: none !important;
+      border: 0 !important;
+      outline: none;
+      display: inline-block;
+      line-height: 1;
+    }
 
     /* CTA Leaderboard pequeño bajo ranking */
     .rank-footer{display:flex;justify-content:flex-end;margin-top:10px}
@@ -273,8 +273,6 @@ a.review-icon:active{
           <div style="margin-top:10px;" class="hint">
             streak actual: <b id="streakDays">0</b> día(s)
           </div>
-
-         
         </article>
       </div>
 
@@ -304,8 +302,6 @@ a.review-icon:active{
             <div class="kpi"><h4>Media  %</h4><div id="kpiAvg" class="n">0%</div></div>
             <div class="kpi"><h4>Mejor %</h4><div id="kpiBest" class="n">0%</div></div>
           </div>
-
-          <!-- (Eliminado bloque Range) -->
 
           <div id="resultsWrap" class="table-wrap">Loading…</div>
 
@@ -345,7 +341,6 @@ a.review-icon:active{
         <span class="muted">© <span id="yearNow"></span></span>
       </div>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <!-- Enlaces eliminados a petición -->
         <span class="muted">v1.3.2</span>
       </div>
     </div>
@@ -480,15 +475,15 @@ a.review-icon:active{
     return {lvl, prog};
   }
 
-  // 🔐 AHORA USAMOS /secure/results CON Authorization: Bearer <token>
-  async function fetchAllResults(limit=3000){
+  // 🔐 USO de /secure/results con Authorization: Bearer <token>
+  async function fetchAllResults(limit = 3000) {
     const token = getArenaIdToken();
     if (!token) throw new Error("No id_token de Cognito (arenaIdToken) en localStorage");
 
     const url = `${API_BASE}${RESULTS_PATH_SECURE}?limit=${limit}`;
     const r = await fetch(url, {
-      mode:"cors",
-      cache:"no-store",
+      mode: "cors",
+      cache: "no-store",
       headers: {
         "Authorization": "Bearer " + token
       }
@@ -499,45 +494,97 @@ a.review-icon:active{
     try { data = JSON.parse(text); }
     catch { throw new Error(`Respuesta no JSON desde /secure/results: ${text}`); }
 
-    if(!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+    if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
 
-    const items = Array.isArray(data.items)? data.items: [];
-    return items.map(x=>({
-      userId: x.userId || "(unknown)",
-      userName: getName(x),
-      quizId: (x.quizId || "-").toLowerCase(),
-      correct: Number(x.correct)||0,
-      total: Number(x.total)||0,
-      pct: Number(x.pct||0),
-      durationSec: Number(x.durationSec)||0,
-      ts: x.ts || null
-    })).filter(r=> QUIZZES.includes(r.quizId));
+    const items = Array.isArray(data.items) ? data.items : [];
+
+    return items
+      .map(x => {
+        const email = (x.email || x.userEmail || x?.user?.email || x?.profile?.email || "").toLowerCase();
+        return {
+          userId: x.userId || x.id || null,
+          userName: getName(x),
+          email,
+          quizId: (x.quizId || "-").toLowerCase(),
+          correct: Number(x.correct) || 0,
+          total: Number(x.total) || 0,
+          pct: Number(x.pct || 0),
+          durationSec: Number(x.durationSec) || 0,
+          ts: x.ts || null
+        };
+      })
+      .filter(r => QUIZZES.includes(r.quizId));
   }
 
-  function aggregateGlobal(rows){
-    const byUser=new Map();
-    rows.forEach(r=>{
-      const {pts,passed}=pointsForAttempt(r);
-      const key=(r.userId||'')+'|'+(r.userName||'');
-      if(!byUser.has(key)){
-        byUser.set(key,{userId:r.userId,userName:r.userName,xp:0,attempts:0,passed:0,badges:new Set(),correctSum:0,totalSum:0});
+  function aggregateGlobal(rows) {
+    const byUser = new Map();
+
+    rows.forEach(r => {
+      // Clave estable: primero userId, luego email, luego nombre normalizado
+      const key =
+        (r.userId && String(r.userId)) ||
+        (r.email && r.email.toLowerCase()) ||
+        (r.userName && r.userName.trim().toLowerCase()) ||
+        "(unknown)";
+
+      const { pts, passed } = pointsForAttempt(r);
+
+      if (!byUser.has(key)) {
+        byUser.set(key, {
+          userId: r.userId || null,
+          userName: r.userName || "(no name)",
+          email: r.email || "",
+          xp: 0,
+          attempts: 0,
+          passed: 0,
+          badges: new Set(),
+          correctSum: 0,
+          totalSum: 0
+        });
       }
-      const u=byUser.get(key);
-      if(passed) u.passed++;
-      u.xp+=pts; u.attempts++; u.correctSum+=toInt(r.correct); u.totalSum+=toInt(r.total);
-      if(r.total>0 && r.durationSec>0 && (r.durationSec/r.total)<=30) u.badges.add('fast');
-      if((r.correct|0)===(r.total|0) && r.total>0) u.badges.add('perfect');
-      if(passed) u.badges.add('ok');
+
+      const u = byUser.get(key);
+
+      // Actualizar nombre/email si vienen mejores datos
+      if (r.userName && r.userName.trim()) {
+        u.userName = r.userName;
+      }
+      if (r.email && r.email.trim() && !u.email) {
+        u.email = r.email.toLowerCase();
+      }
+
+      // Contadores
+      u.attempts += 1;
+      if (passed) u.passed += 1;
+
+      u.xp += pts;
+      u.correctSum += toInt(r.correct);
+      u.totalSum += toInt(r.total);
+
+      // Insignias
+      if (r.total > 0 && r.durationSec > 0 && (r.durationSec / r.total) <= 30) u.badges.add('fast');
+      if ((r.correct | 0) === (r.total | 0) && r.total > 0) u.badges.add('perfect');
+      if (passed) u.badges.add('ok');
     });
-    for(const u of byUser.values()){
-      if(u.attempts>=10) u.badges.add('grinder');
-      if(u.xp>=2000) u.badges.add('veteran');
-      const acc=u.totalSum>0 ? (u.correctSum/u.totalSum)*100 : 0;
-      if(acc>=90) u.badges.add('sharp');
+
+    // Insignias adicionales y nivel
+    for (const u of byUser.values()) {
+      if (u.attempts >= 10) u.badges.add('grinder');
+      if (u.xp >= 2000) u.badges.add('veteran');
+      const acc = u.totalSum > 0 ? (u.correctSum / u.totalSum) * 100 : 0;
+      if (acc >= 90) u.badges.add('sharp');
     }
+
     return [...byUser.values()]
-      .map(u=>{ const {lvl,prog}=levelFromXP(u.xp); return {...u,lvl,prog}; })
-      .sort((a,b)=> b.xp-a.xp || b.passed-a.passed || String(a.userName).localeCompare(String(b.userName)));
+      .map(u => {
+        const { lvl, prog } = levelFromXP(u.xp);
+        return { ...u, lvl, prog };
+      })
+      .sort((a, b) =>
+        b.xp - a.xp ||
+        b.passed - a.passed ||
+        String(a.userName).localeCompare(String(b.userName))
+      );
   }
 
   function medalCell(rank){
@@ -574,8 +621,20 @@ a.review-icon:active{
     try{
       const all=await fetchAllResults(3000);
       const agg=aggregateGlobal(all);
-      const uid=(me.userId||me.id||'').toString();
-      const foundIndex=agg.findIndex(x=> (x.userId||'').toString()===uid || (x.userName||'').trim()===(me.name||me.displayName||me.userName||'').trim());
+
+      const uid    = (me.userId || me.id || "").toString();
+      const uemail = (me.email || "").trim().toLowerCase();
+      const uname  = (me.name || me.displayName || me.userName || "").trim().toLowerCase();
+
+      const foundIndex=agg.findIndex(x=> {
+        const xid    = x.userId ? String(x.userId) : "";
+        const xemail = (x.email || "").toLowerCase();
+        const xname  = (x.userName || "").trim().toLowerCase();
+        return (uid && xid && uid===xid) ||
+               (uemail && xemail && uemail===xemail) ||
+               (uname && xname && uname===xname);
+      });
+
       if(foundIndex<0){
         host.innerHTML='<p class="muted" style="text-align:center">Todavía no tienes puntos en el ranking.</p>';
         cta.innerHTML = `<a class="btn pill small" href="/score/ranking.html">🏆 Leaderboard</a>`;
@@ -980,9 +1039,7 @@ a.review-icon:active{
       console.warn('Marked render failed:', e);
     }
   });
-</script>
-
-
+  </script>
 
 </body>
 </html>
