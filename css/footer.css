@@ -183,6 +183,20 @@
   text-align: right;
 }
 
+.ithub-footer__newsletter-status {
+  margin-top: 6px;
+  font-size: 12px;
+  min-height: 16px; /* así no baila el layout */
+}
+
+.ithub-footer__newsletter-status.ok {
+  color: #7ce38b; /* verde suave */
+}
+
+.ithub-footer__newsletter-status.error {
+  color: #ff8080; /* rojo suave */
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .ithub-footer__bottom {

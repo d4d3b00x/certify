@@ -8,8 +8,11 @@
         <span class="ithub-footer__logo-text">ITHUB.ES</span>
       </div>
       <p class="ithub-footer__tagline">
-        Aprende, practica y aprueba tus certificaciones IT
-        mientras compites con el resto del mundo.
+        
+
+        Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.
+        Sigue tu progreso, repite los temas que más te cuestan y compite en retos con otros estudiantes.
+
       </p>
       <p class="ithub-footer__tagline-small">
         Simuladores de examen, resúmenes por dominio y recursos gratuitos en español.
@@ -20,11 +23,10 @@
     <div class="ithub-footer__col">
       <h3 class="ithub-footer__title">COMUNIDAD</h3>
       <ul class="ithub-footer__list">
-        <li><a href="/faqs.html">FAQs</a></li>
-        <li><a href="/nosotros.html">Nosotros</a></li>
-        <li><a href="/colabora.html">Colabora</a></li>
-        <li><a href="/roadmap.html">Roadmap de contenidos</a></li>
-        <li><a href="/blog.html">Blog &amp; Novedades</a></li>
+        <li><a href="/faqs/faqs.html">FAQs</a></li>
+        <li><a href="/who/acercade.html">Nosotros</a></li>
+        <li><a href="/colabora/colabora.html">Colabora</a></li>
+        <li><a href="/blog/blog.html">Blog &amp; Novedades</a></li>
       </ul>
     </div>
 
@@ -32,12 +34,12 @@
     <div class="ithub-footer__col">
       <h3 class="ithub-footer__title">CONTENIDOS</h3>
       <ul class="ithub-footer__list">
-        <li><a href="/azure-seguridad.html">Azure · Seguridad en la red</a></li>
-        <li><a href="/azure-coste.html">Azure · Coste y Gobernanza</a></li>
-        <li><a href="/azure-landing-zone.html">Azure · Landing Zone</a></li>
-        <li><a href="/aws-ec2.html">AWS · Elasticidad EC2</a></li>
-        <li><a href="/simuladores.html">Simuladores de examen</a></li>
-        <li><a href="/glosario.html">Glosario de términos IT</a></li>
+        <li><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a>></li>
+        <li><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></li>
+        <li><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></li>
+        <li><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></li>
+        <li><a href="/catalog/itcatalog.html">Catálogo</a></li>
+        <li><a href="/content/content.html">Glosario de términos IT</a></li>
       </ul>
     </div>
 
@@ -45,7 +47,7 @@
     <div class="ithub-footer__col">
    
 
-      <h3 class="ithub-footer__title ithub-footer__title--mt">SPONSOR</h3>
+      <h3 class="ithub-footer__title ithub-footer__title--mt">COLABORADOR</h3>
       <p class="ithub-footer__text">
         <a href="https://mundoazure.cloud" target="_blank" rel="noopener">
           https://mundoazure.cloud
@@ -78,32 +80,28 @@
     </svg>
   </a>
 
-  <!-- Icono email -->
-  <a href="mailto:info@ithub.es" class="ithub-footer__icon" title="Escríbenos por email">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <rect x="3" y="5" width="18" height="14" rx="2"
-            stroke="#e8ecff" stroke-width="1.5" fill="none"/>
-      <path d="M3 7l9 6 9-6" stroke="#e8ecff" stroke-width="1.5" fill="none"/>
-    </svg>
-  </a>
+ 
 
 </div>
 
-      <form class="ithub-footer__newsletter" action="#" method="post">
+            <form class="ithub-footer__newsletter" id="newsletter-form">
         <label for="newsletter-email" class="ithub-footer__newsletter-label">
           Recibe novedades y nuevos simuladores:
         </label>
         <div class="ithub-footer__newsletter-row">
           <input id="newsletter-email"
-                 type="email"
-                 name="email"
-                 class="ithub-footer__newsletter-input"
-                 placeholder="Tu email"
-                 required />
-          <button type="submit" class="ithub-footer__newsletter-btn">
+                type="email"
+                name="email"
+                class="ithub-footer__newsletter-input"
+                placeholder="Tu email"
+                required />
+          <button type="submit"
+                  class="ithub-footer__newsletter-btn"
+                  id="newsletter-submit">
             Unirme
           </button>
         </div>
+        <p class="ithub-footer__newsletter-status" id="newsletter-status"></p>
       </form>
     </div>
   </div>
@@ -111,7 +109,7 @@
   <div class="ithub-footer__bottom">
     <p>© 2025 ITHub.es — Todos los derechos reservados.</p>
     <p class="ithub-footer__powered">
-      Desarrollado con AWS · Cognito · DynamoDB · S3 · CloudFront
+      Desarrollado con tecnología Amazon AWS
     </p>
   </div>
 </footer>
