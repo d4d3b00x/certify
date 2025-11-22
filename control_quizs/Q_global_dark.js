@@ -148,28 +148,27 @@ const QUIZZES = {
   .expl{ border:1px dashed var(--stroke); border-radius:12px; padding:12px; margin-top:12px; background:var(--surface); }
   .expl .ttl{ font-weight:900; margin-bottom:8px; }
 
-  /* Feedback compacto y explicación desplegable */
-  .expl-compact{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-  }
-  .expl-compact.ok{
-    border-color:var(--ok);
-    background:var(--ok-bg);
-    color:var(--ok-ink);
-  }
-  .expl-compact.bad{
-    border-color:var(--bad);
-    background:var(--bad-bg);
-    color:var(--bad-ink);
-  }
-  .expl-full{
-    margin-top:10px;
-  }
-  .expl-hidden{
-    display:none;
-  }
+  /* Feedback compacto y explicación desplegable (sin colores rojo/verde) */
+.expl-compact{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  /* usamos el mismo estilo neutro de .expl */
+  border-color:var(--stroke);
+  background:var(--surface);
+  color:var(--ink);
+}
+
+/* .ok y .bad no cambian colores, solo permiten futuras customizaciones si quisieras */
+.expl-compact.ok{}
+.expl-compact.bad{}
+
+.expl-full{
+  margin-top:10px;
+}
+.expl-hidden{
+  display:none;
+}
 
   .refs{ margin-top:10px; background:var(--surface2); border:1px solid var(--stroke);
          border-radius:12px; padding:12px; }
