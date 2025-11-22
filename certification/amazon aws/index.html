@@ -15,17 +15,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
   <title>Guías y simuladores AWS SAA-C03 y más | ITHub.es</title>
-<meta name="description" content="Prepárate para certificaciones oficiales de AWS con guías de estudio, rutas por rol y simuladores para AWS Solutions Architect Associate (SAA-C03) y otras certificaciones." />
-<link rel="canonical" href="https://www.ithub.es/certification/amazon%20aws/index.html" />
-<meta name="robots" content="index,follow" />
+  <meta name="description" content="Prepárate para certificaciones oficiales de AWS con guías de estudio, rutas por rol y simuladores para AWS Solutions Architect Associate (SAA-C03) y otras certificaciones." />
+  <link rel="canonical" href="https://www.ithub.es/certification/amazon%20aws/index.html" />
+  <meta name="robots" content="index,follow" />
 
-<meta property="og:title" content="Guías y simuladores para certificaciones AWS" />
-<meta property="og:description" content="Explora las rutas de certificación de AWS y accede a guías y simuladores para SAA-C03 y futuros exámenes." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://www.ithub.es/certification/amazon%20aws/index.html" />
-<meta property="og:site_name" content="ITHub.es" />
+  <meta property="og:title" content="Guías y simuladores para certificaciones AWS" />
+  <meta property="og:description" content="Explora las rutas de certificación de AWS y accede a guías y simuladores para SAA-C03 y futuros exámenes." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ithub.es/certification/amazon%20aws/index.html" />
+  <meta property="og:site_name" content="ITHub.es" />
 
-    <link rel="icon" type="image/svg+xml" 
+  <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
   <style>
@@ -41,6 +41,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       --dev:#b8ffcb;     --dev-ring:#2f7c49;
       --ops:#ffe0a8;     --ops-ring:#b37823;
       --data:#ffd0a6;    --data-ring:#c56f24;
+
+      /* Header global ITHub */
+      --brand:#6c8bff;
+      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
+      --pill-ring:#2a3150;
+      --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
+      --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
     }
     *{box-sizing:border-box}
     body{
@@ -63,27 +70,169 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       *{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
     }
 
-    /* HEADER */
+    /* HEADER (común) */
     header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
       background:linear-gradient(180deg,rgba(15,19,32,.85),rgba(15,19,32,.55));border-bottom:1px solid var(--stroke)}
     .nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
     nav.menu{display:flex;gap:12px;color:var(--muted);font-weight:800;align-items:center;text-transform:uppercase}
-    nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
-    nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
+    nav.menu .link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900;letter-spacing:.8px}
+    nav.menu .link-btn:hover{border-color:#2a3150;color:var(--ink)}
 
-    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150;
-      border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
-    .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #ff990055;background:var(--cta); color:#181300; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase;}
-    .pill-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
-    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
+    .authwrap{
+      display:flex;align-items:center;gap:6px;
+      background:var(--pill-bg);
+      border:1px solid var(--pill-ring);
+      border-radius:999px;
+      padding:4px;
+      box-shadow:0 6px 18px rgba(5,10,30,.35);
+      max-height:44px;
+    }
+    .hello{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      color:#cbd3ff;
+      font-weight:800;
+      padding:4px 8px;
+      font-size:12px;
+    }
+    .pill-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:88px;
+      min-height:44px;
+      height:34px;
+      padding:0 12px;
+      border-radius:10px;
+      border:1px solid #3b2fff44;
+      background:var(--pill-btn-bg);
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      transition:transform .08s, background .12s;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+    .pill-btn:hover{
+      background:var(--pill-btn-bg-hover);
+      transform:translateY(-1px);
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:44px;
+      height:40px;
+      padding:0 14px;
+      border-radius:12px;
+      border:1px solid var(--stroke);
+      background:transparent;
+      color:var(--ink);
+      font-weight:900;
+      cursor:pointer;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
     .btn.aws{border-color:#ff990066}
     .btn.aws:hover{border-color:#ff9900;color:#ffe3bf}
     @media (max-width:720px){
-      nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
-      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
+      nav.menu{gap:8px}
+      nav.menu .link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}
+      .pill-btn{min-width:82px;height:32px;padding:0 10px}
+      .btn{height:36px}
+      .hello{display:none}
+    }
+
+    /* === NAV DESPLEGABLE (mismas clases que index.html global) === */
+    .menu-has-sub {
+      gap: 6px;
+    }
+    .menu-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .has-sub-trigger {
+      position: relative;
+      padding-right: 18px;
+    }
+    .has-sub-trigger .caret {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-left: 4px;
+    }
+    .menu-group .submenu {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      min-width: 220px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, #141b3a, #101631);
+      box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 60;
+    }
+    .menu-group .submenu a {
+      display: block;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .menu-group .submenu a:hover {
+      background: rgba(108, 139, 255, 0.18);
+      color: var(--ink);
+      border-radius: 8px;
+    }
+    .submenu-title {
+      margin-top: 6px;
+      margin-bottom: 2px;
+      padding: 2px 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #cfe1ff;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+    .submenu.open {
+      display: flex;
+    }
+    @media (min-width: 721px) {
+      .menu-group:hover > .submenu,
+      .menu-group:focus-within > .submenu {
+        display: flex;
+      }
+    }
+    @media (max-width: 720px) {
+      .menu {
+        flex-wrap: wrap;
+      }
+      .menu-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .menu-group .submenu {
+        position: static;
+        margin-top: 4px;
+        width: 100%;
+        box-shadow: 0 6px 16px rgba(5,10,30,.35);
+        display: none;
+      }
+      .menu-group .submenu.open {
+        display: flex;
+      }
     }
 
     /* HERO */
@@ -180,31 +329,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 <body>
   <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
-  <!-- CABECERA -->
-  <header role="banner">
-    <div class="container nav">
-      <div class="brand">
-        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-      </div>
-
-      <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="/">HOME</a>
-        <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
-        <a class="link-btn" href="/score/ranking.html">RANKING</a>
-      </nav>
-
-      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
-
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <!-- CABECERA (se inyecta desde /includes/header.html) -->
+  <div id="site-header"></div>
 
   <main id="main" tabindex="-1">
     <!-- HERO AWS -->
@@ -252,8 +378,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             </article>
           </div>
         </div>
-
-        <!-- (Mapa de certificaciones retirado de la columna izquierda) -->
 
         <!-- Rutas recomendadas por rol -->
         <div class="card" style="margin-top:12px">
@@ -323,18 +447,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             </div>
           </div>
         </div>
-
-        <!-- Consejos (opcional)
-        <div class="card" style="margin-top:12px">
-          <h2>Consejos rápidos para el examen</h2>
-          ...
-        </div>-->
       </div>
 
       <!-- DERECHA -->
       <aside class="sidebar">
-        <!-- (Resumen rápido y Ruta corta eliminados) -->
-
         <div class="block">
           <h3>Recursos oficiales</h3>
           <div style="display:grid;gap:8px">
@@ -346,7 +462,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           </div>
         </div>
 
-        <!-- NUEVO: Mapa de certificaciones en la derecha -->
         <div class="block">
           <h3>Mapa de certificaciones de AWS</h3>
           <div class="mini">Organizado por niveles.</div>
@@ -385,13 +500,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             </div>
           </div>
         </div>
-        <!-- /Mapa en derecha -->
 
         <div class="block">
           <h3>Próximos directos</h3>
           <div class="mini">
             <div style="display:flex;justify-content:space-between"><span>Arquitecturas resilientes en AWS</span><span>Mié 19:00</span></div>
-            
           </div>
         </div>
 
@@ -399,7 +512,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <h3>Comunidad</h3>
           <div style="display:grid;gap:8px">
             <a class="a-btn" href="#">Foro</a>
-         
             <a class="a-btn" href="#">Coaching 1:1</a>
           </div>
         </div>
@@ -407,7 +519,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     </section>
   </main><br>
 
-    <!-- Pie -->
+  <!-- Pie -->
   <footer role="contentinfo">
     <div class="container f-grid">
       <div>
@@ -417,7 +529,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         </div>
         <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT  mientras compites con el resto del mundo.<br><br>Todo lo que necesitas en un sólo lugar.</p>
       </div>
-        <div>
+      <div>
         <div style="font-weight:800">SIMULADORES</div>
         <div><a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">MICROSOFT AZURE AZ-104</a></div>
         <div><a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">MICROSOFTAZURE AZ-305</a></div>
@@ -455,8 +567,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <h3 id="fbTitle">💬 ENVIAR FEEDBACK</h3>
       <p class="mini" style="margin:0 0 8px">Cuéntanos qué mejorar o qué funcionalidades quieres ver.</p>
 
-      <label class="visualmente-h
-      idden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
+      <label class="visualmente-hidden" for="feedbackEmail" style="position:absolute;left:-9999px">Email (opcional)</label>
       <input id="feedbackEmail" type="email" placeholder="Tu email (opcional)" />
       <label class="visualmente-hidden" for="feedbackText" style="position:absolute;left:-9999px">Texto de feedback</label>
       <textarea id="feedbackText" rows="5" placeholder="Escribe aquí tu sugerencia…"></textarea>
@@ -476,18 +587,46 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     document.getElementById('y').textContent = new Date().getFullYear();
 
     /* ===== AUTH mínima ===== */
-    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-    function renderHeaderAuth(){
-      const u=getCurrentUser();
-      const login=document.getElementById('btnLogin');
-      const signup=document.getElementById('btnSignup');
-      const userArea=document.getElementById('userArea');
-      const nameTop=document.getElementById('userNameTop');
-      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    function getCurrentUser(){
+      try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }
+      catch{ return null; }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
-    renderHeaderAuth();
+
+    function renderHeaderAuth(){
+      const u = getCurrentUser();
+      const login   = document.getElementById('btnLogin');
+      const signup  = document.getElementById('btnSignup');
+      const userArea= document.getElementById('userArea');
+      const nameTop = document.getElementById('userNameTop');
+
+      // Si el header aún no está cargado, no hacemos nada
+      if(!login || !signup){ return; }
+
+      if(u){
+        login.style.display='none';
+        signup.style.display='none';
+        if(userArea){
+          userArea.style.display='flex';
+          if(nameTop){
+            nameTop.textContent=(u.name||u.email||'USER').toUpperCase();
+          }
+        }
+      }else{
+        login.style.display='inline-flex';
+        signup.style.display='inline-flex';
+        if(userArea){ userArea.style.display='none'; }
+      }
+    }
+
+    function localLogoutHook(){
+      const btnLogout = document.getElementById('btnLogout');
+      if(btnLogout){
+        btnLogout.addEventListener('click', ()=>{
+          localStorage.removeItem('currentUser');
+          renderHeaderAuth();
+        });
+      }
+    }
 
     /* ===== Modal helpers ===== */
     const fbModal = document.getElementById('feedbackModal');
@@ -547,7 +686,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     btnFbSend?.addEventListener('click', async ()=>{
       const message = (fbText.value||'').trim();
       const from    = (fbEmail.value||'').trim();
-      if(!message){ fbStatus.textContent='Por favor, escribe tu sugerencia.'; fbStatus.className='fb-status err'; return; }
+      if(!message){
+        fbStatus.textContent='Por favor, escribe tu sugerencia.';
+        fbStatus.className='fb-status err';
+        return;
+      }
 
       fbEmail.disabled = fbText.disabled = true;
       btnFbSend.disabled = true;
@@ -588,6 +731,32 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         btnFbOk.focus();
       }
     });
+  </script>
+
+  <script>
+    // Cargar header común desde includes/header.html
+    fetch('/includes/header.html')
+      .then(r => r.text())
+      .then(html => {
+        const container = document.getElementById('site-header');
+        if(!container) return;
+        container.innerHTML = html;
+
+        // Estado de sesión
+        renderHeaderAuth();
+        localLogoutHook();
+
+        // Funciones globales del header (si existen)
+        if (typeof attachHeaderEvents === 'function') {
+          attachHeaderEvents();
+        }
+        if (typeof initSubmenus === 'function') {
+          initSubmenus();
+        }
+      })
+      .catch(err => {
+        console.error('No se pudo cargar el header común:', err);
+      });
   </script>
 </body>
 </html>
