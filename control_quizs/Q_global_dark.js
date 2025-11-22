@@ -23,7 +23,7 @@
 (() => {
 /* ===================== CONFIG ===================== */
 const API_URL       = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-const RESULTS_URL   = `${API_URL}/results`;
+const RESULTS_URL   = `${API_URL}/secure/results`;   // 🔐 SOLO CAMBIO: antes /results
 let   __PROGRESS_URL_CACHED = null;
 const __CANDIDATE_STAGES = [""];
 
@@ -372,6 +372,7 @@ function transformQuestions(items){
       questionId: it.questionId || `${it.exam||''}:${it.question||''}`,
       question: it.question || '',
       options: Array.isArray(it.options) ? it.options.slice() : [],
+
       correctAnswer: (typeof it.answerIndex==='number'?it.answerIndex:null),
       explanation: it.explanation || '',
       explanationRich: it.explanationRich || '',
@@ -432,6 +433,7 @@ function genResultId(r){
   ].join('|');
   const t=Math.floor(Date.now()/10000);
   return `${base}|${t}`;
+
 }
 
 async function saveResultRemoteOnce(result){
@@ -1180,9 +1182,9 @@ function renderSummaryView(result){
     markedIdx.forEach(idx=>{
       const q = S.qs[idx];
       const answered = typeof S.answers[idx]!=='undefined';
-      const li = document.createElement('li');
       const text = (q && q.question) ? q.question : '';
       const short = text.length > 140 ? text.slice(0,140)+'…' : text;
+      const li = document.createElement('li');
       li.innerHTML = `<b>${idx+1}.</b> ${short} <small>(${answered?'respondida':'sin responder'})</small>`;
       ul.appendChild(li);
     });
