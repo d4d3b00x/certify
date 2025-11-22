@@ -1196,7 +1196,7 @@ function renderSummaryView(result){
   const actions = h('div',{class:'controls centered'});
   const btnPanel = h('button',{class:'btn lg primary',html:'Ir a mi panel'});
   btnPanel.onclick = ()=>{ location.href = '/user/profile.html'; };
-  const btnRetry = h('button',{class:'btn lg',html:'Repetir simulador'});
+  const btnRetry = h('button',{class:'btn lg',html:'Hacer otro exámen'});
   btnRetry.onclick = ()=>{ start(S.quizId); };
   actions.appendChild(btnPanel);
   actions.appendChild(btnRetry);
