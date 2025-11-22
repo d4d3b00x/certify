@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="360" height="70" viewBox="0 0 360 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pillGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8AA0FF"/>
+      <stop offset="100%" stop-color="#425DFF"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.4235
+                0 0 0 0 0.5451
+                0 0 0 0 1
+                0 0 0 0.35 0"/>
+    </filter>
+  </defs>
+
+  <!-- Soft glow -->
+  <g filter="url(#softGlow)" opacity="0.7">
+    <rect x="16" y="10" rx="14" ry="14" width="46" height="50" fill="url(#pillGrad)"/>
+  </g>
+
+  <!-- Pill mark -->
+  <rect x="16" y="10" rx="14" ry="14" width="46" height="50" fill="url(#pillGrad)"/>
+  <rect x="24" y="18" rx="8" ry="8" width="30" height="34" fill="rgba(255,255,255,0.12)"/>
+
+  <!-- Wordmark -->
+  <g font-family="Inter, ui-sans-serif, 'Segoe UI', Roboto, Arial, sans-serif" font-weight="800">
+    <text x="80" y="45" font-size="32" fill="#E8ECFF" letter-spacing="0.8">IT</text>
+    <text x="130" y="45" font-size="32" fill="#E8ECFF" font-weight="700">Hub</text>
+    <text x="205" y="45" font-size="28" fill="#9CA8D9" font-weight="700">.es</text>
+  </g>
+</svg>
