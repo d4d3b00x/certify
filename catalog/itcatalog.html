@@ -177,25 +177,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
   <!-- ===== Header ===== -->
-  <header role="banner">
-    <div class="container nav">
-      <div class="brand"><img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio"></div>
-      <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="/">HOME</a>
-        <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
-        <a class="link-btn" href="/score/ranking.html">RANKING</a>
-      </nav>
-      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello" style="color:#cbd3ff;font-weight:800">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <div id="site-header"></div>
 
   <!-- ===== Main ===== -->
   <main id="main" tabindex="-1">
@@ -475,5 +457,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       closeNotice?.addEventListener('click', ()=>{ localStorage.setItem('catalog_notice_dismissed','1'); notice.classList.remove('show'); });
     }catch{}
   </script>
+
+<script>
+  fetch('/includes/header.html')
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById('site-header').innerHTML = html;
+      renderHeaderAuth();
+      initSubmenus();
+      attachHeaderEvents();
+    });
+</script>
+
 </body>
 </html>
