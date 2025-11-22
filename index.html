@@ -14,8 +14,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0f1320" />
-  <title>ITHub.es. Simulador de exámenes y recursos gratuitos en Español para aprobar tus certificaciones IT (Azure, AWS, Cisco..)</title>
-  <meta name="description" content="Simuladores de examen, resúmenes por dominio y guías prácticas para aprobar certificaciones Azure AZ-104, AZ-305 y AWS SAA-C03. Practica con preguntas explicadas, ranking y XP en ITHub.es." />
+  <title>ITHub.es · Simulador de exámenes y recursos gratuitos en Español para certificaciones IT</title>
+  <meta name="description" content="Simuladores de examen, resúmenes por dominio, guías prácticas y planes de estudio para aprobar certificaciones Azure AZ-104, AZ-305 y AWS SAA-C03 en español. Practica con preguntas explicadas, ranking y XP en ITHub.es." />
   <link rel="canonical" href="https://www.ithub.es/" />
   <meta name="robots" content="index,follow" />
 
@@ -41,7 +41,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       --ok:#3ad97a; --warn:#ffd66b; --bad:#ff6b6b;
       --glow-azure: 0 0 0 1px rgba(0,120,212,.35), 0 8px 22px rgba(0,120,212,.18);
       --glow-aws:   0 0 0 1px rgba(255,153,0,.28), 0 8px 22px rgba(255,153,0,.16);
-      --glow-gcp:   0 0 0 1px rgba(66,133,244,.32), 0 8px 22px rgba(66,133,244,.18);
     }
 
     *{box-sizing:border-box}
@@ -70,41 +69,39 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;text-transform:uppercase}
     .brand img.site-logo{height:42px;width:auto;display:block}
     
-    
-      nav.menu{
-        display:flex;
-        gap:12px;
-        color:var(--muted);
-        font-weight:800;
-        align-items:center;
-        text-transform:uppercase;
-      }
+    nav.menu{
+      display:flex;
+      gap:12px;
+      color:var(--muted);
+      font-weight:800;
+      align-items:center;
+      text-transform:uppercase;
+    }
 
-     nav.menu .link-btn{
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-        min-width:110px;
-        min-height:44px;
-        height:40px;
-        padding:0 12px;
-        border-radius:10px;
-        border:1px solid transparent;
-        font-weight:900;
-        letter-spacing:.8px;
-        background:none;
-        cursor:pointer;
-        font-family:inherit;
-        color:inherit;
-        text-decoration:none;
-        line-height:1;
-      }
+    nav.menu .link-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:110px;
+      min-height:44px;
+      height:40px;
+      padding:0 12px;
+      border-radius:10px;
+      border:1px solid transparent;
+      font-weight:900;
+      letter-spacing:.8px;
+      background:none;
+      cursor:pointer;
+      font-family:inherit;
+      color:inherit;
+      text-decoration:none;
+      line-height:1;
+    }
 
-      nav.menu .link-btn:hover{
-        border-color:#2a3150;
-        color:var(--ink);
-      }
-
+    nav.menu .link-btn:hover{
+      border-color:#2a3150;
+      color:var(--ink);
+    }
 
     .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
       border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
@@ -116,8 +113,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .btn.small{min-height:36px;height:34px;padding:0 10px;font-size:.85rem;border-radius:10px}
 
     @media (max-width:720px){
-    nav.menu{gap:8px} nav.menu .link-btn{min-width:90px;height:36px}
-      .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
+      nav.menu{gap:8px}
+      nav.menu .link-btn{min-width:90px;height:36px}
+      .authwrap{gap:4px}
+      .pill-btn{min-width:82px;height:32px;padding:0 10px}
+      .btn{height:36px}
+      .hello{display:none}
     }
 
     .hero{padding:16px 0 4px;text-align:center}
@@ -139,7 +140,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
     .hero h1{margin:0 0 6px;font-size:clamp(1.8rem,4.4vw,3rem);line-height:1.15;font-weight:900;letter-spacing:.2px}
     .lead{color:var(--muted);max-width:860px;margin:0 auto;font-size:1rem}
-    .hero-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
 
     section{padding:24px 0}
     .sec-title{font-size:1.4rem;font-weight:900;margin-bottom:4px;text-transform:uppercase}
@@ -152,17 +152,15 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .sim-card .accent{position:absolute;top:0;left:0;right:0;height:4px;opacity:.9;}
     .sim-card.sim-azure{ box-shadow:0 0 0 1px rgba(0,120,212,.45) inset, 0 10px 26px rgba(0,120,212,.10), var(--shadow); }
     .sim-card.sim-aws{   box-shadow:0 0 0 1px rgba(255,153,0,.35) inset, 0 10px 26px rgba(255,153,0,.10), var(--shadow); }
-    .prov-pill{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;font-weight:900;letter-spacing:.6px;border:1px solid rgba(255,255,255,.15); text-transform:uppercase}
+    .prov-pill{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:999px;font-weight:900;letter-spacing:.6px;border:1px solid rgba(255,255,255,.15); text-transform:uppercase;font-size:12px}
     .prov-azure{background:rgba(0,120,212,.16);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
     .prov-aws{background:rgba(255,153,0,.18);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
-    .sim-title{font-weight:900;font-size:1.05rem}
+    .sim-title{font-weight:900;font-size:1.02rem}
     .sim-badges{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:2px}
     .sim-badge{padding:4px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);font-weight:800;font-size:.72rem;color:#cfe1ff;background:rgba(108,139,255,.12)}
     .btns-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
     .cta-btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;padding:10px 16px;border-radius:12px;border:0;background:var(--cta-purple);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 10px 22px rgba(80,90,240,.25);min-height:44px;letter-spacing:.8px;}
     .cta-btn[aria-disabled="true"]{opacity:.65;cursor:not-allowed;filter:grayscale(.35)}
-    .grid{ gap:10px; } .sim-card{ padding:14px; border-radius:16px; gap:10px; }
-    .prov-pill{ padding:6px 12px; font-size:12px; } .sim-title{ font-size:.98rem; }
 
     .vendor-grid{display:grid;gap:14px;margin-top:12px}
     @media(min-width:820px){.vendor-grid{grid-template-columns:repeat(2,1fr)}}
@@ -186,8 +184,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .p-ico{ width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(180deg,#8aa0ff,#425dff);box-shadow:0 6px 14px rgba(80,90,240,.25); font-size:20px; flex:0 0 36px; }
     .pitch-card h3{ margin:0; font-size:1.02rem; }
     .pitch-card p{ margin:6px 0 0; color:var(--muted); }
-    .hook-ctas{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
-    .hook-ctas .big{ min-height:48px; padding:0 18px; font-size:.98rem; }
+    .hook-ctas{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; } /* vacío */
+
     .pill-btn.big{ background:linear-gradient(180deg,#7a67ff,#5f48ff); border:1px solid #3b2fff44; }
     .pill-btn.big:hover{ background:linear-gradient(180deg,#8a78ff,#6b54ff); transform:translateY(-1px); }
 
@@ -226,7 +224,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .bridge .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
     .note{font-size:.85rem;color:#cfe1ff;opacity:.9;margin-top:6px;font-weight:800}
 
-    /* 3 cajitas alineadas + signos entre ellas */
     .flow{
       width:100%;
       display:grid;
@@ -235,7 +232,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       align-content:center;
     }
 
-    /* Modo ecuación: usamos flex para insertar + y = */
     .flow.equation{
       display:flex;
       grid-template-columns:none;
@@ -256,7 +252,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .step h3{margin:0;font-size:1rem}
     .step p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
 
-    /* Operadores + y = entre cajas */
     .flow-op{
       display:flex;
       align-items:center;
@@ -275,17 +270,181 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     @media(max-width:820px){
       .bridge{grid-template-columns:1fr}
       .flow{grid-template-columns:1fr;gap:10px}
-
       .flow.equation{
         flex-direction:column;
         align-items:stretch;
       }
     }
 
+    /* === NUEVAS SECCIONES: Cómo estudiar + Plan === */
+
+    .study-how{padding-top:10px;}
+    .study-how .sec-title{margin-bottom:6px;}
+    .study-sub{color:var(--muted);max-width:860px;margin-bottom:10px;font-size:.96rem}
+    .study-grid{display:grid;gap:12px;margin-top:8px}
+    @media(min-width:820px){.study-grid{grid-template-columns:repeat(3,1fr)}}
+    .study-card{background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:14px;min-height:150px}
+    .study-card h3{margin:0 0 6px;font-size:1.02rem}
+    .study-card p{margin:0;color:var(--muted);font-size:.95rem}
+
+    .study-plan{padding-top:4px;}
+    .plan-wrap{background:var(--surface);border-radius:14px;border:1px solid var(--stroke);padding:14px;margin-top:10px;overflow-x:auto}
+    .plan-note{font-size:.9rem;color:var(--muted);margin-top:8px}
+    table.plan-table{width:100%;border-collapse:collapse;font-size:.9rem}
+    .plan-table th,.plan-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.05);text-align:left;vertical-align:top}
+    .plan-table th{font-weight:800;color:#cfe1ff;background:rgba(21,27,53,.8);position:sticky;top:0}
+    .plan-tag{display:inline-block;margin-top:4px;padding:2px 6px;border-radius:999px;font-size:.72rem;font-weight:800;background:rgba(108,139,255,.16);border:1px solid rgba(108,139,255,.4);color:#cfe1ff}
+
+    /* Sección SEO (sustituye al glosario) */
+    .seo-section{
+      padding-top:12px;
+    }
+    .seo-inner{
+      position:relative;
+      border-radius:18px;
+      padding:18px 16px 16px;
+      background:linear-gradient(180deg,#151b31,#0f1428);
+      border:1px solid rgba(108,139,255,.4);
+      box-shadow:0 14px 30px rgba(6,12,40,.45), 0 0 0 1px rgba(108,139,255,.18) inset;
+    }
+    .seo-inner::after{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      border-radius:18px;
+      pointer-events:none;
+      background:linear-gradient(135deg,rgba(108,139,255,.55),rgba(255,153,0,.30));
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      padding:1px;
+      opacity:.4;
+    }
+
+    .seo-header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .seo-tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(108,139,255,.16);
+      border:1px solid rgba(108,139,255,.45);
+      color:#cfe1ff;
+      font-size:.78rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+    }
+    .seo-pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      justify-content:flex-end;
+    }
+    .seo-pill{
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(21,190,255,.12);
+      border:1px solid rgba(132,209,255,.45);
+      font-size:.8rem;
+      font-weight:800;
+      color:#e8f5ff;
+    }
+
+    .seo-lead{
+      color:var(--muted);
+      max-width:880px;
+      margin-bottom:10px;
+      font-size:.96rem;
+    }
+
+    .seo-grid{
+      display:grid;
+      gap:12px;
+      margin-top:8px;
+    }
+    @media(min-width:820px){
+      .seo-grid{grid-template-columns:repeat(2,1fr);}
+    }
+
+    .seo-card{
+      position:relative;
+      border-radius:14px;
+      padding:14px 14px 12px;
+      background:linear-gradient(180deg,#121935,#0f1530);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 10px 24px rgba(5,10,30,.4);
+      overflow:hidden;
+    }
+    .seo-card .accent-bar{
+      position:absolute;
+      inset:0;
+      padding:1px;
+      border-radius:14px;
+      pointer-events:none;
+      -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask-composite:exclude;
+      opacity:.55;
+    }
+    .seo-card .accent-bar.azure{
+      background:linear-gradient(135deg,rgba(0,120,212,.9),rgba(108,139,255,.2));
+    }
+    .seo-card .accent-bar.aws{
+      background:linear-gradient(135deg,rgba(255,153,0,.9),rgba(240,190,120,.25));
+    }
+
+    .seo-card h3{
+      margin:0 0 6px;
+      font-size:1.02rem;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .seo-card h3 span.emoji{
+      font-size:1.1rem;
+    }
+    .seo-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .seo-list{
+      margin:6px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .seo-list li{margin-bottom:4px;}
+
+    .seo-note{
+      margin-top:10px;
+      font-size:.9rem;
+      color:var(--muted);
+    }
+
+    @media(max-width:720px){
+      .seo-header{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+      .seo-pills{
+        justify-content:flex-start;
+      }
+    }
+
     footer{border-top:1px solid var(--stroke);padding:24px 0;color:#9ca8d9;background:linear-gradient(180deg,rgba(22,27,45,.6),rgba(22,27,45,.2))}
     .f-grid{display:grid;gap:14px}
     @media(min-width:720px){.f-grid{grid-template-columns:1.2fr .8fr .8fr .8fr}}
-    footer a{color:#cfe1ff} footer a:hover{text-decoration:underline}
+    footer a{color:#cfe1ff}
+    footer a:hover{text-decoration:underline}
 
     .hero .btn {
       background: linear-gradient(180deg, #e423b3, #d8abda);
@@ -304,329 +463,308 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       transform: translateY(-2px);
     }
 
-    /* Glosario (escritorio: grid 2 filas) */
-    .glossary{padding-top:12px;}
-    .g-wrap{position:relative}
-    .g-track{
-      display:grid;
-      grid-auto-flow:column;
-      grid-template-rows:repeat(2,1fr);
-      gap:12px;
-      overflow-x:auto; scroll-behavior:smooth;
-      padding:6px 6px 4px;
-      scrollbar-width:thin; scrollbar-color:#3a4580 transparent;
+    /* === MODAL FEEDBACK === */
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background:rgba(0,0,0,.55);
+      z-index:120;
     }
-    .g-track::-webkit-scrollbar{height:8px}
-    .g-track::-webkit-scrollbar-thumb{background:#3a4580;border-radius:999px}
+    .modal.show{display:flex;}
 
-    .g-card{
-      min-width: 280px; max-width: 320px;
-      background:linear-gradient(180deg,#12183a,#0f1531);
-      border-radius:16px; padding:14px; border:1px solid rgba(255,255,255,.08);
-      position:relative; box-shadow: var(--shadow);
-      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, filter .14s ease;
-      outline:0;
+    .modal-card{
+      width:min(760px,100%);
+      background:var(--surface);
+      border:1px solid var(--stroke);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:var(--shadow);
     }
-    .g-card:hover, .g-card:focus-visible{ transform:translateY(-3px) scale(1.01); }
-    .g-card.azure{ box-shadow: var(--glow-azure); }
-    .g-card.aws{ box-shadow: var(--glow-aws); }
-    .g-card.gcp{ box-shadow: var(--glow-gcp); }
-    .g-card .accent{position:absolute;inset:0;border-radius:16px;
-      padding:1px; background:linear-gradient(135deg,rgba(108,139,255,.7),rgba(255,153,0,.35));
-      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; opacity:.55;
+    .modal-card h3{
+      margin:0 0 10px;
+      font-size:1.2rem;
     }
-    .g-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-    .g-ico{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;
-      background:linear-gradient(180deg,#8aa0ff,#425dff); box-shadow:0 6px 14px rgba(80,90,240,.25)}
-    .g-title{font-weight:900;font-size:1.02rem}
-    .g-desc{margin:6px 0 0;color:var(--muted);font-size:.95rem;line-height:1.35}
-    .g-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-    .g-tag{padding:4px 8px;border-radius:999px;font-weight:900;font-size:.72rem;letter-spacing:.2px;border:1px solid rgba(255,255,255,.14)}
-    .tag-az{background:rgba(0,120,212,.14);color:#cfe6ff;border-color:rgba(0,120,212,.35)}
-    .tag-aws{background:rgba(255,153,0,.14);color:#ffe1b3;border-color:rgba(255,153,0,.35)}
-    .tag-gcp{background:rgba(66,133,244,.14);color:#d7e5ff;border-color:rgba(66,133,244,.35)}
-
-    .g-arrows{display:flex;gap:8px;justify-content:flex-end;margin:8px 2px 0;align-items:center;flex-wrap:wrap}
-    .g-arrow{
-      appearance:none;border:1px solid var(--stroke);background:linear-gradient(180deg,#1b2142,#161b34);
-      color:#cbd3ff;border-radius:12px;min-width:44px;min-height:38px;cursor:pointer;font-weight:900;
-      display:inline-grid;place-items:center;box-shadow:0 6px 14px rgba(5,10,30,.25);
-      transition:transform .08s ease,border-color .12s ease, background .12s ease;
-    }
-    .g-arrow:hover{transform:translateY(-1px);border-color:#3a4580}
-    .g-arrow[disabled]{opacity:.45;cursor:not-allowed;transform:none}
-    .g-arrow svg{width:20px;height:20px}
-
-    .g-meta{display:flex;align-items:center;gap:10px;margin-left:auto}
-    .g-indicator{font-weight:800;color:#cfe1ff;background:rgba(108,139,255,.12);border:1px solid rgba(108,139,255,.35);padding:6px 10px;border-radius:999px;font-size:.85rem}
-
-    @media (max-width: 720px){
-      .g-arrows{
-        position: sticky; top: 8px; z-index: 5;
-        justify-content: center; gap: 12px; margin: 8px 0 6px;
-      }
-      .g-arrow{ min-width: 48px; min-height: 44px; }
-
-      .g-track{
-        display: flex !important;
-        gap: 12px;
-        padding: 6px 8px 12px;
-        overflow-x: auto; overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-      }
-      .g-card{
-        flex: 0 0 88% !important;
-        max-width: 88%;
-        min-width: 0 !important;
-        width: auto;
-        scroll-snap-align: start;
-        border-radius: 14px;
-      }
-      .g-title{ font-size: 1rem; }
-      .g-desc{ font-size: .95rem; }
+    .modal-card p{
+      margin:0 0 8px;
     }
 
-    /* MODALES (feedback) */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.55);z-index:120}
-    .modal.show{display:flex}
-    .modal-card{width:min(760px,100%);background:var(--surface);border:1px solid var(--stroke);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
-    .modal-card h3{margin:0 0 10px;font-size:1.2rem}
-    .modal-card p{margin:0 0 8px}
-    .modal-card input,.modal-card textarea,.modal-card select{
-      width:100%;display:block;margin-top:8px;border:1px solid var(--stroke);border-radius:10px;
-      background:var(--surface2);color:var(--ink);padding:10px;font-weight:700
+    .modal-card input,
+    .modal-card textarea{
+      width:100%;
+      display:block;
+      margin-top:8px;
+      border:1px solid var(--stroke);
+      border-radius:10px;
+      background:var(--surface2);
+      color:var(--ink);
+      padding:10px;
+      font-weight:700;
     }
-    .modal-card textarea{min-height:120px;resize:vertical}
-    .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
-    .fb-status{margin-top:8px;font-weight:800}
-    .fb-status.ok{color:var(--ok)}
-    .fb-status.err{color:var(--bad)}
-    .fb-status.info{color:var(--muted)}
+    .modal-card textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      margin-top:12px;
+    }
+
+    .fb-status{
+      margin-top:8px;
+      font-weight:800;
+    }
+    .fb-status.ok{color:var(--ok);}
+    .fb-status.err{color:var(--bad);}
+    .fb-status.info{color:var(--muted);}
 
     @media (max-width:720px){
-      .sim-card,
-      .g-card,
-      .cta-btn,
-      .hero-head,
-      .p-ico{
-        box-shadow:0 4px 10px rgba(5,10,30,.18) !important;
+      .modal-card{padding:14px;}
+    }
+
+    /* NAV DESPLEGABLE */
+
+    .menu-has-sub { gap: 6px; }
+    .menu-group { position: relative; display: flex; align-items: center; }
+    .has-sub-trigger { position: relative; padding-right: 18px; }
+    .has-sub-trigger .caret { font-size: 0.7rem; opacity: 0.7; margin-left: 4px; }
+
+    .menu-group .submenu {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      min-width: 220px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, #141b3a, #101631);
+      box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 60;
+    }
+
+    .menu-group .submenu a {
+      display: block;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .menu-group .submenu a.submenu-mainlink {
+      margin-top: 4px;
+      margin-bottom: 2px;
+      padding: 6px 8px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: var(--ink);
+      border-radius: 8px;
+      background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.35), transparent 55%),
+                  linear-gradient(180deg, #151b31, #11172b);
+      box-shadow: 0 6px 16px rgba(5,10,30,.45);
+    }
+
+    .menu-group .submenu a.submenu-mainlink:hover {
+      background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.5), transparent 60%),
+                  linear-gradient(180deg, #1a2140, #131a33);
+      color: #ffffff;
+    }
+
+    .menu-group .submenu a.submenu-child {
+      padding-left: 22px;
+      font-size: 0.78rem;
+      opacity: 0.9;
+    }
+
+    .menu-group .submenu a:hover {
+      background: rgba(108, 139, 255, 0.18);
+      color: var(--ink);
+      border-radius: 8px;
+    }
+
+    .submenu-title {
+      margin-top: 6px;
+      margin-bottom: 2px;
+      padding: 2px 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #cfe1ff;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    .submenu.open { display: flex; }
+
+    @media (min-width: 721px) {
+      .menu-group:hover > .submenu,
+      .menu-group:focus-within > .submenu {
+        display: flex;
       }
     }
 
-
-/* === NAV DESPLEGABLE (Ejemplo 1) === */
-
-.menu-has-sub {
-  gap: 6px;
-}
-
-.menu-group {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.has-sub-trigger {
-  position: relative;
-  padding-right: 18px;
-}
-
-.has-sub-trigger .caret {
-  font-size: 0.7rem;
-  opacity: 0.7;
-  margin-left: 4px;
-}
-
-.menu-group .submenu {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  min-width: 220px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: linear-gradient(180deg, #141b3a, #101631);
-  box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  z-index: 60;
-}
-
-.menu-group .submenu a {
-  display: block;
-  padding: 4px 8px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--muted);
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-.menu-group .submenu a:hover {
-  background: rgba(108, 139, 255, 0.18);
-  color: var(--ink);
-  border-radius: 8px;
-}
-
-.submenu-title {
-  margin-top: 4px;
-  margin-bottom: 2px;
-  padding: 2px 8px 2px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #cfe1ff;
-  opacity: 0.7;
-}
-
-.submenu.open {
-  display: flex;
-}
-
-@media (min-width: 721px) {
-  .menu-group:hover > .submenu,
-  .menu-group:focus-within > .submenu {
-    display: flex;
-  }
-}
-
-@media (max-width: 720px) {
-  .menu {
-    flex-wrap: wrap;
-  }
-
-  .menu-group {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .menu-group .submenu {
-    position: static;
-    margin-top: 4px;
-    width: 100%;
-    box-shadow: 0 6px 16px rgba(5,10,30,.35);
-    display: none;
-  }
-
-  .menu-group .submenu.open {
-    display: flex;
-  }
-}
-
-.menu-group .submenu a,
-.menu-group .submenu .submenu-title {
-  text-transform: uppercase;
-}
-
-.menu-group .submenu a {
-  display: block;
-  padding: 4px 8px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-}
-
-.menu-group .submenu a.submenu-mainlink {
-  margin-top: 4px;
-  margin-bottom: 2px;
-  padding: 6px 8px;
-  font-size: 0.82rem;
-  font-weight: 900;
-  color: var(--ink);
-  border-radius: 8px;
-  background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.35), transparent 55%),
-              linear-gradient(180deg, #151b31, #11172b);
-  box-shadow: 0 6px 16px rgba(5,10,30,.45);
-}
-
-.menu-group .submenu a.submenu-mainlink:hover {
-  background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.5), transparent 60%),
-              linear-gradient(180deg, #1a2140, #131a33);
-  color: #ffffff;
-}
-
-.menu-group .submenu a.submenu-child {
-  padding-left: 22px;
-  font-size: 0.78rem;
-  opacity: 0.9;
-}
-
-.menu-group .submenu a:hover {
-  background: rgba(108, 139, 255, 0.18);
-  color: var(--ink);
-  border-radius: 8px;
-}
-
-.submenu-title {
-  margin-top: 6px;
-  margin-bottom: 2px;
-  padding: 2px 8px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #cfe1ff;
-  opacity: 0.7;
-}
+    @media (max-width: 720px) {
+      .menu { flex-wrap: wrap; }
+      .menu-group { flex-direction: column; align-items: flex-start; }
+      .menu-group .submenu {
+        position: static;
+        margin-top: 4px;
+        width: 100%;
+        box-shadow: 0 6px 16px rgba(5,10,30,.35);
+        display: none;
+      }
+      .menu-group .submenu.open { display: flex; }
+    }
   </style>
 </head>
 <body>
-  
 
- <div id="site-header"></div>
+  <div id="site-header"></div>
 
   <main id="main" tabindex="-1">
     <section class="hero" aria-labelledby="hero-title">
       <div class="container">
         <div class="hero-head">
           <h1 id="hero-title"><span aria-hidden="true">🎮</span>Aprende y practica para <b>aprobar tus certificaciones IT</b> y avanzar en tu carrera.</h1>
-          <p class="lead">Simuladores realistas + resúmenes por dominio. Practica lo que más cae y mide tu progreso hasta aprobar.</p>
+          <p class="lead">Simuladores realistas, resúmenes por dominio y planes de estudio en español. Practica lo que más cae y mide tu progreso hasta aprobar.</p>
         </div>
       </div>
     </section>
 
     <section class="hook" aria-labelledby="hook-title">
       <div class="container">
-        <h2 id="hook-title" class="sec-title">Certifícate y gana competitividad </h2>
+        <h2 id="hook-title" class="sec-title">Certifícate y gana competitividad</h2>
         <div class="hook-badges" aria-hidden="true">
           <span>+3.000 preguntas</span><span>Resúmenes por dominio</span><span>Enlaces oficiales</span><span>Ranking e insignias</span>
         </div>
         <div class="pitch-grid" role="list">
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🎯</div><h3>Preguntas enfocadas</h3></div><p>Simuladores para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b>.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🧠</div><h3>Resúmenes accionables</h3></div><p>Hojas de trucos y resúmenes aplicables al trabajo.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">🔗</div><h3>Explicaciones fiables</h3></div><p>Rationale + documentación oficial en cada respuesta.</p></article>
-          <article class="pitch-card" role="listitem"><div class="p-head"><div class="p-ico">💼</div><h3>Demuestra progreso</h3></div><p>Certifícate, suma puntos en ranking y demuestra progreso.</p></article>
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">🎯</div><h3>Preguntas enfocadas</h3></div>
+            <p>Simuladores para <b>AZ-104</b>, <b>AZ-305</b> y <b>SAA-C03</b> alineados con el examen oficial.</p>
+          </article>
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">🧠</div><h3>Resúmenes accionables</h3></div>
+            <p>Hojas de trucos y resúmenes aplicables a escenarios reales de trabajo.</p>
+          </article>
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">🔗</div><h3>Explicaciones fiables</h3></div>
+            <p>Rationale + documentación oficial enlazada en cada respuesta importante.</p>
+          </article>
+          <article class="pitch-card" role="listitem">
+            <div class="p-head"><div class="p-ico">💼</div><h3>Demuestra progreso</h3></div>
+            <p>Certifícate, suma puntos en el ranking y demuestra tu progreso a tu equipo.</p>
+          </article>
         </div>
-        <div class="hook-ctas" role="group" aria-label="Acciones destacadas">
+        <div class="hook-ctas" role="group" aria-label="Acciones destacadas"></div>
+      </div>
+    </section>
+
+    <!-- Cómo estudiar con ITHub.es -->
+    <section class="study-how" aria-labelledby="study-how-title">
+      <div class="container">
+        <h2 id="study-how-title" class="sec-title">Cómo estudiar con ITHub.es</h2>
+        <div class="study-grid" role="list">
+          <article class="study-card" role="listitem">
+            <h3>1. Lee el resumen del dominio</h3>
+            <p>Empieza por la guía o resumen del dominio que te toque (seguridad, redes, alta disponibilidad...). Te da contexto y vocabulario.</p>
+          </article>
+          <article class="study-card" role="listitem">
+            <h3>2. Haz bloques de 20–30 preguntas</h3>
+            <p>Responde un bloque corto de preguntas centrado en ese dominio. Revisa las explicaciones con calma, aunque aciertes.</p>
+          </article>
+          <article class="study-card" role="listitem">
+            <h3>3. Revisa tus puntos débiles</h3>
+            <p>Apunta los temas en los que más fallas y vuelve al resumen o documentación oficial. El objetivo es reducir tus “zonas rojas”.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- === SECCIÓN: Aprende · Practica · Compite (ajustada) === -->
+    <!-- Plan de estudio sugerido -->
+    <section class="study-plan" aria-labelledby="study-plan-title">
+      <div class="container">
+        <h2 id="study-plan-title" class="sec-title">Plan de estudio sugerido (4 semanas)</h2>
+        <div class="plan-wrap">
+          <table class="plan-table" aria-describedby="plan-desc">
+            <thead>
+              <tr>
+                <th scope="col">Semana</th>
+                <th scope="col">Objetivo</th>
+                <th scope="col">Acciones concretas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>1</b> <span class="plan-tag">Fundamentos</span></td>
+                <td>Entender el mapa completo del examen.</td>
+                <td>
+                  Leer la guía general de la certificación.<br>
+                  Hacer 1–2 bloques de preguntas por dominio para ver tu nivel inicial.
+                </td>
+              </tr>
+              <tr>
+                <td><b>2</b> <span class="plan-tag">Dominios fuertes</span></td>
+                <td>Consolidar lo que ya controlas.</td>
+                <td>
+                  Priorizar los dominios donde tengas mejor porcentaje.<br>
+                  Hacer sesiones de simulador de 25–30 preguntas y revisar sólo las que falles.
+                </td>
+              </tr>
+              <tr>
+                <td><b>3</b> <span class="plan-tag">Dominios débiles</span></td>
+                <td>Subir tus “zonas rojas”.</td>
+                <td>
+                  Trabajar las áreas con peor % en los simuladores.<br>
+                  Volver a resúmenes + documentación oficial de Azure/AWS enlazada.
+                </td>
+              </tr>
+              <tr>
+                <td><b>4</b> <span class="plan-tag">Simulacro real</span></td>
+                <td>Simular el día del examen.</td>
+                <td>
+                  Hacer 2–3 simulacros completos en modo examen (cuando esté disponible).<br>
+                  Repasar los últimos errores el día antes y <b>no</b> saturarse con más teoría.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p id="plan-desc" class="plan-note">
+            Ajusta este plan a tu realidad: si ya trabajas con Azure o AWS, puedes ir más rápido; si empiezas desde cero, alarga a 6–8 semanas.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Aprende · Practica · Compite -->
     <section class="bridge-section" aria-labelledby="bridge-title">
       <div class="container">
         <div class="bridge" role="region" aria-labelledby="bridge-title">
           <div class="left">
-            <span class="tag" id="bridge-title">RUTA DE CERTIFICACIÓN...</span>
+            <span class="tag" id="bridge-title">RUTA DE CERTIFICACIÓN</span>
             <p class="muted">
               <br>Empieza con los <b>simuladores</b> para aprender cada dominio del examen con <b>explicaciones</b> y enlaces oficiales.
-              Estamos preparando el juego <b>Arena Battle</b>: <b>quizzes relámpago</b>  para ganar agilidad.
+              Estamos preparando el juego <b>Arena Battle</b>: <b>quizzes relámpago</b> para ganar agilidad.
             </p>
             <div class="cta-row" role="group" aria-label="Acciones de entrenamiento">
-              
-              <a class="btn" href="/blog/blog.html">VER ESTRATEGIAS DE ESTUDIOS</a>
+              <!-- sin botones extra -->
             </div>
+            <p class="note">Consejo: alterna sesiones cortas de preguntas con repasos rápidos de conceptos para fijar vocabulario.</p>
           </div>
-          <div class="right" aria-label="Cómo se complementan">
+          <div class="right" aria-label="Cómo se complementan simulación y gamificación">
             <div class="flow equation" aria-label="Simulación más Gamificación es igual a Certificación">
               <div class="step">
                 <div class="s-head"><div class="s-ico">📘</div><h3>Simulación</h3></div>
-                <p>Simulador de examen para práctica con <b>explicaciones</b> y enlaces oficiales.</p>
+                <p>Simulador de examen para practicar con <b>explicaciones</b> y enlaces oficiales.</p>
               </div>
 
               <div class="flow-op" aria-hidden="true">+</div>
@@ -647,8 +785,77 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         </div>
       </div>
     </section>
-    <!-- === /SECCIÓN === -->
 
+    <!-- Sección SEO en lugar de glosario -->
+    <section class="seo-section" aria-labelledby="seo-title">
+      <div class="container">
+        <div class="seo-inner">
+          <div class="seo-header">
+            <div>
+              <div class="seo-tag">para qué sirve ithub.es</div>
+              <h2 id="seo-title" class="sec-title">Simuladores de exámenes IT CLOUD en español</h2>
+            </div>
+            <div class="seo-pills" aria-hidden="true">
+              <span class="seo-pill">💬 Español</span>
+              <span class="seo-pill">☁️ Cloud & DevOps</span>
+              <span class="seo-pill">📝 Preguntas explicadas</span>
+            </div>
+          </div>
+
+          <p class="seo-lead">
+            ITHub.es es una plataforma independiente donde puedes preparar tus certificaciones <b>Microsoft Azure</b> y
+            <b>Amazon Web Services</b> utilizando simuladores de examen en español, explicaciones detalladas y material de apoyo.
+            Si buscas un <b>simulador AZ-104</b>, un <b>simulador AZ-305</b> o practicar el examen <b>AWS SAA-C03</b> con preguntas explicadas,
+            estás en el sitio correcto.
+          </p>
+
+          <div class="seo-grid">
+            <article class="seo-card">
+              <span class="accent-bar azure" aria-hidden="true"></span>
+              <h3><span class="emoji">📚</span> Simuladores de certificación disponibles</h3>
+              <p>Actualmente puedes practicar con bancos de preguntas orientados a las certificaciones Cloud más demandadas:</p>
+              <ul class="seo-list">
+                <li>
+                  <a href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">Simulador AZ-104 en español</a> ·
+                  rol <b>Azure Administrator Associate</b>, ideal para perfiles de operaciones sobre recursos Azure.
+                </li>
+                <li>
+                  <a href="/certification/microsoft-azure/az-305/lz-azure-az-305.html">Simulador AZ-305</a> ·
+                  examen <b>Azure Solutions Architect Expert</b>, centrado en arquitectura, gobernanza y seguridad.
+                </li>
+                <li>
+                  <a href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">Simulador AWS SAA-C03</a> ·
+                  certificación <b>Solutions Architect Associate</b>, con casos de alta disponibilidad, rendimiento y coste.
+                </li>
+                <li>
+                  Acceso al <a href="/score/ranking.html">ranking global de ITHub.es</a> para ver tu posición frente a otros estudiantes.
+                </li>
+              </ul>
+            </article>
+
+            <article class="seo-card">
+              <span class="accent-bar aws" aria-hidden="true"></span>
+              <h3><span class="emoji">✅</span> Método de estudio recomendado</h3>
+              <p>El objetivo no es memorizar preguntas, sino aprender a razonar como en el examen oficial:</p>
+              <ul class="seo-list">
+                <li>Elige una certificación (por ejemplo, <b>AZ-104</b>) y revisa primero sus dominios principales.</li>
+                <li>Haz bloques de 20–30 preguntas del simulador centrados en un único dominio.</li>
+                <li>Anota los temas que más fallas y refuérzalos con la documentación oficial enlazada.</li>
+                <li>Repite el ciclo hasta mantener un porcentaje estable por encima del 75–80&nbsp;% antes del examen real.</li>
+              </ul>
+            </article>
+          </div>
+
+          <p class="seo-note">
+            Si quieres profundizar más, visita el <a href="/blog/blog.html">blog de ITHub.es</a> donde encontrarás consejos de estudio,
+            resúmenes por dominio y explicaciones de conceptos clave de redes, seguridad, identidad, alta disponibilidad y optimización
+            de costes en Azure y AWS.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catálogo certificaciones -->
     <section aria-labelledby="fab-title">
       <div class="container">
         <div id="fab-title" class="sec-title">CATÁLOGO DE CERTIFICACIONES</div>
@@ -657,7 +864,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <span class="accent" aria-hidden="true"></span>
             <div class="prov-pill prov-azure">MICROSOFT AZURE</div>
             <div class="v-title">Explora las certificaciones de Azure</div>
-            <p>Rutas y guías de estudio CLOUD de Microsoft</p>
+            <p>Rutas y guías de estudio Cloud de Microsoft.</p>
             <div class="btns-row" aria-label="Acciones Microsoft Azure">
               <a class="cta-btn" href="/certification/microsoft-azure/az-104/index.html">🔎 CATÁLOGO AZURE</a>
               <a class="btn" href="/certification/microsoft-azure/az-104/lz-azure-az-104.html">AZ-104</a>
@@ -669,7 +876,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
             <span class="accent" aria-hidden="true"></span>
             <div class="prov-pill prov-aws">AMAZON AWS</div>
             <div class="v-title">Explora las certificaciones de AWS</div>
-            <p>Rutas y guías de estudio CLOUD de Amazon</p>
+            <p>Rutas y guías de estudio Cloud de Amazon.</p>
             <div class="btns-row" aria-label="Acciones Amazon AWS">
               <a class="cta-btn" href="/certification/amazon aws/index.html">🔎 CATÁLOGO AWS</a>
               <a class="btn" href="/certification/amazon aws/aws-saa-c03/lz-aws-saa-c03.html">SAA-C03</a>
@@ -679,77 +886,71 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-   
-
+    <!-- Simuladores -->
     <section id="simuladores" aria-labelledby="sim-title">
       <div class="container">
         <div id="sim-title" class="sec-title">SIMULADOR DE EXÁMENES (BETA)</div>
-        <div class="muted">Modo de examen en desarrollo y más simuladores pronto</div>
+        <div class="muted">Modo de examen en desarrollo y más simuladores pronto.</div>
         <div class="grid" id="simGrid" role="list"></div>
       </div>
     </section>
   </main>
 
-<footer role="contentinfo">
-  <div class="container f-grid">
-    <div>
-      <div class="brand" style="text-transform:none">
-        <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
-        <span>ITHUB.ES</span>
+  <footer role="contentinfo">
+    <div class="container f-grid">
+      <div>
+        <div class="brand" style="text-transform:none">
+          <span class="logo-pill" aria-hidden="true" style="width:18px;height:34px;border-radius:10px;background:linear-gradient(180deg,#8aa0ff 0%,#425dff 100%);box-shadow:0 0 0 6px rgba(108,139,255,.18)"></span>
+          <span>ITHUB.ES</span>
+        </div>
+        <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
       </div>
-      <p style="margin:8px 0 0;">Aprende, practica y aprueba tus certificaciones IT mientras compites con el resto del mundo.</p>
+
+      <div>
+        <div style="font-weight:800">COMUNIDAD</div>
+        <div><a href="/faqs/faqs.html">FAQS</a></div>
+        <div><a href="/who/acercade.html">NOSOTROS</a></div>
+        <div><a href="/comunidad/colabora.html">COLABORA</a></div>
+      </div>
+
+      <div>
+        <div style="font-weight:800">CONTENIDOS</div>
+        <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
+        <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
+        <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
+        <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
+      </div>
+
+      <div>
+        <div style="font-weight:800">SPONSOR</div>
+        <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
+
+        <div style="font-weight:800">CONTACTANOS</div>
+
+        <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+          <button id="footerContactBtn" type="button"
+                  style="background:none;border:none;color:#cfe1ff;
+                         font-weight:800;display:inline-flex;align-items:center;
+                         cursor:pointer;padding:0;">
+            <span style="font-size:22px;line-height:1;">💬</span>
+          </button>
+
+          <a href="https://www.linkedin.com/in/certificacionesithub/"
+             target="_blank" rel="noopener"
+             aria-label="Perfil de LinkedIn de ITHub.es"
+             style="display:inline-flex;align-items:center;">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2" />
+              <rect x="6" y="9" width="2" height="7" fill="#FFFFFF" />
+              <circle cx="7" cy="7" r="1.2" fill="#FFFFFF" />
+              <path d="M11 9h2v1h0.03C13.3 9.3 14 8.9 15 8.9c2 0 2.5 1.3 2.5 3v4.1h-2v-3.6
+                       c0-.9-.1-1.9-1.2-1.9-1.1 0-1.3.9-1.3 1.9v3.6h-2V9z" fill="#FFFFFF" />
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
-
-    <div>
-      <div style="font-weight:800">COMUNIDAD</div>
-      <div><a href="/faqs/faqs.html">FAQS</a></div>
-      <div><a href="/who/acercade.html">NOSOTROS</a></div>
-      <div><a href="/comunidad/colabora.html">COLABORA</a></div>
-    </div>
-
-    <div>
-      <div style="font-weight:800">CONTENIDOS</div>
-      <div><a href="/content/azure-network-security-az104.html">Azure · Seguridad en la red</a></div>
-      <div><a href="/content/azure-cost-governance-az104.html">Azure · Coste y Gobernanza</a></div>
-      <div><a href="/content/azure-landing-zone.html">Azure · Landing Zone</a></div>
-      <div><a href="/content/aws-compute-elasticity-saac03.html">AWS · Elasticidad EC2</a></div>
-    </div>
-
-    <div>
-      <div style="font-weight:800">SPONSOR</div>
-      <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
-
-      <div style="font-weight:800">CONTACTANOS</div>
-
-<div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
-
-
-  <button id="footerContactBtn" type="button"
-          style="background:none;border:none;color:#cfe1ff;
-                 font-weight:800;display:inline-flex;align-items:center;
-                 cursor:pointer;padding:0;">
-    
-    <span style="font-size:22px;line-height:1;">💬</span>
-  </button>
-
-   
-  <a href="https://www.linkedin.com/in/certificacionesithub/"
-     target="_blank" rel="noopener"
-     aria-label="Perfil de LinkedIn de ITHub.es"
-     style="display:inline-flex;align-items:center;">
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="4" fill="#0A66C2" />
-      <rect x="6" y="9" width="2" height="7" fill="#FFFFFF" />
-      <circle cx="7" cy="7" r="1.2" fill="#FFFFFF" />
-      <path d="M11 9h2v1h0.03C13.3 9.3 14 8.9 15 8.9c2 0 2.5 1.3 2.5 3v4.1h-2v-3.6
-               c0-.9-.1-1.9-1.2-1.9-1.1 0-1.3.9-1.3 1.9v3.6h-2V9z" fill="#FFFFFF" />
-    </svg>
-  </a>
-
-</div>
-  </div>
-
-</footer>
+  </footer>
 
   <!-- Modal Feedback -->
   <div class="modal" id="feedbackModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="fbTitle">
@@ -768,8 +969,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   </div>
 
   <script>
-  
-
   const COGNITO_DOMAIN       = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
   const COGNITO_CLIENT_ID    = "592bh3ek4jdeg78qntt810g7vl";
   const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; 
@@ -796,7 +995,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const userArea = document.getElementById('userArea');
     const nameTop  = document.getElementById('userNameTop');
 
-    // Si el header aún no está cargado, salimos sin hacer nada
     if (!login || !signup) return;
 
     if (u){
@@ -818,25 +1016,19 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
   }
 
-  // Engancha eventos de LOGOUT (igual que en blog.html)
   function attachHeaderEvents(){
     const btnLogout = document.getElementById('btnLogout');
 
     if (btnLogout){
       btnLogout.addEventListener('click', (e) => {
         e.preventDefault();
-
-        // Limpiamos info local
         localStorage.removeItem('currentUser');
-        localStorage.removeItem('arenaIdToken'); // opcional
-
+        localStorage.removeItem('arenaIdToken');
         renderHeaderAuth();
         if (typeof renderSims === 'function') renderSims();
       });
     }
   }
-
-
 
   // ======== SIMULADORES ========
   const CATALOG = [
@@ -893,7 +1085,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     e.preventDefault();
   });
 
-  // ======== FEEDBACK / RESTO DEL SCRIPT ========
+  // ======== FEEDBACK ========
   const API_BASE = 'https://uougu1cm26.execute-api.eu-central-1.amazonaws.com';
   const NOTES_ENDPOINT = `${API_BASE}/items`;
   const fbEmail   = document.getElementById('feedbackEmail');
@@ -949,61 +1141,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
   });
 
-  // Carrusel y submenús (igual que tenías)
-  (function(){
-    const track = document.getElementById('gTrack');
-    if(!track) return;
-    const prev  = document.getElementById('gPrev');
-    const next  = document.getElementById('gNext');
-    const indicator = document.getElementById('gIndicator');
-
-    function columnStride(){
-      const first = track.querySelector('.g-card');
-      if(!first) return 320;
-      const rect = first.getBoundingClientRect();
-      const gap  = parseFloat(getComputedStyle(track).gap || '12');
-      return Math.ceil(rect.width + gap);
-    }
-
-    function totalCols(){
-      const perCol = 2;
-      return Math.ceil(track.children.length / perCol);
-    }
-
-    function updateIndicator(){
-      const stride = columnStride();
-      const cols = totalCols();
-      const col = Math.max(1, Math.min(cols, Math.round(track.scrollLeft / stride) + 1));
-      const first = (col - 1) * 2 + 1;
-      const last  = Math.min(first + 1, track.children.length);
-      if(indicator){
-        indicator.textContent = `${first}–${last} / ${track.children.length}`;
-      }
-    }
-
-    function updateArrows(){
-      const max = track.scrollWidth - track.clientWidth - 2;
-      prev.disabled = track.scrollLeft <= 0;
-      next.disabled = track.scrollLeft >= max;
-      updateIndicator();
-    }
-
-    function scrollCols(dir){
-      track.scrollBy({ left: dir * columnStride(), behavior:'smooth' });
-    }
-
-    prev?.addEventListener('click', ()=> scrollCols(-1));
-    next?.addEventListener('click', ()=> scrollCols(1));
-    track.addEventListener('scroll', updateArrows);
-    window.addEventListener('resize', updateArrows);
-    updateArrows();
-
-    track.addEventListener('keydown', (e)=>{
-      if(e.key === 'ArrowRight'){ e.preventDefault(); scrollCols(1); }
-      if(e.key === 'ArrowLeft'){ e.preventDefault(); scrollCols(-1); }
-    });
-  })();
-
+  // Submenús (mobile)
   (function(){
     const triggers = document.querySelectorAll('.has-sub-trigger');
     if (!triggers.length) return;
@@ -1047,21 +1185,20 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       });
     });
   })();
-</script>
+  </script>
 
-<script>
-  fetch('/includes/header.html')
-    .then(r => r.text())
-    .then(html => {
-      document.getElementById('site-header').innerHTML = html;
-      // Ahora que el header ya está en el DOM:
-      renderHeaderAuth();
-      attachHeaderEvents();
-      if (typeof initSubmenus === 'function') {
-        initSubmenus();
-      }
-    });
-</script>
+  <script>
+    fetch('/includes/header.html')
+      .then(r => r.text())
+      .then(html => {
+        document.getElementById('site-header').innerHTML = html;
+        renderHeaderAuth();
+        attachHeaderEvents();
+        if (typeof initSubmenus === 'function') {
+          initSubmenus();
+        }
+      });
+  </script>
 
 </body>
 </html>
