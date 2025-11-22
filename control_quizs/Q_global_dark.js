@@ -23,7 +23,7 @@
 (() => {
 /* ===================== CONFIG ===================== */
 const API_URL       = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
-const RESULTS_URL   = `${API_URL}/secure/results`;   // 🔐 SOLO CAMBIO: antes /results
+const RESULTS_URL   = `${API_URL}/results`;   // 🔐 SOLO CAMBIO: antes /results
 let   __PROGRESS_URL_CACHED = null;
 const __CANDIDATE_STAGES = [""];
 
