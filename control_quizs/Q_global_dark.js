@@ -85,8 +85,6 @@ const S = {
   finished: false,
   finishLocked: false,
 
-  _afterRenderScroll: null,
-
   savingResult: false
 };
 let __SEQ = 0;
@@ -161,7 +159,6 @@ const QUIZZES = {
     background:var(--surface);
     color:var(--ink);
   }
-  /* .ok y .bad no cambian colores, por si quieres usarlas en el futuro */
   .expl-compact.ok{}
   .expl-compact.bad{}
 
@@ -214,18 +211,18 @@ const QUIZZES = {
   .recent-results .pct{font-weight:900;}
   .recent-results .pct.pass{color:var(--ok);}
   .recent-results .pct.fail{color:var(--bad);}
-  .recent-results .line-sub{font-size:.76rem;color:#var(--muted);}
+  .recent-results .line-sub{font-size:.76rem;color:var(--muted);}
 
   /* Resumen final */
   .summary-header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:18px;}
   .summary-circle{width:140px;height:140px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:1000;border:4px solid var(--stroke);margin-top:4px;}
   .summary-circle.pass{border-color:var(--ok);color:var(--ok);}
   .summary-circle.fail{border-color:var(--bad);color:var(--bad);}
-  .summary-meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:.9rem;color:#var(--muted);}
+  .summary-meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:.9rem;color:var(--muted);}
   .summary-section{margin-top:16px;}
   .domain-table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:8px;}
   .domain-table th,.domain-table td{border-bottom:1px solid var(--stroke);padding:6px 4px;text-align:left;}
-  .domain-table th{text-transform:uppercase;font-size:.75rem;color:#var(--muted);}
+  .domain-table th{text-transform:uppercase;font-size:.75rem;color:var(--muted);}
   `;
   const st = document.createElement("style");
   st.innerHTML = css;
@@ -280,6 +277,17 @@ function smartScrollTo(el, align='start'){
 }
 function stripLetterPrefix(s){
   return String(s||'').replace(/^\s*[A-Z]\.\s*/i,'').trim();
+}
+
+/* Helpers de scroll */
+function scrollToQuestion(){
+  const qCard = document.querySelector('#view .question-card');
+  smartScrollTo(qCard, 'center');
+}
+function scrollToKpis(){
+  const kpis = document.getElementById('kpis-under-quiz');
+  const target = kpis || document.querySelector('#view .question-card');
+  smartScrollTo(target, 'center');
 }
 
 /* normaliza texto para firma */
@@ -732,15 +740,13 @@ async function start(quizId="aws-saa-c03", overrides={}){
     }
 
     applyTheme(quizId);
-    S._afterRenderScroll = 'question';
     renderQuiz();
     startTimer();
+    // Primera vez: centramos en la pregunta
+    setTimeout(scrollToQuestion, 0);
 
     // Warmup descubrimiento /progress (no bloquea)
     discoverProgressUrl({sessionId:S.sessionId, quizId:S.quizId, probe:true}).catch(()=>{});
-
-    const qCard = document.querySelector('#view .question-card') || document.getElementById('view');
-    smartScrollTo(qCard,'start');
 
     toast(`Cargadas ${S.qs.length}${tags.length?` • Dominios: ${tags.join(', ')}`:''}`, 1800);
   }catch(e){
@@ -1002,8 +1008,9 @@ function renderQuiz(){
   back.disabled=S.idx===0;
   back.onclick=()=>{
     S.idx=Math.max(0,S.idx-1);
-    S._afterRenderScroll='question';
     renderQuiz();
+    // al ir atrás, centramos en Respondidas
+    setTimeout(scrollToKpis, 0);
   };
 
   const markLabel = S.marked[S.idx] ? 'Quitar marca (M)' : 'Marcar (M)';
@@ -1013,32 +1020,33 @@ function renderQuiz(){
     if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString();
     else delete S.markTimes[S.idx];
     renderQuiz();
+    setTimeout(scrollToKpis, 0);
   };
 
   const isLast = S.idx===S.qs.length-1;
-const nextLabel = isLast ? 'Finalizar (N)' : 'Siguiente (N)';
-const next=h('button',{class:'btn primary',html:nextLabel});
+  const nextLabel = isLast ? 'Finalizar (N)' : 'Siguiente (N)';
+  const next=h('button',{class:'btn primary',html:nextLabel});
 
-if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
+  if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
 
-next.onclick=()=>{
-  if(!isLast){
-    S.idx++;
-    // 👉 después de pasar a la siguiente, queremos centrarnos en Respondidas
-    S._afterRenderScroll = 'kpis';
-    renderQuiz();
-    return;
-  }
-  if(hasPendingMarked()){
-    toast('No puedes finalizar: hay preguntas marcadas sin responder.');
-    return;
-  }
-  if(S.finishLocked) return;
-  S.finishLocked = true;
-  next.disabled = true;
-  try { next.innerHTML = 'Finalizando…'; } catch {}
-  finish();
-};
+  next.onclick=()=>{
+    if(!isLast){
+      S.idx++;
+      renderQuiz();
+      // al pasar a la siguiente, centramos Respondidas
+      setTimeout(scrollToKpis, 0);
+      return;
+    }
+    if(hasPendingMarked()){
+      toast('No puedes finalizar: hay preguntas marcadas sin responder.');
+      return;
+    }
+    if(S.finishLocked) return;
+    S.finishLocked = true;
+    next.disabled = true;
+    try { next.innerHTML = 'Finalizando…'; } catch {}
+    finish();
+  };
 
   ctr.appendChild(back);
   ctr.appendChild(mark);
@@ -1066,8 +1074,8 @@ next.onclick=()=>{
     }
     d.onclick=()=>{
       S.idx=i;
-      S._afterRenderScroll='question';
       renderQuiz();
+      setTimeout(scrollToQuestion, 0);
     };
     dots.appendChild(d);
   });
@@ -1091,22 +1099,8 @@ next.onclick=()=>{
   wrap.appendChild(shell);
   root.appendChild(wrap);
 
- enableHotkeys();
-
-if (S._afterRenderScroll === 'explanation') {
-  smartScrollTo(expBox || ctr, 'start');
-} else if (S._afterRenderScroll === 'question') {
-  // Tras responder, centramos la tarjeta de la pregunta
-  smartScrollTo(qCard, 'center');
-} else if (S._afterRenderScroll === 'kpis') {
-  // Al darle a Siguiente o N, centramos las KPIs (Respondidas)
-  const kpis = document.getElementById('kpis-under-quiz');
-  smartScrollTo(kpis || qCard, 'center');
-}
-
-S._afterRenderScroll = null;
-
-window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
+  enableHotkeys();
+  window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
 }
 
 /* ===================== Helpers ===================== */
@@ -1142,8 +1136,9 @@ function onSelect(i){
     // silencioso
   }
 
-  S._afterRenderScroll='question';
   renderQuiz();
+  // tras contestar, centramos la pregunta
+  setTimeout(scrollToQuestion, 0);
 }
 
 /* ===================== Sesión completa → /progress ===================== */
@@ -1404,32 +1399,32 @@ function enableHotkeys(){
 
     if(S.finished) return;
 
-   if(ev.key==='n'||ev.key==='N'){
-  ev.preventDefault();
-  if(S.idx===S.qs.length-1){
-    if(S.finishLocked) return;
-    if(hasPendingMarked()) {
-      toast('No puedes finalizar: marcadas sin responder.');
-      return;
+    if(ev.key==='n'||ev.key==='N'){
+      ev.preventDefault();
+      if(S.idx===S.qs.length-1){
+        if(S.finishLocked) return;
+        if(hasPendingMarked()) {
+          toast('No puedes finalizar: marcadas sin responder.');
+          return;
+        }
+        S.finishLocked = true;
+        const btn = document.querySelector('.controls .btn.primary');
+        if(btn) btn.disabled = true;
+        finish();
+      } else {
+        S.idx++;
+        renderQuiz();
+        // igual que botón Siguiente → centramos Respondidas
+        setTimeout(scrollToKpis, 0);
+      }
     }
-    S.finishLocked = true;
-    const btn = document.querySelector('.controls .btn.primary');
-    if(btn) btn.disabled = true;
-    finish();
-  } else {
-    S.idx++;
-    // 👉 igual que el botón: centramos en KPIs (Respondidas)
-    S._afterRenderScroll='kpis';
-    renderQuiz();
-  }
-}
 
     if(ev.key==='b'||ev.key==='B'){
       ev.preventDefault();
       if(S.idx>0){
         S.idx--;
-        S._afterRenderScroll='question';
         renderQuiz();
+        setTimeout(scrollToKpis, 0);
       }
     }
     if(ev.key==='m'||ev.key==='M'){
@@ -1438,6 +1433,7 @@ function enableHotkeys(){
       if(S.marked[S.idx]) S.markTimes[S.idx]=new Date().toISOString();
       else delete S.markTimes[S.idx];
       renderQuiz();
+      setTimeout(scrollToKpis, 0);
     }
     const n=parseInt(ev.key,10);
     if(Number.isInteger(n)&&n>=1&&n<=9){
