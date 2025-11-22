@@ -1,3 +1,71 @@
+<!-- ======== FOOTER COMPACTO (CSS INCRUSTADO) ======== -->
+<style>
+/* ===========================
+   FOOTER COMPACTO TIPO GITHUB/STRIPE
+   =========================== */
+
+.ithub-footer {
+  padding-top: 12px !important;
+  padding-bottom: 8px !important;
+}
+
+.ithub-footer__inner {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.ithub-footer__col {
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+}
+
+.ithub-footer__tagline,
+.ithub-footer__tagline-small,
+.ithub-footer__text {
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+.ithub-footer__list li {
+  margin-bottom: 2px !important;
+}
+
+.ithub-footer__bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 8px !important;
+  padding-top: 6px !important;
+  padding-bottom: 4px !important;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: .78rem;
+}
+
+.ithub-footer__bottom p {
+  margin: 0 !important;
+}
+
+@media (max-width: 720px) {
+  .ithub-footer {
+    padding-top: 8px !important;
+    padding-bottom: 6px !important;
+  }
+  .ithub-footer__inner {
+    row-gap: 8px;
+  }
+  .ithub-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    gap: 2px;
+  }
+}
+</style>
+
+<!-- ========== FOOTER HTML ========== -->
 <footer class="ithub-footer">
   <div class="ithub-footer__inner">
 
@@ -40,7 +108,7 @@
       </ul>
     </div>
 
-    <!-- Columna 4: Recursos / Sponsor / Contacto -->
+    <!-- Columna 4 -->
     <div class="ithub-footer__col">
       <h3 class="ithub-footer__title ithub-footer__title--mt">COLABORADOR</h3>
       <p class="ithub-footer__text">
@@ -52,7 +120,7 @@
       <h3 class="ithub-footer__title ithub-footer__title--mt">CONTACTANOS</h3>
       <div class="ithub-footer__social">
 
-        <!-- Icono burbuja / formulario -->
+        <!-- Icono burbuja -->
         <a href="#contacto"
            id="footerContactBtn"
            class="ithub-footer__icon"
@@ -63,7 +131,7 @@
           </svg>
         </a>
 
-        <!-- Icono LinkedIn -->
+        <!-- LinkedIn -->
         <a href="https://www.linkedin.com/in/certificacionesithub"
            class="ithub-footer__icon"
            target="_blank"
