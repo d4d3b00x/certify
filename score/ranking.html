@@ -465,8 +465,7 @@
           localStorage.removeItem('arenaIdToken');
         }catch{}
         renderHeaderAuth();
-        // En ranking no recargamos, pero podrías hacer:
-        // location.reload();
+        // location.reload(); // si quisieras recargar ranking
       });
     }
   }
@@ -535,7 +534,7 @@
     history.replaceState(null,'',url);
   }
 
-  /* ======= Agregación + Insignias ======= */
+  /* ======= Agregación + Insignias (clave por EMAIL) ======= */
   function aggregate(rows, scope, exam){
     const now=new Date(); const curMonth=now.getMonth(), curYear=now.getFullYear(); const wkKey=weekKey(now);
     const byUser=new Map();
@@ -547,17 +546,36 @@
       if(scope==='week' && d && weekKey(d)!==wkKey) return;
 
       const {pts, passed, pct}=pointsForAttempt(r);
-      const key=(r.userId||'')+'|'+(r.userName||'');
+
+      // 🔑 clave estable: primero email, luego userId, luego nombre
+      const keyEmail = r.email && r.email.toLowerCase();
+      const keyUserId = r.userId ? String(r.userId) : "";
+      const keyName = r.userName ? r.userName.trim().toLowerCase() : "";
+
+      let key;
+      if (keyEmail)      key = `mail:${keyEmail}`;
+      else if (keyUserId) key = `id:${keyUserId}`;
+      else               key = `name:${keyName || '(unknown)'}`;
+
       if(!byUser.has(key)){
         byUser.set(key, {
-          userId:r.userId,
-          userName:r.userName,
+          userId:   r.userId,
+          userName: r.userName,
+          email:    r.email || "",
           xp:0, attempts:0, passed:0, last:r.ts,
           badges:new Set(), lastPassTs:null, streak:0,
           correctSum:0, totalSum:0
         });
       }
       const u=byUser.get(key);
+
+      // Actualizar nombre/email si llegan mejores datos
+      if (r.userName && r.userName.trim()) {
+        u.userName = r.userName;
+      }
+      if (r.email && r.email.trim() && !u.email) {
+        u.email = r.email.toLowerCase();
+      }
 
       if(passed){
         u.passed++;
@@ -713,16 +731,22 @@
         }
 
         const items = Array.isArray(data.items) ? data.items : [];
-        CACHE = items.map(x=>({
-          userId: x.userId || "(unknown)",
-          userName: getName(x),
-          quizId: (x.quizId || "-").toLowerCase(),
-          correct: Number(x.correct)||0,
-          total: Number(x.total)||0,
-          pct: Number(x.pct)||0,
-          durationSec: Number(x.durationSec)||0,
-          ts: x.ts || null
-        })).filter(r=> QUIZZES.includes(r.quizId));
+        CACHE = items
+          .map(x=>{
+            const email = (x.email || x.userEmail || x?.user?.email || x?.profile?.email || "").toLowerCase();
+            return {
+              userId: x.userId || "(unknown)",
+              userName: getName(x),
+              email,
+              quizId: (x.quizId || "-").toLowerCase(),
+              correct: Number(x.correct)||0,
+              total: Number(x.total)||0,
+              pct: Number(x.pct)||0,
+              durationSec: Number(x.durationSec)||0,
+              ts: x.ts || null
+            };
+          })
+          .filter(r=> QUIZZES.includes(r.quizId));
       }
 
       const filtered = CACHE.filter(r=> !EXAM || r.quizId===EXAM);
