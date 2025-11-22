@@ -1016,29 +1016,29 @@ function renderQuiz(){
   };
 
   const isLast = S.idx===S.qs.length-1;
-  const nextLabel = isLast ? 'Finalizar (N)' : 'Siguiente (N)';
-  const next=h('button',{class:'btn primary',html:nextLabel});
+const nextLabel = isLast ? 'Finalizar (N)' : 'Siguiente (N)';
+const next=h('button',{class:'btn primary',html:nextLabel});
 
-  if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
+if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
 
-    next.onclick=()=>{
-      if(!isLast){
-        S.idx++;
-        // 👉 Después de ir a la siguiente, centramos en la zona de KPIs (Respondidas)
-        S._afterRenderScroll = 'kpis';
-        renderQuiz();
-        return;
-      }
-      if(hasPendingMarked()){
-        toast('No puedes finalizar: hay preguntas marcadas sin responder.');
-        return;
-      }
-      if(S.finishLocked) return;
-      S.finishLocked = true;
-      next.disabled = true;
-      try { next.innerHTML = 'Finalizando…'; } catch {}
-      finish();
-    };
+next.onclick=()=>{
+  if(!isLast){
+    S.idx++;
+    // 👉 después de pasar a la siguiente, queremos centrarnos en Respondidas
+    S._afterRenderScroll = 'kpis';
+    renderQuiz();
+    return;
+  }
+  if(hasPendingMarked()){
+    toast('No puedes finalizar: hay preguntas marcadas sin responder.');
+    return;
+  }
+  if(S.finishLocked) return;
+  S.finishLocked = true;
+  next.disabled = true;
+  try { next.innerHTML = 'Finalizando…'; } catch {}
+  finish();
+};
 
   ctr.appendChild(back);
   ctr.appendChild(mark);
@@ -1091,21 +1091,22 @@ function renderQuiz(){
   wrap.appendChild(shell);
   root.appendChild(wrap);
 
-  enableHotkeys();
+ enableHotkeys();
 
-  if (S._afterRenderScroll === 'explanation') {
-    smartScrollTo(expBox || ctr, 'start');
-  } else if (S._afterRenderScroll === 'question') {
-    // 👉 tras responder, centramos la tarjeta de la pregunta
-    smartScrollTo(qCard, 'center');
-  } else if (S._afterRenderScroll === 'kpis') {
-    // 👉 al darle a Siguiente, centramos la zona de KPIs (Respondidas)
-    const kpis = document.getElementById('kpis-under-quiz');
-    smartScrollTo(kpis || qCard, 'center');
-  }
-  S._afterRenderScroll = null;
+if (S._afterRenderScroll === 'explanation') {
+  smartScrollTo(expBox || ctr, 'start');
+} else if (S._afterRenderScroll === 'question') {
+  // Tras responder, centramos la tarjeta de la pregunta
+  smartScrollTo(qCard, 'center');
+} else if (S._afterRenderScroll === 'kpis') {
+  // Al darle a Siguiente o N, centramos las KPIs (Respondidas)
+  const kpis = document.getElementById('kpis-under-quiz');
+  smartScrollTo(kpis || qCard, 'center');
+}
 
-  window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
+S._afterRenderScroll = null;
+
+window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
 }
 
 /* ===================== Helpers ===================== */
@@ -1403,24 +1404,26 @@ function enableHotkeys(){
 
     if(S.finished) return;
 
-    if(ev.key==='n'||ev.key==='N'){
-      ev.preventDefault();
-      if(S.idx===S.qs.length-1){
-        if(S.finishLocked) return;
-        if(hasPendingMarked()) {
-          toast('No puedes finalizar: marcadas sin responder.');
-          return;
-        }
-        S.finishLocked = true;
-        const btn = document.querySelector('.controls .btn.primary');
-        if(btn) btn.disabled = true;
-        finish();
-      } else {
-        S.idx++;
-        S._afterRenderScroll='question';
-        renderQuiz();
-      }
+   if(ev.key==='n'||ev.key==='N'){
+  ev.preventDefault();
+  if(S.idx===S.qs.length-1){
+    if(S.finishLocked) return;
+    if(hasPendingMarked()) {
+      toast('No puedes finalizar: marcadas sin responder.');
+      return;
     }
+    S.finishLocked = true;
+    const btn = document.querySelector('.controls .btn.primary');
+    if(btn) btn.disabled = true;
+    finish();
+  } else {
+    S.idx++;
+    // 👉 igual que el botón: centramos en KPIs (Respondidas)
+    S._afterRenderScroll='kpis';
+    renderQuiz();
+  }
+}
+
     if(ev.key==='b'||ev.key==='B'){
       ev.preventDefault();
       if(S.idx>0){
