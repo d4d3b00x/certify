@@ -1021,23 +1021,24 @@ function renderQuiz(){
 
   if(isLast && (hasPendingMarked() || S.finishLocked)) next.disabled = true;
 
-  next.onclick=()=>{
-    if(!isLast){
-      S.idx++;
-      S._afterRenderScroll='question';
-      renderQuiz();
-      return;
-    }
-    if(hasPendingMarked()){
-      toast('No puedes finalizar: hay preguntas marcadas sin responder.');
-      return;
-    }
-    if(S.finishLocked) return;
-    S.finishLocked = true;
-    next.disabled = true;
-    try { next.innerHTML = 'Finalizando…'; } catch {}
-    finish();
-  };
+    next.onclick=()=>{
+      if(!isLast){
+        S.idx++;
+        // 👉 Después de ir a la siguiente, centramos en la zona de KPIs (Respondidas)
+        S._afterRenderScroll = 'kpis';
+        renderQuiz();
+        return;
+      }
+      if(hasPendingMarked()){
+        toast('No puedes finalizar: hay preguntas marcadas sin responder.');
+        return;
+      }
+      if(S.finishLocked) return;
+      S.finishLocked = true;
+      next.disabled = true;
+      try { next.innerHTML = 'Finalizando…'; } catch {}
+      finish();
+    };
 
   ctr.appendChild(back);
   ctr.appendChild(mark);
@@ -1092,8 +1093,16 @@ function renderQuiz(){
 
   enableHotkeys();
 
-  if (S._afterRenderScroll === 'explanation') smartScrollTo(expBox || ctr, 'start');
-  else if (S._afterRenderScroll === 'question') smartScrollTo(qCard, 'start');
+  if (S._afterRenderScroll === 'explanation') {
+    smartScrollTo(expBox || ctr, 'start');
+  } else if (S._afterRenderScroll === 'question') {
+    // 👉 tras responder, centramos la tarjeta de la pregunta
+    smartScrollTo(qCard, 'center');
+  } else if (S._afterRenderScroll === 'kpis') {
+    // 👉 al darle a Siguiente, centramos la zona de KPIs (Respondidas)
+    const kpis = document.getElementById('kpis-under-quiz');
+    smartScrollTo(kpis || qCard, 'center');
+  }
   S._afterRenderScroll = null;
 
   window.dispatchEvent(new CustomEvent('quiz:render', { detail: { idx:S.idx }}));
