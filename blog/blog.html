@@ -400,7 +400,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       align-items:center;
       font-size:.85rem;
     }
-    .share-label{font-weight:800;color:#cfe1ff;text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;}
+    .share-label{font-weight:800;color:#cbd3ff;text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;}
     .share-btn{
       display:inline-flex;
       align-items:center;
@@ -944,7 +944,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <div class="container">
         <div class="blog-layout">
           <!-- Columna principal -->
-          <div class="blog-main">
+          <div class="blog-main" id="blogMain">
             <!-- ART 1 NOV 14 -->
             <article class="blog-article" id="articulo-multi-certificaciones">
               <div class="article-inner">
@@ -1677,7 +1677,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
               </ul>
             </div>
 
-            <div class="aside-card">
+            <div class="aside-card" id="asideShortcuts">
               <h3 class="aside-title">Atajos rápidos</h3>
               <p class="aside-sub">Salta directamente al artículo que necesites hoy:</p>
               <ul class="aside-list">
@@ -2003,6 +2003,42 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           a.href = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
         });
       });
+    })();
+
+    // ======= Reordenar "Atajos rápidos" en móvil =======
+    (function(){
+      const shortcutsCard = document.getElementById('asideShortcuts');
+      const blogMain      = document.getElementById('blogMain');
+      const blogAside     = document.querySelector('.blog-aside');
+
+      if (!shortcutsCard || !blogMain || !blogAside) return;
+
+      let movedToMain = false;
+
+      function repositionShortcuts(){
+        const isMobile = window.innerWidth <= 720;
+
+        // En móvil: mover "Atajos rápidos" al principio de los posts
+        if (isMobile && !movedToMain){
+          blogMain.insertBefore(shortcutsCard, blogMain.firstElementChild);
+          movedToMain = true;
+        }
+        // En escritorio: devolverlo al sidebar, después de "Sobre este blog"
+        else if (!isMobile && movedToMain){
+          const firstCard = blogAside.querySelector('.aside-card');
+          if (firstCard && firstCard !== shortcutsCard) {
+            blogAside.insertBefore(shortcutsCard, firstCard.nextSibling);
+          } else {
+            blogAside.appendChild(shortcutsCard);
+          }
+          movedToMain = false;
+        }
+      }
+
+      // Ejecutar al cargar
+      repositionShortcuts();
+      // Y al redimensionar (por si giras el móvil o cambias tamaño ventana)
+      window.addEventListener('resize', repositionShortcuts);
     })();
   </script>
 </body>
