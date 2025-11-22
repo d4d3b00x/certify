@@ -612,14 +612,14 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       <div class="container">
         <div class="bridge" role="region" aria-labelledby="bridge-title">
           <div class="left">
-            <span class="tag" id="bridge-title">RUTA DE CERTIFICACIÓN...</span>
+            <span class="tag" id="bridge-title">ENTRENA TU CERTIFICACIÓN</span>
             <p class="muted">
               <br>Empieza con los <b>simuladores</b> para aprender cada dominio del examen con <b>explicaciones</b> y enlaces oficiales.
               Estamos preparando el juego <b>Arena Battle</b>: <b>quizzes relámpago</b>  para ganar agilidad.
             </p>
             <div class="cta-row" role="group" aria-label="Acciones de entrenamiento">
               
-              <a class="btn" href="/blog/blog.html">VER ESTRATEGIAS DE ESTUDIOS</a>
+              <a class="btn" href="/catalog/itcatalog.html">VER SIMULADORES</a>
             </div>
           </div>
           <div class="right" aria-label="Cómo se complementan">
@@ -679,7 +679,171 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       </div>
     </section>
 
-   
+    <!-- Glosario → CARRUSEL -->
+    <section class="glossary" aria-labelledby="g-title">
+      <div class="container">
+        <h2 id="g-title" class="sec-title">Carrusel de Conceptos a Examen</h2>
+
+        <div class="g-arrows" role="group" aria-label="Navegación del glosario">
+          <button class="g-arrow" id="gPrev" aria-label="Anterior" aria-controls="gTrack">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <button class="g-arrow" id="gNext" aria-label="Siguiente" aria-controls="gTrack">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m8.59 16.59 1.41 1.41L16 12 10 6 8.59 7.41 13.17 12z"/></svg>
+          </button>
+
+          <div class="g-meta">
+            <div class="g-indicator" id="gIndicator" aria-live="polite">1–2 / 20</div>
+          </div>
+        </div>
+
+        <div class="g-wrap">
+          <div class="g-track" id="gTrack" tabindex="0" role="list" aria-label="Carrusel de términos del glosario (dos filas)">
+            <!-- tarjetas del glosario (1–20) -->
+            <!-- 1 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌐</div><div class="g-title">Azure Front Door</div></div>
+              <p class="g-desc">CDN + WAF global (L7) con terminación TLS y enrutamiento al punto más cercano para apps multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 2 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">GZRS</div></div>
+              <p class="g-desc">Geo-Zone-Redundant Storage: resiliencia a nivel de zona y réplica geográfica para máxima durabilidad.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 3 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📣</div><div class="g-title">SNS Fanout</div></div>
+              <p class="g-desc">Patrón pub/sub para distribuir eventos a múltiples consumidores (SQS, Lambda, HTTPS) de forma desacoplada.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 4 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🛡️</div><div class="g-title">Azure Bastion</div></div>
+              <p class="g-desc">Accede por RDP/SSH desde el navegador sin exponer IP pública ni abrir 22/3389. Menor superficie de ataque.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 5 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌀</div><div class="g-title">VM Scale Sets</div></div>
+              <p class="g-desc">Escala grupos de VMs con zonas, actualizaciones orquestadas y autoescalado por métricas para mantener SLA.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 6 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📏</div><div class="g-title">Azure Policy</div></div>
+              <p class="g-desc">Gobernanza declarativa con efectos audit/deny; aplica estándares a nivel de Management Group y suscripciones.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 7 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🌍</div><div class="g-title">Cosmos DB</div></div>
+              <p class="g-desc">Base NoSQL distribuida globalmente con latencia de un dígito, APIs múltiples y replicación multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 8 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🔁</div><div class="g-title">Azure Site Recovery</div></div>
+              <p class="g-desc">Orquesta DR para VMs con RPO de minutos y pruebas no disruptivas. Failover y failback guiados.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 9 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧭</div><div class="g-title">Gateway VPC Endpoint</div></div>
+              <p class="g-desc">Acceso a S3/DynamoDB desde la VPC sin Internet Gateway ni NAT. Más seguro y económico.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 10 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🚀</div><div class="g-title">CloudFront</div></div>
+              <p class="g-desc">CDN global con TLS, caché y protección integrada (Shield/WAF). Orígenes S3/ALB/EC2.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 11 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">⚡</div><div class="g-title">DynamoDB</div></div>
+              <p class="g-desc">NoSQL serverless con On-Demand/Provisioned, Streams y Global Tables para replicación multi-región.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 12 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🏛️</div><div class="g-title">RDS Multi-AZ</div></div>
+              <p class="g-desc">Replica sincrónica a standby en otra zona y failover automático para mejorar disponibilidad.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 13 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧊</div><div class="g-title">S3 Glacier</div></div>
+              <p class="g-desc">Archivado de bajo coste con ciclos de vida y tiempos de recuperación configurables.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 14 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">📶</div><div class="g-title">Kinesis Data Streams</div></div>
+              <p class="g-desc">Ingesta en tiempo real con orden por shard, múltiples consumidores y retención configurable.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 15 -->
+            <article class="g-card aws" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">💸</div><div class="g-title">Savings Plans</div></div>
+              <p class="g-desc">Compromiso de gasto que reduce costes de compute manteniendo flexibilidad de familia, tamaño y región.</p>
+              <div class="g-tags"><span class="g-tag tag-aws">SAA-C03</span></div>
+            </article>
+            <!-- 16 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧱</div><div class="g-title">Application Gateway (WAF)</div></div>
+              <p class="g-desc">Balanceo L7 con WAF administrado, rutas por host/path y TLS end-to-end. Integrable con AKS.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 17 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🔐</div><div class="g-title">Key Vault (HSM)</div></div>
+              <p class="g-desc">Gestión de claves, secretos y certificados con protección HSM, soft-delete y purge protection.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-305</span></div>
+            </article>
+            <!-- 18 -->
+            <article class="g-card azure" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🗂️</div><div class="g-title">Azure Files</div></div>
+              <p class="g-desc">SMB gestionado con AD/ACLs y snapshots. Ideal para lift & shift y perfiles de usuario.</p>
+              <div class="g-tags"><span class="g-tag tag-az">AZ-104</span></div>
+            </article>
+            <!-- 19 -->
+            <article class="g-card gcp" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🧮</div><div class="g-title">BigQuery</div></div>
+              <p class="g-desc">Data warehouse serverless; consulta petabytes con SQL y separación compute/almacenamiento.</p>
+              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
+            </article>
+            <!-- 20 -->
+            <article class="g-card gcp" role="listitem" tabindex="0">
+              <span class="accent" aria-hidden="true"></span>
+              <div class="g-head"><div class="g-ico">🐳</div><div class="g-title">Cloud Run</div></div>
+              <p class="g-desc">Contenedores serverless con escalado a cero y facturación por solicitud. Integración con Pub/Sub y VPC.</p>
+              <div class="g-tags"><span class="g-tag tag-gcp">GCP</span></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section id="simuladores" aria-labelledby="sim-title">
       <div class="container">
@@ -717,22 +881,22 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     <div>
       <div style="font-weight:800">SPONSOR</div>
-      <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
+      💬 <span><a href="https://mundoazure.cloud" target="_blank" rel="noopener">https://mundoazure.cloud</a></span><br><br>
 
       <div style="font-weight:800">CONTACTANOS</div>
 
 <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
 
-
+  <!-- ICONO NUBECITA → abre modal -->
   <button id="footerContactBtn" type="button"
           style="background:none;border:none;color:#cfe1ff;
                  font-weight:800;display:inline-flex;align-items:center;
                  cursor:pointer;padding:0;">
-    
+    <!-- emoji estilo icono del mismo tamaño -->
     <span style="font-size:22px;line-height:1;">💬</span>
   </button>
 
-   
+   <!-- ICONO LINKEDIN OFICIAL (mismo tamaño que la nubecita) -->
   <a href="https://www.linkedin.com/in/certificacionesithub/"
      target="_blank" rel="noopener"
      aria-label="Perfil de LinkedIn de ITHub.es"
@@ -749,6 +913,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 </div>
   </div>
 
+  <div class="container" style="margin-top:12px;font-size:12px;">© <span id="y"></span> ITHub.es</div>
 </footer>
 
   <!-- Modal Feedback -->
@@ -768,11 +933,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   </div>
 
   <script>
-  
+    document.getElementById('y').textContent = new Date().getFullYear();
 
+ // === Cognito config (mismos valores que en jwt-lab / cognito-callback) ===
   const COGNITO_DOMAIN       = "https://eu-central-1iqmrkcwly.auth.eu-central-1.amazoncognito.com";
   const COGNITO_CLIENT_ID    = "592bh3ek4jdeg78qntt810g7vl";
-  const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; 
+  const COGNITO_REDIRECT_URI = "https://www.ithub.es/login/cognito-callback.html"; // OJO: debe coincidir con el app client
 
   function buildCognitoAuthUrl(path){ // path: 'login' o 'signup'
     const params = new URLSearchParams({
