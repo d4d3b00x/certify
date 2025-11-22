@@ -27,6 +27,10 @@ const RESULTS_URL   = `${API_URL}/results`;   // 🔐 SOLO CAMBIO: antes /result
 let   __PROGRESS_URL_CACHED = null;
 const __CANDIDATE_STAGES = [""];
 
+/* ⚙️ Opcional: forzar logout/redirección al expirar token */
+const FORCE_LOGOUT_ON_TOKEN_EXPIRED = true;
+const LOGIN_URL_ON_EXPIRED = "/user/login.html"; // 🔁 Cambia esta ruta si tu login está en otro sitio
+
 /* ===== Utils de red ===== */
 function withTimeout(promise, ms, tag="op"){
   let t;
@@ -149,26 +153,24 @@ const QUIZZES = {
   .expl .ttl{ font-weight:900; margin-bottom:8px; }
 
   /* Feedback compacto y explicación desplegable (sin colores rojo/verde) */
-.expl-compact{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  /* usamos el mismo estilo neutro de .expl */
-  border-color:var(--stroke);
-  background:var(--surface);
-  color:var(--ink);
-}
+  .expl-compact{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    border-color:var(--stroke);
+    background:var(--surface);
+    color:var(--ink);
+  }
+  /* .ok y .bad no cambian colores, por si quieres usarlas en el futuro */
+  .expl-compact.ok{}
+  .expl-compact.bad{}
 
-/* .ok y .bad no cambian colores, solo permiten futuras customizaciones si quisieras */
-.expl-compact.ok{}
-.expl-compact.bad{}
-
-.expl-full{
-  margin-top:10px;
-}
-.expl-hidden{
-  display:none;
-}
+  .expl-full{
+    margin-top:10px;
+  }
+  .expl-hidden{
+    display:none;
+  }
 
   .refs{ margin-top:10px; background:var(--surface2); border:1px solid var(--stroke);
          border-radius:12px; padding:12px; }
@@ -212,18 +214,18 @@ const QUIZZES = {
   .recent-results .pct{font-weight:900;}
   .recent-results .pct.pass{color:var(--ok);}
   .recent-results .pct.fail{color:var(--bad);}
-  .recent-results .line-sub{font-size:.76rem;color:var(--muted);}
+  .recent-results .line-sub{font-size:.76rem;color:#var(--muted);}
 
   /* Resumen final */
   .summary-header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:18px;}
   .summary-circle{width:140px;height:140px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;font-weight:1000;border:4px solid var(--stroke);margin-top:4px;}
   .summary-circle.pass{border-color:var(--ok);color:var(--ok);}
   .summary-circle.fail{border-color:var(--bad);color:var(--bad);}
-  .summary-meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:.9rem;color:var(--muted);}
+  .summary-meta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;font-size:.9rem;color:#var(--muted);}
   .summary-section{margin-top:16px;}
   .domain-table{width:100%;border-collapse:collapse;font-size:.86rem;margin-top:8px;}
   .domain-table th,.domain-table td{border-bottom:1px solid var(--stroke);padding:6px 4px;text-align:left;}
-  .domain-table th{text-transform:uppercase;font-size:.75rem;color:var(--muted);}
+  .domain-table th{text-transform:uppercase;font-size:.75rem;color:#var(--muted);}
   `;
   const st = document.createElement("style");
   st.innerHTML = css;
@@ -360,6 +362,12 @@ async function fetchQuestionsFromApi({exam,count,overfetch=3,domainTags=[],searc
     });
 
     const txt = await res.text();
+
+    // 🔒 Detección explícita de token caducado
+    if (res.status === 401) {
+      throw new Error("401 Unauthorized - token expired");
+    }
+
     if (!res.ok) throw new Error(`GET /secure/questions ${res.status}: ${txt}`);
 
     let data;
@@ -446,6 +454,40 @@ function getUserAny(){
   }
 }
 
+/* ===================== Manejo de sesión expirada ===================== */
+function handleSessionExpired(){
+  // Limpiar info local
+  try{
+    localStorage.removeItem("arenaIdToken");
+    localStorage.removeItem("idToken");
+    localStorage.removeItem("currentUser");
+  }catch{}
+
+  toast("Tu sesión ha caducado. Por favor, vuelve a iniciar sesión.", 2600);
+
+  // Notificar a otros scripts (por si quieren reaccionar)
+  try {
+    window.dispatchEvent(new CustomEvent("auth:session-expired"));
+  } catch {}
+
+  // Forzar logout/redirección si está activado
+  if (FORCE_LOGOUT_ON_TOKEN_EXPIRED && typeof window !== "undefined") {
+    setTimeout(() => {
+      if (typeof window.handleLogout === "function") {
+        window.handleLogout();
+        return;
+      }
+      if (typeof window.logout === "function") {
+        window.logout();
+        return;
+      }
+      if (LOGIN_URL_ON_EXPIRED) {
+        window.location.href = LOGIN_URL_ON_EXPIRED;
+      }
+    }, 1200);
+  }
+}
+
 /* ===================== RESULTADOS ===================== */
 function genResultId(r){
   const base=[
@@ -457,7 +499,6 @@ function genResultId(r){
   ].join('|');
   const t=Math.floor(Date.now()/10000);
   return `${base}|${t}`;
-
 }
 
 async function saveResultRemoteOnce(result){
@@ -704,7 +745,15 @@ async function start(quizId="aws-saa-c03", overrides={}){
     toast(`Cargadas ${S.qs.length}${tags.length?` • Dominios: ${tags.join(', ')}`:''}`, 1800);
   }catch(e){
     console.error(e);
-    showError(e.message||"Error cargando preguntas");
+    const msg = String(e?.message || "").toLowerCase();
+
+    // 🔐 Si es un problema de token caducado / 401 → mensaje claro + manejo de sesión
+    if (msg.includes("401") || msg.includes("unauthorized") || msg.includes("token expired")) {
+      handleSessionExpired();
+      showError("Tu sesión ha caducado. Por favor, vuelve a iniciar sesión.");
+    } else {
+      showError(e.message || "Error cargando preguntas");
+    }
   }finally{
     if(__SEQ===seq) S.loading=false;
   }
