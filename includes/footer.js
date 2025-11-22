@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!container) return;
       container.innerHTML = html;
 
-      // Una vez insertado el footer en el DOM, conectamos el formulario
+      // Una vez insertado el footer en el DOM:
       setupNewsletterForm();
+      setupFooterContact();          // <-- NUEVO: engancha el icono al modal
     })
     .catch(error => console.error("Error cargando el footer:", error));
 });
@@ -89,4 +90,18 @@ function showStatus(message, type, el) {
   el.classList.remove("ok", "error");
   if (type === "ok") el.classList.add("ok");
   if (type === "error") el.classList.add("error");
+}
+
+/* ====== NUEVO: conectar icono de contacto con el modal de feedback ====== */
+function setupFooterContact() {
+  const btn = document.getElementById("footerContactBtn");
+  if (!btn) return;
+
+  btn.addEventListener("click", function (e) {
+    // Solo evitamos el enlace si existe la función del modal
+    if (typeof window.openFeedbackModal === "function") {
+      e.preventDefault();
+      window.openFeedbackModal();
+    }
+  });
 }
