@@ -41,6 +41,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       --dev:#9fffb0;     --dev-ring:#3f9156;
       --ops:#ffd699;     --ops-ring:#a16a1f;
       --data:#d1b3ff;    --data-ring:#6f45b4;
+
+      /* Header global ITHub */
+      --brand:#6c8bff;
+      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
+      --pill-ring:#2a3150;
+      --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
+      --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
     }
     *{box-sizing:border-box}
     body{
@@ -73,17 +80,173 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     nav.menu a.link-btn{display:inline-flex;align-items:center;justify-content:center;min-width:110px;min-height:44px;height:40px;padding:0 12px;border-radius:10px;border:1px solid transparent;font-weight:900}
     nav.menu a.link-btn:hover{border-color:#2a3150;color:var(--ink)}
 
-    .authwrap{display:flex;align-items:center;gap:6px;background:linear-gradient(180deg,#151b31,#12182c); border:1px solid #2a3150;
+    .authwrap{display:flex;align-items:center;gap:6px;background:var(--pill-bg); border:1px solid var(--pill-ring);
       border-radius:999px; padding:4px; box-shadow:0 6px 18px rgba(5,10,30,.35); max-height:44px;}
     .hello{display:flex;align-items:center;gap:6px;color:#cbd3ff;font-weight:800;padding:4px 8px;font-size:12px}
-    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #0078d455;background:var(--cta); color:#0b1930; font-weight:900; cursor:pointer;transition:transform .08s, filter .12s; font-size:13px;text-transform:uppercase;}
-    .pill-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
+    .pill-btn{display:inline-flex;align-items:center;justify-content:center;min-width:88px;min-height:44px;height:34px;padding:0 12px;border-radius:10px;border:1px solid #3b2fff44;background:var(--pill-btn-bg); color:#fff; font-weight:900; cursor:pointer;transition:transform .08s, background .12s, transform .08s; font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+    .pill-btn:hover{background:var(--pill-btn-bg-hover); transform:translateY(-1px)}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:40px;padding:0 14px;border-radius:12px;border:1px solid var(--stroke);background:transparent;color:var(--ink);font-weight:900;cursor:pointer;text-transform:uppercase;}
     .btn.azure{border-color:#0078d466}
     .btn.azure:hover{border-color:#76c7ff;color:#d6ecff}
     @media (max-width:720px){
       nav.menu{gap:8px} nav.menu a.link-btn{min-width:90px;height:36px}
       .authwrap{gap:4px}.pill-btn{min-width:82px;height:32px;padding:0 10px}.btn{height:36px}.hello{display:none}
+    }
+
+    /* === NAV DESPLEGABLE (mismas clases que index) === */
+    .menu-has-sub {
+      gap: 6px;
+    }
+
+    .menu-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .has-sub-trigger {
+      position: relative;
+      padding-right: 18px;
+    }
+
+    .has-sub-trigger .caret {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-left: 4px;
+    }
+
+    .menu-group .submenu {
+      position: absolute;
+      top: 110%;
+      left: 0;
+      min-width: 220px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, #141b3a, #101631);
+      box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 60;
+    }
+
+    .menu-group .submenu a {
+      display: block;
+      padding: 4px 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .menu-group .submenu a:hover {
+      background: rgba(108, 139, 255, 0.18);
+      color: var(--ink);
+      border-radius: 8px;
+    }
+
+    .submenu-title {
+      margin-top: 4px;
+      margin-bottom: 2px;
+      padding: 2px 8px 2px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #cfe1ff;
+      opacity: 0.7;
+    }
+
+    .submenu.open {
+      display: flex;
+    }
+
+    @media (min-width: 721px) {
+      .menu-group:hover > .submenu,
+      .menu-group:focus-within > .submenu {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .menu {
+        flex-wrap: wrap;
+      }
+
+      .menu-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .menu-group .submenu {
+        position: static;
+        margin-top: 4px;
+        width: 100%;
+        box-shadow: 0 6px 16px rgba(5,10,30,.35);
+        display: none;
+      }
+
+      .menu-group .submenu.open {
+        display: flex;
+      }
+    }
+
+    .menu-group .submenu a,
+    .menu-group .submenu .submenu-title {
+      text-transform: uppercase;
+    }
+
+    .menu-group .submenu a {
+      display: block;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .menu-group .submenu a.submenu-mainlink {
+      margin-top: 4px;
+      margin-bottom: 2px;
+      padding: 6px 8px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: var(--ink);
+      border-radius: 8px;
+      background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.35), transparent 55%),
+                  linear-gradient(180deg, #151b31, #11172b);
+      box-shadow: 0 6px 16px rgba(5,10,30,.45);
+    }
+
+    .menu-group .submenu a.submenu-mainlink:hover {
+      background: radial-gradient(circle at 0% 0%, rgba(108,139,255,.5), transparent 60%),
+                  linear-gradient(180deg, #1a2140, #131a33);
+      color: #ffffff;
+    }
+
+    .menu-group .submenu a.submenu-child {
+      padding-left: 22px;
+      font-size: 0.78rem;
+      opacity: 0.9;
+    }
+
+    .menu-group .submenu a:hover {
+      background: rgba(108, 139, 255, 0.18);
+      color: var(--ink);
+      border-radius: 8px;
+    }
+
+    .submenu-title {
+      margin-top: 6px;
+      margin-bottom: 2px;
+      padding: 2px 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #cfe1ff;
+      opacity: 0.7;
     }
 
     /* HERO */
@@ -188,30 +351,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
   <!-- CABECERA -->
-  <header role="banner">
-    <div class="container nav">
-      <div class="brand">
-        <img class="site-logo" src="/assets/ithub-logo.svg" alt="ITHub: inicio">
-      </div>
-
-      <nav class="menu" aria-label="Navegación principal">
-        <a class="link-btn" href="/">HOME</a>
-        <a class="link-btn" href="/content/content.html">CONTENIDOS</a>
-        <a class="link-btn" href="/score/ranking.html">RANKING</a>
-      </nav>
-
-      <div class="authwrap" id="authWrap" aria-label="Acciones de sesión">
-        <a id="btnLogin"  class="pill-btn" href="/login/login.html" role="button">LOGIN</a>
-        <a id="btnSignup" class="pill-btn" href="/login/login.html#signup" role="button">REGÍSTRATE</a>
-
-        <div id="userArea" style="display:none;align-items:center;gap:6px">
-          <div class="hello">👋 <span id="userNameTop" style="font-weight:900">USER</span></div>
-          <a class="pill-btn" href="/user/profile.html" role="button">PERFIL</a>
-          <button id="btnLogout" class="pill-btn" type="button">LOGOUT</button>
-        </div>
-      </div>
-    </div>
-  </header>
+  <div id="site-header"></div>
 
   <main id="main" tabindex="-1">
     <!-- HERO AZURE -->
@@ -526,18 +666,47 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     document.getElementById('y').textContent = new Date().getFullYear();
 
     /* ===== AUTH mínima ===== */
-    function getCurrentUser(){ try{ return JSON.parse(localStorage.getItem("currentUser")||"null"); }catch{ return null; } }
-    function renderHeaderAuth(){
-      const u=getCurrentUser();
-      const login=document.getElementById('btnLogin');
-      const signup=document.getElementById('btnSignup');
-      const userArea=document.getElementById('userArea');
-      const nameTop=document.getElementById('userNameTop');
-      if(u){ login.style.display='none'; signup.style.display='none'; userArea.style.display='flex'; nameTop.textContent=(u.name||u.email||'USER').toUpperCase(); }
-      else{ login.style.display='inline-flex'; signup.style.display='inline-flex'; userArea.style.display='none'; }
+    function getCurrentUser(){
+      try{
+        return JSON.parse(localStorage.getItem("currentUser")||"null");
+      }catch{
+        return null;
+      }
     }
-    document.getElementById('btnLogout')?.addEventListener('click', ()=>{ localStorage.removeItem('currentUser'); renderHeaderAuth(); });
-    renderHeaderAuth();
+    function renderHeaderAuth(){
+      const u = getCurrentUser();
+      const login   = document.getElementById('btnLogin');
+      const signup  = document.getElementById('btnSignup');
+      const userArea= document.getElementById('userArea');
+      const nameTop = document.getElementById('userNameTop');
+
+      // Si el header aún no se ha inyectado, salimos sin error
+      if(!login || !signup){ return; }
+
+      if(u){
+        login.style.display = 'none';
+        signup.style.display = 'none';
+        if(userArea){
+          userArea.style.display = 'flex';
+          if(nameTop){
+            nameTop.textContent = (u.name || u.email || 'USER').toUpperCase();
+          }
+        }
+      }else{
+        login.style.display = 'inline-flex';
+        signup.style.display = 'inline-flex';
+        if(userArea){ userArea.style.display = 'none'; }
+      }
+    }
+    function localLogoutHook(){
+      const btnLogout = document.getElementById('btnLogout');
+      if(btnLogout){
+        btnLogout.addEventListener('click', ()=>{
+          localStorage.removeItem('currentUser');
+          renderHeaderAuth();
+        });
+      }
+    }
 
     /* ===== Modal helpers ===== */
     const fbModal = document.getElementById('feedbackModal');
@@ -638,6 +807,32 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         btnFbOk.focus();
       }
     });
+  </script>
+
+  <script>
+    // Cargar header común desde includes/header.html
+    fetch('/includes/header.html')
+      .then(r => r.text())
+      .then(html => {
+        const container = document.getElementById('site-header');
+        if(!container) return;
+        container.innerHTML = html;
+
+        // Actualizar estado de sesión en la cabecera
+        renderHeaderAuth();
+        localLogoutHook();
+
+        // Funciones globales del header (si existen)
+        if (typeof attachHeaderEvents === 'function') {
+          attachHeaderEvents();
+        }
+        if (typeof initSubmenus === 'function') {
+          initSubmenus();
+        }
+      })
+      .catch(err => {
+        console.error('No se pudo cargar el header común:', err);
+      });
   </script>
 </body>
 </html>
