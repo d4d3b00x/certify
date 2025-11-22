@@ -516,16 +516,19 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       .filter(r => QUIZZES.includes(r.quizId));
   }
 
+  // 🔁 AGRUPACIÓN POR EMAIL (siempre que exista)
   function aggregateGlobal(rows) {
     const byUser = new Map();
 
     rows.forEach(r => {
-      // Clave estable: primero userId, luego email, luego nombre normalizado
-      const key =
-        (r.userId && String(r.userId)) ||
-        (r.email && r.email.toLowerCase()) ||
-        (r.userName && r.userName.trim().toLowerCase()) ||
-        "(unknown)";
+      const keyEmail = r.email && r.email.toLowerCase();
+      const keyUserId = r.userId ? String(r.userId) : "";
+      const keyName = r.userName ? r.userName.trim().toLowerCase() : "";
+
+      let key;
+      if (keyEmail)      key = `mail:${keyEmail}`;
+      else if (keyUserId) key = `id:${keyUserId}`;
+      else               key = `name:${keyName || '(unknown)'}`;
 
       const { pts, passed } = pointsForAttempt(r);
 
@@ -630,9 +633,11 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         const xid    = x.userId ? String(x.userId) : "";
         const xemail = (x.email || "").toLowerCase();
         const xname  = (x.userName || "").trim().toLowerCase();
-        return (uid && xid && uid===xid) ||
-               (uemail && xemail && uemail===xemail) ||
-               (uname && xname && uname===xname);
+
+        if (uemail && xemail && uemail===xemail) return true;       // 🔑 match por email
+        if (uid && xid && uid===xid) return true;
+        if (uname && xname && uname===xname) return true;
+        return false;
       });
 
       if(foundIndex<0){
@@ -692,9 +697,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const token = getArenaIdToken();
     if (!token) throw new Error("No id_token de Cognito (arenaIdToken) para /secure/results");
 
+    // 👉 FILTRAMOS PRINCIPALMENTE POR EMAIL
     const qs = new URLSearchParams({ limit: String(limit) });
-    if (uid) qs.set("userId", uid);
-    if (uemail) qs.set("email", uemail);
+    if (uemail) {
+      qs.set("email", uemail);
+    } else if (uid) {
+      qs.set("userId", uid);
+    }
 
     const url = `${API_BASE}${RESULTS_PATH_SECURE}?${qs.toString()}`;
     const res = await fetch(url, {
@@ -713,12 +722,17 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
 
     const items = Array.isArray(data.items) ? data.items : [];
+
+    // 🔍 Pertenencia basada en EMAIL (y userId solo de backup)
     const isMine = (x) => {
       const xid = (x.userId || x.id || x?.user?.id || "").toString();
       const xemail = norm(x.email || x.userEmail || x?.user?.email || x?.profile?.email);
-      return (uid && xid && uid === xid) || (uemail && xemail && uemail === xemail);
+      if (uemail && xemail && uemail === xemail) return true;
+      if (!uemail && uid && xid && uid === xid) return true;
+      return false;
     };
     const mine = items.filter(isMine);
+
     const pick2 = v => (typeof v === "string" ? v.trim() : "");
     const getName2 = x => pick2(x.userName)||pick2(x.username)||pick2(x.displayName)||pick2(x.name)||pick2(x?.user?.name)||pick2(x?.profile?.name)||"(no name)";
 
@@ -873,7 +887,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
               continue;
             }
             const questionIds = Array.isArray(it.questionIds) ? it.questionIds : [];
-            const markedMap   = (typeof it.marked === 'object' && it.marked) ? it.marked : {};
+            const markedMap   = (typeof it.marked === 'object' && it) ? it.marked : {};
             Object.entries(markedMap).forEach(([idxStr,flag])=>{
               if(!flag) return;
               const idx = parseInt(idxStr,10);
