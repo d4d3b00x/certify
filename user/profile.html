@@ -12,6 +12,7 @@
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  
 
   <title>Perfil de usuario — Progreso y logros | ITHub.es</title>
   <meta name="description" content="Revisa tu perfil en ITHub.es: progreso en simuladores, estadísticas de examen, logros, XP y posición en el ranking de certificaciones Azure y AWS." />
@@ -27,6 +28,7 @@
   <link rel="icon" type="image/svg+xml" 
 href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop stop-color='%238aa0ff'/><stop offset='1' stop-color='%23425dff'/></linearGradient></defs><rect rx='12' width='64' height='64' fill='url(%23g)'/><text x='32' y='42' font-family='Segoe UI,Arial' font-size='28' fill='white' font-weight='900' text-anchor='middle'>IT</text></svg>">
 
+
   <style>
     :root{
       --bg:#0f1320; --surface:#161b2d; --surface2:#1b2140; --card:#111937;
@@ -34,13 +36,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       --radius:16px; --accent:#7b5cff; --accent-2:#8166ff; --accent-warn:#ffb84d;
       --ok:#25b873; --danger:#ff6b6b; --gap:12px;
       --gold:#ffd662; --silver:#e6e6e6; --bronze:#e2a97a;
-
-      /* Header global ITHub */
-      --brand:#6c8bff;
-      --pill-bg:linear-gradient(180deg,#151b31,#12182c);
-      --pill-ring:#2a3150;
-      --pill-btn-bg:linear-gradient(180deg,#7a67ff,#5f48ff);
-      --pill-btn-bg-hover:linear-gradient(180deg,#8a78ff,#6b54ff);
     }
     *{box-sizing:border-box}
     html,body{margin:0;padding:0}
@@ -58,177 +53,38 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     .wrap{max-width:1200px;margin:0 auto;padding:20px;width:100%}
 
-    /* ===== HEADER GLOBAL (usa /includes/header.html) ===== */
-    header{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(10px);
-      background:linear-gradient(180deg,rgba(15,19,32,.92),rgba(15,19,32,.72));
-      border-bottom:1px solid var(--stroke);
+    /* ===== HEADER ===== */
+    header.site{
+      position:sticky; top:0; z-index:20;
+      background:linear-gradient(180deg,#0e1222 0%, #0b0f1c 100%);
+      border-bottom:1px solid rgba(40,48,86,.6);
+      box-shadow:0 10px 24px rgba(0,0,0,.35);
     }
     .nav{
-      height:64px;
-      max-width:1200px;
-      margin:0 auto;
-      padding:0 20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      max-width:1200px; margin:0 auto; padding:10px 20px;
+      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      text-transform:uppercase;
-    }
-    .brand img.site-logo{
-      height:42px;
-      width:auto;
-      display:block;
-    }
-    nav.menu{
-      display:flex;
-      gap:16px;
-      color:var(--muted);
-      font-weight:800;
-      align-items:center;
-      text-transform:uppercase;
-    }
-    nav.menu .link-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:110px;
-      min-height:44px;
-      height:40px;
-      padding:0 12px;
-      border-radius:10px;
-      border:1px solid transparent;
-      font-weight:900;
-      letter-spacing:.8px;
-    }
-    nav.menu .link-btn:hover{
-      border-color:#2a3150;
-      color:var(--ink);
-    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px;text-decoration:none}
+    .brand .badge{width:30px;height:30px;border-radius:10px;background:linear-gradient(180deg,#7693ff,#6a7cff);display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:inset 0 -4px 8px rgba(0,0,0,.25)}
+    .brand .name{display:flex;align-items:baseline;gap:6px}
+    .brand .name b{font-size:1.05rem}
+    .brand .name .dot{opacity:.9}
+    .brand .name .es{opacity:.7;font-weight:800}
 
-    .authwrap{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      background:var(--pill-bg);
-      border:1px solid var(--pill-ring);
-      border-radius:999px;
-      padding:4px;
-      box-shadow:0 6px 18px rgba(5,10,30,.35);
-      max-height:44px;
-    }
-    .hello{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      color:#cbd3ff;
-      font-weight:800;
-      padding:4px 8px;
-      font-size:12px;
-    }
-    .pill-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:100px;
-      min-height:44px;
-      height:34px;
-      padding:0 14px;
-      border-radius:12px;
-      border:1px solid #3b2fff44;
-      background:var(--pill-btn-bg);
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;
-      transition:transform .08s, background .12s;
-      font-size:13px;
-      text-transform:uppercase;
-    }
-    .pill-btn:hover{
-      background:var(--pill-btn-bg-hover);
-      transform:translateY(-1px);
-    }
-    @media (max-width:720px){
-      nav.menu{gap:8px}
-      nav.menu .link-btn{min-width:90px;height:36px}
-      .authwrap{gap:4px}
-      .pill-btn{min-width:82px;height:32px;padding:0 10px}
-      .hello{display:none}
-    }
+    .navlinks{display:flex;align-items:center;justify-content:center;gap:28px;font-weight:900}
+    .navlinks a{text-decoration:none;color:#bac4ff;letter-spacing:.5px}
+    .navlinks a:hover{color:#fff;text-shadow:0 0 12px rgba(123,92,255,.35)}
 
-    /* NAV DESPLEGABLE (submenús) */
-    .menu-has-sub { gap: 6px; }
-    .menu-group { position: relative; display: flex; align-items: center; }
-    .has-sub-trigger { position: relative; padding-right: 18px; }
-    .has-sub-trigger .caret { font-size: 0.7rem; opacity: 0.7; margin-left: 4px; }
-    .menu-group .submenu {
-      position: absolute;
-      top: 110%;
-      left: 0;
-      min-width: 220px;
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(180deg, #141b3a, #101631);
-      box-shadow: 0 14px 28px rgba(5, 10, 30, 0.55);
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      z-index: 60;
-    }
-    .menu-group .submenu a {
-      display: block;
-      padding: 4px 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .menu-group .submenu a:hover {
-      background: rgba(108, 139, 255, 0.18);
-      color: var(--ink);
-      border-radius: 8px;
-    }
-    .submenu-title {
-      margin-top: 6px;
-      margin-bottom: 2px;
-      padding: 2px 8px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      color: #cfe1ff;
-      opacity: 0.7;
-      text-transform: uppercase;
-    }
-    .submenu.open { display: flex; }
-    @media (min-width: 721px) {
-      .menu-group:hover > .submenu,
-      .menu-group:focus-within > .submenu {
-        display: flex;
-      }
-    }
-    @media (max-width: 720px) {
-      .menu { flex-wrap: wrap; }
-      .menu-group { flex-direction: column; align-items: flex-start; }
-      .menu-group .submenu {
-        position: static;
-        margin-top: 4px;
-        width: 100%;
-        box-shadow: 0 6px 16px rgba(5,10,30,.35);
-        display: none;
-      }
-      .menu-group .submenu.open { display: flex; }
-    }
+    .usercapsule{display:flex;align-items:center;gap:10px;padding:6px;background:linear-gradient(180deg, rgba(16,22,43,.9), rgba(10,14,30,.9));border:1px solid var(--stroke);border-radius:999px;box-shadow:var(--shadow)}
+    .chip-user{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-weight:900;color:#e8ecff;background:linear-gradient(180deg, rgba(124,146,255,.18), rgba(90,110,220,.14));border:1px solid rgba(70,80,150,.7);white-space:nowrap}
+    .chip-user .flame{color:var(--accent-warn)}
+    .btn{appearance:none;border:1px solid var(--stroke);cursor:pointer;background:var(--surface2);color:var(--ink);font-weight:900;letter-spacing:.2px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);transition:transform .08s, box-shadow .12s, filter .12s, border-color .12s; text-decoration:none}
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.35) }
+    .btn.pill{ border-radius:999px; padding:10px 16px }
+    .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border-color:transparent }
+    .btn.ghost{ background:transparent; border-color:rgba(80,92,160,.6) }
+    .btn.small{ padding:6px 10px; font-size:.9rem }
+    .hidden{display:none !important}
 
     /* Tarjetas / Hero */
     .card{background:linear-gradient(180deg, var(--card), #0f1633);border:1px solid var(--stroke);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);color:var(--ink);margin-bottom:12px}
@@ -236,22 +92,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .hero h1{margin:4px 0 6px;font-size:clamp(1.4rem,1.4vw + 1rem,1.9rem);font-weight:900}
     .hero .desc{color:var(--muted);margin:0}
 
-    .hidden{display:none !important}
-
     /* Authbar (estado) */
     .authbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 14px;background:var(--surface);border:1px solid var(--stroke);border-radius:999px;font-weight:800;box-shadow:var(--shadow);margin:0 0 var(--gap)}
     .authbar .actions{display:flex;gap:8px}
 
-    .btn{appearance:none;border:1px solid var(--stroke);cursor:pointer;background:var(--surface2);color:var(--ink);font-weight:900;letter-spacing:.2px;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);transition:transform .08s, box-shadow .12s, filter .12s, border-color .12s; text-decoration:none}
-    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,.35) }
-    .btn.pill{ border-radius:999px; padding:10px 16px }
-    .btn.primary{ background:linear-gradient(180deg,var(--accent),var(--accent-2)); color:#111; border-color:transparent }
-    .btn.ghost{ background:transparent; border-color:rgba(80,92,160,.6) }
-    .btn.small{ padding:6px 10px; font-size:.9rem }
-
     /* Grid */
     .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:var(--gap);align-items:start}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}.nav{grid-template-columns:auto auto;grid-template-rows:auto auto}.navlinks{order:3;grid-column:1/-1;padding-top:6px}}
     .col-right{display:flex;flex-direction:column;gap:var(--gap)}
     .col-right>.card{width:100%}
 
@@ -313,7 +160,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     .ibadge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--surface2)}
     .ibadge.fast{color:#ffb84d}.ibadge.perfect{color:#bb86fc}.ibadge.ok{color:#4ee69a}.ibadge.streak{color:#ff6b6b}.ibadge.grinder{color:#64b5f6}.ibadge.sharp{color:#00c8aa}.ibadge.veteran{color:#ffd662}
 
-    /* Quitar subrayado de la lupa */
+    /* Footer */
+    footer.site{margin-top:auto;border-top:1px solid var(--stroke);background:linear-gradient(180deg,#0f1633,#0b1024)}
+    .foot{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .foot a{color:#cbd6ff;text-decoration:none}
+    .foot .muted{color:#9ca8d9}
+
+    /* Quitar subrayado de la lupa (en todas sus pseudo-clases) */
     a.review-icon,
     a.review-icon:link,
     a.review-icon:visited,
@@ -328,18 +181,31 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
     /* CTA Leaderboard pequeño bajo ranking */
     .rank-footer{display:flex;justify-content:flex-end;margin-top:10px}
-
-    /* Footer */
-    footer.site{margin-top:auto;border-top:1px solid var(--stroke);background:linear-gradient(180deg,#0f1633,#0b1024)}
-    .foot{max-width:1200px;margin:0 auto;padding:16px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .foot a{color:#cbd6ff;text-decoration:none}
-    .foot .muted{color:#9ca8d9}
   </style>
 </head>
 <body>
 
-  <!-- Header común inyectado -->
-  <div id="site-header"></div>
+  <!-- ===== HEADER ===== -->
+  <header class="site">
+    <nav class="nav">
+      <a class="brand" href="/" aria-label="IT Hub">
+        <div class="badge">□</div>
+        <div class="name"><b>IT&nbsp;&nbsp;Hub</b><span class="dot">.</span><span class="es">es</span></div>
+      </a>
+      <div class="navlinks" aria-label="Navegación principal">
+        <a href="/">HOME</a>
+        <a href="/contenidos">CONTENIDOS</a>
+        <a href="/score/ranking.html">RANKING</a>
+      </div>
+      <div class="usercapsule">
+        <span id="hdrUser" class="chip-user hidden"><span class="flame">🔥</span><span id="hdrUserName">USER</span></span>
+        <a id="btnHdrPerfil" class="btn pill ghost hidden" href="/user/profile.html">PERFIL</a>
+        <button id="btnHdrLogout" class="btn pill primary hidden">LOGOUT</button>
+        <button id="btnHdrLogin" class="btn pill primary">LOGIN</button>
+        <button id="btnHdrSignup" class="btn pill ghost">CREAR CUENTA</button>
+      </div>
+    </nav>
+  </header>
 
   <div class="wrap">
     <section class="card hero">
@@ -424,10 +290,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
           <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
             <h3 style="margin:0;font-weight:900">📘 TUS ÚLTIMOS QUIZS</h3>
             <div class="tabs">
-              <button id="tabAll"   class="tab-btn active" type="button">Todos</button>
-              <button id="tabAZ"    class="tab-btn" type="button">AZ-104</button>
+              <button id="tabAll"  class="tab-btn active" type="button">Todos</button>
+              <button id="tabAZ"   class="tab-btn" type="button">AZ-104</button>
               <button id="tabAZ305" class="tab-btn" type="button">AZ-305</button>
-              <button id="tabAWS"   class="tab-btn" type="button">AWS SAA-C03</button>
+              <button id="tabAWS"  class="tab-btn" type="button">AWS SAA-C03</button>
             </div>
           </div>
 
@@ -469,7 +335,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     <div class="foot">
       <div style="display:flex;align-items:center;gap:10px">
         <div class="brand" style="gap:8px">
-          <div class="badge" style="width:22px;height:22px;border-radius:7px;background:linear-gradient(180deg,#7b8cff,#4c66ff);display:grid;place-items:center;color:#fff;font-weight:900">□</div>
+          <div class="badge" style="width:22px;height:22px;border-radius:7px">□</div>
           <strong>IT Hub<span class="dot">.</span><span class="es">es</span></strong>
         </div>
         <span class="muted">© <span id="yearNow"></span></span>
@@ -484,12 +350,16 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   const API_BASE = "https://uougu1cm26.execute-api.eu-central-1.amazonaws.com";
   const AUTH_KEY = "currentUser";
   const GOAL_KEY = "weeklyGoal";
-  const LOGIN_URL = "/login/login.html";
+  const LOGIN_URL = "/login/login.html"; // ajusta si tu ruta es diferente
 
+  // Nueva ruta y helper para token de Cognito
   const RESULTS_PATH_SECURE = "/secure/results";
   function getArenaIdToken(){
-    try { return localStorage.getItem("arenaIdToken") || ""; }
-    catch { return ""; }
+    try {
+      return localStorage.getItem("arenaIdToken") || "";
+    } catch {
+      return "";
+    }
   }
 
   const byId = id => document.getElementById(id);
@@ -501,14 +371,8 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   const norm = s => (s||"").toString().trim().toLowerCase();
   const initialsOf = (name)=>{ const s=(name||"").trim(); if(!s) return "👤"; const parts=s.split(/\s+/).slice(0,2); return parts.map(x=>x[0]?.toUpperCase()||"").join("")||"👤"; };
 
-  function getUser(){
-    try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;}
-  }
-  function getUserAny(){
-    let u=getUser();
-    if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} }
-    return u;
-  }
+  function getUser(){ try{ return JSON.parse(localStorage.getItem(AUTH_KEY)||"null"); }catch{return null;} }
+  function getUserAny(){ let u=getUser(); if(!u){ try{u=JSON.parse(localStorage.getItem("certify_user")||"null")}catch{} } return u; }
   function setUser(u){ localStorage.setItem(AUTH_KEY, JSON.stringify(u)); renderAuth(); }
 
   const getGoal = ()=>{ const v = toInt(localStorage.getItem(GOAL_KEY)||"7"); return v>0? v:7; }
@@ -517,48 +381,32 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
   const toDateOnly = (d)=> new Date(d.getFullYear(), d.getMonth(), d.getDate());
   function isWithinDays(date, days){ const now=new Date(); const diff = (now - new Date(date)) / 86400000; return diff>=0 && diff<=days; }
 
-  /* ===== Header auth para header común ===== */
+  /* Header dinámico */
   function renderHeaderAuth(){
-    const u       = getUserAny();
-    const login   = document.getElementById('btnLogin');
-    const signup  = document.getElementById('btnSignup');
-    const userArea= document.getElementById('userArea');
-    const nameTop = document.getElementById('userNameTop');
-
-    if(!login || !signup) return; // header aún no montado
+    const u = getUserAny();
+    const pillName = byId('hdrUser');
+    const pillNameTxt = byId('hdrUserName');
+    const btnPerfil = byId('btnHdrPerfil');
+    const btnLogout = byId('btnHdrLogout');
+    const btnLogin = byId('btnHdrLogin');
+    const btnSignup = byId('btnHdrSignup');
 
     if(u){
-      login.style.display  = 'inline-flex';
-      signup.style.display = 'none';
-      if(userArea){
-        userArea.style.display='flex';
-        if(nameTop){
-          nameTop.textContent = (u.name || u.displayName || u.userName || u.email || 'USER').toUpperCase();
-        }
-      }
+      pillNameTxt.textContent = (u.name || u.displayName || u.userName || u.email || 'USER').toUpperCase();
+      pillName.classList.remove('hidden');
+      btnPerfil.classList.remove('hidden');
+      btnLogout.classList.remove('hidden');
+      btnLogin.classList.add('hidden');
+      btnSignup.classList.add('hidden');
     }else{
-      login.style.display  = 'inline-flex';
-      signup.style.display = 'inline-flex';
-      if(userArea){ userArea.style.display='none'; }
+      pillName.classList.add('hidden');
+      btnPerfil.classList.add('hidden');
+      btnLogout.classList.add('hidden');
+      btnLogin.classList.remove('hidden');
+      btnSignup.classList.remove('hidden');
     }
   }
 
-  function localLogoutHook(){
-    const btnLogout = document.getElementById('btnLogout');
-    if(btnLogout){
-      btnLogout.addEventListener('click', ()=>{
-        try{
-          localStorage.removeItem(AUTH_KEY);
-          localStorage.removeItem('certify_user');
-          localStorage.removeItem('arenaIdToken');
-        }catch{}
-        renderHeaderAuth();
-        renderAuth();
-      });
-    }
-  }
-
-  /* ===== Authbar interna ===== */
   function renderAuth(){
     const u = getUserAny();
     const authText = byId("authText");
@@ -608,7 +456,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }catch{}
   }
 
-  /* ===== Ranking Global mini (igual que antes) ===== */
+  /* ====== Ranking Global ====== */
   const QUIZZES = ["az-104","az-305","aws-saa-c03"];
   const pick = v => (typeof v === "string" ? v.trim() : "");
   const getName = x => pick(x.displayName)||pick(x.userName)||pick(x.username)||pick(x.name)||pick(x?.user?.name)||pick(x?.profile?.name)||"(no name)";
@@ -627,6 +475,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     return {lvl, prog};
   }
 
+  // 🔐 USO de /secure/results con Authorization: Bearer <token>
   async function fetchAllResults(limit = 3000) {
     const token = getArenaIdToken();
     if (!token) throw new Error("No id_token de Cognito (arenaIdToken) en localStorage");
@@ -671,6 +520,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     const byUser = new Map();
 
     rows.forEach(r => {
+      // Clave estable: primero userId, luego email, luego nombre normalizado
       const key =
         (r.userId && String(r.userId)) ||
         (r.email && r.email.toLowerCase()) ||
@@ -695,6 +545,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
       const u = byUser.get(key);
 
+      // Actualizar nombre/email si vienen mejores datos
       if (r.userName && r.userName.trim()) {
         u.userName = r.userName;
       }
@@ -702,6 +553,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
         u.email = r.email.toLowerCase();
       }
 
+      // Contadores
       u.attempts += 1;
       if (passed) u.passed += 1;
 
@@ -709,11 +561,13 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       u.correctSum += toInt(r.correct);
       u.totalSum += toInt(r.total);
 
+      // Insignias
       if (r.total > 0 && r.durationSec > 0 && (r.durationSec / r.total) <= 30) u.badges.add('fast');
       if ((r.correct | 0) === (r.total | 0) && r.total > 0) u.badges.add('perfect');
       if (passed) u.badges.add('ok');
     });
 
+    // Insignias adicionales y nivel
     for (const u of byUser.values()) {
       if (u.attempts >= 10) u.badges.add('grinder');
       if (u.xp >= 2000) u.badges.add('veteran');
@@ -829,7 +683,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
   }
 
-  /* ===== Resultados propios ===== */
+  /* ===== Resultados propios (también contra /secure/results) ===== */
   async function fetchMyResults(limit=500){
     const u = getUserAny(); if (!u) return [];
     const uid = (u.userId || u.id || "").toString();
@@ -978,7 +832,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     root.innerHTML = html;
   }
 
-  /* ===== Marcadas ===== */
+  /* ===== Marcadas ===== (igual que antes, sin tocar API) ===== */
   function getLastSessionId() {
     const keys = Object.keys(localStorage).filter(k => k.startsWith("quiz.session."));
     keys.sort().reverse();
@@ -1076,7 +930,12 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     }
   }
 
-  /* Eventos propios (no header) */
+  // ===== Eventos header/auth =====
+  byId('btnHdrLogin').onclick  = ()=> location.href = LOGIN_URL;
+  byId('btnHdrSignup').onclick = ()=> location.href = LOGIN_URL;
+  byId('btnHdrLogout').onclick = ()=> { localStorage.removeItem(AUTH_KEY); renderAuth(); location.href = LOGIN_URL; };
+
+  // ===== Eventos existentes =====
   byId("btnHome").onclick = ()=>{ location.href = "/"; };
   byId("btnLogout").onclick = ()=>{ localStorage.removeItem(AUTH_KEY); location.href = LOGIN_URL; };
   byId("btnResetProfile").onclick = ()=>{ renderProfileForm(); byId("profMsg").textContent=""; };
@@ -1095,10 +954,10 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     byId("tabAZ305").classList.toggle("active", which==="az-305");
     byId("tabAWS").classList.toggle("active", which==="aws-saa-c03");
   }
-  byId("tabAll").onclick   = ()=>{ activateTab("all");    renderResults(window.__myRows||[], "all"); };
-  byId("tabAZ").onclick    = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
-  byId("tabAZ305").onclick = ()=>{ activateTab("az-305"); renderResults(window.__myRows||[], "az-305"); };
-  byId("tabAWS").onclick   = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
+  byId("tabAll").onclick  = ()=>{ activateTab("all"); renderResults(window.__myRows||[], "all"); };
+  byId("tabAZ").onclick   = ()=>{ activateTab("az-104"); renderResults(window.__myRows||[], "az-104"); };
+  byId("tabAZ305").onclick= ()=>{ activateTab("az-305"); renderResults(window.__myRows||[], "az-305"); };
+  byId("tabAWS").onclick  = ()=>{ activateTab("aws-saa-c03"); renderResults(window.__myRows||[], "aws-saa-c03"); };
 
   function renderProfile(){
     const u=getUserAny()||{};
@@ -1130,7 +989,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
     loadRemoteMe();
     renderProfile();
 
-    // Tus últimos quizs
+    // Tus últimos quizs (desde /secure/results)
     try{
       const rows = await fetchMyResults(500);
       window.__myRows = rows;
@@ -1157,7 +1016,7 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       console.warn('Results fetch failed:', e);
     }
 
-    // Ranking Global mini
+    // Ranking Global mini (desde /secure/results)
     renderMyGlobalRank();
 
     // Marcadas
@@ -1180,32 +1039,6 @@ href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0
       console.warn('Marked render failed:', e);
     }
   });
-  </script>
-
-  <script>
-    // Cargar header común desde includes/header.html
-    fetch('/includes/header.html')
-      .then(r => r.text())
-      .then(html => {
-        const container = document.getElementById('site-header');
-        if(!container) return;
-        container.innerHTML = html;
-
-        // Estado de sesión en cabecera
-        renderHeaderAuth();
-        localLogoutHook();
-
-        // Funciones globales del header (si existen)
-        if (typeof attachHeaderEvents === 'function') {
-          attachHeaderEvents();
-        }
-        if (typeof initSubmenus === 'function') {
-          initSubmenus();
-        }
-      })
-      .catch(err => {
-        console.error('No se pudo cargar el header común:', err);
-      });
   </script>
 
 </body>
